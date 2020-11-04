@@ -495,7 +495,7 @@
 <span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
 <span class="kn">from</span> <span class="nn">kivy.factory</span> <span class="kn">import</span> <span class="n">Factory</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.stencilview</span> <span class="kn">import</span> <span class="n">StencilView</span>
-<span class="kn">from</span> <span class="nn">kivy.metrics</span> <span class="kn">import</span> <span class="n">sp</span><span class="p">,</span> <span class="n">dp</span>
+<span class="kn">from</span> <span class="nn">kivy.metrics</span> <span class="kn">import</span> <span class="n">dp</span>
 <span class="kn">from</span> <span class="nn">kivy.effects.dampedscroll</span> <span class="kn">import</span> <span class="n">DampedScrollEffect</span>
 <span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">NumericProperty</span><span class="p">,</span> <span class="n">BooleanProperty</span><span class="p">,</span> <span class="n">AliasProperty</span><span class="p">,</span> \
     <span class="n">ObjectProperty</span><span class="p">,</span> <span class="n">ListProperty</span><span class="p">,</span> <span class="n">ReferenceListProperty</span><span class="p">,</span> <span class="n">OptionProperty</span><span class="p">,</span> \
@@ -954,17 +954,14 @@
     <span class="k">def</span> <span class="nf">_update_effect_y_bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_viewport</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewport_size</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewport_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">scrollable_height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewport_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">scrollable_height</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">scrollable_height</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="n">scrollable_height</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span><span class="o">.</span><span class="n">max</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span>
 
     <span class="k">def</span> <span class="nf">_update_effect_bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_viewport</span><span class="p">:</span>
-            <span class="k">return</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_x</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_update_effect_x_bounds</span><span class="p">()</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_update_effect_y_bounds</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_effect_x_bounds</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_effect_y_bounds</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_update_effect_x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="n">vp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_viewport</span>
@@ -1067,12 +1064,11 @@
              <span class="s1">&#39;right&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">bar_margin</span><span class="p">}</span>
 
         <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;in_bar_x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">scroll_bar</span> <span class="ow">and</span> <span class="n">width_scrollable</span> <span class="ow">and</span>
-                             <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">bar_pos_x</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bar_width</span><span class="p">))</span>
+                          <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">bar_pos_x</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bar_width</span><span class="p">))</span>
         <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;in_bar_y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">scroll_bar</span> <span class="ow">and</span> <span class="n">height_scrollable</span> <span class="ow">and</span>
-                             <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">bar_pos_y</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bar_width</span><span class="p">))</span>
+                          <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">bar_pos_y</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bar_width</span><span class="p">))</span>
 
-        <span class="k">if</span> <span class="n">vp</span> <span class="ow">and</span> <span class="s1">&#39;button&#39;</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">profile</span> <span class="ow">and</span> \
-                <span class="n">touch</span><span class="o">.</span><span class="n">button</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;scroll&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;button&#39;</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">profile</span> <span class="ow">and</span> <span class="n">touch</span><span class="o">.</span><span class="n">button</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;scroll&#39;</span><span class="p">):</span>
             <span class="n">btn</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">button</span>
             <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_wheel_distance</span>
             <span class="n">e</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1085,12 +1081,20 @@
             <span class="p">):</span>
                 <span class="k">return</span> <span class="kc">False</span>
 
-            <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">effect_x</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_y</span> <span class="ow">and</span> <span class="n">height_scrollable</span> <span class="ow">and</span>
-                    <span class="n">btn</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;scrolldown&#39;</span><span class="p">,</span> <span class="s1">&#39;scrollup&#39;</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">effect_x</span>
+                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_y</span>
+                <span class="ow">and</span> <span class="n">height_scrollable</span>
+                <span class="ow">and</span> <span class="n">btn</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;scrolldown&#39;</span><span class="p">,</span> <span class="s1">&#39;scrollup&#39;</span><span class="p">)</span>
+            <span class="p">):</span>
                 <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_x</span> <span class="k">if</span> <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;in_bar_x&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span>
 
-            <span class="k">elif</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_x</span> <span class="ow">and</span> <span class="n">width_scrollable</span> <span class="ow">and</span>
-                    <span class="n">btn</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;scrollleft&#39;</span><span class="p">,</span> <span class="s1">&#39;scrollright&#39;</span><span class="p">)):</span>
+            <span class="k">elif</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span>
+                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_x</span>
+                <span class="ow">and</span> <span class="n">width_scrollable</span>
+                <span class="ow">and</span> <span class="n">btn</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;scrollleft&#39;</span><span class="p">,</span> <span class="s1">&#39;scrollright&#39;</span><span class="p">)</span>
+            <span class="p">):</span>
                 <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span> <span class="k">if</span> <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;in_bar_y&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_x</span>
 
             <span class="k">if</span> <span class="n">e</span><span class="p">:</span>
@@ -1100,19 +1104,19 @@
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">smooth_scroll_end</span><span class="p">:</span>
                         <span class="n">e</span><span class="o">.</span><span class="n">velocity</span> <span class="o">-=</span> <span class="n">m</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">smooth_scroll_end</span>
                     <span class="k">else</span><span class="p">:</span>
-                        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">always_overscroll</span><span class="p">:</span>
-                            <span class="n">e</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">value</span> <span class="o">-</span> <span class="n">m</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">min</span><span class="p">)</span>
-                        <span class="k">else</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">always_overscroll</span><span class="p">:</span>
                             <span class="n">e</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">value</span> <span class="o">-</span> <span class="n">m</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">e</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">value</span> <span class="o">-</span> <span class="n">m</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
                         <span class="n">e</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="mi">0</span>
                 <span class="k">elif</span> <span class="n">btn</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;scrollup&#39;</span><span class="p">,</span> <span class="s1">&#39;scrollright&#39;</span><span class="p">):</span>
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">smooth_scroll_end</span><span class="p">:</span>
                         <span class="n">e</span><span class="o">.</span><span class="n">velocity</span> <span class="o">+=</span> <span class="n">m</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">smooth_scroll_end</span>
                     <span class="k">else</span><span class="p">:</span>
-                        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">always_overscroll</span><span class="p">:</span>
-                            <span class="n">e</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="n">m</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">min</span><span class="p">)</span>
-                        <span class="k">else</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">always_overscroll</span><span class="p">:</span>
                             <span class="n">e</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="n">m</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">e</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="n">m</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">min</span><span class="p">)</span>
                         <span class="n">e</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="mi">0</span>
                 <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">(</span><span class="s1">&#39;svavoid&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="n">e</span><span class="o">.</span><span class="n">trigger_velocity_update</span><span class="p">()</span>
@@ -1666,8 +1670,8 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Nov 01, 2020.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.2.1.
+      Last updated on Nov 04, 2020.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.3.0.
 </div>
 -->
   </body>
