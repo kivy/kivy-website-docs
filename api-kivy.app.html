@@ -6,14 +6,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="twitter:site" content="@kivyframework">
     
-    <title>Application &mdash; Kivy 1.11.1 documentation</title>
+    <title>Application &mdash; Kivy 2.0.0 documentation</title>
     <link href='//fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="_static/fresh.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.11.1',
+        VERSION:     '2.0.0',
         COLLAPSE_MODINDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,13 +23,13 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <script type="text/javascript" src="_static/jquery-effects-core-and-slide.js"></script>
     <script type="text/javascript" src="_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="_static/kivy.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="Kivy 1.11.1 documentation" href="index.html" />
+    <link rel="top" title="Kivy 2.0.0 documentation" href="index.html" />
     <link rel="up" title="Kivy framework" href="api-kivy.html" />
     <link rel="next" title="Asynchronous data loader" href="api-kivy.loader.html" />
     <link rel="prev" title="Animation" href="api-kivy.animation.html" /> 
@@ -83,6 +83,12 @@
 <li><a class="reference internal" href="#profiling-with-on-start-and-on-stop">Profiling with on_start and on_stop</a></li>
 <li><a class="reference internal" href="#customising-layout">Customising layout</a></li>
 <li><a class="reference internal" href="#pause-mode">Pause mode</a></li>
+<li><a class="reference internal" href="#asynchronous-app">Asynchronous app</a><ul>
+<li><a class="reference internal" href="#background">Background</a></li>
+<li><a class="reference internal" href="#async-configuration">Async configuration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#interacting-with-kivy-app-from-other-coroutines">Interacting with Kivy app from other coroutines</a></li>
 </ul>
 </li>
 </ul>
@@ -92,7 +98,7 @@
           <ul>
 <li class="toctree-l1"><a class="reference internal" href="gettingstarted/index.html">Getting Started</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="gettingstarted/intro.html">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gettingstarted/installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted/installation.html">Installing Kivy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gettingstarted/first_app.html">A first App</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gettingstarted/properties.html">Properties</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gettingstarted/rules.html">Kv Design Language</a></li>
@@ -138,6 +144,21 @@
 </li>
 </ul>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted/index.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted/intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted/installation.html">Installing Kivy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted/first_app.html">A first App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted/properties.html">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted/rules.html">Kv Design Language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted/events.html">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted/framework.html">Non-widget stuff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted/layouts.html">Layouts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted/drawing.html">Drawing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted/packaging.html">Packaging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted/examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted/diving.html">Diving in</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="user-guide.html">Kivy Project</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="philosophy.html">Philosophy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contribute.html">Contributing</a></li>
@@ -168,6 +189,7 @@
 </li>
 <li class="toctree-l1 current"><a class="reference internal" href="api-index.html">API Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="api-kivy.html">Kivy framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.atlas.html">Atlas</a></li>
@@ -239,8 +261,6 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.input.providers.probesysfs.html">Auto Create Input Provider Config Entry for Available MT Hardware (linux only).</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.input.providers.tuio.html">TUIO Input Provider</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.input.providers.wm_common.html">Common definitions for a Windows provider</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.providers.wm_pen.html">Support for WM_PEN messages (Windows platform)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.providers.wm_touch.html">Support for WM_TOUCH messages (Windows platform)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.input.recorder.html">Input recorder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.input.shape.html">Motion Event Shape</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.interactive.html">Interactive launcher</a></li>
@@ -380,6 +400,12 @@
 <li><a class="reference internal" href="#profiling-with-on-start-and-on-stop">Profiling with on_start and on_stop</a></li>
 <li><a class="reference internal" href="#customising-layout">Customising layout</a></li>
 <li><a class="reference internal" href="#pause-mode">Pause mode</a></li>
+<li><a class="reference internal" href="#asynchronous-app">Asynchronous app</a><ul>
+<li><a class="reference internal" href="#background">Background</a></li>
+<li><a class="reference internal" href="#async-configuration">Async configuration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#interacting-with-kivy-app-from-other-coroutines">Interacting with Kivy app from other coroutines</a></li>
 </ul>
 </li>
 </ul>
@@ -411,8 +437,8 @@ method in your app class and return the widget tree you constructed.</p>
 <span class="kn">import</span> <span class="nn">kivy</span>
 <span class="n">kivy</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;1.0.7&#39;</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">kivy.app</span> <span class="k">import</span> <span class="n">App</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.button</span> <span class="k">import</span> <span class="n">Button</span>
+<span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.button</span> <span class="kn">import</span> <span class="n">Button</span>
 
 
 <span class="k">class</span> <span class="nc">TestApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
@@ -460,7 +486,7 @@ is the same example as the Button one in a kv file.</p>
 <span class="kn">import</span> <span class="nn">kivy</span>
 <span class="n">kivy</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;1.0.7&#39;</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">kivy.app</span> <span class="k">import</span> <span class="n">App</span>
+<span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
 
 
 <span class="k">class</span> <span class="nc">TestApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
@@ -605,7 +631,7 @@ altogether, you can do this:</p>
 </pre></div>
 </div>
 <div class="versionadded">
-<p><span class="versionmodified">New in version 1.0.7.</span></p>
+<p><span class="versionmodified added">New in version 1.0.7.</span></p>
 </div>
 </div>
 </div>
@@ -680,7 +706,7 @@ settings panel has been replaced.</p>
 <div class="section" id="pause-mode">
 <h2>Pause mode<a class="headerlink" href="#pause-mode" title="Permalink to this headline">¶</a></h2>
 <div class="versionadded">
-<p><span class="versionmodified">New in version 1.1.0.</span></p>
+<p><span class="versionmodified added">New in version 1.1.0.</span></p>
 </div>
 <p>On tablets and phones, the user can switch at any moment to another
 application. By default, your application will close and the
@@ -694,16 +720,16 @@ implemented in Kivy.</p>
 <p>The currently implemented Pause mechanism is:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Kivy checks every frame if Pause mode is activated by the Operating
+<li><p>Kivy checks every frame if Pause mode is activated by the Operating
 System due to the user switching to another application, a phone
-shutdown or any other reason.</li>
-<li><a class="reference internal" href="#kivy.app.App.on_pause" title="kivy.app.App.on_pause"><code class="xref py py-meth docutils literal notranslate"><span class="pre">App.on_pause()</span></code></a> is called:</li>
-<li>If False is returned, then <a class="reference internal" href="#kivy.app.App.on_stop" title="kivy.app.App.on_stop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">App.on_stop()</span></code></a> is called.</li>
-<li>If True is returned (default case), the application will sleep until
-the OS resumes our App.</li>
-<li>When the app is resumed, <a class="reference internal" href="#kivy.app.App.on_resume" title="kivy.app.App.on_resume"><code class="xref py py-meth docutils literal notranslate"><span class="pre">App.on_resume()</span></code></a> is called.</li>
-<li>If our app memory has been reclaimed by the OS, then nothing will be
-called.</li>
+shutdown or any other reason.</p></li>
+<li><p><a class="reference internal" href="#kivy.app.App.on_pause" title="kivy.app.App.on_pause"><code class="xref py py-meth docutils literal notranslate"><span class="pre">App.on_pause()</span></code></a> is called:</p></li>
+<li><p>If False is returned, then <a class="reference internal" href="#kivy.app.App.on_stop" title="kivy.app.App.on_stop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">App.on_stop()</span></code></a> is called.</p></li>
+<li><p>If True is returned (default case), the application will sleep until
+the OS resumes our App.</p></li>
+<li><p>When the app is resumed, <a class="reference internal" href="#kivy.app.App.on_resume" title="kivy.app.App.on_resume"><code class="xref py py-meth docutils literal notranslate"><span class="pre">App.on_resume()</span></code></a> is called.</p></li>
+<li><p>If our app memory has been reclaimed by the OS, then nothing will be
+called.</p></li>
 </ol>
 </div></blockquote>
 <p>Here is a simple example of how on_pause() should be used:</p>
@@ -719,68 +745,146 @@ called.</li>
 </pre></div>
 </div>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Both <cite>on_pause</cite> and <cite>on_stop</cite> must save important data because after
+<p class="admonition-title">Warning</p>
+<p>Both <cite>on_pause</cite> and <cite>on_stop</cite> must save important data because after
 <cite>on_pause</cite> is called, <cite>on_resume</cite> may not be called at all.</p>
 </div>
-<dl class="class">
+</div>
+<div class="section" id="asynchronous-app">
+<h2>Asynchronous app<a class="headerlink" href="#asynchronous-app" title="Permalink to this headline">¶</a></h2>
+<p>In addition to running an app normally,
+Kivy can be run within an async event loop such as provided by the standard
+library asyncio package or the trio package (highly recommended).</p>
+<div class="section" id="background">
+<h3>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h3>
+<p>Normally, when a Kivy app is run, it blocks the thread that runs it until the
+app exits. Internally, at each clock iteration it executes all the app
+callbacks, handles graphics and input, and idles by sleeping for any remaining
+time.</p>
+<p>To be able to run asynchronously, the Kivy app may not sleep, but instead must
+release control of the running context to the asynchronous event loop running
+the Kivy app. We do this when idling by calling the appropriate functions of
+the async package being used instead of sleeping.</p>
+</div>
+<div class="section" id="async-configuration">
+<h3>Async configuration<a class="headerlink" href="#async-configuration" title="Permalink to this headline">¶</a></h3>
+<p>To run a Kivy app asynchronously, either the <a class="reference internal" href="#kivy.app.async_runTouchApp" title="kivy.app.async_runTouchApp"><code class="xref py py-func docutils literal notranslate"><span class="pre">async_runTouchApp()</span></code></a> or
+<a class="reference internal" href="#kivy.app.App.async_run" title="kivy.app.App.async_run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">App.async_run()</span></code></a> coroutine must be scheduled to run in the event loop of
+the async library being used.</p>
+<p>The environmental variable <code class="docutils literal notranslate"><span class="pre">KIVY_EVENTLOOP</span></code> or the <code class="docutils literal notranslate"><span class="pre">async_lib</span></code> parameter in
+<a class="reference internal" href="#kivy.app.async_runTouchApp" title="kivy.app.async_runTouchApp"><code class="xref py py-func docutils literal notranslate"><span class="pre">async_runTouchApp()</span></code></a> and <a class="reference internal" href="#kivy.app.App.async_run" title="kivy.app.App.async_run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">App.async_run()</span></code></a> set the async
+library that Kivy uses internally when the app is run with
+<a class="reference internal" href="#kivy.app.async_runTouchApp" title="kivy.app.async_runTouchApp"><code class="xref py py-func docutils literal notranslate"><span class="pre">async_runTouchApp()</span></code></a> and <a class="reference internal" href="#kivy.app.App.async_run" title="kivy.app.App.async_run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">App.async_run()</span></code></a>. It can be set to one of
+<cite>“asyncio”</cite> when the standard library <cite>asyncio</cite> is used, or <cite>“trio”</cite> if the
+trio library is used. If the environment variable is not set and <code class="docutils literal notranslate"><span class="pre">async_lib</span></code>
+is not provided, the stdlib <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> is used.</p>
+<p><a class="reference internal" href="api-kivy.clock.html#kivy.clock.ClockBaseBehavior.init_async_lib" title="kivy.clock.ClockBaseBehavior.init_async_lib"><code class="xref py py-meth docutils literal notranslate"><span class="pre">init_async_lib()</span></code></a> can also be directly
+called to set the async library to use, but it may only be called before the
+app has begun running with <a class="reference internal" href="#kivy.app.async_runTouchApp" title="kivy.app.async_runTouchApp"><code class="xref py py-func docutils literal notranslate"><span class="pre">async_runTouchApp()</span></code></a> or <a class="reference internal" href="#kivy.app.App.async_run" title="kivy.app.App.async_run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">App.async_run()</span></code></a>.</p>
+<p>To run the app asynchronously, one schedules <a class="reference internal" href="#kivy.app.async_runTouchApp" title="kivy.app.async_runTouchApp"><code class="xref py py-func docutils literal notranslate"><span class="pre">async_runTouchApp()</span></code></a>
+or <a class="reference internal" href="#kivy.app.App.async_run" title="kivy.app.App.async_run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">App.async_run()</span></code></a> to run within the given library’s async event loop as
+in the examples shown below. Kivy is then treated as just another coroutine
+that the given library runs in its event loop. Internally, Kivy will use the
+specified async library’s API, so <code class="docutils literal notranslate"><span class="pre">KIVY_EVENTLOOP</span></code> or <code class="docutils literal notranslate"><span class="pre">async_lib</span></code> must
+match the async library that is running Kivy.</p>
+<p>For a fuller basic and more advanced examples, see the demo apps in
+<code class="docutils literal notranslate"><span class="pre">examples/async</span></code>.</p>
+<p>Asyncio example
+~~~~~~~~~~~~~–</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">async_runTouchApp</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.label</span> <span class="kn">import</span> <span class="n">Label</span>
+
+
+<span class="n">loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span>
+<span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span>
+    <span class="n">async_runTouchApp</span><span class="p">(</span><span class="n">Label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Hello, World!&#39;</span><span class="p">),</span> <span class="n">async_lib</span><span class="o">=</span><span class="s1">&#39;asyncio&#39;</span><span class="p">))</span>
+<span class="n">loop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Trio example
+~~~~~~~~~~–</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">trio</span>
+
+<span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">async_runTouchApp</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.label</span> <span class="kn">import</span> <span class="n">Label</span>
+
+<span class="n">trio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">async_runTouchApp</span><span class="p">,</span> <span class="n">Label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Hello, World!&#39;</span><span class="p">),</span> <span class="n">async_lib</span><span class="o">=</span><span class="s1">&#39;trio&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="interacting-with-kivy-app-from-other-coroutines">
+<h2>Interacting with Kivy app from other coroutines<a class="headerlink" href="#interacting-with-kivy-app-from-other-coroutines" title="Permalink to this headline">¶</a></h2>
+<p>It is fully safe to interact with any kivy object from other coroutines
+running within the same async event loop. This is because they are all running
+from the same thread and the other coroutines are only executed when Kivy
+is idling.</p>
+<p>Similarly, the kivy callbacks may safely interact with objects from other
+coroutines running in the same event loop. Normal single threaded rules apply
+to both case.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.0.0.</span></p>
+</div>
+<dl class="py class">
 <dt id="kivy.app.App">
-<em class="property">class </em><code class="descclassname">kivy.app.</code><code class="descname">App</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">kivy.app.</code><code class="sig-name descname">App</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="api-kivy.event.html#kivy.event.EventDispatcher" title="kivy.event.EventDispatcher"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.event.EventDispatcher</span></code></a></p>
 <p>Application class, see module documentation for more information.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Events:</th><td class="field-body"><dl class="first last docutils">
-<dt><cite>on_start</cite>:</dt>
-<dd><p class="first last">Fired when the application is being started (before the
+<dl class="field-list simple">
+<dt class="field-odd">Events</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>on_start</cite>:</dt><dd><p>Fired when the application is being started (before the
 <a class="reference internal" href="api-kivy.base.html#kivy.base.runTouchApp" title="kivy.base.runTouchApp"><code class="xref py py-func docutils literal notranslate"><span class="pre">runTouchApp()</span></code></a> call.</p>
 </dd>
-<dt><cite>on_stop</cite>:</dt>
-<dd><p class="first last">Fired when the application stops.</p>
+<dt><cite>on_stop</cite>:</dt><dd><p>Fired when the application stops.</p>
 </dd>
-<dt><cite>on_pause</cite>:</dt>
-<dd><p class="first last">Fired when the application is paused by the OS.</p>
+<dt><cite>on_pause</cite>:</dt><dd><p>Fired when the application is paused by the OS.</p>
 </dd>
-<dt><cite>on_resume</cite>:</dt>
-<dd><p class="first last">Fired when the application is resumed from pause by the OS. Beware:
+<dt><cite>on_resume</cite>:</dt><dd><p>Fired when the application is resumed from pause by the OS. Beware:
 you have no guarantee that this event will be fired after the
 <cite>on_pause</cite> event has been called.</p>
 </dd>
 </dl>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <div class="versionchanged">
-<p><span class="versionmodified">Changed in version 1.7.0: </span>Parameter <cite>kv_file</cite> added.</p>
+<p><span class="versionmodified changed">Changed in version 1.7.0: </span>Parameter <cite>kv_file</cite> added.</p>
 </div>
 <div class="versionchanged">
-<p><span class="versionmodified">Changed in version 1.8.0: </span>Parameters <cite>kv_file</cite> and <cite>kv_directory</cite> are now properties of App.</p>
+<p><span class="versionmodified changed">Changed in version 1.8.0: </span>Parameters <cite>kv_file</cite> and <cite>kv_directory</cite> are now properties of App.</p>
 </div>
-<dl class="method">
+<dl class="py method">
+<dt id="kivy.app.App.async_run">
+<em class="property">async </em><code class="sig-name descname">async_run</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">async_lib</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.async_run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.async_run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identical to <a class="reference internal" href="#kivy.app.App.run" title="kivy.app.App.run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run()</span></code></a>, but is a coroutine and can be
+scheduled in a running async event loop.</p>
+<p>See <a class="reference internal" href="#module-kivy.app" title="kivy.app"><code class="xref py py-mod docutils literal notranslate"><span class="pre">kivy.app</span></code></a> for example usage.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.0.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt id="kivy.app.App.build">
-<code class="descname">build</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.build" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">build</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.build" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initializes the application; it will be called only once.
 If this method returns a widget (tree), it will be used as the root
 widget and added to the window.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None or a root <a class="reference internal" href="api-kivy.uix.widget.html#kivy.uix.widget.Widget" title="kivy.uix.widget.Widget"><code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code></a> instance
-if no self.root exists.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None or a root <a class="reference internal" href="api-kivy.uix.widget.html#kivy.uix.widget.Widget" title="kivy.uix.widget.Widget"><code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code></a> instance
+if no self.root exists.</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="kivy.app.App.build_config">
-<code class="descname">build_config</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.build_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.build_config" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">build_config</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.build_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.build_config" title="Permalink to this definition">¶</a></dt>
 <dd><div class="versionadded">
-<p><span class="versionmodified">New in version 1.0.7.</span></p>
+<p><span class="versionmodified added">New in version 1.0.7.</span></p>
 </div>
 <p>This method is called before the application is initialized to
 construct your <a class="reference internal" href="api-kivy.config.html#kivy.config.ConfigParser" title="kivy.config.ConfigParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigParser</span></code></a> object. This
@@ -788,26 +892,21 @@ is where you can put any default section / key / value for your
 config. If anything is set, the configuration will be
 automatically saved in the file returned by
 <a class="reference internal" href="#kivy.app.App.get_application_config" title="kivy.app.App.get_application_config"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_application_config()</span></code></a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt><cite>config</cite>: <a class="reference internal" href="api-kivy.config.html#kivy.config.ConfigParser" title="kivy.config.ConfigParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigParser</span></code></a></dt>
-<dd><p class="first last">Use this to add default section / key / value items</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>config</cite>: <a class="reference internal" href="api-kivy.config.html#kivy.config.ConfigParser" title="kivy.config.ConfigParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigParser</span></code></a></dt><dd><p>Use this to add default section / key / value items</p>
 </dd>
 </dl>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="kivy.app.App.build_settings">
-<code class="descname">build_settings</code><span class="sig-paren">(</span><em>settings</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.build_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.build_settings" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">build_settings</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">settings</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.build_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.build_settings" title="Permalink to this definition">¶</a></dt>
 <dd><div class="versionadded">
-<p><span class="versionmodified">New in version 1.0.7.</span></p>
+<p><span class="versionmodified added">New in version 1.0.7.</span></p>
 </div>
 <p>This method is called when the user (or you) want to show the
 application settings. It is called once when the settings panel
@@ -817,46 +916,38 @@ called again if the cached settings panel is removed by
 <p>You can use this method to add settings panels and to
 customise the settings widget e.g. by changing the sidebar
 width. See the module documentation for full details.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt><cite>settings</cite>: <a class="reference internal" href="api-kivy.uix.settings.html#kivy.uix.settings.Settings" title="kivy.uix.settings.Settings"><code class="xref py py-class docutils literal notranslate"><span class="pre">Settings</span></code></a></dt>
-<dd><p class="first last">Settings instance for adding panels</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>settings</cite>: <a class="reference internal" href="api-kivy.uix.settings.html#kivy.uix.settings.Settings" title="kivy.uix.settings.Settings"><code class="xref py py-class docutils literal notranslate"><span class="pre">Settings</span></code></a></dt><dd><p>Settings instance for adding panels</p>
 </dd>
 </dl>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="kivy.app.App.close_settings">
-<code class="descname">close_settings</code><span class="sig-paren">(</span><em>*largs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.close_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.close_settings" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">close_settings</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">largs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.close_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.close_settings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Close the previously opened settings panel.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the settings has been closed.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if the settings has been closed.</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="kivy.app.App.config">
-<code class="descname">config</code><em class="property"> = None</em><a class="headerlink" href="#kivy.app.App.config" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">config</code><a class="headerlink" href="#kivy.app.App.config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns an instance of the <a class="reference internal" href="api-kivy.config.html#kivy.config.ConfigParser" title="kivy.config.ConfigParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigParser</span></code></a> for
 the application configuration. You can use this to query some config
 tokens in the <a class="reference internal" href="#kivy.app.App.build" title="kivy.app.App.build"><code class="xref py py-meth docutils literal notranslate"><span class="pre">build()</span></code></a> method.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="kivy.app.App.create_settings">
-<code class="descname">create_settings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.create_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.create_settings" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">create_settings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.create_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.create_settings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create the settings panel. This method will normally
 be called only one time per
 application life-time and the result is cached internally,
@@ -870,15 +961,15 @@ on_close/on_config_change.</p>
 panel or close/config change events, this is the method you want to
 overload.</p>
 <div class="versionadded">
-<p><span class="versionmodified">New in version 1.8.0.</span></p>
+<p><span class="versionmodified added">New in version 1.8.0.</span></p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="kivy.app.App.destroy_settings">
-<code class="descname">destroy_settings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.destroy_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.destroy_settings" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">destroy_settings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.destroy_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.destroy_settings" title="Permalink to this definition">¶</a></dt>
 <dd><div class="versionadded">
-<p><span class="versionmodified">New in version 1.8.0.</span></p>
+<p><span class="versionmodified added">New in version 1.8.0.</span></p>
 </div>
 <p>Dereferences the current settings panel if one
 exists. This means that when <a class="reference internal" href="#kivy.app.App.open_settings" title="kivy.app.App.open_settings"><code class="xref py py-meth docutils literal notranslate"><span class="pre">App.open_settings()</span></code></a> is next
@@ -893,52 +984,47 @@ correctly detect if the previous settings widget has been
 destroyed.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py method">
 <dt id="kivy.app.App.directory">
-<code class="descname">directory</code><a class="headerlink" href="#kivy.app.App.directory" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">directory</code><a class="headerlink" href="#kivy.app.App.directory" title="Permalink to this definition">¶</a></dt>
 <dd><div class="versionadded">
-<p><span class="versionmodified">New in version 1.0.7.</span></p>
+<p><span class="versionmodified added">New in version 1.0.7.</span></p>
 </div>
 <p>Return the directory where the application lives.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="kivy.app.App.display_settings">
-<code class="descname">display_settings</code><span class="sig-paren">(</span><em>settings</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.display_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.display_settings" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">display_settings</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">settings</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.display_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.display_settings" title="Permalink to this definition">¶</a></dt>
 <dd><div class="versionadded">
-<p><span class="versionmodified">New in version 1.8.0.</span></p>
+<p><span class="versionmodified added">New in version 1.8.0.</span></p>
 </div>
 <p>Display the settings panel. By default, the panel is drawn directly
 on top of the window. You can define other behaviour by overriding
 this method, such as adding it to a ScreenManager or Popup.</p>
 <p>You should return True if the display is successful, otherwise False.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt><cite>settings</cite>: <a class="reference internal" href="api-kivy.uix.settings.html#kivy.uix.settings.Settings" title="kivy.uix.settings.Settings"><code class="xref py py-class docutils literal notranslate"><span class="pre">Settings</span></code></a></dt>
-<dd><p class="first last">You can modify this object in order to modify the settings
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>settings</cite>: <a class="reference internal" href="api-kivy.uix.settings.html#kivy.uix.settings.Settings" title="kivy.uix.settings.Settings"><code class="xref py py-class docutils literal notranslate"><span class="pre">Settings</span></code></a></dt><dd><p>You can modify this object in order to modify the settings
 display.</p>
 </dd>
 </dl>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="kivy.app.App.get_application_config">
-<code class="descname">get_application_config</code><span class="sig-paren">(</span><em>defaultpath='%(appdir)s/%(appname)s.ini'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.get_application_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.get_application_config" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_application_config</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">defaultpath</span><span class="o">=</span><span class="default_value">'%(appdir)s/%(appname)s.ini'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.get_application_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.get_application_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the filename of your application configuration. Depending
 on the platform, the application file will be stored in
 different locations:</p>
 <blockquote>
 <div><ul class="simple">
-<li>on iOS: &lt;appdir&gt;/Documents/.&lt;appname&gt;.ini</li>
-<li>on Android: &lt;user_data_dir&gt;/.&lt;appname&gt;.ini</li>
-<li>otherwise: &lt;appdir&gt;/&lt;appname&gt;.ini</li>
+<li><p>on iOS: &lt;appdir&gt;/Documents/.&lt;appname&gt;.ini</p></li>
+<li><p>on Android: &lt;user_data_dir&gt;/.&lt;appname&gt;.ini</p></li>
+<li><p>otherwise: &lt;appdir&gt;/&lt;appname&gt;.ini</p></li>
 </ul>
 </div></blockquote>
 <p>When you are distributing your application on Desktops, please
@@ -955,49 +1041,49 @@ save the configuration file in the user directory.</p>
 </div>
 <p>Some notes:</p>
 <ul class="simple">
-<li>The tilda ‘~’ will be expanded to the user directory.</li>
-<li>%(appdir)s will be replaced with the application <a class="reference internal" href="#kivy.app.App.directory" title="kivy.app.App.directory"><code class="xref py py-attr docutils literal notranslate"><span class="pre">directory</span></code></a></li>
-<li>%(appname)s will be replaced with the application <a class="reference internal" href="#kivy.app.App.name" title="kivy.app.App.name"><code class="xref py py-attr docutils literal notranslate"><span class="pre">name</span></code></a></li>
+<li><p>The tilda ‘~’ will be expanded to the user directory.</p></li>
+<li><p>%(appdir)s will be replaced with the application <a class="reference internal" href="#kivy.app.App.directory" title="kivy.app.App.directory"><code class="xref py py-attr docutils literal notranslate"><span class="pre">directory</span></code></a></p></li>
+<li><p>%(appname)s will be replaced with the application <a class="reference internal" href="#kivy.app.App.name" title="kivy.app.App.name"><code class="xref py py-attr docutils literal notranslate"><span class="pre">name</span></code></a></p></li>
 </ul>
 <div class="versionadded">
-<p><span class="versionmodified">New in version 1.0.7.</span></p>
+<p><span class="versionmodified added">New in version 1.0.7.</span></p>
 </div>
 <div class="versionchanged">
-<p><span class="versionmodified">Changed in version 1.4.0: </span>Customized the defaultpath for iOS and Android platforms. Added a
+<p><span class="versionmodified changed">Changed in version 1.4.0: </span>Customized the defaultpath for iOS and Android platforms. Added a
 defaultpath parameter for desktop OS’s (not applicable to iOS
 and Android.)</p>
 </div>
 <div class="versionchanged">
-<p><span class="versionmodified">Changed in version 1.11.0: </span>Changed the Android version to make use of the
+<p><span class="versionmodified changed">Changed in version 1.11.0: </span>Changed the Android version to make use of the
 <a class="reference internal" href="#kivy.app.App.user_data_dir" title="kivy.app.App.user_data_dir"><code class="xref py py-attr docutils literal notranslate"><span class="pre">user_data_dir</span></code></a> and added a missing dot to the iOS
 config file name.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="kivy.app.App.get_application_icon">
-<code class="descname">get_application_icon</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.get_application_icon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.get_application_icon" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_application_icon</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.get_application_icon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.get_application_icon" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the icon of the application.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="kivy.app.App.get_application_name">
-<code class="descname">get_application_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.get_application_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.get_application_name" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_application_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.get_application_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.get_application_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the name of the application.</p>
 </dd></dl>
 
-<dl class="staticmethod">
+<dl class="py method">
 <dt id="kivy.app.App.get_running_app">
-<em class="property">static </em><code class="descname">get_running_app</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.get_running_app"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.get_running_app" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">get_running_app</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.get_running_app"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.get_running_app" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the currently running application instance.</p>
 <div class="versionadded">
-<p><span class="versionmodified">New in version 1.1.0.</span></p>
+<p><span class="versionmodified added">New in version 1.1.0.</span></p>
 </div>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="kivy.app.App.icon">
-<code class="descname">icon</code><a class="headerlink" href="#kivy.app.App.icon" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">icon</code><a class="headerlink" href="#kivy.app.App.icon" title="Permalink to this definition">¶</a></dt>
 <dd><p>Icon of your application.
 The icon can be located in the same directory as your main file. You can
 set this as follows:</p>
@@ -1007,76 +1093,73 @@ set this as follows:</p>
 </pre></div>
 </div>
 <div class="versionadded">
-<p><span class="versionmodified">New in version 1.0.5.</span></p>
+<p><span class="versionmodified added">New in version 1.0.5.</span></p>
 </div>
 <div class="versionchanged">
-<p><span class="versionmodified">Changed in version 1.8.0: </span><cite>icon</cite> is now a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.StringProperty" title="kivy.properties.StringProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a>. Don’t set the
+<p><span class="versionmodified changed">Changed in version 1.8.0: </span><cite>icon</cite> is now a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.StringProperty" title="kivy.properties.StringProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a>. Don’t set the
 icon in the class as previously stated in the documentation.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>For Kivy prior to 1.8.0, you need to set this as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
     <span class="n">icon</span> <span class="o">=</span> <span class="s1">&#39;customicon.png&#39;</span>
 </pre></div>
 </div>
-<p class="last">Recommended 256x256 or 1024x1024? for GNU/Linux and Mac OSX
+<p>Recommended 256x256 or 1024x1024? for GNU/Linux and Mac OSX
 32x32 for Windows7 or less. &lt;= 256x256 for windows 8
 256x256 does work (on Windows 8 at least), but is scaled
 down and doesn’t look as good as a 32x32 icon.</p>
 </div>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="kivy.app.App.kv_directory">
-<code class="descname">kv_directory</code><a class="headerlink" href="#kivy.app.App.kv_directory" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">kv_directory</code><a class="headerlink" href="#kivy.app.App.kv_directory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Path of the directory where application kv is stored, defaults to None</p>
 <div class="versionadded">
-<p><span class="versionmodified">New in version 1.8.0.</span></p>
+<p><span class="versionmodified added">New in version 1.8.0.</span></p>
 </div>
 <p>If a kv_directory is set, it will be used to get the initial kv file. By
 default, the file is assumed to be in the same directory as the current App
 definition file.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="kivy.app.App.kv_file">
-<code class="descname">kv_file</code><a class="headerlink" href="#kivy.app.App.kv_file" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">kv_file</code><a class="headerlink" href="#kivy.app.App.kv_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Filename of the Kv file to load, defaults to None.</p>
 <div class="versionadded">
-<p><span class="versionmodified">New in version 1.8.0.</span></p>
+<p><span class="versionmodified added">New in version 1.8.0.</span></p>
 </div>
 <p>If a kv_file is set, it will be loaded when the application starts. The
 loading of the “default” kv file will be prevented.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="kivy.app.App.load_config">
-<code class="descname">load_config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.load_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.load_config" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">load_config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.load_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.load_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>(internal) This function is used for returning a ConfigParser with
 the application configuration. It’s doing 3 things:</p>
 <blockquote>
 <div><ol class="arabic simple">
-<li>Creating an instance of a ConfigParser</li>
-<li>Loading the default configuration by calling
-<a class="reference internal" href="#kivy.app.App.build_config" title="kivy.app.App.build_config"><code class="xref py py-meth docutils literal notranslate"><span class="pre">build_config()</span></code></a>, then</li>
-<li>If it exists, it loads the application configuration file,
-otherwise it creates one.</li>
+<li><p>Creating an instance of a ConfigParser</p></li>
+<li><p>Loading the default configuration by calling
+<a class="reference internal" href="#kivy.app.App.build_config" title="kivy.app.App.build_config"><code class="xref py py-meth docutils literal notranslate"><span class="pre">build_config()</span></code></a>, then</p></li>
+<li><p>If it exists, it loads the application configuration file,
+otherwise it creates one.</p></li>
 </ol>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="api-kivy.config.html#kivy.config.ConfigParser" title="kivy.config.ConfigParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigParser</span></code></a> instance</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a class="reference internal" href="api-kivy.config.html#kivy.config.ConfigParser" title="kivy.config.ConfigParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigParser</span></code></a> instance</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="kivy.app.App.load_kv">
-<code class="descname">load_kv</code><span class="sig-paren">(</span><em>filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.load_kv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.load_kv" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">load_kv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.load_kv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.load_kv" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method is invoked the first time the app is being run if no
 widget tree has been constructed before for this app.
 This method then looks for a matching kv file in the same directory as
@@ -1103,8 +1186,8 @@ documentation for more information on how to create kv files. If your
 kv file contains a root widget, it will be used as self.root, the root
 widget for the application.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This function is called from <a class="reference internal" href="#kivy.app.App.run" title="kivy.app.App.run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run()</span></code></a>, therefore, any widget
+<p class="admonition-title">Note</p>
+<p>This function is called from <a class="reference internal" href="#kivy.app.App.run" title="kivy.app.App.run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run()</span></code></a>, therefore, any widget
 whose styling is defined in this kv file and is created before
 <a class="reference internal" href="#kivy.app.App.run" title="kivy.app.App.run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run()</span></code></a> is called (e.g. in <cite>__init__</cite>), won’t have its styling
 applied. Note that <a class="reference internal" href="#kivy.app.App.build" title="kivy.app.App.build"><code class="xref py py-meth docutils literal notranslate"><span class="pre">build()</span></code></a> is called after <a class="reference internal" href="#kivy.app.App.load_kv" title="kivy.app.App.load_kv"><code class="xref py py-attr docutils literal notranslate"><span class="pre">load_kv</span></code></a>
@@ -1112,28 +1195,28 @@ has been called.</p>
 </div>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py method">
 <dt id="kivy.app.App.name">
-<code class="descname">name</code><a class="headerlink" href="#kivy.app.App.name" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">name</code><a class="headerlink" href="#kivy.app.App.name" title="Permalink to this definition">¶</a></dt>
 <dd><div class="versionadded">
-<p><span class="versionmodified">New in version 1.0.7.</span></p>
+<p><span class="versionmodified added">New in version 1.0.7.</span></p>
 </div>
 <p>Return the name of the application based on the class name.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="kivy.app.App.on_config_change">
-<code class="descname">on_config_change</code><span class="sig-paren">(</span><em>config</em>, <em>section</em>, <em>key</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.on_config_change"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.on_config_change" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">on_config_change</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">config</span></em>, <em class="sig-param"><span class="n">section</span></em>, <em class="sig-param"><span class="n">key</span></em>, <em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.on_config_change"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.on_config_change" title="Permalink to this definition">¶</a></dt>
 <dd><p>Event handler fired when a configuration token has been changed by
 the settings page.</p>
 <div class="versionchanged">
-<p><span class="versionmodified">Changed in version 1.10.1: </span>Added corresponding <code class="docutils literal notranslate"><span class="pre">on_config_change</span></code> event.</p>
+<p><span class="versionmodified changed">Changed in version 1.10.1: </span>Added corresponding <code class="docutils literal notranslate"><span class="pre">on_config_change</span></code> event.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="kivy.app.App.on_pause">
-<code class="descname">on_pause</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.on_pause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.on_pause" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">on_pause</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.on_pause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.on_pause" title="Permalink to this definition">¶</a></dt>
 <dd><p>Event handler called when Pause mode is requested. You should
 return True if your app can go into Pause mode, otherwise
 return False and your application will be stopped.</p>
@@ -1142,48 +1225,48 @@ It’s determined by the Operating System and mostly used for mobile
 devices (android/ios) and for resizing.</p>
 <p>The default return value is True.</p>
 <div class="versionadded">
-<p><span class="versionmodified">New in version 1.1.0.</span></p>
+<p><span class="versionmodified added">New in version 1.1.0.</span></p>
 </div>
 <div class="versionchanged">
-<p><span class="versionmodified">Changed in version 1.10.0: </span>The default return value is now True.</p>
+<p><span class="versionmodified changed">Changed in version 1.10.0: </span>The default return value is now True.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="kivy.app.App.on_resume">
-<code class="descname">on_resume</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.on_resume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.on_resume" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">on_resume</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.on_resume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.on_resume" title="Permalink to this definition">¶</a></dt>
 <dd><p>Event handler called when your application is resuming from
 the Pause mode.</p>
 <div class="versionadded">
-<p><span class="versionmodified">New in version 1.1.0.</span></p>
+<p><span class="versionmodified added">New in version 1.1.0.</span></p>
 </div>
 <div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">When resuming, the OpenGL Context might have been damaged / freed.
+<p class="admonition-title">Warning</p>
+<p>When resuming, the OpenGL Context might have been damaged / freed.
 This is where you can reconstruct some of your OpenGL state
 e.g. FBO content.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="kivy.app.App.on_start">
-<code class="descname">on_start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.on_start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.on_start" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">on_start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.on_start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.on_start" title="Permalink to this definition">¶</a></dt>
 <dd><p>Event handler for the <cite>on_start</cite> event which is fired after
 initialization (after build() has been called) but before the
 application has started running.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="kivy.app.App.on_stop">
-<code class="descname">on_stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.on_stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.on_stop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">on_stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.on_stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.on_stop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Event handler for the <cite>on_stop</cite> event which is fired when the
 application has finished running (i.e. the window is about to be
 closed).</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="kivy.app.App.open_settings">
-<code class="descname">open_settings</code><span class="sig-paren">(</span><em>*largs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.open_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.open_settings" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">open_settings</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">largs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.open_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.open_settings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Open the application settings panel. It will be created the very
 first time, or recreated if the previously cached panel has been
 removed by <a class="reference internal" href="#kivy.app.App.destroy_settings" title="kivy.app.App.destroy_settings"><code class="xref py py-meth docutils literal notranslate"><span class="pre">destroy_settings()</span></code></a>. The settings panel will be
@@ -1192,49 +1275,46 @@ displayed with the
 settings panel to the Window attached to your application. You
 should override that method if you want to display the
 settings panel differently.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the settings has been opened.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if the settings has been opened.</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="kivy.app.App.options">
-<code class="descname">options</code><em class="property"> = None</em><a class="headerlink" href="#kivy.app.App.options" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">options</code><a class="headerlink" href="#kivy.app.App.options" title="Permalink to this definition">¶</a></dt>
 <dd><p>Options passed to the __init__ of the App</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="kivy.app.App.root">
-<code class="descname">root</code><em class="property"> = None</em><a class="headerlink" href="#kivy.app.App.root" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">root</code><a class="headerlink" href="#kivy.app.App.root" title="Permalink to this definition">¶</a></dt>
 <dd><p>The <em>root</em> widget returned by the <a class="reference internal" href="#kivy.app.App.build" title="kivy.app.App.build"><code class="xref py py-meth docutils literal notranslate"><span class="pre">build()</span></code></a> method or by the
 <a class="reference internal" href="#kivy.app.App.load_kv" title="kivy.app.App.load_kv"><code class="xref py py-meth docutils literal notranslate"><span class="pre">load_kv()</span></code></a> method if the kv file contains a root widget.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py method">
 <dt id="kivy.app.App.root_window">
-<code class="descname">root_window</code><a class="headerlink" href="#kivy.app.App.root_window" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">root_window</code><a class="headerlink" href="#kivy.app.App.root_window" title="Permalink to this definition">¶</a></dt>
 <dd><div class="versionadded">
-<p><span class="versionmodified">New in version 1.9.0.</span></p>
+<p><span class="versionmodified added">New in version 1.9.0.</span></p>
 </div>
 <p>Returns the root window instance used by <a class="reference internal" href="#kivy.app.App.run" title="kivy.app.App.run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run()</span></code></a>.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="kivy.app.App.run">
-<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.run" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Launches the app in standalone mode.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="kivy.app.App.settings_cls">
-<code class="descname">settings_cls</code><a class="headerlink" href="#kivy.app.App.settings_cls" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">settings_cls</code><a class="headerlink" href="#kivy.app.App.settings_cls" title="Permalink to this definition">¶</a></dt>
 <dd><div class="versionadded">
-<p><span class="versionmodified">New in version 1.8.0.</span></p>
+<p><span class="versionmodified added">New in version 1.8.0.</span></p>
 </div>
 <p>The class used to construct the settings panel and
 the instance passed to <a class="reference internal" href="#kivy.app.App.build_config" title="kivy.app.App.build_config"><code class="xref py py-meth docutils literal notranslate"><span class="pre">build_config()</span></code></a>. You should
@@ -1253,17 +1333,17 @@ a string, the <a class="reference internal" href="api-kivy.factory.html#kivy.fac
 class.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="kivy.app.App.stop">
-<code class="descname">stop</code><span class="sig-paren">(</span><em>*largs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.stop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stop</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">largs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/app.html#App.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.App.stop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stop the application.</p>
 <p>If you use this method, the whole application will stop by issuing
 a call to <a class="reference internal" href="api-kivy.base.html#kivy.base.stopTouchApp" title="kivy.base.stopTouchApp"><code class="xref py py-func docutils literal notranslate"><span class="pre">stopTouchApp()</span></code></a>.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="kivy.app.App.title">
-<code class="descname">title</code><a class="headerlink" href="#kivy.app.App.title" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">title</code><a class="headerlink" href="#kivy.app.App.title" title="Permalink to this definition">¶</a></dt>
 <dd><p>Title of your application. You can set this as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1271,43 +1351,43 @@ a call to <a class="reference internal" href="api-kivy.base.html#kivy.base.stopT
 </pre></div>
 </div>
 <div class="versionadded">
-<p><span class="versionmodified">New in version 1.0.5.</span></p>
+<p><span class="versionmodified added">New in version 1.0.5.</span></p>
 </div>
 <div class="versionchanged">
-<p><span class="versionmodified">Changed in version 1.8.0: </span><cite>title</cite> is now a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.StringProperty" title="kivy.properties.StringProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a>. Don’t
+<p><span class="versionmodified changed">Changed in version 1.8.0: </span><cite>title</cite> is now a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.StringProperty" title="kivy.properties.StringProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a>. Don’t
 set the title in the class as previously stated in the documentation.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>For Kivy &lt; 1.8.0, you can set this as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
     <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Custom title&#39;</span>
 </pre></div>
 </div>
 <p>If you want to dynamically change the title, you can do:</p>
-<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kivy.base</span> <span class="k">import</span> <span class="n">EventLoop</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kivy.base</span> <span class="kn">import</span> <span class="n">EventLoop</span>
 <span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;New title&#39;</span>
 </pre></div>
 </div>
 </div>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="kivy.app.App.use_kivy_settings">
-<code class="descname">use_kivy_settings</code><em class="property"> = True</em><a class="headerlink" href="#kivy.app.App.use_kivy_settings" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">use_kivy_settings</code><em class="property"> = True</em><a class="headerlink" href="#kivy.app.App.use_kivy_settings" title="Permalink to this definition">¶</a></dt>
 <dd><div class="versionadded">
-<p><span class="versionmodified">New in version 1.0.7.</span></p>
+<p><span class="versionmodified added">New in version 1.0.7.</span></p>
 </div>
 <p>If True, the application settings will also include the Kivy settings. If
 you don’t want the user to change any kivy settings from your settings UI,
 change this to False.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py method">
 <dt id="kivy.app.App.user_data_dir">
-<code class="descname">user_data_dir</code><a class="headerlink" href="#kivy.app.App.user_data_dir" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">user_data_dir</code><a class="headerlink" href="#kivy.app.App.user_data_dir" title="Permalink to this definition">¶</a></dt>
 <dd><div class="versionadded">
-<p><span class="versionmodified">New in version 1.7.0.</span></p>
+<p><span class="versionmodified added">New in version 1.7.0.</span></p>
 </div>
 <p>Returns the path to the directory in the users file system which the
 application can use to store additional data.</p>
@@ -1322,13 +1402,61 @@ app’s sandbox).</p>
 <p>On Linux, <cite>$XDG_CONFIG_HOME/&lt;app_name&gt;</cite> is returned.</p>
 <p>On Android, <a class="reference external" href="https://developer.android.com/reference/android/content/Context.html#getFilesDir()">Context.GetFilesDir</a> is returned.</p>
 <div class="versionchanged">
-<p><span class="versionmodified">Changed in version 1.11.0: </span>On Android, this function previously returned
+<p><span class="versionmodified changed">Changed in version 1.11.0: </span>On Android, this function previously returned
 <cite>/sdcard/&lt;app_name&gt;</cite>. This folder became read-only by default
 in Android API 26 and the user_data_dir has therefore been moved
 to a writeable location.</p>
 </div>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py function">
+<dt id="kivy.app.async_runTouchApp">
+<em class="property">async </em><code class="sig-prename descclassname">kivy.app.</code><code class="sig-name descname">async_runTouchApp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">widget</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">embedded</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">async_lib</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/base.html#async_runTouchApp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.async_runTouchApp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identical to <a class="reference internal" href="#kivy.app.runTouchApp" title="kivy.app.runTouchApp"><code class="xref py py-func docutils literal notranslate"><span class="pre">runTouchApp()</span></code></a> but instead it is a coroutine
+that can be run in an existing async event loop.</p>
+<p><code class="docutils literal notranslate"><span class="pre">async_lib</span></code> is the async library to use. See <a class="reference internal" href="#module-kivy.app" title="kivy.app"><code class="xref py py-mod docutils literal notranslate"><span class="pre">kivy.app</span></code></a> for details
+and example usage.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.0.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kivy.app.runTouchApp">
+<code class="sig-prename descclassname">kivy.app.</code><code class="sig-name descname">runTouchApp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">widget</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">embedded</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/base.html#runTouchApp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.runTouchApp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static main function that starts the application loop.
+You can access some magic via the following arguments:</p>
+<p>See <a class="reference internal" href="#module-kivy.app" title="kivy.app"><code class="xref py py-mod docutils literal notranslate"><span class="pre">kivy.app</span></code></a> for example usage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>&lt;empty&gt;</cite></dt><dd><p>To make dispatching work, you need at least one
+input listener. If not, application will leave.
+(MTWindow act as an input listener)</p>
+</dd>
+<dt><cite>widget</cite></dt><dd><p>If you pass only a widget, a MTWindow will be created
+and your widget will be added to the window as the root
+widget.</p>
+</dd>
+<dt><cite>embedded</cite></dt><dd><p>No event dispatching is done. This will be your job.</p>
+</dd>
+<dt><cite>widget + embedded</cite></dt><dd><p>No event dispatching is done. This will be your job but
+we try to get the window (must be created by you beforehand)
+and add the widget to it. Very useful for embedding Kivy
+in another toolkit. (like Qt, check kivy-designed)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kivy.app.stopTouchApp">
+<code class="sig-prename descclassname">kivy.app.</code><code class="sig-name descname">stopTouchApp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/base.html#stopTouchApp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.app.stopTouchApp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop the current application by leaving the main loop.</p>
+<p>See <a class="reference internal" href="#module-kivy.app" title="kivy.app"><code class="xref py py-mod docutils literal notranslate"><span class="pre">kivy.app</span></code></a> for example usage.</p>
 </dd></dl>
 
 </div>
@@ -1399,8 +1527,8 @@ to a writeable location.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Nov 25, 2019.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.9.
+      Last updated on Dec 10, 2020.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.3.1.
 </div>
 -->
   </body>

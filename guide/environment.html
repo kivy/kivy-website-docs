@@ -6,14 +6,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="twitter:site" content="@kivyframework">
     
-    <title>Controlling the environment &mdash; Kivy 1.11.1 documentation</title>
+    <title>Controlling the environment &mdash; Kivy 2.0.0 documentation</title>
     <link href='//fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../_static/fresh.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1.11.1',
+        VERSION:     '2.0.0',
         COLLAPSE_MODINDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,13 +23,13 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <script type="text/javascript" src="../_static/jquery-effects-core-and-slide.js"></script>
     <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
     <script type="text/javascript" src="../_static/kivy.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="Kivy 1.11.1 documentation" href="../index.html" />
+    <link rel="top" title="Kivy 2.0.0 documentation" href="../index.html" />
     <link rel="up" title="Programming Guide" href="../guide-index.html" />
     <link rel="next" title="Configure Kivy" href="config.html" />
     <link rel="prev" title="Kivy Basics" href="basic.html" /> 
@@ -75,6 +75,7 @@
 <li><a class="reference internal" href="#restrict-core-to-specific-implementation">Restrict core to specific implementation</a></li>
 <li><a class="reference internal" href="#metrics">Metrics</a></li>
 <li><a class="reference internal" href="#graphics">Graphics</a></li>
+<li><a class="reference internal" href="#event-loop">Event Loop</a></li>
 </ul>
 </li>
 </ul>
@@ -84,7 +85,7 @@
           <ul>
 <li class="toctree-l1"><a class="reference internal" href="../gettingstarted/index.html">Getting Started</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../gettingstarted/intro.html">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/installation.html">Installing Kivy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../gettingstarted/first_app.html">A first App</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../gettingstarted/properties.html">Properties</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../gettingstarted/rules.html">Kv Design Language</a></li>
@@ -130,6 +131,21 @@
 </li>
 </ul>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../gettingstarted/index.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/installation.html">Installing Kivy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/first_app.html">A first App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/properties.html">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/rules.html">Kv Design Language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/events.html">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/framework.html">Non-widget stuff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/layouts.html">Layouts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/drawing.html">Drawing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/packaging.html">Packaging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/examples.html">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/diving.html">Diving in</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../user-guide.html">Kivy Project</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../philosophy.html">Philosophy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../contribute.html">Contributing</a></li>
@@ -160,6 +176,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api-index.html">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.html">Kivy framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.app.html">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.atlas.html">Atlas</a></li>
@@ -231,8 +248,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.input.providers.probesysfs.html">Auto Create Input Provider Config Entry for Available MT Hardware (linux only).</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.input.providers.tuio.html">TUIO Input Provider</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.input.providers.wm_common.html">Common definitions for a Windows provider</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-kivy.input.providers.wm_pen.html">Support for WM_PEN messages (Windows platform)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-kivy.input.providers.wm_touch.html">Support for WM_TOUCH messages (Windows platform)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.input.recorder.html">Input recorder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.input.shape.html">Motion Event Shape</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.interactive.html">Interactive launcher</a></li>
@@ -364,6 +379,7 @@
 <li><a class="reference internal" href="#restrict-core-to-specific-implementation">Restrict core to specific implementation</a></li>
 <li><a class="reference internal" href="#metrics">Metrics</a></li>
 <li><a class="reference internal" href="#graphics">Graphics</a></li>
+<li><a class="reference internal" href="#event-loop">Event Loop</a></li>
 </ul>
 </li>
 </ul>
@@ -386,42 +402,39 @@ behavior of Kivy.</p>
 <div class="section" id="path-control">
 <h2>Path control<a class="headerlink" href="#path-control" title="Permalink to this headline">¶</a></h2>
 <div class="versionadded">
-<p><span class="versionmodified">New in version 1.0.7.</span></p>
+<p><span class="versionmodified added">New in version 1.0.7.</span></p>
 </div>
 <p>You can control the default directories where config files, modules
 and kivy data are located.</p>
-<dl class="docutils">
-<dt>KIVY_DATA_DIR</dt>
-<dd>Location of the Kivy data, defaults to <cite>&lt;kivy path&gt;/data</cite></dd>
-<dt>KIVY_MODULES_DIR</dt>
-<dd>Location of the Kivy modules, defaults to <cite>&lt;kivy path&gt;/modules</cite></dd>
-<dt>KIVY_HOME</dt>
-<dd><p class="first">Location of the Kivy home. This directory is used for local configuration,
+<dl>
+<dt>KIVY_DATA_DIR</dt><dd><p>Location of the Kivy data, defaults to <cite>&lt;kivy path&gt;/data</cite></p>
+</dd>
+<dt>KIVY_MODULES_DIR</dt><dd><p>Location of the Kivy modules, defaults to <cite>&lt;kivy path&gt;/modules</cite></p>
+</dd>
+<dt>KIVY_HOME</dt><dd><p>Location of the Kivy home. This directory is used for local configuration,
 and must be in a writable location.</p>
-<dl class="docutils">
-<dt>Defaults to:</dt>
-<dd><ul class="first last simple">
-<li>Desktop: <cite>&lt;user home&gt;/.kivy</cite></li>
-<li>Android: <cite>&lt;android app path&gt;/.kivy</cite></li>
-<li>iOS: <cite>&lt;user home&gt;/Documents/.kivy</cite></li>
+<dl class="simple">
+<dt>Defaults to:</dt><dd><ul class="simple">
+<li><p>Desktop: <cite>&lt;user home&gt;/.kivy</cite></p></li>
+<li><p>Android: <cite>&lt;android app path&gt;/.kivy</cite></p></li>
+<li><p>iOS: <cite>&lt;user home&gt;/Documents/.kivy</cite></p></li>
 </ul>
 </dd>
 </dl>
-<div class="last versionadded">
-<p><span class="versionmodified">New in version 1.9.0.</span></p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.9.0.</span></p>
 </div>
 </dd>
-<dt>KIVY_SDL2_PATH</dt>
-<dd><p class="first">If set, the SDL2 libraries and headers from this path are used when
+<dt>KIVY_SDL2_PATH</dt><dd><p>If set, the SDL2 libraries and headers from this path are used when
 compiling kivy instead of the ones installed system-wide.
 To use the same libraries while running a kivy app, this path must be
 added at the start of the PATH environment variable.</p>
 <div class="versionadded">
-<p><span class="versionmodified">New in version 1.9.0.</span></p>
+<p><span class="versionmodified added">New in version 1.9.0.</span></p>
 </div>
-<div class="last admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">This path is required for the compilation of Kivy. It is not
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This path is required for the compilation of Kivy. It is not
 required for program execution.</p>
 </div>
 </dd>
@@ -429,18 +442,17 @@ required for program execution.</p>
 </div>
 <div class="section" id="configuration">
 <h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt>KIVY_USE_DEFAULTCONFIG</dt>
-<dd>If this name is found in environ, Kivy will not read the user config file.</dd>
-<dt>KIVY_NO_CONFIG</dt>
-<dd>If set, no configuration file will be read or written to. This also applies
-to the user configuration directory.</dd>
-<dt>KIVY_NO_FILELOG</dt>
-<dd>If set, logs will be not print to a file</dd>
-<dt>KIVY_NO_CONSOLELOG</dt>
-<dd>If set, logs will be not print to the console</dd>
-<dt>KIVY_NO_ARGS</dt>
-<dd><p class="first">If set, the argument passed in command line will not be parsed and used by Kivy.
+<dl>
+<dt>KIVY_USE_DEFAULTCONFIG</dt><dd><p>If this name is found in environ, Kivy will not read the user config file.</p>
+</dd>
+<dt>KIVY_NO_CONFIG</dt><dd><p>If set, no configuration file will be read or written to. This also applies
+to the user configuration directory.</p>
+</dd>
+<dt>KIVY_NO_FILELOG</dt><dd><p>If set, logs will be not print to a file</p>
+</dd>
+<dt>KIVY_NO_CONSOLELOG</dt><dd><p>If set, logs will be not print to the console</p>
+</dd>
+<dt>KIVY_NO_ARGS</dt><dd><p>If set, the argument passed in command line will not be parsed and used by Kivy.
 Ie, you can safely make a script or an app with your own arguments without
 requiring the <cite>–</cite> delimiter:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -448,12 +460,11 @@ requiring the <cite>–</cite> delimiter:</p>
 <span class="kn">import</span> <span class="nn">kivy</span>
 </pre></div>
 </div>
-<div class="last versionadded">
-<p><span class="versionmodified">New in version 1.9.0.</span></p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.9.0.</span></p>
 </div>
 </dd>
-<dt>KCFG_section_key</dt>
-<dd><p class="first">If a such format environment name is detected, it will be mapped
+<dt>KCFG_section_key</dt><dd><p>If a such format environment name is detected, it will be mapped
 to the Config object. They are loaded only once when <cite>kivy</cite> is
 imported. The behavior can be disabled using <cite>KIVY_NO_ENV_CONFIG</cite>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -463,15 +474,14 @@ imported. The behavior can be disabled using <cite>KIVY_NO_ENV_CONFIG</cite>.</p
 <span class="c1"># Config.set(&quot;kivy&quot;, &quot;log_level&quot;, &quot;warning&quot;)</span>
 </pre></div>
 </div>
-<div class="last versionadded">
-<p><span class="versionmodified">New in version 1.11.0.</span></p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.11.0.</span></p>
 </div>
 </dd>
-<dt>KIVY_NO_ENV_CONFIG</dt>
-<dd><p class="first">If set, no environment key will be mapped to configuration object.
+<dt>KIVY_NO_ENV_CONFIG</dt><dd><p>If set, no environment key will be mapped to configuration object.
 If unset, any <cite>KCFG_section_key=value</cite> will be mapped to Config.</p>
-<div class="last versionadded">
-<p><span class="versionmodified">New in version 1.11.0.</span></p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.11.0.</span></p>
 </div>
 </dd>
 </dl>
@@ -481,54 +491,44 @@ If unset, any <cite>KCFG_section_key=value</cite> will be mapped to Config.</p>
 <p><a class="reference internal" href="../api-kivy.core.html#module-kivy.core" title="kivy.core"><code class="xref py py-mod docutils literal notranslate"><span class="pre">kivy.core</span></code></a> try to select the best implementation available for your
 platform. For testing or custom installation, you might want to restrict the
 selector to a specific implementation.</p>
-<dl class="docutils">
-<dt>KIVY_WINDOW</dt>
-<dd><p class="first">Implementation to use for creating the Window</p>
-<p class="last">Values: sdl2, pygame, x11, egl_rpi</p>
+<dl>
+<dt>KIVY_WINDOW</dt><dd><p>Implementation to use for creating the Window</p>
+<p>Values: sdl2, pygame, x11, egl_rpi</p>
 </dd>
-<dt>KIVY_TEXT</dt>
-<dd><p class="first">Implementation to use for rendering text</p>
-<p class="last">Values: sdl2, pil, pygame, sdlttf</p>
+<dt>KIVY_TEXT</dt><dd><p>Implementation to use for rendering text</p>
+<p>Values: sdl2, pil, pygame, sdlttf</p>
 </dd>
-<dt>KIVY_VIDEO</dt>
-<dd><p class="first">Implementation to use for rendering video</p>
-<p class="last">Values: gstplayer, ffpyplayer, ffmpeg, null</p>
+<dt>KIVY_VIDEO</dt><dd><p>Implementation to use for rendering video</p>
+<p>Values: gstplayer, ffpyplayer, ffmpeg, null</p>
 </dd>
-<dt>KIVY_AUDIO</dt>
-<dd><p class="first">Implementation to use for playing audio</p>
-<p class="last">Values: sdl2, gstplayer, ffpyplayer, pygame, avplayer</p>
+<dt>KIVY_AUDIO</dt><dd><p>Implementation to use for playing audio</p>
+<p>Values: sdl2, gstplayer, ffpyplayer, pygame, avplayer</p>
 </dd>
-<dt>KIVY_IMAGE</dt>
-<dd><p class="first">Implementation to use for reading image</p>
-<p class="last">Values: sdl2, pil, pygame, imageio, tex, dds, gif</p>
+<dt>KIVY_IMAGE</dt><dd><p>Implementation to use for reading image</p>
+<p>Values: sdl2, pil, pygame, imageio, tex, dds, gif</p>
 </dd>
-<dt>KIVY_CAMERA</dt>
-<dd><p class="first">Implementation to use for reading camera</p>
-<p class="last">Values: avfoundation, android, opencv</p>
+<dt>KIVY_CAMERA</dt><dd><p>Implementation to use for reading camera</p>
+<p>Values: avfoundation, android, opencv</p>
 </dd>
-<dt>KIVY_SPELLING</dt>
-<dd><p class="first">Implementation to use for spelling</p>
-<p class="last">Values: enchant, osxappkit</p>
+<dt>KIVY_SPELLING</dt><dd><p>Implementation to use for spelling</p>
+<p>Values: enchant, osxappkit</p>
 </dd>
-<dt>KIVY_CLIPBOARD</dt>
-<dd><p class="first">Implementation to use for clipboard management</p>
-<p class="last">Values: sdl2, pygame, dummy, android</p>
+<dt>KIVY_CLIPBOARD</dt><dd><p>Implementation to use for clipboard management</p>
+<p>Values: sdl2, pygame, dummy, android</p>
 </dd>
 </dl>
 </div>
 <div class="section" id="metrics">
 <h2>Metrics<a class="headerlink" href="#metrics" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt>KIVY_DPI</dt>
-<dd><p class="first">If set, the value will be used for <code class="xref py py-attr docutils literal notranslate"><span class="pre">Metrics.dpi</span></code>.</p>
-<div class="last versionadded">
-<p><span class="versionmodified">New in version 1.4.0.</span></p>
+<dl>
+<dt>KIVY_DPI</dt><dd><p>If set, the value will be used for <code class="xref py py-attr docutils literal notranslate"><span class="pre">Metrics.dpi</span></code>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.4.0.</span></p>
 </div>
 </dd>
-<dt>KIVY_METRICS_DENSITY</dt>
-<dd><p class="first">If set, the value will be used for <code class="xref py py-attr docutils literal notranslate"><span class="pre">Metrics.density</span></code>.</p>
-<div class="last versionadded">
-<p><span class="versionmodified">New in version 1.5.0.</span></p>
+<dt>KIVY_METRICS_DENSITY</dt><dd><p>If set, the value will be used for <code class="xref py py-attr docutils literal notranslate"><span class="pre">Metrics.density</span></code>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.5.0.</span></p>
 </div>
 </dd>
 </dl>
@@ -536,70 +536,84 @@ selector to a specific implementation.</p>
 <blockquote>
 <div><p>If set, the value will be used for <code class="xref py py-attr docutils literal notranslate"><span class="pre">Metrics.fontscale</span></code>.</p>
 <div class="versionadded">
-<p><span class="versionmodified">New in version 1.5.0.</span></p>
+<p><span class="versionmodified added">New in version 1.5.0.</span></p>
 </div>
 </div></blockquote>
 </div>
 <div class="section" id="graphics">
 <h2>Graphics<a class="headerlink" href="#graphics" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt>KIVY_GL_BACKEND</dt>
-<dd>The OpenGL backend to use. See <a class="reference internal" href="../api-kivy.graphics.cgl.html#module-kivy.graphics.cgl" title="kivy.graphics.cgl"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cgl</span></code></a>.</dd>
-<dt>KIVY_GL_DEBUG</dt>
-<dd>Whether to log OpenGL calls. See <a class="reference internal" href="../api-kivy.graphics.cgl.html#module-kivy.graphics.cgl" title="kivy.graphics.cgl"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cgl</span></code></a>.</dd>
-<dt>KIVY_GRAPHICS</dt>
-<dd>Whether to use OpenGL ES2. See <a class="reference internal" href="../api-kivy.graphics.cgl.html#module-kivy.graphics.cgl" title="kivy.graphics.cgl"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cgl</span></code></a>.</dd>
-<dt>KIVY_GLES_LIMITS</dt>
-<dd><p class="first">Whether the GLES2 restrictions are enforced (the default, or if set to
+<dl>
+<dt>KIVY_GL_BACKEND</dt><dd><p>The OpenGL backend to use. See <a class="reference internal" href="../api-kivy.graphics.cgl.html#module-kivy.graphics.cgl" title="kivy.graphics.cgl"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cgl</span></code></a>.</p>
+</dd>
+<dt>KIVY_GL_DEBUG</dt><dd><p>Whether to log OpenGL calls. See <a class="reference internal" href="../api-kivy.graphics.cgl.html#module-kivy.graphics.cgl" title="kivy.graphics.cgl"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cgl</span></code></a>.</p>
+</dd>
+<dt>KIVY_GRAPHICS</dt><dd><p>Whether to use OpenGL ES2. See <a class="reference internal" href="../api-kivy.graphics.cgl.html#module-kivy.graphics.cgl" title="kivy.graphics.cgl"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cgl</span></code></a>.</p>
+</dd>
+<dt>KIVY_GLES_LIMITS</dt><dd><p>Whether the GLES2 restrictions are enforced (the default, or if set to
 1). If set to false, Kivy will not be truly GLES2 compatible.</p>
-<p class="last">Following is a list of the potential incompatibilities that result
+<p>Following is a list of the potential incompatibilities that result
 when set to true.</p>
 </dd>
 </dl>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="21%" />
-<col width="79%" />
+<col style="width: 21%" />
+<col style="width: 79%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>Mesh indices</td>
-<td>If true, the number of indices in a mesh is limited
-to 65535</td>
+<tbody>
+<tr class="row-odd"><td><p>Mesh indices</p></td>
+<td><p>If true, the number of indices in a mesh is limited
+to 65535</p></td>
 </tr>
-<tr class="row-even"><td>Texture blit</td>
-<td>When blitting to a texture, the data (color and
+<tr class="row-even"><td><p>Texture blit</p></td>
+<td><p>When blitting to a texture, the data (color and
 buffer) format must be the same format as the one
 used at the texture creation. On desktop, the
 conversion of different color is correctly handled
 by the driver, while on Android, most of devices
 fail to do it.
-Ref: <a class="reference external" href="https://github.com/kivy/kivy/issues/1600">https://github.com/kivy/kivy/issues/1600</a></td>
+Ref: <a class="reference external" href="https://github.com/kivy/kivy/issues/1600">https://github.com/kivy/kivy/issues/1600</a></p></td>
 </tr>
 </tbody>
 </table>
 <blockquote>
 <div><div class="versionadded">
-<p><span class="versionmodified">New in version 1.8.1.</span></p>
+<p><span class="versionmodified added">New in version 1.8.1.</span></p>
 </div>
 </div></blockquote>
-<dl class="docutils">
-<dt>KIVY_BCM_DISPMANX_ID</dt>
-<dd><p class="first">Change the default Raspberry Pi display to use. The list of available value
+<dl>
+<dt>KIVY_BCM_DISPMANX_ID</dt><dd><p>Change the default Raspberry Pi display to use. The list of available value
 is accessible in <cite>vc_dispmanx_types.h</cite>. Default value is 0:</p>
-<ul class="last simple">
-<li>0: DISPMANX_ID_MAIN_LCD</li>
-<li>1: DISPMANX_ID_AUX_LCD</li>
-<li>2: DISPMANX_ID_HDMI</li>
-<li>3: DISPMANX_ID_SDTV</li>
-<li>4: DISPMANX_ID_FORCE_LCD</li>
-<li>5: DISPMANX_ID_FORCE_TV</li>
-<li>6: DISPMANX_ID_FORCE_OTHER</li>
+<ul class="simple">
+<li><p>0: DISPMANX_ID_MAIN_LCD</p></li>
+<li><p>1: DISPMANX_ID_AUX_LCD</p></li>
+<li><p>2: DISPMANX_ID_HDMI</p></li>
+<li><p>3: DISPMANX_ID_SDTV</p></li>
+<li><p>4: DISPMANX_ID_FORCE_LCD</p></li>
+<li><p>5: DISPMANX_ID_FORCE_TV</p></li>
+<li><p>6: DISPMANX_ID_FORCE_OTHER</p></li>
 </ul>
 </dd>
-<dt>KIVY_BCM_DISPMANX_LAYER</dt>
-<dd><p class="first">Change the default Raspberry Pi dispmanx layer. Default value is 0.</p>
-<div class="last versionadded">
-<p><span class="versionmodified">New in version 1.10.1.</span></p>
+<dt>KIVY_BCM_DISPMANX_LAYER</dt><dd><p>Change the default Raspberry Pi dispmanx layer. Default value is 0.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.10.1.</span></p>
+</div>
+</dd>
+</dl>
+</div>
+<div class="section" id="event-loop">
+<h2>Event Loop<a class="headerlink" href="#event-loop" title="Permalink to this headline">¶</a></h2>
+<dl>
+<dt>KIVY_EVENTLOOP</dt><dd><p>Which async library should be used when the app is run in an asynchronous
+manner. See <a class="reference internal" href="../api-kivy.app.html#module-kivy.app" title="kivy.app"><code class="xref py py-mod docutils literal notranslate"><span class="pre">kivy.app</span></code></a> for example usage.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">'asyncio'</span></code>: When the app is run in an asynchronous manner and the standard</dt><dd><p>library asyncio package should be used. The default if not set.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">'trio'</span></code>: When the app is run in an asynchronous manner and the <cite>trio</cite></dt><dd><p>package should be used.</p>
+</dd>
+</dl>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.0.0.</span></p>
 </div>
 </dd>
 </dl>
@@ -669,8 +683,8 @@ is accessible in <cite>vc_dispmanx_types.h</cite>. Default value is 0:</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Nov 25, 2019.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.7.9.
+      Last updated on Dec 10, 2020.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.3.1.
 </div>
 -->
   </body>
