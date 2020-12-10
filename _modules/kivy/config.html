@@ -600,6 +600,12 @@
 <span class="sd">    `allow_screensaver`: int, one of 0 or 1, defaults to 1</span>
 <span class="sd">        Allow the device to show a screen saver, or to go to sleep</span>
 <span class="sd">        on mobile devices. Only works for the sdl2 window provider.</span>
+<span class="sd">    `vsync`: `none`, empty value, or integers</span>
+<span class="sd">        Whether vsync is enabled, currently only used with sdl2 window.</span>
+<span class="sd">        Possible values are `none` or empty value -- leaves it unchanged,</span>
+<span class="sd">        ``0`` -- disables vsync, ``1`` or larger -- sets vsync interval,</span>
+<span class="sd">        ``-1`` sets adaptive vsync. It falls back to 1 if setting to ``2+``</span>
+<span class="sd">        or ``-1`` failed. See ``SDL_GL_SetSwapInterval``.</span>
 
 <span class="sd">:input:</span>
 
@@ -671,6 +677,9 @@
 <span class="sd">    Check the specific module&#39;s documentation for a list of accepted</span>
 <span class="sd">    arguments.</span>
 
+<span class="sd">.. versionchanged:: 2.1.0</span>
+<span class="sd">    `vsync` has been added to the graphics section</span>
+
 <span class="sd">.. versionchanged:: 1.10.0</span>
 <span class="sd">    `min_state_time`  and `allow_screensaver` have been added</span>
 <span class="sd">    to the `graphics` section.</span>
@@ -722,7 +731,7 @@
 <span class="n">_is_rpi</span> <span class="o">=</span> <span class="n">exists</span><span class="p">(</span><span class="s1">&#39;/opt/vc/include/bcm_host.h&#39;</span><span class="p">)</span>
 
 <span class="c1"># Version number of current configuration format</span>
-<span class="n">KIVY_CONFIG_VERSION</span> <span class="o">=</span> <span class="mi">21</span>
+<span class="n">KIVY_CONFIG_VERSION</span> <span class="o">=</span> <span class="mi">22</span>
 
 <span class="n">Config</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="sd">&#39;&#39;&#39;The default Kivy configuration object. This is a :class:`ConfigParser`</span>
@@ -1112,7 +1121,6 @@
             <span class="n">Config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;graphics&#39;</span><span class="p">,</span> <span class="s1">&#39;rotation&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span>
             <span class="n">Config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;graphics&#39;</span><span class="p">,</span> <span class="s1">&#39;show_cursor&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">)</span>
             <span class="n">Config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;graphics&#39;</span><span class="p">,</span> <span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span>
-            <span class="n">Config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;graphics&#39;</span><span class="p">,</span> <span class="s1">&#39;vsync&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">)</span>
             <span class="n">Config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;graphics&#39;</span><span class="p">,</span> <span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="s1">&#39;800&#39;</span><span class="p">)</span>
 
             <span class="c1"># input configuration</span>
@@ -1148,7 +1156,6 @@
             <span class="n">Config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;widgets&#39;</span><span class="p">,</span> <span class="s1">&#39;list_trigger_distance&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">)</span>
 
         <span class="k">elif</span> <span class="n">version</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">Config</span><span class="o">.</span><span class="n">remove_option</span><span class="p">(</span><span class="s1">&#39;graphics&#39;</span><span class="p">,</span> <span class="s1">&#39;vsync&#39;</span><span class="p">)</span>
             <span class="n">Config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;graphics&#39;</span><span class="p">,</span> <span class="s1">&#39;maxfps&#39;</span><span class="p">,</span> <span class="s1">&#39;60&#39;</span><span class="p">)</span>
 
         <span class="k">elif</span> <span class="n">version</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
@@ -1241,6 +1248,9 @@
 
         <span class="k">elif</span> <span class="n">version</span> <span class="o">==</span> <span class="mi">20</span><span class="p">:</span>
             <span class="n">Config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;network&#39;</span><span class="p">,</span> <span class="s1">&#39;useragent&#39;</span><span class="p">,</span> <span class="s1">&#39;curl&#39;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">version</span> <span class="o">==</span> <span class="mi">21</span><span class="p">:</span>
+            <span class="n">Config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;graphics&#39;</span><span class="p">,</span> <span class="s1">&#39;vsync&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
 
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># for future.</span>
