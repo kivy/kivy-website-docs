@@ -452,6 +452,7 @@
 <span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randint</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
 
 <span class="kn">import</span> <span class="nn">kivy</span>
 
@@ -511,47 +512,40 @@
     <span class="n">encoding</span> <span class="o">=</span> <span class="s1">&#39;utf-8&#39;</span>
 
     <span class="k">def</span> <span class="nf">purge_logs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Purge log is called randomly to prevent the log directory from being</span>
-<span class="sd">        filled by lots and lots of log files.</span>
-<span class="sd">        You&#39;ve a chance of 1 in 20 that purge log will be fired.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">return</span>
+        <span class="sd">&quot;&quot;&quot;Purge logs which exceed the maximum amount of log files,</span>
+<span class="sd">        starting with the oldest creation timestamp (or edit-timestamp on Linux)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_dir</span><span class="p">:</span>
             <span class="k">return</span>
 
         <span class="kn">from</span> <span class="nn">kivy.config</span> <span class="kn">import</span> <span class="n">Config</span>
-        <span class="n">maxfiles</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s1">&#39;kivy&#39;</span><span class="p">,</span> <span class="s1">&#39;log_maxfiles&#39;</span><span class="p">)</span>
+        <span class="n">maxfiles</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s2">&quot;kivy&quot;</span><span class="p">,</span> <span class="s2">&quot;log_maxfiles&quot;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">maxfiles</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># Get path to log directory</span>
+        <span class="n">log_dir</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_dir</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">maxfiles</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># No log file limit set</span>
             <span class="k">return</span>
 
-        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Logger: Purge log fired. Analysing...&#39;</span><span class="p">)</span>
-        <span class="n">join</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span>
-        <span class="n">unlink</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">unlink</span>
+        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Logger: Purge log fired. Processing...&quot;</span><span class="p">)</span>
 
-        <span class="c1"># search all log files</span>
-        <span class="n">lst</span> <span class="o">=</span> <span class="p">[</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_dir</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_dir</span><span class="p">)]</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">maxfiles</span><span class="p">:</span>
-            <span class="c1"># get creation time on every files</span>
-            <span class="n">lst</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;fn&#39;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s1">&#39;ctime&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getctime</span><span class="p">(</span><span class="n">x</span><span class="p">)}</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">]</span>
+        <span class="c1"># Get all files from log directory and corresponding creation timestamps</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="p">[(</span><span class="n">item</span><span class="p">,</span> <span class="n">item</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span><span class="o">.</span><span class="n">st_ctime</span><span class="p">)</span>
+                 <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">log_dir</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()</span> <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">is_file</span><span class="p">()]</span>
+        <span class="c1"># Sort files by ascending timestamp</span>
+        <span class="n">files</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
-            <span class="c1"># sort by date</span>
-            <span class="n">lst</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;ctime&#39;</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">file</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">files</span><span class="p">[:(</span><span class="o">-</span><span class="n">maxfiles</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">))]:</span>
+            <span class="c1"># More log files than allowed maximum,</span>
+            <span class="c1"># delete files, starting with oldest creation timestamp</span>
+            <span class="c1"># (or edit-timestamp on Linux)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">PermissionError</span><span class="p">,</span> <span class="ne">FileNotFoundError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Logger: Skipped file </span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-            <span class="c1"># get the oldest (keep last maxfiles)</span>
-            <span class="n">lst</span> <span class="o">=</span> <span class="n">lst</span><span class="p">[:</span><span class="o">-</span><span class="n">maxfiles</span><span class="p">]</span> <span class="k">if</span> <span class="n">maxfiles</span> <span class="k">else</span> <span class="n">lst</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Logger: Purge </span><span class="si">%d</span><span class="s1"> log files&#39;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">))</span>
-
-            <span class="c1"># now, unlink every file in the list</span>
-            <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span>
-                <span class="k">try</span><span class="p">:</span>
-                    <span class="n">unlink</span><span class="p">(</span><span class="n">filename</span><span class="p">[</span><span class="s1">&#39;fn&#39;</span><span class="p">])</span>
-                <span class="k">except</span> <span class="ne">PermissionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                    <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Logger: Skipped file </span><span class="si">{0}</span><span class="s1">, </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span>
-                                <span class="nb">format</span><span class="p">(</span><span class="n">filename</span><span class="p">[</span><span class="s1">&#39;fn&#39;</span><span class="p">],</span> <span class="n">e</span><span class="p">))</span>
-
-        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Logger: Purge finished!&#39;</span><span class="p">)</span>
+        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Logger: Purge finished!&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_configure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">strftime</span>
@@ -581,8 +575,9 @@
 
         <span class="k">if</span> <span class="n">FileHandler</span><span class="o">.</span><span class="n">filename</span> <span class="o">==</span> <span class="n">filename</span> <span class="ow">and</span> <span class="n">FileHandler</span><span class="o">.</span><span class="n">fd</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
+
         <span class="n">FileHandler</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
-        <span class="k">if</span> <span class="n">FileHandler</span><span class="o">.</span><span class="n">fd</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">FileHandler</span><span class="o">.</span><span class="n">fd</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
             <span class="n">FileHandler</span><span class="o">.</span><span class="n">fd</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="n">FileHandler</span><span class="o">.</span><span class="n">fd</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">FileHandler</span><span class="o">.</span><span class="n">encoding</span><span class="p">)</span>
         <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Logger: Record log in </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
@@ -617,6 +612,8 @@
                 <span class="n">Config</span><span class="o">.</span><span class="n">add_callback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_configure</span><span class="p">,</span> <span class="s1">&#39;kivy&#39;</span><span class="p">,</span> <span class="s1">&#39;log_name&#39;</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="c1"># deactivate filehandler...</span>
+                <span class="k">if</span> <span class="n">FileHandler</span><span class="o">.</span><span class="n">fd</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+                    <span class="n">FileHandler</span><span class="o">.</span><span class="n">fd</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
                 <span class="n">FileHandler</span><span class="o">.</span><span class="n">fd</span> <span class="o">=</span> <span class="kc">False</span>
                 <span class="n">Logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;Error while activating FileHandler logger&#39;</span><span class="p">)</span>
                 <span class="k">return</span>
@@ -805,7 +802,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Jan 05, 2021.
+      Last updated on Jan 07, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.4.2.
 </div>
 -->
