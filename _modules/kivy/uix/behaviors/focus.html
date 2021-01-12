@@ -598,6 +598,17 @@
 <span class="sd">        2.0.0.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
+    <span class="n">keyboard_suggestions</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;If True provides auto suggestions on top of keyboard.</span>
+<span class="sd">    This will only work if :attr:`input_type` is set to `text`, `url`, `mail` or</span>
+<span class="sd">    `address`.</span>
+
+<span class="sd">    .. versionadded:: 2.1.0</span>
+
+<span class="sd">    :attr:`keyboard_suggestions` is a :class:`~kivy.properties.BooleanProperty`</span>
+<span class="sd">    and defaults to True</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
     <span class="k">def</span> <span class="nf">_set_on_focus_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; If changing code, ensure following code is not infinite loop:</span>
 <span class="sd">        widget.focus_next = widget</span>
@@ -749,9 +760,12 @@
     <span class="k">def</span> <span class="nf">_ensure_keyboard</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keyboard</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_requested_keyboard</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="n">keyboard</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keyboard</span> <span class="o">=</span>\
-                <span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">request_keyboard</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_keyboard_released</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">input_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input_type</span><span class="p">)</span>
+            <span class="n">keyboard</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keyboard</span> <span class="o">=</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">request_keyboard</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_keyboard_released</span><span class="p">,</span>
+                <span class="bp">self</span><span class="p">,</span>
+                <span class="n">input_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input_type</span><span class="p">,</span>
+                <span class="n">keyboard_suggestions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">keyboard_suggestions</span><span class="p">,</span>
+            <span class="p">)</span>
             <span class="n">keyboards</span> <span class="o">=</span> <span class="n">FocusBehavior</span><span class="o">.</span><span class="n">_keyboards</span>
             <span class="k">if</span> <span class="n">keyboard</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">keyboards</span><span class="p">:</span>
                 <span class="n">keyboards</span><span class="p">[</span><span class="n">keyboard</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
