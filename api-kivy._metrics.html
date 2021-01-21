@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="twitter:site" content="@kivyframework">
     
-    <title>Calibration &mdash; Kivy 2.1.0.dev0 documentation</title>
+    <title>Low level Metrics &mdash; Kivy 2.1.0.dev0 documentation</title>
     <link href='//fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="_static/fresh.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -29,9 +29,9 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="Kivy 2.1.0.dev0 documentation" href="index.html" />
-    <link rel="up" title="Input Postprocessing" href="api-kivy.input.postproc.html" />
-    <link rel="next" title="Dejitter" href="api-kivy.input.postproc.dejitter.html" />
-    <link rel="prev" title="Input Postprocessing" href="api-kivy.input.postproc.html" /> 
+    <link rel="up" title="Kivy framework" href="api-kivy.html" />
+    <link rel="next" title="Metrics" href="api-kivy.metrics.html" />
+    <link rel="prev" title="Logger object" href="api-kivy.logger.html" /> 
   </head>
   <body>
 
@@ -66,9 +66,9 @@
                 <input type="text" class="text" name="q" />
             </form>
           <!--
-          <h3><a href="index.html">Calibration</a></h3>
+          <h3><a href="index.html">Low level Metrics</a></h3>
           <ul>
-<li><a class="reference internal" href="#">Calibration</a></li>
+<li><a class="reference internal" href="#">Low level Metrics</a></li>
 </ul>
 
           <h3><a href="index.html">Table Of Contents</a></h3>
@@ -166,8 +166,8 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="reference internal" href="api-index.html">API Reference</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="api-kivy.html">Kivy framework</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy._metrics.html">Low level Metrics</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="api-kivy.html">Kivy framework</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Low level Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.app.html">Application</a></li>
@@ -218,11 +218,11 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.tesselator.html">Tesselator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.texture.html">Texture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.transformation.html">Transformation</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="api-kivy.input.html">Input management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.html">Input management</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.input.factory.html">Motion Event Factory</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.input.motionevent.html">Motion Event</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="api-kivy.input.postproc.html">Input Postprocessing</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.postproc.html">Input Postprocessing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.postproc.calibration.html">Calibration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.input.postproc.dejitter.html">Dejitter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.input.postproc.doubletap.html">Double Tap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.input.postproc.ignorelist.html">Ignore list</a></li>
@@ -353,8 +353,8 @@
           <!--
           <h3>Related Topics</h3>
           <ul>
-              <li>Previous: <a href="api-kivy.input.postproc.html" title="previous chapter">Input Postprocessing</a></li>
-              <li>Next: <a href="api-kivy.input.postproc.dejitter.html" title="next chapter">Dejitter</a></li>
+              <li>Previous: <a href="api-kivy.logger.html" title="previous chapter">Logger object</a></li>
+              <li>Next: <a href="api-kivy.metrics.html" title="next chapter">Metrics</a></li>
           </ul>
           -->
         </div>
@@ -365,91 +365,33 @@
         <div class="bodywrapper">
           <div class="body">
             <div class="toc"><h2>Table Of Contents</h2><ul>
-<li><a class="reference internal" href="#">Calibration</a></li>
+<li><a class="reference internal" href="#">Low level Metrics</a></li>
 </ul>
 </div>
             
-  <div class="section" id="module-kivy.input.postproc.calibration">
-<span id="calibration"></span><h1>Calibration<a class="headerlink" href="#module-kivy.input.postproc.calibration" title="Permalink to this headline">¶</a></h1>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 1.9.0.</span></p>
-</div>
-<p>Recalibrate input device to a specific range / offset.</p>
-<p>Let’s say you have 3 1080p displays, the 2 firsts are multitouch. By default,
-both will have mixed touch, the range will conflict with each others: the 0-1
-range will goes to 0-5760 px (remember, 3 * 1920 = 5760.)</p>
-<p>To fix it, you need to manually reference them. For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nb">input</span><span class="p">]</span>
-<span class="n">left</span> <span class="o">=</span> <span class="n">mtdev</span><span class="p">,</span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="nb">input</span><span class="o">/</span><span class="n">event17</span>
-<span class="n">middle</span> <span class="o">=</span> <span class="n">mtdev</span><span class="p">,</span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="nb">input</span><span class="o">/</span><span class="n">event15</span>
-<span class="c1"># the right screen is just a display.</span>
-</pre></div>
-</div>
-<p>Then, you can use the calibration postproc module:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">postproc</span><span class="p">:</span><span class="n">calibration</span><span class="p">]</span>
-<span class="n">left</span> <span class="o">=</span> <span class="n">xratio</span><span class="o">=</span><span class="mf">0.3333</span>
-<span class="n">middle</span> <span class="o">=</span> <span class="n">xratio</span><span class="o">=</span><span class="mf">0.3333</span><span class="p">,</span><span class="n">xoffset</span><span class="o">=</span><span class="mf">0.3333</span>
-</pre></div>
-</div>
-<p>Now, the touches from the left screen will be within 0-0.3333 range, and the
-touches from the middle screen will be within 0.3333-0.6666 range.</p>
-<p>You can also match calibration rules to devices based on their provider type.
-This is useful when probesysfs is used to match devices. For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nb">input</span><span class="p">]</span>
-<span class="n">mtdev_</span><span class="o">%</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="n">s</span> <span class="o">=</span> <span class="n">probesysfs</span><span class="p">,</span><span class="n">provider</span><span class="o">=</span><span class="n">mtdev</span>
-</pre></div>
-</div>
-<p>Then to apply calibration to any mtdev device, you can assign rules to the
-provider name enclosed by parentheses:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">postproc</span><span class="p">:</span><span class="n">calibration</span><span class="p">]</span>
-<span class="p">(</span><span class="n">mtdev</span><span class="p">)</span> <span class="o">=</span> <span class="n">xratio</span><span class="o">=</span><span class="mf">0.3333</span><span class="p">,</span><span class="n">xoffset</span><span class="o">=</span><span class="mf">0.3333</span>
-</pre></div>
-</div>
-<p>Calibrating devices like this means the device’s path doesn’t need to be
-configured ahead of time. Note that with this method, all mtdev inputs will
-have the same calibration applied to them. For this reason, matching by
-provider will typically be useful when expecting only one input device.</p>
-<dl class="py class">
-<dt id="kivy.input.postproc.calibration.InputPostprocCalibration">
-<em class="property">class </em><code class="sig-prename descclassname">kivy.input.postproc.calibration.</code><code class="sig-name descname">InputPostprocCalibration</code><a class="reference internal" href="_modules/kivy/input/postproc/calibration.html#InputPostprocCalibration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#kivy.input.postproc.calibration.InputPostprocCalibration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">builtins.object</span></code></p>
-<p>Recalibrate the inputs.</p>
-<p>The configuration must go within a section named <cite>postproc:calibration</cite>.
-Within the section, you must have a line like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">devicename</span> <span class="o">=</span> <span class="n">param</span><span class="o">=</span><span class="n">value</span><span class="p">,</span><span class="n">param</span><span class="o">=</span><span class="n">value</span>
-</pre></div>
-</div>
-<p>If you wish to match by provider, you must have a line like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">provider</span><span class="p">)</span> <span class="o">=</span> <span class="n">param</span><span class="o">=</span><span class="n">value</span><span class="p">,</span><span class="n">param</span><span class="o">=</span><span class="n">value</span>
-</pre></div>
-</div>
-<dl class="field-list">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl>
-<dt><cite>xratio</cite>: float</dt><dd><p>Value to multiply X</p>
-</dd>
-<dt><cite>yratio</cite>: float</dt><dd><p>Value to multiply Y</p>
-</dd>
-<dt><cite>xoffset</cite>: float</dt><dd><p>Value to add to X</p>
-</dd>
-<dt><cite>yoffset</cite>: float</dt><dd><p>Value to add to Y</p>
-</dd>
-<dt><cite>auto</cite>: str</dt><dd><p>If set, then the touch is transformed from screen-relative
-to window-relative The value is used as an indication of
-screen size, e.g for fullHD:</p>
-<blockquote>
-<div><p>auto=1920x1080</p>
-</div></blockquote>
-<p>If present, this setting overrides all the others.
-This assumes the input device exactly covers the display
-area, if they are different, the computations will be wrong.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-<div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 1.11.0: </span>Added <cite>auto</cite> parameter</p>
-</div>
+  <div class="section" id="module-kivy._metrics">
+<span id="low-level-metrics"></span><h1>Low level Metrics<a class="headerlink" href="#module-kivy._metrics" title="Permalink to this headline">¶</a></h1>
+<p>Module for low level metrics operations.</p>
+<dl class="py function">
+<dt id="kivy._metrics.dispatch_pixel_scale">
+<code class="sig-prename descclassname">kivy._metrics.</code><code class="sig-name descname">dispatch_pixel_scale</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy._metrics.dispatch_pixel_scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dispatches all properties that and watch pixel_scale_observers.</p>
+<p>This should be called by Metrics when it changes any of the scaling
+properties.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kivy._metrics.dpi2px">
+<code class="sig-prename descclassname">kivy._metrics.</code><code class="sig-name descname">dpi2px</code><span class="sig-paren">(</span><em class="sig-param">value</em>, <em class="sig-param">unicode ext</em><span class="sig-paren">)</span> &#x2192; float<a class="headerlink" href="#kivy._metrics.dpi2px" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the value according to the ext.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="kivy._metrics.sync_pixel_scale">
+<code class="sig-prename descclassname">kivy._metrics.</code><code class="sig-name descname">sync_pixel_scale</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dpi</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">density</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fontscale</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy._metrics.sync_pixel_scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Internal method to manually updated the scaling factors when metrics
+changes, before anything has been dispatched.</p>
+<p>Do not call in user code!</p>
 </dd></dl>
 
 <div class="toctree-wrapper compound">
@@ -461,10 +403,10 @@ area, if they are different, the computations will be wrong.</p>
             <table>
                 <tr>
                     <td class="leftlink">
-                  <a href="api-kivy.input.postproc.html" title="previous chapter">&laquo; Input Postprocessing</a></li>
+                  <a href="api-kivy.logger.html" title="previous chapter">&laquo; Logger object</a></li>
                   </td>
                   <td class="rightlink">
-                  <a href="api-kivy.input.postproc.dejitter.html" title="next chapter">Dejitter &raquo;</a>
+                  <a href="api-kivy.metrics.html" title="next chapter">Metrics &raquo;</a>
                       </td>
                   </tr>
               </table>
