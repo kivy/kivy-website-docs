@@ -162,7 +162,6 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../api-index.html">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.html">Kivy framework</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api-kivy._metrics.html">Low level Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.app.html">Application</a></li>
@@ -1046,9 +1045,7 @@
                                 <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;_size&#39;</span><span class="p">,</span> <span class="s1">&#39;softinput_mode&#39;</span><span class="p">,</span>
                                       <span class="s1">&#39;keyboard_height&#39;</span><span class="p">),</span>
                                 <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Real size of the window ignoring rotation. If the density is</span>
-<span class="sd">    not 1, the :attr:`system_size` is the :attr:`size` devided by</span>
-<span class="sd">    density.</span>
+    <span class="sd">&#39;&#39;&#39;Real size of the window ignoring rotation.</span>
 
 <span class="sd">    .. versionadded:: 1.0.9</span>
 
@@ -1056,8 +1053,8 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="k">def</span> <span class="nf">_get_effective_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;On density=1 and non-ios displays, return :attr:`system_size`,</span>
-<span class="sd">        else return scaled / rotated :attr:`size`.</span>
+        <span class="sd">&#39;&#39;&#39;On density=1 and non-ios displays, return system_size, else</span>
+<span class="sd">        return scaled / rotated size.</span>
 
 <span class="sd">        Used by MouseMotionEvent.update_graphics() and WindowBase.on_motion().</span>
 <span class="sd">        &#39;&#39;&#39;</span>
@@ -1254,6 +1251,7 @@
         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__instance</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
         <span class="n">force</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;force&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 
         <span class="c1"># don&#39;t init window 2 times,</span>
@@ -1268,7 +1266,6 @@
         <span class="c1"># property changes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trigger_create_window</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">create_trigger</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">create_window</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;dpi&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reset_metrics_dpi</span><span class="p">)</span>
 
         <span class="c1"># Create a trigger for updating the keyboard height</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trigger_keyboard_height</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">create_trigger</span><span class="p">(</span>
@@ -1355,10 +1352,6 @@
 
         <span class="c1"># mark as initialized</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">initialized</span> <span class="o">=</span> <span class="kc">True</span>
-
-    <span class="k">def</span> <span class="nf">_reset_metrics_dpi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-        <span class="kn">from</span> <span class="nn">kivy.metrics</span> <span class="kn">import</span> <span class="n">Metrics</span>
-        <span class="n">Metrics</span><span class="o">.</span><span class="n">reset_dpi</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_bind_create_window</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="p">(</span>
@@ -1840,7 +1833,9 @@
         <span class="kn">from</span> <span class="nn">kivy.graphics.transformation</span> <span class="kn">import</span> <span class="n">Matrix</span>
         <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">radians</span>
 
-        <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_effective_size</span><span class="p">()</span>
+        <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">system_size</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_density</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
 
         <span class="n">smode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">softinput_mode</span>
         <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_system_keyboard</span><span class="o">.</span><span class="n">target</span>
@@ -2186,15 +2181,17 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">pass</span></div>
 
-    <span class="n">dpi</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mf">96.</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Return the DPI of the screen as computed by the window. If the</span>
-<span class="sd">    implementation doesn&#39;t support DPI lookup, it&#39;s 96.</span>
+    <span class="nd">@reify</span>
+    <span class="k">def</span> <span class="nf">dpi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Return the DPI of the screen. If the implementation doesn&#39;t support</span>
+<span class="sd">        any DPI lookup, it will just return 96.</span>
 
-<span class="sd">    .. warning::</span>
+<span class="sd">        .. warning::</span>
 
-<span class="sd">        This value is not cross-platform. Use</span>
-<span class="sd">        :attr:`kivy.metrics.Metrics.dpi` instead.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">            This value is not cross-platform. Use</span>
+<span class="sd">            :attr:`kivy.base.EventLoop.dpi` instead.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="mf">96.</span>
 
     <span class="k">def</span> <span class="nf">configure_keyboards</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Configure how to provide keyboards (virtual or not)</span>
