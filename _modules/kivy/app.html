@@ -746,7 +746,12 @@
 <span class="sd">    from kivy.app import async_runTouchApp</span>
 <span class="sd">    from kivy.uix.label import Label</span>
 
-<span class="sd">    trio.run(async_runTouchApp, Label(text=&#39;Hello, World!&#39;), async_lib=&#39;trio&#39;)</span>
+<span class="sd">    from functools import partial</span>
+
+<span class="sd">    # use functools.partial() to pass keyword arguments:</span>
+<span class="sd">    async_runTouchApp_func = partial(async_runTouchApp, async_lib=&#39;trio&#39;)</span>
+
+<span class="sd">    trio.run(async_runTouchApp_func, Label(text=&#39;Hello, World!&#39;))</span>
 
 <span class="sd">Interacting with Kivy app from other coroutines</span>
 <span class="sd">-----------------------------------------------</span>
@@ -1584,7 +1589,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Jan 24, 2021.
+      Last updated on Jan 25, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.4.3.
 </div>
 -->
