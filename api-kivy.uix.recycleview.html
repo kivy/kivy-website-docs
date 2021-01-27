@@ -68,7 +68,10 @@
           <!--
           <h3><a href="index.html">RecycleView</a></h3>
           <ul>
-<li><a class="reference internal" href="#">RecycleView</a></li>
+<li><a class="reference internal" href="#">RecycleView</a><ul>
+<li><a class="reference internal" href="#viewclass-state">Viewclass State</a></li>
+</ul>
+</li>
 </ul>
 
           <h3><a href="index.html">Table Of Contents</a></h3>
@@ -365,7 +368,10 @@
         <div class="bodywrapper">
           <div class="body">
             <div class="toc"><h2>Table Of Contents</h2><ul>
-<li><a class="reference internal" href="#">RecycleView</a></li>
+<li><a class="reference internal" href="#">RecycleView</a><ul>
+<li><a class="reference internal" href="#viewclass-state">Viewclass State</a></li>
+</ul>
+</li>
 </ul>
 </div>
             
@@ -377,6 +383,14 @@
 <p>The RecycleView provides a flexible model for viewing selected sections of
 large data sets. It aims to prevent the performance degradation that can occur
 when generating large numbers of widgets in order to display many data items.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Because <a class="reference internal" href="#kivy.uix.recycleview.RecycleView" title="kivy.uix.recycleview.RecycleView"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecycleView</span></code></a> reuses widgets, any state change to a single
+widget will stay with that widget as it’s reused, even if the
+<a class="reference internal" href="#kivy.uix.recycleview.RecycleView.data" title="kivy.uix.recycleview.RecycleView.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a> assigned to it by the <a class="reference internal" href="#kivy.uix.recycleview.RecycleView" title="kivy.uix.recycleview.RecycleView"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecycleView</span></code></a>
+changes. Unless the complete state is tracked in <a class="reference internal" href="#kivy.uix.recycleview.RecycleView.data" title="kivy.uix.recycleview.RecycleView.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a>
+(see below).</p>
+</div>
 <p>The view is generatad by processing the <a class="reference internal" href="#kivy.uix.recycleview.RecycleView.data" title="kivy.uix.recycleview.RecycleView.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a>, essentially
 a list of dicts, and uses these dicts to generate instances of the
 <a class="reference internal" href="#kivy.uix.recycleview.RecycleView.viewclass" title="kivy.uix.recycleview.RecycleView.viewclass"><code class="xref py py-attr docutils literal notranslate"><span class="pre">viewclass</span></code></a> as required. Its design is based on the
@@ -517,6 +531,91 @@ as follows:</p>
 </div>
 <p>Please see the <cite>examples/widgets/recycleview/basic_data.py</cite> file for a more
 complete example.</p>
+<div class="section" id="viewclass-state">
+<h2>Viewclass State<a class="headerlink" href="#viewclass-state" title="Permalink to this headline">¶</a></h2>
+<p>Because the viewclass widgets are reused or instantiated as needed by the
+<a class="reference internal" href="#kivy.uix.recycleview.RecycleView" title="kivy.uix.recycleview.RecycleView"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecycleView</span></code></a>, the order and content of the widgets are mutable. So any
+state change to a single widget will stay with that widget, even when the data
+assigned to it from the <a class="reference internal" href="#kivy.uix.recycleview.RecycleView.data" title="kivy.uix.recycleview.RecycleView.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a> dict changes, unless
+<a class="reference internal" href="#kivy.uix.recycleview.RecycleView.data" title="kivy.uix.recycleview.RecycleView.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a> tracks those changes or they are manually refreshed
+when re-used.</p>
+<p>There are two methods for managing state changes in viewclass widgets:</p>
+<ol class="arabic simple">
+<li><p>Store state in the RecycleView.data Model</p></li>
+<li><p>Generate state changes on-the-fly by catching <a class="reference internal" href="#kivy.uix.recycleview.RecycleView.data" title="kivy.uix.recycleview.RecycleView.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a>
+updates and manually refreshing.</p></li>
+</ol>
+<p>An example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
+<span class="kn">from</span> <span class="nn">kivy.lang</span> <span class="kn">import</span> <span class="n">Builder</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.boxlayout</span> <span class="kn">import</span> <span class="n">BoxLayout</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.recycleview</span> <span class="kn">import</span> <span class="n">RecycleView</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.recycleview.views</span> <span class="kn">import</span> <span class="n">RecycleDataViewBehavior</span>
+<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">BooleanProperty</span><span class="p">,</span> <span class="n">StringProperty</span>
+
+<span class="n">Builder</span><span class="o">.</span><span class="n">load_string</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">&lt;StatefulLabel&gt;:</span>
+<span class="s1">    active: stored_state.active</span>
+<span class="s1">    CheckBox:</span>
+<span class="s1">        id: stored_state</span>
+<span class="s1">        active: root.active</span>
+<span class="s1">        on_release: root.store_checkbox_state()</span>
+<span class="s1">    Label:</span>
+<span class="s1">        text: root.text</span>
+<span class="s1">    Label:</span>
+<span class="s1">        id: generate_state</span>
+<span class="s1">        text: root.generated_state_text</span>
+
+<span class="s1">&lt;RV&gt;:</span>
+<span class="s1">    viewclass: &#39;StatefulLabel&#39;</span>
+<span class="s1">    RecycleBoxLayout:</span>
+<span class="s1">        size_hint_y: None</span>
+<span class="s1">        height: self.minimum_height</span>
+<span class="s1">        orientation: &#39;vertical&#39;</span>
+<span class="s1">&#39;&#39;&#39;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">StatefulLabel</span><span class="p">(</span><span class="n">RecycleDataViewBehavior</span><span class="p">,</span> <span class="n">BoxLayout</span><span class="p">):</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">()</span>
+    <span class="n">generated_state_text</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">()</span>
+    <span class="n">active</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">()</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    To change a viewclass&#39; state as the data assigned to it changes,</span>
+<span class="sd">    overload the refresh_view_attrs function (inherited from</span>
+<span class="sd">    RecycleDataViewBehavior)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">refresh_view_attrs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rv</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span>
+        <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;0&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">generated_state_text</span> <span class="o">=</span> <span class="s2">&quot;is zero&quot;</span>
+        <span class="k">elif</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">])</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">generated_state_text</span> <span class="o">=</span> <span class="s2">&quot;is odd&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">generated_state_text</span> <span class="o">=</span> <span class="s2">&quot;is even&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">StatefulLabel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">refresh_view_attrs</span><span class="p">(</span><span class="n">rv</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    To keep state changes in the viewclass with associated data,</span>
+<span class="sd">    they can be explicitly stored in the RecycleView&#39;s data object</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">store_checkbox_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">rv</span> <span class="o">=</span> <span class="n">App</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">rv</span>
+        <span class="n">rv</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">][</span><span class="s1">&#39;active&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span>
+
+<span class="k">class</span> <span class="nc">RV</span><span class="p">(</span><span class="n">RecycleView</span><span class="p">,</span> <span class="n">App</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RV</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;active&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+        <span class="n">App</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">rv</span> <span class="o">=</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">RV</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
 <dl class="simple">
 <dt>TODO:</dt><dd><ul class="simple">
 <li><p>Method to clear cached class instances.</p></li>
@@ -690,6 +789,7 @@ sets the current view adapter.</p>
 
 </dd></dl>
 
+</div>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api-kivy.uix.recycleview.datamodel.html">RecycleView Data Model</a><ul class="simple">
@@ -752,7 +852,7 @@ sets the current view adapter.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Jan 25, 2021.
+      Last updated on Jan 27, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.4.3.
 </div>
 -->

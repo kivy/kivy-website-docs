@@ -370,6 +370,14 @@
 <span class="sd">large data sets. It aims to prevent the performance degradation that can occur</span>
 <span class="sd">when generating large numbers of widgets in order to display many data items.</span>
 
+<span class="sd">.. warning::</span>
+
+<span class="sd">    Because :class:`RecycleView` reuses widgets, any state change to a single</span>
+<span class="sd">    widget will stay with that widget as it&#39;s reused, even if the</span>
+<span class="sd">    :attr:`~RecycleView.data` assigned to it by the :class:`RecycleView`</span>
+<span class="sd">    changes. Unless the complete state is tracked in :attr:`~RecycleView.data`</span>
+<span class="sd">    (see below).</span>
+
 <span class="sd">The view is generatad by processing the :attr:`~RecycleView.data`, essentially</span>
 <span class="sd">a list of dicts, and uses these dicts to generate instances of the</span>
 <span class="sd">:attr:`~RecycleView.viewclass` as required. Its design is based on the</span>
@@ -516,6 +524,93 @@
 
 <span class="sd">Please see the `examples/widgets/recycleview/basic_data.py` file for a more</span>
 <span class="sd">complete example.</span>
+
+<span class="sd">Viewclass State</span>
+<span class="sd">^^^^^^^^^^^^^^^</span>
+
+<span class="sd">Because the viewclass widgets are reused or instantiated as needed by the</span>
+<span class="sd">:class:`RecycleView`, the order and content of the widgets are mutable. So any</span>
+<span class="sd">state change to a single widget will stay with that widget, even when the data</span>
+<span class="sd">assigned to it from the :attr:`~RecycleView.data` dict changes, unless</span>
+<span class="sd">:attr:`~RecycleView.data` tracks those changes or they are manually refreshed</span>
+<span class="sd">when re-used.</span>
+
+<span class="sd">There are two methods for managing state changes in viewclass widgets:</span>
+
+<span class="sd">1. Store state in the RecycleView.data Model</span>
+<span class="sd">2. Generate state changes on-the-fly by catching :attr:`~RecycleView.data`</span>
+<span class="sd">   updates and manually refreshing.</span>
+
+<span class="sd">An example::</span>
+
+<span class="sd">    from kivy.app import App</span>
+<span class="sd">    from kivy.lang import Builder</span>
+<span class="sd">    from kivy.uix.boxlayout import BoxLayout</span>
+<span class="sd">    from kivy.uix.recycleview import RecycleView</span>
+<span class="sd">    from kivy.uix.recycleview.views import RecycleDataViewBehavior</span>
+<span class="sd">    from kivy.properties import BooleanProperty, StringProperty</span>
+
+<span class="sd">    Builder.load_string(&#39;&#39;&#39;</span>
+<span class="sd">    &lt;StatefulLabel&gt;:</span>
+<span class="sd">        active: stored_state.active</span>
+<span class="sd">        CheckBox:</span>
+<span class="sd">            id: stored_state</span>
+<span class="sd">            active: root.active</span>
+<span class="sd">            on_release: root.store_checkbox_state()</span>
+<span class="sd">        Label:</span>
+<span class="sd">            text: root.text</span>
+<span class="sd">        Label:</span>
+<span class="sd">            id: generate_state</span>
+<span class="sd">            text: root.generated_state_text</span>
+
+<span class="sd">    &lt;RV&gt;:</span>
+<span class="sd">        viewclass: &#39;StatefulLabel&#39;</span>
+<span class="sd">        RecycleBoxLayout:</span>
+<span class="sd">            size_hint_y: None</span>
+<span class="sd">            height: self.minimum_height</span>
+<span class="sd">            orientation: &#39;vertical&#39;</span>
+<span class="sd">    &#39;&#39;&#39;)</span>
+
+<span class="sd">    class StatefulLabel(RecycleDataViewBehavior, BoxLayout):</span>
+<span class="sd">        text = StringProperty()</span>
+<span class="sd">        generated_state_text = StringProperty()</span>
+<span class="sd">        active = BooleanProperty()</span>
+<span class="sd">        index = 0</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        To change a viewclass&#39; state as the data assigned to it changes,</span>
+<span class="sd">        overload the refresh_view_attrs function (inherited from</span>
+<span class="sd">        RecycleDataViewBehavior)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        def refresh_view_attrs(self, rv, index, data):</span>
+<span class="sd">            self.index = index</span>
+<span class="sd">            if data[&#39;text&#39;] == &#39;0&#39;:</span>
+<span class="sd">                self.generated_state_text = &quot;is zero&quot;</span>
+<span class="sd">            elif int(data[&#39;text&#39;]) % 2 == 1:</span>
+<span class="sd">                self.generated_state_text = &quot;is odd&quot;</span>
+<span class="sd">            else:</span>
+<span class="sd">                self.generated_state_text = &quot;is even&quot;</span>
+<span class="sd">            super(StatefulLabel, self).refresh_view_attrs(rv, index, data)</span>
+
+<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        To keep state changes in the viewclass with associated data,</span>
+<span class="sd">        they can be explicitly stored in the RecycleView&#39;s data object</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        def store_checkbox_state(self):</span>
+<span class="sd">            rv = App.get_running_app().rv</span>
+<span class="sd">            rv.data[self.index][&#39;active&#39;] = self.active</span>
+
+<span class="sd">    class RV(RecycleView, App):</span>
+<span class="sd">        def __init__(self, **kwargs):</span>
+<span class="sd">            super(RV, self).__init__(**kwargs)</span>
+<span class="sd">            self.data = [{&#39;text&#39;: str(x), &#39;active&#39;: False} for x in range(10)]</span>
+<span class="sd">            App.get_running_app().rv = self</span>
+
+<span class="sd">        def build(self):</span>
+<span class="sd">            return self</span>
+
+<span class="sd">    if __name__ == &#39;__main__&#39;:</span>
+<span class="sd">        RV().run()</span>
 
 <span class="sd">TODO:</span>
 <span class="sd">    - Method to clear cached class instances.</span>
@@ -927,7 +1022,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Jan 25, 2021.
+      Last updated on Jan 27, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.4.3.
 </div>
 -->
