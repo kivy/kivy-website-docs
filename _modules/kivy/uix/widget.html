@@ -1045,12 +1045,17 @@
 <span class="sd">        .. versionchanged:: 1.8.0</span>
 <span class="sd">            The `children` argument can be used to specify the children you</span>
 <span class="sd">            want to remove.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        .. versionchanged:: 2.1.0</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">children</span><span class="p">:</span>
-            <span class="n">children</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span>
+<span class="sd">            Specifying an empty ``children`` list leaves the widgets unchanged.</span>
+<span class="sd">            Previously it was treated like ``None`` and all children were</span>
+<span class="sd">            removed.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">children</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">children</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+            <span class="n">children</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">[:]</span>
+
         <span class="n">remove_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_widget</span>
-        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">children</span><span class="p">[:]:</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span>
             <span class="n">remove_widget</span><span class="p">(</span><span class="n">child</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Widget.export_to_png"><a class="viewcode-back" href="../../../api-kivy.uix.widget.html#kivy.uix.sandbox.Widget.export_to_png">[docs]</a>    <span class="k">def</span> <span class="nf">export_to_png</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -1872,7 +1877,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Feb 01, 2021.
+      Last updated on Feb 02, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.4.3.
 </div>
 -->
