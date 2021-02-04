@@ -1340,53 +1340,60 @@
         <span class="k">if</span> <span class="n">screen</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_screen</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="n">name</span>
 
-<div class="viewcode-block" id="ScreenManager.add_widget"><a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.ScreenManager.add_widget">[docs]</a>    <span class="k">def</span> <span class="nf">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="n">Screen</span><span class="p">):</span>
+<div class="viewcode-block" id="ScreenManager.add_widget"><a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.ScreenManager.add_widget">[docs]</a>    <span class="k">def</span> <span class="nf">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        .. versionchanged:: 2.1.0</span>
+<span class="sd">            Renamed argument `screen` to `widget`.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">Screen</span><span class="p">):</span>
             <span class="k">raise</span> <span class="n">ScreenManagerException</span><span class="p">(</span>
                 <span class="s1">&#39;ScreenManager accepts only Screen widget.&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">screen</span><span class="o">.</span><span class="n">manager</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">screen</span><span class="o">.</span><span class="n">manager</span> <span class="ow">is</span> <span class="bp">self</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">widget</span><span class="o">.</span><span class="n">manager</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">widget</span><span class="o">.</span><span class="n">manager</span> <span class="ow">is</span> <span class="bp">self</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">ScreenManagerException</span><span class="p">(</span>
                     <span class="s1">&#39;Screen already managed by this ScreenManager (are you &#39;</span>
                     <span class="s1">&#39;calling `switch_to` when you should be setting &#39;</span>
                     <span class="s1">&#39;`current`?)&#39;</span><span class="p">)</span>
             <span class="k">raise</span> <span class="n">ScreenManagerException</span><span class="p">(</span>
                 <span class="s1">&#39;Screen already managed by another ScreenManager.&#39;</span><span class="p">)</span>
-        <span class="n">screen</span><span class="o">.</span><span class="n">manager</span> <span class="o">=</span> <span class="bp">self</span>
-        <span class="n">screen</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_screen_name_changed</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">screens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">screen</span><span class="p">)</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">manager</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_screen_name_changed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">screens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="n">screen</span><span class="o">.</span><span class="n">name</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">name</span></div>
 
-<div class="viewcode-block" id="ScreenManager.remove_widget"><a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.ScreenManager.remove_widget">[docs]</a>    <span class="k">def</span> <span class="nf">remove_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">l</span><span class="p">):</span>
-        <span class="n">screen</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="n">Screen</span><span class="p">):</span>
+<div class="viewcode-block" id="ScreenManager.remove_widget"><a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.ScreenManager.remove_widget">[docs]</a>    <span class="k">def</span> <span class="nf">remove_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">Screen</span><span class="p">):</span>
             <span class="k">raise</span> <span class="n">ScreenManagerException</span><span class="p">(</span>
                 <span class="s1">&#39;ScreenManager uses remove_widget only for removing Screens.&#39;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">screen</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">screens</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">widget</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">screens</span><span class="p">:</span>
             <span class="k">return</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_screen</span> <span class="o">==</span> <span class="n">screen</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_screen</span> <span class="o">==</span> <span class="n">widget</span><span class="p">:</span>
             <span class="n">other</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">screen</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">other</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">widget</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">other</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="kc">None</span>
-                <span class="n">screen</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">real_remove_widget</span><span class="p">(</span><span class="n">screen</span><span class="p">)</span>
+                <span class="n">widget</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">real_remove_widget</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="n">other</span>
 
-        <span class="n">screen</span><span class="o">.</span><span class="n">manager</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">screen</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_screen_name_changed</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">screens</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">screen</span><span class="p">)</span></div>
+        <span class="n">widget</span><span class="o">.</span><span class="n">manager</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_screen_name_changed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">screens</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ScreenManager.clear_widgets"><a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.ScreenManager.clear_widgets">[docs]</a>    <span class="k">def</span> <span class="nf">clear_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screens</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">screens</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">screens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">screens</span>
-
-        <span class="c1"># iterate over a copy of screens, as self.remove_widget</span>
-        <span class="c1"># modifies self.screens in place</span>
-        <span class="k">for</span> <span class="n">screen</span> <span class="ow">in</span> <span class="n">screens</span><span class="p">[:]:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="n">screen</span><span class="p">)</span></div>
+<div class="viewcode-block" id="ScreenManager.clear_widgets"><a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.ScreenManager.clear_widgets">[docs]</a>    <span class="k">def</span> <span class="nf">clear_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        .. versionchanged:: 2.1.0</span>
+<span class="sd">            Renamed argument `screens` to `children`.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">children</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># iterate over a copy of screens, as self.remove_widget</span>
+            <span class="c1"># modifies self.screens in place</span>
+            <span class="n">children</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">screens</span><span class="p">[:]</span>
+        <span class="n">remove_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_widget</span>
+        <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span>
+            <span class="n">remove_widget</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">real_add_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="c1"># ensure screen is removed from its previous parent</span>
@@ -1661,7 +1668,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Feb 02, 2021.
+      Last updated on Feb 04, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.4.3.
 </div>
 -->
