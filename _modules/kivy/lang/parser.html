@@ -371,6 +371,7 @@
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">ast</span>
 <span class="kn">from</span> <span class="nn">re</span> <span class="kn">import</span> <span class="n">sub</span><span class="p">,</span> <span class="n">findall</span>
 <span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">CodeType</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
@@ -397,11 +398,16 @@
 <span class="n">__KV_INCLUDES__</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="c1"># precompile regexp expression</span>
-<span class="n">lang_str</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
-    <span class="s2">&quot;((?:&#39;&#39;&#39;.*?&#39;&#39;&#39;)|&quot;</span>
+<span class="n">str_re</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s2">&quot;(?:&#39;&#39;&#39;.*?&#39;&#39;&#39;)|&quot;</span>
     <span class="s2">&quot;(?:(?:(?&lt;!&#39;)|&#39;&#39;&#39;)&#39;(?:[^&#39;]|</span><span class="se">\\\\</span><span class="s2">&#39;)+?&#39;(?:(?!&#39;)|&#39;&#39;&#39;))|&quot;</span>
     <span class="s1">&#39;(?:&quot;&quot;&quot;.*?&quot;&quot;&quot;)|&#39;</span>
-    <span class="s1">&#39;(?:(?:(?&lt;!&quot;)|&quot;&quot;&quot;)&quot;(?:[^&quot;]|</span><span class="se">\\\\</span><span class="s1">&quot;)+?&quot;(?:(?!&quot;)|&quot;&quot;&quot;)))&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
+    <span class="s1">&#39;(?:(?:(?&lt;!&quot;)|&quot;&quot;&quot;)&quot;(?:[^&quot;]|</span><span class="se">\\\\</span><span class="s1">&quot;)+?&quot;(?:(?!&quot;)|&quot;&quot;&quot;))&#39;</span>
+<span class="p">)</span>
+
+<span class="n">lang_str</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">str_re</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
+<span class="n">lang_fstr</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;([fF](?:</span><span class="si">{</span><span class="n">str_re</span><span class="si">}</span><span class="s2">))&quot;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
+
 <span class="n">lang_key</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;([a-zA-Z_]+)&#39;</span><span class="p">)</span>
 <span class="n">lang_keyvalue</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;([a-zA-Z_][a-zA-Z0-9_.]*\.[a-zA-Z0-9_.]+)&#39;</span><span class="p">)</span>
 <span class="n">lang_tr</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(_\()&#39;</span><span class="p">)</span>
@@ -553,20 +559,95 @@
             <span class="k">return</span>
 
         <span class="c1"># now, detect obj.prop</span>
+        <span class="c1"># find all the fstrings in the  value</span>
+        <span class="n">fstrings</span> <span class="o">=</span> <span class="n">lang_fstr</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">expressions</span> <span class="o">=</span> <span class="p">[</span><span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">fstrings</span><span class="p">]</span>
+        <span class="n">wk</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">fstrings</span><span class="p">:</span>
+            <span class="n">expression</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+            <span class="n">wk</span> <span class="o">|=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_names_from_expression</span><span class="p">(</span><span class="n">expression</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+
         <span class="c1"># first, remove all the string from the value</span>
         <span class="n">tmp</span> <span class="o">=</span> <span class="n">sub</span><span class="p">(</span><span class="n">lang_str</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
         <span class="n">idx</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">idx</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
             <span class="n">tmp</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">[:</span><span class="n">idx</span><span class="p">]</span>
         <span class="c1"># detect key.value inside value, and split them</span>
-        <span class="n">wk</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">findall</span><span class="p">(</span><span class="n">lang_keyvalue</span><span class="p">,</span> <span class="n">tmp</span><span class="p">)))</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">wk</span><span class="p">):</span>
+        <span class="n">wk</span> <span class="o">|=</span> <span class="nb">set</span><span class="p">(</span><span class="n">findall</span><span class="p">(</span><span class="n">lang_keyvalue</span><span class="p">,</span> <span class="n">tmp</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">wk</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">watched_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">wk</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">findall</span><span class="p">(</span><span class="n">lang_tr</span><span class="p">,</span> <span class="n">tmp</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">watched_keys</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">watched_keys</span> <span class="o">+=</span> <span class="p">[[</span><span class="s1">&#39;_&#39;</span><span class="p">]]</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">watched_keys</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;_&#39;</span><span class="p">]]</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_names_from_expression</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Look for all the symbols used in an ast node.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Name</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="p">(</span><span class="n">ast</span><span class="o">.</span><span class="n">JoinedStr</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">BoolOp</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Str</span><span class="p">):</span>
+                    <span class="c1"># NOTE: required for python3.6</span>
+                    <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_names_from_expression</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">s</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_names_from_expression</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">BinOp</span><span class="p">):</span>
+            <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_names_from_expression</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">right</span><span class="p">)</span>
+            <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_names_from_expression</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">left</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">IfExp</span><span class="p">):</span>
+            <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_names_from_expression</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">test</span><span class="p">)</span>
+            <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_names_from_expression</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+            <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_names_from_expression</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">orelse</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Subscript</span><span class="p">):</span>
+            <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_names_from_expression</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_names_from_expression</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">slice</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Slice</span><span class="p">):</span>
+            <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_names_from_expression</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">lower</span><span class="p">)</span>
+            <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_names_from_expression</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">upper</span><span class="p">)</span>
+            <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_names_from_expression</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">step</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span>
+            <span class="n">node</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">ast</span><span class="o">.</span><span class="n">ListComp</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">DictComp</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">SetComp</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">GeneratorExp</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">generators</span><span class="p">:</span>
+                <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_names_from_expression</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">iter</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="p">(</span><span class="n">ast</span><span class="o">.</span><span class="n">List</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Tuple</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Set</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">elt</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">elts</span><span class="p">:</span>
+                <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_names_from_expression</span><span class="p">(</span><span class="n">elt</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Dict</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
+                <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_names_from_expression</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">UnaryOp</span><span class="p">):</span>
+            <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_names_from_expression</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">operand</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">comprehension</span><span class="p">):</span>
+            <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_names_from_expression</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">iter</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Attribute</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Name</span><span class="p">):</span>
+                <span class="k">yield</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">attr</span><span class="si">}</span><span class="s1">&#39;</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Call</span><span class="p">):</span>
+            <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_names_from_expression</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">func</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">args</span><span class="p">:</span>
+                <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_names_from_expression</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">keyword</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">keywords</span><span class="p">:</span>
+                <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_names_from_expression</span><span class="p">(</span><span class="n">keyword</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;&lt;ParserRuleProperty name=</span><span class="si">%r</span><span class="s1"> filename=</span><span class="si">%s</span><span class="s1">:</span><span class="si">%d</span><span class="s1"> &#39;</span> \
@@ -1133,7 +1214,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Feb 05, 2021.
+      Last updated on Feb 09, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.4.3.
 </div>
 -->
