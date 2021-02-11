@@ -373,7 +373,9 @@
 
 <span class="kn">from</span> <span class="nn">kivy.uix.recycleview.layout</span> <span class="kn">import</span> <span class="n">RecycleLayoutManagerBehavior</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.layout</span> <span class="kn">import</span> <span class="n">Layout</span>
-<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">ObjectProperty</span><span class="p">,</span> <span class="n">StringProperty</span>
+<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ObjectProperty</span><span class="p">,</span> <span class="n">StringProperty</span><span class="p">,</span> <span class="n">ReferenceListProperty</span><span class="p">,</span> <span class="n">NumericProperty</span>
+<span class="p">)</span>
 <span class="kn">from</span> <span class="nn">kivy.factory</span> <span class="kn">import</span> <span class="n">Factory</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;RecycleLayout&#39;</span><span class="p">,</span> <span class="p">)</span>
@@ -384,19 +386,152 @@
 <span class="sd">    RecycleLayout provides the default layout for RecycleViews.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">default_size</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
-    <span class="sd">&#39;&#39;&#39;size as in w, h. They each can be None.</span>
+    <span class="n">default_width</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;Default width for items</span>
+
+<span class="sd">    :attr:`default_width` is a NumericProperty and default to 100</span>
 <span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">default_height</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;Default height for items</span>
+
+<span class="sd">    :attr:`default_height` is a :class:`~kivy.properties.NumericProperty` and</span>
+<span class="sd">    default to 100.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">default_size</span> <span class="o">=</span> <span class="n">ReferenceListProperty</span><span class="p">(</span><span class="n">default_width</span><span class="p">,</span> <span class="n">default_height</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;size (width, height). Each value can be None.</span>
+
+<span class="sd">    :attr:`default_size` is an :class:`~kivy.properties.ReferenceListProperty`</span>
+<span class="sd">    to [:attr:`default_width`, :attr:`default_height`].</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">default_size_hint_x</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;Default size_hint_x for items</span>
+
+<span class="sd">    :attr:`default_size_hint_x` is a :class:`~kivy.properties.NumericProperty`</span>
+<span class="sd">    and default to None.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">default_size_hint_y</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;Default size_hint_y for items</span>
+
+<span class="sd">    :attr:`default_size_hint_y` is a :class:`~kivy.properties.NumericProperty`</span>
+<span class="sd">    and default to None.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">default_size_hint</span> <span class="o">=</span> <span class="n">ReferenceListProperty</span><span class="p">(</span>
+        <span class="n">default_size_hint_x</span><span class="p">,</span> <span class="n">default_size_hint_y</span>
+    <span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;size (width, height). Each value can be None.</span>
+
+<span class="sd">    :attr:`default_size_hint` is an</span>
+<span class="sd">    :class:`~kivy.properties.ReferenceListProperty` to</span>
+<span class="sd">    [:attr:`default_size_hint_x`, :attr:`default_size_hint_y`].</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
     <span class="n">key_size</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">default_size_hint</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">((</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+    <span class="sd">&#39;&#39;&#39;If set, which key in the dict should be used to set the size property of</span>
+<span class="sd">    the item.</span>
+
+<span class="sd">    :attr:`key_size` is a :class:`~kivy.properties.StringProperty` and defaults</span>
+<span class="sd">    to None.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">key_size_hint</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">default_size_hint_min</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">((</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+    <span class="sd">&#39;&#39;&#39;If set, which key in the dict should be used to set the size_hint</span>
+<span class="sd">    property of the item.</span>
+
+<span class="sd">    :attr:`key_size_hint` is a :class:`~kivy.properties.StringProperty` and</span>
+<span class="sd">    defaults to None.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
     <span class="n">key_size_hint_min</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">default_size_hint_max</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">((</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
+    <span class="sd">&#39;&#39;&#39;If set, which key in the dict should be used to set the size_hint_min</span>
+<span class="sd">    property of the item.</span>
+
+<span class="sd">    :attr:`key_size_hint_min` is a :class:`~kivy.properties.StringProperty` and</span>
+<span class="sd">    defaults to None.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">default_size_hint_x_min</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;Default value for size_hint_x_min of items</span>
+
+<span class="sd">    :attr:`default_pos_hint_x_min` is a</span>
+<span class="sd">    :class:`~kivy.properties.NumericProperty` and defaults to None.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">default_size_hint_y_min</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;Default value for size_hint_y_min of items</span>
+
+<span class="sd">    :attr:`default_pos_hint_y_min` is a</span>
+<span class="sd">    :class:`~kivy.properties.NumericProperty` and defaults to None.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">default_size_hint_min</span> <span class="o">=</span> <span class="n">ReferenceListProperty</span><span class="p">(</span>
+        <span class="n">default_size_hint_x_min</span><span class="p">,</span>
+        <span class="n">default_size_hint_y_min</span>
+    <span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;Default value for size_hint_min of items</span>
+
+<span class="sd">    :attr:`default_size_min` is a</span>
+<span class="sd">    :class:`~kivy.properties.ReferenceListProperty` to</span>
+<span class="sd">    [:attr:`default_size_hint_x_min`, :attr:`default_size_hint_y_min`].</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
     <span class="n">key_size_hint_max</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;If set, which key in the dict should be used to set the size_hint_max</span>
+<span class="sd">    property of the item.</span>
+
+<span class="sd">    :attr:`key_size_hint_max` is a :class:`~kivy.properties.StringProperty` and</span>
+<span class="sd">    defaults to None.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">default_size_hint_x_max</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;Default value for size_hint_x_max of items</span>
+
+<span class="sd">    :attr:`default_pos_hint_x_max` is a</span>
+<span class="sd">    :class:`~kivy.properties.NumericProperty` and defaults to None.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">default_size_hint_y_max</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;Default value for size_hint_y_max of items</span>
+
+<span class="sd">    :attr:`default_pos_hint_y_max` is a</span>
+<span class="sd">    :class:`~kivy.properties.NumericProperty` and defaults to None.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">default_size_hint_max</span> <span class="o">=</span> <span class="n">ReferenceListProperty</span><span class="p">(</span>
+        <span class="n">default_size_hint_x_max</span><span class="p">,</span>
+        <span class="n">default_size_hint_y_max</span>
+    <span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;Default value for size_hint_max of items</span>
+
+<span class="sd">    :attr:`default_size_max` is a</span>
+<span class="sd">    :class:`~kivy.properties.ReferenceListProperty` to</span>
+<span class="sd">    [:attr:`default_size_hint_x_max`, :attr:`default_size_hint_y_max`].</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
     <span class="n">default_pos_hint</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">({})</span>
+    <span class="sd">&#39;&#39;&#39;Default pos_hint value for items</span>
+
+<span class="sd">    :attr:`default_pos_hint` is a :class:`~kivy.properties.DictProperty` and</span>
+<span class="sd">    defaults to {}.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">key_pos_hint</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">initial_size</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+    <span class="sd">&#39;&#39;&#39;If set, which key in the dict should be used to set the pos_hint of</span>
+<span class="sd">    items.</span>
+
+<span class="sd">    :attr:`key_pos_hint` is a :class:`~kivy.properties.StringProperty` and</span>
+<span class="sd">    defaults to None.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">initial_width</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;Initial width for the items.</span>
+
+<span class="sd">    :attr:`initial_width` is a :class:`~kivy.properties.NumericProperty` and</span>
+<span class="sd">    defaults to 100.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">initial_height</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;Initial height for the items.</span>
+
+<span class="sd">    :attr:`initial_height` is a :class:`~kivy.properties.NumericProperty` and</span>
+<span class="sd">    defaults to 100.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">initial_size</span> <span class="o">=</span> <span class="n">ReferenceListProperty</span><span class="p">(</span><span class="n">initial_width</span><span class="p">,</span> <span class="n">initial_height</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;Initial size of items</span>
+
+<span class="sd">    :attr:`initial_size` is a :class:`~kivy.properties.ReferenceListProperty`</span>
+<span class="sd">    to [:attr:`initial_width`, :attr:`initial_height`].</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">view_opts</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -709,7 +844,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Feb 09, 2021.
+      Last updated on Feb 11, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.4.3.
 </div>
 -->
