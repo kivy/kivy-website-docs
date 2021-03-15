@@ -682,13 +682,14 @@
         <span class="c1"># calculate the coordinate of the attached widget in the window</span>
         <span class="c1"># coordinate system</span>
         <span class="n">win</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_win</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">win</span><span class="p">:</span>
+            <span class="k">return</span>
         <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attach_to</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">widget</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">widget</span><span class="o">.</span><span class="n">parent</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">win</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">widget</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">widget</span><span class="o">.</span><span class="n">get_parent_window</span><span class="p">():</span>
             <span class="k">return</span>
         <span class="n">wx</span><span class="p">,</span> <span class="n">wy</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">to_window</span><span class="p">(</span><span class="o">*</span><span class="n">widget</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span>
         <span class="n">wright</span><span class="p">,</span> <span class="n">wtop</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">to_window</span><span class="p">(</span><span class="n">widget</span><span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="n">widget</span><span class="o">.</span><span class="n">top</span><span class="p">)</span>
 
-        <span class="c1"># set width and x</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_width</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">wright</span> <span class="o">-</span> <span class="n">wx</span>
 
@@ -719,7 +720,6 @@
             <span class="c1"># none of both top/bottom have enough place to display the</span>
             <span class="c1"># widget at the current size. Take the best side, and fit to</span>
             <span class="c1"># it.</span>
-
             <span class="k">if</span> <span class="n">h_top</span> <span class="o">&lt;</span> <span class="n">h_bottom</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">top</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">wy</span>
             <span class="k">else</span><span class="p">:</span>
@@ -785,7 +785,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 14, 2021.
+      Last updated on Mar 15, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.2.
 </div>
 -->
