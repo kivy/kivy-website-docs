@@ -383,7 +383,7 @@
 <p><span class="versionmodified added">New in version 1.4.0.</span></p>
 </div>
 <p>The <a class="reference internal" href="#kivy.uix.modalview.ModalView" title="kivy.uix.modalview.ModalView"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModalView</span></code></a> widget is used to create modal views. By default, the
-view will cover the whole “parent” window.</p>
+view will cover the whole “main” window.</p>
 <p>Remember that the default size of a Widget is size_hint=(1, 1). If you don’t
 want your view to be fullscreen, either use size hints with values lower than
 1 (for instance size_hint=(.8, .8)) or deactivate the size_hint and use fixed
@@ -407,7 +407,7 @@ the ModalView instance:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">view</span><span class="o">.</span><span class="n">dismiss</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Both <a class="reference internal" href="#kivy.uix.modalview.ModalView.open" title="kivy.uix.modalview.ModalView.open"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ModalView.open()</span></code></a> and <a class="reference internal" href="#kivy.uix.modalview.ModalView.dismiss" title="kivy.uix.modalview.ModalView.dismiss"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ModalView.dismiss()</span></code></a> are bindable. That
+<p>Both <a class="reference internal" href="#kivy.uix.modalview.ModalView.open" title="kivy.uix.modalview.ModalView.open"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ModalView.open()</span></code></a> and <a class="reference internal" href="#kivy.uix.modalview.ModalView.dismiss" title="kivy.uix.modalview.ModalView.dismiss"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ModalView.dismiss()</span></code></a> are bind-able. That
 means you can directly bind the function to an action, e.g. to a button’s
 on_press</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># create content and add it to the view</span>
@@ -425,10 +425,11 @@ on_press</p>
 </div>
 <div class="section" id="modalview-events">
 <h2>ModalView Events<a class="headerlink" href="#modalview-events" title="Permalink to this headline">¶</a></h2>
-<p>There are two events available: <cite>on_open</cite> which is raised when the view is
-opening, and <cite>on_dismiss</cite> which is raised when the view is closed.
-For <cite>on_dismiss</cite>, you can prevent the view from closing by explicitly returning
-True from your callback.</p>
+<p>There are four events available: <cite>on_pre_open</cite> and <cite>on_open</cite> which are raised
+when the view is opening; <cite>on_pre_dismiss</cite> and <cite>on_dismiss</cite> which are raised
+when the view is closed.</p>
+<p>For <cite>on_dismiss</cite>, you can prevent the view from closing by explicitly
+returning <cite>True</cite> from your callback:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_callback</span><span class="p">(</span><span class="n">instance</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ModalView&#39;</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="s1">&#39;is being dismissed, but is prevented!&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="kc">True</span>
@@ -469,6 +470,9 @@ the dismiss will be canceled.</p>
 </div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 2.0.0: </span>Added property ‘overlay_color’.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.1.0: </span>Marked <cite>attach_to</cite> property as deprecated.</p>
 </div>
 <dl class="py attribute">
 <dt id="kivy.uix.modalview.ModalView.attach_to">
@@ -530,64 +534,73 @@ BorderImage instructions for more information about how to use it.</p>
 
 <dl class="py method">
 <dt id="kivy.uix.modalview.ModalView.dismiss">
-<code class="sig-name descname"><span class="pre">dismiss</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">largs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/uix/modalview.html#ModalView.dismiss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.uix.modalview.ModalView.dismiss" title="Permalink to this definition">¶</a></dt>
-<dd><p>Close the view if it is open. If you really want to close the
-view, whatever the on_dismiss event returns, you can use the <em>force</em>
-argument:</p>
+<code class="sig-name descname"><span class="pre">dismiss</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">_args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/uix/modalview.html#ModalView.dismiss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.uix.modalview.ModalView.dismiss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the view if it is open.</p>
+<p>If you really want to close the view, whatever the on_dismiss
+event returns, you can use the <em>force</em> keyword argument:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">view</span> <span class="o">=</span> <span class="n">ModalView</span><span class="p">()</span>
 <span class="n">view</span><span class="o">.</span><span class="n">dismiss</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>When the view is dismissed, it will be faded out before being
-removed from the parent. If you don’t want animation, use:</p>
+removed from the parent. If you don’t want this animation, use:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">view</span><span class="o">.</span><span class="n">dismiss</span><span class="p">(</span><span class="n">animation</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
 
 <dl class="py method">
+<dt id="kivy.uix.modalview.ModalView.on__anim_alpha">
+<code class="sig-name descname"><span class="pre">on__anim_alpha</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/uix/modalview.html#ModalView.on__anim_alpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.uix.modalview.ModalView.on__anim_alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>animation progress callback.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="kivy.uix.modalview.ModalView.on_dismiss">
+<code class="sig-name descname"><span class="pre">on_dismiss</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/uix/modalview.html#ModalView.on_dismiss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.uix.modalview.ModalView.on_dismiss" title="Permalink to this definition">¶</a></dt>
+<dd><p>default dismiss event handler.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="kivy.uix.modalview.ModalView.on_open">
+<code class="sig-name descname"><span class="pre">on_open</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/uix/modalview.html#ModalView.on_open"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.uix.modalview.ModalView.on_open" title="Permalink to this definition">¶</a></dt>
+<dd><p>default open event handler.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="kivy.uix.modalview.ModalView.on_pre_dismiss">
+<code class="sig-name descname"><span class="pre">on_pre_dismiss</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/uix/modalview.html#ModalView.on_pre_dismiss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.uix.modalview.ModalView.on_pre_dismiss" title="Permalink to this definition">¶</a></dt>
+<dd><p>default pre-dismiss event handler.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="kivy.uix.modalview.ModalView.on_pre_open">
+<code class="sig-name descname"><span class="pre">on_pre_open</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/uix/modalview.html#ModalView.on_pre_open"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.uix.modalview.ModalView.on_pre_open" title="Permalink to this definition">¶</a></dt>
+<dd><p>default pre-open event handler.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="kivy.uix.modalview.ModalView.on_touch_down">
 <code class="sig-name descname"><span class="pre">on_touch_down</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">touch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/uix/modalview.html#ModalView.on_touch_down"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.uix.modalview.ModalView.on_touch_down" title="Permalink to this definition">¶</a></dt>
-<dd><p>Receive a touch down event.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><cite>touch</cite>: <a class="reference internal" href="api-kivy.input.motionevent.html#kivy.input.motionevent.MotionEvent" title="kivy.input.motionevent.MotionEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">MotionEvent</span></code></a> class</dt><dd><p>Touch received. The touch is in parent coordinates. See
-<a class="reference internal" href="api-kivy.uix.relativelayout.html#module-kivy.uix.relativelayout" title="kivy.uix.relativelayout"><code class="xref py py-mod docutils literal notranslate"><span class="pre">relativelayout</span></code></a> for a discussion on
-coordinate systems.</p>
-</dd>
-</dl>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>bool
-If True, the dispatching of the touch event will stop.
-If False, the event will continue to be dispatched to the rest
-of the widget tree.</p>
-</dd>
-</dl>
+<dd><p>touch down event handler.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="kivy.uix.modalview.ModalView.on_touch_move">
 <code class="sig-name descname"><span class="pre">on_touch_move</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">touch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/uix/modalview.html#ModalView.on_touch_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.uix.modalview.ModalView.on_touch_move" title="Permalink to this definition">¶</a></dt>
-<dd><p>Receive a touch move event. The touch is in parent coordinates.</p>
-<p>See <a class="reference internal" href="#kivy.uix.modalview.ModalView.on_touch_down" title="kivy.uix.modalview.ModalView.on_touch_down"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_touch_down()</span></code></a> for more information.</p>
+<dd><p>touch moved event handler.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="kivy.uix.modalview.ModalView.on_touch_up">
 <code class="sig-name descname"><span class="pre">on_touch_up</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">touch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/uix/modalview.html#ModalView.on_touch_up"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.uix.modalview.ModalView.on_touch_up" title="Permalink to this definition">¶</a></dt>
-<dd><p>Receive a touch up event. The touch is in parent coordinates.</p>
-<p>See <a class="reference internal" href="#kivy.uix.modalview.ModalView.on_touch_down" title="kivy.uix.modalview.ModalView.on_touch_down"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_touch_down()</span></code></a> for more information.</p>
+<dd><p>touch up event handler.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="kivy.uix.modalview.ModalView.open">
-<code class="sig-name descname"><span class="pre">open</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">largs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/uix/modalview.html#ModalView.open"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.uix.modalview.ModalView.open" title="Permalink to this definition">¶</a></dt>
-<dd><p>Show the view window from the <a class="reference internal" href="#kivy.uix.modalview.ModalView.attach_to" title="kivy.uix.modalview.ModalView.attach_to"><code class="xref py py-attr docutils literal notranslate"><span class="pre">attach_to</span></code></a> widget. If set, it
-will attach to the nearest window. If the widget is not attached to any
-window, the view will attach to the global
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Window</span></code>.</p>
+<code class="sig-name descname"><span class="pre">open</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">_args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/uix/modalview.html#ModalView.open"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.uix.modalview.ModalView.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display the modal in the Window.</p>
 <p>When the view is opened, it will be faded in with an animation. If you
 don’t want the animation, use:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">view</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">animation</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -661,8 +674,8 @@ defaults to [0, 0, 0, .7].</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 18, 2021.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.2.
+      Last updated on Mar 21, 2021.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.3.
 </div>
 -->
   </body>

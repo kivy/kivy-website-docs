@@ -360,14 +360,14 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.uix.modalview</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">ModalView</span>
 <span class="sd">=========</span>
 
 <span class="sd">.. versionadded:: 1.4.0</span>
 
 <span class="sd">The :class:`ModalView` widget is used to create modal views. By default, the</span>
-<span class="sd">view will cover the whole &quot;parent&quot; window.</span>
+<span class="sd">view will cover the whole &quot;main&quot; window.</span>
 
 <span class="sd">Remember that the default size of a Widget is size_hint=(1, 1). If you don&#39;t</span>
 <span class="sd">want your view to be fullscreen, either use size hints with values lower than</span>
@@ -394,7 +394,7 @@
 
 <span class="sd">    view.dismiss()</span>
 
-<span class="sd">Both :meth:`ModalView.open` and :meth:`ModalView.dismiss` are bindable. That</span>
+<span class="sd">Both :meth:`ModalView.open` and :meth:`ModalView.dismiss` are bind-able. That</span>
 <span class="sd">means you can directly bind the function to an action, e.g. to a button&#39;s</span>
 <span class="sd">on_press ::</span>
 
@@ -413,10 +413,12 @@
 <span class="sd">ModalView Events</span>
 <span class="sd">----------------</span>
 
-<span class="sd">There are two events available: `on_open` which is raised when the view is</span>
-<span class="sd">opening, and `on_dismiss` which is raised when the view is closed.</span>
-<span class="sd">For `on_dismiss`, you can prevent the view from closing by explicitly returning</span>
-<span class="sd">True from your callback. ::</span>
+<span class="sd">There are four events available: `on_pre_open` and `on_open` which are raised</span>
+<span class="sd">when the view is opening; `on_pre_dismiss` and `on_dismiss` which are raised</span>
+<span class="sd">when the view is closed.</span>
+
+<span class="sd">For `on_dismiss`, you can prevent the view from closing by explicitly</span>
+<span class="sd">returning `True` from your callback::</span>
 
 <span class="sd">    def my_callback(instance):</span>
 <span class="sd">        print(&#39;ModalView&#39;, instance, &#39;is being dismissed, but is prevented!&#39;)</span>
@@ -432,19 +434,19 @@
 <span class="sd">    keyboard if the :attr:`ModalView.auto_dismiss` property is True (the</span>
 <span class="sd">    default).</span>
 
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;ModalView&#39;</span><span class="p">,</span> <span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">kivy.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
 <span class="kn">from</span> <span class="nn">kivy.animation</span> <span class="kn">import</span> <span class="n">Animation</span>
+<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">StringProperty</span><span class="p">,</span> <span class="n">BooleanProperty</span><span class="p">,</span> <span class="n">ObjectProperty</span><span class="p">,</span> <span class="n">NumericProperty</span><span class="p">,</span>
+    <span class="n">ListProperty</span><span class="p">,</span> <span class="n">ColorProperty</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.anchorlayout</span> <span class="kn">import</span> <span class="n">AnchorLayout</span>
-<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">StringProperty</span><span class="p">,</span> <span class="n">BooleanProperty</span><span class="p">,</span> <span class="n">ObjectProperty</span><span class="p">,</span> \
-    <span class="n">NumericProperty</span><span class="p">,</span> <span class="n">ListProperty</span><span class="p">,</span> <span class="n">ColorProperty</span>
 
 
 <div class="viewcode-block" id="ModalView"><a class="viewcode-back" href="../../../api-kivy.uix.modalview.html#kivy.uix.modalview.ModalView">[docs]</a><span class="k">class</span> <span class="nc">ModalView</span><span class="p">(</span><span class="n">AnchorLayout</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;ModalView class. See module documentation for more information.</span>
+    <span class="sd">&quot;&quot;&quot;ModalView class. See module documentation for more information.</span>
 
 <span class="sd">    :Events:</span>
 <span class="sd">        `on_pre_open`:</span>
@@ -464,8 +466,12 @@
 <span class="sd">    .. versionchanged:: 2.0.0</span>
 <span class="sd">        Added property &#39;overlay_color&#39;.</span>
 
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    .. versionchanged:: 2.1.0</span>
+<span class="sd">        Marked `attach_to` property as deprecated.</span>
 
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># noinspection PyArgumentEqualDefault</span>
     <span class="n">auto_dismiss</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
     <span class="sd">&#39;&#39;&#39;This property determines if the view is automatically</span>
 <span class="sd">    dismissed when the user clicks outside it.</span>
@@ -474,7 +480,7 @@
 <span class="sd">    defaults to True.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="n">attach_to</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">attach_to</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">deprecated</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="sd">&#39;&#39;&#39;If a widget is set on attach_to, the view will attach to the nearest</span>
 <span class="sd">    parent window of the widget. If none is found, it will attach to the</span>
 <span class="sd">    main/global Window.</span>
@@ -538,7 +544,9 @@
 
     <span class="n">_anim_duration</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="o">.</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="n">_window</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">rebind</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">_window</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">rebind</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">_is_open</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="n">_touch_started_inside</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -548,70 +556,52 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ModalView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_search_window</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># get window to attach to</span>
-        <span class="n">window</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">attach_to</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">window</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attach_to</span><span class="o">.</span><span class="n">get_parent_window</span><span class="p">()</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">window</span><span class="p">:</span>
-                <span class="n">window</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attach_to</span><span class="o">.</span><span class="n">get_root_window</span><span class="p">()</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">window</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">kivy.core.window</span> <span class="kn">import</span> <span class="n">Window</span>
-            <span class="n">window</span> <span class="o">=</span> <span class="n">Window</span>
-        <span class="k">return</span> <span class="n">window</span>
-
-<div class="viewcode-block" id="ModalView.open"><a class="viewcode-back" href="../../../api-kivy.uix.modalview.html#kivy.uix.modalview.ModalView.open">[docs]</a>    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Show the view window from the :attr:`attach_to` widget. If set, it</span>
-<span class="sd">        will attach to the nearest window. If the widget is not attached to any</span>
-<span class="sd">        window, the view will attach to the global</span>
-<span class="sd">        :class:`~kivy.core.window.Window`.</span>
+<div class="viewcode-block" id="ModalView.open"><a class="viewcode-back" href="../../../api-kivy.uix.modalview.html#kivy.uix.modalview.ModalView.open">[docs]</a>    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Display the modal in the Window.</span>
 
 <span class="sd">        When the view is opened, it will be faded in with an animation. If you</span>
 <span class="sd">        don&#39;t want the animation, use::</span>
 
 <span class="sd">            view.open(animation=False)</span>
 
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;ModalView: you can only open once.&#39;</span><span class="p">)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">kivy.core.window</span> <span class="kn">import</span> <span class="n">Window</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_open</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="c1"># search window</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_window</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_search_window</span><span class="p">()</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window</span><span class="p">:</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;ModalView: cannot open view, no window found.&#39;</span><span class="p">)</span>
-            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_window</span> <span class="o">=</span> <span class="n">Window</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_open</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_pre_open&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_window</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_window</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span>
+        <span class="n">Window</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">Window</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span>
             <span class="n">on_resize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_align_center</span><span class="p">,</span>
             <span class="n">on_keyboard</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle_keyboard</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window</span><span class="o">.</span><span class="n">center</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="n">Window</span><span class="o">.</span><span class="n">center</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_align_center</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_align_center</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;animation&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
-            <span class="n">a</span> <span class="o">=</span> <span class="n">Animation</span><span class="p">(</span><span class="n">_anim_alpha</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_anim_duration</span><span class="p">)</span>
-            <span class="n">a</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_complete</span><span class="o">=</span><span class="k">lambda</span> <span class="o">*</span><span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_open&#39;</span><span class="p">))</span>
-            <span class="n">a</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">ani</span> <span class="o">=</span> <span class="n">Animation</span><span class="p">(</span><span class="n">_anim_alpha</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_anim_duration</span><span class="p">)</span>
+            <span class="n">ani</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_complete</span><span class="o">=</span><span class="k">lambda</span> <span class="o">*</span><span class="n">_args</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_open&#39;</span><span class="p">))</span>
+            <span class="n">ani</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_anim_alpha</span> <span class="o">=</span> <span class="mf">1.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_open&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ModalView.dismiss"><a class="viewcode-back" href="../../../api-kivy.uix.modalview.html#kivy.uix.modalview.ModalView.dismiss">[docs]</a>    <span class="k">def</span> <span class="nf">dismiss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Close the view if it is open. If you really want to close the</span>
-<span class="sd">        view, whatever the on_dismiss event returns, you can use the *force*</span>
-<span class="sd">        argument:</span>
-<span class="sd">        ::</span>
+<div class="viewcode-block" id="ModalView.dismiss"><a class="viewcode-back" href="../../../api-kivy.uix.modalview.html#kivy.uix.modalview.ModalView.dismiss">[docs]</a>    <span class="k">def</span> <span class="nf">dismiss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Close the view if it is open.</span>
+
+<span class="sd">        If you really want to close the view, whatever the on_dismiss</span>
+<span class="sd">        event returns, you can use the *force* keyword argument::</span>
 
 <span class="sd">            view = ModalView()</span>
 <span class="sd">            view.dismiss(force=True)</span>
 
 <span class="sd">        When the view is dismissed, it will be faded out before being</span>
-<span class="sd">        removed from the parent. If you don&#39;t want animation, use::</span>
+<span class="sd">        removed from the parent. If you don&#39;t want this animation, use::</span>
 
 <span class="sd">            view.dismiss(animation=False)</span>
 
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_open</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_pre_dismiss&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_dismiss&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
@@ -623,56 +613,61 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_anim_alpha</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_real_remove_widget</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">_align_center</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">l</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_align_center</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_args</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_open</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window</span><span class="o">.</span><span class="n">center</span>
 
 <div class="viewcode-block" id="ModalView.on_touch_down"><a class="viewcode-back" href="../../../api-kivy.uix.modalview.html#kivy.uix.modalview.ModalView.on_touch_down">[docs]</a>    <span class="k">def</span> <span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; touch down event handler. &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_touch_started_inside</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">collide_point</span><span class="p">(</span><span class="o">*</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_dismiss</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_touch_started_inside</span><span class="p">:</span>
-            <span class="nb">super</span><span class="p">(</span><span class="n">ModalView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_touch_down</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_touch_down</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="ModalView.on_touch_move"><a class="viewcode-back" href="../../../api-kivy.uix.modalview.html#kivy.uix.modalview.ModalView.on_touch_move">[docs]</a>    <span class="k">def</span> <span class="nf">on_touch_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; touch moved event handler. &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_dismiss</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_touch_started_inside</span><span class="p">:</span>
-            <span class="nb">super</span><span class="p">(</span><span class="n">ModalView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_touch_move</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_touch_move</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="ModalView.on_touch_up"><a class="viewcode-back" href="../../../api-kivy.uix.modalview.html#kivy.uix.modalview.ModalView.on_touch_up">[docs]</a>    <span class="k">def</span> <span class="nf">on_touch_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; touch up event handler. &quot;&quot;&quot;</span>
         <span class="c1"># Explicitly test for False as None occurs when shown by on_touch_down</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_dismiss</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_touch_started_inside</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dismiss</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">super</span><span class="p">(</span><span class="n">ModalView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_touch_up</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_touch_up</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_touch_started_inside</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
-    <span class="k">def</span> <span class="nf">on__anim_alpha</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_real_remove_widget</span><span class="p">()</span>
+<div class="viewcode-block" id="ModalView.on__anim_alpha"><a class="viewcode-back" href="../../../api-kivy.uix.modalview.html#kivy.uix.modalview.ModalView.on__anim_alpha">[docs]</a>    <span class="k">def</span> <span class="nf">on__anim_alpha</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; animation progress callback. &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_open</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_real_remove_widget</span><span class="p">()</span></div>
 
     <span class="k">def</span> <span class="nf">_real_remove_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_window</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_open</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_window</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_window</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span>
             <span class="n">on_resize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_align_center</span><span class="p">,</span>
             <span class="n">on_keyboard</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle_keyboard</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_open</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_window</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">on_pre_open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
+<div class="viewcode-block" id="ModalView.on_pre_open"><a class="viewcode-back" href="../../../api-kivy.uix.modalview.html#kivy.uix.modalview.ModalView.on_pre_open">[docs]</a>    <span class="k">def</span> <span class="nf">on_pre_open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; default pre-open event handler. &quot;&quot;&quot;</span></div>
 
-    <span class="k">def</span> <span class="nf">on_open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
+<div class="viewcode-block" id="ModalView.on_open"><a class="viewcode-back" href="../../../api-kivy.uix.modalview.html#kivy.uix.modalview.ModalView.on_open">[docs]</a>    <span class="k">def</span> <span class="nf">on_open</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; default open event handler. &quot;&quot;&quot;</span></div>
 
-    <span class="k">def</span> <span class="nf">on_pre_dismiss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
+<div class="viewcode-block" id="ModalView.on_pre_dismiss"><a class="viewcode-back" href="../../../api-kivy.uix.modalview.html#kivy.uix.modalview.ModalView.on_pre_dismiss">[docs]</a>    <span class="k">def</span> <span class="nf">on_pre_dismiss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; default pre-dismiss event handler. &quot;&quot;&quot;</span></div>
 
-    <span class="k">def</span> <span class="nf">on_dismiss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">pass</span>
+<div class="viewcode-block" id="ModalView.on_dismiss"><a class="viewcode-back" href="../../../api-kivy.uix.modalview.html#kivy.uix.modalview.ModalView.on_dismiss">[docs]</a>    <span class="k">def</span> <span class="nf">on_dismiss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; default dismiss event handler. &quot;&quot;&quot;</span></div>
 
-    <span class="k">def</span> <span class="nf">_handle_keyboard</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_handle_keyboard</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_window</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="o">*</span><span class="n">_args</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="mi">27</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_dismiss</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dismiss</span><span class="p">()</span>
             <span class="k">return</span> <span class="kc">True</span></div>
@@ -681,29 +676,24 @@
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">kivy.base</span> <span class="kn">import</span> <span class="n">runTouchApp</span>
     <span class="kn">from</span> <span class="nn">kivy.uix.button</span> <span class="kn">import</span> <span class="n">Button</span>
+    <span class="kn">from</span> <span class="nn">kivy.core.window</span> <span class="kn">import</span> <span class="n">Window</span>
     <span class="kn">from</span> <span class="nn">kivy.uix.label</span> <span class="kn">import</span> <span class="n">Label</span>
     <span class="kn">from</span> <span class="nn">kivy.uix.gridlayout</span> <span class="kn">import</span> <span class="n">GridLayout</span>
-    <span class="kn">from</span> <span class="nn">kivy.core.window</span> <span class="kn">import</span> <span class="n">Window</span>
 
     <span class="c1"># add view</span>
     <span class="n">content</span> <span class="o">=</span> <span class="n">GridLayout</span><span class="p">(</span><span class="n">cols</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">content</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">Label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;This is a hello world&#39;</span><span class="p">))</span>
-    <span class="n">view</span> <span class="o">=</span> <span class="n">ModalView</span><span class="p">(</span><span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span>
-                     <span class="n">auto_dismiss</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">view</span> <span class="o">=</span> <span class="n">ModalView</span><span class="p">(</span><span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">))</span>
     <span class="n">view</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">open_view</span><span class="p">(</span><span class="n">btn</span><span class="p">):</span>
-        <span class="n">view</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
 
     <span class="n">layout</span> <span class="o">=</span> <span class="n">GridLayout</span><span class="p">(</span><span class="n">cols</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
-        <span class="n">btn</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;click me </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">x</span><span class="p">)</span>
+        <span class="n">btn</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;click me </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">btn</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_release</span><span class="o">=</span><span class="n">view</span><span class="o">.</span><span class="n">open</span><span class="p">)</span>
         <span class="n">layout</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">btn</span><span class="p">)</span>
     <span class="n">Window</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
 
     <span class="n">view</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
-
     <span class="n">runTouchApp</span><span class="p">()</span>
 </pre></div>
 
@@ -743,8 +733,8 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 18, 2021.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.2.
+      Last updated on Mar 21, 2021.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.3.
 </div>
 -->
   </body>
