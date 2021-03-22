@@ -652,7 +652,7 @@ automatic updating of the <code class="docutils literal notranslate"><span class
 was enabled. See <a class="reference internal" href="#kivy.properties.ObjectProperty" title="kivy.properties.ObjectProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectProperty</span></code></a>.</p>
 <dl class="py class">
 <dt id="kivy.properties.AliasProperty">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">kivy.properties.</span></code><code class="sig-name descname"><span class="pre">AliasProperty</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">getter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">setter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rebind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.properties.AliasProperty" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">kivy.properties.</span></code><code class="sig-name descname"><span class="pre">AliasProperty</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">getter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">setter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rebind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">watch_before_use</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.properties.AliasProperty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#kivy.properties.Property" title="kivy.properties.Property"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.properties.Property</span></code></a></p>
 <p>If you don’t find a Property class that fits to your needs, you can make
 your own by creating custom Python getter and setter methods.</p>
@@ -687,9 +687,9 @@ will be raised on every set attempt:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">right</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">get_right</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;width&#39;</span><span class="p">],</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
-<dl class="field-list simple">
+<dl class="field-list">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
+<dd class="field-odd"><dl>
 <dt><cite>getter</cite>: function</dt><dd><p>Function to use as a property getter.</p>
 </dd>
 <dt><cite>setter</cite>: function</dt><dd><p>Function to use as a property setter. Callbacks bound to the
@@ -705,6 +705,19 @@ elements changes or if setter returns <cite>True</cite>.</p>
 </dd>
 <dt><cite>rebind</cite>: bool, defaults to <cite>False</cite></dt><dd><p>See <a class="reference internal" href="#kivy.properties.ObjectProperty" title="kivy.properties.ObjectProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectProperty</span></code></a> for details.</p>
 </dd>
+<dt><cite>watch_before_use</cite>: bool, defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code></dt><dd><p>Whether the <code class="docutils literal notranslate"><span class="pre">bind</span></code> properties are tracked (bound) before this
+property is used in any way.</p>
+<p>By default, the getter is called if the <code class="docutils literal notranslate"><span class="pre">bind</span></code> properties update
+or if the property value (unless cached) is read. As an
+optimization to speed up widget creation, when <code class="docutils literal notranslate"><span class="pre">watch_before_use</span></code>
+is False, we only track the bound properties once this property is
+used in any way (i.e. it is bound, it was set/read, etc).</p>
+<p>The property value read/set/bound will be correct as expected in
+both cases. The difference is only that when <code class="docutils literal notranslate"><span class="pre">False</span></code>, any side
+effects from the <code class="docutils literal notranslate"><span class="pre">getter</span></code> would not occur until this property is
+interacted with in any way because the <code class="docutils literal notranslate"><span class="pre">getter</span></code> won’t be called
+early.</p>
+</dd>
 </dl>
 </dd>
 </dl>
@@ -715,11 +728,6 @@ elements changes or if setter returns <cite>True</cite>.</p>
 <p><span class="versionmodified changed">Changed in version 1.4.0: </span>Parameter <cite>cache</cite> added.</p>
 </div>
 <dl class="py method">
-<dt id="kivy.properties.AliasProperty.dispatch">
-<code class="sig-name descname"><span class="pre">dispatch</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">EventDispatcher</span> <span class="pre">obj</span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.properties.AliasProperty.dispatch" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
 <dt id="kivy.properties.AliasProperty.get">
 <code class="sig-name descname"><span class="pre">get</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">EventDispatcher</span> <span class="pre">obj</span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.properties.AliasProperty.get" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -727,6 +735,11 @@ elements changes or if setter returns <cite>True</cite>.</p>
 <dl class="py method">
 <dt id="kivy.properties.AliasProperty.link_deps">
 <code class="sig-name descname"><span class="pre">link_deps</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">EventDispatcher</span> <span class="pre">obj</span></em>, <em class="sig-param"><span class="pre">unicode</span> <span class="pre">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.properties.AliasProperty.link_deps" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="kivy.properties.AliasProperty.link_eagerly">
+<code class="sig-name descname"><span class="pre">link_eagerly</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">EventDispatcher</span> <span class="pre">obj</span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">PropertyStorage</span><a class="headerlink" href="#kivy.properties.AliasProperty.link_eagerly" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1077,7 +1090,7 @@ dict and not the original dict. See <a class="reference internal" href="#kivy.pr
 </div>
 <dl class="py method">
 <dt id="kivy.properties.DictProperty.link">
-<code class="sig-name descname"><span class="pre">link</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">EventDispatcher</span> <span class="pre">obj</span></em>, <em class="sig-param"><span class="pre">unicode</span> <span class="pre">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.properties.DictProperty.link" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">link</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">EventDispatcher</span> <span class="pre">obj</span></em>, <em class="sig-param"><span class="pre">unicode</span> <span class="pre">name</span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">PropertyStorage</span><a class="headerlink" href="#kivy.properties.DictProperty.link" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1133,7 +1146,7 @@ since the property uses a shallow copy of my_list.</p>
 </div>
 <dl class="py method">
 <dt id="kivy.properties.ListProperty.link">
-<code class="sig-name descname"><span class="pre">link</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">EventDispatcher</span> <span class="pre">obj</span></em>, <em class="sig-param"><span class="pre">unicode</span> <span class="pre">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.properties.ListProperty.link" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">link</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">EventDispatcher</span> <span class="pre">obj</span></em>, <em class="sig-param"><span class="pre">unicode</span> <span class="pre">name</span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">PropertyStorage</span><a class="headerlink" href="#kivy.properties.ListProperty.link" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1394,7 +1407,7 @@ which searches for all matches.</p>
 
 <dl class="py method">
 <dt id="kivy.properties.Property.link">
-<code class="sig-name descname"><span class="pre">link</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">EventDispatcher</span> <span class="pre">obj</span></em>, <em class="sig-param"><span class="pre">unicode</span> <span class="pre">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.properties.Property.link" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">link</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">EventDispatcher</span> <span class="pre">obj</span></em>, <em class="sig-param"><span class="pre">unicode</span> <span class="pre">name</span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">PropertyStorage</span><a class="headerlink" href="#kivy.properties.Property.link" title="Permalink to this definition">¶</a></dt>
 <dd><p>Link the instance with its real name.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1419,14 +1432,24 @@ storage space of the property for this specific widget instance.</p>
 <dd></dd></dl>
 
 <dl class="py method">
+<dt id="kivy.properties.Property.link_eagerly">
+<code class="sig-name descname"><span class="pre">link_eagerly</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">EventDispatcher</span> <span class="pre">obj</span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">PropertyStorage</span><a class="headerlink" href="#kivy.properties.Property.link_eagerly" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="kivy.properties.Property.set">
 <code class="sig-name descname"><span class="pre">set</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">EventDispatcher</span> <span class="pre">obj</span></em>, <em class="sig-param"><span class="pre">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.properties.Property.set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set a new value for the property.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="kivy.properties.Property.set_name">
+<code class="sig-name descname"><span class="pre">set_name</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">EventDispatcher</span> <span class="pre">obj</span></em>, <em class="sig-param"><span class="pre">unicode</span> <span class="pre">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.properties.Property.set_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="kivy.properties.Property.unbind">
-<code class="sig-name descname"><span class="pre">unbind</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">EventDispatcher</span> <span class="pre">obj</span></em>, <em class="sig-param"><span class="pre">observer</span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.properties.Property.unbind" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">unbind</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">EventDispatcher</span> <span class="pre">obj</span></em>, <em class="sig-param"><span class="pre">observer</span></em>, <em class="sig-param"><span class="pre">int</span> <span class="pre">stop_on_first=0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.properties.Property.unbind" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove the observer from our widget observer list.</p>
 </dd></dl>
 
@@ -1462,7 +1485,7 @@ If you read the value of <cite>pos</cite>, it will return a tuple with the value
 
 <dl class="py method">
 <dt id="kivy.properties.ReferenceListProperty.link">
-<code class="sig-name descname"><span class="pre">link</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">EventDispatcher</span> <span class="pre">obj</span></em>, <em class="sig-param"><span class="pre">unicode</span> <span class="pre">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.properties.ReferenceListProperty.link" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">link</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">EventDispatcher</span> <span class="pre">obj</span></em>, <em class="sig-param"><span class="pre">unicode</span> <span class="pre">name</span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">PropertyStorage</span><a class="headerlink" href="#kivy.properties.ReferenceListProperty.link" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1544,7 +1567,7 @@ here are some examples of how VariabelListProperty’s are handled.</p>
 
 <dl class="py method">
 <dt id="kivy.properties.VariableListProperty.link">
-<code class="sig-name descname"><span class="pre">link</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">EventDispatcher</span> <span class="pre">obj</span></em>, <em class="sig-param"><span class="pre">unicode</span> <span class="pre">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.properties.VariableListProperty.link" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">link</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">EventDispatcher</span> <span class="pre">obj</span></em>, <em class="sig-param"><span class="pre">unicode</span> <span class="pre">name</span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">PropertyStorage</span><a class="headerlink" href="#kivy.properties.VariableListProperty.link" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1601,7 +1624,7 @@ here are some examples of how VariabelListProperty’s are handled.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 21, 2021.
+      Last updated on Mar 22, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.3.
 </div>
 -->
