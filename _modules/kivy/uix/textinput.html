@@ -3423,47 +3423,6 @@
 <span class="sd">    and defaults to True on mobile OS&#39;s, False on desktop OS&#39;s.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="n">suggestion_text</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Shows a suggestion text at the end of the current line.</span>
-<span class="sd">    The feature is useful for text autocompletion, and it does not implement</span>
-<span class="sd">    validation (accepting the suggested text on enter etc.).</span>
-<span class="sd">    This can also be used by the IME to setup the current word being edited.</span>
-
-<span class="sd">    .. versionadded:: 1.9.0</span>
-
-<span class="sd">    :attr:`suggestion_text` is a :class:`~kivy.properties.StringProperty` and</span>
-<span class="sd">    defaults to `&#39;&#39;`.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-
-    <span class="k">def</span> <span class="nf">on_suggestion_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="k">global</span> <span class="n">MarkupLabel</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">MarkupLabel</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">kivy.core.text.markup</span> <span class="kn">import</span> <span class="n">MarkupLabel</span>
-
-        <span class="n">cursor_row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_row</span>
-        <span class="k">if</span> <span class="n">cursor_row</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lines</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span>
-
-        <span class="n">cursor_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span>
-        <span class="n">txt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lines</span><span class="p">[</span><span class="n">cursor_row</span><span class="p">]</span>
-
-        <span class="n">kw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_line_options</span><span class="p">()</span>
-        <span class="n">rct</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lines_rects</span><span class="p">[</span><span class="n">cursor_row</span><span class="p">]</span>
-
-        <span class="n">lbl</span> <span class="o">=</span> <span class="n">text</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
-            <span class="n">lbl</span> <span class="o">=</span> <span class="n">MarkupLabel</span><span class="p">(</span>
-                <span class="n">text</span><span class="o">=</span><span class="n">txt</span> <span class="o">+</span> <span class="s2">&quot;[b]</span><span class="si">{}</span><span class="s2">[/b]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">lbl</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
-            <span class="n">text</span> <span class="o">=</span> <span class="n">txt</span>
-
-        <span class="n">lbl</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_lines_labels</span><span class="p">[</span><span class="n">cursor_row</span><span class="p">]</span> <span class="o">=</span> <span class="n">lbl</span><span class="o">.</span><span class="n">texture</span>
-        <span class="n">rct</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">lbl</span><span class="o">.</span><span class="n">size</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_update_graphics</span><span class="p">()</span>
-
     <span class="k">def</span> <span class="nf">get_sel_from</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_from</span>
 
@@ -3832,23 +3791,16 @@
     <span class="kn">from</span> <span class="nn">kivy.lang</span> <span class="kn">import</span> <span class="n">Builder</span>
 
     <span class="k">class</span> <span class="nc">TextInputApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
-
         <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-
-            <span class="n">Builder</span><span class="o">.</span><span class="n">load_string</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
-<span class="s1">&lt;TextInput&gt;</span>
-<span class="s1">    on_text:</span>
-<span class="s1">        self.suggestion_text = &#39;&#39;</span>
-<span class="s1">        self.suggestion_text = &#39;ion_text&#39;</span>
-
-<span class="s1">&#39;&#39;&#39;</span><span class="p">)</span>
             <span class="n">root</span> <span class="o">=</span> <span class="n">BoxLayout</span><span class="p">(</span><span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">)</span>
-            <span class="n">textinput</span> <span class="o">=</span> <span class="n">TextInput</span><span class="p">(</span><span class="n">multiline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">use_bubble</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                  <span class="n">use_handles</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="c1"># textinput.text = __doc__</span>
+            <span class="n">textinput</span> <span class="o">=</span> <span class="n">TextInput</span><span class="p">(</span>
+                <span class="n">multiline</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">use_bubble</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">use_handles</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
             <span class="n">root</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">textinput</span><span class="p">)</span>
-            <span class="n">textinput2</span> <span class="o">=</span> <span class="n">TextInput</span><span class="p">(</span><span class="n">multiline</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;monoline textinput&#39;</span><span class="p">,</span>
-                                   <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">height</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+            <span class="n">textinput2</span> <span class="o">=</span> <span class="n">TextInput</span><span class="p">(</span>
+                <span class="n">multiline</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;monoline textinput&#39;</span><span class="p">,</span>
+                <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">height</span><span class="o">=</span><span class="mi">30</span>
+            <span class="p">)</span>
             <span class="n">root</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">textinput2</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">root</span>
 
@@ -3891,7 +3843,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 22, 2021.
+      Last updated on Mar 23, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.3.
 </div>
 -->
