@@ -1160,6 +1160,24 @@ since the property uses a shallow copy of my_list.</p>
 <dt id="kivy.properties.NumericProperty">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">kivy.properties.</span></code><code class="sig-name descname"><span class="pre">NumericProperty</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">defaultvalue</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.properties.NumericProperty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#kivy.properties.Property" title="kivy.properties.Property"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.properties.Property</span></code></a></p>
+<p>It only accepts the int or float numeric data type or a string that can be
+converted to a number as shown below. For other numeric types use ObjectProperty
+or use errorhandler to convert it to an int/float.</p>
+<p>It does not support numpy numbers so they must be manually converted to int/float.
+E.g. <code class="docutils literal notranslate"><span class="pre">widget.num</span> <span class="pre">=</span> <span class="pre">np.arange(4)[0]</span></code> will raise an exception. Numpy arrays are not
+supported at all, even by ObjectProperty because their comparision does not return
+a bool. But if you must use a Kivy property, use a ObjectProperty with <code class="docutils literal notranslate"><span class="pre">comparator</span></code>
+set to <code class="docutils literal notranslate"><span class="pre">np.array_equal</span></code>. E.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">data</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="n">comparator</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">A</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="nb">print</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">&lt;__main__.A object at 0x000001C839B50208&gt; [0 1]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">&lt;__main__.A object at 0x000001C839B50208&gt; [0 1 2]</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
