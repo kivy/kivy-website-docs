@@ -590,9 +590,9 @@
         <span class="n">cur</span><span class="o">.</span><span class="n">clear_graphics</span><span class="p">(</span><span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">on_mouse_motion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
-        <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">system_size</span>
-        <span class="n">rx</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">width</span><span class="p">)</span>
-        <span class="n">ry</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">-</span> <span class="n">y</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">height</span><span class="p">)</span>
+        <span class="n">x_max</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">system_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">win</span><span class="o">.</span><span class="n">system_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mf">1.0</span>
+        <span class="n">rx</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="n">x_max</span> <span class="k">if</span> <span class="n">x_max</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+        <span class="n">ry</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">y</span> <span class="o">/</span> <span class="n">y_max</span> <span class="k">if</span> <span class="n">y_max</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_drag</span><span class="p">:</span>
             <span class="n">cur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_drag</span>
             <span class="n">cur</span><span class="o">.</span><span class="n">move</span><span class="p">([</span><span class="n">rx</span><span class="p">,</span> <span class="n">ry</span><span class="p">])</span>
@@ -607,9 +607,9 @@
     <span class="k">def</span> <span class="nf">on_mouse_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_activity</span><span class="p">():</span>
             <span class="k">return</span>
-        <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">system_size</span>
-        <span class="n">rx</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">width</span><span class="p">)</span>
-        <span class="n">ry</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">-</span> <span class="n">y</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">height</span><span class="p">)</span>
+        <span class="n">x_max</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">system_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">win</span><span class="o">.</span><span class="n">system_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mf">1.0</span>
+        <span class="n">rx</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="n">x_max</span> <span class="k">if</span> <span class="n">x_max</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+        <span class="n">ry</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">y</span> <span class="o">/</span> <span class="n">y_max</span> <span class="k">if</span> <span class="n">y_max</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">)</span>
         <span class="n">new_me</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_touch</span><span class="p">(</span><span class="n">rx</span><span class="p">,</span> <span class="n">ry</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">new_me</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">current_drag</span> <span class="o">=</span> <span class="n">new_me</span>
@@ -705,7 +705,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 23, 2021.
+      Last updated on Mar 24, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.3.
 </div>
 -->
