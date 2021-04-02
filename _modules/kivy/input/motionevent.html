@@ -519,14 +519,13 @@
          <span class="s1">&#39;is_triple_tap&#39;</span><span class="p">,</span> <span class="s1">&#39;triple_tap_time&#39;</span><span class="p">,</span>
          <span class="s1">&#39;ud&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">is_touch</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">==</span> <span class="n">MotionEvent</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;class MotionEvent is abstract&#39;</span><span class="p">)</span>
         <span class="n">MotionEvent</span><span class="o">.</span><span class="n">__uniq_id</span> <span class="o">+=</span> <span class="mi">1</span>
 
-        <span class="c1">#: True if the Motion Event is a Touch. Can be also verified is</span>
-        <span class="c1">#: `pos` is :attr:`profile`.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">is_touch</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="c1">#: True if the Motion Event is a Touch.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_touch</span> <span class="o">=</span> <span class="n">is_touch</span>
 
         <span class="c1">#: Attributes to push by default, when we use :meth:`push` : x, y, z,</span>
         <span class="c1">#: dx, dy, dz, ox, oy, oz, px, py, pz.</span>
@@ -549,6 +548,9 @@
         <span class="c1">#: Used to determine which widget the touch is being dispatched to.</span>
         <span class="c1">#: Check the :meth:`grab` function for more information.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">grab_current</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1">#: Currently pressed button</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="c1">#: Profiles currently used in the touch</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">profile</span> <span class="o">=</span> <span class="p">[]</span>
@@ -684,9 +686,10 @@
 <span class="sd">                else:</span>
 <span class="sd">                    # it&#39;s a normal touch</span>
 <span class="sd">                    pass</span>
+
+<span class="sd">        .. versionchanged:: 2.1.0</span>
+<span class="sd">            Allowed grab for non-touch events.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_touch</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Grab works only for Touch MotionEvents.&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">grab_exclusive_class</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Cannot grab the touch, touch is exclusive&#39;</span><span class="p">)</span>
         <span class="n">class_instance</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">class_instance</span><span class="o">.</span><span class="vm">__self__</span><span class="p">)</span>
@@ -889,7 +892,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Apr 01, 2021.
+      Last updated on Apr 02, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.3.
 </div>
 -->
