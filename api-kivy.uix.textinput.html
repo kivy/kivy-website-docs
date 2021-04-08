@@ -463,7 +463,7 @@ this function. By overwriting it you can reject or change unwanted characters.</
 
     <span class="k">def</span> <span class="nf">insert_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">substring</span><span class="p">,</span> <span class="n">from_undo</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">substring</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">CapitalInput</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">insert_text</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">from_undo</span><span class="o">=</span><span class="n">from_undo</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">insert_text</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">from_undo</span><span class="o">=</span><span class="n">from_undo</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Or to only allow floats (0 - 9 and a single period):</p>
@@ -475,8 +475,11 @@ this function. By overwriting it you can reject or change unwanted characters.</
         <span class="k">if</span> <span class="s1">&#39;.&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
             <span class="n">s</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">pat</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">substring</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">pat</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">substring</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)])</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">FloatInput</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">insert_text</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">from_undo</span><span class="o">=</span><span class="n">from_undo</span><span class="p">)</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">pat</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">substring</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">insert_text</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">from_undo</span><span class="o">=</span><span class="n">from_undo</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -936,6 +939,18 @@ This function is automatically called when <cite>ctrl+z</cite> keys are pressed.
 </dd></dl>
 
 <dl class="py attribute">
+<dt id="kivy.uix.textinput.TextInput.do_wrap">
+<code class="sig-name descname"><span class="pre">do_wrap</span></code><a class="headerlink" href="#kivy.uix.textinput.TextInput.do_wrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>If True, and the text is multiline, then lines larger than the width of
+the widget will wrap around to the next line, avoiding the need for
+horizontal scrolling. Disabling this option ensure one line is always
+displayed as one line.</p>
+<p><a class="reference internal" href="#kivy.uix.textinput.TextInput.do_wrap" title="kivy.uix.textinput.TextInput.do_wrap"><code class="xref py py-attr docutils literal notranslate"><span class="pre">do_wrap</span></code></a> is a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.BooleanProperty" title="kivy.properties.BooleanProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">BooleanProperty</span></code></a> and defaults
+to True.</p>
+<p>versionadded:: 2.1.0</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt id="kivy.uix.textinput.TextInput.font_context">
 <code class="sig-name descname"><span class="pre">font_context</span></code><a class="headerlink" href="#kivy.uix.textinput.TextInput.font_context" title="Permalink to this definition">¶</a></dt>
 <dd><p>Font context. <cite>None</cite> means the font is used in isolation, so you are
@@ -1236,6 +1251,19 @@ defaults to True.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="kivy.uix.textinput.TextInput.on_cursor">
+<code class="sig-name descname"><span class="pre">on_cursor</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/uix/textinput.html#TextInput.on_cursor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.uix.textinput.TextInput.on_cursor" title="Permalink to this definition">¶</a></dt>
+<dd><p>When the cursor is moved, reset cursor blinking to keep it showing,
+and update all the graphics.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="kivy.uix.textinput.TextInput.on_cursor_blink">
+<code class="sig-name descname"><span class="pre">on_cursor_blink</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/uix/textinput.html#TextInput.on_cursor_blink"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.uix.textinput.TextInput.on_cursor_blink" title="Permalink to this definition">¶</a></dt>
+<dd><p>trigger blink event reset to switch blinking while focused</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="kivy.uix.textinput.TextInput.on_double_tap">
 <code class="sig-name descname"><span class="pre">on_double_tap</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/uix/textinput.html#TextInput.on_double_tap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.uix.textinput.TextInput.on_double_tap" title="Permalink to this definition">¶</a></dt>
 <dd><p>This event is dispatched when a double tap happens
@@ -1370,6 +1398,12 @@ position.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.8.0.</span></p>
 </div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="kivy.uix.textinput.TextInput.pgmove_speed">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">pgmove_speed</span></code><a class="headerlink" href="#kivy.uix.textinput.TextInput.pgmove_speed" title="Permalink to this definition">¶</a></dt>
+<dd><p>how much vertical distance hitting pg_up or pg_down will move</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1644,7 +1678,7 @@ defaults to <cite>True</cite>.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Apr 05, 2021.
+      Last updated on Apr 08, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.3.
 </div>
 -->
