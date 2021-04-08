@@ -384,11 +384,31 @@ hood.</p>
 the video is loaded (when the texture is created):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">on_position_change</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The position in the video is&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
 <span class="k">def</span> <span class="nf">on_duration_change</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The duration of the video is&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
 <span class="n">video</span> <span class="o">=</span> <span class="n">Video</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;PandaSneezes.avi&#39;</span><span class="p">)</span>
-<span class="n">video</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="n">on_position_change</span><span class="p">,</span>
-           <span class="n">duration</span><span class="o">=</span><span class="n">on_duration_change</span><span class="p">)</span>
+<span class="n">video</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span>
+    <span class="n">position</span><span class="o">=</span><span class="n">on_position_change</span><span class="p">,</span>
+    <span class="n">duration</span><span class="o">=</span><span class="n">on_duration_change</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>One can define a preview image which gets displayed until the video is
+started/loaded by passing <code class="docutils literal notranslate"><span class="pre">preview</span></code> to the constructor:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">video</span> <span class="o">=</span> <span class="n">Video</span><span class="p">(</span>
+    <span class="n">source</span><span class="o">=</span><span class="s1">&#39;PandaSneezes.avi&#39;</span><span class="p">,</span>
+    <span class="n">preview</span><span class="o">=</span><span class="s1">&#39;PandaSneezes_preview.png&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>One can display the placeholder image when the video stops by reacting on eos:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">on_eos_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inst</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">val</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">preview</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_texture_from_resource</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preview</span><span class="p">)</span>
+
+<span class="n">video</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">eos</span><span class="o">=</span><span class="n">on_eos_change</span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="py class">
@@ -468,6 +488,18 @@ False.</p>
 defaults to -1 and is set to a real position when the video is loaded.</p>
 <p><a class="reference internal" href="#kivy.uix.video.Video.position" title="kivy.uix.video.Video.position"><code class="xref py py-attr docutils literal notranslate"><span class="pre">position</span></code></a> is a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.NumericProperty" title="kivy.properties.NumericProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">NumericProperty</span></code></a> and
 defaults to -1.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="kivy.uix.video.Video.preview">
+<code class="sig-name descname"><span class="pre">preview</span></code><a class="headerlink" href="#kivy.uix.video.Video.preview" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filename / source of a preview image displayed before video starts.</p>
+<p><a class="reference internal" href="#kivy.uix.video.Video.preview" title="kivy.uix.video.Video.preview"><code class="xref py py-attr docutils literal notranslate"><span class="pre">preview</span></code></a> is a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.StringProperty" title="kivy.properties.StringProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> and
+defaults to None.</p>
+<p>If set, it gets displayed until the video is loaded/started.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.1.0.</span></p>
+</div>
 </dd></dl>
 
 <dl class="py method">

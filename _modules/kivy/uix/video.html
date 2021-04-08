@@ -378,12 +378,31 @@
 
 <span class="sd">    def on_position_change(instance, value):</span>
 <span class="sd">        print(&#39;The position in the video is&#39;, value)</span>
+
 <span class="sd">    def on_duration_change(instance, value):</span>
 <span class="sd">        print(&#39;The duration of the video is&#39;, value)</span>
-<span class="sd">    video = Video(source=&#39;PandaSneezes.avi&#39;)</span>
-<span class="sd">    video.bind(position=on_position_change,</span>
-<span class="sd">               duration=on_duration_change)</span>
 
+<span class="sd">    video = Video(source=&#39;PandaSneezes.avi&#39;)</span>
+<span class="sd">    video.bind(</span>
+<span class="sd">        position=on_position_change,</span>
+<span class="sd">        duration=on_duration_change</span>
+<span class="sd">    )</span>
+
+<span class="sd">One can define a preview image which gets displayed until the video is</span>
+<span class="sd">started/loaded by passing ``preview`` to the constructor::</span>
+
+<span class="sd">    video = Video(</span>
+<span class="sd">        source=&#39;PandaSneezes.avi&#39;,</span>
+<span class="sd">        preview=&#39;PandaSneezes_preview.png&#39;</span>
+<span class="sd">    )</span>
+
+<span class="sd">One can display the placeholder image when the video stops by reacting on eos::</span>
+
+<span class="sd">    def on_eos_change(self, inst, val):</span>
+<span class="sd">        if val and self.preview:</span>
+<span class="sd">            self.set_texture_from_resource(self.preview)</span>
+
+<span class="sd">    video.bind(eos=on_eos_change)</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Video&#39;</span><span class="p">,</span> <span class="p">)</span>
@@ -393,11 +412,22 @@
 <span class="kn">from</span> <span class="nn">kivy.core.video</span> <span class="kn">import</span> <span class="n">Video</span> <span class="k">as</span> <span class="n">CoreVideo</span>
 <span class="kn">from</span> <span class="nn">kivy.resources</span> <span class="kn">import</span> <span class="n">resource_find</span>
 <span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="p">(</span><span class="n">BooleanProperty</span><span class="p">,</span> <span class="n">NumericProperty</span><span class="p">,</span> <span class="n">ObjectProperty</span><span class="p">,</span>
-                             <span class="n">OptionProperty</span><span class="p">)</span>
+                             <span class="n">OptionProperty</span><span class="p">,</span> <span class="n">StringProperty</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="Video"><a class="viewcode-back" href="../../../api-kivy.uix.video.html#kivy.uix.video.Video">[docs]</a><span class="k">class</span> <span class="nc">Video</span><span class="p">(</span><span class="n">Image</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Video class. See module documentation for more information.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">preview</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;Filename / source of a preview image displayed before video starts.</span>
+
+<span class="sd">    :attr:`preview` is a :class:`~kivy.properties.StringProperty` and</span>
+<span class="sd">    defaults to None.</span>
+
+<span class="sd">    If set, it gets displayed until the video is loaded/started.</span>
+
+<span class="sd">    .. versionadded:: 2.1.0</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">state</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">&#39;stop&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;play&#39;</span><span class="p">,</span> <span class="s1">&#39;pause&#39;</span><span class="p">,</span> <span class="s1">&#39;stop&#39;</span><span class="p">))</span>
@@ -500,6 +530,12 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;eos&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;eos&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_video_load</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">texture_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">preview</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_texture_from_resource</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preview</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_texture_from_resource</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Video.seek"><a class="viewcode-back" href="../../../api-kivy.uix.video.html#kivy.uix.video.Video.seek">[docs]</a>    <span class="k">def</span> <span class="nf">seek</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">percent</span><span class="p">,</span> <span class="n">precise</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Change the position to a percentage (strictly, a proportion)</span>
