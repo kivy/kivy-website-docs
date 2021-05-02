@@ -561,8 +561,7 @@
             <span class="k">return</span> <span class="kc">False</span>
         <span class="c1"># trying to get if we currently have other touch than us</span>
         <span class="c1"># discard touches generated from kinetic</span>
-        <span class="n">touches</span> <span class="o">=</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">touches</span>
-        <span class="k">for</span> <span class="n">touch</span> <span class="ow">in</span> <span class="n">touches</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">touch</span> <span class="ow">in</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">touches</span><span class="p">:</span>
             <span class="c1"># discard all kinetic touch</span>
             <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;KineticMotionEvent&#39;</span><span class="p">:</span>
                 <span class="k">continue</span>
@@ -571,63 +570,60 @@
                 <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="nf">find_touch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-        <span class="n">factor</span> <span class="o">=</span> <span class="mf">10.</span> <span class="o">/</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">system_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">touches</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-            <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">t</span><span class="o">.</span><span class="n">sx</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">factor</span> <span class="ow">and</span> <span class="nb">abs</span><span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">t</span><span class="o">.</span><span class="n">sy</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">factor</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">t</span>
-        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">def</span> <span class="nf">find_touch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">factor</span> <span class="o">=</span> <span class="mf">10.</span> <span class="o">/</span> <span class="n">win</span><span class="o">.</span><span class="n">system_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">touch</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">touches</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">sx</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">factor</span> <span class="ow">and</span> <span class="nb">abs</span><span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">sy</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">factor</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">touch</span>
+        <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">create_event_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">counter</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">create_touch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rx</span><span class="p">,</span> <span class="n">ry</span><span class="p">,</span> <span class="n">is_double_tap</span><span class="p">,</span> <span class="n">do_graphics</span><span class="p">,</span> <span class="n">button</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">create_touch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">is_double_tap</span><span class="p">,</span> <span class="n">do_graphics</span><span class="p">,</span> <span class="n">button</span><span class="p">):</span>
         <span class="n">event_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_event_id</span><span class="p">()</span>
-        <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">rx</span><span class="p">,</span> <span class="n">ry</span><span class="p">,</span> <span class="n">button</span><span class="p">]</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">button</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">do_graphics</span><span class="p">:</span>
             <span class="n">args</span> <span class="o">+=</span> <span class="p">[</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">multitouch_on_demand</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">current_drag</span> <span class="o">=</span> <span class="n">cur</span> <span class="o">=</span> <span class="n">MouseMotionEvent</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_drag</span> <span class="o">=</span> <span class="n">touch</span> <span class="o">=</span> <span class="n">MouseMotionEvent</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">event_id</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span>
             <span class="n">is_touch</span><span class="o">=</span><span class="kc">True</span>
         <span class="p">)</span>
-        <span class="n">cur</span><span class="o">.</span><span class="n">is_double_tap</span> <span class="o">=</span> <span class="n">is_double_tap</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">touches</span><span class="p">[</span><span class="n">event_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur</span>
+        <span class="n">touch</span><span class="o">.</span><span class="n">is_double_tap</span> <span class="o">=</span> <span class="n">is_double_tap</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">touches</span><span class="p">[</span><span class="n">event_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">touch</span>
         <span class="k">if</span> <span class="n">do_graphics</span><span class="p">:</span>
             <span class="c1"># only draw red circle if multitouch is not disabled, and</span>
             <span class="c1"># if the multitouch_on_demand feature is not enable</span>
             <span class="c1"># (because in that case, we wait to see if multitouch_sim</span>
             <span class="c1"># is True or not before doing the multitouch)</span>
             <span class="n">create_flag</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">disable_multitouch</span><span class="p">)</span> <span class="ow">and</span>
-                <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">multitouch_on_demand</span><span class="p">)</span>
+                <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">disable_multitouch</span>
+                <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">multitouch_on_demand</span>
             <span class="p">)</span>
-            <span class="n">cur</span><span class="o">.</span><span class="n">update_graphics</span><span class="p">(</span><span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">create_flag</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">waiting_event</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;begin&#39;</span><span class="p">,</span> <span class="n">cur</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">cur</span>
+            <span class="n">touch</span><span class="o">.</span><span class="n">update_graphics</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">create_flag</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">waiting_event</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;begin&#39;</span><span class="p">,</span> <span class="n">touch</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">touch</span>
 
-    <span class="k">def</span> <span class="nf">remove_touch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cur</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">cur</span><span class="o">.</span><span class="n">id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">touches</span><span class="p">:</span>
-            <span class="k">return</span>
-        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">touches</span><span class="p">[</span><span class="n">cur</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
-        <span class="n">cur</span><span class="o">.</span><span class="n">update_time_end</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">waiting_event</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;end&#39;</span><span class="p">,</span> <span class="n">cur</span><span class="p">))</span>
-        <span class="n">cur</span><span class="o">.</span><span class="n">clear_graphics</span><span class="p">(</span><span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">remove_touch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">touches</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">touches</span><span class="p">[</span><span class="n">touch</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+            <span class="n">touch</span><span class="o">.</span><span class="n">update_time_end</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">waiting_event</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;end&#39;</span><span class="p">,</span> <span class="n">touch</span><span class="p">))</span>
+            <span class="n">touch</span><span class="o">.</span><span class="n">clear_graphics</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">create_hover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">etype</span><span class="p">,</span> <span class="n">win</span><span class="p">):</span>
-        <span class="n">x_max</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">system_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">win</span><span class="o">.</span><span class="n">system_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
-        <span class="n">args</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">win</span><span class="o">.</span><span class="n">mouse_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">win</span><span class="o">.</span><span class="n">_density</span> <span class="o">/</span> <span class="n">x_max</span> <span class="k">if</span> <span class="n">x_max</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">,</span>
-            <span class="n">win</span><span class="o">.</span><span class="n">mouse_pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">win</span><span class="o">.</span><span class="n">_density</span> <span class="o">/</span> <span class="n">y_max</span> <span class="k">if</span> <span class="n">y_max</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
-        <span class="p">)</span>
+    <span class="k">def</span> <span class="nf">create_hover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">etype</span><span class="p">):</span>
+        <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">to_normalized_pos</span><span class="p">(</span><span class="o">*</span><span class="n">win</span><span class="o">.</span><span class="n">mouse_pos</span><span class="p">)</span>
+        <span class="c1"># Divide by density because it&#39;s used by mouse_pos</span>
+        <span class="n">nx</span> <span class="o">/=</span> <span class="n">win</span><span class="o">.</span><span class="n">_density</span>
+        <span class="n">ny</span> <span class="o">/=</span> <span class="n">win</span><span class="o">.</span><span class="n">_density</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">)</span>
         <span class="n">hover</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hover_event</span>
         <span class="k">if</span> <span class="n">hover</span><span class="p">:</span>
             <span class="n">hover</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">hover_event</span> <span class="o">=</span> <span class="n">hover</span> <span class="o">=</span> <span class="n">MouseMotionEvent</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">create_event_id</span><span class="p">(),</span>
-                <span class="n">args</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_event_id</span><span class="p">(),</span> <span class="n">args</span>
             <span class="p">)</span>
         <span class="k">if</span> <span class="n">etype</span> <span class="o">==</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span>
             <span class="n">hover</span><span class="o">.</span><span class="n">update_time_end</span><span class="p">()</span>
@@ -635,86 +631,83 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">waiting_event</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">etype</span><span class="p">,</span> <span class="n">hover</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">on_mouse_motion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
-        <span class="n">x_max</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">system_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">win</span><span class="o">.</span><span class="n">system_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mf">1.0</span>
-        <span class="n">rx</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="n">x_max</span> <span class="k">if</span> <span class="n">x_max</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
-        <span class="n">ry</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">y</span> <span class="o">/</span> <span class="n">y_max</span> <span class="k">if</span> <span class="n">y_max</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">to_normalized_pos</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">ny</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">ny</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_drag</span><span class="p">:</span>
-            <span class="n">cur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_drag</span>
-            <span class="n">cur</span><span class="o">.</span><span class="n">move</span><span class="p">([</span><span class="n">rx</span><span class="p">,</span> <span class="n">ry</span><span class="p">])</span>
-            <span class="n">cur</span><span class="o">.</span><span class="n">update_graphics</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">waiting_event</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="n">cur</span><span class="p">))</span>
+            <span class="n">touch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_drag</span>
+            <span class="n">touch</span><span class="o">.</span><span class="n">move</span><span class="p">([</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">])</span>
+            <span class="n">touch</span><span class="o">.</span><span class="n">update_graphics</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">waiting_event</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="n">touch</span><span class="p">))</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">alt_touch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="s1">&#39;alt&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">modifiers</span><span class="p">:</span>
             <span class="c1"># alt just released ?</span>
             <span class="n">is_double_tap</span> <span class="o">=</span> <span class="s1">&#39;shift&#39;</span> <span class="ow">in</span> <span class="n">modifiers</span>
-            <span class="n">cur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_touch</span><span class="p">(</span><span class="n">rx</span><span class="p">,</span> <span class="n">ry</span><span class="p">,</span> <span class="n">is_double_tap</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="p">[])</span>
-        <span class="k">return</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">create_touch</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">is_double_tap</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="p">[])</span>
 
     <span class="k">def</span> <span class="nf">on_mouse_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_activity</span><span class="p">():</span>
             <span class="k">return</span>
-        <span class="n">x_max</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">system_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">win</span><span class="o">.</span><span class="n">system_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mf">1.0</span>
-        <span class="n">rx</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="n">x_max</span> <span class="k">if</span> <span class="n">x_max</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
-        <span class="n">ry</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">y</span> <span class="o">/</span> <span class="n">y_max</span> <span class="k">if</span> <span class="n">y_max</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span><span class="p">)</span>
-        <span class="n">new_me</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_touch</span><span class="p">(</span><span class="n">rx</span><span class="p">,</span> <span class="n">ry</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">new_me</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">current_drag</span> <span class="o">=</span> <span class="n">new_me</span>
+        <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">to_normalized_pos</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">ny</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">ny</span>
+        <span class="n">found_touch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_touch</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">found_touch</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_drag</span> <span class="o">=</span> <span class="n">found_touch</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">is_double_tap</span> <span class="o">=</span> <span class="s1">&#39;shift&#39;</span> <span class="ow">in</span> <span class="n">modifiers</span>
-            <span class="n">do_graphics</span> <span class="o">=</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">disable_multitouch</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span>
-                <span class="n">button</span> <span class="o">!=</span> <span class="s1">&#39;left&#39;</span> <span class="ow">or</span> <span class="s1">&#39;ctrl&#39;</span> <span class="ow">in</span> <span class="n">modifiers</span><span class="p">)</span>
-            <span class="n">cur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_touch</span><span class="p">(</span><span class="n">rx</span><span class="p">,</span> <span class="n">ry</span><span class="p">,</span> <span class="n">is_double_tap</span><span class="p">,</span> <span class="n">do_graphics</span><span class="p">,</span> <span class="n">button</span><span class="p">)</span>
+            <span class="n">do_graphics</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">disable_multitouch</span>
+                <span class="ow">and</span> <span class="p">(</span><span class="n">button</span> <span class="o">!=</span> <span class="s1">&#39;left&#39;</span> <span class="ow">or</span> <span class="s1">&#39;ctrl&#39;</span> <span class="ow">in</span> <span class="n">modifiers</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">touch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_touch</span><span class="p">(</span>
+                <span class="n">win</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">is_double_tap</span><span class="p">,</span> <span class="n">do_graphics</span><span class="p">,</span> <span class="n">button</span>
+            <span class="p">)</span>
             <span class="k">if</span> <span class="s1">&#39;alt&#39;</span> <span class="ow">in</span> <span class="n">modifiers</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">alt_touch</span> <span class="o">=</span> <span class="n">cur</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">alt_touch</span> <span class="o">=</span> <span class="n">touch</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">current_drag</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">on_mouse_release</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
-        <span class="c1"># special case, if button is all, then remove all the current mouses.</span>
         <span class="k">if</span> <span class="n">button</span> <span class="o">==</span> <span class="s1">&#39;all&#39;</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">cur</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">touches</span><span class="o">.</span><span class="n">values</span><span class="p">())[:]:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">remove_touch</span><span class="p">(</span><span class="n">cur</span><span class="p">)</span>
+            <span class="c1"># Special case, if button is all,</span>
+            <span class="c1"># then remove all the current touches.</span>
+            <span class="k">for</span> <span class="n">touch</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">touches</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">remove_touch</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">touch</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">current_drag</span> <span class="o">=</span> <span class="kc">None</span>
-
-        <span class="n">cur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_drag</span>
-        <span class="k">if</span> <span class="n">cur</span><span class="p">:</span>
+        <span class="n">touch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_drag</span>
+        <span class="k">if</span> <span class="n">touch</span><span class="p">:</span>
             <span class="n">not_right</span> <span class="o">=</span> <span class="n">button</span> <span class="ow">in</span> <span class="p">(</span>
                 <span class="s1">&#39;left&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;scrollup&#39;</span><span class="p">,</span> <span class="s1">&#39;scrolldown&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;scrollleft&#39;</span><span class="p">,</span> <span class="s1">&#39;scrollright&#39;</span>
             <span class="p">)</span>
-            <span class="n">not_ctrl</span> <span class="o">=</span> <span class="ow">not</span> <span class="p">(</span><span class="s1">&#39;ctrl&#39;</span> <span class="ow">in</span> <span class="n">modifiers</span><span class="p">)</span>
+            <span class="n">not_ctrl</span> <span class="o">=</span> <span class="s1">&#39;ctrl&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">modifiers</span>
             <span class="n">not_multi</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">disable_multitouch</span> <span class="ow">or</span>
-                <span class="s1">&#39;multitouch_sim&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cur</span><span class="o">.</span><span class="n">profile</span> <span class="ow">or</span>
-                <span class="ow">not</span> <span class="n">cur</span><span class="o">.</span><span class="n">multitouch_sim</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">disable_multitouch</span>
+                <span class="ow">or</span> <span class="s1">&#39;multitouch_sim&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">profile</span>
+                <span class="ow">or</span> <span class="ow">not</span> <span class="n">touch</span><span class="o">.</span><span class="n">multitouch_sim</span>
             <span class="p">)</span>
-
-            <span class="k">if</span> <span class="p">(</span><span class="n">not_right</span> <span class="ow">and</span> <span class="n">not_ctrl</span> <span class="ow">or</span> <span class="n">not_multi</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">remove_touch</span><span class="p">(</span><span class="n">cur</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">not_right</span> <span class="ow">and</span> <span class="n">not_ctrl</span> <span class="ow">or</span> <span class="n">not_multi</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">remove_touch</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">touch</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">current_drag</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">cur</span><span class="o">.</span><span class="n">update_graphics</span><span class="p">(</span><span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-
+                <span class="n">touch</span><span class="o">.</span><span class="n">update_graphics</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">alt_touch</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">remove_touch</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alt_touch</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_touch</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">alt_touch</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">alt_touch</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">begin_or_update_hover_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="n">etype</span> <span class="o">=</span> <span class="s1">&#39;update&#39;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hover_event</span> <span class="k">else</span> <span class="s1">&#39;begin&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">create_hover</span><span class="p">(</span><span class="n">etype</span><span class="p">,</span> <span class="n">win</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_hover</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">etype</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">begin_hover_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">hover_event</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">create_hover</span><span class="p">(</span><span class="s1">&#39;begin&#39;</span><span class="p">,</span> <span class="n">win</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">create_hover</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="s1">&#39;begin&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">update_hover_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hover_event</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">create_hover</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="n">win</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">create_hover</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="s1">&#39;update&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">end_hover_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hover_event</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">create_hover</span><span class="p">(</span><span class="s1">&#39;end&#39;</span><span class="p">,</span> <span class="n">win</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">create_hover</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="MouseMotionEventProvider.update"><a class="viewcode-back" href="../../../../api-kivy.input.providers.mouse.html#kivy.input.providers.mouse.MouseMotionEventProvider.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dispatch_fn</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Update the mouse provider (pop event from the queue)&#39;&#39;&#39;</span>
