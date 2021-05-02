@@ -515,9 +515,14 @@
 
 <div class="viewcode-block" id="EventLoopBase.remove_input_provider"><a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase.remove_input_provider">[docs]</a>    <span class="k">def</span> <span class="nf">remove_input_provider</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">provider</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Remove an input provider.</span>
+
+<span class="sd">        .. versionchanged:: 2.1.0</span>
+<span class="sd">            Provider will be also removed if it exist in auto-remove list.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">provider</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_providers</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">input_providers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">provider</span><span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">input_providers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">provider</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">provider</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_providers_autoremove</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">input_providers_autoremove</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">provider</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="EventLoopBase.add_event_listener"><a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase.add_event_listener">[docs]</a>    <span class="k">def</span> <span class="nf">add_event_listener</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">listener</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Add a new event listener for getting touch events.</span>
@@ -571,9 +576,7 @@
         <span class="c1"># problem happens, crashing badly without error</span>
         <span class="k">for</span> <span class="n">provider</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_providers</span><span class="p">[:]):</span>
             <span class="n">provider</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">provider</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_providers_autoremove</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">input_providers_autoremove</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">provider</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">input_providers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">provider</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_input_provider</span><span class="p">(</span><span class="n">provider</span><span class="p">)</span>
 
         <span class="c1"># ensure any restart will not break anything later.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">input_events</span> <span class="o">=</span> <span class="p">[]</span>
