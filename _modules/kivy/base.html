@@ -532,8 +532,15 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">event_listeners</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">listener</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="EventLoopBase.start"><a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Must be called only once before :meth:`EventLoopBase.run()`.</span>
-<span class="sd">        This starts all configured input providers.&#39;&#39;&#39;</span>
+        <span class="sd">&#39;&#39;&#39;Must be called before :meth:`EventLoopBase.run()`. This starts all</span>
+<span class="sd">        configured input providers.</span>
+
+<span class="sd">        .. versionchanged:: 2.1.0</span>
+<span class="sd">            Method can be called multiple times, but event loop will start only</span>
+<span class="sd">            once.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;started&#39;</span><span class="p">:</span>
+            <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;started&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">quit</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">Clock</span><span class="o">.</span><span class="n">start_clock</span><span class="p">()</span>
@@ -550,8 +557,14 @@
 
 <div class="viewcode-block" id="EventLoopBase.stop"><a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Stop all input providers and call callbacks registered using</span>
-<span class="sd">        `EventLoop.add_stop_callback()`.&#39;&#39;&#39;</span>
+<span class="sd">        `EventLoop.add_stop_callback()`.</span>
 
+<span class="sd">        .. versionchanged:: 2.1.0</span>
+<span class="sd">            Method can be called multiple times, but event loop will stop only</span>
+<span class="sd">            once.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="s1">&#39;started&#39;</span><span class="p">:</span>
+            <span class="k">return</span>
         <span class="c1"># XXX stop in reverse order that we started them!! (like push</span>
         <span class="c1"># pop), very important because e.g. wm_touch and WM_PEN both</span>
         <span class="c1"># store old window proc and the restore, if order is messed big</span>
