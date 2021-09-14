@@ -5,7 +5,8 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="twitter:site" content="@kivyframework">
-    
+    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Events and Properties &mdash; Kivy 2.1.0.dev0 documentation</title>
     <link href='//fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../_static/fresh.css" type="text/css" />
@@ -20,6 +21,7 @@
 
       };
     </script>
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -401,7 +403,7 @@
 </ul>
 </div>
             
-  <div class="section" id="events-and-properties">
+  <section id="events-and-properties">
 <span id="properties"></span><span id="events"></span><h1>Events and Properties<a class="headerlink" href="#events-and-properties" title="Permalink to this headline">¶</a></h1>
 <p>Events are an important part of Kivy programming. That may not be surprising to
 those with GUI development experience, but it’s an important concept for
@@ -410,7 +412,7 @@ will see them everywhere in Kivy. They make it easy to build whatever behavior
 you want into Kivy.</p>
 <p>The following illustration shows how events are handled in the Kivy framework.</p>
 <img alt="../_images/Events.png" src="../_images/Events.png" />
-<div class="section" id="introduction-to-the-event-dispatcher">
+<section id="introduction-to-the-event-dispatcher">
 <h2>Introduction to the Event Dispatcher<a class="headerlink" href="#introduction-to-the-event-dispatcher" title="Permalink to this headline">¶</a></h2>
 <p>One of the most important base classes of the framework is the
 <a class="reference internal" href="../api-kivy.event.html#kivy.event.EventDispatcher" title="kivy.event.EventDispatcher"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventDispatcher</span></code></a> class. This class allows you to register
@@ -420,8 +422,8 @@ dispatchers). The <a class="reference internal" href="../api-kivy.uix.widget.htm
 examples of event dispatchers.</p>
 <p>EventDispatcher objects depend on the main loop to generate and
 handle events.</p>
-</div>
-<div class="section" id="main-loop">
+</section>
+<section id="main-loop">
 <h2>Main loop<a class="headerlink" href="#main-loop" title="Permalink to this headline">¶</a></h2>
 <p>As outlined in the illustration above, Kivy has a <cite>main loop</cite>. This loop is
 running during all of the application’s lifetime and only quits when exiting
@@ -443,7 +445,7 @@ For example the following code does both:</p>
 doing all of the other things that need doing. As a result, all you’ll see is a
 black window which you won’t be able to interact with. Instead, you need to
 “schedule” your <code class="docutils literal notranslate"><span class="pre">animate_something()</span></code> function to be called repeatedly.</p>
-<div class="section" id="scheduling-a-repetitive-event">
+<section id="scheduling-a-repetitive-event">
 <h3>Scheduling a repetitive event<a class="headerlink" href="#scheduling-a-repetitive-event" title="Permalink to this headline">¶</a></h3>
 <p>You can call a function or a method every X times per second using
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">schedule_interval()</span></code>. Here is an example of calling a
@@ -475,8 +477,8 @@ unscheduled:</p>
 <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_interval</span><span class="p">(</span><span class="n">my_callback</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="mf">30.</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="scheduling-a-one-time-event">
+</section>
+<section id="scheduling-a-one-time-event">
 <h3>Scheduling a one-time event<a class="headerlink" href="#scheduling-a-one-time-event" title="Permalink to this headline">¶</a></h3>
 <p>Using <code class="xref py py-meth docutils literal notranslate"><span class="pre">schedule_once()</span></code>, you can call a function “later”,
 like in the next frame, or in X seconds:</p>
@@ -512,8 +514,8 @@ anticipated and thus the timing can be a little off.</p>
 be called at least one second after the last iteration ends. With
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">schedule_interval()</span></code> however, the callback is called
 every second.</p>
-</div>
-<div class="section" id="trigger-events">
+</section>
+<section id="trigger-events">
 <h3>Trigger events<a class="headerlink" href="#trigger-events" title="Permalink to this headline">¶</a></h3>
 <p>Sometimes you may want to schedule a function to be called only once for the next
 frame, preventing duplicate calls. You might be tempted to achieve that like so:</p>
@@ -536,9 +538,9 @@ created every time. Use a trigger instead:</p>
 </div>
 <p>Each time you call trigger(), it will schedule a single call of your callback. If
 it was already scheduled, it will not be rescheduled.</p>
-</div>
-</div>
-<div class="section" id="widget-events">
+</section>
+</section>
+<section id="widget-events">
 <h2>Widget events<a class="headerlink" href="#widget-events" title="Permalink to this headline">¶</a></h2>
 <p>A widget has 2 default types of events:</p>
 <ul class="simple">
@@ -546,10 +548,10 @@ it was already scheduled, it will not be rescheduled.</p>
 <li><p>Widget-defined event: e.g. an event will be fired for a Button when it’s pressed or
 released.</p></li>
 </ul>
-<p>For a discussion on how widget touch events managed and propagated, please refer
+<p>For a discussion on how widget touch events are managed and propagated, please refer
 to the <a class="reference internal" href="../api-kivy.uix.widget.html#widget-event-bubbling"><span class="std std-ref">Widget touch event bubbling</span></a> section.</p>
-</div>
-<div class="section" id="creating-custom-events">
+</section>
+<section id="creating-custom-events">
 <h2>Creating custom events<a class="headerlink" href="#creating-custom-events" title="Permalink to this headline">¶</a></h2>
 <p>To create an event dispatcher with custom events, you need to register the name
 of the event in the class and then create a method of the same name.</p>
@@ -568,8 +570,8 @@ of the event in the class and then create a method of the same name.</p>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I am dispatched&quot;</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="attaching-callbacks">
+</section>
+<section id="attaching-callbacks">
 <h2>Attaching callbacks<a class="headerlink" href="#attaching-callbacks" title="Permalink to this headline">¶</a></h2>
 <p>To use events, you have to bind callbacks to them. When the event is
 dispatched, your callbacks will be called with the parameters relevant to
@@ -589,8 +591,8 @@ the arguments that the event emits. For this, it’s usually safest to accept th
 </div>
 <p>Pleases refer to the <a class="reference internal" href="../api-kivy.event.html#kivy.event.EventDispatcher.bind" title="kivy.event.EventDispatcher.bind"><code class="xref py py-meth docutils literal notranslate"><span class="pre">kivy.event.EventDispatcher.bind()</span></code></a> method
 documentation for more examples on how to attach callbacks.</p>
-</div>
-<div class="section" id="introduction-to-properties">
+</section>
+<section id="introduction-to-properties">
 <h2>Introduction to Properties<a class="headerlink" href="#introduction-to-properties" title="Permalink to this headline">¶</a></h2>
 <p>Properties are an awesome way to define events and bind to them. Essentially,
 they produce events such that when an attribute of your object changes,
@@ -609,8 +611,8 @@ handle.</p>
 <li><p><a class="reference internal" href="../api-kivy.properties.html#kivy.properties.BooleanProperty" title="kivy.properties.BooleanProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">BooleanProperty</span></code></a></p></li>
 <li><p><a class="reference internal" href="../api-kivy.properties.html#kivy.properties.ReferenceListProperty" title="kivy.properties.ReferenceListProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReferenceListProperty</span></code></a></p></li>
 </ul>
-</div>
-<div class="section" id="declaration-of-a-property">
+</section>
+<section id="declaration-of-a-property">
 <h2>Declaration of a Property<a class="headerlink" href="#declaration-of-a-property" title="Permalink to this headline">¶</a></h2>
 <p>To declare properties, you must declare them at the class level. The class will then do
 the work to instantiate the real attributes when your object is created. These properties
@@ -627,8 +629,8 @@ the parent’s <cite>__init__</cite> method, passing in your class instance:</p>
     <span class="nb">super</span><span class="p">(</span><span class="n">MyWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="dispatching-a-property-event">
+</section>
+<section id="dispatching-a-property-event">
 <h2>Dispatching a Property event<a class="headerlink" href="#dispatching-a-property-event" title="Permalink to this headline">¶</a></h2>
 <p>Kivy properties, by default, provide an <cite>on_&lt;property_name&gt;</cite> event. This event is
 called when the value of the property is changed.</p>
@@ -638,31 +640,20 @@ called when the value of the property is changed.</p>
 <cite>on_&lt;property_name&gt;</cite> event will not be called.</p>
 </div>
 <p>For example, consider the following code:</p>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="k">class</span> <span class="nc">CustomBtn</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
-
-     <span class="n">pressed</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-
-     <span class="k">def</span> <span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
-         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">collide_point</span><span class="p">(</span><span class="o">*</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">):</span>
-             <span class="bp">self</span><span class="o">.</span><span class="n">pressed</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">pos</span>
-             <span class="k">return</span> <span class="kc">True</span>
-         <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">CustomBtn</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_touch_down</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
-
-     <span class="k">def</span> <span class="nf">on_pressed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
-         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;pressed at </span><span class="si">{pos}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pos</span><span class="o">=</span><span class="n">pos</span><span class="p">))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span> <span class="k">class</span> <span class="nc">CustomBtn</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span>     <span class="n">pressed</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span>     <span class="k">def</span> <span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+<span class="linenos"> 6</span>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">collide_point</span><span class="p">(</span><span class="o">*</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">):</span>
+<span class="linenos"> 7</span>             <span class="bp">self</span><span class="o">.</span><span class="n">pressed</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">pos</span>
+<span class="linenos"> 8</span>             <span class="k">return</span> <span class="kc">True</span>
+<span class="linenos"> 9</span>         <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">CustomBtn</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_touch_down</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span>     <span class="k">def</span> <span class="nf">on_pressed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+<span class="linenos">12</span>         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;pressed at </span><span class="si">{pos}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pos</span><span class="o">=</span><span class="n">pos</span><span class="p">))</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>In the code above at line 3:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pressed</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
 </pre></div>
@@ -706,31 +697,20 @@ instance? You <em>bind</em> to the property:</p>
 </pre></div>
 </div>
 <p>For example, consider the following code:</p>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="k">class</span> <span class="nc">RootWidget</span><span class="p">(</span><span class="n">BoxLayout</span><span class="p">):</span>
-
-     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-         <span class="nb">super</span><span class="p">(</span><span class="n">RootWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-         <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;btn 1&#39;</span><span class="p">))</span>
-         <span class="n">cb</span> <span class="o">=</span> <span class="n">CustomBtn</span><span class="p">()</span>
-         <span class="n">cb</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">pressed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">btn_pressed</span><span class="p">)</span>
-         <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">cb</span><span class="p">)</span>
-         <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;btn 2&#39;</span><span class="p">))</span>
-
-     <span class="k">def</span> <span class="nf">btn_pressed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
-         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;pos: printed from root widget: </span><span class="si">{pos}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pos</span><span class="o">=.</span><span class="n">pos</span><span class="p">))</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span> <span class="k">class</span> <span class="nc">RootWidget</span><span class="p">(</span><span class="n">BoxLayout</span><span class="p">):</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span>     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="linenos"> 4</span>         <span class="nb">super</span><span class="p">(</span><span class="n">RootWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="linenos"> 5</span>         <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;btn 1&#39;</span><span class="p">))</span>
+<span class="linenos"> 6</span>         <span class="n">cb</span> <span class="o">=</span> <span class="n">CustomBtn</span><span class="p">()</span>
+<span class="linenos"> 7</span>         <span class="n">cb</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">pressed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">btn_pressed</span><span class="p">)</span>
+<span class="linenos"> 8</span>         <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">cb</span><span class="p">)</span>
+<span class="linenos"> 9</span>         <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;btn 2&#39;</span><span class="p">))</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span>     <span class="k">def</span> <span class="nf">btn_pressed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+<span class="linenos">12</span>         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;pos: printed from root widget: </span><span class="si">{pos}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pos</span><span class="o">=.</span><span class="n">pos</span><span class="p">))</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>If you run the code as is, you will notice two print statements in the console.
 One from the <cite>on_pressed</cite> event that is called inside the <cite>CustomBtn</cite> class and
 another from the <cite>btn_pressed</cite> function that we bind to the property change.</p>
@@ -744,150 +724,94 @@ only use one of the methods of listening/reacting to property changes.</p>
 </div>
 <p>The first parameter is <cite>self</cite>, which is the instance of the class where this
 function is defined. You can use an in-line function as follows:</p>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span>
-<span class="normal">7</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="n">cb</span> <span class="o">=</span> <span class="n">CustomBtn</span><span class="p">()</span>
-
- <span class="k">def</span> <span class="nf">_local_func</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
-     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;pos: printed from root widget: </span><span class="si">{pos}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pos</span><span class="o">=</span><span class="n">pos</span><span class="p">))</span>
-
- <span class="n">cb</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">pressed</span><span class="o">=</span><span class="n">_local_func</span><span class="p">)</span>
- <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">cb</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span> <span class="n">cb</span> <span class="o">=</span> <span class="n">CustomBtn</span><span class="p">()</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span> <span class="k">def</span> <span class="nf">_local_func</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+<span class="linenos">4</span>     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;pos: printed from root widget: </span><span class="si">{pos}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pos</span><span class="o">=</span><span class="n">pos</span><span class="p">))</span>
+<span class="linenos">5</span>
+<span class="linenos">6</span> <span class="n">cb</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">pressed</span><span class="o">=</span><span class="n">_local_func</span><span class="p">)</span>
+<span class="linenos">7</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">cb</span><span class="p">)</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>The first parameter would be the <cite>instance</cite> of the class the property is
 defined.</p>
 <p>The second parameter would be the <cite>value</cite>, which is the new value of the property.</p>
 <p>Here is the complete example, derived from the snippets above, that you can
 use to copy and paste into an editor to experiment.</p>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span>
-<span class="normal">11</span>
-<span class="normal">12</span>
-<span class="normal">13</span>
-<span class="normal">14</span>
-<span class="normal">15</span>
-<span class="normal">16</span>
-<span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
- <span class="kn">from</span> <span class="nn">kivy.uix.widget</span> <span class="kn">import</span> <span class="n">Widget</span>
- <span class="kn">from</span> <span class="nn">kivy.uix.button</span> <span class="kn">import</span> <span class="n">Button</span>
- <span class="kn">from</span> <span class="nn">kivy.uix.boxlayout</span> <span class="kn">import</span> <span class="n">BoxLayout</span>
- <span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">ListProperty</span>
-
- <span class="k">class</span> <span class="nc">RootWidget</span><span class="p">(</span><span class="n">BoxLayout</span><span class="p">):</span>
-
-     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-         <span class="nb">super</span><span class="p">(</span><span class="n">RootWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-         <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;btn 1&#39;</span><span class="p">))</span>
-         <span class="n">cb</span> <span class="o">=</span> <span class="n">CustomBtn</span><span class="p">()</span>
-         <span class="n">cb</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">pressed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">btn_pressed</span><span class="p">)</span>
-         <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">cb</span><span class="p">)</span>
-         <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;btn 2&#39;</span><span class="p">))</span>
-
-     <span class="k">def</span> <span class="nf">btn_pressed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
-         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;pos: printed from root widget: </span><span class="si">{pos}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pos</span><span class="o">=</span><span class="n">pos</span><span class="p">))</span>
-
- <span class="k">class</span> <span class="nc">CustomBtn</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
-
-     <span class="n">pressed</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-
-     <span class="k">def</span> <span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
-         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">collide_point</span><span class="p">(</span><span class="o">*</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">):</span>
-             <span class="bp">self</span><span class="o">.</span><span class="n">pressed</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">pos</span>
-             <span class="c1"># we consumed the touch. return False here to propagate</span>
-             <span class="c1"># the touch further to the children.</span>
-             <span class="k">return</span> <span class="kc">True</span>
-         <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">CustomBtn</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_touch_down</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
-
-     <span class="k">def</span> <span class="nf">on_pressed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
-         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;pressed at </span><span class="si">{pos}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pos</span><span class="o">=</span><span class="n">pos</span><span class="p">))</span>
-
- <span class="k">class</span> <span class="nc">TestApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
-
-     <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-         <span class="k">return</span> <span class="n">RootWidget</span><span class="p">()</span>
-
-
- <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-     <span class="n">TestApp</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span> <span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
+<span class="linenos"> 2</span> <span class="kn">from</span> <span class="nn">kivy.uix.widget</span> <span class="kn">import</span> <span class="n">Widget</span>
+<span class="linenos"> 3</span> <span class="kn">from</span> <span class="nn">kivy.uix.button</span> <span class="kn">import</span> <span class="n">Button</span>
+<span class="linenos"> 4</span> <span class="kn">from</span> <span class="nn">kivy.uix.boxlayout</span> <span class="kn">import</span> <span class="n">BoxLayout</span>
+<span class="linenos"> 5</span> <span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">ListProperty</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span> <span class="k">class</span> <span class="nc">RootWidget</span><span class="p">(</span><span class="n">BoxLayout</span><span class="p">):</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="linenos">10</span>         <span class="nb">super</span><span class="p">(</span><span class="n">RootWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="linenos">11</span>         <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;btn 1&#39;</span><span class="p">))</span>
+<span class="linenos">12</span>         <span class="n">cb</span> <span class="o">=</span> <span class="n">CustomBtn</span><span class="p">()</span>
+<span class="linenos">13</span>         <span class="n">cb</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">pressed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">btn_pressed</span><span class="p">)</span>
+<span class="linenos">14</span>         <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">cb</span><span class="p">)</span>
+<span class="linenos">15</span>         <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;btn 2&#39;</span><span class="p">))</span>
+<span class="linenos">16</span>
+<span class="linenos">17</span>     <span class="k">def</span> <span class="nf">btn_pressed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+<span class="linenos">18</span>         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;pos: printed from root widget: </span><span class="si">{pos}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pos</span><span class="o">=</span><span class="n">pos</span><span class="p">))</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span> <span class="k">class</span> <span class="nc">CustomBtn</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span>     <span class="n">pressed</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span>     <span class="k">def</span> <span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+<span class="linenos">25</span>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">collide_point</span><span class="p">(</span><span class="o">*</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">):</span>
+<span class="linenos">26</span>             <span class="bp">self</span><span class="o">.</span><span class="n">pressed</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">pos</span>
+<span class="linenos">27</span>             <span class="c1"># we consumed the touch. return False here to propagate</span>
+<span class="linenos">28</span>             <span class="c1"># the touch further to the children.</span>
+<span class="linenos">29</span>             <span class="k">return</span> <span class="kc">True</span>
+<span class="linenos">30</span>         <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">CustomBtn</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_touch_down</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
+<span class="linenos">31</span>
+<span class="linenos">32</span>     <span class="k">def</span> <span class="nf">on_pressed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+<span class="linenos">33</span>         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;pressed at </span><span class="si">{pos}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pos</span><span class="o">=</span><span class="n">pos</span><span class="p">))</span>
+<span class="linenos">34</span>
+<span class="linenos">35</span> <span class="k">class</span> <span class="nc">TestApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
+<span class="linenos">36</span>
+<span class="linenos">37</span>     <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="linenos">38</span>         <span class="k">return</span> <span class="n">RootWidget</span><span class="p">()</span>
+<span class="linenos">39</span>
+<span class="linenos">40</span>
+<span class="linenos">41</span> <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="linenos">42</span>     <span class="n">TestApp</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>Running the code above will give you the following output:</p>
 <img alt="../_images/property_events_binding.png" src="../_images/property_events_binding.png" />
 <p>Our CustomBtn has no visual representation and thus appears black. You can
 touch/click on the black area to see the output on your console.</p>
-</div>
-<div class="section" id="compound-properties">
+</section>
+<section id="compound-properties">
 <h2>Compound Properties<a class="headerlink" href="#compound-properties" title="Permalink to this headline">¶</a></h2>
 <p>When defining an <a class="reference internal" href="../api-kivy.properties.html#kivy.properties.AliasProperty" title="kivy.properties.AliasProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">AliasProperty</span></code></a>, you normally define
 a getter and a setter function yourself. Here, it falls on to you to define
 when the getter and the setter functions are called using the <cite>bind</cite> argument.</p>
 <p>Consider the following code.</p>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
-<span class="normal"> 2</span>
-<span class="normal"> 3</span>
-<span class="normal"> 4</span>
-<span class="normal"> 5</span>
-<span class="normal"> 6</span>
-<span class="normal"> 7</span>
-<span class="normal"> 8</span>
-<span class="normal"> 9</span>
-<span class="normal">10</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span> <span class="n">cursor_pos</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_cursor_pos</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span>
-                            <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;cursor&#39;</span><span class="p">,</span> <span class="s1">&#39;padding&#39;</span><span class="p">,</span> <span class="s1">&#39;pos&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">,</span>
-                                  <span class="s1">&#39;focus&#39;</span><span class="p">,</span> <span class="s1">&#39;scroll_x&#39;</span><span class="p">,</span> <span class="s1">&#39;scroll_y&#39;</span><span class="p">,</span>
-                                  <span class="s1">&#39;line_height&#39;</span><span class="p">,</span> <span class="s1">&#39;line_spacing&#39;</span><span class="p">),</span>
-                            <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
- <span class="sd">&#39;&#39;&#39;Current position of the cursor, in (x, y).</span>
-
-<span class="sd"> :attr:`cursor_pos` is an :class:`~kivy.properties.AliasProperty`,</span>
-<span class="sd"> read-only.</span>
-<span class="sd"> &#39;&#39;&#39;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span> <span class="n">cursor_pos</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_cursor_pos</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span>
+<span class="linenos"> 2</span>                            <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;cursor&#39;</span><span class="p">,</span> <span class="s1">&#39;padding&#39;</span><span class="p">,</span> <span class="s1">&#39;pos&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">,</span>
+<span class="linenos"> 3</span>                                  <span class="s1">&#39;focus&#39;</span><span class="p">,</span> <span class="s1">&#39;scroll_x&#39;</span><span class="p">,</span> <span class="s1">&#39;scroll_y&#39;</span><span class="p">,</span>
+<span class="linenos"> 4</span>                                  <span class="s1">&#39;line_height&#39;</span><span class="p">,</span> <span class="s1">&#39;line_spacing&#39;</span><span class="p">),</span>
+<span class="linenos"> 5</span>                            <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="linenos"> 6</span> <span class="sd">&#39;&#39;&#39;Current position of the cursor, in (x, y).</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="sd"> :attr:`cursor_pos` is an :class:`~kivy.properties.AliasProperty`,</span>
+<span class="linenos"> 9</span><span class="sd"> read-only.</span>
+<span class="linenos">10</span><span class="sd"> &#39;&#39;&#39;</span>
 </pre></div>
-</td></tr></table></div>
+</div>
 <p>Here <cite>cursor_pos</cite> is a <a class="reference internal" href="../api-kivy.properties.html#kivy.properties.AliasProperty" title="kivy.properties.AliasProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">AliasProperty</span></code></a> which uses the
 <cite>getter</cite> <cite>_get_cursor_pos</cite> with the <cite>setter</cite> part set to None, implying this
 is a read only Property.</p>
 <p>The bind argument at the end defines that <cite>on_cursor_pos</cite> event is dispatched
 when any of the properties used in the <cite>bind=</cite> argument change.</p>
-</div>
-</div>
+</section>
+</section>
 
 
             <div class="footerlinks">
@@ -936,8 +860,8 @@ when any of the properties used in the <cite>bind=</cite> argument change.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on May 06, 2021.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      Last updated on Sep 14, 2021.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.2.0.
 </div>
 -->
   </body>

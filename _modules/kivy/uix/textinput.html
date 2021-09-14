@@ -20,6 +20,7 @@
 
       };
     </script>
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
@@ -1866,7 +1867,8 @@
                         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update_graphics</span><span class="p">()</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_height</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">-</span>
+                                            <span class="bp">self</span><span class="o">.</span><span class="n">line_height</span><span class="p">)</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update_graphics</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">scroll_type</span> <span class="o">==</span> <span class="s1">&#39;up&#39;</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiline</span><span class="p">:</span>
@@ -1878,9 +1880,12 @@
                         <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_height</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update_graphics</span><span class="p">()</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">&lt;</span>
-                            <span class="bp">self</span><span class="o">.</span><span class="n">_lines_rects</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">texture</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_height</span>
+                    <span class="n">minimum_width</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lines_rects</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">texture</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+                    <span class="n">max_scroll_x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">minimum_width</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">&lt;</span> <span class="n">max_scroll_x</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">max_scroll_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">+</span>
+                                            <span class="bp">self</span><span class="o">.</span><span class="n">line_height</span><span class="p">)</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update_graphics</span><span class="p">()</span>
             <span class="k">return</span> <span class="kc">True</span>
 
@@ -2538,6 +2543,7 @@
                     <span class="n">base_dir</span><span class="p">,</span>
                     <span class="n">halign</span><span class="p">,</span>
                     <span class="n">rects</span><span class="p">,</span>
+                    <span class="n">auto_halign_r</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="k">elif</span> <span class="n">y</span> <span class="o">&lt;=</span> <span class="n">miny</span><span class="p">:</span>
                 <span class="n">line_num</span> <span class="o">-=</span> <span class="mi">1</span>
@@ -2566,6 +2572,7 @@
         <span class="n">base_dir</span><span class="p">,</span>
         <span class="n">halign</span><span class="p">,</span>
         <span class="n">rects</span><span class="p">,</span>
+        <span class="n">auto_halign_r</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="n">size</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">texture</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
         <span class="n">texcoords</span> <span class="o">=</span> <span class="n">texture</span><span class="o">.</span><span class="n">tex_coords</span><span class="p">[:]</span>
@@ -2690,9 +2697,9 @@
             <span class="n">islice</span><span class="p">(</span>
                 <span class="n">rects</span><span class="p">,</span>
                 <span class="nb">max</span><span class="p">(</span><span class="n">selection_start_row</span><span class="p">,</span> <span class="n">first_visible_line</span><span class="p">),</span>
-                <span class="nb">min</span><span class="p">(</span><span class="n">selection_end_row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">last_visible_line</span><span class="p">),</span>
+                <span class="nb">min</span><span class="p">(</span><span class="n">selection_end_row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">last_visible_line</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
             <span class="p">),</span>
-            <span class="n">start</span><span class="o">=</span><span class="n">selection_start_row</span>
+            <span class="n">start</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">selection_start_row</span><span class="p">,</span> <span class="n">first_visible_line</span><span class="p">)</span>
         <span class="p">):</span>
             <span class="n">draw_selection</span><span class="p">(</span>
                 <span class="n">rect</span><span class="o">.</span><span class="n">pos</span><span class="p">,</span>
@@ -2711,7 +2718,6 @@
                 <span class="n">canvas_add</span><span class="p">,</span>
                 <span class="n">selection_color</span>
             <span class="p">)</span>
-            <span class="n">y</span> <span class="o">-=</span> <span class="n">dy</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_position_handles</span><span class="p">(</span><span class="s1">&#39;both&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_draw_selection</span><span class="p">(</span>
@@ -4195,8 +4201,8 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on May 06, 2021.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      Last updated on Sep 14, 2021.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.2.0.
 </div>
 -->
   </body>

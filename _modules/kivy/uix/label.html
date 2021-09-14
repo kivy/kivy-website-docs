@@ -20,6 +20,7 @@
 
       };
     </script>
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
@@ -703,8 +704,12 @@
         <span class="k">if</span> <span class="p">(</span><span class="n">markup</span> <span class="ow">and</span> <span class="bp">cls</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">CoreMarkupLabel</span><span class="p">)</span> <span class="ow">or</span> \
            <span class="p">(</span><span class="ow">not</span> <span class="n">markup</span> <span class="ow">and</span> <span class="bp">cls</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">CoreLabel</span><span class="p">):</span>
             <span class="c1"># markup have change, we need to change our rendering method.</span>
-            <span class="n">d</span> <span class="o">=</span> <span class="n">Label</span><span class="o">.</span><span class="n">_font_properties</span>
-            <span class="n">dkw</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">d</span><span class="p">])))</span>
+            <span class="n">dkw</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_font_properties</span><span class="p">}</span>
+            <span class="n">dkw</span><span class="p">[</span><span class="s1">&#39;usersize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_size</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">disabled</span><span class="p">:</span>
+                <span class="n">dkw</span><span class="p">[</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">disabled_color</span>
+                <span class="n">dkw</span><span class="p">[</span><span class="s1">&#39;outline_color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">disabled_outline_color</span>
+
             <span class="k">if</span> <span class="n">markup</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_label</span> <span class="o">=</span> <span class="n">CoreMarkupLabel</span><span class="p">(</span><span class="o">**</span><span class="n">dkw</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
@@ -1506,8 +1511,8 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on May 06, 2021.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      Last updated on Sep 14, 2021.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.2.0.
 </div>
 -->
   </body>

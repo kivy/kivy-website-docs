@@ -20,6 +20,7 @@
 
       };
     </script>
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
@@ -383,6 +384,7 @@
 <span class="c1"># flake8: noqa</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">ctypes</span> <span class="kn">import</span> <span class="n">cdll</span><span class="p">,</span> <span class="n">Structure</span><span class="p">,</span> <span class="n">c_ulong</span><span class="p">,</span> <span class="n">c_int</span><span class="p">,</span> <span class="n">c_ushort</span><span class="p">,</span> \
                    <span class="n">c_void_p</span><span class="p">,</span> <span class="n">pointer</span><span class="p">,</span> <span class="n">POINTER</span><span class="p">,</span> <span class="n">byref</span>
 
@@ -503,7 +505,22 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_device</span> <span class="o">=</span> <span class="n">mtdev</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">O_NONBLOCK</span> <span class="o">|</span> <span class="n">os</span><span class="o">.</span><span class="n">O_RDONLY</span><span class="p">)</span>
+        <span class="c1"># Linux kernel creates input devices then hands permission changes</span>
+        <span class="c1"># off to udev. This results in a period of time when the device is</span>
+        <span class="c1"># readable only by root. Device reconnects can be processed by</span>
+        <span class="c1"># MTDMotionEventProvider faster than udev can get a chance to run,</span>
+        <span class="c1"># so we spin for a period of time to allow udev to fix permissions.</span>
+        <span class="c1"># We limit the loop time in case the system is misconfigured and</span>
+        <span class="c1"># the user really does not (and will not) have permission to access</span>
+        <span class="c1"># the device.</span>
+        <span class="c1"># Note: udev takes about 0.6 s on a Raspberry Pi 4</span>
+        <span class="n">permission_wait_until</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">+</span> <span class="mf">3.0</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">O_NONBLOCK</span> <span class="o">|</span> <span class="n">os</span><span class="o">.</span><span class="n">O_RDONLY</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">PermissionError</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">permission_wait_until</span><span class="p">:</span>
+                    <span class="k">raise</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="n">mtdev_open</span><span class="p">(</span><span class="n">pointer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_device</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fd</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">ret</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">os</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fd</span><span class="p">)</span>
@@ -636,8 +653,8 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on May 06, 2021.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 3.5.4.
+      Last updated on Sep 14, 2021.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.2.0.
 </div>
 -->
   </body>
