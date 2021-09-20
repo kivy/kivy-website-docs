@@ -1857,7 +1857,8 @@
             <span class="k">if</span> <span class="n">scroll_type</span> <span class="o">==</span> <span class="s1">&#39;down&#39;</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiline</span><span class="p">:</span>
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_height</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">-</span>
+                                            <span class="bp">self</span><span class="o">.</span><span class="n">line_height</span><span class="p">)</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update_graphics</span><span class="p">()</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -1866,16 +1867,14 @@
                         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update_graphics</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">scroll_type</span> <span class="o">==</span> <span class="s1">&#39;up&#39;</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiline</span><span class="p">:</span>
-                    <span class="n">viewport_height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>\
-                                      <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
-                    <span class="n">text_height</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lines</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_height</span>
-                                                      <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_spacing</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="n">viewport_height</span> <span class="o">&lt;</span> <span class="n">text_height</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span><span class="p">:</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_height</span>
+                    <span class="n">max_scroll_y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimum_height</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">&lt;</span> <span class="n">max_scroll_y</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">max_scroll_y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">+</span>
+                                            <span class="bp">self</span><span class="o">.</span><span class="n">line_height</span><span class="p">)</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update_graphics</span><span class="p">()</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">minimum_width</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lines_rects</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">texture</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span>
-                                     <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+                    <span class="n">minimum_width</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_row_width</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
                     <span class="n">max_scroll_x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">minimum_width</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">&lt;</span> <span class="n">max_scroll_x</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">max_scroll_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">+</span>
@@ -4196,7 +4195,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Sep 19, 2021.
+      Last updated on Sep 20, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.2.0.
 </div>
 -->
