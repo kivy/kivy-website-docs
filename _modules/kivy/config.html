@@ -525,9 +525,17 @@
 <span class="sd">        Time allowed for the detection of triple tap, in milliseconds.</span>
 
 <span class="sd">:graphics:</span>
-<span class="sd">    `borderless`: int , one of 0 or 1</span>
+<span class="sd">    `borderless`: int, one of 0 or 1</span>
 <span class="sd">        If set to `1`, removes the window border/decoration. Window resizing</span>
 <span class="sd">        must also be disabled to hide the resizing border.</span>
+<span class="sd">    `custom_titlebar`: int, one of 0 or 1</span>
+<span class="sd">        If set to `1`, removes the window border and allows user to set a Widget</span>
+<span class="sd">        as a titlebar</span>
+<span class="sd">        see :meth:`~kivy.core.window.WindowBase.set_custom_titlebar`</span>
+<span class="sd">        for detailed usage</span>
+<span class="sd">    `custom_titlebar_border`: int, defaults to 5</span>
+<span class="sd">        sets the how many pixles off the border should be used as the</span>
+<span class="sd">        rezising frame</span>
 <span class="sd">    `window_state`: string , one of &#39;visible&#39;, &#39;hidden&#39;, &#39;maximized&#39;</span>
 <span class="sd">                    or &#39;minimized&#39;</span>
 
@@ -729,7 +737,7 @@
 <span class="n">_is_rpi</span> <span class="o">=</span> <span class="n">exists</span><span class="p">(</span><span class="s1">&#39;/opt/vc/include/bcm_host.h&#39;</span><span class="p">)</span>
 
 <span class="c1"># Version number of current configuration format</span>
-<span class="n">KIVY_CONFIG_VERSION</span> <span class="o">=</span> <span class="mi">23</span>
+<span class="n">KIVY_CONFIG_VERSION</span> <span class="o">=</span> <span class="mi">24</span>
 
 <span class="n">Config</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="sd">&#39;&#39;&#39;The default Kivy configuration object. This is a :class:`ConfigParser`</span>
@@ -1253,6 +1261,10 @@
         <span class="k">elif</span> <span class="n">version</span> <span class="o">==</span> <span class="mi">22</span><span class="p">:</span>
             <span class="n">Config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;graphics&#39;</span><span class="p">,</span> <span class="s1">&#39;verify_gl_main_thread&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">)</span>
 
+        <span class="k">elif</span> <span class="n">version</span> <span class="o">==</span> <span class="mi">23</span><span class="p">:</span>
+            <span class="n">Config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;graphics&#39;</span><span class="p">,</span> <span class="s1">&#39;custom_titlebar&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span>
+            <span class="n">Config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;graphics&#39;</span><span class="p">,</span> <span class="s1">&#39;custom_titlebar_border&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">)</span>
+
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># for future.</span>
             <span class="k">break</span>
@@ -1349,7 +1361,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Sep 20, 2021.
+      Last updated on Sep 28, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.2.0.
 </div>
 -->

@@ -495,6 +495,8 @@ keycodes, it will return -1.</p>
 <a class="reference internal" href="api-kivy.config.html#module-kivy.config" title="kivy.config"><code class="xref py py-mod docutils literal notranslate"><span class="pre">config</span></code></a> documentation for a
 more detailed explanation on the values.</p>
 </dd>
+<dt><cite>custom_titlebar</cite>: str, one of (‘0’, ‘1’)</dt><dd><p>Set to <cite>‘1’</cite> to uses a custom titlebar</p>
+</dd>
 <dt><cite>fullscreen</cite>: str, one of (‘0’, ‘1’, ‘auto’, ‘fake’)</dt><dd><p>Make the window fullscreen. Check the
 <a class="reference internal" href="api-kivy.config.html#module-kivy.config" title="kivy.config"><code class="xref py py-mod docutils literal notranslate"><span class="pre">config</span></code></a> documentation for a
 more detailed explanation on the values.</p>
@@ -724,6 +726,21 @@ is not suitable for Applications.</p>
 <p>Again, don’t use this method unless you know exactly what you are
 doing!</p>
 </div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.core.window.WindowBase.custom_titlebar">
+<span class="sig-name descname"><span class="pre">custom_titlebar</span></span><a class="headerlink" href="#kivy.core.window.WindowBase.custom_titlebar" title="Permalink to this definition">¶</a></dt>
+<dd><p>When set to True, allows the user to set a widget as a titlebar.
+Check the <a class="reference internal" href="api-kivy.config.html#module-kivy.config" title="kivy.config"><code class="xref py py-mod docutils literal notranslate"><span class="pre">config</span></code></a> documentation for a more detailed
+explanation on the values.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.1.0.</span></p>
+</div>
+<p>see <a class="reference internal" href="#kivy.core.window.WindowBase.set_custom_titlebar" title="kivy.core.window.WindowBase.set_custom_titlebar"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_custom_titlebar()</span></code></a>
+for detailed usage
+<a class="reference internal" href="#kivy.core.window.WindowBase.custom_titlebar" title="kivy.core.window.WindowBase.custom_titlebar"><code class="xref py py-attr docutils literal notranslate"><span class="pre">custom_titlebar</span></code></a> is a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.BooleanProperty" title="kivy.properties.BooleanProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">BooleanProperty</span></code></a> and
+defaults to False.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1443,6 +1460,56 @@ degrees.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="kivy.core.window.WindowBase.set_custom_titlebar">
+<span class="sig-name descname"><span class="pre">set_custom_titlebar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/window.html#WindowBase.set_custom_titlebar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.window.WindowBase.set_custom_titlebar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a Widget as a titlebar</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">widget</dt>
+<dd class="field-odd"><p>The widget you want to set as the titlebar</p>
+</dd>
+</dl>
+</div></blockquote>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.1.0.</span></p>
+</div>
+<p>This function returns <cite>True</cite> on successfully setting the custom titlebar,
+else false</p>
+<p>How to use this feature</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.</span> <span class="n">first</span> <span class="nb">set</span> <span class="n">Window</span><span class="o">.</span><span class="n">custom_titlebar</span> <span class="n">to</span> <span class="kc">True</span>
+<span class="mf">2.</span> <span class="n">then</span> <span class="n">call</span> <span class="n">Window</span><span class="o">.</span><span class="n">set_custom_titlebar</span> <span class="k">with</span> <span class="n">the</span> <span class="n">widget</span><span class="o">/</span><span class="n">layout</span> <span class="n">you</span> <span class="n">want</span> <span class="n">to</span> <span class="nb">set</span> <span class="k">as</span> <span class="n">titlebar</span> <span class="k">as</span> <span class="n">the</span> <span class="n">argument</span> <span class="c1"># noqa: E501</span>
+</pre></div>
+</div>
+<p>If you want a child of the widget to receive touch events, in
+that child define a property <cite>draggable</cite> and set it to False</p>
+<p>If you set the property <cite>draggable</cite> on a layout,
+all the child in the layout will receive touch events</p>
+<p>If you want to override default behaviour, add function <cite>in_drag_area(x,y)</cite>
+to the widget</p>
+<p>The function is call with two args x,y which are mouse.x, and mouse.y
+the function should return</p>
+<div class="line-block">
+<div class="line"><cite>True</cite> if that point should be used to drag the window</div>
+<div class="line"><cite>False</cite> if you want to receive the touch event at the point</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you use <code class="xref py py-meth docutils literal notranslate"><span class="pre">in_drag_area()</span></code> property <cite>draggable</cite>
+will not be checked</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This feature requires the SDL2 window provider and is currently
+only supported on desktop platforms.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><a class="reference internal" href="#kivy.core.window.WindowBase.custom_titlebar" title="kivy.core.window.WindowBase.custom_titlebar"><code class="xref py py-mod docutils literal notranslate"><span class="pre">custom_titlebar</span></code></a> must be set to True
+for the widget to be successfully set as a titlebar</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="kivy.core.window.WindowBase.set_icon">
 <span class="sig-name descname"><span class="pre">set_icon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/window.html#WindowBase.set_icon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.window.WindowBase.set_icon" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the icon of the window.</p>
@@ -1881,7 +1948,7 @@ the position set in <a class="reference internal" href="api-kivy.config.html#kiv
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Sep 20, 2021.
+      Last updated on Sep 28, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.2.0.
 </div>
 -->
