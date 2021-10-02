@@ -567,8 +567,12 @@
 
 <span class="c1"># When we are generating documentation, Config doesn&#39;t exist</span>
 <span class="n">_is_desktop</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">_scroll_timeout</span> <span class="o">=</span> <span class="n">_scroll_distance</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="k">if</span> <span class="n">Config</span><span class="p">:</span>
     <span class="n">_is_desktop</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s1">&#39;kivy&#39;</span><span class="p">,</span> <span class="s1">&#39;desktop&#39;</span><span class="p">)</span>
+    <span class="n">_scroll_timeout</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s1">&#39;widgets&#39;</span><span class="p">,</span> <span class="s1">&#39;scroll_timeout&#39;</span><span class="p">)</span>
+    <span class="n">_scroll_distance</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">sp&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s1">&#39;widgets&#39;</span><span class="p">,</span>
+                                                   <span class="s1">&#39;scroll_distance&#39;</span><span class="p">))</span>
 
 <span class="c1"># register an observer to clear the textinput cache when OpenGL will reload</span>
 <span class="k">if</span> <span class="s1">&#39;KIVY_DOC&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">environ</span><span class="p">:</span>
@@ -875,6 +879,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_do_blink_cursor_ev</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">create_trigger</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_do_blink_cursor</span><span class="p">,</span> <span class="mf">.5</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_line_options_ev</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_x</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_y</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enable_scroll</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="c1"># [from; to) range of lines being partially or fully rendered</span>
         <span class="c1"># in TextInput&#39;s viewport</span>
@@ -1798,9 +1805,15 @@
     <span class="k">def</span> <span class="nf">long_touch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_long_touch_ev</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_to</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_from</span><span class="p">:</span>
-            <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_local</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_long_touch_pos</span><span class="p">,</span> <span class="n">relative</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_local</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_touch_down</span><span class="o">.</span><span class="n">pos</span><span class="p">,</span> <span class="n">relative</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_show_cut_copy_paste</span><span class="p">(</span>
                 <span class="n">pos</span><span class="p">,</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;paste&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">cancel_long_touch_event</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># schedule long touch for paste</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_long_touch_ev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_long_touch_ev</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_long_touch_ev</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="TextInput.on_double_tap"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.on_double_tap">[docs]</a>    <span class="k">def</span> <span class="nf">on_double_tap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;This event is dispatched when a double tap happens</span>
@@ -1891,17 +1904,16 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_touch_count</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_quad_touch&#39;</span><span class="p">)</span>
 
+        <span class="c1"># stores the touch for later use</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_touch_down</span> <span class="o">=</span> <span class="n">touch</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_hide_cut_copy_paste</span><span class="p">(</span><span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span><span class="p">)</span>
         <span class="c1"># schedule long touch for paste</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_long_touch_pos</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">pos</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_long_touch_ev</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">long_touch</span><span class="p">,</span> <span class="mf">.5</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_cursor_from_xy</span><span class="p">(</span><span class="o">*</span><span class="n">touch_pos</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_touch</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">cancel_selection</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_selection_touch</span> <span class="o">=</span> <span class="n">touch</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_selection_from</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_to</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_index</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_update_selection</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_from_swipe</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cancel_update_selection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_touch_down</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">CutBuffer</span> <span class="ow">and</span> <span class="s1">&#39;button&#39;</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">profile</span> <span class="ow">and</span> \
                 <span class="n">touch</span><span class="o">.</span><span class="n">button</span> <span class="o">==</span> <span class="s1">&#39;middle&#39;</span><span class="p">:</span>
@@ -1909,6 +1921,14 @@
             <span class="k">return</span> <span class="kc">True</span>
 
         <span class="k">return</span> <span class="kc">True</span></div>
+
+    <span class="c1"># cancel/update existing selection after a single tap</span>
+    <span class="k">def</span> <span class="nf">_cancel_update_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_touch</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cancel_selection</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_selection_touch</span> <span class="o">=</span> <span class="n">touch</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_selection_from</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_to</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_index</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_selection</span><span class="p">()</span>
 
 <div class="viewcode-block" id="TextInput.on_touch_move"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.on_touch_move">[docs]</a>    <span class="k">def</span> <span class="nf">on_touch_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">grab_current</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="p">:</span>
@@ -1918,7 +1938,13 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_touch</span> <span class="ow">is</span> <span class="n">touch</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_selection_touch</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_touch</span> <span class="ow">is</span> <span class="n">touch</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_from_swipe</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scroll_text_from_swipe</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_enable_scroll</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enable_scroll</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_touch</span> <span class="ow">is</span> <span class="n">touch</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_cursor_from_xy</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">touch</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_selection_to</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_index</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_update_selection</span><span class="p">()</span>
@@ -1930,22 +1956,52 @@
         <span class="n">touch</span><span class="o">.</span><span class="n">ungrab</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_touch_count</span> <span class="o">-=</span> <span class="mi">1</span>
 
-        <span class="c1"># schedule long touch for paste</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_long_touch_ev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_long_touch_ev</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_long_touch_ev</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cancel_long_touch_event</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">focus</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
 
+        <span class="c1"># types of touch that will have higher priority in being recognized,</span>
+        <span class="c1"># compared to single tap</span>
+        <span class="n">prioritized_touch_types</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">touch</span><span class="o">.</span><span class="n">is_double_tap</span>
+            <span class="ow">or</span> <span class="n">touch</span><span class="o">.</span><span class="n">is_triple_tap</span>
+            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_touch_count</span> <span class="o">==</span> <span class="mi">4</span>
+        <span class="p">)</span>
+
+        <span class="n">_scroll_timeout</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">time_update</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">time_start</span>
+        <span class="c1"># conditions for discarding touch such as swipe to scroll and as</span>
+        <span class="c1"># selection on hold. If the conditions are true, the tap will be</span>
+        <span class="c1"># generically recognized as a single tap.</span>
+        <span class="n">single_tap</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">_scroll_timeout</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_timeout</span> <span class="o">/</span> <span class="mi">1000</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_x</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_distance</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_y</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_distance</span>
+        <span class="p">)</span>
+
+        <span class="c1"># if the given conditions are true, the touch will be recognized as a</span>
+        <span class="c1"># single tap. If there is selected text, the selection will be canceled</span>
+        <span class="c1"># and it will be possible to start a new selection.</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scroll_from_swipe</span>
+            <span class="ow">and</span> <span class="ow">not</span> <span class="n">prioritized_touch_types</span>
+            <span class="ow">and</span> <span class="n">single_tap</span>
+        <span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cancel_update_selection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_touch_down</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enable_scroll</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_x</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_y</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># show Bubble</span>
+        <span class="n">win</span> <span class="o">=</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_to</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_from</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_show_cut_copy_paste</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">,</span> <span class="n">win</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_touch</span> <span class="ow">is</span> <span class="n">touch</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_selection_to</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_index</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_update_selection</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-            <span class="c1"># show Bubble</span>
-            <span class="n">win</span> <span class="o">=</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_to</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_from</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_show_cut_copy_paste</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">,</span> <span class="n">win</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_handles</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_handles</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_to</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_from</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_hide_handles</span><span class="p">()</span>
                 <span class="n">handle_middle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_middle</span>
                 <span class="k">if</span> <span class="n">handle_middle</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -1962,6 +2018,54 @@
                     <span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">handle_middle</span><span class="p">,</span> <span class="n">canvas</span><span class="o">=</span><span class="s1">&#39;after&#39;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_position_handles</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;middle&#39;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">True</span></div>
+
+    <span class="k">def</span> <span class="nf">scroll_text_from_swipe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiline</span><span class="p">:</span>
+            <span class="n">_scroll_timeout</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">time_update</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">time_start</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_x</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">dx</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_y</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">dy</span><span class="p">)</span>
+
+            <span class="c1"># disable scroll and start selection mode if scroll distance</span>
+            <span class="c1"># isn&#39;t reached within scroll_timeout</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">_scroll_timeout</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_timeout</span> <span class="o">/</span> <span class="mi">1000</span>
+                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_x</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_distance</span>
+                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_y</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_distance</span>
+            <span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_enable_scroll</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_cancel_update_selection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_touch_down</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enable_scroll</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cancel_long_touch_event</span><span class="p">()</span>
+                <span class="n">max_scroll_y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimum_height</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">+</span> <span class="n">touch</span><span class="o">.</span><span class="n">dy</span><span class="p">),</span>
+                                    <span class="n">max_scroll_y</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update_graphics</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_position_handles</span><span class="p">()</span>
+                <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_scroll_timeout</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">time_update</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">time_start</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_x</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">dx</span><span class="p">)</span>
+
+            <span class="c1"># works with the same logic as multiline above</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">_scroll_timeout</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_timeout</span> <span class="o">/</span> <span class="mi">1000</span>
+                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_x</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_distance</span>
+            <span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_enable_scroll</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_cancel_update_selection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_touch_down</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enable_scroll</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cancel_long_touch_event</span><span class="p">()</span>
+                <span class="n">minimum_width</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_row_width</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span>
+                                 <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+                <span class="n">max_scroll_x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">minimum_width</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">dx</span><span class="p">),</span>
+                                    <span class="n">max_scroll_x</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update_graphics</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_position_handles</span><span class="p">()</span>
+                <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">_handle_pressed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_hide_cut_copy_paste</span><span class="p">()</span>
@@ -2034,7 +2138,9 @@
             <span class="n">hp_mid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span>
             <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_local</span><span class="p">(</span><span class="o">*</span><span class="n">hp_mid</span><span class="p">,</span> <span class="n">relative</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">handle_middle</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">handle_middle</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span>
-            <span class="n">handle_middle</span><span class="o">.</span><span class="n">top</span> <span class="o">=</span> <span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">lh</span>
+            <span class="n">handle_middle</span><span class="o">.</span><span class="n">top</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+                                    <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                        <span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">lh</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">mode</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;m&#39;</span><span class="p">:</span>
             <span class="k">return</span>
 
@@ -3707,6 +3813,38 @@
 <span class="sd">    and defaults to True on mobile OS&#39;s, False on desktop OS&#39;s.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
+    <span class="n">scroll_from_swipe</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="ow">not</span> <span class="n">_is_desktop</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;Allow to scroll the text using swipe gesture according to</span>
+<span class="sd">    :attr:`scroll_timeout` and :attr:`scroll_distance`.</span>
+
+<span class="sd">    .. versionadded:: 2.1.0</span>
+
+<span class="sd">    :attr:`scroll_from_swipe` is a BooleanProperty and defaults to True on</span>
+<span class="sd">    mobile OS’s, False on desktop OS’s.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">scroll_distance</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="n">_scroll_distance</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;Minimum distance to move before change from scroll to selection mode, in</span>
+<span class="sd">    pixels.</span>
+<span class="sd">    It is advisable that you base this value on the dpi of your target device&#39;s</span>
+<span class="sd">    screen.</span>
+
+<span class="sd">    .. versionadded:: 2.1.0</span>
+
+<span class="sd">    :attr:`scroll_distance` is a NumericProperty and defaults to  20 pixels.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">scroll_timeout</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="n">_scroll_timeout</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;Timeout allowed to trigger the :attr:`scroll_distance`, in milliseconds.</span>
+<span class="sd">    If the user has not moved :attr:`scroll_distance` within the timeout, the</span>
+<span class="sd">    scrolling will be disabled, and the selection mode will start.</span>
+
+<span class="sd">    .. versionadded:: 2.1.0</span>
+
+<span class="sd">    :attr:`scroll_timeout` is a NumericProperty and defaults to 250</span>
+<span class="sd">    milliseconds.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
     <span class="k">def</span> <span class="nf">get_sel_from</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_from</span>
 
@@ -4195,7 +4333,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Sep 28, 2021.
+      Last updated on Oct 02, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.2.0.
 </div>
 -->
