@@ -697,7 +697,6 @@
     <span class="n">_size</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
     <span class="n">_modifiers</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([])</span>
     <span class="n">_rotation</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">_clearcolor</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
     <span class="n">_focus</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="n">gl_backends_allowed</span> <span class="o">=</span> <span class="p">[]</span>
@@ -813,19 +812,7 @@
 <span class="sd">    :attr:`size` is an :class:`~kivy.properties.AliasProperty`.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="nf">_get_clearcolor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clearcolor</span>
-
-    <span class="k">def</span> <span class="nf">_set_clearcolor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Clearcolor must be a list or tuple&#39;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Clearcolor must contain 4 values&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_clearcolor</span> <span class="o">=</span> <span class="n">value</span>
-
-    <span class="n">clearcolor</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_clearcolor</span><span class="p">,</span> <span class="n">_set_clearcolor</span><span class="p">,</span>
-                               <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;_clearcolor&#39;</span><span class="p">,</span> <span class="p">))</span>
+    <span class="n">clearcolor</span> <span class="o">=</span> <span class="n">ColorProperty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
     <span class="sd">&#39;&#39;&#39;Color used to clear the window.</span>
 
 <span class="sd">    ::</span>
@@ -843,8 +830,12 @@
 
 <span class="sd">    .. versionadded:: 1.0.9</span>
 
-<span class="sd">    :attr:`clearcolor` is an :class:`~kivy.properties.AliasProperty` and</span>
+<span class="sd">    :attr:`clearcolor` is an :class:`~kivy.properties.ColorProperty` and</span>
 <span class="sd">    defaults to (0, 0, 0, 1).</span>
+
+<span class="sd">    .. versionchanged:: 2.1.0</span>
+<span class="sd">        Changed from :class:`~kivy.properties.AliasProperty` to</span>
+<span class="sd">        :class:`~kivy.properties.ColorProperty`.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="c1"># make some property read-only</span>
@@ -1784,13 +1775,13 @@
 <div class="viewcode-block" id="WindowBase.clear"><a class="viewcode-back" href="../../../api-kivy.core.window.html#kivy.core.window.WindowBase.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Clear the window with the background color&#39;&#39;&#39;</span>
         <span class="c1"># XXX FIXME use late binding</span>
-        <span class="kn">from</span> <span class="nn">kivy.graphics.opengl</span> <span class="kn">import</span> <span class="n">glClearColor</span><span class="p">,</span> <span class="n">glClear</span><span class="p">,</span> \
-            <span class="n">GL_COLOR_BUFFER_BIT</span><span class="p">,</span> <span class="n">GL_DEPTH_BUFFER_BIT</span><span class="p">,</span> <span class="n">GL_STENCIL_BUFFER_BIT</span>
-        <span class="n">cc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clearcolor</span>
-        <span class="k">if</span> <span class="n">cc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">glClearColor</span><span class="p">(</span><span class="o">*</span><span class="n">cc</span><span class="p">)</span>
-            <span class="n">glClear</span><span class="p">(</span><span class="n">GL_COLOR_BUFFER_BIT</span> <span class="o">|</span> <span class="n">GL_DEPTH_BUFFER_BIT</span> <span class="o">|</span>
-                    <span class="n">GL_STENCIL_BUFFER_BIT</span><span class="p">)</span></div>
+        <span class="kn">from</span> <span class="nn">kivy.graphics</span> <span class="kn">import</span> <span class="n">opengl</span> <span class="k">as</span> <span class="n">gl</span>
+        <span class="n">gl</span><span class="o">.</span><span class="n">glClearColor</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">clearcolor</span><span class="p">)</span>
+        <span class="n">gl</span><span class="o">.</span><span class="n">glClear</span><span class="p">(</span>
+            <span class="n">gl</span><span class="o">.</span><span class="n">GL_COLOR_BUFFER_BIT</span>
+            <span class="o">|</span> <span class="n">gl</span><span class="o">.</span><span class="n">GL_DEPTH_BUFFER_BIT</span>
+            <span class="o">|</span> <span class="n">gl</span><span class="o">.</span><span class="n">GL_STENCIL_BUFFER_BIT</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="WindowBase.set_title"><a class="viewcode-back" href="../../../api-kivy.core.window.html#kivy.core.window.WindowBase.set_title">[docs]</a>    <span class="k">def</span> <span class="nf">set_title</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Set the window title.</span>
