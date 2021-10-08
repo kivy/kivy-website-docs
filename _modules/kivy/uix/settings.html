@@ -421,10 +421,10 @@
 <span class="sd">        }</span>
 <span class="sd">    ]</span>
 
-<span class="sd">Each element in the root list represents a setting that the user can configure.</span>
-<span class="sd">Only the &quot;type&quot; key is mandatory: an instance of the associated class will be</span>
-<span class="sd">created and used for the setting - other keys are assigned to corresponding</span>
-<span class="sd">properties of that class.</span>
+<span class="sd">Each element in the root list represents a setting that the user can</span>
+<span class="sd">configure. Only the &quot;type&quot; key is mandatory: an instance of the associated</span>
+<span class="sd">class will be created and used for the setting - other keys are assigned to</span>
+<span class="sd">corresponding properties of that class.</span>
 
 <span class="sd">    ============== =================================================</span>
 <span class="sd">    Type           Associated class</span>
@@ -435,10 +435,14 @@
 <span class="sd">    options        :class:`SettingOptions`</span>
 <span class="sd">    string         :class:`SettingString`</span>
 <span class="sd">    path           :class:`SettingPath`</span>
+<span class="sd">    color          :class:`SettingColor`</span>
 <span class="sd">    ============== =================================================</span>
 
 <span class="sd">    .. versionadded:: 1.1.0</span>
 <span class="sd">        Added :attr:`SettingPath` type</span>
+
+<span class="sd">    .. versionadded:: 2.1.0</span>
+<span class="sd">        Added :attr:`SettingColor` type</span>
 
 <span class="sd">In the JSON example above, the first element is of type &quot;title&quot;. It will create</span>
 <span class="sd">a new instance of :class:`SettingTitle` and apply the rest of the key-value</span>
@@ -524,6 +528,7 @@
 
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">kivy.utils</span> <span class="k">as</span> <span class="nn">utils</span>
 <span class="kn">from</span> <span class="nn">kivy.factory</span> <span class="kn">import</span> <span class="n">Factory</span>
 <span class="kn">from</span> <span class="nn">kivy.metrics</span> <span class="kn">import</span> <span class="n">dp</span>
 <span class="kn">from</span> <span class="nn">kivy.config</span> <span class="kn">import</span> <span class="n">ConfigParser</span>
@@ -534,6 +539,7 @@
 <span class="kn">from</span> <span class="nn">kivy.uix.tabbedpanel</span> <span class="kn">import</span> <span class="n">TabbedPanelHeader</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.button</span> <span class="kn">import</span> <span class="n">Button</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.filechooser</span> <span class="kn">import</span> <span class="n">FileChooserListView</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.colorpicker</span> <span class="kn">import</span> <span class="n">ColorPicker</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.scrollview</span> <span class="kn">import</span> <span class="n">ScrollView</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.floatlayout</span> <span class="kn">import</span> <span class="n">FloatLayout</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.gridlayout</span> <span class="kn">import</span> <span class="n">GridLayout</span>
@@ -569,8 +575,8 @@
     <span class="n">title</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">&#39;&lt;No title set&gt;&#39;</span><span class="p">)</span>
     <span class="sd">&#39;&#39;&#39;Title of the setting, defaults to &#39;&lt;No title set&gt;&#39;.</span>
 
-<span class="sd">    :attr:`title` is a :class:`~kivy.properties.StringProperty` and defaults to</span>
-<span class="sd">    &#39;&lt;No title set&gt;&#39;.</span>
+<span class="sd">    :attr:`title` is a :class:`~kivy.properties.StringProperty` and defaults</span>
+<span class="sd">    to &#39;&lt;No title set&gt;&#39;.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">desc</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -626,8 +632,8 @@
 <span class="sd">    As soon as the content object is set, any further call to add_widget will</span>
 <span class="sd">    call the content.add_widget. This is automatically set.</span>
 
-<span class="sd">    :attr:`content` is an :class:`~kivy.properties.ObjectProperty` and defaults</span>
-<span class="sd">    to None.</span>
+<span class="sd">    :attr:`content` is an :class:`~kivy.properties.ObjectProperty` and</span>
+<span class="sd">    defaults to None.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">selected_alpha</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -680,9 +686,10 @@
 
 
 <div class="viewcode-block" id="SettingBoolean"><a class="viewcode-back" href="../../../api-kivy.uix.settings.html#kivy.uix.settings.SettingBoolean">[docs]</a><span class="k">class</span> <span class="nc">SettingBoolean</span><span class="p">(</span><span class="n">SettingItem</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Implementation of a boolean setting on top of a :class:`SettingItem`. It</span>
-<span class="sd">    is visualized with a :class:`~kivy.uix.switch.Switch` widget. By default,</span>
-<span class="sd">    0 and 1 are used for values: you can change them by setting :attr:`values`.</span>
+    <span class="sd">&#39;&#39;&#39;Implementation of a boolean setting on top of a :class:`SettingItem`.</span>
+<span class="sd">    It is visualized with a :class:`~kivy.uix.switch.Switch` widget.</span>
+<span class="sd">    By default, 0 and 1 are used for values: you can change them by setting</span>
+<span class="sd">    :attr:`values`.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">values</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">])</span>
@@ -872,6 +879,68 @@
 
         <span class="c1"># all done, open the popup !</span>
         <span class="n">popup</span><span class="o">.</span><span class="n">open</span><span class="p">()</span></div>
+
+
+<span class="k">class</span> <span class="nc">SettingColor</span><span class="p">(</span><span class="n">SettingItem</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Implementation of a color setting on top of a :class:`SettingItem`.</span>
+<span class="sd">    It is visualized with a :class:`~kivy.uix.label.Label` widget and a</span>
+<span class="sd">    colored canvas rectangle that, when clicked, will open a</span>
+<span class="sd">    :class:`~kivy.uix.popup.Popup` with a</span>
+<span class="sd">    :class:`~kivy.uix.colorpicker.ColorPicker` so the user can choose a color.</span>
+
+<span class="sd">    .. versionadded:: 2.0.1</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">popup</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;(internal) Used to store the current popup when it&#39;s shown.</span>
+
+<span class="sd">    :attr:`popup` is an :class:`~kivy.properties.ObjectProperty` and defaults</span>
+<span class="sd">    to None.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">on_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_release</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_create_popup</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_dismiss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">popup</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">popup</span><span class="o">.</span><span class="n">dismiss</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">popup</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dismiss</span><span class="p">()</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_hex_from_color</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colorpicker</span><span class="o">.</span><span class="n">color</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="nf">_create_popup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+        <span class="c1"># create popup layout</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">BoxLayout</span><span class="p">(</span><span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="s1">&#39;5dp&#39;</span><span class="p">)</span>
+        <span class="n">popup_width</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mf">0.95</span> <span class="o">*</span> <span class="n">Window</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">dp</span><span class="p">(</span><span class="mi">500</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">popup</span> <span class="o">=</span> <span class="n">popup</span> <span class="o">=</span> <span class="n">Popup</span><span class="p">(</span>
+            <span class="n">title</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">content</span><span class="p">,</span> <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">),</span>
+            <span class="n">width</span><span class="o">=</span><span class="n">popup_width</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">colorpicker</span> <span class="o">=</span> <span class="n">colorpicker</span> <span class="o">=</span> \
+            <span class="n">ColorPicker</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">utils</span><span class="o">.</span><span class="n">get_color_from_hex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+        <span class="n">colorpicker</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_color</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_validate</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">colorpicker</span> <span class="o">=</span> <span class="n">colorpicker</span>
+        <span class="n">content</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">colorpicker</span><span class="p">)</span>
+        <span class="n">content</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">SettingSpacer</span><span class="p">())</span>
+
+        <span class="c1"># 2 buttons are created for accept or cancel the current value</span>
+        <span class="n">btnlayout</span> <span class="o">=</span> <span class="n">BoxLayout</span><span class="p">(</span><span class="n">size_hint_y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s1">&#39;50dp&#39;</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="s1">&#39;5dp&#39;</span><span class="p">)</span>
+        <span class="n">btn</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Ok&#39;</span><span class="p">)</span>
+        <span class="n">btn</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_release</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_validate</span><span class="p">)</span>
+        <span class="n">btnlayout</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">btn</span><span class="p">)</span>
+        <span class="n">btn</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Cancel&#39;</span><span class="p">)</span>
+        <span class="n">btn</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_release</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_dismiss</span><span class="p">)</span>
+        <span class="n">btnlayout</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">btn</span><span class="p">)</span>
+        <span class="n">content</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">btnlayout</span><span class="p">)</span>
+
+        <span class="c1"># all done, open the popup !</span>
+        <span class="n">popup</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
 
 
 <div class="viewcode-block" id="SettingNumeric"><a class="viewcode-back" href="../../../api-kivy.uix.settings.html#kivy.uix.settings.SettingNumeric">[docs]</a><span class="k">class</span> <span class="nc">SettingNumeric</span><span class="p">(</span><span class="n">SettingString</span><span class="p">):</span>
@@ -1288,6 +1357,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">register_type</span><span class="p">(</span><span class="s1">&#39;options&#39;</span><span class="p">,</span> <span class="n">SettingOptions</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">register_type</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="n">SettingTitle</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">register_type</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">,</span> <span class="n">SettingPath</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_type</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="n">SettingColor</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Settings.on_touch_down"><a class="viewcode-back" href="../../../api-kivy.uix.settings.html#kivy.uix.settings.Settings.on_touch_down">[docs]</a>    <span class="k">def</span> <span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">collide_point</span><span class="p">(</span><span class="o">*</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">):</span>
@@ -1605,12 +1675,26 @@
     <span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
 
     <span class="k">class</span> <span class="nc">SettingsApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
+        <span class="n">demo_json_settings</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">([</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;color&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Test color&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;desc&#39;</span><span class="p">:</span> <span class="s1">&#39;Your choosen Color&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;section&#39;</span><span class="p">:</span> <span class="s1">&#39;colorselection&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="s1">&#39;testcolor&#39;</span>
+            <span class="p">}])</span>
 
         <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="n">s</span> <span class="o">=</span> <span class="n">Settings</span><span class="p">()</span>
             <span class="n">s</span><span class="o">.</span><span class="n">add_kivy_panel</span><span class="p">()</span>
+            <span class="n">s</span><span class="o">.</span><span class="n">add_json_panel</span><span class="p">(</span><span class="s1">&#39;Color settings&#39;</span><span class="p">,</span>
+                             <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span>
+                             <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">demo_json_settings</span><span class="p">)</span>
             <span class="n">s</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_close</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">s</span>
+
+        <span class="k">def</span> <span class="nf">build_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">setdefaults</span><span class="p">(</span><span class="s1">&#39;colorselection&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;testcolor&#39;</span><span class="p">:</span> <span class="s1">&#39;#FF0000&#39;</span><span class="p">})</span>
 
     <span class="n">SettingsApp</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
@@ -1651,7 +1735,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Oct 05, 2021.
+      Last updated on Oct 08, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.2.0.
 </div>
 -->
