@@ -613,51 +613,29 @@
         <span class="k">elif</span> <span class="n">etype</span> <span class="o">==</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">me</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">me_list</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">me_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">me</span><span class="p">)</span>
-
         <span class="c1"># dispatch to listeners</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">me</span><span class="o">.</span><span class="n">grab_exclusive_class</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">listener</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_listeners</span><span class="p">:</span>
                 <span class="n">listener</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_motion&#39;</span><span class="p">,</span> <span class="n">etype</span><span class="p">,</span> <span class="n">me</span><span class="p">)</span>
-
         <span class="c1"># dispatch grabbed touch</span>
         <span class="n">me</span><span class="o">.</span><span class="n">grab_state</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">for</span> <span class="n">_wid</span> <span class="ow">in</span> <span class="n">me</span><span class="o">.</span><span class="n">grab_list</span><span class="p">[:]:</span>
-
-            <span class="c1"># it&#39;s a weakref, call it!</span>
-            <span class="n">wid</span> <span class="o">=</span> <span class="n">_wid</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">weak_widget</span> <span class="ow">in</span> <span class="n">me</span><span class="o">.</span><span class="n">grab_list</span><span class="p">[:]:</span>
+            <span class="c1"># weak_widget is a weak reference to widget</span>
+            <span class="n">wid</span> <span class="o">=</span> <span class="n">weak_widget</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">wid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="c1"># object is gone, stop.</span>
-                <span class="n">me</span><span class="o">.</span><span class="n">grab_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">_wid</span><span class="p">)</span>
+                <span class="n">me</span><span class="o">.</span><span class="n">grab_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">weak_widget</span><span class="p">)</span>
                 <span class="k">continue</span>
-
             <span class="n">root_window</span> <span class="o">=</span> <span class="n">wid</span><span class="o">.</span><span class="n">get_root_window</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">wid</span> <span class="o">!=</span> <span class="n">root_window</span> <span class="ow">and</span> <span class="n">root_window</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">me</span><span class="o">.</span><span class="n">push</span><span class="p">()</span>
-                <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">root_window</span><span class="o">.</span><span class="n">_get_effective_size</span><span class="p">()</span>
-                <span class="n">kheight</span> <span class="o">=</span> <span class="n">root_window</span><span class="o">.</span><span class="n">keyboard_height</span>
-                <span class="n">smode</span> <span class="o">=</span> <span class="n">root_window</span><span class="o">.</span><span class="n">softinput_mode</span>
-                <span class="n">me</span><span class="o">.</span><span class="n">scale_for_screen</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="n">root_window</span><span class="o">.</span><span class="n">rotation</span><span class="p">,</span>
-                                    <span class="n">smode</span><span class="o">=</span><span class="n">smode</span><span class="p">,</span> <span class="n">kheight</span><span class="o">=</span><span class="n">kheight</span><span class="p">)</span>
-                <span class="n">parent</span> <span class="o">=</span> <span class="n">wid</span><span class="o">.</span><span class="n">parent</span>
-                <span class="c1"># and do to_local until the widget</span>
                 <span class="k">try</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">parent</span><span class="p">:</span>
-                        <span class="n">me</span><span class="o">.</span><span class="n">apply_transform_2d</span><span class="p">(</span><span class="n">parent</span><span class="o">.</span><span class="n">to_widget</span><span class="p">)</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="n">me</span><span class="o">.</span><span class="n">apply_transform_2d</span><span class="p">(</span><span class="n">wid</span><span class="o">.</span><span class="n">to_widget</span><span class="p">)</span>
-                        <span class="n">me</span><span class="o">.</span><span class="n">apply_transform_2d</span><span class="p">(</span><span class="n">wid</span><span class="o">.</span><span class="n">to_parent</span><span class="p">)</span>
+                    <span class="n">root_window</span><span class="o">.</span><span class="n">transform_motion_event_2d</span><span class="p">(</span><span class="n">me</span><span class="p">,</span> <span class="n">wid</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-                    <span class="c1"># when using inner window, an app have grab the touch</span>
-                    <span class="c1"># but app is removed. the touch can&#39;t access</span>
-                    <span class="c1"># to one of the parent. (i.e, self.parent will be None)</span>
-                    <span class="c1"># and BAM the bug happen.</span>
                     <span class="n">me</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
                     <span class="k">continue</span>
-
             <span class="n">me</span><span class="o">.</span><span class="n">grab_current</span> <span class="o">=</span> <span class="n">wid</span>
-
             <span class="n">wid</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">push</span><span class="p">()</span>
-
             <span class="k">if</span> <span class="n">etype</span> <span class="o">==</span> <span class="s1">&#39;begin&#39;</span><span class="p">:</span>
                 <span class="c1"># don&#39;t dispatch again touch in on_touch_down</span>
                 <span class="c1"># a down event are nearly uniq here.</span>
@@ -669,18 +647,14 @@
                         <span class="n">wid</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_touch_move&#39;</span><span class="p">,</span> <span class="n">me</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">wid</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_touch_move&#39;</span><span class="p">,</span> <span class="n">me</span><span class="p">)</span>
-
             <span class="k">elif</span> <span class="n">etype</span> <span class="o">==</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">wid</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">sandbox</span><span class="p">:</span>
                     <span class="k">with</span> <span class="n">wid</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">sandbox</span><span class="p">:</span>
                         <span class="n">wid</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_touch_up&#39;</span><span class="p">,</span> <span class="n">me</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">wid</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_touch_up&#39;</span><span class="p">,</span> <span class="n">me</span><span class="p">)</span>
-
             <span class="n">wid</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-
             <span class="n">me</span><span class="o">.</span><span class="n">grab_current</span> <span class="o">=</span> <span class="kc">None</span>
-
             <span class="k">if</span> <span class="n">wid</span> <span class="o">!=</span> <span class="n">root_window</span> <span class="ow">and</span> <span class="n">root_window</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">me</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
         <span class="n">me</span><span class="o">.</span><span class="n">grab_state</span> <span class="o">=</span> <span class="kc">False</span></div>
@@ -1031,7 +1005,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Oct 08, 2021.
+      Last updated on Oct 30, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.2.0.
 </div>
 -->

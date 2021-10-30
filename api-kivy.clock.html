@@ -1649,6 +1649,34 @@ returned:</p>
 </div>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="kivy.clock.triggered">
+<span class="sig-prename descclassname"><span class="pre">kivy.clock.</span></span><span class="sig-name descname"><span class="pre">triggered</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/clock.html#triggered"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.clock.triggered" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator that will trigger the call of the function at the specified
+timeout, through the method <a class="reference internal" href="#kivy.clock.CyClockBase.create_trigger" title="kivy.clock.CyClockBase.create_trigger"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CyClockBase.create_trigger()</span></code></a>. Subsequent
+calls to the decorated function (while the timeout is active) are ignored.</p>
+<p>It can be helpful when an expensive function (i.e. call to a server) can be
+triggered by different methods. Setting a proper timeout will delay the
+calling and only one of them will be triggered.</p>
+<blockquote>
+<div><p>&#64;triggered(timeout, interval=False)
+def callback(id):</p>
+<blockquote>
+<div><p>print(‘The callback has been called with id=%d’ % id)</p>
+</div></blockquote>
+<p>&gt;&gt; callback(id=1)
+&gt;&gt; callback(id=2)
+The callback has been called with id=2</p>
+</div></blockquote>
+<p>The decorated callback can also be unscheduled using:</p>
+<blockquote>
+<div><p>&gt;&gt; callback.cancel()</p>
+</div></blockquote>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.10.1.</span></p>
+</div>
+</dd></dl>
+
 </section>
 <div class="toctree-wrapper compound">
 </div>
@@ -1701,7 +1729,7 @@ returned:</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Oct 08, 2021.
+      Last updated on Oct 30, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.2.0.
 </div>
 -->
