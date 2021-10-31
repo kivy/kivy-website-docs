@@ -720,45 +720,54 @@
 <span class="sd">            Max value for `x`, `y` and `z` is changed respectively to `w` - 1,</span>
 <span class="sd">            `h` - 1 and `p` - 1.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="n">x_max</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">w</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">h</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span>
-        <span class="n">sx</span><span class="p">,</span> <span class="n">sy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sy</span>
-        <span class="k">if</span> <span class="n">rotation</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">sx</span> <span class="o">*</span> <span class="n">x_max</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">sy</span> <span class="o">*</span> <span class="n">y_max</span>
-        <span class="k">elif</span> <span class="n">rotation</span> <span class="o">==</span> <span class="mi">90</span><span class="p">:</span>
-            <span class="n">sx</span><span class="p">,</span> <span class="n">sy</span> <span class="o">=</span> <span class="n">sy</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">sx</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">sx</span> <span class="o">*</span> <span class="n">y_max</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">sy</span> <span class="o">*</span> <span class="n">x_max</span>
-        <span class="k">elif</span> <span class="n">rotation</span> <span class="o">==</span> <span class="mi">180</span><span class="p">:</span>
-            <span class="n">sx</span><span class="p">,</span> <span class="n">sy</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">sx</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">sy</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">sx</span> <span class="o">*</span> <span class="n">x_max</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">sy</span> <span class="o">*</span> <span class="n">y_max</span>
-        <span class="k">elif</span> <span class="n">rotation</span> <span class="o">==</span> <span class="mi">270</span><span class="p">:</span>
-            <span class="n">sx</span><span class="p">,</span> <span class="n">sy</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">sy</span><span class="p">,</span> <span class="n">sx</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">sx</span> <span class="o">*</span> <span class="n">y_max</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">sy</span> <span class="o">*</span> <span class="n">x_max</span>
-
+        <span class="n">x_max</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">w</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">absolute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_absolute_pos</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">absolute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sy</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">y_max</span><span class="p">,</span> <span class="n">rotation</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ox</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">oy</span> <span class="o">=</span> <span class="n">absolute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">osx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">osy</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">y_max</span><span class="p">,</span> <span class="n">rotation</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">px</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">py</span> <span class="o">=</span> <span class="n">absolute</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">psx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">psy</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">y_max</span><span class="p">,</span> <span class="n">rotation</span><span class="p">)</span>
+        <span class="c1"># Update z values</span>
         <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sz</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">p</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span>
-
+            <span class="n">z_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">p</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sz</span> <span class="o">*</span> <span class="n">z_max</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">oz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">osz</span> <span class="o">*</span> <span class="n">z_max</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">psz</span> <span class="o">*</span> <span class="n">z_max</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">pz</span>
         <span class="k">if</span> <span class="n">smode</span><span class="p">:</span>
+            <span class="c1"># Adjust y for keyboard height</span>
             <span class="k">if</span> <span class="n">smode</span> <span class="o">==</span> <span class="s1">&#39;pan&#39;</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-=</span> <span class="n">kheight</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">oy</span> <span class="o">-=</span> <span class="n">kheight</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">py</span> <span class="o">-=</span> <span class="n">kheight</span>
             <span class="k">elif</span> <span class="n">smode</span> <span class="o">==</span> <span class="s1">&#39;scale&#39;</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="p">(</span><span class="n">kheight</span> <span class="o">*</span> <span class="p">(</span>
-                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">kheight</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">h</span> <span class="o">-</span> <span class="n">kheight</span><span class="p">)))</span> <span class="o">-</span> <span class="n">kheight</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ox</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">px</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ox</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">py</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">oy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">pz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">oz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span>
-
+                <span class="n">offset</span> <span class="o">=</span> <span class="n">kheight</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">h</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">h</span> <span class="o">-</span> <span class="n">kheight</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="n">offset</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">oy</span> <span class="o">+=</span> <span class="n">offset</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">py</span> <span class="o">+=</span> <span class="n">offset</span>
+        <span class="c1"># Update delta for x and y</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">px</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">py</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">pz</span>
-
-        <span class="c1"># cache position</span>
+        <span class="c1"># Cache position</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span></div>
+
+<div class="viewcode-block" id="MotionEvent.to_absolute_pos"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.to_absolute_pos">[docs]</a>    <span class="k">def</span> <span class="nf">to_absolute_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">y_max</span><span class="p">,</span> <span class="n">rotation</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Transforms normalized (0-1) coordinates `nx` and `ny` to absolute</span>
+<span class="sd">        coordinates using `x_max`, `y_max` and `rotation`.</span>
+
+<span class="sd">        :raises:</span>
+<span class="sd">            `ValueError`: If `rotation` is not one of: 0, 90, 180 or 270</span>
+
+<span class="sd">        .. versionadded:: 2.1.0</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">rotation</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">nx</span> <span class="o">*</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">ny</span> <span class="o">*</span> <span class="n">y_max</span>
+        <span class="k">elif</span> <span class="n">rotation</span> <span class="o">==</span> <span class="mi">90</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ny</span> <span class="o">*</span> <span class="n">y_max</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">nx</span><span class="p">)</span> <span class="o">*</span> <span class="n">x_max</span>
+        <span class="k">elif</span> <span class="n">rotation</span> <span class="o">==</span> <span class="mi">180</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">nx</span><span class="p">)</span> <span class="o">*</span> <span class="n">x_max</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">ny</span><span class="p">)</span> <span class="o">*</span> <span class="n">y_max</span>
+        <span class="k">elif</span> <span class="n">rotation</span> <span class="o">==</span> <span class="mi">270</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">ny</span><span class="p">)</span> <span class="o">*</span> <span class="n">y_max</span><span class="p">,</span> <span class="n">nx</span> <span class="o">*</span> <span class="n">x_max</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid rotation </span><span class="si">%s</span><span class="s1">, &#39;</span>
+                         <span class="s1">&#39;valid values are 0, 90, 180 or 270&#39;</span> <span class="o">%</span> <span class="n">rotation</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="MotionEvent.push"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.push">[docs]</a>    <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Push attribute values in `attrs` onto the stack</span>
@@ -886,7 +895,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Oct 30, 2021.
+      Last updated on Oct 31, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.2.0.
 </div>
 -->
