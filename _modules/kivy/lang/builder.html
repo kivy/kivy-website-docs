@@ -360,9 +360,7 @@
 
 <span class="sd">Class used for the registering and application of rules for specific widgets.</span>
 <span class="sd">&#39;&#39;&#39;</span>
-<span class="kn">import</span> <span class="nn">codecs</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">types</span>
 <span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">environ</span>
 <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span>
@@ -936,11 +934,11 @@
             <span class="n">_ids</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">rctx</span><span class="p">[</span><span class="s1">&#39;ids&#39;</span><span class="p">])</span>
             <span class="n">_root</span> <span class="o">=</span> <span class="n">_ids</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;root&#39;</span><span class="p">)</span>
             <span class="n">_new_ids</span> <span class="o">=</span> <span class="n">_root</span><span class="o">.</span><span class="n">ids</span>
-            <span class="k">for</span> <span class="n">_key</span> <span class="ow">in</span> <span class="n">_ids</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-                <span class="k">if</span> <span class="n">_ids</span><span class="p">[</span><span class="n">_key</span><span class="p">]</span> <span class="o">==</span> <span class="n">_root</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">_key</span><span class="p">,</span> <span class="n">_value</span> <span class="ow">in</span> <span class="n">_ids</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">_value</span> <span class="o">==</span> <span class="n">_root</span><span class="p">:</span>
                     <span class="c1"># skip on self</span>
                     <span class="k">continue</span>
-                <span class="n">_new_ids</span><span class="p">[</span><span class="n">_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">_ids</span><span class="p">[</span><span class="n">_key</span><span class="p">]</span>
+                <span class="n">_new_ids</span><span class="p">[</span><span class="n">_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">_value</span>
             <span class="n">_root</span><span class="o">.</span><span class="n">ids</span> <span class="o">=</span> <span class="n">_new_ids</span>
 
         <span class="c1"># first, ensure that the widget have all the properties used in</span>
@@ -1294,7 +1292,7 @@
 
 <span class="k">if</span> <span class="s1">&#39;KIVY_PROFILE_LANG&#39;</span> <span class="ow">in</span> <span class="n">environ</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">atexit</span>
-    <span class="kn">import</span> <span class="nn">cgi</span>
+    <span class="kn">from</span> <span class="nn">html</span> <span class="kn">import</span> <span class="n">escape</span>
 
     <span class="k">def</span> <span class="nf">match_rule</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">rule</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">rule</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">filename</span> <span class="o">!=</span> <span class="n">fn</span><span class="p">:</span>
@@ -1323,7 +1321,7 @@
             <span class="s1">&#39;&lt;style type=&quot;text/css&quot;&gt;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span>
             <span class="s1">&#39;pre { margin: 0; }</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span>
             <span class="s1">&#39;&lt;/style&gt;&#39;</span><span class="p">]</span>
-        <span class="n">files</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">filename</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">Builder</span><span class="o">.</span><span class="n">rules</span><span class="p">])</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">filename</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">Builder</span><span class="o">.</span><span class="n">rules</span><span class="p">}</span>
         <span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -1334,12 +1332,12 @@
             <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
                 <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
-                <span class="n">line</span> <span class="o">=</span> <span class="n">cgi</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="n">escape</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
                 <span class="n">matched_prp</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="k">for</span> <span class="n">psn</span><span class="p">,</span> <span class="n">rule</span> <span class="ow">in</span> <span class="n">Builder</span><span class="o">.</span><span class="n">rules</span><span class="p">:</span>
-                    <span class="n">matched_prp</span> <span class="o">+=</span> <span class="nb">list</span><span class="p">(</span><span class="n">match_rule</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">rule</span><span class="p">))</span>
+                    <span class="n">matched_prp</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">match_rule</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">rule</span><span class="p">))</span>
 
-                <span class="n">count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">count</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">matched_prp</span><span class="p">]))</span>
+                <span class="n">count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">({</span><span class="n">x</span><span class="o">.</span><span class="n">count</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">matched_prp</span><span class="p">})</span>
 
                 <span class="n">color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">155</span><span class="p">,</span> <span class="mi">155</span><span class="p">)</span> <span class="k">if</span> <span class="n">count</span> <span class="k">else</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
                 <span class="n">html</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;&lt;tr style=&quot;background-color: rgb</span><span class="si">{}</span><span class="s1">&quot;&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">color</span><span class="p">),</span>
@@ -1349,7 +1347,7 @@
                          <span class="s1">&#39;&lt;/tr&gt;&#39;</span><span class="p">]</span>
             <span class="n">html</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;&lt;/table&gt;&#39;</span><span class="p">]</span>
         <span class="n">html</span> <span class="o">+=</span> <span class="p">[</span><span class="s1">&#39;&lt;/body&gt;&lt;/html&gt;&#39;</span><span class="p">]</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;builder_stats.html&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;builder_stats.html&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
             <span class="n">fd</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">html</span><span class="p">))</span>
 
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Profiling written at builder_stats.html&#39;</span><span class="p">)</span>
@@ -1393,7 +1391,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Nov 19, 2021.
+      Last updated on Nov 23, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.3.0.
 </div>
 -->
