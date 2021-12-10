@@ -642,15 +642,36 @@
         <span class="c1">#: the touch.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ud</span> <span class="o">=</span> <span class="n">EnhancedDictionary</span><span class="p">()</span>
 
+        <span class="c1">#: If set to `True` (default) keeps first previous position</span>
+        <span class="c1">#: (X, Y, Z in 0-1 range) and ignore all other until</span>
+        <span class="c1">#: :meth:`MotionEvent.dispatch_done` is called from the `EventLoop`.</span>
+        <span class="c1">#:</span>
+        <span class="c1">#: This attribute is needed because event provider can make many calls</span>
+        <span class="c1">#: to :meth:`MotionEvent.move`, but for all those calls event is</span>
+        <span class="c1">#: dispatched to the listeners only once. Assigning `False` will keep</span>
+        <span class="c1">#: latest previous position. See :meth:`MotionEvent.move`.</span>
+        <span class="c1">#:</span>
+        <span class="c1">#: .. versionadded:: 2.1.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sync_with_dispatch</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1">#: Keep first previous position if :attr:`sync_with_dispatch` is</span>
+        <span class="c1">#: `True`.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_keep_prev_pos</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1">#: Flag that first dispatch of this event is done.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_first_dispatch_done</span> <span class="o">=</span> <span class="kc">False</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">depack</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 
 <div class="viewcode-block" id="MotionEvent.depack"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.depack">[docs]</a>    <span class="k">def</span> <span class="nf">depack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Depack `args` into attributes of the class&#39;&#39;&#39;</span>
-        <span class="c1"># set initial position and last position</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">osx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">psx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">osx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sx</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">psy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">osy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sy</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">psz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">osz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sz</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">osx</span> <span class="ow">is</span> <span class="kc">None</span> \
+                <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">sync_with_dispatch</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_first_dispatch_done</span><span class="p">:</span>
+            <span class="c1"># Sync origin/previous/current positions until the first</span>
+            <span class="c1"># dispatch (etype == &#39;begin&#39;) is done.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">osx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">psx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sx</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">osy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">psy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sy</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">osz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">psz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sz</span>
         <span class="c1"># update the delta</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dsx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sx</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">psx</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dsy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sy</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">psy</span>
@@ -700,15 +721,25 @@
         <span class="k">if</span> <span class="n">class_instance</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">grab_list</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">grab_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">class_instance</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MotionEvent.move"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.move">[docs]</a>    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Move the touch to another position</span>
+<div class="viewcode-block" id="MotionEvent.dispatch_done"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.dispatch_done">[docs]</a>    <span class="k">def</span> <span class="nf">dispatch_done</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Notify that dispatch to the listeners is done.</span>
+
+<span class="sd">        Called by the :meth:`EventLoopBase.dispatch_input`.</span>
+
+<span class="sd">        .. versionadded:: 2.1.0</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">px</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">py</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">psx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sx</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">psy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sy</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">psz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sz</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_keep_prev_pos</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_first_dispatch_done</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="MotionEvent.move"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.move">[docs]</a>    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Move the touch to another position.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sync_with_dispatch</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keep_prev_pos</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">psx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">psy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">psz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sz</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_keep_prev_pos</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">psx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">psy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">psz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sz</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">time_update</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">depack</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div>
 
@@ -895,7 +926,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Dec 09, 2021.
+      Last updated on Dec 10, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.3.1.
 </div>
 -->

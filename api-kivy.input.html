@@ -433,6 +433,16 @@ ox, oy, oz, dx, dy, dz</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="kivy.input.MotionEvent.dispatch_done">
+<span class="sig-name descname"><span class="pre">dispatch_done</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/input/motionevent.html#MotionEvent.dispatch_done"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.input.MotionEvent.dispatch_done" title="Permalink to this definition">¶</a></dt>
+<dd><p>Notify that dispatch to the listeners is done.</p>
+<p>Called by the <code class="xref py py-meth docutils literal notranslate"><span class="pre">EventLoopBase.dispatch_input()</span></code>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.1.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="kivy.input.MotionEvent.distance">
 <span class="sig-name descname"><span class="pre">distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other_touch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/input/motionevent.html#MotionEvent.distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.input.MotionEvent.distance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the distance between the current touch and another touch.</p>
@@ -567,7 +577,7 @@ instead.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.input.MotionEvent.move">
 <span class="sig-name descname"><span class="pre">move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/input/motionevent.html#MotionEvent.move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.input.MotionEvent.move" title="Permalink to this definition">¶</a></dt>
-<dd><p>Move the touch to another position</p>
+<dd><p>Move the touch to another position.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -722,6 +732,21 @@ By default, the property is set to None</p>
 <dt class="sig sig-object py" id="kivy.input.MotionEvent.sy">
 <span class="sig-name descname"><span class="pre">sy</span></span><a class="headerlink" href="#kivy.input.MotionEvent.sy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Y position, in 0-1 range</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.input.MotionEvent.sync_with_dispatch">
+<span class="sig-name descname"><span class="pre">sync_with_dispatch</span></span><a class="headerlink" href="#kivy.input.MotionEvent.sync_with_dispatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>If set to <cite>True</cite> (default) keeps first previous position
+(X, Y, Z in 0-1 range) and ignore all other until
+<a class="reference internal" href="#kivy.input.MotionEvent.dispatch_done" title="kivy.input.MotionEvent.dispatch_done"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MotionEvent.dispatch_done()</span></code></a> is called from the <cite>EventLoop</cite>.</p>
+<p>This attribute is needed because event provider can make many calls
+to <a class="reference internal" href="#kivy.input.MotionEvent.move" title="kivy.input.MotionEvent.move"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MotionEvent.move()</span></code></a>, but for all those calls event is
+dispatched to the listeners only once. Assigning <cite>False</cite> will keep
+latest previous position. See <a class="reference internal" href="#kivy.input.MotionEvent.move" title="kivy.input.MotionEvent.move"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MotionEvent.move()</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.1.0.</span></p>
+</div>
 </dd></dl>
 
 <dl class="py attribute">
@@ -1003,7 +1028,7 @@ provider.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Dec 09, 2021.
+      Last updated on Dec 10, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.3.1.
 </div>
 -->
