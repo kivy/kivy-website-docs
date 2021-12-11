@@ -567,6 +567,8 @@
         <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;on_mouse_down&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_mouse_press</span><span class="p">)</span>
         <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;on_mouse_move&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_mouse_motion</span><span class="p">)</span>
         <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;on_mouse_up&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_mouse_release</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;on_rotate&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_touch_graphics</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;system_size&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_touch_graphics</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">disable_hover</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_start_hover_events</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_running</span> <span class="o">=</span> <span class="kc">True</span></div>
@@ -588,6 +590,8 @@
         <span class="n">funbind</span><span class="p">(</span><span class="s1">&#39;on_mouse_down&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_mouse_press</span><span class="p">)</span>
         <span class="n">funbind</span><span class="p">(</span><span class="s1">&#39;on_mouse_move&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_mouse_motion</span><span class="p">)</span>
         <span class="n">funbind</span><span class="p">(</span><span class="s1">&#39;on_mouse_up&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_mouse_release</span><span class="p">)</span>
+        <span class="n">funbind</span><span class="p">(</span><span class="s1">&#39;on_rotate&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_touch_graphics</span><span class="p">)</span>
+        <span class="n">funbind</span><span class="p">(</span><span class="s1">&#39;system_size&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_touch_graphics</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">disable_hover</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_stop_hover_events</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_running</span> <span class="o">=</span> <span class="kc">False</span></div>
@@ -738,6 +742,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">remove_touch</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">alt_touch</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">alt_touch</span> <span class="o">=</span> <span class="kc">None</span>
 
+    <span class="k">def</span> <span class="nf">update_touch_graphics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">touch</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">touches</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">touch</span><span class="o">.</span><span class="n">update_graphics</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">begin_or_update_hover_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="n">etype</span> <span class="o">=</span> <span class="s1">&#39;update&#39;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hover_event</span> <span class="k">else</span> <span class="s1">&#39;begin&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_hover</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">etype</span><span class="p">)</span>
@@ -804,7 +812,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Dec 10, 2021.
+      Last updated on Dec 11, 2021.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.3.1.
 </div>
 -->
