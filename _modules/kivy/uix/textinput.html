@@ -1720,11 +1720,15 @@
 
         <span class="k">if</span> <span class="n">halign</span> <span class="o">==</span> <span class="s1">&#39;center&#39;</span><span class="p">:</span>
             <span class="n">viewport_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="n">padding_left</span> <span class="o">-</span> <span class="n">padding_right</span>
-            <span class="n">xoff</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">viewport_width</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_row_width</span><span class="p">(</span><span class="n">cursor_y</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">xoff</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+                <span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">((</span><span class="n">viewport_width</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_row_width</span><span class="p">(</span><span class="n">cursor_y</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="p">)</span>
 
         <span class="k">elif</span> <span class="n">halign</span> <span class="o">==</span> <span class="s1">&#39;right&#39;</span> <span class="ow">or</span> <span class="n">auto_halign_r</span><span class="p">:</span>
             <span class="n">viewport_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="n">padding_left</span> <span class="o">-</span> <span class="n">padding_right</span>
-            <span class="n">xoff</span> <span class="o">=</span> <span class="n">viewport_width</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_row_width</span><span class="p">(</span><span class="n">cursor_y</span><span class="p">)</span>
+            <span class="n">xoff</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+                <span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">viewport_width</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_row_width</span><span class="p">(</span><span class="n">cursor_y</span><span class="p">))</span>
+            <span class="p">)</span>
 
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="n">cursor_y</span><span class="p">])):</span>
             <span class="n">line_y</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">cursor_y</span><span class="p">]</span>
@@ -2942,7 +2946,7 @@
             <span class="n">row_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_row_width</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor_row</span><span class="p">)</span>
             <span class="n">x</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="n">left</span>
-                <span class="o">+</span> <span class="p">(</span><span class="n">viewport_width</span> <span class="o">-</span> <span class="n">row_width</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+                <span class="o">+</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">viewport_width</span> <span class="o">-</span> <span class="n">row_width</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
                 <span class="o">+</span> <span class="n">cursor_offset</span>
                 <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span>
             <span class="p">)</span>
@@ -2950,8 +2954,7 @@
             <span class="n">row_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_row_width</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor_row</span><span class="p">)</span>
             <span class="n">x</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="n">left</span>
-                <span class="o">+</span> <span class="n">viewport_width</span>
-                <span class="o">-</span> <span class="n">row_width</span>
+                <span class="o">+</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">viewport_width</span> <span class="o">-</span> <span class="n">row_width</span><span class="p">)</span>
                 <span class="o">+</span> <span class="n">cursor_offset</span>
                 <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span>
             <span class="p">)</span>
@@ -3544,13 +3547,36 @@
         <span class="n">padding_right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
         <span class="n">viewport_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="n">padding_left</span> <span class="o">-</span> <span class="n">padding_right</span>
         <span class="n">sx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span>
+        <span class="n">base_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_direction</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolved_base_dir</span>
+        <span class="n">auto_halign_r</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">halign</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span>
+            <span class="ow">and</span> <span class="n">base_dir</span>
+            <span class="ow">and</span> <span class="s1">&#39;rtl&#39;</span> <span class="ow">in</span> <span class="n">base_dir</span>
+        <span class="p">)</span>
+
         <span class="n">offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_offset</span><span class="p">()</span>
+        <span class="n">row_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_row_width</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor_row</span><span class="p">)</span>
 
         <span class="c1"># if offset is outside the current bounds, readjust</span>
         <span class="k">if</span> <span class="n">offset</span> <span class="o">-</span> <span class="n">sx</span> <span class="o">&gt;=</span> <span class="n">viewport_width</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">=</span> <span class="n">offset</span> <span class="o">-</span> <span class="n">viewport_width</span>
         <span class="k">elif</span> <span class="n">offset</span> <span class="o">&lt;</span> <span class="n">sx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">=</span> <span class="n">offset</span>
+
+        <span class="c1"># Avoid right/center horizontal alignment issues if the viewport is at</span>
+        <span class="c1"># the end of the line, if not multiline.</span>
+        <span class="n">viewport_scroll_x</span> <span class="o">=</span> <span class="n">row_width</span> <span class="o">-</span> <span class="n">viewport_width</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiline</span>
+            <span class="ow">and</span> <span class="n">offset</span> <span class="o">&gt;=</span> <span class="n">viewport_scroll_x</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">&gt;=</span> <span class="n">viewport_scroll_x</span>
+            <span class="ow">and</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">halign</span> <span class="o">==</span> <span class="s2">&quot;center&quot;</span>
+                <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">halign</span> <span class="o">==</span> <span class="s2">&quot;right&quot;</span>
+                <span class="ow">or</span> <span class="n">auto_halign_r</span>
+            <span class="p">)</span>
+        <span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">viewport_scroll_x</span><span class="p">)</span>
 
         <span class="c1"># do the same for Y</span>
         <span class="c1"># this algo try to center the cursor as much as possible</span>
@@ -4367,8 +4393,8 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Jan 12, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.3.2.
+      Last updated on Jan 16, 2022.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
 </div>
 -->
   </body>
