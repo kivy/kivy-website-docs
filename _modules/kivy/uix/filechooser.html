@@ -443,12 +443,12 @@
 <span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">StringProperty</span><span class="p">,</span> <span class="n">ListProperty</span><span class="p">,</span> <span class="n">BooleanProperty</span><span class="p">,</span> <span class="n">ObjectProperty</span><span class="p">,</span>
     <span class="n">NumericProperty</span><span class="p">,</span> <span class="n">AliasProperty</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">collections.abc</span>
 <span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">listdir</span>
 <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">basename</span><span class="p">,</span> <span class="n">join</span><span class="p">,</span> <span class="n">sep</span><span class="p">,</span> <span class="n">normpath</span><span class="p">,</span> <span class="n">expanduser</span><span class="p">,</span> <span class="n">altsep</span><span class="p">,</span>
     <span class="n">splitdrive</span><span class="p">,</span> <span class="n">realpath</span><span class="p">,</span> <span class="n">getsize</span><span class="p">,</span> <span class="n">isdir</span><span class="p">,</span> <span class="n">abspath</span><span class="p">,</span> <span class="n">isfile</span><span class="p">,</span> <span class="n">dirname</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">fnmatch</span> <span class="kn">import</span> <span class="n">fnmatch</span>
-<span class="kn">import</span> <span class="nn">collections</span>
 
 <span class="n">platform</span> <span class="o">=</span> <span class="n">core_platform</span>
 <span class="n">filesize_units</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;KB&#39;</span><span class="p">,</span> <span class="s1">&#39;MB&#39;</span><span class="p">,</span> <span class="s1">&#39;GB&#39;</span><span class="p">,</span> <span class="s1">&#39;TB&#39;</span><span class="p">)</span>
@@ -1007,7 +1007,7 @@
             <span class="k">return</span> <span class="n">files</span>
         <span class="n">filtered</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">filt</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filt</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Callable</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filt</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Callable</span><span class="p">):</span>
                 <span class="n">filtered</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">fn</span> <span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">files</span> <span class="k">if</span> <span class="n">filt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">fn</span><span class="p">)])</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">filtered</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">fn</span> <span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">files</span> <span class="k">if</span> <span class="n">fnmatch</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">filt</span><span class="p">)])</span>
