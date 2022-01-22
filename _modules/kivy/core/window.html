@@ -971,12 +971,30 @@
             <span class="kn">import</span> <span class="nn">android</span>
         <span class="k">return</span> <span class="n">android</span><span class="o">.</span><span class="n">get_keyboard_height</span><span class="p">()</span>
 
+    <span class="k">def</span> <span class="nf">_get_kivy_vkheight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;kivy&#39;</span><span class="p">,</span> <span class="s1">&#39;keyboard_mode&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">mode</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;dock&#39;</span><span class="p">,</span> <span class="s1">&#39;systemanddock&#39;</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vkeyboard_cls</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="p">):</span>
+            <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">VKeyboard</span><span class="p">):</span>
+                    <span class="n">vkeyboard_height</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">height</span> <span class="o">*</span> <span class="n">w</span><span class="o">.</span><span class="n">scale</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">softinput_mode</span> <span class="o">==</span> <span class="s1">&#39;pan&#39;</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="n">vkeyboard_height</span>
+                    <span class="k">elif</span> <span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">softinput_mode</span> <span class="o">==</span> <span class="s1">&#39;below_target&#39;</span>
+                        <span class="ow">and</span> <span class="n">w</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;</span> <span class="n">vkeyboard_height</span>
+                    <span class="p">):</span>
+                        <span class="k">return</span> <span class="n">vkeyboard_height</span> <span class="o">-</span> <span class="n">w</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">y</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
     <span class="k">def</span> <span class="nf">_get_kheight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;android&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_android_kheight</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;ios&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;ios&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_ios_kheight</span><span class="p">()</span>
-        <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_kivy_vkheight</span><span class="p">()</span>
 
     <span class="n">keyboard_height</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_kheight</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;_keyboard_changed&#39;</span><span class="p">,))</span>
     <span class="sd">&#39;&#39;&#39;Returns the height of the softkeyboard/IME on mobile platforms.</span>
@@ -1953,7 +1971,7 @@
         <span class="n">w2</span><span class="p">,</span> <span class="n">h2</span> <span class="o">=</span> <span class="n">w</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">,</span> <span class="n">h</span> <span class="o">/</span> <span class="mf">2.</span>
         <span class="n">r</span> <span class="o">=</span> <span class="n">radians</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rotation</span><span class="p">)</span>
 
-        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">_h</span> <span class="o">=</span> <span class="n">h</span>
         <span class="k">if</span> <span class="n">smode</span> <span class="o">==</span> <span class="s1">&#39;pan&#39;</span><span class="p">:</span>
             <span class="n">y</span> <span class="o">=</span> <span class="n">kheight</span>
@@ -1963,7 +1981,7 @@
             <span class="n">_h</span> <span class="o">-=</span> <span class="n">kheight</span>
 
         <span class="c1"># prepare the viewport</span>
-        <span class="n">glViewport</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">_h</span><span class="p">)</span>
+        <span class="n">glViewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">_h</span><span class="p">)</span>
 
         <span class="c1"># do projection matrix</span>
         <span class="n">projection_mat</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">()</span>
@@ -1975,7 +1993,7 @@
         <span class="n">modelview_mat</span> <span class="o">=</span> <span class="n">modelview_mat</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">Matrix</span><span class="p">()</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 
         <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
-        <span class="n">w2</span><span class="p">,</span> <span class="n">h2</span> <span class="o">=</span> <span class="n">w</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">,</span> <span class="n">h</span> <span class="o">/</span> <span class="mf">2.</span>
+        <span class="n">w2</span><span class="p">,</span> <span class="n">h2</span> <span class="o">=</span> <span class="n">w</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">,</span> <span class="n">h</span> <span class="o">/</span> <span class="mf">2.</span> <span class="o">-</span> <span class="n">y</span>
         <span class="n">modelview_mat</span> <span class="o">=</span> <span class="n">modelview_mat</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">Matrix</span><span class="p">()</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="o">-</span><span class="n">w2</span><span class="p">,</span> <span class="o">-</span><span class="n">h2</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">render_context</span><span class="p">[</span><span class="s1">&#39;modelview_mat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">modelview_mat</span>
         <span class="n">frag_modelview_mat</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">()</span>
@@ -2474,6 +2492,12 @@
             <span class="n">keyboard</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">docked</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">docked_vkeyboard</span>
             <span class="n">keyboard</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">setup_mode</span><span class="p">()</span>
 
+            <span class="c1"># sets vkeyboard position according to Window.softinput_mode</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">softinput_mode</span> <span class="o">==</span> <span class="s1">&#39;pan&#39;</span><span class="p">:</span>
+                <span class="n">keyboard</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">top</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">softinput_mode</span> <span class="o">==</span> <span class="s1">&#39;below_target&#39;</span><span class="p">:</span>
+                <span class="n">keyboard</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">top</span> <span class="o">=</span> <span class="n">keyboard</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">y</span>
+
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># system keyboard, just register the callback.</span>
             <span class="n">keyboard</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_system_keyboard</span>
@@ -2590,7 +2614,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Jan 20, 2022.
+      Last updated on Jan 22, 2022.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
 </div>
 -->
