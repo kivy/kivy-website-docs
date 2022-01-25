@@ -787,9 +787,7 @@
 <span class="sd">    and defaults to True.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="n">size</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_size</span><span class="p">,</span> <span class="n">_set_size</span><span class="p">,</span>
-                         <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;_size&#39;</span><span class="p">,</span> <span class="s1">&#39;_rotation&#39;</span><span class="p">,</span> <span class="s1">&#39;softinput_mode&#39;</span><span class="p">,</span>
-                               <span class="s1">&#39;keyboard_height&#39;</span><span class="p">))</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_size</span><span class="p">,</span> <span class="n">_set_size</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;_size&#39;</span><span class="p">,</span> <span class="s1">&#39;_rotation&#39;</span><span class="p">))</span>
     <span class="sd">&#39;&#39;&#39;Get the rotated size of the window. If :attr:`rotation` is set, then the</span>
 <span class="sd">    size will change to reflect the rotation.</span>
 
@@ -834,7 +832,7 @@
             <span class="k">return</span> <span class="n">_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
-    <span class="n">width</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_width</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;_rotation&#39;</span><span class="p">,</span> <span class="s1">&#39;_size&#39;</span><span class="p">))</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_width</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;_rotation&#39;</span><span class="p">,</span> <span class="s1">&#39;_size&#39;</span><span class="p">,</span> <span class="s1">&#39;_density&#39;</span><span class="p">))</span>
     <span class="sd">&#39;&#39;&#39;Rotated window width.</span>
 
 <span class="sd">    :attr:`width` is a read-only :class:`~kivy.properties.AliasProperty`.</span>
@@ -851,9 +849,8 @@
             <span class="k">return</span> <span class="n">_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">kb</span>
         <span class="k">return</span> <span class="n">_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">kb</span>
 
-    <span class="n">height</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_height</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span>
-                           <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;_rotation&#39;</span><span class="p">,</span> <span class="s1">&#39;_size&#39;</span><span class="p">,</span> <span class="s1">&#39;softinput_mode&#39;</span><span class="p">,</span>
-                                 <span class="s1">&#39;keyboard_height&#39;</span><span class="p">))</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_height</span><span class="p">,</span>
+                           <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;_rotation&#39;</span><span class="p">,</span> <span class="s1">&#39;_size&#39;</span><span class="p">,</span> <span class="s1">&#39;_density&#39;</span><span class="p">))</span>
     <span class="sd">&#39;&#39;&#39;Rotated window height.</span>
 
 <span class="sd">    :attr:`height` is a read-only :class:`~kivy.properties.AliasProperty`.</span>
@@ -862,9 +859,7 @@
     <span class="k">def</span> <span class="nf">_get_center</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="mf">2.</span>
 
-    <span class="n">center</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_center</span><span class="p">,</span>
-                           <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="s1">&#39;height&#39;</span><span class="p">,</span> <span class="s1">&#39;_density&#39;</span><span class="p">),</span>
-                           <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">center</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_center</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="s1">&#39;height&#39;</span><span class="p">))</span>
     <span class="sd">&#39;&#39;&#39;Center of the rotated window.</span>
 
 <span class="sd">    .. versionadded:: 1.0.9</span>
@@ -1039,9 +1034,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span>
 
     <span class="n">system_size</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_system_size</span><span class="p">,</span> <span class="n">_set_system_size</span><span class="p">,</span>
-                                <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;_size&#39;</span><span class="p">,</span> <span class="s1">&#39;softinput_mode&#39;</span><span class="p">,</span>
-                                      <span class="s1">&#39;keyboard_height&#39;</span><span class="p">),</span>
-                                <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                                <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;_size&#39;</span><span class="p">,))</span>
     <span class="sd">&#39;&#39;&#39;Real size of the window ignoring rotation. If the density is</span>
 <span class="sd">    not 1, the :attr:`system_size` is the :attr:`size` divided by</span>
 <span class="sd">    density.</span>
@@ -2614,7 +2607,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Jan 23, 2022.
+      Last updated on Jan 25, 2022.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
 </div>
 -->
