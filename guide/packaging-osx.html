@@ -8,7 +8,7 @@
     <meta name="twitter:site" content="@kivyframework">
     <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Creating packages for OS X &mdash; Kivy 2.1.0.dev0 documentation</title>
+    <title>Creating packages for macOS &mdash; Kivy 2.1.0.dev0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../_static/fresh.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -26,7 +26,7 @@
     <link rel="search" title="Search" href="../search.html" />
     <link rel="top" title="Kivy 2.1.0.dev0 documentation" href="../index.html" />
     <link rel="up" title="Packaging your application" href="packaging.html" />
-    <link rel="next" title="Create a package for IOS" href="packaging-ios.html" />
+    <link rel="next" title="iOS Prerequisites" href="packaging-ios-prerequisites.html" />
     <link rel="prev" title="Kivy on Android" href="android.html" /> 
   </head>
   <body>
@@ -62,10 +62,11 @@
                 <button type="submit">Go</button>
             </form>
           <!--
-          <h3><a href="../index.html">Creating packages for OS X</a></h3>
+          <h3><a href="../index.html">Creating packages for macOS</a></h3>
           <ul>
-<li><a class="reference internal" href="#">Creating packages for OS X</a><ul>
+<li><a class="reference internal" href="#">Creating packages for macOS</a><ul>
 <li><a class="reference internal" href="#using-the-kivy-sdk">Using the Kivy SDK</a></li>
+<li><a class="reference internal" href="#using-buildozer">Using Buildozer</a></li>
 <li><a class="reference internal" href="#using-pyinstaller-and-homebrew">Using PyInstaller and Homebrew</a><ul>
 <li><a class="reference internal" href="#complete-guide">Complete guide</a></li>
 <li><a class="reference internal" href="#editing-the-spec-file">Editing the spec file</a></li>
@@ -77,7 +78,6 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#using-pyinstaller-without-homebrew">Using PyInstaller without Homebrew</a></li>
-<li><a class="reference internal" href="#using-buildozer">Using Buildozer</a></li>
 </ul>
 </li>
 </ul>
@@ -129,7 +129,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../gettingstarted/layouts.html">Layouts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../gettingstarted/drawing.html">Drawing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../gettingstarted/packaging.html">Packaging</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/examples.html">Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../gettingstarted/diving.html">Diving in</a></li>
 </ul>
 </li>
@@ -350,7 +349,7 @@
           <h3>Related Topics</h3>
           <ul>
               <li>Previous: <a href="android.html" title="previous chapter">Kivy on Android</a></li>
-              <li>Next: <a href="packaging-ios.html" title="next chapter">Create a package for IOS</a></li>
+              <li>Next: <a href="packaging-ios-prerequisites.html" title="next chapter">iOS Prerequisites</a></li>
           </ul>
           -->
         </div>
@@ -361,8 +360,9 @@
         <div class="bodywrapper">
           <div class="body">
             <div class="toc"><h2>Table Of Contents</h2><ul>
-<li><a class="reference internal" href="#">Creating packages for OS X</a><ul>
+<li><a class="reference internal" href="#">Creating packages for macOS</a><ul>
 <li><a class="reference internal" href="#using-the-kivy-sdk">Using the Kivy SDK</a></li>
+<li><a class="reference internal" href="#using-buildozer">Using Buildozer</a></li>
 <li><a class="reference internal" href="#using-pyinstaller-and-homebrew">Using PyInstaller and Homebrew</a><ul>
 <li><a class="reference internal" href="#complete-guide">Complete guide</a></li>
 <li><a class="reference internal" href="#editing-the-spec-file">Editing the spec file</a></li>
@@ -374,18 +374,17 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#using-pyinstaller-without-homebrew">Using PyInstaller without Homebrew</a></li>
-<li><a class="reference internal" href="#using-buildozer">Using Buildozer</a></li>
 </ul>
 </li>
 </ul>
 </div>
             
-  <section id="creating-packages-for-os-x">
-<span id="packaging-osx"></span><h1>Creating packages for OS X<a class="headerlink" href="#creating-packages-for-os-x" title="Permalink to this headline">¶</a></h1>
+  <section id="creating-packages-for-macos">
+<span id="packaging-osx"></span><h1>Creating packages for macOS<a class="headerlink" href="#creating-packages-for-macos" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This guide describes multiple ways for packaging Kivy applications.
-Packaging with PyInstaller is recommended for general use.</p>
+Packaging using the Kivy SDK is recommended for general use.</p>
 </div>
 <section id="using-the-kivy-sdk">
 <span id="packaging-osx-sdk"></span><h2>Using the Kivy SDK<a class="headerlink" href="#using-the-kivy-sdk" title="Permalink to this headline">¶</a></h2>
@@ -395,13 +394,10 @@ Packaging with PyInstaller is recommended for general use.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Kivy.app is built on the <a class="reference external" href="https://github.com/actions/virtual-environments#available-environments">current GitHub Action macOS version (10.15)</a> and will typically
-not work on older OS X versions. For older OS X versions, you need to build Kivy.app
-on the oldest machine you wish to support. See below.</p>
+<p>Kivy.app is built with <code class="docutils literal notranslate"><span class="pre">MACOSX_DEPLOYMENT_TARGET=10.9</span></code>.</p>
 </div>
-<p>For OS X 10.15+ and later, we provide a Kivy DMG with all dependencies
-bundled in a <strong>virtual environment</strong>, including a Python interpreter that can be used as
-a base to package kivy apps.</p>
+<p>We provide a Kivy DMG with all dependencies bundled in a <strong>virtual environment</strong>,
+including a Python interpreter that can be used as a base to package kivy apps.</p>
 <p>This is the safest approach because it packages the binaries without references to
 any binaries on the system on which the app is packaged. Because all references are
 to frameworks included in the dmg or to binaries with the dmg. As opposed to
@@ -410,11 +406,37 @@ e.g. pyinstaller which copies binaries from your local python installation.</p>
 with Kivy.app or building from scratch, in the readme
 of the <a class="reference external" href="https://github.com/kivy/kivy-sdk-packager/tree/master/osx">kivy-sdk-packager repo</a>.</p>
 </section>
+<section id="using-buildozer">
+<span id="osx-kivy-sdk-packager"></span><h2>Using Buildozer<a class="headerlink" href="#using-buildozer" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>pip install git+http://github.com/kivy/buildozer
+cd /to/where/I/Want/to/package
+buildozer init</p>
+</div></blockquote>
+<p>Edit the buildozer.spec and add the details for your app.
+Dependencies can be added to the <cite>requirements=</cite> section.</p>
+<p>By default the kivy version specified in the requirements is ignored.</p>
+<p>If you have a Kivy.app at /Applications/Kivy.app then that is used,
+for packaging. Otherwise the latest build from kivy.org using Kivy
+master will be downloaded and used.</p>
+<p>When you’re ready to package your macOS app just run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">buildozer</span> <span class="n">osx</span> <span class="n">debug</span>
+</pre></div>
+</div>
+<p>Once the app is packaged, you might want to remove unneeded
+packages, just reduce the package to its minimal state that
+is needed for the app to run.</p>
+<p>That’s it. Enjoy!</p>
+<p>Buildozer right now uses the Kivy SDK to package your app.
+If you want to control more details about your app than buildozer
+currently offers then you can use the SDK directly, as detailed in the
+section below.</p>
+</section>
 <section id="using-pyinstaller-and-homebrew">
 <span id="osx-pyinstaller"></span><h2>Using PyInstaller and Homebrew<a class="headerlink" href="#using-pyinstaller-and-homebrew" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Package your app on the oldest OS X version you want to support.</p>
+<p>Package your app on the oldest macOS version you want to support.</p>
 </div>
 <section id="complete-guide">
 <h3>Complete guide<a class="headerlink" href="#complete-guide" title="Permalink to this headline">¶</a></h3>
@@ -444,10 +466,8 @@ be used on other machines:</p>
 </li>
 <li><p>Install Cython and Kivy:</p>
 <blockquote>
-<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install |cython_install|
-$ pip install -U kivy
-</pre></div>
-</div>
+<div><pre class="literal-block">$ pip install Cython==0.29.26
+$ pip install -U kivy</pre>
 </div></blockquote>
 </li>
 <li><p>Install PyInstaller:</p>
@@ -599,44 +619,6 @@ code to it:</p>
 <p>Replace <cite>touchtracer</cite> with your app where appropriate.
 This will give you a &lt;yourapp&gt;.app in the dist/ folder.</p>
 </section>
-<section id="using-buildozer">
-<span id="osx-kivy-sdk-packager"></span><h2>Using Buildozer<a class="headerlink" href="#using-buildozer" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<div><p>pip install git+http://github.com/kivy/buildozer
-cd /to/where/I/Want/to/package
-buildozer init</p>
-</div></blockquote>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Packaging Kivy applications with the following method must be done inside
-OS X, 32-bit platforms are no longer supported.</p>
-</div>
-<p>Edit the buildozer.spec and add the details for your app.
-Dependencies can be added to the <cite>requirements=</cite> section.</p>
-<p>By default the kivy version specified in the requirements is ignored.</p>
-<p>If you have a Kivy.app at /Applications/Kivy.app then that is used,
-for packaging. Otherwise the latest build from kivy.org using Kivy
-master will be downloaded and used.</p>
-<p>If you want to package for python 3.x.x simply download the package
-named Kivy3.7z from the download section of kivy.org and extract it
-to Kivy.app in /Applications, then run:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">buildozer</span> <span class="n">osx</span> <span class="n">debug</span>
-</pre></div>
-</div>
-<p>Once the app is packaged, you might want to remove unneeded
-packages like gstreamer, if you don’t need video support.
-Same logic applies for other things you do not use, just reduce
-the package to its minimal state that is needed for the app to run.</p>
-<p>As an example we are including the showcase example packaged using
-this method for both Python 2 (9.xMB) and 3 (15.xMB), you can find the
-packages here:
-<a class="reference external" href="https://drive.google.com/drive/folders/0B1WO07-OL50_alFzSXJUajBFdnc">https://drive.google.com/drive/folders/0B1WO07-OL50_alFzSXJUajBFdnc</a> .</p>
-<p>That’s it. Enjoy!</p>
-<p>Buildozer right now uses the Kivy SDK to package your app.
-If you want to control more details about your app than buildozer
-currently offers then you can use the SDK directly, as detailed in the
-section below.</p>
-</section>
 </section>
 
 
@@ -647,7 +629,7 @@ section below.</p>
                   <a href="android.html" title="previous chapter">&laquo; Kivy on Android</a></li>
                   </td>
                   <td class="rightlink">
-                  <a href="packaging-ios.html" title="next chapter">Create a package for IOS &raquo;</a>
+                  <a href="packaging-ios-prerequisites.html" title="next chapter">iOS Prerequisites &raquo;</a>
                       </td>
                   </tr>
               </table>

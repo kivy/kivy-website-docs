@@ -27,7 +27,7 @@
     <link rel="top" title="Kivy 2.1.0.dev0 documentation" href="../index.html" />
     <link rel="up" title="Programming Guide" href="../guide-index.html" />
     <link rel="next" title="Tutorials" href="../tutorials-index.html" />
-    <link rel="prev" title="IOS Prerequisites" href="packaging-ios-prerequisites.html" /> 
+    <link rel="prev" title="Create a package for iOS" href="packaging-ios.html" /> 
   </head>
   <body>
 
@@ -73,7 +73,7 @@
 </li>
 <li><a class="reference internal" href="#linux">Linux</a></li>
 <li><a class="reference internal" href="#android">Android</a></li>
-<li><a class="reference internal" href="#mac">Mac</a></li>
+<li><a class="reference internal" href="#macos">macOS</a></li>
 <li><a class="reference internal" href="#ios">iOS</a></li>
 <li><a class="reference internal" href="#avoiding-binaries">Avoiding binaries</a></li>
 </ul>
@@ -127,7 +127,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../gettingstarted/layouts.html">Layouts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../gettingstarted/drawing.html">Drawing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../gettingstarted/packaging.html">Packaging</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/examples.html">Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../gettingstarted/diving.html">Diving in</a></li>
 </ul>
 </li>
@@ -347,7 +346,7 @@
           <!--
           <h3>Related Topics</h3>
           <ul>
-              <li>Previous: <a href="packaging-ios-prerequisites.html" title="previous chapter">IOS Prerequisites</a></li>
+              <li>Previous: <a href="packaging-ios.html" title="previous chapter">Create a package for iOS</a></li>
               <li>Next: <a href="../tutorials-index.html" title="next chapter">Tutorials</a></li>
           </ul>
           -->
@@ -368,7 +367,7 @@
 </li>
 <li><a class="reference internal" href="#linux">Linux</a></li>
 <li><a class="reference internal" href="#android">Android</a></li>
-<li><a class="reference internal" href="#mac">Mac</a></li>
+<li><a class="reference internal" href="#macos">macOS</a></li>
 <li><a class="reference internal" href="#ios">iOS</a></li>
 <li><a class="reference internal" href="#avoiding-binaries">Avoiding binaries</a></li>
 </ul>
@@ -402,13 +401,13 @@ supports. You therefore need to comply to their licenses, which mostly requires
 only pasting a copyright notice in your app and not pretending you wrote the
 code.</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://sf.net/p/docutils/code/HEAD/tree/trunk/docutils/COPYING.txt">docutils</a></p></li>
-<li><p><a class="reference external" href="https://bitbucket.org/birkenfeld/pygments-main/src/tip/LICENSE">pygments</a></p></li>
+<li><p><a class="reference external" href="https://docutils.sourceforge.io/COPYING.html">docutils</a></p></li>
+<li><p><a href="#id1"><span class="problematic" id="id2">`pygments https://github.com/pygments/pygments/blob/master/LICENSE`_</span></a></p></li>
 <li><p><a class="reference external" href="https://www.libsdl.org/license.php">sdl2</a></p></li>
 <li><p><a class="reference external" href="http://glew.sourceforge.net/glew.txt">glew</a></p></li>
 <li><p><a class="reference external" href="https://github.com/GStreamer/gstreamer/blob/master/COPYING">gstreamer</a>
 (if used)</p></li>
-<li><p>image &amp; audio libraries(e.g. <a class="reference external" href="http://hg.libsdl.org/SDL_mixer/file/default/VisualC/external/lib/x86">SDL_mixer has them</a>)</p></li>
+<li><p>image &amp; audio libraries(e.g. <a class="reference external" href="https://github.com/libsdl-org/SDL_mixer/tree/master/external">SDL_mixer has them</a>)</p></li>
 </ul>
 <p>You’ll probably need to check image and audio libraries manually (most begin
 with <code class="docutils literal notranslate"><span class="pre">lib</span></code>). The <code class="docutils literal notranslate"><span class="pre">LICENSE*</span></code> files that belong to them should be included by
@@ -462,28 +461,25 @@ attributions into your app or not.</p>
 </section>
 <section id="android">
 <h2>Android<a class="headerlink" href="#android" title="Permalink to this headline">¶</a></h2>
-<p>As APK is just an archive of files: you can extract files from it and (as in
+<p>As APK or AAB are just an archive of files: you can extract files from them and (as in
 Windows redistributables) check all the files.</p>
-<p><code class="docutils literal notranslate"><span class="pre">APK/assets/private.mp3/private.mp3/</span></code> contains all the included files. Most
+<p><code class="docutils literal notranslate"><span class="pre">private.tar</span></code> contains all the included files. Most
 of them are related to Kivy, Python or your source, but those that aren’t need
 checking.</p>
-<p>Known packages:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://bitbucket.org/pygame/pygame/src/tip/LGPL">pygame</a>
-(if old_toolchain is used)</p></li>
-<li><p><a class="reference external" href="https://github.com/ghaering/pysqlite/blob/master/LICENSE">sqlite3</a></p></li>
-<li><p><a class="reference external" href="https://bitbucket.org/gutworth/six/src/tip/LICENSE">six</a></p></li>
-</ul>
+<p><strong>apk:</strong> <code class="docutils literal notranslate"><span class="pre">APK/assets/private.tar</span></code></p>
+<p><strong>aab:</strong> <code class="docutils literal notranslate"><span class="pre">AAB/base/assets/private.tar</span></code></p>
 <p>There are other included libraries, included either by Kivy directly or through
-Pygame/SDL2, that are located in <code class="docutils literal notranslate"><span class="pre">APK/lib/armeabi/</span></code>. Most of them are related
+SDL2, that are located in <code class="docutils literal notranslate"><span class="pre">APK/lib/*</span></code> or <code class="docutils literal notranslate"><span class="pre">AAB/base/lib/*</span></code>. Most of them are related
 to dependencies or are produced by python-for-android and are part of its source
 (and licensing).</p>
-<ul class="simple">
-<li><p>libapplication.so</p></li>
-</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="docutils literal notranslate"><span class="pre">libpybundle.so</span></code> is actually a <code class="docutils literal notranslate"><span class="pre">tarball</span></code> that contains python <code class="docutils literal notranslate"><span class="pre">modules</span></code> and <code class="docutils literal notranslate"><span class="pre">site-packages</span></code>.
+You’ll probably want to inspect it for licensing purposes via <code class="docutils literal notranslate"><span class="pre">tar</span> <span class="pre">-xvf</span> <span class="pre">libpybundle.so</span></code>.</p>
+</div>
 </section>
-<section id="mac">
-<h2>Mac<a class="headerlink" href="#mac" title="Permalink to this headline">¶</a></h2>
+<section id="macos">
+<h2>macOS<a class="headerlink" href="#macos" title="Permalink to this headline">¶</a></h2>
 <p>Missing.</p>
 </section>
 <section id="ios">
@@ -511,7 +507,7 @@ about your users, you might want to slow down a little and read more about the
             <table>
                 <tr>
                     <td class="leftlink">
-                  <a href="packaging-ios-prerequisites.html" title="previous chapter">&laquo; IOS Prerequisites</a></li>
+                  <a href="packaging-ios.html" title="previous chapter">&laquo; Create a package for iOS</a></li>
                   </td>
                   <td class="rightlink">
                   <a href="../tutorials-index.html" title="next chapter">Tutorials &raquo;</a>

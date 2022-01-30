@@ -133,7 +133,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../gettingstarted/layouts.html">Layouts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../gettingstarted/drawing.html">Drawing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../gettingstarted/packaging.html">Packaging</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/examples.html">Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../gettingstarted/diving.html">Diving in</a></li>
 </ul>
 </li>
@@ -804,7 +803,7 @@ declaration will have the same kv properties.</p>
 <p>One of the aims of the Kivy language is to
 <a class="reference external" href="https://en.wikipedia.org/wiki/Separation_of_concerns">separate the concerns</a>
 of presentation and logic. The presentation (layout) side is addressed by your
-kv file and the logic by your .py file.</p>
+<code class="docutils literal notranslate"><span class="pre">.kv</span></code> file and the logic by your <code class="docutils literal notranslate"><span class="pre">.py</span></code> file.</p>
 <section id="the-code-goes-in-py-files">
 <h3>The code goes in py files<a class="headerlink" href="#the-code-goes-in-py-files" title="Permalink to this headline">¶</a></h3>
 <p>Let’s start with a little example: a Python file named <cite>main.py</cite>:</p>
@@ -858,22 +857,22 @@ nothing will be shown on the screen. This is expected, because the
 create the UI around the <code class="docutils literal notranslate"><span class="pre">Controller</span></code> class in a file named <cite>controller.kv</cite>,
 which will be loaded when we run the <code class="docutils literal notranslate"><span class="pre">ControllerApp</span></code>. How this is done and
 what files are loaded is described in the <a class="reference internal" href="../api-kivy.app.html#kivy.app.App.load_kv" title="kivy.app.App.load_kv"><code class="xref py py-meth docutils literal notranslate"><span class="pre">kivy.app.App.load_kv()</span></code></a> method.</p>
-<div class="highlight-kv notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="cp">#:kivy 1.0</span>
-<span class="linenos"> 2</span>
-<span class="linenos"> 3</span><span class="nn">&lt;Controller&gt;</span><span class="p">:</span>
-<span class="linenos"> 4</span>    <span class="na">label_wid</span><span class="p">:</span> <span class="n">my_custom_label</span>
-<span class="linenos"> 5</span>
-<span class="linenos"> 6</span>    <span class="nc">BoxLayout</span><span class="p">:</span>
-<span class="linenos"> 7</span>        <span class="na">orientation</span><span class="p">:</span> <span class="s1">&#39;vertical&#39;</span>
-<span class="linenos"> 8</span>        <span class="na">padding</span><span class="p">:</span> <span class="mi">20</span>
-<span class="linenos"> 9</span>
-<span class="linenos">10</span>        <span class="nc">Button</span><span class="p">:</span>
-<span class="linenos">11</span>            <span class="na">text</span><span class="p">:</span> <span class="s1">&#39;My controller info is: &#39;</span> <span class="o">+</span> <span class="n">root</span><span class="o">.</span><span class="n">info</span>
-<span class="linenos">12</span>            <span class="na">on_press</span><span class="p">:</span> <span class="n">root</span><span class="o">.</span><span class="n">do_action</span><span class="p">()</span>
-<span class="linenos">13</span>
-<span class="linenos">14</span>        <span class="nc">Label</span><span class="p">:</span>
-<span class="linenos">15</span>            <span class="na">id</span><span class="p">:</span> <span class="n">my_custom_label</span>
-<span class="linenos">16</span>            <span class="na">text</span><span class="p">:</span> <span class="s1">&#39;My label before button press&#39;</span>
+<div class="highlight-kv notranslate"><div class="highlight"><pre><span></span><span class="cp">#:kivy 1.0</span>
+
+<span class="nn">&lt;Controller&gt;</span><span class="p">:</span>
+    <span class="na">label_wid</span><span class="p">:</span> <span class="n">my_custom_label</span>
+
+    <span class="nc">BoxLayout</span><span class="p">:</span>
+        <span class="na">orientation</span><span class="p">:</span> <span class="s1">&#39;vertical&#39;</span>
+        <span class="na">padding</span><span class="p">:</span> <span class="mi">20</span>
+
+        <span class="nc">Button</span><span class="p">:</span>
+            <span class="na">text</span><span class="p">:</span> <span class="s1">&#39;My controller info is: &#39;</span> <span class="o">+</span> <span class="n">root</span><span class="o">.</span><span class="n">info</span>
+            <span class="na">on_press</span><span class="p">:</span> <span class="n">root</span><span class="o">.</span><span class="n">do_action</span><span class="p">()</span>
+
+        <span class="nc">Label</span><span class="p">:</span>
+            <span class="na">id</span><span class="p">:</span> <span class="n">my_custom_label</span>
+            <span class="na">text</span><span class="p">:</span> <span class="s1">&#39;My label before button press&#39;</span>
 </pre></div>
 </div>
 <p>One label and one button in a vertical <code class="docutils literal notranslate"><span class="pre">BoxLayout</span></code>. Seems very simple. There
@@ -913,11 +912,8 @@ that the <code class="docutils literal notranslate"><span class="pre">Button</sp
 </section>
 <section id="more-documentation">
 <h2>More documentation<a class="headerlink" href="#more-documentation" title="Permalink to this headline">¶</a></h2>
-<dl class="simple">
-<dt>For a full description of the different components of the <cite>KV</cite> language,</dt><dd><p>advanced usage and limitations, see the documentation
-for <a class="reference internal" href="../api-kivy.lang.html#module-kivy.lang" title="kivy.lang"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lang</span></code></a></p>
-</dd>
-</dl>
+<p>For a full description of the different components of the <cite>KV</cite> language,
+advanced usage and limitations, see the documentation for <a class="reference internal" href="../api-kivy.lang.html#module-kivy.lang" title="kivy.lang"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lang</span></code></a></p>
 </section>
 </section>
 
