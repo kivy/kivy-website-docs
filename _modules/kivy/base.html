@@ -171,6 +171,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.effects.opacityscroll.html">Opacity scroll effect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.effects.scroll.html">Scroll effect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.event.html">Event dispatcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api-kivy.eventmanager.html">EventManagerBase</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.factory.html">Factory object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.garden.html">Garden</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.geometry.html">Geometry utilities</a></li>
@@ -603,6 +604,9 @@
             <span class="k">for</span> <span class="n">listener</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_listeners</span><span class="p">:</span>
                 <span class="n">listener</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_motion&#39;</span><span class="p">,</span> <span class="n">etype</span><span class="p">,</span> <span class="n">me</span><span class="p">)</span>
         <span class="c1"># dispatch grabbed touch</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">me</span><span class="o">.</span><span class="n">is_touch</span><span class="p">:</span>
+            <span class="c1"># Non-touch event must be handled by the event manager</span>
+            <span class="k">return</span>
         <span class="n">me</span><span class="o">.</span><span class="n">grab_state</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">for</span> <span class="n">weak_widget</span> <span class="ow">in</span> <span class="n">me</span><span class="o">.</span><span class="n">grab_list</span><span class="p">[:]:</span>
             <span class="c1"># weak_widget is a weak reference to widget</span>
@@ -991,7 +995,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Jan 31, 2022.
+      Last updated on Feb 02, 2022.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
 </div>
 -->

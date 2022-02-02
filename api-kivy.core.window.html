@@ -177,6 +177,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.effects.opacityscroll.html">Opacity scroll effect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.effects.scroll.html">Scroll effect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.event.html">Event dispatcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.eventmanager.html">EventManagerBase</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.factory.html">Factory object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.garden.html">Garden</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.geometry.html">Geometry utilities</a></li>
@@ -744,6 +745,44 @@ implementation doesn’t support DPI lookup, it’s 96.</p>
 </div>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.core.window.WindowBase.event_managers">
+<span class="sig-name descname"><span class="pre">event_managers</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#kivy.core.window.WindowBase.event_managers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Holds a <cite>list</cite> of registered event managers.</p>
+<p>Don’t change the property directly but use
+<a class="reference internal" href="#kivy.core.window.WindowBase.register_event_manager" title="kivy.core.window.WindowBase.register_event_manager"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register_event_manager()</span></code></a> and <a class="reference internal" href="#kivy.core.window.WindowBase.unregister_event_manager" title="kivy.core.window.WindowBase.unregister_event_manager"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unregister_event_manager()</span></code></a> to
+register and unregister an event manager.</p>
+<p>Event manager is an instance of
+<a class="reference internal" href="api-kivy.eventmanager.html#kivy.eventmanager.EventManagerBase" title="kivy.eventmanager.EventManagerBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventManagerBase</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.1.0.</span></p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This is an experimental property and it remains so while this warning
+is present.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.core.window.WindowBase.event_managers_dict">
+<span class="sig-name descname"><span class="pre">event_managers_dict</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#kivy.core.window.WindowBase.event_managers_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Holds a <cite>dict</cite> of <cite>type_id</cite> to <cite>list</cite> of event managers.</p>
+<p>Don’t change the property directly but use
+<a class="reference internal" href="#kivy.core.window.WindowBase.register_event_manager" title="kivy.core.window.WindowBase.register_event_manager"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register_event_manager()</span></code></a> and <a class="reference internal" href="#kivy.core.window.WindowBase.unregister_event_manager" title="kivy.core.window.WindowBase.unregister_event_manager"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unregister_event_manager()</span></code></a> to
+register and unregister an event manager.</p>
+<p>Event manager is an instance of
+<a class="reference internal" href="api-kivy.eventmanager.html#kivy.eventmanager.EventManagerBase" title="kivy.eventmanager.EventManagerBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventManagerBase</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.1.0.</span></p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This is an experimental property and it remains so while this warning
+is present.</p>
+</div>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.core.window.WindowBase.flip">
 <span class="sig-name descname"><span class="pre">flip</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/window.html#WindowBase.flip"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.window.WindowBase.flip" title="Permalink to this definition">¶</a></dt>
@@ -1164,17 +1203,24 @@ iOS and Android.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.core.window.WindowBase.on_motion">
 <span class="sig-name descname"><span class="pre">on_motion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">etype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">me</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/window.html#WindowBase.on_motion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.window.WindowBase.on_motion" title="Permalink to this definition">¶</a></dt>
-<dd><p>Event called when a Motion Event is received.</p>
+<dd><p>Event called when a motion event is received.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><cite>etype</cite>: str</dt><dd><p>One of ‘begin’, ‘update’, ‘end’</p>
+<dt><cite>etype</cite>: str</dt><dd><p>One of “begin”, “update” or “end”.</p>
 </dd>
-<dt><cite>me</cite>: <a class="reference internal" href="api-kivy.input.motionevent.html#kivy.input.motionevent.MotionEvent" title="kivy.input.motionevent.MotionEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">MotionEvent</span></code></a></dt><dd><p>The Motion Event currently dispatched.</p>
-</dd>
-</dl>
+<dt><cite>me</cite>: <a class="reference internal" href="api-kivy.input.motionevent.html#kivy.input.motionevent.MotionEvent" title="kivy.input.motionevent.MotionEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">MotionEvent</span></code></a></dt><dd><p>The motion event currently dispatched.</p>
 </dd>
 </dl>
+</dd>
+</dl>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.1.0: </span>Event managers get to handle the touch event first and if none of
+them accepts the event (by returning <cite>True</cite>) then window will
+dispatch <cite>me</cite> through “on_touch_down”, “on_touch_move”,
+“on_touch_up” events depending on the <cite>etype</cite>. All non-touch events
+will go only through managers.</p>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -1325,6 +1371,22 @@ platforms only.</p>
 <p class="admonition-title">Note</p>
 <p>This feature requires the SDL2 window provider and is currently
 only supported on desktop platforms.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy.core.window.WindowBase.register_event_manager">
+<span class="sig-name descname"><span class="pre">register_event_manager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">manager</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/window.html#WindowBase.register_event_manager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.window.WindowBase.register_event_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register and start an event manager to handle events declared in
+<a class="reference internal" href="api-kivy.eventmanager.html#kivy.eventmanager.EventManagerBase.type_ids" title="kivy.eventmanager.EventManagerBase.type_ids"><code class="xref py py-attr docutils literal notranslate"><span class="pre">type_ids</span></code></a> attribute.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.1.0.</span></p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This is an experimental method and it remains so until this warning
+is present as it can be changed or removed in the next versions of
+Kivy.</p>
 </div>
 </dd></dl>
 
@@ -1903,6 +1965,22 @@ call to preserve previous values of <cite>me</cite>’s attributes.</p>
 </div>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy.core.window.WindowBase.unregister_event_manager">
+<span class="sig-name descname"><span class="pre">unregister_event_manager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">manager</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/window.html#WindowBase.unregister_event_manager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.window.WindowBase.unregister_event_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unregister and stop an event manager previously registered with
+<a class="reference internal" href="#kivy.core.window.WindowBase.register_event_manager" title="kivy.core.window.WindowBase.register_event_manager"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register_event_manager()</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.1.0.</span></p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This is an experimental method and it remains so until this warning
+is present as it can be changed or removed in the next versions of
+Kivy.</p>
+</div>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kivy.core.window.WindowBase.width">
 <span class="sig-name descname"><span class="pre">width</span></span><a class="headerlink" href="#kivy.core.window.WindowBase.width" title="Permalink to this definition">¶</a></dt>
@@ -1963,7 +2041,7 @@ call to preserve previous values of <cite>me</cite>’s attributes.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Jan 31, 2022.
+      Last updated on Feb 02, 2022.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
 </div>
 -->
