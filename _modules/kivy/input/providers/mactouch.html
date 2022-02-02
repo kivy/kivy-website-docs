@@ -435,14 +435,18 @@
 <span class="sd">    and shape profiles.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;is_touch&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;type_id&#39;</span><span class="p">,</span> <span class="s1">&#39;touch&#39;</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">profile</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;pos&#39;</span><span class="p">,</span> <span class="s1">&#39;shape&#39;</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">depack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">is_touch</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">ShapeRect</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sy</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">profile</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;pos&#39;</span><span class="p">,</span> <span class="s1">&#39;shape&#39;</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">MacMotionEvent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">depack</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">depack</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;&lt;MacMotionEvent id=</span><span class="si">%d</span><span class="s1"> pos=(</span><span class="si">%f</span><span class="s1">, </span><span class="si">%f</span><span class="s1">) device=</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> \

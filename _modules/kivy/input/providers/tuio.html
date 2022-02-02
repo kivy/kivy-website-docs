@@ -403,8 +403,6 @@
 <span class="sd">        # Create a class to handle the new TUIO type/path</span>
 <span class="sd">        # Replace NEWPATH with the pathname you want to handle</span>
 <span class="sd">        class TuioNEWPATHMotionEvent(MotionEvent):</span>
-<span class="sd">            def __init__(self, id, args):</span>
-<span class="sd">                super(TuioNEWPATHMotionEvent, self).__init__(id, args)</span>
 
 <span class="sd">            def depack(self, args):</span>
 <span class="sd">                # In this method, implement &#39;unpacking&#39; for the received</span>
@@ -415,7 +413,7 @@
 <span class="sd">                    self.sx, self.sy = args</span>
 <span class="sd">                    self.profile = (&#39;pos&#39;, )</span>
 <span class="sd">                self.sy = 1 - self.sy</span>
-<span class="sd">                super(TuioNEWPATHMotionEvent, self).depack(args)</span>
+<span class="sd">                super().depack(args)</span>
 
 <span class="sd">        # Register it with the TUIO MotionEvent provider.</span>
 <span class="sd">        # You obviously need to replace the PATH placeholders appropriately.</span>
@@ -432,9 +430,9 @@
     <span class="n">__handlers__</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">TuioMotionEventProvider</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
         <span class="n">args</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Tuio: Invalid configuration for TUIO provider&#39;</span><span class="p">)</span>
             <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Tuio: Format must be ip:port (eg. 127.0.0.1:3333)&#39;</span><span class="p">)</span>
             <span class="n">err</span> <span class="o">=</span> <span class="s1">&#39;Tuio: Current configuration is &lt;</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">)))</span>
@@ -562,8 +560,10 @@
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">__attrs__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="s1">&#39;Z&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">TuioMotionEvent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;is_touch&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;type_id&#39;</span><span class="p">,</span> <span class="s1">&#39;touch&#39;</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="c1"># Default argument for TUIO touches</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="mf">0.0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -588,11 +588,7 @@
 <div class="viewcode-block" id="Tuio2dCurMotionEvent"><a class="viewcode-back" href="../../../../api-kivy.input.providers.tuio.html#kivy.input.providers.tuio.Tuio2dCurMotionEvent">[docs]</a><span class="k">class</span> <span class="nc">Tuio2dCurMotionEvent</span><span class="p">(</span><span class="n">TuioMotionEvent</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;A 2dCur TUIO touch.&#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Tuio2dCurMotionEvent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
-
 <div class="viewcode-block" id="Tuio2dCurMotionEvent.depack"><a class="viewcode-back" href="../../../../api-kivy.input.providers.tuio.html#kivy.input.providers.tuio.Tuio2dCurMotionEvent.depack">[docs]</a>    <span class="k">def</span> <span class="nf">depack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">is_touch</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sy</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">profile</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;pos&#39;</span><span class="p">,</span> <span class="p">)</span>
@@ -611,18 +607,14 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sy</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">sy</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Tuio2dCurMotionEvent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">depack</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">depack</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="Tuio2dObjMotionEvent"><a class="viewcode-back" href="../../../../api-kivy.input.providers.tuio.html#kivy.input.providers.tuio.Tuio2dObjMotionEvent">[docs]</a><span class="k">class</span> <span class="nc">Tuio2dObjMotionEvent</span><span class="p">(</span><span class="n">TuioMotionEvent</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;A 2dObj TUIO object.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Tuio2dObjMotionEvent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
-
 <div class="viewcode-block" id="Tuio2dObjMotionEvent.depack"><a class="viewcode-back" href="../../../../api-kivy.input.providers.tuio.html#kivy.input.providers.tuio.Tuio2dObjMotionEvent.depack">[docs]</a>    <span class="k">def</span> <span class="nf">depack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">is_touch</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sy</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">profile</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;pos&#39;</span><span class="p">,</span> <span class="p">)</span>
@@ -643,7 +635,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">height</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sy</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">sy</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Tuio2dObjMotionEvent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">depack</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">depack</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div></div>
 
 
 <span class="k">class</span> <span class="nc">Tuio2dBlbMotionEvent</span><span class="p">(</span><span class="n">TuioMotionEvent</span><span class="p">):</span>
@@ -653,22 +645,20 @@
 <span class="sd">    /tuio/2Dblb set s   x y a w h f X Y A m r</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Tuio2dBlbMotionEvent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">profile</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;pos&#39;</span><span class="p">,</span> <span class="s1">&#39;angle&#39;</span><span class="p">,</span> <span class="s1">&#39;mov&#39;</span><span class="p">,</span> <span class="s1">&#39;rot&#39;</span><span class="p">,</span> <span class="s1">&#39;rotacc&#39;</span><span class="p">,</span> <span class="s1">&#39;acc&#39;</span><span class="p">,</span> <span class="s1">&#39;shape&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">depack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">is_touch</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">,</span> <span class="n">sw</span><span class="p">,</span> <span class="n">sh</span><span class="p">,</span> <span class="n">sd</span><span class="p">,</span> \
             <span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">m</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">args</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Y</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">Y</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">profile</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;pos&#39;</span><span class="p">,</span> <span class="s1">&#39;angle&#39;</span><span class="p">,</span> <span class="s1">&#39;mov&#39;</span><span class="p">,</span> <span class="s1">&#39;rot&#39;</span><span class="p">,</span> <span class="s1">&#39;rotacc&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;acc&#39;</span><span class="p">,</span> <span class="s1">&#39;shape&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">ShapeRect</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">sw</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">sh</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sy</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">sy</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Tuio2dBlbMotionEvent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">depack</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">depack</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 
 
 <span class="c1"># registers</span>
