@@ -652,7 +652,21 @@
 <span class="sd">                The *unicode* parameter has be deprecated in favor of</span>
 <span class="sd">                codepoint, and will be removed completely in future versions.</span>
 
-<span class="sd">        `on_dropfile`: filename (bytes or string):</span>
+<span class="sd">        `on_drop_begin`: x, y</span>
+<span class="sd">            Fired when text(s) or file(s) drop on the application is about to</span>
+<span class="sd">            begin.</span>
+
+<span class="sd">            Values `x` and `y` are drop position and are relative to window</span>
+<span class="sd">            position :attr:`left` and :attr:`top`.</span>
+
+<span class="sd">            .. note::</span>
+<span class="sd">                On Windows it is possible to drop file(s) on window title bar</span>
+<span class="sd">                or on it&#39;s edges and in that case :attr:`mouse_pos` won&#39;t be</span>
+<span class="sd">                updated as the mouse cursor is not within the window size.</span>
+
+<span class="sd">            .. versionadded:: 2.1.0</span>
+
+<span class="sd">        `on_drop_file`: filename (bytes or string):</span>
 <span class="sd">            Fired when a file is dropped on the application.</span>
 
 <span class="sd">            .. note::</span>
@@ -660,6 +674,21 @@
 <span class="sd">                because the OS API calls are filtered. Check issue</span>
 <span class="sd">                `#4999 &lt;https://github.com/kivy/kivy/issues/4999&gt;`_ for</span>
 <span class="sd">                pointers to workarounds.</span>
+
+<span class="sd">            .. versionadded:: 1.2.0</span>
+
+<span class="sd">            .. versionchanged:: 2.1.0</span>
+<span class="sd">                Renamed from `on_dropfile` to `on_drop_file`.</span>
+
+<span class="sd">        `on_drop_text`: text (bytes or string)</span>
+<span class="sd">            Fired when a text is dropped on the application.</span>
+
+<span class="sd">            .. versionadded:: 2.1.0</span>
+
+<span class="sd">        `on_drop_end`:</span>
+<span class="sd">            Fired when text(s) or file(s) drop on the application has ended.</span>
+
+<span class="sd">            .. versionadded:: 2.1.0</span>
 
 <span class="sd">        `on_memorywarning`:</span>
 <span class="sd">            Fired when the platform have memory issue (iOS / Android mostly)</span>
@@ -680,7 +709,7 @@
     <span class="n">_fake_fullscreen</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="c1"># private properties</span>
-    <span class="n">_density</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">_density</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mf">1.</span><span class="p">)</span>
     <span class="n">_size</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
     <span class="n">_modifiers</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([])</span>
     <span class="n">_rotation</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -1096,7 +1125,7 @@
 <span class="sd">        property instead.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="n">mouse_pos</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">mouse_pos</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
     <span class="sd">&#39;&#39;&#39;2d position of the mouse within the window.</span>
 
 <span class="sd">    .. versionadded:: 1.2.0</span>
@@ -1278,7 +1307,8 @@
         <span class="s1">&#39;on_hide&#39;</span><span class="p">,</span> <span class="s1">&#39;on_show&#39;</span><span class="p">,</span> <span class="s1">&#39;on_motion&#39;</span><span class="p">,</span> <span class="s1">&#39;on_touch_down&#39;</span><span class="p">,</span>
         <span class="s1">&#39;on_touch_move&#39;</span><span class="p">,</span> <span class="s1">&#39;on_touch_up&#39;</span><span class="p">,</span> <span class="s1">&#39;on_mouse_down&#39;</span><span class="p">,</span>
         <span class="s1">&#39;on_mouse_move&#39;</span><span class="p">,</span> <span class="s1">&#39;on_mouse_up&#39;</span><span class="p">,</span> <span class="s1">&#39;on_keyboard&#39;</span><span class="p">,</span> <span class="s1">&#39;on_key_down&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;on_key_up&#39;</span><span class="p">,</span> <span class="s1">&#39;on_textinput&#39;</span><span class="p">,</span> <span class="s1">&#39;on_dropfile&#39;</span><span class="p">,</span> <span class="s1">&#39;on_request_close&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;on_key_up&#39;</span><span class="p">,</span> <span class="s1">&#39;on_textinput&#39;</span><span class="p">,</span> <span class="s1">&#39;on_drop_begin&#39;</span><span class="p">,</span> <span class="s1">&#39;on_drop_file&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;on_dropfile&#39;</span><span class="p">,</span> <span class="s1">&#39;on_drop_text&#39;</span><span class="p">,</span> <span class="s1">&#39;on_drop_end&#39;</span><span class="p">,</span> <span class="s1">&#39;on_request_close&#39;</span><span class="p">,</span>
         <span class="s1">&#39;on_cursor_enter&#39;</span><span class="p">,</span> <span class="s1">&#39;on_cursor_leave&#39;</span><span class="p">,</span> <span class="s1">&#39;on_joy_axis&#39;</span><span class="p">,</span>
         <span class="s1">&#39;on_joy_hat&#39;</span><span class="p">,</span> <span class="s1">&#39;on_joy_ball&#39;</span><span class="p">,</span> <span class="s1">&#39;on_joy_button_down&#39;</span><span class="p">,</span>
         <span class="s1">&#39;on_joy_button_up&#39;</span><span class="p">,</span> <span class="s1">&#39;on_memorywarning&#39;</span><span class="p">,</span> <span class="s1">&#39;on_textedit&#39;</span><span class="p">,</span>
@@ -1360,6 +1390,10 @@
         <span class="k">if</span> <span class="s1">&#39;shape_image&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
             <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;shape_image&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;kivy&#39;</span><span class="p">,</span> <span class="s1">&#39;window_shape&#39;</span><span class="p">)</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span>
+            <span class="s1">&#39;on_drop_file&#39;</span><span class="p">,</span>
+            <span class="k">lambda</span> <span class="n">window</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="n">window</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_dropfile&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">WindowBase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="c1"># bind all the properties that need to recreate the window</span>
@@ -2348,17 +2382,58 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="WindowBase.on_dropfile"><a class="viewcode-back" href="../../../api-kivy.core.window.html#kivy.core.window.WindowBase.on_dropfile">[docs]</a>    <span class="k">def</span> <span class="nf">on_dropfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowBase.on_drop_begin"><a class="viewcode-back" href="../../../api-kivy.core.window.html#kivy.core.window.WindowBase.on_drop_begin">[docs]</a>    <span class="k">def</span> <span class="nf">on_drop_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Event called when a text or a file drop on the application is about</span>
+<span class="sd">        to begin. It will be followed-up by a single or a multiple</span>
+<span class="sd">        `on_drop_text` or `on_drop_file` events ending with an `on_drop_end`</span>
+<span class="sd">        event.</span>
+
+<span class="sd">        .. note::</span>
+<span class="sd">            This event works with sdl2 window provider.</span>
+
+<span class="sd">        .. versionadded:: 2.1.0</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="WindowBase.on_drop_file"><a class="viewcode-back" href="../../../api-kivy.core.window.html#kivy.core.window.WindowBase.on_drop_file">[docs]</a>    <span class="k">def</span> <span class="nf">on_drop_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Event called when a file is dropped on the application.</span>
 
 <span class="sd">        .. warning::</span>
-
 <span class="sd">            This event currently works with sdl2 window provider, on pygame</span>
 <span class="sd">            window provider and OS X with a patched version of pygame.</span>
 <span class="sd">            This event is left in place for further evolution</span>
 <span class="sd">            (ios, android etc.)</span>
 
 <span class="sd">        .. versionadded:: 1.2.0</span>
+
+<span class="sd">        .. versionchanged:: 2.1.0</span>
+<span class="sd">            Renamed from `on_dropfile` to `on_drop_file`.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">pass</span></div>
+
+    <span class="nd">@deprecated</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="s1">&#39;Deprecated in 2.1.0, use on_drop_file event instead. &#39;</span>
+                    <span class="s1">&#39;Event on_dropfile will be removed in next two releases.&#39;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">on_dropfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="WindowBase.on_drop_text"><a class="viewcode-back" href="../../../api-kivy.core.window.html#kivy.core.window.WindowBase.on_drop_text">[docs]</a>    <span class="k">def</span> <span class="nf">on_drop_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Event called when a text is dropped on the application.</span>
+
+<span class="sd">        .. note::</span>
+<span class="sd">            This event works with sdl2 window provider on x11 window.</span>
+
+<span class="sd">        .. versionadded:: 2.1.0</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="WindowBase.on_drop_end"><a class="viewcode-back" href="../../../api-kivy.core.window.html#kivy.core.window.WindowBase.on_drop_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_drop_end</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Event called when a text or a file drop on the application has</span>
+<span class="sd">        ended.</span>
+
+<span class="sd">        .. note::</span>
+<span class="sd">            This event works with sdl2 window provider.</span>
+
+<span class="sd">        .. versionadded:: 2.1.0</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">pass</span></div>
 
@@ -2694,7 +2769,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Feb 06, 2022.
+      Last updated on Feb 07, 2022.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
 </div>
 -->

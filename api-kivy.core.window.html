@@ -583,13 +583,43 @@ codepoint, and will be removed completely in future versions.</p>
 codepoint, and will be removed completely in future versions.</p>
 </div>
 </dd>
-<dt><cite>on_dropfile</cite>: filename (bytes or string):</dt><dd><p>Fired when a file is dropped on the application.</p>
+<dt><cite>on_drop_begin</cite>: x, y</dt><dd><p>Fired when text(s) or file(s) drop on the application is about to
+begin.</p>
+<p>Values <cite>x</cite> and <cite>y</cite> are drop position and are relative to window
+position <a class="reference internal" href="#kivy.core.window.WindowBase.left" title="kivy.core.window.WindowBase.left"><code class="xref py py-attr docutils literal notranslate"><span class="pre">left</span></code></a> and <a class="reference internal" href="#kivy.core.window.WindowBase.top" title="kivy.core.window.WindowBase.top"><code class="xref py py-attr docutils literal notranslate"><span class="pre">top</span></code></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On Windows it is possible to drop file(s) on window title bar
+or on it’s edges and in that case <a class="reference internal" href="#kivy.core.window.WindowBase.mouse_pos" title="kivy.core.window.WindowBase.mouse_pos"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mouse_pos</span></code></a> won’t be
+updated as the mouse cursor is not within the window size.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.1.0.</span></p>
+</div>
+</dd>
+<dt><cite>on_drop_file</cite>: filename (bytes or string):</dt><dd><p>Fired when a file is dropped on the application.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This event doesn’t work for apps with elevated permissions,
 because the OS API calls are filtered. Check issue
 <a class="reference external" href="https://github.com/kivy/kivy/issues/4999">#4999</a> for
 pointers to workarounds.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.2.0.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.1.0: </span>Renamed from <cite>on_dropfile</cite> to <cite>on_drop_file</cite>.</p>
+</div>
+</dd>
+<dt><cite>on_drop_text</cite>: text (bytes or string)</dt><dd><p>Fired when a text is dropped on the application.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.1.0.</span></p>
+</div>
+</dd>
+<dt><cite>on_drop_end</cite>:</dt><dd><p>Fired when text(s) or file(s) drop on the application has ended.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.1.0.</span></p>
 </div>
 </dd>
 <dt><cite>on_memorywarning</cite>:</dt><dd><p>Fired when the platform have memory issue (iOS / Android mostly)
@@ -1060,8 +1090,38 @@ defaults to [0, 0].</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="kivy.core.window.WindowBase.on_dropfile">
-<span class="sig-name descname"><span class="pre">on_dropfile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/window.html#WindowBase.on_dropfile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.window.WindowBase.on_dropfile" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="kivy.core.window.WindowBase.on_drop_begin">
+<span class="sig-name descname"><span class="pre">on_drop_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/window.html#WindowBase.on_drop_begin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.window.WindowBase.on_drop_begin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event called when a text or a file drop on the application is about
+to begin. It will be followed-up by a single or a multiple
+<cite>on_drop_text</cite> or <cite>on_drop_file</cite> events ending with an <cite>on_drop_end</cite>
+event.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This event works with sdl2 window provider.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.1.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy.core.window.WindowBase.on_drop_end">
+<span class="sig-name descname"><span class="pre">on_drop_end</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/window.html#WindowBase.on_drop_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.window.WindowBase.on_drop_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event called when a text or a file drop on the application has
+ended.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This event works with sdl2 window provider.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.1.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy.core.window.WindowBase.on_drop_file">
+<span class="sig-name descname"><span class="pre">on_drop_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/window.html#WindowBase.on_drop_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.window.WindowBase.on_drop_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Event called when a file is dropped on the application.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1072,6 +1132,22 @@ This event is left in place for further evolution
 </div>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.2.0.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.1.0: </span>Renamed from <cite>on_dropfile</cite> to <cite>on_drop_file</cite>.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy.core.window.WindowBase.on_drop_text">
+<span class="sig-name descname"><span class="pre">on_drop_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/window.html#WindowBase.on_drop_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.window.WindowBase.on_drop_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event called when a text is dropped on the application.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This event works with sdl2 window provider on x11 window.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.1.0.</span></p>
 </div>
 </dd></dl>
 
@@ -2041,7 +2117,7 @@ Kivy.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Feb 06, 2022.
+      Last updated on Feb 07, 2022.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
 </div>
 -->
