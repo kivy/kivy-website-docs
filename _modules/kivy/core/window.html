@@ -652,13 +652,13 @@
 <span class="sd">                The *unicode* parameter has be deprecated in favor of</span>
 <span class="sd">                codepoint, and will be removed completely in future versions.</span>
 
-<span class="sd">        `on_drop_begin`: x, y</span>
+<span class="sd">        `on_drop_begin`: x, y, *args</span>
 <span class="sd">            Fired when text(s) or file(s) drop on the application is about to</span>
 <span class="sd">            begin.</span>
 
 <span class="sd">            .. versionadded:: 2.1.0</span>
 
-<span class="sd">        `on_drop_file`: filename (bytes), x, y</span>
+<span class="sd">        `on_drop_file`: filename (bytes), x, y, *args</span>
 <span class="sd">            Fired when a file is dropped on the application.</span>
 
 <span class="sd">            .. versionadded:: 1.2.0</span>
@@ -666,12 +666,12 @@
 <span class="sd">            .. versionchanged:: 2.1.0</span>
 <span class="sd">                Renamed from `on_dropfile` to `on_drop_file`.</span>
 
-<span class="sd">        `on_drop_text`: text (bytes), x, y</span>
+<span class="sd">        `on_drop_text`: text (bytes), x, y, *args</span>
 <span class="sd">            Fired when a text is dropped on the application.</span>
 
 <span class="sd">            .. versionadded:: 2.1.0</span>
 
-<span class="sd">        `on_drop_end`: x, y</span>
+<span class="sd">        `on_drop_end`: x, y, *args</span>
 <span class="sd">            Fired when text(s) or file(s) drop on the application has ended.</span>
 
 <span class="sd">            .. versionadded:: 2.1.0</span>
@@ -2374,17 +2374,25 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="WindowBase.on_drop_begin"><a class="viewcode-back" href="../../../api-kivy.core.window.html#kivy.core.window.WindowBase.on_drop_begin">[docs]</a>    <span class="k">def</span> <span class="nf">on_drop_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowBase.on_drop_begin"><a class="viewcode-back" href="../../../api-kivy.core.window.html#kivy.core.window.WindowBase.on_drop_begin">[docs]</a>    <span class="k">def</span> <span class="nf">on_drop_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Event called when a text or a file drop on the application is about</span>
 <span class="sd">        to begin. It will be followed-up by a single or a multiple</span>
 <span class="sd">        `on_drop_text` or `on_drop_file` events ending with an `on_drop_end`</span>
 <span class="sd">        event.</span>
 
+<span class="sd">        Arguments `x` and `y` are the mouse cursor position at the time of the</span>
+<span class="sd">        drop and you should only rely on them if the drop originated from the</span>
+<span class="sd">        mouse.</span>
+
 <span class="sd">        :Parameters:</span>
 <span class="sd">            `x`: `int`</span>
-<span class="sd">                Cursor x position, relative to window :attr:`left`.</span>
+<span class="sd">                Cursor x position, relative to the window :attr:`left`, at the</span>
+<span class="sd">                time of the drop.</span>
 <span class="sd">            `y`: `int`</span>
-<span class="sd">                Cursor y position, relative to window :attr:`top`.</span>
+<span class="sd">                Cursor y position, relative to the window :attr:`top`, at the</span>
+<span class="sd">                time of the drop.</span>
+<span class="sd">            `*args`: `tuple`</span>
+<span class="sd">                Additional arugments.</span>
 
 <span class="sd">        .. note::</span>
 <span class="sd">            This event works with sdl2 window provider.</span>
@@ -2393,16 +2401,24 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="WindowBase.on_drop_file"><a class="viewcode-back" href="../../../api-kivy.core.window.html#kivy.core.window.WindowBase.on_drop_file">[docs]</a>    <span class="k">def</span> <span class="nf">on_drop_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowBase.on_drop_file"><a class="viewcode-back" href="../../../api-kivy.core.window.html#kivy.core.window.WindowBase.on_drop_file">[docs]</a>    <span class="k">def</span> <span class="nf">on_drop_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Event called when a file is dropped on the application.</span>
+
+<span class="sd">        Arguments `x` and `y` are the mouse cursor position at the time of the</span>
+<span class="sd">        drop and you should only rely on them if the drop originated from the</span>
+<span class="sd">        mouse.</span>
 
 <span class="sd">        :Parameters:</span>
 <span class="sd">            `filename`: `bytes`</span>
 <span class="sd">                Absolute path to a dropped file.</span>
 <span class="sd">            `x`: `int`</span>
-<span class="sd">                Cursor x position, relative to window :attr:`left`.</span>
+<span class="sd">                Cursor x position, relative to the window :attr:`left`, at the</span>
+<span class="sd">                time of the drop.</span>
 <span class="sd">            `y`: `int`</span>
-<span class="sd">                Cursor y position, relative to window :attr:`top`.</span>
+<span class="sd">                Cursor y position, relative to the window :attr:`top`, at the</span>
+<span class="sd">                time of the drop.</span>
+<span class="sd">            `*args`: `tuple`</span>
+<span class="sd">                Additional arugments.</span>
 
 <span class="sd">        .. warning::</span>
 <span class="sd">            This event currently works with sdl2 window provider, on pygame</span>
@@ -2434,16 +2450,24 @@
     <span class="k">def</span> <span class="nf">on_dropfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
         <span class="k">pass</span>
 
-<div class="viewcode-block" id="WindowBase.on_drop_text"><a class="viewcode-back" href="../../../api-kivy.core.window.html#kivy.core.window.WindowBase.on_drop_text">[docs]</a>    <span class="k">def</span> <span class="nf">on_drop_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowBase.on_drop_text"><a class="viewcode-back" href="../../../api-kivy.core.window.html#kivy.core.window.WindowBase.on_drop_text">[docs]</a>    <span class="k">def</span> <span class="nf">on_drop_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Event called when a text is dropped on the application.</span>
+
+<span class="sd">        Arguments `x` and `y` are the mouse cursor position at the time of the</span>
+<span class="sd">        drop and you should only rely on them if the drop originated from the</span>
+<span class="sd">        mouse.</span>
 
 <span class="sd">        :Parameters:</span>
 <span class="sd">            `text`: `bytes`</span>
 <span class="sd">                Text which is dropped.</span>
 <span class="sd">            `x`: `int`</span>
-<span class="sd">                Cursor x position, relative to window :attr:`left`.</span>
+<span class="sd">                Cursor x position, relative to the window :attr:`left`, at the</span>
+<span class="sd">                time of the drop.</span>
 <span class="sd">            `y`: `int`</span>
-<span class="sd">                Cursor y position, relative to window :attr:`top`.</span>
+<span class="sd">                Cursor y position, relative to the window :attr:`top`, at the</span>
+<span class="sd">                time of the drop.</span>
+<span class="sd">            `*args`: `tuple`</span>
+<span class="sd">                Additional arugments.</span>
 
 <span class="sd">        .. note::</span>
 <span class="sd">            This event works with sdl2 window provider on x11 window.</span>
@@ -2457,15 +2481,23 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="WindowBase.on_drop_end"><a class="viewcode-back" href="../../../api-kivy.core.window.html#kivy.core.window.WindowBase.on_drop_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_drop_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<div class="viewcode-block" id="WindowBase.on_drop_end"><a class="viewcode-back" href="../../../api-kivy.core.window.html#kivy.core.window.WindowBase.on_drop_end">[docs]</a>    <span class="k">def</span> <span class="nf">on_drop_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Event called when a text or a file drop on the application has</span>
 <span class="sd">        ended.</span>
 
+<span class="sd">        Arguments `x` and `y` are the mouse cursor position at the time of the</span>
+<span class="sd">        drop and you should only rely on them if the drop originated from the</span>
+<span class="sd">        mouse.</span>
+
 <span class="sd">        :Parameters:</span>
 <span class="sd">            `x`: `int`</span>
-<span class="sd">                Cursor x position, relative to window :attr:`left`.</span>
+<span class="sd">                Cursor x position, relative to the window :attr:`left`, at the</span>
+<span class="sd">                time of the drop.</span>
 <span class="sd">            `y`: `int`</span>
-<span class="sd">                Cursor y position, relative to window :attr:`top`.</span>
+<span class="sd">                Cursor y position, relative to the window :attr:`top`, at the</span>
+<span class="sd">                time of the drop.</span>
+<span class="sd">            `*args`: `tuple`</span>
+<span class="sd">                Additional arugments.</span>
 
 <span class="sd">        .. note::</span>
 <span class="sd">            This event works with sdl2 window provider.</span>

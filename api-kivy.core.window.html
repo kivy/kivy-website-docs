@@ -583,13 +583,13 @@ codepoint, and will be removed completely in future versions.</p>
 codepoint, and will be removed completely in future versions.</p>
 </div>
 </dd>
-<dt><cite>on_drop_begin</cite>: x, y</dt><dd><p>Fired when text(s) or file(s) drop on the application is about to
+<dt><cite>on_drop_begin</cite>: x, y, <a href="#id1"><span class="problematic" id="id2">*</span></a>args</dt><dd><p>Fired when text(s) or file(s) drop on the application is about to
 begin.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2.1.0.</span></p>
 </div>
 </dd>
-<dt><cite>on_drop_file</cite>: filename (bytes), x, y</dt><dd><p>Fired when a file is dropped on the application.</p>
+<dt><cite>on_drop_file</cite>: filename (bytes), x, y, <a href="#id3"><span class="problematic" id="id4">*</span></a>args</dt><dd><p>Fired when a file is dropped on the application.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.2.0.</span></p>
 </div>
@@ -597,12 +597,12 @@ begin.</p>
 <p><span class="versionmodified changed">Changed in version 2.1.0: </span>Renamed from <cite>on_dropfile</cite> to <cite>on_drop_file</cite>.</p>
 </div>
 </dd>
-<dt><cite>on_drop_text</cite>: text (bytes), x, y</dt><dd><p>Fired when a text is dropped on the application.</p>
+<dt><cite>on_drop_text</cite>: text (bytes), x, y, <a href="#id5"><span class="problematic" id="id6">*</span></a>args</dt><dd><p>Fired when a text is dropped on the application.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2.1.0.</span></p>
 </div>
 </dd>
-<dt><cite>on_drop_end</cite>: x, y</dt><dd><p>Fired when text(s) or file(s) drop on the application has ended.</p>
+<dt><cite>on_drop_end</cite>: x, y, <a href="#id7"><span class="problematic" id="id8">*</span></a>args</dt><dd><p>Fired when text(s) or file(s) drop on the application has ended.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2.1.0.</span></p>
 </div>
@@ -1082,17 +1082,24 @@ defaults to (0, 0).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.core.window.WindowBase.on_drop_begin">
-<span class="sig-name descname"><span class="pre">on_drop_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/window.html#WindowBase.on_drop_begin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.window.WindowBase.on_drop_begin" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_drop_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/window.html#WindowBase.on_drop_begin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.window.WindowBase.on_drop_begin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Event called when a text or a file drop on the application is about
 to begin. It will be followed-up by a single or a multiple
 <cite>on_drop_text</cite> or <cite>on_drop_file</cite> events ending with an <cite>on_drop_end</cite>
 event.</p>
+<p>Arguments <cite>x</cite> and <cite>y</cite> are the mouse cursor position at the time of the
+drop and you should only rely on them if the drop originated from the
+mouse.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><cite>x</cite>: <cite>int</cite></dt><dd><p>Cursor x position, relative to window <a class="reference internal" href="#kivy.core.window.WindowBase.left" title="kivy.core.window.WindowBase.left"><code class="xref py py-attr docutils literal notranslate"><span class="pre">left</span></code></a>.</p>
+<dt><cite>x</cite>: <cite>int</cite></dt><dd><p>Cursor x position, relative to the window <a class="reference internal" href="#kivy.core.window.WindowBase.left" title="kivy.core.window.WindowBase.left"><code class="xref py py-attr docutils literal notranslate"><span class="pre">left</span></code></a>, at the
+time of the drop.</p>
 </dd>
-<dt><cite>y</cite>: <cite>int</cite></dt><dd><p>Cursor y position, relative to window <a class="reference internal" href="#kivy.core.window.WindowBase.top" title="kivy.core.window.WindowBase.top"><code class="xref py py-attr docutils literal notranslate"><span class="pre">top</span></code></a>.</p>
+<dt><cite>y</cite>: <cite>int</cite></dt><dd><p>Cursor y position, relative to the window <a class="reference internal" href="#kivy.core.window.WindowBase.top" title="kivy.core.window.WindowBase.top"><code class="xref py py-attr docutils literal notranslate"><span class="pre">top</span></code></a>, at the
+time of the drop.</p>
+</dd>
+<dt><cite>*args</cite>: <cite>tuple</cite></dt><dd><p>Additional arugments.</p>
 </dd>
 </dl>
 </dd>
@@ -1108,15 +1115,22 @@ event.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.core.window.WindowBase.on_drop_end">
-<span class="sig-name descname"><span class="pre">on_drop_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/window.html#WindowBase.on_drop_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.window.WindowBase.on_drop_end" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_drop_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/window.html#WindowBase.on_drop_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.window.WindowBase.on_drop_end" title="Permalink to this definition">¶</a></dt>
 <dd><p>Event called when a text or a file drop on the application has
 ended.</p>
+<p>Arguments <cite>x</cite> and <cite>y</cite> are the mouse cursor position at the time of the
+drop and you should only rely on them if the drop originated from the
+mouse.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><cite>x</cite>: <cite>int</cite></dt><dd><p>Cursor x position, relative to window <a class="reference internal" href="#kivy.core.window.WindowBase.left" title="kivy.core.window.WindowBase.left"><code class="xref py py-attr docutils literal notranslate"><span class="pre">left</span></code></a>.</p>
+<dt><cite>x</cite>: <cite>int</cite></dt><dd><p>Cursor x position, relative to the window <a class="reference internal" href="#kivy.core.window.WindowBase.left" title="kivy.core.window.WindowBase.left"><code class="xref py py-attr docutils literal notranslate"><span class="pre">left</span></code></a>, at the
+time of the drop.</p>
 </dd>
-<dt><cite>y</cite>: <cite>int</cite></dt><dd><p>Cursor y position, relative to window <a class="reference internal" href="#kivy.core.window.WindowBase.top" title="kivy.core.window.WindowBase.top"><code class="xref py py-attr docutils literal notranslate"><span class="pre">top</span></code></a>.</p>
+<dt><cite>y</cite>: <cite>int</cite></dt><dd><p>Cursor y position, relative to the window <a class="reference internal" href="#kivy.core.window.WindowBase.top" title="kivy.core.window.WindowBase.top"><code class="xref py py-attr docutils literal notranslate"><span class="pre">top</span></code></a>, at the
+time of the drop.</p>
+</dd>
+<dt><cite>*args</cite>: <cite>tuple</cite></dt><dd><p>Additional arugments.</p>
 </dd>
 </dl>
 </dd>
@@ -1132,16 +1146,23 @@ ended.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.core.window.WindowBase.on_drop_file">
-<span class="sig-name descname"><span class="pre">on_drop_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/window.html#WindowBase.on_drop_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.window.WindowBase.on_drop_file" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_drop_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/window.html#WindowBase.on_drop_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.window.WindowBase.on_drop_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Event called when a file is dropped on the application.</p>
+<p>Arguments <cite>x</cite> and <cite>y</cite> are the mouse cursor position at the time of the
+drop and you should only rely on them if the drop originated from the
+mouse.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
 <dt><cite>filename</cite>: <cite>bytes</cite></dt><dd><p>Absolute path to a dropped file.</p>
 </dd>
-<dt><cite>x</cite>: <cite>int</cite></dt><dd><p>Cursor x position, relative to window <a class="reference internal" href="#kivy.core.window.WindowBase.left" title="kivy.core.window.WindowBase.left"><code class="xref py py-attr docutils literal notranslate"><span class="pre">left</span></code></a>.</p>
+<dt><cite>x</cite>: <cite>int</cite></dt><dd><p>Cursor x position, relative to the window <a class="reference internal" href="#kivy.core.window.WindowBase.left" title="kivy.core.window.WindowBase.left"><code class="xref py py-attr docutils literal notranslate"><span class="pre">left</span></code></a>, at the
+time of the drop.</p>
 </dd>
-<dt><cite>y</cite>: <cite>int</cite></dt><dd><p>Cursor y position, relative to window <a class="reference internal" href="#kivy.core.window.WindowBase.top" title="kivy.core.window.WindowBase.top"><code class="xref py py-attr docutils literal notranslate"><span class="pre">top</span></code></a>.</p>
+<dt><cite>y</cite>: <cite>int</cite></dt><dd><p>Cursor y position, relative to the window <a class="reference internal" href="#kivy.core.window.WindowBase.top" title="kivy.core.window.WindowBase.top"><code class="xref py py-attr docutils literal notranslate"><span class="pre">top</span></code></a>, at the
+time of the drop.</p>
+</dd>
+<dt><cite>*args</cite>: <cite>tuple</cite></dt><dd><p>Additional arugments.</p>
 </dd>
 </dl>
 </dd>
@@ -1176,16 +1197,23 @@ pointers to workarounds.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.core.window.WindowBase.on_drop_text">
-<span class="sig-name descname"><span class="pre">on_drop_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/window.html#WindowBase.on_drop_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.window.WindowBase.on_drop_text" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_drop_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/window.html#WindowBase.on_drop_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.window.WindowBase.on_drop_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Event called when a text is dropped on the application.</p>
+<p>Arguments <cite>x</cite> and <cite>y</cite> are the mouse cursor position at the time of the
+drop and you should only rely on them if the drop originated from the
+mouse.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
 <dt><cite>text</cite>: <cite>bytes</cite></dt><dd><p>Text which is dropped.</p>
 </dd>
-<dt><cite>x</cite>: <cite>int</cite></dt><dd><p>Cursor x position, relative to window <a class="reference internal" href="#kivy.core.window.WindowBase.left" title="kivy.core.window.WindowBase.left"><code class="xref py py-attr docutils literal notranslate"><span class="pre">left</span></code></a>.</p>
+<dt><cite>x</cite>: <cite>int</cite></dt><dd><p>Cursor x position, relative to the window <a class="reference internal" href="#kivy.core.window.WindowBase.left" title="kivy.core.window.WindowBase.left"><code class="xref py py-attr docutils literal notranslate"><span class="pre">left</span></code></a>, at the
+time of the drop.</p>
 </dd>
-<dt><cite>y</cite>: <cite>int</cite></dt><dd><p>Cursor y position, relative to window <a class="reference internal" href="#kivy.core.window.WindowBase.top" title="kivy.core.window.WindowBase.top"><code class="xref py py-attr docutils literal notranslate"><span class="pre">top</span></code></a>.</p>
+<dt><cite>y</cite>: <cite>int</cite></dt><dd><p>Cursor y position, relative to the window <a class="reference internal" href="#kivy.core.window.WindowBase.top" title="kivy.core.window.WindowBase.top"><code class="xref py py-attr docutils literal notranslate"><span class="pre">top</span></code></a>, at the
+time of the drop.</p>
+</dd>
+<dt><cite>*args</cite>: <cite>tuple</cite></dt><dd><p>Additional arugments.</p>
 </dd>
 </dl>
 </dd>
