@@ -585,26 +585,11 @@ codepoint, and will be removed completely in future versions.</p>
 </dd>
 <dt><cite>on_drop_begin</cite>: x, y</dt><dd><p>Fired when text(s) or file(s) drop on the application is about to
 begin.</p>
-<p>Values <cite>x</cite> and <cite>y</cite> are drop position and are relative to window
-position <a class="reference internal" href="#kivy.core.window.WindowBase.left" title="kivy.core.window.WindowBase.left"><code class="xref py py-attr docutils literal notranslate"><span class="pre">left</span></code></a> and <a class="reference internal" href="#kivy.core.window.WindowBase.top" title="kivy.core.window.WindowBase.top"><code class="xref py py-attr docutils literal notranslate"><span class="pre">top</span></code></a>.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>On Windows it is possible to drop file(s) on window title bar
-or on it’s edges and in that case <a class="reference internal" href="#kivy.core.window.WindowBase.mouse_pos" title="kivy.core.window.WindowBase.mouse_pos"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mouse_pos</span></code></a> won’t be
-updated as the mouse cursor is not within the window size.</p>
-</div>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2.1.0.</span></p>
 </div>
 </dd>
-<dt><cite>on_drop_file</cite>: filename (bytes or string):</dt><dd><p>Fired when a file is dropped on the application.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This event doesn’t work for apps with elevated permissions,
-because the OS API calls are filtered. Check issue
-<a class="reference external" href="https://github.com/kivy/kivy/issues/4999">#4999</a> for
-pointers to workarounds.</p>
-</div>
+<dt><cite>on_drop_file</cite>: filename (bytes), x, y</dt><dd><p>Fired when a file is dropped on the application.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.2.0.</span></p>
 </div>
@@ -612,12 +597,12 @@ pointers to workarounds.</p>
 <p><span class="versionmodified changed">Changed in version 2.1.0: </span>Renamed from <cite>on_dropfile</cite> to <cite>on_drop_file</cite>.</p>
 </div>
 </dd>
-<dt><cite>on_drop_text</cite>: text (bytes or string)</dt><dd><p>Fired when a text is dropped on the application.</p>
+<dt><cite>on_drop_text</cite>: text (bytes), x, y</dt><dd><p>Fired when a text is dropped on the application.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2.1.0.</span></p>
 </div>
 </dd>
-<dt><cite>on_drop_end</cite>:</dt><dd><p>Fired when text(s) or file(s) drop on the application has ended.</p>
+<dt><cite>on_drop_end</cite>: x, y</dt><dd><p>Fired when text(s) or file(s) drop on the application has ended.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2.1.0.</span></p>
 </div>
@@ -1049,12 +1034,18 @@ defaults to 0.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kivy.core.window.WindowBase.mouse_pos">
 <span class="sig-name descname"><span class="pre">mouse_pos</span></span><a class="headerlink" href="#kivy.core.window.WindowBase.mouse_pos" title="Permalink to this definition">¶</a></dt>
-<dd><p>2d position of the mouse within the window.</p>
+<dd><p>2d position of the mouse cursor within the window.</p>
+<p>Position is relative to the left/bottom point of the window.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Cursor position will be scaled by the pixel density if the high density
+mode is supported by the window provider.</p>
+</div>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.2.0.</span></p>
 </div>
 <p><a class="reference internal" href="#kivy.core.window.WindowBase.mouse_pos" title="kivy.core.window.WindowBase.mouse_pos"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mouse_pos</span></code></a> is an <a class="reference internal" href="api-kivy.properties.html#kivy.properties.ObjectProperty" title="kivy.properties.ObjectProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectProperty</span></code></a> and
-defaults to [0, 0].</p>
+defaults to (0, 0).</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1096,6 +1087,16 @@ defaults to [0, 0].</p>
 to begin. It will be followed-up by a single or a multiple
 <cite>on_drop_text</cite> or <cite>on_drop_file</cite> events ending with an <cite>on_drop_end</cite>
 event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>x</cite>: <cite>int</cite></dt><dd><p>Cursor x position, relative to window <a class="reference internal" href="#kivy.core.window.WindowBase.left" title="kivy.core.window.WindowBase.left"><code class="xref py py-attr docutils literal notranslate"><span class="pre">left</span></code></a>.</p>
+</dd>
+<dt><cite>y</cite>: <cite>int</cite></dt><dd><p>Cursor y position, relative to window <a class="reference internal" href="#kivy.core.window.WindowBase.top" title="kivy.core.window.WindowBase.top"><code class="xref py py-attr docutils literal notranslate"><span class="pre">top</span></code></a>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This event works with sdl2 window provider.</p>
@@ -1107,9 +1108,19 @@ event.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.core.window.WindowBase.on_drop_end">
-<span class="sig-name descname"><span class="pre">on_drop_end</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/window.html#WindowBase.on_drop_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.window.WindowBase.on_drop_end" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_drop_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/window.html#WindowBase.on_drop_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.window.WindowBase.on_drop_end" title="Permalink to this definition">¶</a></dt>
 <dd><p>Event called when a text or a file drop on the application has
 ended.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>x</cite>: <cite>int</cite></dt><dd><p>Cursor x position, relative to window <a class="reference internal" href="#kivy.core.window.WindowBase.left" title="kivy.core.window.WindowBase.left"><code class="xref py py-attr docutils literal notranslate"><span class="pre">left</span></code></a>.</p>
+</dd>
+<dt><cite>y</cite>: <cite>int</cite></dt><dd><p>Cursor y position, relative to window <a class="reference internal" href="#kivy.core.window.WindowBase.top" title="kivy.core.window.WindowBase.top"><code class="xref py py-attr docutils literal notranslate"><span class="pre">top</span></code></a>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This event works with sdl2 window provider.</p>
@@ -1121,14 +1132,39 @@ ended.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.core.window.WindowBase.on_drop_file">
-<span class="sig-name descname"><span class="pre">on_drop_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/window.html#WindowBase.on_drop_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.window.WindowBase.on_drop_file" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_drop_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/window.html#WindowBase.on_drop_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.window.WindowBase.on_drop_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Event called when a file is dropped on the application.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>filename</cite>: <cite>bytes</cite></dt><dd><p>Absolute path to a dropped file.</p>
+</dd>
+<dt><cite>x</cite>: <cite>int</cite></dt><dd><p>Cursor x position, relative to window <a class="reference internal" href="#kivy.core.window.WindowBase.left" title="kivy.core.window.WindowBase.left"><code class="xref py py-attr docutils literal notranslate"><span class="pre">left</span></code></a>.</p>
+</dd>
+<dt><cite>y</cite>: <cite>int</cite></dt><dd><p>Cursor y position, relative to window <a class="reference internal" href="#kivy.core.window.WindowBase.top" title="kivy.core.window.WindowBase.top"><code class="xref py py-attr docutils literal notranslate"><span class="pre">top</span></code></a>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This event currently works with sdl2 window provider, on pygame
 window provider and OS X with a patched version of pygame.
 This event is left in place for further evolution
 (ios, android etc.)</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On Windows it is possible to drop a file on the window title bar
+or on its edges and for that case <a class="reference internal" href="#kivy.core.window.WindowBase.mouse_pos" title="kivy.core.window.WindowBase.mouse_pos"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mouse_pos</span></code></a> won’t be
+updated as the mouse cursor is not within the window.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This event doesn’t work for apps with elevated permissions,
+because the OS API calls are filtered. Check issue
+<a class="reference external" href="https://github.com/kivy/kivy/issues/4999">#4999</a> for
+pointers to workarounds.</p>
 </div>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.2.0.</span></p>
@@ -1140,11 +1176,29 @@ This event is left in place for further evolution
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.core.window.WindowBase.on_drop_text">
-<span class="sig-name descname"><span class="pre">on_drop_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/window.html#WindowBase.on_drop_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.window.WindowBase.on_drop_text" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_drop_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/window.html#WindowBase.on_drop_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.window.WindowBase.on_drop_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Event called when a text is dropped on the application.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>text</cite>: <cite>bytes</cite></dt><dd><p>Text which is dropped.</p>
+</dd>
+<dt><cite>x</cite>: <cite>int</cite></dt><dd><p>Cursor x position, relative to window <a class="reference internal" href="#kivy.core.window.WindowBase.left" title="kivy.core.window.WindowBase.left"><code class="xref py py-attr docutils literal notranslate"><span class="pre">left</span></code></a>.</p>
+</dd>
+<dt><cite>y</cite>: <cite>int</cite></dt><dd><p>Cursor y position, relative to window <a class="reference internal" href="#kivy.core.window.WindowBase.top" title="kivy.core.window.WindowBase.top"><code class="xref py py-attr docutils literal notranslate"><span class="pre">top</span></code></a>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This event works with sdl2 window provider on x11 window.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On Windows it is possible to drop a text on the window title bar
+or on its edges and for that case <a class="reference internal" href="#kivy.core.window.WindowBase.mouse_pos" title="kivy.core.window.WindowBase.mouse_pos"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mouse_pos</span></code></a> won’t be
+updated as the mouse cursor is not within the window.</p>
 </div>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2.1.0.</span></p>
@@ -2117,7 +2171,7 @@ Kivy.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Feb 07, 2022.
+      Last updated on Feb 08, 2022.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
 </div>
 -->
