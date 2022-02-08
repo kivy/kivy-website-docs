@@ -3089,9 +3089,14 @@
         <span class="n">_tab_width</span><span class="p">,</span> <span class="n">_label_cached</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab_width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_label_cached</span>
 
         <span class="c1"># try to add each word on current line.</span>
+        <span class="n">words_widths</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
             <span class="n">is_newline</span> <span class="o">=</span> <span class="p">(</span><span class="n">word</span> <span class="o">==</span> <span class="sa">u</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-            <span class="n">w</span> <span class="o">=</span> <span class="n">text_width</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">_tab_width</span><span class="p">,</span> <span class="n">_label_cached</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">w</span> <span class="o">=</span> <span class="n">words_widths</span><span class="p">[</span><span class="n">word</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="n">w</span> <span class="o">=</span> <span class="n">text_width</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">_tab_width</span><span class="p">,</span> <span class="n">_label_cached</span><span class="p">)</span>
+                <span class="n">words_widths</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="n">w</span>
             <span class="c1"># if we have more than the width, or if it&#39;s a newline,</span>
             <span class="c1"># push the current line, and create a new one</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">w</span> <span class="o">&gt;</span> <span class="n">width</span> <span class="ow">and</span> <span class="n">line</span><span class="p">)</span> <span class="ow">or</span> <span class="n">is_newline</span><span class="p">:</span>
@@ -3107,9 +3112,11 @@
                     <span class="n">split_width</span> <span class="o">=</span> <span class="n">split_pos</span> <span class="o">=</span> <span class="mi">0</span>
                     <span class="c1"># split the word</span>
                     <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">word</span><span class="p">:</span>
-                        <span class="n">cw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_text_width</span><span class="p">(</span>
-                            <span class="n">c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab_width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_label_cached</span>
-                        <span class="p">)</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">cw</span> <span class="o">=</span> <span class="n">words_widths</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+                        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                            <span class="n">cw</span> <span class="o">=</span> <span class="n">text_width</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">_tab_width</span><span class="p">,</span> <span class="n">_label_cached</span><span class="p">)</span>
+                            <span class="n">words_widths</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">cw</span>
                         <span class="k">if</span> <span class="n">split_width</span> <span class="o">+</span> <span class="n">cw</span> <span class="o">&gt;</span> <span class="n">width</span><span class="p">:</span>
                             <span class="k">break</span>
                         <span class="n">split_width</span> <span class="o">+=</span> <span class="n">cw</span>
