@@ -8,7 +8,7 @@
     <meta name="twitter:site" content="@kivyframework">
     <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>EventManagerBase &mdash; Kivy 2.1.0.dev0 documentation</title>
+    <title>Event Manager &mdash; Kivy 2.1.0.dev0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="_static/fresh.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -62,9 +62,9 @@
                 <button type="submit">Go</button>
             </form>
           <!--
-          <h3><a href="index.html">EventManagerBase</a></h3>
+          <h3><a href="index.html">Event Manager</a></h3>
           <ul>
-<li><a class="reference internal" href="#">EventManagerBase</a><ul>
+<li><a class="reference internal" href="#">Event Manager</a><ul>
 <li><a class="reference internal" href="#when-to-use-an-event-manager">When to use an event manager</a></li>
 <li><a class="reference internal" href="#defining-and-registering-an-event-manager">Defining and registering an event manager</a></li>
 <li><a class="reference internal" href="#dispatching-events-to-the-widgets">Dispatching events to the widgets</a></li>
@@ -182,7 +182,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.effects.opacityscroll.html">Opacity scroll effect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.effects.scroll.html">Scroll effect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.event.html">Event dispatcher</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">EventManagerBase</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Event Manager</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.factory.html">Factory object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.garden.html">Garden</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.geometry.html">Geometry utilities</a></li>
@@ -351,7 +351,7 @@
         <div class="bodywrapper">
           <div class="body">
             <div class="toc"><h2>Table Of Contents</h2><ul>
-<li><a class="reference internal" href="#">EventManagerBase</a><ul>
+<li><a class="reference internal" href="#">Event Manager</a><ul>
 <li><a class="reference internal" href="#when-to-use-an-event-manager">When to use an event manager</a></li>
 <li><a class="reference internal" href="#defining-and-registering-an-event-manager">Defining and registering an event manager</a></li>
 <li><a class="reference internal" href="#dispatching-events-to-the-widgets">Dispatching events to the widgets</a></li>
@@ -361,28 +361,30 @@
 </div>
             
   <section id="module-kivy.eventmanager">
-<span id="eventmanagerbase"></span><h1>EventManagerBase<a class="headerlink" href="#module-kivy.eventmanager" title="Permalink to this headline">¶</a></h1>
+<span id="event-manager"></span><h1>Event Manager<a class="headerlink" href="#module-kivy.eventmanager" title="Permalink to this headline">¶</a></h1>
 <p>The <a class="reference internal" href="#kivy.eventmanager.EventManagerBase" title="kivy.eventmanager.EventManagerBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventManagerBase</span></code></a> is the abstract class intended for specific
 implementation of dispatching motion events
 (instances of <a class="reference internal" href="api-kivy.input.motionevent.html#kivy.input.motionevent.MotionEvent" title="kivy.input.motionevent.MotionEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">MotionEvent</span></code></a>) to widgets through
-<a class="reference internal" href="api-kivy.uix.widget.html#kivy.uix.widget.Widget.on_motion" title="kivy.uix.widget.Widget.on_motion"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_motion()</span></code></a> method.</p>
+<a class="reference internal" href="api-kivy.uix.widget.html#kivy.uix.widget.Widget.on_motion" title="kivy.uix.widget.Widget.on_motion"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_motion()</span></code></a> method of the
+<a class="reference internal" href="api-kivy.uix.widget.html#kivy.uix.widget.Widget" title="kivy.uix.widget.Widget"><code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code></a> class.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>This feature is experimental and it remains so while this warning is
 present.</p>
 </div>
-<p>Manager is a layer between window and its widgets. Window will forward all the
-events it receives in <a class="reference internal" href="api-kivy.uix.widget.html#kivy.uix.widget.Widget.on_motion" title="kivy.uix.widget.Widget.on_motion"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_motion()</span></code></a> method to
-all managers who declared to receive types of those events. Event will continue
-to go through managers even if one of them accepts it (by returning <cite>True</cite>).</p>
+<p>Manager is a layer between the window and its widgets.
+<a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase" title="kivy.core.window.WindowBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">WindowBase</span></code></a> will forward all the events it receives
+in <a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_motion" title="kivy.core.window.WindowBase.on_motion"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_motion()</span></code></a> method to the all managers
+who declared to receive types of those events. Event will continue to go
+through the managers list even if one of them accept it (by returning <cite>True</cite>).</p>
 <section id="when-to-use-an-event-manager">
 <h2>When to use an event manager<a class="headerlink" href="#when-to-use-an-event-manager" title="Permalink to this headline">¶</a></h2>
 <p>Use a manager when you want to:</p>
 <ul class="simple">
 <li><p>Dispatch touch, hover, keyboard, joystick or any other events to the widgets
 through <a class="reference internal" href="api-kivy.uix.widget.html#kivy.uix.widget.Widget.on_motion" title="kivy.uix.widget.Widget.on_motion"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_motion()</span></code></a> method.</p></li>
-<li><p>Dispatch filtered motion events by any criteria, like by
-<a class="reference internal" href="api-kivy.input.motionevent.html#kivy.input.motionevent.MotionEvent.device" title="kivy.input.motionevent.MotionEvent.device"><code class="xref py py-attr docutils literal notranslate"><span class="pre">device</span></code></a> or
+<li><p>Dispatch filtered motion events by any criteria, like by a
+<a class="reference internal" href="api-kivy.input.motionevent.html#kivy.input.motionevent.MotionEvent.device" title="kivy.input.motionevent.MotionEvent.device"><code class="xref py py-attr docutils literal notranslate"><span class="pre">device</span></code></a> or a
 <a class="reference internal" href="api-kivy.input.motionevent.html#kivy.input.motionevent.MotionEvent.profile" title="kivy.input.motionevent.MotionEvent.profile"><code class="xref py py-attr docutils literal notranslate"><span class="pre">profile</span></code></a>.</p></li>
 <li><p>Combine several motion events (touch, hover etc.) into one new event and
 dispatch it to the widgets.</p></li>
@@ -394,31 +396,19 @@ window’s canvas for every simulated touch.</p></li>
 <section id="defining-and-registering-an-event-manager">
 <h2>Defining and registering an event manager<a class="headerlink" href="#defining-and-registering-an-event-manager" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
-<li><dl class="simple">
-<dt>Inherit <a class="reference internal" href="#kivy.eventmanager.EventManagerBase" title="kivy.eventmanager.EventManagerBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventManagerBase</span></code></a> and set which events this manager</dt><dd><p>should receive by declaring event types in
-<cite>:attr:`EventManagerBase.type_ids</cite> attribute.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Implement <a class="reference internal" href="#kivy.eventmanager.EventManagerBase.dispatch" title="kivy.eventmanager.EventManagerBase.dispatch"><code class="xref py py-meth docutils literal notranslate"><span class="pre">EventManagerBase.dispatch()</span></code></a> which will be called by window</dt><dd><p>to pass event type (one of “begin”, “update”, “end”) and an event.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Implement <a class="reference internal" href="#kivy.eventmanager.EventManagerBase.start" title="kivy.eventmanager.EventManagerBase.start"><code class="xref py py-meth docutils literal notranslate"><span class="pre">EventManagerBase.start()</span></code></a> and <a class="reference internal" href="#kivy.eventmanager.EventManagerBase.stop" title="kivy.eventmanager.EventManagerBase.stop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">EventManagerBase.stop()</span></code></a></dt><dd><p>to allocate and release additional resources if needed.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Register a manager instance to window using method</dt><dd><p><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.register_event_manager" title="kivy.core.window.WindowBase.register_event_manager"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register_event_manager()</span></code></a>. This can be
+<li><p>Inherit <a class="reference internal" href="#kivy.eventmanager.EventManagerBase" title="kivy.eventmanager.EventManagerBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventManagerBase</span></code></a> and set which events this manager
+should receive by declaring event types in
+<cite>:attr:`EventManagerBase.type_ids</cite> attribute.</p></li>
+<li><p>Implement <a class="reference internal" href="#kivy.eventmanager.EventManagerBase.dispatch" title="kivy.eventmanager.EventManagerBase.dispatch"><code class="xref py py-meth docutils literal notranslate"><span class="pre">EventManagerBase.dispatch()</span></code></a> which will be called by window
+to pass event type (one of “begin”, “update”, “end”) and an event.</p></li>
+<li><p>Implement <a class="reference internal" href="#kivy.eventmanager.EventManagerBase.start" title="kivy.eventmanager.EventManagerBase.start"><code class="xref py py-meth docutils literal notranslate"><span class="pre">EventManagerBase.start()</span></code></a> and <a class="reference internal" href="#kivy.eventmanager.EventManagerBase.stop" title="kivy.eventmanager.EventManagerBase.stop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">EventManagerBase.stop()</span></code></a>
+to allocate and release additional resources if needed.</p></li>
+<li><p>Register a manager instance to window using method
+<a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.register_event_manager" title="kivy.core.window.WindowBase.register_event_manager"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register_event_manager()</span></code></a>. This can be
 done by overriding methods <a class="reference internal" href="api-kivy.app.html#kivy.app.App.build" title="kivy.app.App.build"><code class="xref py py-meth docutils literal notranslate"><span class="pre">build()</span></code></a> or
-<a class="reference internal" href="api-kivy.app.html#kivy.app.App.on_start" title="kivy.app.App.on_start"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_start()</span></code></a>.</p>
-</dd>
-</dl>
-</li>
+<a class="reference internal" href="api-kivy.app.html#kivy.app.App.on_start" title="kivy.app.App.on_start"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_start()</span></code></a>.</p></li>
 </ol>
-<p>All registered managers are kept in
+<p>All registered managers are kept in the
 <a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.event_managers" title="kivy.core.window.WindowBase.event_managers"><code class="xref py py-attr docutils literal notranslate"><span class="pre">event_managers</span></code></a> list. To unregister a
 manager call <a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.unregister_event_manager" title="kivy.core.window.WindowBase.unregister_event_manager"><code class="xref py py-meth docutils literal notranslate"><span class="pre">unregister_event_manager()</span></code></a>
 which itself can be called in <a class="reference internal" href="api-kivy.app.html#kivy.app.App.on_stop" title="kivy.app.App.on_stop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_stop()</span></code></a> method.</p>
@@ -428,13 +418,13 @@ which itself can be called in <a class="reference internal" href="api-kivy.app.h
 <p>Once registered, window will start the manager and forward all events of types
 declared in <a class="reference internal" href="#kivy.eventmanager.EventManagerBase.type_ids" title="kivy.eventmanager.EventManagerBase.type_ids"><code class="xref py py-attr docutils literal notranslate"><span class="pre">EventManagerBase.type_ids</span></code></a> to the manager’s
 <a class="reference internal" href="#kivy.eventmanager.EventManagerBase.dispatch" title="kivy.eventmanager.EventManagerBase.dispatch"><code class="xref py py-meth docutils literal notranslate"><span class="pre">EventManagerBase.dispatch()</span></code></a> method. It’s up to manager to decide how to
-dispatch them, either going through <code class="xref py py-attr docutils literal notranslate"><span class="pre">EventManagerBase.window.children</span></code>
-and dispatch <cite>on_motion</cite> event to them or by using some different logic. It’s
+dispatch them, either by going through <code class="xref py py-attr docutils literal notranslate"><span class="pre">EventManagerBase.window.children</span></code>
+list and dispatching <cite>on_motion</cite> event or by using some different logic. It’s
 also up to manager to dispatch grabbed events if grab feature is supported by
 the event (see <a class="reference internal" href="api-kivy.input.motionevent.html#kivy.input.motionevent.MotionEvent.grab" title="kivy.input.motionevent.MotionEvent.grab"><code class="xref py py-meth docutils literal notranslate"><span class="pre">grab()</span></code></a> and
 <a class="reference internal" href="api-kivy.input.motionevent.html#kivy.input.motionevent.MotionEvent.ungrab" title="kivy.input.motionevent.MotionEvent.ungrab"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ungrab()</span></code></a> methods).</p>
 <p>Manager can assign a different dispatch mode to decide how event
-should be dispatched throughout the widget tree by changing value of
+should be dispatched throughout the widget tree by changing the value of the
 <a class="reference internal" href="api-kivy.input.motionevent.html#kivy.input.motionevent.MotionEvent.dispatch_mode" title="kivy.input.motionevent.MotionEvent.dispatch_mode"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dispatch_mode</span></code></a> attribute. Before
 changing the mode manager should store/restore the current one, either by using
 a local variable or by using event’s
@@ -443,27 +433,18 @@ a local variable or by using event’s
 <p>Currently there are three dispatch modes (behaviors) recognized by the
 <cite>on_motion</cite> method in <a class="reference internal" href="api-kivy.uix.widget.html#kivy.uix.widget.Widget" title="kivy.uix.widget.Widget"><code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code></a> class:</p>
 <ol class="arabic simple">
-<li><dl class="simple">
-<dt>Default dispatch (requires <a class="reference internal" href="#kivy.eventmanager.MODE_DEFAULT_DISPATCH" title="kivy.eventmanager.MODE_DEFAULT_DISPATCH"><code class="xref py py-const docutils literal notranslate"><span class="pre">MODE_DEFAULT_DISPATCH</span></code></a>) - event will go</dt><dd><p>through widget’s <cite>children</cite> list, starting with the first widget in the
+<li><p>Default dispatch (requires <a class="reference internal" href="#kivy.eventmanager.MODE_DEFAULT_DISPATCH" title="kivy.eventmanager.MODE_DEFAULT_DISPATCH"><code class="xref py py-const docutils literal notranslate"><span class="pre">MODE_DEFAULT_DISPATCH</span></code></a>) - event will go
+through widget’s <cite>children</cite> list, starting with the first widget in the
 list until event gets accepted or last widget registered for that event is
 reached. Mode <a class="reference internal" href="#kivy.eventmanager.MODE_DEFAULT_DISPATCH" title="kivy.eventmanager.MODE_DEFAULT_DISPATCH"><code class="xref py py-const docutils literal notranslate"><span class="pre">MODE_DEFAULT_DISPATCH</span></code></a> is assigned by default in
-<a class="reference internal" href="api-kivy.input.motionevent.html#kivy.input.motionevent.MotionEvent" title="kivy.input.motionevent.MotionEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">MotionEvent</span></code></a> class.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>Filtered dispatch (requires <a class="reference internal" href="#kivy.eventmanager.MODE_FILTERED_DISPATCH" title="kivy.eventmanager.MODE_FILTERED_DISPATCH"><code class="xref py py-const docutils literal notranslate"><span class="pre">MODE_FILTERED_DISPATCH</span></code></a>) - event will go</dt><dd><p>only through registered child widgets.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="simple">
-<dt>No dispatch to children (requires <a class="reference internal" href="#kivy.eventmanager.MODE_DONT_DISPATCH" title="kivy.eventmanager.MODE_DONT_DISPATCH"><code class="xref py py-const docutils literal notranslate"><span class="pre">MODE_DONT_DISPATCH</span></code></a>) - event will</dt><dd><p>not be dispatched to child widgets.</p>
-</dd>
-</dl>
-</li>
+<a class="reference internal" href="api-kivy.input.motionevent.html#kivy.input.motionevent.MotionEvent" title="kivy.input.motionevent.MotionEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">MotionEvent</span></code></a> class.</p></li>
+<li><p>Filtered dispatch (requires <a class="reference internal" href="#kivy.eventmanager.MODE_FILTERED_DISPATCH" title="kivy.eventmanager.MODE_FILTERED_DISPATCH"><code class="xref py py-const docutils literal notranslate"><span class="pre">MODE_FILTERED_DISPATCH</span></code></a>) - event will go
+only through registered child widgets.</p></li>
+<li><p>No dispatch to children (requires <a class="reference internal" href="#kivy.eventmanager.MODE_DONT_DISPATCH" title="kivy.eventmanager.MODE_DONT_DISPATCH"><code class="xref py py-const docutils literal notranslate"><span class="pre">MODE_DONT_DISPATCH</span></code></a>) - event will
+not be dispatched to child widgets.</p></li>
 </ol>
-<p>Note that window does not have <cite>motion_filter</cite> property and therefore does not
-have a list of filtered widgets from its <cite>children</cite> list.</p>
+<p>Note that window does not have a <cite>motion_filter</cite> property and therefore does
+not have a list of filtered widgets from its <cite>children</cite> list.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="kivy.eventmanager.EventManagerBase">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.eventmanager.</span></span><span class="sig-name descname"><span class="pre">EventManagerBase</span></span><a class="reference internal" href="_modules/kivy/eventmanager.html#EventManagerBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.eventmanager.EventManagerBase" title="Permalink to this definition">¶</a></dt>
@@ -491,7 +472,7 @@ have a list of filtered widgets from its <cite>children</cite> list.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.eventmanager.EventManagerBase.dispatch">
 <span class="sig-name descname"><span class="pre">dispatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">etype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">me</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/eventmanager.html#EventManagerBase.dispatch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.eventmanager.EventManagerBase.dispatch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Dispatch event <cite>me</cite> to widgets in <a class="reference internal" href="#kivy.eventmanager.EventManagerBase.window" title="kivy.eventmanager.EventManagerBase.window"><code class="xref py py-attr docutils literal notranslate"><span class="pre">window</span></code></a>.</p>
+<dd><p>Dispatch event <cite>me</cite> to the widgets in the <a class="reference internal" href="#kivy.eventmanager.EventManagerBase.window" title="kivy.eventmanager.EventManagerBase.window"><code class="xref py py-attr docutils literal notranslate"><span class="pre">window</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
@@ -514,9 +495,9 @@ have a list of filtered widgets from its <cite>children</cite> list.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.eventmanager.EventManagerBase.start">
 <span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/eventmanager.html#EventManagerBase.start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.eventmanager.EventManagerBase.start" title="Permalink to this definition">¶</a></dt>
-<dd><p>Start the manager, bind callbacks to objects and create additional
-resources. Attribute <a class="reference internal" href="#kivy.eventmanager.EventManagerBase.window" title="kivy.eventmanager.EventManagerBase.window"><code class="xref py py-attr docutils literal notranslate"><span class="pre">window</span></code></a> is assigned when this method is
-called.</p>
+<dd><p>Start the manager, bind callbacks to the objects and create
+additional resources. Attribute <a class="reference internal" href="#kivy.eventmanager.EventManagerBase.window" title="kivy.eventmanager.EventManagerBase.window"><code class="xref py py-attr docutils literal notranslate"><span class="pre">window</span></code></a> is assigned when this
+method is called.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2.1.0.</span></p>
 </div>
@@ -525,8 +506,8 @@ called.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.eventmanager.EventManagerBase.stop">
 <span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/eventmanager.html#EventManagerBase.stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.eventmanager.EventManagerBase.stop" title="Permalink to this definition">¶</a></dt>
-<dd><p>Stop the manager, unbind from any objects and to release any
-allocated resources.</p>
+<dd><p>Stop the manager, unbind from any objects and release any allocated
+resources.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2.1.0.</span></p>
 </div>
@@ -535,10 +516,10 @@ allocated resources.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kivy.eventmanager.EventManagerBase.type_ids">
 <span class="sig-name descname"><span class="pre">type_ids</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#kivy.eventmanager.EventManagerBase.type_ids" title="Permalink to this definition">¶</a></dt>
-<dd><p>Override this attribute to declare type ids of events which manager will
-receive. This attribute will be used by
-<a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase" title="kivy.core.window.WindowBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">WindowBase</span></code></a> to know which events to pass to
-method <a class="reference internal" href="#kivy.eventmanager.EventManagerBase.dispatch" title="kivy.eventmanager.EventManagerBase.dispatch"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dispatch()</span></code></a>.</p>
+<dd><p>Override this attribute to declare the type ids of the events which
+manager wants to receive. This attribute will be used by
+<a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase" title="kivy.core.window.WindowBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">WindowBase</span></code></a> to know which events to pass to the
+<a class="reference internal" href="#kivy.eventmanager.EventManagerBase.dispatch" title="kivy.eventmanager.EventManagerBase.dispatch"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dispatch()</span></code></a> method.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2.1.0.</span></p>
 </div>
@@ -547,7 +528,7 @@ method <a class="reference internal" href="#kivy.eventmanager.EventManagerBase.d
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kivy.eventmanager.EventManagerBase.window">
 <span class="sig-name descname"><span class="pre">window</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#kivy.eventmanager.EventManagerBase.window" title="Permalink to this definition">¶</a></dt>
-<dd><p>Holds an instance of <a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase" title="kivy.core.window.WindowBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">WindowBase</span></code></a>.</p>
+<dd><p>Holds the instance of the <a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase" title="kivy.core.window.WindowBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">WindowBase</span></code></a>.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2.1.0.</span></p>
 </div>
@@ -640,7 +621,7 @@ child widgets.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Feb 08, 2022.
+      Last updated on Feb 09, 2022.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
 </div>
 -->
