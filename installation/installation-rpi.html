@@ -107,6 +107,7 @@
 <li><a class="reference internal" href="#source-installation-dependencies">Source installation Dependencies</a><ul>
 <li><a class="reference internal" href="#id1">Raspbian Jessie/Stretch/Buster</a><ul>
 <li><a class="reference internal" href="#raspberry-pi-1-4-desktop-environment">Raspberry Pi 1-4 Desktop environment</a></li>
+<li><a class="reference internal" href="#cross-compilation-for-raspberry-pi-1-3-headless-installation-on-raspbian-buster">Cross-Compilation for Raspberry Pi 1-3 headless installation on Raspbian Buster</a></li>
 <li><a class="reference internal" href="#raspberry-pi-4-headless-installation-on-raspbian-buster">Raspberry Pi 4 headless installation on Raspbian Buster</a></li>
 </ul>
 </li>
@@ -409,6 +410,7 @@
 <li><a class="reference internal" href="#source-installation-dependencies">Source installation Dependencies</a><ul>
 <li><a class="reference internal" href="#id1">Raspbian Jessie/Stretch/Buster</a><ul>
 <li><a class="reference internal" href="#raspberry-pi-1-4-desktop-environment">Raspberry Pi 1-4 Desktop environment</a></li>
+<li><a class="reference internal" href="#cross-compilation-for-raspberry-pi-1-3-headless-installation-on-raspbian-buster">Cross-Compilation for Raspberry Pi 1-3 headless installation on Raspbian Buster</a></li>
 <li><a class="reference internal" href="#raspberry-pi-4-headless-installation-on-raspbian-buster">Raspberry Pi 4 headless installation on Raspbian Buster</a></li>
 </ul>
 </li>
@@ -488,6 +490,20 @@ then install SDL2 from apt:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">libsdl2</span><span class="o">-</span><span class="n">dev</span> <span class="n">libsdl2</span><span class="o">-</span><span class="n">image</span><span class="o">-</span><span class="n">dev</span> <span class="n">libsdl2</span><span class="o">-</span><span class="n">mixer</span><span class="o">-</span><span class="n">dev</span> <span class="n">libsdl2</span><span class="o">-</span><span class="n">ttf</span><span class="o">-</span><span class="n">dev</span>
 </pre></div>
 </div>
+</section>
+<section id="cross-compilation-for-raspberry-pi-1-3-headless-installation-on-raspbian-buster">
+<h5>Cross-Compilation for Raspberry Pi 1-3 headless installation on Raspbian Buster<a class="headerlink" href="#cross-compilation-for-raspberry-pi-1-3-headless-installation-on-raspbian-buster" title="Permalink to this headline">¶</a></h5>
+<p>The Raspberry OS project uses <cite>pi-gen</cite> project to create bootable images for Raspberry PI.</p>
+<p>Kivy determines automatically the sub-packages to build based on the environment it is compiled within. By default, the <cite>egl_rpi</cite> renderer that uses the (now deprecated but still useful) DISPMANX API is only compiled when running on a Raspberry Pi.
+In order to build Kivy in such <cite>pi-gen</cite> environment, the auto-detection of the Raspberry Pi hardware version needs to be disabled.</p>
+<p>When cross-compiling using e.g. <cite>pi-gen</cite>, the build system can be forced into compiling for Raspberry Pi with <cite>egl_rpi</cite> support by setting the environment variabel <cite>KIVY_RPI_VERSION</cite> to any number &lt; 4, e.g. <cite>3</cite>.</p>
+<p>The install command then looks something like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apt</span> <span class="n">install</span> <span class="n">build</span><span class="o">-</span><span class="n">essential</span> <span class="n">libraspberrypi</span><span class="o">-</span><span class="n">dev</span> <span class="n">raspberrypi</span><span class="o">-</span><span class="n">kernel</span><span class="o">-</span><span class="n">headers</span>
+<span class="n">KIVY_RPI_VERSION</span><span class="o">=</span><span class="mi">3</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;kivy[base]&quot;</span> <span class="n">kivy_examples</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">binary</span> <span class="n">kivy</span>
+</pre></div>
+</div>
+<p>Please note that the <cite>egl_rpi</cite> window handler is not supported on Raspberry Pi 4 and higher.
+The existing version check will refuse to compile the <cite>egl_rpi</cite> provider when detecting or forcing the Raspberry Pi version to 4 or higher.</p>
 </section>
 <section id="raspberry-pi-4-headless-installation-on-raspbian-buster">
 <h5>Raspberry Pi 4 headless installation on Raspbian Buster<a class="headerlink" href="#raspberry-pi-4-headless-installation-on-raspbian-buster" title="Permalink to this headline">¶</a></h5>
@@ -678,7 +694,7 @@ configure Kivy to use it as an input source. To do this, edit the file
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Feb 16, 2022.
+      Last updated on Feb 17, 2022.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
 </div>
 -->
