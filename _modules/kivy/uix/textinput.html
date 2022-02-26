@@ -904,6 +904,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_x</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_y</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_enable_scroll</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_have_scrolled</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="c1"># [from; to) range of lines being partially or fully rendered</span>
         <span class="c1"># in TextInput&#39;s viewport</span>
@@ -1965,6 +1966,12 @@
         <span class="c1"># stores the touch for later use</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_touch_down</span> <span class="o">=</span> <span class="n">touch</span>
 
+        <span class="c1"># Is a new touch_down, so previous scroll states needs to be reset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enable_scroll</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_have_scrolled</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_x</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_y</span> <span class="o">=</span> <span class="mi">0</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_hide_cut_copy_paste</span><span class="p">(</span><span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span><span class="p">)</span>
         <span class="c1"># schedule long touch for paste</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_long_touch_ev</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">long_touch</span><span class="p">,</span> <span class="mf">.5</span><span class="p">)</span>
@@ -1999,10 +2006,8 @@
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_from_swipe</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">scroll_text_from_swipe</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_enable_scroll</span> <span class="o">=</span> <span class="kc">False</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enable_scroll</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_touch</span> <span class="ow">is</span> <span class="n">touch</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_have_scrolled</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_touch</span> <span class="ow">is</span> <span class="n">touch</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_cursor_from_xy</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">touch</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_selection_to</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_index</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_update_selection</span><span class="p">()</span>
@@ -2027,29 +2032,10 @@
             <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_touch_count</span> <span class="o">==</span> <span class="mi">4</span>
         <span class="p">)</span>
 
-        <span class="n">_scroll_timeout</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">time_update</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">time_start</span>
-        <span class="c1"># conditions for discarding touch such as swipe to scroll and as</span>
-        <span class="c1"># selection on hold. If the conditions are true, the tap will be</span>
-        <span class="c1"># generically recognized as a single tap.</span>
-        <span class="n">single_tap</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">_scroll_timeout</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_timeout</span> <span class="o">/</span> <span class="mi">1000</span>
-            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_x</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_distance</span>
-            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_y</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_distance</span>
-        <span class="p">)</span>
-
-        <span class="c1"># if the given conditions are true, the touch will be recognized as a</span>
-        <span class="c1"># single tap. If there is selected text, the selection will be canceled</span>
-        <span class="c1"># and it will be possible to start a new selection.</span>
-        <span class="k">if</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">scroll_from_swipe</span>
-            <span class="ow">and</span> <span class="ow">not</span> <span class="n">prioritized_touch_types</span>
-            <span class="ow">and</span> <span class="n">single_tap</span>
-        <span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_have_scrolled</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">prioritized_touch_types</span><span class="p">:</span>
+            <span class="c1"># Is a single tap and did not scrolled.</span>
+            <span class="c1"># Selection needs to be canceled.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_cancel_update_selection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_touch_down</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_enable_scroll</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_x</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_y</span> <span class="o">=</span> <span class="mi">0</span>
 
         <span class="c1"># show Bubble</span>
         <span class="n">win</span> <span class="o">=</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span>
@@ -2078,52 +2064,51 @@
             <span class="k">return</span> <span class="kc">True</span></div>
 
     <span class="k">def</span> <span class="nf">scroll_text_from_swipe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+        <span class="n">_scroll_timeout</span> <span class="o">=</span> <span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">time_update</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">time_start</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_x</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">dx</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_y</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">dy</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_have_scrolled</span><span class="p">:</span>
+            <span class="c1"># To be considered a scroll, touch should travel more than</span>
+            <span class="c1"># scroll_distance in less than the scroll_timeout since touch_down</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span>
+                <span class="n">_scroll_timeout</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_timeout</span>
+                <span class="ow">and</span> <span class="p">(</span>
+                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_x</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_distance</span><span class="p">)</span>
+                    <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_y</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_distance</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">):</span>
+                <span class="c1"># Distance isn&#39;t enough (yet) to consider it as a scroll</span>
+                <span class="k">if</span> <span class="n">_scroll_timeout</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_timeout</span><span class="p">:</span>
+                    <span class="c1"># Timeout is not reached, scroll is still enabled.</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_enable_scroll</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_cancel_update_selection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_touch_down</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+            <span class="c1"># We have a scroll!</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_have_scrolled</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cancel_long_touch_event</span><span class="p">()</span>
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiline</span><span class="p">:</span>
-            <span class="n">_scroll_timeout</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">time_update</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">time_start</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_x</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">dx</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_y</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">dy</span><span class="p">)</span>
-
-            <span class="c1"># disable scroll and start selection mode if scroll distance</span>
-            <span class="c1"># isn&#39;t reached within scroll_timeout</span>
-            <span class="k">if</span> <span class="p">(</span>
-                <span class="n">_scroll_timeout</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_timeout</span> <span class="o">/</span> <span class="mi">1000</span>
-                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_x</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_distance</span>
-                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_y</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_distance</span>
-            <span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_enable_scroll</span> <span class="o">=</span> <span class="kc">False</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_cancel_update_selection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_touch_down</span><span class="p">)</span>
-
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enable_scroll</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">cancel_long_touch_event</span><span class="p">()</span>
-                <span class="n">max_scroll_y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimum_height</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">+</span> <span class="n">touch</span><span class="o">.</span><span class="n">dy</span><span class="p">),</span>
-                                    <span class="n">max_scroll_y</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update_graphics</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_position_handles</span><span class="p">()</span>
-                <span class="k">return</span> <span class="kc">True</span>
-
+            <span class="n">max_scroll_y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimum_height</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span>
+                <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">+</span> <span class="n">touch</span><span class="o">.</span><span class="n">dy</span><span class="p">),</span>
+                <span class="n">max_scroll_y</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">_scroll_timeout</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">time_update</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">time_start</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_x</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">dx</span><span class="p">)</span>
-
-            <span class="c1"># works with the same logic as multiline above</span>
-            <span class="k">if</span> <span class="p">(</span>
-                <span class="n">_scroll_timeout</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_timeout</span> <span class="o">/</span> <span class="mi">1000</span>
-                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_x</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_distance</span>
-            <span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_enable_scroll</span> <span class="o">=</span> <span class="kc">False</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_cancel_update_selection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_touch_down</span><span class="p">)</span>
-
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enable_scroll</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">cancel_long_touch_event</span><span class="p">()</span>
-                <span class="n">minimum_width</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_row_width</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span>
-                                 <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-                <span class="n">max_scroll_x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">minimum_width</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">dx</span><span class="p">),</span>
-                                    <span class="n">max_scroll_x</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update_graphics</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_position_handles</span><span class="p">()</span>
-                <span class="k">return</span> <span class="kc">True</span>
+            <span class="n">minimum_width</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_get_row_width</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">max_scroll_x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">minimum_width</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span>
+                <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">dx</span><span class="p">),</span>
+                <span class="n">max_scroll_x</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update_graphics</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_position_handles</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">_handle_pressed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_hide_cut_copy_paste</span><span class="p">()</span>
