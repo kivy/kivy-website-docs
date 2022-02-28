@@ -866,8 +866,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_annotations</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_annotations_labels</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">VideoPlayer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_load_thumbnail</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_load_annotations</span><span class="p">()</span>
+        <span class="n">update_thumbnail</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_thumbnail</span>
+        <span class="n">update_annotations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_annotations</span>
+        <span class="n">fbind</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;thumbnail&#39;</span><span class="p">,</span> <span class="n">update_thumbnail</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;annotations&#39;</span><span class="p">,</span> <span class="n">update_annotations</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_video_load</span><span class="p">()</span>
@@ -879,15 +882,36 @@
                                                            <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">ev</span><span class="p">()</span>
 
+    <span class="k">def</span> <span class="nf">_try_load_default_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">thumbnail</span> <span class="o">=</span> <span class="n">filename</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;.png&#39;</span>
+            <span class="k">if</span> <span class="n">exists</span><span class="p">(</span><span class="n">thumbnail</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_load_thumbnail</span><span class="p">(</span><span class="n">thumbnail</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_try_load_default_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">annotations</span> <span class="o">=</span> <span class="n">filename</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;.jsa&#39;</span>
+            <span class="k">if</span> <span class="n">exists</span><span class="p">(</span><span class="n">annotations</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_load_annotations</span><span class="p">(</span><span class="n">annotations</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">on_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="c1"># we got a value, try to see if we have an image for it</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_load_thumbnail</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_load_annotations</span><span class="p">()</span>
+        <span class="c1"># By default, VideoPlayer should look for thumbnail and annotations</span>
+        <span class="c1"># with the same filename (except extension) of the source (video) file.</span>
+        <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_try_load_default_thumbnail</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_try_load_default_annotations</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_video</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_video</span><span class="o">.</span><span class="n">unload</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_video</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_video_load</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_update_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_load_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">thumbnail</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_update_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_load_annotations</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">annotations</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">on_image_overlay_play</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_image</span><span class="o">.</span><span class="n">image_overlay_play</span> <span class="o">=</span> <span class="n">value</span>
@@ -895,35 +919,25 @@
     <span class="k">def</span> <span class="nf">on_image_loading</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_image</span><span class="o">.</span><span class="n">image_loading</span> <span class="o">=</span> <span class="n">value</span>
 
-    <span class="k">def</span> <span class="nf">_load_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_load_thumbnail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">thumbnail</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">clear_widgets</span><span class="p">()</span>
-        <span class="c1"># get the source, remove extension, and use png</span>
-        <span class="n">thumbnail</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">thumbnail</span><span class="p">:</span>
-            <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">thumbnail</span> <span class="o">=</span> <span class="n">filename</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;.png&#39;</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">thumbnail</span><span class="p">):</span>
-                <span class="n">thumbnail</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_image</span> <span class="o">=</span> <span class="n">VideoPlayerPreview</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">thumbnail</span><span class="p">,</span> <span class="n">video</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_image</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">thumbnail</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_image</span> <span class="o">=</span> <span class="n">VideoPlayerPreview</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">thumbnail</span><span class="p">,</span> <span class="n">video</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_image</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_load_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_load_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">annotations</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_annotations_labels</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">annotations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotations</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">annotations</span><span class="p">:</span>
-            <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">annotations</span> <span class="o">=</span> <span class="n">filename</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;.jsa&#39;</span>
-        <span class="k">if</span> <span class="n">exists</span><span class="p">(</span><span class="n">annotations</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">annotations</span><span class="p">:</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">annotations</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_annotations</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_annotations</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_annotations</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_annotations_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                    <span class="n">VideoPlayerAnnotation</span><span class="p">(</span><span class="n">annotation</span><span class="o">=</span><span class="n">ann</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_annotations</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_annotations</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_annotations_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="n">VideoPlayerAnnotation</span><span class="p">(</span><span class="n">annotation</span><span class="o">=</span><span class="n">ann</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">on_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_video</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -1097,7 +1111,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Feb 26, 2022.
+      Last updated on Feb 28, 2022.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
 </div>
 -->
