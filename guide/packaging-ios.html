@@ -4,55 +4,85 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="twitter:site" content="@kivyframework">
+    <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
     <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Create a package for IOS &mdash; Kivy 2.0.0 documentation</title>
-    <link href='//fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="../_static/fresh.css" type="text/css" />
+    <title>Create a package for iOS &mdash; Kivy 2.1.0 documentation</title>
+    <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '2.0.0',
-        COLLAPSE_MODINDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-
-      };
-    </script>
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../_static/jquery.js"></script>
-    <script type="text/javascript" src="../_static/underscore.js"></script>
-    <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="../_static/jquery-effects-core-and-slide.js"></script>
-    <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
-    <script type="text/javascript" src="../_static/kivy.js"></script>
+    <link rel="stylesheet" href="../_static/fresh.css" type="text/css" />
+         
+          <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script> 
+            <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script> 
+            <script src="../_static/jquery.js"></script> 
+            <script src="../_static/underscore.js"></script> 
+            <script src="../_static/doctools.js"></script> 
+        
+        <script>
+            const currTheme = localStorage.getItem("theme");
+            if(currTheme){
+                document.documentElement.className = currTheme;
+            } else if(window.matchMedia){
+                document.documentElement.className = window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark": "light";
+            } else { // neither localStorage or window.matchMedia exists
+                document.documentElement.className = "light"; //todo should dark theme be the fallback value instead ?
+            }
+        </script>
+        <script type="text/javascript" src="../_static/jquery-effects-core-and-slide.js"></script>
+        <script type="text/javascript" src="../_static/jquery.cookie.js"></script>
+        <script type="text/javascript" src="../_static/kivy.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="Kivy 2.0.0 documentation" href="../index.html" />
+    <link rel="top" title="Kivy 2.1.0 documentation" href="../index.html" />
     <link rel="up" title="Packaging your application" href="packaging.html" />
-    <link rel="next" title="IOS Prerequisites" href="packaging-ios-prerequisites.html" />
-    <link rel="prev" title="Creating packages for OS X" href="packaging-osx.html" /> 
+    <link rel="next" title="Package licensing" href="licensing.html" />
+    <link rel="prev" title="iOS Prerequisites" href="packaging-ios-prerequisites.html" /> 
   </head>
   <body>
 
     <div id="topbar">
         <div id="topwrapper">
-        <div id="toplogo">
-            <a href="http://kivy.org/">
-                <img src="../_static/logo-kivy.png" alt="Kivy" height="50"/>
-            </a>
-        </div>
-        <div id="topmenu">
-            <ul class="navigation">
-                <li><a class="nav-guides" href="../gettingstarted/intro.html">Guides</a></li>
-                <li><a class="nav-garden" href="http://kivy-garden.github.io/">Garden</a></li>
-                <li><a class="nav-api" href="../api-kivy.html">API Reference</a></li>
-                <li><a class="nav-pdf" href="https://media.readthedocs.org/pdf/kivy/latest/kivy.pdf">PDF</a></li>
-                <li><a class="nav-wiki" href="http://wiki.kivy.org">Wiki</a></li>
-            </ul>
-        </div>
+          <div id="toplogo">
+              <a href="https://kivy.org/">
+                  <img src="../_static/logo-kivy.png" alt="Kivy"/>
+              </a>
+          </div>
+          <div id="topmenu">
+              <ul class="navigation">
+                  <li><a class="nav-guides" href="../gettingstarted/intro.html">Guides</a></li>
+                  <li><a class="nav-garden" href="http://kivy-garden.github.io/">Garden</a></li>
+                  <li><a class="nav-api" href="../api-kivy.html">API Reference</a></li>
+                  <li><a class="nav-pdf" href="https://media.readthedocs.org/pdf/kivy/latest/kivy.pdf">PDF</a></li>
+                  <li><a class="nav-wiki" href="http://wiki.kivy.org">Wiki</a></li>
+                  <li id="li_themeToggleSwitch">
+                        <button id="themeToggleSwitch" type="button">
+                            <span class="vt-switch-check">
+                                <span class="vt-switch-icon">
+                                    <!--[-->
+                                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" class="sun">
+                                        <path d="M12,18c-3.3,0-6-2.7-6-6s2.7-6,6-6s6,2.7,6,6S15.3,18,12,18zM12,8c-2.2,0-4,1.8-4,4c0,2.2,1.8,4,4,4c2.2,0,4-1.8,4-4C16,9.8,14.2,8,12,8z"></path>
+                                        <path d="M12,4c-0.6,0-1-0.4-1-1V1c0-0.6,0.4-1,1-1s1,0.4,1,1v2C13,3.6,12.6,4,12,4z"></path>
+                                        <path d="M12,24c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1s1,0.4,1,1v2C13,23.6,12.6,24,12,24z"></path>
+                                        <path d="M5.6,6.6c-0.3,0-0.5-0.1-0.7-0.3L3.5,4.9c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l1.4,1.4c0.4,0.4,0.4,1,0,1.4C6.2,6.5,5.9,6.6,5.6,6.6z"></path>
+                                        <path d="M19.8,20.8c-0.3,0-0.5-0.1-0.7-0.3l-1.4-1.4c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l1.4,1.4c0.4,0.4,0.4,1,0,1.4C20.3,20.7,20,20.8,19.8,20.8z"></path>
+                                        <path d="M3,13H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h2c0.6,0,1,0.4,1,1S3.6,13,3,13z"></path>
+                                        <path d="M23,13h-2c-0.6,0-1-0.4-1-1s0.4-1,1-1h2c0.6,0,1,0.4,1,1S23.6,13,23,13z"></path>
+                                        <path d="M4.2,20.8c-0.3,0-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.4l1.4-1.4c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-1.4,1.4C4.7,20.7,4.5,20.8,4.2,20.8z"></path>
+                                        <path d="M18.4,6.6c-0.3,0-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.4l1.4-1.4c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-1.4,1.4C18.9,6.5,18.6,6.6,18.4,6.6z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" class="moon">
+                                        <path d="M12.1,22c-0.3,0-0.6,0-0.9,0c-5.5-0.5-9.5-5.4-9-10.9c0.4-4.8,4.2-8.6,9-9c0.4,0,0.8,0.2,1,0.5c0.2,0.3,0.2,0.8-0.1,1.1c-2,2.7-1.4,6.4,1.3,8.4c2.1,1.6,5,1.6,7.1,0c0.3-0.2,0.7-0.3,1.1-0.1c0.3,0.2,0.5,0.6,0.5,1c-0.2,2.7-1.5,5.1-3.6,6.8C16.6,21.2,14.4,22,12.1,22zM9.3,4.4c-2.9,1-5,3.6-5.2,6.8c-0.4,4.4,2.8,8.3,7.2,8.7c2.1,0.2,4.2-0.4,5.8-1.8c1.1-0.9,1.9-2.1,2.4-3.4c-2.5,0.9-5.3,0.5-7.5-1.1C9.2,11.4,8.1,7.7,9.3,4.4z"></path>
+                                    </svg>
+                                    <!--]-->
+                                </span>
+                            </span>
+                        </button>
+
+                  </li>
+              </ul>
+          </div>
         </div>
     </div>
 <div id="contentall">
@@ -62,15 +92,15 @@
             <select id="version_selector"></select>
             <h3>Quick search</h3>
             <form class="search" action="../search.html" method="get">
-                &nbsp;
                 <input type="hidden" name="check_keywords" value="yes" />
                 <input type="hidden" name="area" value="default" />
                 <input type="text" class="text" name="q" />
+                <button type="submit">Go</button>
             </form>
           <!--
-          <h3><a href="../index.html">Create a package for IOS</a></h3>
+          <h3><a href="../index.html">Create a package for iOS</a></h3>
           <ul>
-<li><a class="reference internal" href="#">Create a package for IOS</a><ul>
+<li><a class="reference internal" href="#">Create a package for iOS</a><ul>
 <li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
 <li><a class="reference internal" href="#compile-the-distribution">Compile the distribution</a></li>
 <li><a class="reference internal" href="#create-an-xcode-project">Create an Xcode project</a></li>
@@ -80,7 +110,7 @@
 <li><a class="reference internal" href="#faq">FAQ</a><ul>
 <li><a class="reference internal" href="#application-quit-abnormally">Application quit abnormally!</a></li>
 <li><a class="reference internal" href="#how-can-apple-accept-a-python-app">How can Apple accept a python app?</a></li>
-<li><a class="reference internal" href="#have-you-already-submited-a-kivy-application-to-the-app-store">Have you already submited a Kivy application to the App store?</a></li>
+<li><a class="reference internal" href="#have-you-already-submitted-a-kivy-application-to-the-app-store">Have you already submitted a Kivy application to the App store?</a></li>
 </ul>
 </li>
 </ul>
@@ -90,21 +120,6 @@
           <h3><a href="../index.html">Table Of Contents</a></h3>
           -->
           <ul>
-<li class="toctree-l1"><a class="reference internal" href="../gettingstarted/index.html">Getting Started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/intro.html">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/installation.html">Installing Kivy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/first_app.html">A first App</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/properties.html">Properties</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/rules.html">Kv Design Language</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/events.html">Events</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/framework.html">Non-widget stuff</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/layouts.html">Layouts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/drawing.html">Drawing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/packaging.html">Packaging</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/examples.html">Examples</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/diving.html">Diving in</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Gallery of Examples</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../examples/gallery.html">Gallery</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../examples/gen__3Drendering__main__py.html">3D Rotating Monkey Head</a></li>
@@ -149,7 +164,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../gettingstarted/layouts.html">Layouts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../gettingstarted/drawing.html">Drawing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../gettingstarted/packaging.html">Packaging</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../gettingstarted/examples.html">Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../gettingstarted/diving.html">Diving in</a></li>
 </ul>
 </li>
@@ -183,6 +197,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api-index.html">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.html">Kivy framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-kivy._metrics.html">Low level Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.app.html">Application</a></li>
@@ -212,6 +227,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.effects.opacityscroll.html">Opacity scroll effect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.effects.scroll.html">Scroll effect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.event.html">Event dispatcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-kivy.eventmanager.html">Event Manager</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.factory.html">Factory object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.garden.html">Garden</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.geometry.html">Geometry utilities</a></li>
@@ -368,19 +384,19 @@
           <!--
           <h3>Related Topics</h3>
           <ul>
-              <li>Previous: <a href="packaging-osx.html" title="previous chapter">Creating packages for OS X</a></li>
-              <li>Next: <a href="packaging-ios-prerequisites.html" title="next chapter">IOS Prerequisites</a></li>
+              <li>Previous: <a href="packaging-ios-prerequisites.html" title="previous chapter">iOS Prerequisites</a></li>
+              <li>Next: <a href="licensing.html" title="next chapter">Package licensing</a></li>
           </ul>
           -->
         </div>
       </div>
-    <div id="content">
+  <div id="content">
     <div class="wrapper">
       <div class="documentwrapper">
         <div class="bodywrapper">
           <div class="body">
             <div class="toc"><h2>Table Of Contents</h2><ul>
-<li><a class="reference internal" href="#">Create a package for IOS</a><ul>
+<li><a class="reference internal" href="#">Create a package for iOS</a><ul>
 <li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
 <li><a class="reference internal" href="#compile-the-distribution">Compile the distribution</a></li>
 <li><a class="reference internal" href="#create-an-xcode-project">Create an Xcode project</a></li>
@@ -390,7 +406,7 @@
 <li><a class="reference internal" href="#faq">FAQ</a><ul>
 <li><a class="reference internal" href="#application-quit-abnormally">Application quit abnormally!</a></li>
 <li><a class="reference internal" href="#how-can-apple-accept-a-python-app">How can Apple accept a python app?</a></li>
-<li><a class="reference internal" href="#have-you-already-submited-a-kivy-application-to-the-app-store">Have you already submited a Kivy application to the App store?</a></li>
+<li><a class="reference internal" href="#have-you-already-submitted-a-kivy-application-to-the-app-store">Have you already submitted a Kivy application to the App store?</a></li>
 </ul>
 </li>
 </ul>
@@ -399,14 +415,10 @@
 </div>
             
   <section id="create-a-package-for-ios">
-<span id="packaging-ios"></span><h1>Create a package for IOS<a class="headerlink" href="#create-a-package-for-ios" title="Permalink to this headline">¶</a></h1>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Currently, kivy-iOS builds packages with Python 3.7.</p>
-</div>
-<p>The overall process for creating a package for IOS can be explained in 4 steps:</p>
+<span id="packaging-ios"></span><h1>Create a package for iOS<a class="headerlink" href="#create-a-package-for-ios" title="Permalink to this headline">¶</a></h1>
+<p>The overall process for creating a package for iOS can be explained in 4 steps:</p>
 <ol class="arabic simple">
-<li><p><a class="reference internal" href="#compile-the-distribution"><span class="std std-ref">Compile the distribution</span></a> (python + modules for IOS)</p></li>
+<li><p><a class="reference internal" href="#compile-the-distribution"><span class="std std-ref">Compile the distribution</span></a> (python + modules for iOS)</p></li>
 <li><p><a class="reference internal" href="#create-an-xcode-project"><span class="std std-ref">Create an Xcode project</span></a> (and link your source code)</p></li>
 <li><p><a class="reference internal" href="#update-the-xcode-project"><span class="std std-ref">Update the Xcode project</span></a></p></li>
 <li><p><a class="reference internal" href="#customize"><span class="std std-ref">Customize the Xcode project</span></a></p></li>
@@ -414,14 +426,12 @@
 <section id="prerequisites">
 <h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
 <p>You need to install some dependencies, like Cython, autotools, etc. We
-encourage you to use <a class="reference external" href="http://mxcl.github.com/homebrew/">Homebrew</a> to install
+encourage you to use <a class="reference external" href="https://brew.sh">Homebrew</a> to install
 those dependencies:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ brew install autoconf automake libtool pkg-config
+<pre class="literal-block">$ brew install autoconf automake libtool pkg-config
 $ brew link libtool
-$ pip install |cython_install|
-</pre></div>
-</div>
-<p>For more detail, see <a class="reference internal" href="packaging-ios-prerequisites.html#packaging-ios-prerequisites"><span class="std std-ref">IOS Prerequisites</span></a>.
+$ pip install Cython==0.29.28</pre>
+<p>For more detail, see <a class="reference internal" href="packaging-ios-prerequisites.html#packaging-ios-prerequisites"><span class="std std-ref">iOS Prerequisites</span></a>.
 Just ensure that everything is ok before starting the second step!</p>
 </section>
 <section id="compile-the-distribution">
@@ -498,13 +508,10 @@ in future versions.</p>
 <span id="ios-packaging-faq"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
 <section id="application-quit-abnormally">
 <h3>Application quit abnormally!<a class="headerlink" href="#application-quit-abnormally" title="Permalink to this headline">¶</a></h3>
-<p>By default, all the print statements to the console and files are ignored. If
-you have an issue when running your application, you can activate the log by
-commenting out this line in <cite>main.m</cite>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">putenv</span><span class="p">(</span><span class="s2">&quot;KIVY_NO_CONSOLELOG=1&quot;</span><span class="p">);</span>
-</pre></div>
-</div>
-<p>Then you should see all the Kivy logging on the Xcode console.</p>
+<p>In debug mode, all the print statements are sent to the Xcode console.
+Looking and grep’ing these logs is highly encouraged. You’ll probably find
+that you missed to build/install a required dependency. Not your case?
+Feel free to ask on our Discord <code class="docutils literal notranslate"><span class="pre">support</span></code> channels.</p>
 </section>
 <section id="how-can-apple-accept-a-python-app">
 <h3>How can Apple accept a python app?<a class="headerlink" href="#how-can-apple-accept-a-python-app" title="Permalink to this headline">¶</a></h3>
@@ -512,15 +519,9 @@ commenting out this line in <cite>main.m</cite>:</p>
 called libpython. This means all binary modules are loaded beforehand, so
 nothing is dynamically loaded.</p>
 </section>
-<section id="have-you-already-submited-a-kivy-application-to-the-app-store">
-<h3>Have you already submited a Kivy application to the App store?<a class="headerlink" href="#have-you-already-submited-a-kivy-application-to-the-app-store" title="Permalink to this headline">¶</a></h3>
-<p>Yes, check:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="http://itunes.apple.com/us/app/deflectouch/id505729681">Defletouch on iTunes</a>,</p></li>
-<li><p><a class="reference external" href="http://itunes.apple.com/us/app/processcraft/id526377075">ProcessCraft on iTunes</a></p></li>
-</ul>
-<p>For a more complete list, visit the
-<a class="reference external" href="https://github.com/kivy/kivy/wiki/List-of-Kivy-Projects">Kivy wiki</a>.</p>
+<section id="have-you-already-submitted-a-kivy-application-to-the-app-store">
+<h3>Have you already submitted a Kivy application to the App store?<a class="headerlink" href="#have-you-already-submitted-a-kivy-application-to-the-app-store" title="Permalink to this headline">¶</a></h3>
+<p>Yes, absolutely. <a class="reference external" href="https://github.com/kivy/kivy/wiki/List-of-Kivy-Projects#kivy-apps-in-the-apple-app-store">Kivy Apps in the Apple App Store</a>.</p>
 </section>
 </section>
 </section>
@@ -530,10 +531,10 @@ nothing is dynamically loaded.</p>
             <table>
                 <tr>
                     <td class="leftlink">
-                  <a href="packaging-osx.html" title="previous chapter">&laquo; Creating packages for OS X</a></li>
+                  <a href="packaging-ios-prerequisites.html" title="previous chapter">&laquo; iOS Prerequisites</a></li>
                   </td>
                   <td class="rightlink">
-                  <a href="packaging-ios-prerequisites.html" title="next chapter">IOS Prerequisites &raquo;</a>
+                  <a href="licensing.html" title="next chapter">Package licensing &raquo;</a>
                       </td>
                   </tr>
               </table>
@@ -541,26 +542,11 @@ nothing is dynamically loaded.</p>
           </div>
         </div>
       </div>
-      </div>
-      <div class="clearer"></div>
     </div>
-    </div>
+    <div class="clearer"></div>
+  </div>
+</div>
 <!-- Piwik -->
-<script>
-  var _paq = _paq || [];
-  _paq.push(['setDomains', '*.kivy.org']);
-  _paq.push(['setCookieDomain', '*.kivy.org']);
-  _paq.push(['enableHeartBeatTimer', 60]);
-  _paq.push(['trackPageView']);
-  _paq.push(['enableLinkTracking']);
-  (function() {
-    var u="//pw.kivy.org/";
-    _paq.push(['setTrackerUrl', u+'pw.php']);
-    _paq.push(['setSiteId', 4]);
-    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'pw.js'; s.parentNode.insertBefore(g,s);
-  })();
-</script>
 <script>
   var selector = $("#version_selector");
 
@@ -583,13 +569,12 @@ nothing is dynamically loaded.</p>
     });
   });
 </script>
-<noscript><p><img src="//pw.kivy.org/pw.php?idsite=4&rec=1" style="border:0;" alt="" /></p></noscript>
 <!-- End Piwik Tracking Code -->
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Nov 10, 2021.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.2.0.
+      Last updated on Mar 06, 2022.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
 </div>
 -->
   </body>
