@@ -17,6 +17,7 @@
             <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script> 
             <script src="../../../_static/jquery.js"></script> 
             <script src="../../../_static/underscore.js"></script> 
+            <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script> 
             <script src="../../../_static/doctools.js"></script> 
         
         <script>
@@ -542,7 +543,7 @@
 <span class="kn">from</span> <span class="nn">kivy.graphics.texture</span> <span class="kn">import</span> <span class="n">Texture</span>
 
 <span class="kn">from</span> <span class="nn">kivy.uix.widget</span> <span class="kn">import</span> <span class="n">Widget</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.bubble</span> <span class="kn">import</span> <span class="n">Bubble</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.bubble</span> <span class="kn">import</span> <span class="n">Bubble</span><span class="p">,</span> <span class="n">BubbleContent</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.behaviors</span> <span class="kn">import</span> <span class="n">ButtonBehavior</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.image</span> <span class="kn">import</span> <span class="n">Image</span>
 
@@ -684,6 +685,8 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_parent_ev</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_interval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_check_parent</span><span class="p">,</span> <span class="mf">.5</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">textinput</span><span class="o">.</span><span class="n">get_window_matrix</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bubble_content</span> <span class="o">=</span> <span class="n">BubbleContent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bubble_content</span><span class="p">)</span>
 
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">before</span><span class="p">:</span>
             <span class="n">Callback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_transform</span><span class="p">)</span>
@@ -750,7 +753,7 @@
         <span class="n">mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span>
 
         <span class="k">if</span> <span class="n">parent</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">clear_widgets</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bubble_content</span><span class="o">.</span><span class="n">clear_widgets</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;paste&#39;</span><span class="p">:</span>
                 <span class="c1"># show only paste on long touch</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">but_selectall</span><span class="o">.</span><span class="n">opacity</span> <span class="o">=</span> <span class="mi">1</span>
@@ -765,7 +768,7 @@
                 <span class="n">widget_list</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">but_cut</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">but_copy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">but_paste</span><span class="p">)</span>
 
             <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="n">widget_list</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">bubble_content</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">do</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
         <span class="n">textinput</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">textinput</span>
@@ -4409,8 +4412,8 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on May 25, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+      Last updated on May 30, 2022.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 5.0.0.
 </div>
 -->
   </body>

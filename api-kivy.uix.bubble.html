@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
-    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Bubble &mdash; Kivy 2.2.0.dev0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
@@ -18,6 +18,7 @@
             <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script> 
             <script src="_static/jquery.js"></script> 
             <script src="_static/underscore.js"></script> 
+            <script src="_static/_sphinx_javascript_frameworks_compat.js"></script> 
             <script src="_static/doctools.js"></script> 
         
         <script>
@@ -101,8 +102,12 @@
           <h3><a href="index.html">Bubble</a></h3>
           <ul>
 <li><a class="reference internal" href="#">Bubble</a><ul>
+<li><a class="reference internal" href="#bubblecontent">BubbleContent</a></li>
+<li><a class="reference internal" href="#bubblebutton">BubbleButton</a><ul>
 <li><a class="reference internal" href="#simple-example">Simple example</a></li>
 <li><a class="reference internal" href="#customize-the-bubble">Customize the Bubble</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -387,25 +392,72 @@
           <div class="body">
             <div class="toc"><h2>Table Of Contents</h2><ul>
 <li><a class="reference internal" href="#">Bubble</a><ul>
+<li><a class="reference internal" href="#bubblecontent">BubbleContent</a></li>
+<li><a class="reference internal" href="#bubblebutton">BubbleButton</a><ul>
 <li><a class="reference internal" href="#simple-example">Simple example</a></li>
 <li><a class="reference internal" href="#customize-the-bubble">Customize the Bubble</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
             
   <section id="module-kivy.uix.bubble">
-<span id="bubble"></span><h1>Bubble<a class="headerlink" href="#module-kivy.uix.bubble" title="Permalink to this headline">¶</a></h1>
+<span id="bubble"></span><h1>Bubble<a class="headerlink" href="#module-kivy.uix.bubble" title="Permalink to this heading">¶</a></h1>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.1.0.</span></p>
 </div>
 <img alt="_images/bubble.jpg" class="align-right" src="_images/bubble.jpg" />
-<p>The Bubble widget is a form of menu or a small popup where the menu options
-are stacked either vertically or horizontally.</p>
-<p>The <a class="reference internal" href="#kivy.uix.bubble.Bubble" title="kivy.uix.bubble.Bubble"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bubble</span></code></a> contains an arrow pointing in the direction you
-choose.</p>
+<p>The <a class="reference internal" href="#kivy.uix.bubble.Bubble" title="kivy.uix.bubble.Bubble"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bubble</span></code></a> widget is a form of menu or a small popup with an arrow
+arranged on one side of it’s content.</p>
+<p>The <a class="reference internal" href="#kivy.uix.bubble.Bubble" title="kivy.uix.bubble.Bubble"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bubble</span></code></a> contains an arrow attached to the content
+(e.g., <a class="reference internal" href="#kivy.uix.bubble.BubbleContent" title="kivy.uix.bubble.BubbleContent"><code class="xref py py-class docutils literal notranslate"><span class="pre">BubbleContent</span></code></a>) pointing in the direction you choose. It can
+be placed either at a predifined location or flexibly by specifying a relative
+position on the border of the widget.</p>
+<p>The <a class="reference internal" href="#kivy.uix.bubble.BubbleContent" title="kivy.uix.bubble.BubbleContent"><code class="xref py py-class docutils literal notranslate"><span class="pre">BubbleContent</span></code></a> is a styled BoxLayout and is thought to be added to
+the <a class="reference internal" href="#kivy.uix.bubble.Bubble" title="kivy.uix.bubble.Bubble"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bubble</span></code></a> as a child widget. The <a class="reference internal" href="#kivy.uix.bubble.Bubble" title="kivy.uix.bubble.Bubble"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bubble</span></code></a> will then arrange
+an arrow around the content as desired. Instead of the class:<cite>BubbleContent</cite>,
+you can theoretically use any other <code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code> as well as long as it
+supports the ‘bind’ and ‘unbind’ function of the <code class="xref py py-class docutils literal notranslate"><span class="pre">EventDispatcher</span></code> and
+is compatible with Kivy to be placed inside a <code class="xref py py-class docutils literal notranslate"><span class="pre">BoxLayout</span></code>.</p>
+<p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">BubbleButton`is</span> <span class="pre">a</span> <span class="pre">styled</span> <span class="pre">Button.</span> <span class="pre">It</span> <span class="pre">suits</span> <span class="pre">to</span> <span class="pre">the</span> <span class="pre">style</span> <span class="pre">of</span>
+<span class="pre">:class:`Bubble</span></code> and <a class="reference internal" href="#kivy.uix.bubble.BubbleContent" title="kivy.uix.bubble.BubbleContent"><code class="xref py py-class docutils literal notranslate"><span class="pre">BubbleContent</span></code></a>. Feel free to place other Widgets
+inside the ‘content’ of the <a class="reference internal" href="#kivy.uix.bubble.Bubble" title="kivy.uix.bubble.Bubble"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bubble</span></code></a>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.2.0.</span></p>
+</div>
+<p>The properties <code class="xref py py-attr docutils literal notranslate"><span class="pre">background_image</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">background_color</span></code>,
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">border</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">border_auto_scale</span></code> were removed from <a class="reference internal" href="#kivy.uix.bubble.Bubble" title="kivy.uix.bubble.Bubble"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bubble</span></code></a>.
+These properties had only been used by the content widget that now uses it’s
+own properties instead. The color of the arrow is now changed with
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">arrow_color</span></code> instead of <code class="xref py py-attr docutils literal notranslate"><span class="pre">background_color</span></code>.
+These changes makes the <a class="reference internal" href="#kivy.uix.bubble.Bubble" title="kivy.uix.bubble.Bubble"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bubble</span></code></a> transparent to use with other layouts
+as content without any side-effects due to property inheritance.</p>
+<p>The property <code class="xref py py-attr docutils literal notranslate"><span class="pre">flex_arrow_pos</span></code> has been added to allow further
+customization of the arrow positioning.</p>
+<p>The properties <code class="xref py py-attr docutils literal notranslate"><span class="pre">arrow_margin</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">arrow_margin_x</span></code>,
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">arrow_margin_y</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">content_size</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">content_width</span></code> and
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">content_height</span></code> have been added to ease proper sizing of a
+<a class="reference internal" href="#kivy.uix.bubble.Bubble" title="kivy.uix.bubble.Bubble"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bubble</span></code></a> e.g., based on it’s content size.</p>
+<section id="bubblecontent">
+<h2>BubbleContent<a class="headerlink" href="#bubblecontent" title="Permalink to this heading">¶</a></h2>
+<p>The <a class="reference internal" href="#kivy.uix.bubble.BubbleContent" title="kivy.uix.bubble.BubbleContent"><code class="xref py py-class docutils literal notranslate"><span class="pre">BubbleContent</span></code></a> is a styled BoxLayout that can be used to
+add e.g., <code class="xref py py-class docutils literal notranslate"><span class="pre">BubbleButtons</span></code> as menu items.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.2.0.</span></p>
+</div>
+<p>The properties <code class="xref py py-attr docutils literal notranslate"><span class="pre">background_image</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">background_color</span></code>,
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">border</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">border_auto_scale</span></code> were added to the
+<a class="reference internal" href="#kivy.uix.bubble.BubbleContent" title="kivy.uix.bubble.BubbleContent"><code class="xref py py-class docutils literal notranslate"><span class="pre">BubbleContent</span></code></a>. The <a class="reference internal" href="#kivy.uix.bubble.BubbleContent" title="kivy.uix.bubble.BubbleContent"><code class="xref py py-class docutils literal notranslate"><span class="pre">BubbleContent</span></code></a> does no longer rely on these
+properties being present in the parent class.</p>
+</section>
+<section id="bubblebutton">
+<h2>BubbleButton<a class="headerlink" href="#bubblebutton" title="Permalink to this heading">¶</a></h2>
+<p>The <a class="reference internal" href="#kivy.uix.bubble.BubbleButton" title="kivy.uix.bubble.BubbleButton"><code class="xref py py-class docutils literal notranslate"><span class="pre">BubbleButton</span></code></a> is a styled <code class="xref py py-class docutils literal notranslate"><span class="pre">Button</span></code> that can be used to be
+added to the <a class="reference internal" href="#kivy.uix.bubble.BubbleContent" title="kivy.uix.bubble.BubbleContent"><code class="xref py py-class docutils literal notranslate"><span class="pre">BubbleContent</span></code></a>.</p>
 <section id="simple-example">
-<h2>Simple example<a class="headerlink" href="#simple-example" title="Permalink to this headline">¶</a></h2>
+<h3>Simple example<a class="headerlink" href="#simple-example" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Bubble</span>
 <span class="sd">======</span>
@@ -424,12 +476,16 @@ choose.</p>
 <span class="s1">    size_hint: (None, None)</span>
 <span class="s1">    size: (160, 120)</span>
 <span class="s1">    pos_hint: {&#39;center_x&#39;: .5, &#39;y&#39;: .6}</span>
-<span class="s1">    BubbleButton:</span>
-<span class="s1">        text: &#39;Cut&#39;</span>
-<span class="s1">    BubbleButton:</span>
-<span class="s1">        text: &#39;Copy&#39;</span>
-<span class="s1">    BubbleButton:</span>
-<span class="s1">        text: &#39;Paste&#39;</span>
+<span class="s1">    BubbleContent:</span>
+<span class="s1">        BubbleButton:</span>
+<span class="s1">            text: &#39;Cut&#39;</span>
+<span class="s1">            size_hint_y: 1</span>
+<span class="s1">        BubbleButton:</span>
+<span class="s1">            text: &#39;Copy&#39;</span>
+<span class="s1">            size_hint_y: 1</span>
+<span class="s1">        BubbleButton:</span>
+<span class="s1">            text: &#39;Paste&#39;</span>
+<span class="s1">            size_hint_y: 1</span>
 <span class="s1">&#39;&#39;&#39;</span><span class="p">)</span>
 
 
@@ -469,46 +525,36 @@ choose.</p>
 </div>
 </section>
 <section id="customize-the-bubble">
-<h2>Customize the Bubble<a class="headerlink" href="#customize-the-bubble" title="Permalink to this headline">¶</a></h2>
+<h3>Customize the Bubble<a class="headerlink" href="#customize-the-bubble" title="Permalink to this heading">¶</a></h3>
 <p>You can choose the direction in which the arrow points:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Bubble</span><span class="p">(</span><span class="n">arrow_pos</span><span class="o">=</span><span class="s1">&#39;top_mid&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>The widgets added to the Bubble are ordered horizontally by default, like a
-Boxlayout. You can change that by:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">orientation</span> <span class="o">=</span> <span class="s1">&#39;vertical&#39;</span>
-</pre></div>
-</div>
-<p>To add items to the bubble:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bubble</span> <span class="o">=</span> <span class="n">Bubble</span><span class="p">(</span><span class="n">orientation</span> <span class="o">=</span> <span class="s1">&#39;vertical&#39;</span><span class="p">)</span>
-<span class="n">bubble</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">your_widget_instance</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>To remove items:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bubble</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
 <span class="ow">or</span>
-<span class="n">bubble</span><span class="o">.</span><span class="n">clear_widgets</span><span class="p">()</span>
+<span class="n">Bubble</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span> <span class="n">flex_arrow_pos</span><span class="o">=</span><span class="p">(</span><span class="mi">175</span><span class="p">,</span> <span class="mi">40</span><span class="p">))</span>
+
+<span class="n">Similarly</span><span class="p">,</span> <span class="n">the</span> <span class="n">corresponding</span> <span class="n">properties</span> <span class="ow">in</span> <span class="n">the</span> <span class="s1">&#39;.kv&#39;</span> <span class="n">language</span> <span class="n">can</span> <span class="n">be</span> <span class="n">used</span>
+<span class="k">as</span> <span class="n">well</span><span class="o">.</span>
 </pre></div>
 </div>
-<p>To access the list of children, use content.children:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bubble</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">children</span>
+<p>You can change the appearance of the bubble:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Bubble</span><span class="p">(</span>
+    <span class="n">arrow_image</span><span class="o">=</span><span class="s1">&#39;/path/to/arrow/image&#39;</span><span class="p">,</span>
+    <span class="n">arrow_color</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">.5</span><span class="p">)),</span>
+<span class="p">)</span>
+<span class="n">BubbleContent</span><span class="p">(</span>
+    <span class="n">background_image</span><span class="o">=</span><span class="s1">&#39;/path/to/background/image&#39;</span><span class="p">,</span>
+    <span class="n">background_color</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">.5</span><span class="p">),</span>  <span class="c1"># 50% translucent red</span>
+    <span class="n">border</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="n">Similarly</span><span class="p">,</span> <span class="n">the</span> <span class="n">corresponding</span> <span class="n">properties</span> <span class="ow">in</span> <span class="n">the</span> <span class="s1">&#39;.kv&#39;</span> <span class="n">language</span> <span class="n">can</span> <span class="n">be</span> <span class="n">used</span>
+<span class="k">as</span> <span class="n">well</span><span class="o">.</span>
 </pre></div>
 </div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>This is important! Do not use bubble.children</p>
-</div>
-<p>To change the appearance of the bubble:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bubble</span><span class="o">.</span><span class="n">background_color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">.5</span><span class="p">)</span> <span class="c1">#50% translucent red</span>
-<span class="n">bubble</span><span class="o">.</span><span class="n">border</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-<span class="n">background_image</span> <span class="o">=</span> <span class="s1">&#39;path/to/background/image&#39;</span>
-<span class="n">arrow_image</span> <span class="o">=</span> <span class="s1">&#39;path/to/arrow/image&#39;</span>
-</pre></div>
-</div>
+<hr class="docutils" />
 <dl class="py class">
 <dt class="sig sig-object py" id="kivy.uix.bubble.Bubble">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.uix.bubble.</span></span><span class="sig-name descname"><span class="pre">Bubble</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/uix/bubble.html#Bubble"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.uix.bubble.Bubble" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="api-kivy.uix.gridlayout.html#kivy.uix.gridlayout.GridLayout" title="kivy.uix.gridlayout.GridLayout"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.gridlayout.GridLayout</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="api-kivy.uix.boxlayout.html#kivy.uix.boxlayout.BoxLayout" title="kivy.uix.boxlayout.BoxLayout"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.boxlayout.BoxLayout</span></code></a></p>
 <p>Bubble class. See module documentation for more information.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.uix.bubble.Bubble.add_widget">
@@ -516,7 +562,7 @@ Boxlayout. You can change that by:</p>
 <dd><p>Add a new widget as a child of this widget.</p>
 <blockquote>
 <div><dl class="field-list">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
 <dt><cite>widget</cite>: <code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code></dt><dd><p>Widget to add to our list of children.</p>
 </dd>
@@ -550,6 +596,18 @@ None for the default canvas.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.uix.bubble.Bubble.arrow_color">
+<span class="sig-name descname"><span class="pre">arrow_color</span></span><a class="headerlink" href="#kivy.uix.bubble.Bubble.arrow_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arrow color, in the format (r, g, b, a). To use it you have to set
+<a class="reference internal" href="#kivy.uix.bubble.Bubble.arrow_image" title="kivy.uix.bubble.Bubble.arrow_image"><code class="xref py py-attr docutils literal notranslate"><span class="pre">arrow_image</span></code></a> first.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.2.0.</span></p>
+</div>
+<p><a class="reference internal" href="#kivy.uix.bubble.Bubble.arrow_color" title="kivy.uix.bubble.Bubble.arrow_color"><code class="xref py py-attr docutils literal notranslate"><span class="pre">arrow_color</span></code></a> is a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.ColorProperty" title="kivy.properties.ColorProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorProperty</span></code></a> and
+defaults to [1, 1, 1, 1].</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="kivy.uix.bubble.Bubble.arrow_image">
 <span class="sig-name descname"><span class="pre">arrow_image</span></span><a class="headerlink" href="#kivy.uix.bubble.Bubble.arrow_image" title="Permalink to this definition">¶</a></dt>
 <dd><p>Image of the arrow pointing to the bubble.</p>
@@ -558,9 +616,56 @@ defaults to ‘atlas://data/images/defaulttheme/bubble_arrow’.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.uix.bubble.Bubble.arrow_margin">
+<span class="sig-name descname"><span class="pre">arrow_margin</span></span><a class="headerlink" href="#kivy.uix.bubble.Bubble.arrow_margin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Automatically computed margin that the arrow widget occupies in
+x and y direction in pixel.</p>
+<p>Check the description of <a class="reference internal" href="#kivy.uix.bubble.Bubble.arrow_margin_x" title="kivy.uix.bubble.Bubble.arrow_margin_x"><code class="xref py py-attr docutils literal notranslate"><span class="pre">arrow_margin_x</span></code></a> and <a class="reference internal" href="#kivy.uix.bubble.Bubble.arrow_margin_y" title="kivy.uix.bubble.Bubble.arrow_margin_y"><code class="xref py py-attr docutils literal notranslate"><span class="pre">arrow_margin_y</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.2.0.</span></p>
+</div>
+<p><a class="reference internal" href="#kivy.uix.bubble.Bubble.arrow_margin" title="kivy.uix.bubble.Bubble.arrow_margin"><code class="xref py py-attr docutils literal notranslate"><span class="pre">arrow_margin</span></code></a> is a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.ReferenceListProperty" title="kivy.properties.ReferenceListProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReferenceListProperty</span></code></a>
+of (<a class="reference internal" href="#kivy.uix.bubble.Bubble.arrow_margin_x" title="kivy.uix.bubble.Bubble.arrow_margin_x"><code class="xref py py-attr docutils literal notranslate"><span class="pre">arrow_margin_x</span></code></a>, <a class="reference internal" href="#kivy.uix.bubble.Bubble.arrow_margin_y" title="kivy.uix.bubble.Bubble.arrow_margin_y"><code class="xref py py-attr docutils literal notranslate"><span class="pre">arrow_margin_y</span></code></a>) properties.
+It is read only.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.uix.bubble.Bubble.arrow_margin_x">
+<span class="sig-name descname"><span class="pre">arrow_margin_x</span></span><a class="headerlink" href="#kivy.uix.bubble.Bubble.arrow_margin_x" title="Permalink to this definition">¶</a></dt>
+<dd><p>Automatically computed margin in x direction that the arrow widget
+occupies in pixel.</p>
+<p>In combination with the <a class="reference internal" href="#kivy.uix.bubble.Bubble.content_width" title="kivy.uix.bubble.Bubble.content_width"><code class="xref py py-attr docutils literal notranslate"><span class="pre">content_width</span></code></a>, this property can be used
+to determine the correct width of the Bubble to exactly enclose the
+arrow + content by adding <a class="reference internal" href="#kivy.uix.bubble.Bubble.content_width" title="kivy.uix.bubble.Bubble.content_width"><code class="xref py py-attr docutils literal notranslate"><span class="pre">content_width</span></code></a> and <a class="reference internal" href="#kivy.uix.bubble.Bubble.arrow_margin_x" title="kivy.uix.bubble.Bubble.arrow_margin_x"><code class="xref py py-attr docutils literal notranslate"><span class="pre">arrow_margin_x</span></code></a></p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.2.0.</span></p>
+</div>
+<p><a class="reference internal" href="#kivy.uix.bubble.Bubble.arrow_margin_x" title="kivy.uix.bubble.Bubble.arrow_margin_x"><code class="xref py py-attr docutils literal notranslate"><span class="pre">arrow_margin_x</span></code></a> is a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.NumericProperty" title="kivy.properties.NumericProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">NumericProperty</span></code></a> and
+represents the added margin in x direction due to the arrow widget.
+It defaults to 0 and is read only.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.uix.bubble.Bubble.arrow_margin_y">
+<span class="sig-name descname"><span class="pre">arrow_margin_y</span></span><a class="headerlink" href="#kivy.uix.bubble.Bubble.arrow_margin_y" title="Permalink to this definition">¶</a></dt>
+<dd><p>Automatically computed margin in y direction that the arrow widget
+occupies in pixel.</p>
+<p>In combination with the <a class="reference internal" href="#kivy.uix.bubble.Bubble.content_height" title="kivy.uix.bubble.Bubble.content_height"><code class="xref py py-attr docutils literal notranslate"><span class="pre">content_height</span></code></a>, this property can be used
+to determine the correct height of the Bubble to exactly enclose the
+arrow + content by adding <a class="reference internal" href="#kivy.uix.bubble.Bubble.content_height" title="kivy.uix.bubble.Bubble.content_height"><code class="xref py py-attr docutils literal notranslate"><span class="pre">content_height</span></code></a> and <a class="reference internal" href="#kivy.uix.bubble.Bubble.arrow_margin_y" title="kivy.uix.bubble.Bubble.arrow_margin_y"><code class="xref py py-attr docutils literal notranslate"><span class="pre">arrow_margin_y</span></code></a></p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.2.0.</span></p>
+</div>
+<p><a class="reference internal" href="#kivy.uix.bubble.Bubble.arrow_margin_y" title="kivy.uix.bubble.Bubble.arrow_margin_y"><code class="xref py py-attr docutils literal notranslate"><span class="pre">arrow_margin_y</span></code></a> is a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.NumericProperty" title="kivy.properties.NumericProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">NumericProperty</span></code></a> and
+represents the added margin in y direction due to the arrow widget.
+It defaults to 0 and is read only.</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="kivy.uix.bubble.Bubble.arrow_pos">
 <span class="sig-name descname"><span class="pre">arrow_pos</span></span><a class="headerlink" href="#kivy.uix.bubble.Bubble.arrow_pos" title="Permalink to this definition">¶</a></dt>
-<dd><p>Specifies the position of the arrow relative to the bubble.
+<dd><p>Specifies the position of the arrow as predefined relative position to
+the bubble.
 Can be one of: left_top, left_mid, left_bottom top_left, top_mid, top_right
 right_top, right_mid, right_bottom bottom_left, bottom_mid, bottom_right.</p>
 <p><a class="reference internal" href="#kivy.uix.bubble.Bubble.arrow_pos" title="kivy.uix.bubble.Bubble.arrow_pos"><code class="xref py py-attr docutils literal notranslate"><span class="pre">arrow_pos</span></code></a> is a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.OptionProperty" title="kivy.properties.OptionProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptionProperty</span></code></a> and
@@ -568,74 +673,65 @@ defaults to ‘bottom_mid’.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="kivy.uix.bubble.Bubble.background_color">
-<span class="sig-name descname"><span class="pre">background_color</span></span><a class="headerlink" href="#kivy.uix.bubble.Bubble.background_color" title="Permalink to this definition">¶</a></dt>
-<dd><p>Background color, in the format (r, g, b, a). To use it you have to set
-either <a class="reference internal" href="#kivy.uix.bubble.Bubble.background_image" title="kivy.uix.bubble.Bubble.background_image"><code class="xref py py-attr docutils literal notranslate"><span class="pre">background_image</span></code></a> or <a class="reference internal" href="#kivy.uix.bubble.Bubble.arrow_image" title="kivy.uix.bubble.Bubble.arrow_image"><code class="xref py py-attr docutils literal notranslate"><span class="pre">arrow_image</span></code></a> first.</p>
-<p><a class="reference internal" href="#kivy.uix.bubble.Bubble.background_color" title="kivy.uix.bubble.Bubble.background_color"><code class="xref py py-attr docutils literal notranslate"><span class="pre">background_color</span></code></a> is a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.ColorProperty" title="kivy.properties.ColorProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorProperty</span></code></a> and
-defaults to [1, 1, 1, 1].</p>
-<div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 2.0.0: </span>Changed from <a class="reference internal" href="api-kivy.properties.html#kivy.properties.ListProperty" title="kivy.properties.ListProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> to
-<a class="reference internal" href="api-kivy.properties.html#kivy.properties.ColorProperty" title="kivy.properties.ColorProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorProperty</span></code></a>.</p>
-</div>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="kivy.uix.bubble.Bubble.background_image">
-<span class="sig-name descname"><span class="pre">background_image</span></span><a class="headerlink" href="#kivy.uix.bubble.Bubble.background_image" title="Permalink to this definition">¶</a></dt>
-<dd><p>Background image of the bubble.</p>
-<p><a class="reference internal" href="#kivy.uix.bubble.Bubble.background_image" title="kivy.uix.bubble.Bubble.background_image"><code class="xref py py-attr docutils literal notranslate"><span class="pre">background_image</span></code></a> is a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.StringProperty" title="kivy.properties.StringProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> and
-defaults to ‘atlas://data/images/defaulttheme/bubble’.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="kivy.uix.bubble.Bubble.border">
-<span class="sig-name descname"><span class="pre">border</span></span><a class="headerlink" href="#kivy.uix.bubble.Bubble.border" title="Permalink to this definition">¶</a></dt>
-<dd><p>Border used for <a class="reference internal" href="api-kivy.graphics.vertex_instructions.html#kivy.graphics.vertex_instructions.BorderImage" title="kivy.graphics.vertex_instructions.BorderImage"><code class="xref py py-class docutils literal notranslate"><span class="pre">BorderImage</span></code></a>
-graphics instruction. Used with the <a class="reference internal" href="#kivy.uix.bubble.Bubble.background_image" title="kivy.uix.bubble.Bubble.background_image"><code class="xref py py-attr docutils literal notranslate"><span class="pre">background_image</span></code></a>.
-It should be used when using custom backgrounds.</p>
-<p>It must be a list of 4 values: (bottom, right, top, left). Read the
-BorderImage instructions for more information about how to use it.</p>
-<p><a class="reference internal" href="#kivy.uix.bubble.Bubble.border" title="kivy.uix.bubble.Bubble.border"><code class="xref py py-attr docutils literal notranslate"><span class="pre">border</span></code></a> is a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.ListProperty" title="kivy.properties.ListProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> and defaults to
-(16, 16, 16, 16)</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="kivy.uix.bubble.Bubble.border_auto_scale">
-<span class="sig-name descname"><span class="pre">border_auto_scale</span></span><a class="headerlink" href="#kivy.uix.bubble.Bubble.border_auto_scale" title="Permalink to this definition">¶</a></dt>
-<dd><p>Specifies the <a class="reference internal" href="api-kivy.graphics.html#kivy.graphics.BorderImage.auto_scale" title="kivy.graphics.BorderImage.auto_scale"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kivy.graphics.BorderImage.auto_scale</span></code></a>
-value on the background BorderImage.</p>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 1.11.0.</span></p>
-</div>
-<p><a class="reference internal" href="#kivy.uix.bubble.Bubble.border_auto_scale" title="kivy.uix.bubble.Bubble.border_auto_scale"><code class="xref py py-attr docutils literal notranslate"><span class="pre">border_auto_scale</span></code></a> is a
-<a class="reference internal" href="api-kivy.properties.html#kivy.properties.OptionProperty" title="kivy.properties.OptionProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptionProperty</span></code></a> and defaults to
-‘both_lower’.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="kivy.uix.bubble.Bubble.clear_widgets">
-<span class="sig-name descname"><span class="pre">clear_widgets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/uix/bubble.html#Bubble.clear_widgets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.uix.bubble.Bubble.clear_widgets" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove all (or the specified) <code class="xref py py-attr docutils literal notranslate"><span class="pre">children</span></code> of this widget.
-If the ‘children’ argument is specified, it should be a list (or
-filtered list) of children of the current widget.</p>
-<div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 1.8.0: </span>The <cite>children</cite> argument can be used to specify the children you
-want to remove.</p>
-</div>
-<div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 2.1.0: </span>Specifying an empty <code class="docutils literal notranslate"><span class="pre">children</span></code> list leaves the widgets unchanged.
-Previously it was treated like <code class="docutils literal notranslate"><span class="pre">None</span></code> and all children were
-removed.</p>
-</div>
-</dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="kivy.uix.bubble.Bubble.content">
 <span class="sig-name descname"><span class="pre">content</span></span><a class="headerlink" href="#kivy.uix.bubble.Bubble.content" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the object where the main content of the bubble is held.</p>
-<p><a class="reference internal" href="#kivy.uix.bubble.Bubble.content" title="kivy.uix.bubble.Bubble.content"><code class="xref py py-attr docutils literal notranslate"><span class="pre">content</span></code></a> is a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.ObjectProperty" title="kivy.properties.ObjectProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectProperty</span></code></a> and
-defaults to ‘None’.</p>
+<p>The content of the Bubble set by ‘add_widget’ and removed with
+‘remove_widget’ similarly to the <code class="xref py py-class docutils literal notranslate"><span class="pre">ActionView</span></code> which is placed into
+a class:<cite>ActionBar</cite></p>
+<p><a class="reference internal" href="#kivy.uix.bubble.Bubble.content" title="kivy.uix.bubble.Bubble.content"><code class="xref py py-attr docutils literal notranslate"><span class="pre">content</span></code></a> is a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.ObjectProperty" title="kivy.properties.ObjectProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectProperty</span></code></a> and defaults
+to None.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.uix.bubble.Bubble.content_height">
+<span class="sig-name descname"><span class="pre">content_height</span></span><a class="headerlink" href="#kivy.uix.bubble.Bubble.content_height" title="Permalink to this definition">¶</a></dt>
+<dd><p>The height of the content Widget.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.2.0.</span></p>
+</div>
+<p><a class="reference internal" href="#kivy.uix.bubble.Bubble.content_height" title="kivy.uix.bubble.Bubble.content_height"><code class="xref py py-attr docutils literal notranslate"><span class="pre">content_height</span></code></a> is a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.NumericProperty" title="kivy.properties.NumericProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">NumericProperty</span></code></a> and
+is the same as self.content.height if content is not None, else it defaults
+to 0. It is read only.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.uix.bubble.Bubble.content_size">
+<span class="sig-name descname"><span class="pre">content_size</span></span><a class="headerlink" href="#kivy.uix.bubble.Bubble.content_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The size of the content Widget.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.2.0.</span></p>
+</div>
+<p><a class="reference internal" href="#kivy.uix.bubble.Bubble.content_size" title="kivy.uix.bubble.Bubble.content_size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">content_size</span></code></a> is a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.ReferenceListProperty" title="kivy.properties.ReferenceListProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReferenceListProperty</span></code></a>
+of (<a class="reference internal" href="#kivy.uix.bubble.Bubble.content_width" title="kivy.uix.bubble.Bubble.content_width"><code class="xref py py-attr docutils literal notranslate"><span class="pre">content_width</span></code></a>, <a class="reference internal" href="#kivy.uix.bubble.Bubble.content_height" title="kivy.uix.bubble.Bubble.content_height"><code class="xref py py-attr docutils literal notranslate"><span class="pre">content_height</span></code></a>) properties.
+It is read only.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.uix.bubble.Bubble.content_width">
+<span class="sig-name descname"><span class="pre">content_width</span></span><a class="headerlink" href="#kivy.uix.bubble.Bubble.content_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>The width of the content Widget.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.2.0.</span></p>
+</div>
+<p><a class="reference internal" href="#kivy.uix.bubble.Bubble.content_width" title="kivy.uix.bubble.Bubble.content_width"><code class="xref py py-attr docutils literal notranslate"><span class="pre">content_width</span></code></a> is a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.NumericProperty" title="kivy.properties.NumericProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">NumericProperty</span></code></a> and
+is the same as self.content.width if content is not None, else it defaults
+to 0. It is read only.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.uix.bubble.Bubble.flex_arrow_pos">
+<span class="sig-name descname"><span class="pre">flex_arrow_pos</span></span><a class="headerlink" href="#kivy.uix.bubble.Bubble.flex_arrow_pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the position of the arrow as flex coordinate around the
+border of the <a class="reference internal" href="#kivy.uix.bubble.Bubble" title="kivy.uix.bubble.Bubble"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bubble</span></code></a> Widget.
+If this property is set to a proper position (relative pixel coordinates
+within the <a class="reference internal" href="#kivy.uix.bubble.Bubble" title="kivy.uix.bubble.Bubble"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bubble</span></code></a> widget, it overwrites the setting
+<a class="reference internal" href="#kivy.uix.bubble.Bubble.arrow_pos" title="kivy.uix.bubble.Bubble.arrow_pos"><code class="xref py py-attr docutils literal notranslate"><span class="pre">arrow_pos</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.2.0.</span></p>
+</div>
+<p><a class="reference internal" href="#kivy.uix.bubble.Bubble.flex_arrow_pos" title="kivy.uix.bubble.Bubble.flex_arrow_pos"><code class="xref py py-attr docutils literal notranslate"><span class="pre">flex_arrow_pos</span></code></a> is a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.ListProperty" title="kivy.properties.ListProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> and
+defaults to None.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -645,17 +741,8 @@ defaults to ‘None’.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.6.0.</span></p>
 </div>
-<p><a class="reference internal" href="#kivy.uix.bubble.Bubble.limit_to" title="kivy.uix.bubble.Bubble.limit_to"><code class="xref py py-attr docutils literal notranslate"><span class="pre">limit_to</span></code></a> is a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.ObjectProperty" title="kivy.properties.ObjectProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectProperty</span></code></a> and
-defaults to ‘None’.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="kivy.uix.bubble.Bubble.orientation">
-<span class="sig-name descname"><span class="pre">orientation</span></span><a class="headerlink" href="#kivy.uix.bubble.Bubble.orientation" title="Permalink to this definition">¶</a></dt>
-<dd><p>This specifies the manner in which the children inside bubble
-are arranged. Can be one of ‘vertical’ or ‘horizontal’.</p>
-<p><a class="reference internal" href="#kivy.uix.bubble.Bubble.orientation" title="kivy.uix.bubble.Bubble.orientation"><code class="xref py py-attr docutils literal notranslate"><span class="pre">orientation</span></code></a> is a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.OptionProperty" title="kivy.properties.OptionProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptionProperty</span></code></a> and
-defaults to ‘horizontal’.</p>
+<p><a class="reference internal" href="#kivy.uix.bubble.Bubble.limit_to" title="kivy.uix.bubble.Bubble.limit_to"><code class="xref py py-attr docutils literal notranslate"><span class="pre">limit_to</span></code></a> is a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.ObjectProperty" title="kivy.properties.ObjectProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectProperty</span></code></a> and defaults
+to ‘None’.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -664,7 +751,7 @@ defaults to ‘horizontal’.</p>
 <dd><p>Remove a widget from the children of this widget.</p>
 <blockquote>
 <div><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><cite>widget</cite>: <code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code></dt><dd><p>Widget to remove from our children list.</p>
 </dd>
@@ -698,9 +785,9 @@ defaults to <cite>True</cite>.</p>
 <dt class="sig sig-object py" id="kivy.uix.bubble.BubbleButton">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.uix.bubble.</span></span><span class="sig-name descname"><span class="pre">BubbleButton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/uix/bubble.html#BubbleButton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.uix.bubble.BubbleButton" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="api-kivy.uix.button.html#kivy.uix.button.Button" title="kivy.uix.button.Button"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.button.Button</span></code></a></p>
-<p>A button intended for use in a Bubble widget.
-You can use a “normal” button class, but it will not look good unless
-the background is changed.</p>
+<p>A button intended for use in a BubbleContent widget.
+You can use a “normal” button class, but it will not look good unless the
+background is changed.</p>
 <p>Rather use this BubbleButton widget that is already defined and provides a
 suitable background for you.</p>
 </dd></dl>
@@ -708,9 +795,70 @@ suitable background for you.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="kivy.uix.bubble.BubbleContent">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.uix.bubble.</span></span><span class="sig-name descname"><span class="pre">BubbleContent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/uix/bubble.html#BubbleContent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.uix.bubble.BubbleContent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="api-kivy.uix.gridlayout.html#kivy.uix.gridlayout.GridLayout" title="kivy.uix.gridlayout.GridLayout"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.gridlayout.GridLayout</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="api-kivy.uix.boxlayout.html#kivy.uix.boxlayout.BoxLayout" title="kivy.uix.boxlayout.BoxLayout"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.boxlayout.BoxLayout</span></code></a></p>
+<p>A styled BoxLayout that can be used as the content widget of a Bubble.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.2.0.</span></p>
+</div>
+<p>The graphical appearance of <a class="reference internal" href="#kivy.uix.bubble.BubbleContent" title="kivy.uix.bubble.BubbleContent"><code class="xref py py-class docutils literal notranslate"><span class="pre">BubbleContent</span></code></a> is now based on it’s
+own properties <a class="reference internal" href="#kivy.uix.bubble.BubbleContent.background_image" title="kivy.uix.bubble.BubbleContent.background_image"><code class="xref py py-attr docutils literal notranslate"><span class="pre">background_image</span></code></a>, <a class="reference internal" href="#kivy.uix.bubble.BubbleContent.background_color" title="kivy.uix.bubble.BubbleContent.background_color"><code class="xref py py-attr docutils literal notranslate"><span class="pre">background_color</span></code></a>,
+<a class="reference internal" href="#kivy.uix.bubble.BubbleContent.border" title="kivy.uix.bubble.BubbleContent.border"><code class="xref py py-attr docutils literal notranslate"><span class="pre">border</span></code></a> and <a class="reference internal" href="#kivy.uix.bubble.BubbleContent.border_auto_scale" title="kivy.uix.bubble.BubbleContent.border_auto_scale"><code class="xref py py-attr docutils literal notranslate"><span class="pre">border_auto_scale</span></code></a>. The parent widget properties
+are no longer considered. This makes the BubbleContent a standalone themed
+BoxLayout.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.uix.bubble.BubbleContent.background_color">
+<span class="sig-name descname"><span class="pre">background_color</span></span><a class="headerlink" href="#kivy.uix.bubble.BubbleContent.background_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Background color, in the format (r, g, b, a). To use it you have to set
+<a class="reference internal" href="#kivy.uix.bubble.BubbleContent.background_image" title="kivy.uix.bubble.BubbleContent.background_image"><code class="xref py py-attr docutils literal notranslate"><span class="pre">background_image</span></code></a> first.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.2.0.</span></p>
+</div>
+<p><a class="reference internal" href="#kivy.uix.bubble.BubbleContent.background_color" title="kivy.uix.bubble.BubbleContent.background_color"><code class="xref py py-attr docutils literal notranslate"><span class="pre">background_color</span></code></a> is a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.ColorProperty" title="kivy.properties.ColorProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorProperty</span></code></a> and
+defaults to [1, 1, 1, 1].</p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.uix.bubble.BubbleContent.background_image">
+<span class="sig-name descname"><span class="pre">background_image</span></span><a class="headerlink" href="#kivy.uix.bubble.BubbleContent.background_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Background image of the bubble.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.2.0.</span></p>
+</div>
+<p><a class="reference internal" href="#kivy.uix.bubble.BubbleContent.background_image" title="kivy.uix.bubble.BubbleContent.background_image"><code class="xref py py-attr docutils literal notranslate"><span class="pre">background_image</span></code></a> is a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.StringProperty" title="kivy.properties.StringProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> and
+defaults to ‘atlas://data/images/defaulttheme/bubble’.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.uix.bubble.BubbleContent.border">
+<span class="sig-name descname"><span class="pre">border</span></span><a class="headerlink" href="#kivy.uix.bubble.BubbleContent.border" title="Permalink to this definition">¶</a></dt>
+<dd><p>Border used for <a class="reference internal" href="api-kivy.graphics.vertex_instructions.html#kivy.graphics.vertex_instructions.BorderImage" title="kivy.graphics.vertex_instructions.BorderImage"><code class="xref py py-class docutils literal notranslate"><span class="pre">BorderImage</span></code></a>
+graphics instruction. Used with the <a class="reference internal" href="#kivy.uix.bubble.BubbleContent.background_image" title="kivy.uix.bubble.BubbleContent.background_image"><code class="xref py py-attr docutils literal notranslate"><span class="pre">background_image</span></code></a>.
+It should be used when using custom backgrounds.</p>
+<p>It must be a list of 4 values: (bottom, right, top, left). Read the
+BorderImage instructions for more information about how to use it.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.2.0.</span></p>
+</div>
+<p><a class="reference internal" href="#kivy.uix.bubble.BubbleContent.border" title="kivy.uix.bubble.BubbleContent.border"><code class="xref py py-attr docutils literal notranslate"><span class="pre">border</span></code></a> is a <a class="reference internal" href="api-kivy.properties.html#kivy.properties.ListProperty" title="kivy.properties.ListProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> and defaults to
+(16, 16, 16, 16)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.uix.bubble.BubbleContent.border_auto_scale">
+<span class="sig-name descname"><span class="pre">border_auto_scale</span></span><a class="headerlink" href="#kivy.uix.bubble.BubbleContent.border_auto_scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the <a class="reference internal" href="api-kivy.graphics.html#kivy.graphics.BorderImage.auto_scale" title="kivy.graphics.BorderImage.auto_scale"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kivy.graphics.BorderImage.auto_scale</span></code></a>
+value on the background BorderImage.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.2.0.</span></p>
+</div>
+<p><a class="reference internal" href="#kivy.uix.bubble.BubbleContent.border_auto_scale" title="kivy.uix.bubble.BubbleContent.border_auto_scale"><code class="xref py py-attr docutils literal notranslate"><span class="pre">border_auto_scale</span></code></a> is a
+<a class="reference internal" href="api-kivy.properties.html#kivy.properties.OptionProperty" title="kivy.properties.OptionProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptionProperty</span></code></a> and defaults to
+‘both_lower’.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 </section>
 <div class="toctree-wrapper compound">
 </div>
@@ -763,8 +911,8 @@ suitable background for you.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on May 25, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.5.0.
+      Last updated on May 30, 2022.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 5.0.0.
 </div>
 -->
   </body>
