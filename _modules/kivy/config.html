@@ -704,6 +704,9 @@
 <span class="sd">    Check the specific module&#39;s documentation for a list of accepted</span>
 <span class="sd">    arguments.</span>
 
+<span class="sd">.. versionchanged:: 2.2.0</span>
+<span class="sd">    `implementation` has been added to the network section.</span>
+
 <span class="sd">.. versionchanged:: 2.1.0</span>
 <span class="sd">    `vsync` has been added to the graphics section.</span>
 <span class="sd">    `verify_gl_main_thread` has been added to the graphics section.</span>
@@ -713,6 +716,7 @@
 <span class="sd">    to the `graphics` section.</span>
 <span class="sd">    `kivy_clock` has been added to the kivy section.</span>
 <span class="sd">    `default_font` has beed added to the kivy section.</span>
+<span class="sd">    `useragent` has been added to the network section.</span>
 
 <span class="sd">.. versionchanged:: 1.9.0</span>
 <span class="sd">    `borderless` and `window_state` have been added to the graphics section.</span>
@@ -747,14 +751,15 @@
     <span class="kn">from</span> <span class="nn">ConfigParser</span> <span class="kn">import</span> <span class="n">ConfigParser</span> <span class="k">as</span> <span class="n">PythonConfigParser</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">RawConfigParser</span> <span class="k">as</span> <span class="n">PythonConfigParser</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
 <span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">environ</span>
 <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
-<span class="kn">from</span> <span class="nn">kivy</span> <span class="kn">import</span> <span class="n">kivy_config_fn</span>
-<span class="kn">from</span> <span class="nn">kivy.logger</span> <span class="kn">import</span> <span class="n">Logger</span><span class="p">,</span> <span class="n">logger_config_update</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
-<span class="kn">from</span> <span class="nn">kivy.utils</span> <span class="kn">import</span> <span class="n">platform</span>
-<span class="kn">from</span> <span class="nn">kivy.compat</span> <span class="kn">import</span> <span class="n">PY2</span><span class="p">,</span> <span class="n">string_types</span>
 <span class="kn">from</span> <span class="nn">weakref</span> <span class="kn">import</span> <span class="n">ref</span>
+
+<span class="kn">from</span> <span class="nn">kivy</span> <span class="kn">import</span> <span class="n">kivy_config_fn</span>
+<span class="kn">from</span> <span class="nn">kivy.compat</span> <span class="kn">import</span> <span class="n">PY2</span><span class="p">,</span> <span class="n">string_types</span>
+<span class="kn">from</span> <span class="nn">kivy.logger</span> <span class="kn">import</span> <span class="n">Logger</span><span class="p">,</span> <span class="n">logger_config_update</span>
+<span class="kn">from</span> <span class="nn">kivy.utils</span> <span class="kn">import</span> <span class="n">platform</span>
 
 <span class="n">_is_rpi</span> <span class="o">=</span> <span class="n">exists</span><span class="p">(</span><span class="s1">&#39;/opt/vc/include/bcm_host.h&#39;</span><span class="p">)</span>
 
@@ -1099,7 +1104,7 @@
             <span class="s1">&#39;KIVY_NO_CONFIG&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">environ</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">Config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">kivy_config_fn</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="n">Logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;Core: error while reading local&#39;</span>
                              <span class="s1">&#39;configuration&#39;</span><span class="p">)</span>
 
@@ -1287,6 +1292,9 @@
             <span class="n">Config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;graphics&#39;</span><span class="p">,</span> <span class="s1">&#39;custom_titlebar&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span>
             <span class="n">Config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;graphics&#39;</span><span class="p">,</span> <span class="s1">&#39;custom_titlebar_border&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">)</span>
 
+        <span class="k">elif</span> <span class="n">version</span> <span class="o">==</span> <span class="mi">24</span><span class="p">:</span>
+            <span class="n">Config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;network&quot;</span><span class="p">,</span> <span class="s2">&quot;implementation&quot;</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">)</span>
+
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># for future.</span>
             <span class="k">break</span>
@@ -1306,7 +1314,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">Config</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">kivy_config_fn</span>
             <span class="n">Config</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="n">Logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;Core: Error while saving default config file&#39;</span><span class="p">)</span>
 
     <span class="c1"># Load configuration from env</span>
@@ -1383,7 +1391,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Aug 16, 2022.
+      Last updated on Aug 24, 2022.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 5.1.1.
 </div>
 -->
