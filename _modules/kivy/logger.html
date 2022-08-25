@@ -466,8 +466,6 @@
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">copy</span>
-<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randint</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
 <span class="kn">import</span> <span class="nn">pathlib</span>
 
@@ -476,11 +474,6 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
     <span class="s1">&#39;Logger&#39;</span><span class="p">,</span> <span class="s1">&#39;LOG_LEVELS&#39;</span><span class="p">,</span> <span class="s1">&#39;COLORS&#39;</span><span class="p">,</span> <span class="s1">&#39;LoggerHistory&#39;</span><span class="p">,</span> <span class="s1">&#39;file_log_handler&#39;</span><span class="p">)</span>
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="ne">PermissionError</span>
-<span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>  <span class="c1"># Python 2</span>
-    <span class="ne">PermissionError</span> <span class="o">=</span> <span class="ne">OSError</span><span class="p">,</span> <span class="ne">IOError</span>
 
 <span class="n">Logger</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -811,9 +804,6 @@
 <span class="n">Logger</span><span class="o">.</span><span class="n">logfile_activated</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="n">Logger</span><span class="o">.</span><span class="n">trace</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">Logger</span><span class="o">.</span><span class="n">log</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">TRACE</span><span class="p">)</span>
 
-<span class="c1"># set the Kivy logger as the default</span>
-<span class="n">logging</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">Logger</span>
-
 <span class="c1"># add default kivy logger</span>
 <span class="n">Logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">LoggerHistory</span><span class="p">())</span>
 <span class="n">file_log_handler</span> <span class="o">=</span> <span class="kc">None</span>
@@ -854,8 +844,12 @@
         <span class="n">console</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
         <span class="n">Logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">console</span><span class="p">)</span>
 
-<span class="c1"># install stderr handlers</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">LogFile</span><span class="p">(</span><span class="s1">&#39;stderr&#39;</span><span class="p">,</span> <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;KIVY_LOG_MODE&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;TEST&quot;</span><span class="p">:</span>
+    <span class="c1"># set the Kivy logger as the default</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">Logger</span>
+
+    <span class="c1"># install stderr handlers</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">LogFile</span><span class="p">(</span><span class="s2">&quot;stderr&quot;</span><span class="p">,</span> <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">)</span>
 </pre></div>
 
             <div class="footerlinks">
@@ -894,7 +888,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Aug 24, 2022.
+      Last updated on Aug 25, 2022.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 5.1.1.
 </div>
 -->
