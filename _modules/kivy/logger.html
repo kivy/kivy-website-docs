@@ -470,6 +470,7 @@
 <span class="kn">import</span> <span class="nn">pathlib</span>
 
 <span class="kn">import</span> <span class="nn">kivy</span>
+<span class="kn">from</span> <span class="nn">kivy.utils</span> <span class="kn">import</span> <span class="n">platform</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
@@ -811,56 +812,74 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_coloring_cls</span><span class="p">(</span><span class="n">ColonSplittingLogRecord</span><span class="p">(</span><span class="n">record</span><span class="p">)))</span>
 
 
+<span class="k">def</span> <span class="nf">is_color_terminal</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">(</span>
+            <span class="p">(</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;WT_SESSION&quot;</span><span class="p">)</span> <span class="ow">or</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;COLORTERM&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;truecolor&#39;</span> <span class="ow">or</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;PYCHARM_HOSTED&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span> <span class="ow">or</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;TERM&#39;</span><span class="p">)</span> <span class="ow">in</span> <span class="p">(</span>
+                        <span class="s1">&#39;rxvt&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;rxvt-256color&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;rxvt-unicode&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;rxvt-unicode-256color&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;xterm&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;xterm-256color&#39;</span><span class="p">,</span>
+                    <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="ow">and</span> <span class="n">platform</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;android&#39;</span><span class="p">,</span> <span class="s1">&#39;ios&#39;</span><span class="p">)</span>
+    <span class="p">)</span>
+
+
 <span class="c1">#: Kivy default logger instance</span>
 <span class="n">Logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;kivy&#39;</span><span class="p">)</span>
 <span class="n">Logger</span><span class="o">.</span><span class="n">logfile_activated</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="n">Logger</span><span class="o">.</span><span class="n">trace</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">Logger</span><span class="o">.</span><span class="n">log</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">TRACE</span><span class="p">)</span>
 
-<span class="c1"># add default kivy logger</span>
-<span class="n">Logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">LoggerHistory</span><span class="p">())</span>
-<span class="n">file_log_handler</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="k">if</span> <span class="s1">&#39;KIVY_NO_FILELOG&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
-    <span class="n">file_log_handler</span> <span class="o">=</span> <span class="n">FileHandler</span><span class="p">()</span>
-    <span class="n">Logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">file_log_handler</span><span class="p">)</span>
+<span class="n">file_log_handler</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">FileHandler</span><span class="p">()</span>
+    <span class="k">if</span> <span class="s1">&#39;KIVY_NO_FILELOG&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span>
+    <span class="k">else</span> <span class="kc">None</span>
+<span class="p">)</span>
 
-<span class="c1"># Use the custom handler instead of streaming one.</span>
-<span class="k">if</span> <span class="s1">&#39;KIVY_NO_CONSOLELOG&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s1">&#39;_kivy_logging_handler&#39;</span><span class="p">):</span>
-        <span class="n">Logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s1">&#39;_kivy_logging_handler&#39;</span><span class="p">))</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">use_color</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="p">(</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;WT_SESSION&quot;</span><span class="p">)</span> <span class="ow">or</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;COLORTERM&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;truecolor&#39;</span> <span class="ow">or</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;PYCHARM_HOSTED&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span> <span class="ow">or</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;TERM&#39;</span><span class="p">)</span> <span class="ow">in</span> <span class="p">(</span>
-                    <span class="s1">&#39;rxvt&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;rxvt-256color&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;rxvt-unicode&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;rxvt-unicode-256color&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;xterm&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;xterm-256color&#39;</span><span class="p">,</span>
-                <span class="p">)</span>
-            <span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;KIVY_BUILD&#39;</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;android&#39;</span><span class="p">,</span> <span class="s1">&#39;ios&#39;</span><span class="p">)</span>
-        <span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">use_color</span><span class="p">:</span>
-            <span class="c1"># No additional control characters will be inserted inside the</span>
-            <span class="c1"># levelname field, 7 chars will fit &quot;WARNING&quot;</span>
-            <span class="n">fmt</span> <span class="o">=</span> <span class="s2">&quot;[</span><span class="si">%(levelname)-7s</span><span class="s2">] </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
+
+<span class="k">def</span> <span class="nf">add_kivy_handlers</span><span class="p">(</span><span class="n">logger</span><span class="p">):</span>
+    <span class="c1"># add default kivy logger</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">LoggerHistory</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">file_log_handler</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">file_log_handler</span><span class="p">)</span>
+
+    <span class="c1"># Use the custom handler instead of streaming one.</span>
+    <span class="k">if</span> <span class="s1">&#39;KIVY_NO_CONSOLELOG&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+        <span class="c1"># This attribute is undocumented, and may be removed in a future</span>
+        <span class="c1"># release.</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s1">&#39;_kivy_logging_handler&#39;</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s1">&#39;_kivy_logging_handler&#39;</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># levelname field width need to take into account the length of the</span>
-            <span class="c1"># color control codes (7+4 chars for bold+color, and reset)</span>
-            <span class="n">fmt</span> <span class="o">=</span> <span class="s2">&quot;[</span><span class="si">%(levelname)-18s</span><span class="s2">] </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
-        <span class="n">formatter</span> <span class="o">=</span> <span class="n">KivyFormatter</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="n">use_color</span><span class="o">=</span><span class="n">use_color</span><span class="p">)</span>
-        <span class="n">console</span> <span class="o">=</span> <span class="n">ConsoleHandler</span><span class="p">()</span>
-        <span class="n">console</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
-        <span class="n">Logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">console</span><span class="p">)</span>
+            <span class="n">use_color</span> <span class="o">=</span> <span class="n">is_color_terminal</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">use_color</span><span class="p">:</span>
+                <span class="c1"># No additional control characters will be inserted inside the</span>
+                <span class="c1"># levelname field, 7 chars will fit &quot;WARNING&quot;</span>
+                <span class="n">fmt</span> <span class="o">=</span> <span class="s2">&quot;[</span><span class="si">%(levelname)-7s</span><span class="s2">] </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># levelname field width need to take into account the length of</span>
+                <span class="c1"># the color control codes (7+4 chars for bold+color, and reset)</span>
+                <span class="n">fmt</span> <span class="o">=</span> <span class="s2">&quot;[</span><span class="si">%(levelname)-18s</span><span class="s2">] </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
+            <span class="n">formatter</span> <span class="o">=</span> <span class="n">KivyFormatter</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="n">use_color</span><span class="o">=</span><span class="n">use_color</span><span class="p">)</span>
+            <span class="n">console</span> <span class="o">=</span> <span class="n">ConsoleHandler</span><span class="p">()</span>
+            <span class="n">console</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">console</span><span class="p">)</span>
+
 
 <span class="c1"># This environment variable is unsupported, and is expected to change before</span>
 <span class="c1"># the next release.</span>
 <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;KIVY_LOG_MODE&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;TEST&quot;</span><span class="p">:</span>
-    <span class="c1"># set the Kivy logger as the default</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">Logger</span>
+    <span class="c1"># Add the Kivy handlers to the root logger, so it will be used</span>
+    <span class="c1"># for all propagated log messages.</span>
+    <span class="n">add_kivy_handlers</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+
+    <span class="c1"># Root logger defaults to warning. Let Logger be the limiting factor.</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">NOTSET</span><span class="p">)</span>
 
     <span class="c1"># install stderr handlers</span>
 
