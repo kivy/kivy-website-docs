@@ -9,7 +9,7 @@
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
     <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Logger object &mdash; Kivy 2.2.0.dev0 documentation</title>
+    <title>Kivy Logging &mdash; Kivy 2.2.0.dev0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/fresh.css" type="text/css" />
@@ -99,13 +99,25 @@
                 <button type="submit">Go</button>
             </form>
           <!--
-          <h3><a href="index.html">Logger object</a></h3>
+          <h3><a href="index.html">Kivy Logging</a></h3>
           <ul>
-<li><a class="reference internal" href="#">Logger object</a><ul>
+<li><a class="reference internal" href="#">Kivy Logging</a><ul>
+<li><a class="reference internal" href="#logger-object">Logger object</a><ul>
 <li><a class="reference internal" href="#example-usage">Example Usage</a></li>
-<li><a class="reference internal" href="#features">Features</a></li>
-<li><a class="reference internal" href="#logger-configuration">Logger Configuration</a></li>
+<li><a class="reference internal" href="#interaction-with-other-logging">Interaction with other logging</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#logger-configuration">Logger Configuration</a><ul>
+<li><a class="reference internal" href="#kivy-log-mode">Kivy Log Mode</a><ul>
+<li><a class="reference internal" href="#kivy-mode-default">KIVY Mode (default)</a></li>
+<li><a class="reference internal" href="#python-mode">PYTHON Mode</a></li>
+<li><a class="reference internal" href="#mixed-mode">MIXED Mode</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#config-files">Config Files</a></li>
 <li><a class="reference internal" href="#logger-history">Logger History</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -274,7 +286,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.gstplayer.html">GstPlayer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.mtdev.html">Python mtdev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.loader.html">Asynchronous data loader</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Logger object</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Kivy Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.metrics.html">Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.html">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.console.html">Console</a></li>
@@ -388,27 +400,57 @@
         <div class="bodywrapper">
           <div class="body">
             <div class="toc"><h2>Table Of Contents</h2><ul>
-<li><a class="reference internal" href="#">Logger object</a><ul>
+<li><a class="reference internal" href="#">Kivy Logging</a><ul>
+<li><a class="reference internal" href="#logger-object">Logger object</a><ul>
 <li><a class="reference internal" href="#example-usage">Example Usage</a></li>
-<li><a class="reference internal" href="#features">Features</a></li>
-<li><a class="reference internal" href="#logger-configuration">Logger Configuration</a></li>
+<li><a class="reference internal" href="#interaction-with-other-logging">Interaction with other logging</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#logger-configuration">Logger Configuration</a><ul>
+<li><a class="reference internal" href="#kivy-log-mode">Kivy Log Mode</a><ul>
+<li><a class="reference internal" href="#kivy-mode-default">KIVY Mode (default)</a></li>
+<li><a class="reference internal" href="#python-mode">PYTHON Mode</a></li>
+<li><a class="reference internal" href="#mixed-mode">MIXED Mode</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#config-files">Config Files</a></li>
 <li><a class="reference internal" href="#logger-history">Logger History</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
             
   <section id="module-kivy.logger">
-<span id="logger-object"></span><h1>Logger object<a class="headerlink" href="#module-kivy.logger" title="Permalink to this heading">¶</a></h1>
-<p>The Kivy <cite>Logger</cite> class provides a singleton logger instance. This instance
-exposes a standard Python
-<a class="reference external" href="https://docs.python.org/3/library/logging.html">logger</a> object but adds
-some convenient features.</p>
-<p>All the standard logging levels are available : <cite>trace</cite>, <cite>debug</cite>, <cite>info</cite>,
-<cite>warning</cite>, <cite>error</cite> and <cite>critical</cite>.</p>
+<span id="kivy-logging"></span><h1>Kivy Logging<a class="headerlink" href="#module-kivy.logger" title="Permalink to this heading">¶</a></h1>
+<p>By default, Kivy provides a logging system based on the standard Python
+<a class="reference external" href="https://docs.python.org/3/library/logging.html">logging</a> module with
+several additional features designed to be more convenient. These features
+include:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>simplied usage (single instance, simple configuration, works by default)</p></li>
+<li><p>color-coded output on supported terminals</p></li>
+<li><p>output to <code class="docutils literal notranslate"><span class="pre">stderr</span></code> by default</p></li>
+<li><p>message categorization via colon separation</p></li>
+<li><p>access to log history even if logging is disabled</p></li>
+<li><p>built-in handling of various cross-platform considerations</p></li>
+<li><p>any stray output written to <code class="docutils literal notranslate"><span class="pre">sys.stderr</span></code> is captured, and stored in the log
+file as a warning.</p></li>
+</ul>
+</div></blockquote>
+<p>These features are configurable via the Config file or environment variables -
+including falling back to only using the standard Python system.</p>
+<section id="logger-object">
+<h2>Logger object<a class="headerlink" href="#logger-object" title="Permalink to this heading">¶</a></h2>
+<p>The Kivy <code class="docutils literal notranslate"><span class="pre">Logger</span></code> class provides a singleton logging.logger instance.</p>
+<p>As well as the standard logging levels (<code class="docutils literal notranslate"><span class="pre">debug</span></code>, <code class="docutils literal notranslate"><span class="pre">info</span></code>,
+<code class="docutils literal notranslate"><span class="pre">warning</span></code>, <code class="docutils literal notranslate"><span class="pre">error</span></code> and <code class="docutils literal notranslate"><span class="pre">critical</span></code>), an additional <code class="docutils literal notranslate"><span class="pre">trace</span></code> level is
+available.</p>
 <section id="example-usage">
-<h2>Example Usage<a class="headerlink" href="#example-usage" title="Permalink to this heading">¶</a></h2>
-<p>Use the <cite>Logger</cite> as you would a standard Python logger.</p>
+<h3>Example Usage<a class="headerlink" href="#example-usage" title="Permalink to this heading">¶</a></h3>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">Logger</span></code> as you would a standard Python logger.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kivy.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
 
 <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;title: This is a info message.&#39;</span><span class="p">)</span>
@@ -430,31 +472,76 @@ message. This way, you can “categorize” your messages easily.</p>
 <span class="p">[</span><span class="n">INFO</span>   <span class="p">]</span> <span class="p">[</span><span class="n">Application</span> <span class="p">]</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">test</span>
 </pre></div>
 </div>
-<p>You can change the logging level at any time using the <cite>setLevel</cite> method.</p>
+<p>You can change the logging level at any time using the <code class="docutils literal notranslate"><span class="pre">setLevel</span></code> method.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kivy.logger</span> <span class="kn">import</span> <span class="n">Logger</span><span class="p">,</span> <span class="n">LOG_LEVELS</span>
 
 <span class="n">Logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">LOG_LEVELS</span><span class="p">[</span><span class="s2">&quot;debug&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.2.0.</span></p>
+</div>
 </section>
-<section id="features">
-<h2>Features<a class="headerlink" href="#features" title="Permalink to this heading">¶</a></h2>
-<p>Although you are free to use standard python loggers, the Kivy <cite>Logger</cite> offers
-some solid benefits and useful features. These include:</p>
-<ul class="simple">
-<li><p>simplied usage (single instance, simple configuration, works by default)</p></li>
-<li><p>color-coded output</p></li>
-<li><p>output to <cite>stdout</cite> by default</p></li>
-<li><p>message categorization via colon separation</p></li>
-<li><p>access to log history even if logging is disabled</p></li>
-<li><p>built-in handling of various cross-platform considerations</p></li>
-</ul>
-<p>Kivys’ logger was designed to be used with kivy apps and makes logging from
-Kivy apps more convenient.</p>
+<section id="interaction-with-other-logging">
+<h3>Interaction with other logging<a class="headerlink" href="#interaction-with-other-logging" title="Permalink to this heading">¶</a></h3>
+<p>The Kivy logging system will, by default, present all log messages sent from
+any logger - e.g. from third-party libraries.</p>
+<p>Additional handlers may be added.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Handlers that output to <code class="docutils literal notranslate"><span class="pre">sys.stderr</span></code> may cause loops, as stderr
+output is reported as a warning log message.</p>
+</div>
+</section>
 </section>
 <section id="logger-configuration">
 <h2>Logger Configuration<a class="headerlink" href="#logger-configuration" title="Permalink to this heading">¶</a></h2>
-<p>The Logger can be controlled via the Kivy configuration file:</p>
+<section id="kivy-log-mode">
+<h3>Kivy Log Mode<a class="headerlink" href="#kivy-log-mode" title="Permalink to this heading">¶</a></h3>
+<p>At the highest level, Kivy’s logging system is controlled by an environment
+variable <code class="docutils literal notranslate"><span class="pre">KIVY_LOG_MODE</span></code>. It may be given any of three values:
+<code class="docutils literal notranslate"><span class="pre">KIVY</span></code>, <code class="docutils literal notranslate"><span class="pre">PYTHON</span></code>, <code class="docutils literal notranslate"><span class="pre">MIXED</span></code></p>
+<section id="kivy-mode-default">
+<h4>KIVY Mode (default)<a class="headerlink" href="#kivy-mode-default" title="Permalink to this heading">¶</a></h4>
+<p>In <code class="docutils literal notranslate"><span class="pre">KIVY</span></code> mode, all Kivy handlers are attached to the root logger, so all log
+messages in the system are output to the Kivy log files and to the console. Any
+stray output to <code class="docutils literal notranslate"><span class="pre">sys.stderr</span></code> is logged as a warning.</p>
+<p>If you are writing an entire Kivy app from scratch, this is the most convenient
+mode.</p>
+</section>
+<section id="python-mode">
+<h4>PYTHON Mode<a class="headerlink" href="#python-mode" title="Permalink to this heading">¶</a></h4>
+<p>In <code class="docutils literal notranslate"><span class="pre">PYTHON</span></code> mode, no handlers are added, and <code class="docutils literal notranslate"><span class="pre">sys.stderr</span></code> output is not
+captured. It is left to the client to add appropriate handlers. (If none are
+added, the <code class="docutils literal notranslate"><span class="pre">logging</span></code> module will output them to <code class="docutils literal notranslate"><span class="pre">stderr</span></code>.)</p>
+<p>Messages logged with <code class="docutils literal notranslate"><span class="pre">Logger</span></code> will be propagated to the root logger, from a
+logger named <code class="docutils literal notranslate"><span class="pre">kivy</span></code>.</p>
+<p>If the Kivy app is part of a much larger project which has its own logging
+regimen, this is the mode that gives most control.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">kivy.logger</span></code> file contains a number of <code class="docutils literal notranslate"><span class="pre">logging.handler</span></code>,
+<code class="docutils literal notranslate"><span class="pre">logging.formatter</span></code>, and other helper classes to allow
+users to adopt the features of Kivy logging that they like, including the
+stderr redirection.</p>
+</section>
+<section id="mixed-mode">
+<h4>MIXED Mode<a class="headerlink" href="#mixed-mode" title="Permalink to this heading">¶</a></h4>
+<p>In <code class="docutils literal notranslate"><span class="pre">MIXED</span></code> mode, handlers are added to the Kivy’s <code class="docutils literal notranslate"><span class="pre">Logger</span></code> object directly,
+and propagation is turned off. <code class="docutils literal notranslate"><span class="pre">sys.stderr</span></code> is not redirected.</p>
+<p>Messages logged with Kivy’s <code class="docutils literal notranslate"><span class="pre">Logger</span></code> will appear in the Kivy log file and
+output to the Console.</p>
+<p>However, messages logged with other Python loggers will not be handled by Kivy
+handlers. The client will need to add their own.</p>
+<p>If you like the features of Kivy <code class="docutils literal notranslate"><span class="pre">Logger</span></code>, but are writing a Kivy app that
+relies on third-party libraries that don’t use colon-separation of categorise
+or depend on the display of the logger name, this mode provides a compromise.</p>
+<p>Again, the <code class="docutils literal notranslate"><span class="pre">kivy.logger</span></code> file contains re-usable logging features that can be
+used to get the best of both systems.</p>
+</section>
+</section>
+<section id="config-files">
+<h3>Config Files<a class="headerlink" href="#config-files" title="Permalink to this heading">¶</a></h3>
+<p>In <code class="docutils literal notranslate"><span class="pre">KIVY</span></code> and <code class="docutils literal notranslate"><span class="pre">MIXED</span></code> modes, the logger handlers can be controlled via the
+Kivy configuration file:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">kivy</span><span class="p">]</span>
 <span class="n">log_level</span> <span class="o">=</span> <span class="n">info</span>
 <span class="n">log_enable</span> <span class="o">=</span> <span class="mi">1</span>
@@ -465,20 +552,111 @@ Kivy apps more convenient.</p>
 </div>
 <p>More information about the allowed values are described in the
 <a class="reference internal" href="api-kivy.config.html#module-kivy.config" title="kivy.config"><code class="xref py py-mod docutils literal notranslate"><span class="pre">kivy.config</span></code></a> module.</p>
+<p>In addition, the environment variables <code class="docutils literal notranslate"><span class="pre">KIVY_NO_FILELOG</span></code> and
+<code class="docutils literal notranslate"><span class="pre">KIVY_NO_CONSOLELOG</span></code> can be used to turn off the installation of the
+corresponding handlers.</p>
 </section>
 <section id="logger-history">
-<h2>Logger History<a class="headerlink" href="#logger-history" title="Permalink to this heading">¶</a></h2>
+<h3>Logger History<a class="headerlink" href="#logger-history" title="Permalink to this heading">¶</a></h3>
 <p>Even if the logger is not enabled, you still have access to the last 100
-messages:</p>
+LogRecords:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kivy.logger</span> <span class="kn">import</span> <span class="n">LoggerHistory</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">LoggerHistory</span><span class="o">.</span><span class="n">history</span><span class="p">)</span>
 </pre></div>
 </div>
-<dl class="py data">
-<dt class="sig sig-object py" id="kivy.logger.Logger">
-<span class="sig-prename descclassname"><span class="pre">kivy.logger.</span></span><span class="sig-name descname"><span class="pre">Logger</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Logger</span> <span class="pre">kivy</span> <span class="pre">(NOTSET)&gt;</span></em><a class="reference internal" href="_modules/logging.html#Logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.logger.Logger" title="Permalink to this definition">¶</a></dt>
-<dd><p>Kivy default logger instance</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="kivy.logger.ColonSplittingLogRecord">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.logger.</span></span><span class="sig-name descname"><span class="pre">ColonSplittingLogRecord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logrecord</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/logger.html#ColonSplittingLogRecord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.logger.ColonSplittingLogRecord" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">logging.LogRecord</span></code></p>
+<p>Clones an existing logRecord, but reformats the message field
+if it contains a colon.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.2.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="kivy.logger.ColoredLogRecord">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.logger.</span></span><span class="sig-name descname"><span class="pre">ColoredLogRecord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logrecord</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/logger.html#ColoredLogRecord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.logger.ColoredLogRecord" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">logging.LogRecord</span></code></p>
+<p>Clones an existing logRecord, but reformats the levelname to add
+color, and the message to add bolding (where indicated by $BOLD
+and $RESET in the message).</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.2.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="kivy.logger.ConsoleHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.logger.</span></span><span class="sig-name descname"><span class="pre">ConsoleHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stream</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/logger.html#ConsoleHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.logger.ConsoleHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">logging.StreamHandler</span></code></p>
+<p>Emits records to a stream (by default, stderr).</p>
+<p>However, if the msg starts with “stderr:” it is not formatted, but
+written straight to the stream.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.2.0.</span></p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy.logger.ConsoleHandler.filter">
+<span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/logger.html#ConsoleHandler.filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.logger.ConsoleHandler.filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if a record is loggable by consulting all the filters.</p>
+<p>The default is to allow the record to be logged; any filter can veto
+this and the record is then dropped. Returns a zero value if a record
+is to be dropped, else non-zero.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.2: </span>Allow filters to be just callables.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="kivy.logger.FileHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.logger.</span></span><span class="sig-name descname"><span class="pre">FileHandler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/logger.html#FileHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.logger.FileHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">logging.Handler</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy.logger.FileHandler.emit">
+<span class="sig-name descname"><span class="pre">emit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/logger.html#FileHandler.emit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.logger.FileHandler.emit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do whatever it takes to actually log the specified logging record.</p>
+<p>This version is intended to be implemented by subclasses and so
+raises a NotImplementedError.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy.logger.FileHandler.purge_logs">
+<span class="sig-name descname"><span class="pre">purge_logs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/logger.html#FileHandler.purge_logs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.logger.FileHandler.purge_logs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Purge logs which exceed the maximum amount of log files,
+starting with the oldest creation timestamp (or edit-timestamp on Linux)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="kivy.logger.KivyFormatter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.logger.</span></span><span class="sig-name descname"><span class="pre">KivyFormatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/logger.html#KivyFormatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.logger.KivyFormatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">logging.Formatter</span></code></p>
+<p>Split out first field in message marked with a colon,
+and either apply terminal color codes to the record, or strip
+out color markup if colored logging is not available.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.2.0.</span></p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy.logger.KivyFormatter.format">
+<span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/logger.html#KivyFormatter.format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.logger.KivyFormatter.format" title="Permalink to this definition">¶</a></dt>
+<dd><p>Format the specified record as text.</p>
+<p>The record’s attribute dictionary is used as the operand to a
+string formatting operation which yields the returned string.
+Before formatting the dictionary, a couple of preparatory steps
+are carried out. The message attribute of the record is computed
+using LogRecord.getMessage(). If the formatting string uses the
+time (as determined by a call to usesTime(), formatTime() is
+called to format the event time. If there is exception information,
+it is formatted using formatException() and appended to the message.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -503,6 +681,47 @@ subclasses.</p>
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="kivy.logger.ProcessingStream">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.logger.</span></span><span class="sig-name descname"><span class="pre">ProcessingStream</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/logger.html#ProcessingStream"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.logger.ProcessingStream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">builtins.object</span></code></p>
+<p>Stream-like object that takes each completed line written to it,
+adds a given prefix, and applies the given function to it.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.2.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="kivy.logger.UncoloredLogRecord">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.logger.</span></span><span class="sig-name descname"><span class="pre">UncoloredLogRecord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logrecord</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/logger.html#UncoloredLogRecord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.logger.UncoloredLogRecord" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">logging.LogRecord</span></code></p>
+<p>Clones an existing logRecord, but reformats the message
+to remove $BOLD/$RESET markup.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.2.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="kivy.logger.add_kivy_handlers">
+<span class="sig-prename descclassname"><span class="pre">kivy.logger.</span></span><span class="sig-name descname"><span class="pre">add_kivy_handlers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/logger.html#add_kivy_handlers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.logger.add_kivy_handlers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add Kivy-specific handlers to a logger.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.2.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="kivy.logger.is_color_terminal">
+<span class="sig-prename descclassname"><span class="pre">kivy.logger.</span></span><span class="sig-name descname"><span class="pre">is_color_terminal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/logger.html#is_color_terminal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.logger.is_color_terminal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detect whether the environment supports color codes in output.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.2.0.</span></p>
+</div>
+</dd></dl>
+
+</section>
 </section>
 <div class="toctree-wrapper compound">
 </div>
@@ -555,7 +774,7 @@ subclasses.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Aug 31, 2022.
+      Last updated on Sep 10, 2022.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 5.1.1.
 </div>
 -->

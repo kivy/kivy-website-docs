@@ -262,7 +262,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.lib.gstplayer.html">GstPlayer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.lib.mtdev.html">Python mtdev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.loader.html">Asynchronous data loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api-kivy.logger.html">Logger object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api-kivy.logger.html">Kivy Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.metrics.html">Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.modules.html">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.modules.console.html">Console</a></li>
@@ -376,22 +376,40 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.logger</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Kivy Logging</span>
+<span class="sd">============</span>
+
+<span class="sd">By default, Kivy provides a logging system based on the standard Python</span>
+<span class="sd">`logging &lt;https://docs.python.org/3/library/logging.html&gt;`_ module with</span>
+<span class="sd">several additional features designed to be more convenient. These features</span>
+<span class="sd">include:</span>
+
+<span class="sd"> * simplied usage (single instance, simple configuration, works by default)</span>
+<span class="sd"> * color-coded output on supported terminals</span>
+<span class="sd"> * output to ``stderr`` by default</span>
+<span class="sd"> * message categorization via colon separation</span>
+<span class="sd"> * access to log history even if logging is disabled</span>
+<span class="sd"> * built-in handling of various cross-platform considerations</span>
+<span class="sd"> * any stray output written to ``sys.stderr`` is captured, and stored in the log</span>
+<span class="sd">   file as a warning.</span>
+
+<span class="sd">These features are configurable via the Config file or environment variables -</span>
+<span class="sd">including falling back to only using the standard Python system.</span>
+
 <span class="sd">Logger object</span>
 <span class="sd">=============</span>
 
-<span class="sd">The Kivy `Logger` class provides a singleton logger instance. This instance</span>
-<span class="sd">exposes a standard Python</span>
-<span class="sd">`logger &lt;https://docs.python.org/3/library/logging.html&gt;`_ object but adds</span>
-<span class="sd">some convenient features.</span>
+<span class="sd">The Kivy ``Logger`` class provides a singleton logging.logger instance.</span>
 
-<span class="sd">All the standard logging levels are available : `trace`, `debug`, `info`,</span>
-<span class="sd">`warning`, `error` and `critical`.</span>
+<span class="sd">As well as the standard logging levels (``debug``, ``info``,</span>
+<span class="sd">``warning``, ``error`` and ``critical``), an additional ``trace`` level is</span>
+<span class="sd">available.</span>
 
 <span class="sd">Example Usage</span>
 <span class="sd">-------------</span>
 
-<span class="sd">Use the `Logger` as you would a standard Python logger. ::</span>
+<span class="sd">Use the ``Logger`` as you would a standard Python logger. ::</span>
 
 <span class="sd">    from kivy.logger import Logger</span>
 
@@ -413,33 +431,89 @@
 
 <span class="sd">    [INFO   ] [Application ] This is a test</span>
 
-<span class="sd">You can change the logging level at any time using the `setLevel` method. ::</span>
+<span class="sd">You can change the logging level at any time using the ``setLevel`` method. ::</span>
 
 <span class="sd">    from kivy.logger import Logger, LOG_LEVELS</span>
 
 <span class="sd">    Logger.setLevel(LOG_LEVELS[&quot;debug&quot;])</span>
 
+<span class="sd">.. versionchanged:: 2.2.0</span>
 
-<span class="sd">Features</span>
-<span class="sd">--------</span>
+<span class="sd">Interaction with other logging</span>
+<span class="sd">------------------------------</span>
 
-<span class="sd">Although you are free to use standard python loggers, the Kivy `Logger` offers</span>
-<span class="sd">some solid benefits and useful features. These include:</span>
+<span class="sd">The Kivy logging system will, by default, present all log messages sent from</span>
+<span class="sd">any logger - e.g. from third-party libraries.</span>
 
-<span class="sd">* simplied usage (single instance, simple configuration, works by default)</span>
-<span class="sd">* color-coded output</span>
-<span class="sd">* output to `stdout` by default</span>
-<span class="sd">* message categorization via colon separation</span>
-<span class="sd">* access to log history even if logging is disabled</span>
-<span class="sd">* built-in handling of various cross-platform considerations</span>
+<span class="sd">Additional handlers may be added.</span>
 
-<span class="sd">Kivys&#39; logger was designed to be used with kivy apps and makes logging from</span>
-<span class="sd">Kivy apps more convenient.</span>
+<span class="sd">.. warning:: Handlers that output to ``sys.stderr`` may cause loops, as stderr</span>
+<span class="sd">   output is reported as a warning log message.</span>
 
 <span class="sd">Logger Configuration</span>
-<span class="sd">--------------------</span>
+<span class="sd">====================</span>
 
-<span class="sd">The Logger can be controlled via the Kivy configuration file::</span>
+<span class="sd">Kivy Log Mode</span>
+<span class="sd">-------------</span>
+
+<span class="sd">At the highest level, Kivy&#39;s logging system is controlled by an environment</span>
+<span class="sd">variable ``KIVY_LOG_MODE``. It may be given any of three values:</span>
+<span class="sd">``KIVY``, ``PYTHON``, ``MIXED``</span>
+
+<span class="sd">.. versionadded: 2.2.0</span>
+
+<span class="sd">KIVY Mode (default)</span>
+<span class="sd">^^^^^^^^^^^^^^^^^^^</span>
+
+<span class="sd">In ``KIVY`` mode, all Kivy handlers are attached to the root logger, so all log</span>
+<span class="sd">messages in the system are output to the Kivy log files and to the console. Any</span>
+<span class="sd">stray output to ``sys.stderr`` is logged as a warning.</span>
+
+<span class="sd">If you are writing an entire Kivy app from scratch, this is the most convenient</span>
+<span class="sd">mode.</span>
+
+<span class="sd">PYTHON Mode</span>
+<span class="sd">^^^^^^^^^^^</span>
+
+<span class="sd">In ``PYTHON`` mode, no handlers are added, and ``sys.stderr`` output is not</span>
+<span class="sd">captured. It is left to the client to add appropriate handlers. (If none are</span>
+<span class="sd">added, the ``logging`` module will output them to ``stderr``.)</span>
+
+<span class="sd">Messages logged with ``Logger`` will be propagated to the root logger, from a</span>
+<span class="sd">logger named ``kivy``.</span>
+
+<span class="sd">If the Kivy app is part of a much larger project which has its own logging</span>
+<span class="sd">regimen, this is the mode that gives most control.</span>
+
+<span class="sd">The ``kivy.logger`` file contains a number of ``logging.handler``,</span>
+<span class="sd">``logging.formatter``, and other helper classes to allow</span>
+<span class="sd">users to adopt the features of Kivy logging that they like, including the</span>
+<span class="sd">stderr redirection.</span>
+
+<span class="sd">MIXED Mode</span>
+<span class="sd">^^^^^^^^^^</span>
+
+<span class="sd">In ``MIXED`` mode, handlers are added to the Kivy&#39;s ``Logger`` object directly,</span>
+<span class="sd">and propagation is turned off. ``sys.stderr`` is not redirected.</span>
+
+<span class="sd">Messages logged with Kivy&#39;s ``Logger`` will appear in the Kivy log file and</span>
+<span class="sd">output to the Console.</span>
+
+<span class="sd">However, messages logged with other Python loggers will not be handled by Kivy</span>
+<span class="sd">handlers. The client will need to add their own.</span>
+
+<span class="sd">If you like the features of Kivy ``Logger``, but are writing a Kivy app that</span>
+<span class="sd">relies on third-party libraries that don&#39;t use colon-separation of categorise</span>
+<span class="sd">or depend on the display of the logger name, this mode provides a compromise.</span>
+
+<span class="sd">Again, the ``kivy.logger`` file contains re-usable logging features that can be</span>
+<span class="sd">used to get the best of both systems.</span>
+
+<span class="sd">Config Files</span>
+<span class="sd">------------</span>
+
+<span class="sd">In ``KIVY`` and ``MIXED`` modes, the logger handlers can be controlled via the</span>
+<span class="sd">Kivy configuration file::</span>
 
 <span class="sd">    [kivy]</span>
 <span class="sd">    log_level = info</span>
@@ -451,17 +525,21 @@
 <span class="sd">More information about the allowed values are described in the</span>
 <span class="sd">:mod:`kivy.config` module.</span>
 
+<span class="sd">In addition, the environment variables ``KIVY_NO_FILELOG`` and</span>
+<span class="sd">``KIVY_NO_CONSOLELOG`` can be used to turn off the installation of the</span>
+<span class="sd">corresponding handlers.</span>
+
+
 <span class="sd">Logger History</span>
 <span class="sd">--------------</span>
 
 <span class="sd">Even if the logger is not enabled, you still have access to the last 100</span>
-<span class="sd">messages::</span>
+<span class="sd">LogRecords::</span>
 
 <span class="sd">    from kivy.logger import LoggerHistory</span>
 
 <span class="sd">    print(LoggerHistory.history)</span>
-
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -474,7 +552,22 @@
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s1">&#39;Logger&#39;</span><span class="p">,</span> <span class="s1">&#39;LOG_LEVELS&#39;</span><span class="p">,</span> <span class="s1">&#39;COLORS&#39;</span><span class="p">,</span> <span class="s1">&#39;LoggerHistory&#39;</span><span class="p">,</span> <span class="s1">&#39;file_log_handler&#39;</span><span class="p">)</span>
+    <span class="s2">&quot;add_kivy_handlers&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ColonSplittingLogRecord&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ColoredLogRecord&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;COLORS&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ConsoleHandler&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;file_log_handler&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;FileHandler&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;is_color_terminal&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;KivyFormatter&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LOG_LEVELS&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Logger&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LoggerHistory&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ProcessingStream&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;UncoloredLogRecord&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
 
 <span class="n">Logger</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -490,14 +583,14 @@
     <span class="s1">&#39;critical&#39;</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">CRITICAL</span><span class="p">}</span>
 
 
-<span class="k">class</span> <span class="nc">FileHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Handler</span><span class="p">):</span>
+<div class="viewcode-block" id="FileHandler"><a class="viewcode-back" href="../../api-kivy.logger.html#kivy.logger.FileHandler">[docs]</a><span class="k">class</span> <span class="nc">FileHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Handler</span><span class="p">):</span>
     <span class="n">history</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;log.txt&#39;</span>
     <span class="n">fd</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">log_dir</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="n">encoding</span> <span class="o">=</span> <span class="s1">&#39;utf-8&#39;</span>
 
-    <span class="k">def</span> <span class="nf">purge_logs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="FileHandler.purge_logs"><a class="viewcode-back" href="../../api-kivy.logger.html#kivy.logger.FileHandler.purge_logs">[docs]</a>    <span class="k">def</span> <span class="nf">purge_logs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Purge logs which exceed the maximum amount of log files,</span>
 <span class="sd">        starting with the oldest creation timestamp (or edit-timestamp on Linux)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -531,7 +624,7 @@
             <span class="k">except</span> <span class="p">(</span><span class="ne">PermissionError</span><span class="p">,</span> <span class="ne">FileNotFoundError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Logger: Skipped file </span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Logger: Purge finished!&quot;</span><span class="p">)</span>
+        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Logger: Purge finished!&quot;</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_configure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">strftime</span>
@@ -579,7 +672,7 @@
         <span class="n">stream</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">fs</span> <span class="o">%</span> <span class="n">msg</span><span class="p">)</span>
         <span class="n">stream</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">emit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+<div class="viewcode-block" id="FileHandler.emit"><a class="viewcode-back" href="../../api-kivy.logger.html#kivy.logger.FileHandler.emit">[docs]</a>    <span class="k">def</span> <span class="nf">emit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
         <span class="c1"># during the startup, store the message in the history</span>
         <span class="k">if</span> <span class="n">Logger</span><span class="o">.</span><span class="n">logfile_activated</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">FileHandler</span><span class="o">.</span><span class="n">history</span> <span class="o">+=</span> <span class="p">[</span><span class="n">message</span><span class="p">]</span>
@@ -607,7 +700,7 @@
                 <span class="n">_message</span> <span class="o">=</span> <span class="n">FileHandler</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_write_message</span><span class="p">(</span><span class="n">_message</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_write_message</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_write_message</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="LoggerHistory"><a class="viewcode-back" href="../../api-kivy.logger.html#kivy.logger.LoggerHistory">[docs]</a><span class="k">class</span> <span class="nc">LoggerHistory</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Handler</span><span class="p">):</span>
@@ -626,16 +719,17 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">clear_history</span><span class="p">()</span></div></div>
 
 
-<span class="k">class</span> <span class="nc">ConsoleHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">):</span>
+<div class="viewcode-block" id="ConsoleHandler"><a class="viewcode-back" href="../../api-kivy.logger.html#kivy.logger.ConsoleHandler">[docs]</a><span class="k">class</span> <span class="nc">ConsoleHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Emits records to a stream (by default, stderr).</span>
 
 <span class="sd">        However, if the msg starts with &quot;stderr:&quot; it is not formatted, but</span>
 <span class="sd">        written straight to the stream.</span>
 
+<span class="sd">        .. versionadded:: 2.2.0</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+<div class="viewcode-block" id="ConsoleHandler.filter"><a class="viewcode-back" href="../../api-kivy.logger.html#kivy.logger.ConsoleHandler.filter">[docs]</a>    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">msg</span>
             <span class="n">k</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -647,13 +741,15 @@
                 <span class="k">return</span> <span class="kc">False</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="k">pass</span>
-        <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">True</span></div></div>
 
 
-<span class="k">class</span> <span class="nc">ProcessingStream</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="ProcessingStream"><a class="viewcode-back" href="../../api-kivy.logger.html#kivy.logger.ProcessingStream">[docs]</a><span class="k">class</span> <span class="nc">ProcessingStream</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Stream-like object that takes each completed line written to it,</span>
 <span class="sd">        adds a given prefix, and applies the given function to it.</span>
+
+<span class="sd">        .. versionadded:: 2.2.0</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
@@ -676,18 +772,22 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">isatty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
 
 
 <span class="k">def</span> <span class="nf">logger_config_update</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">LOG_LEVELS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;Loglevel </span><span class="si">{0!r}</span><span class="s1"> doesn</span><span class="se">\&#39;</span><span class="s1">t exists&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
-    <span class="n">Logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">LOG_LEVELS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">KIVY_LOG_MODE</span> <span class="o">!=</span> <span class="s2">&quot;PYTHON&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">LOG_LEVELS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;Loglevel </span><span class="si">{0!r}</span><span class="s1"> doesn</span><span class="se">\&#39;</span><span class="s1">t exists&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+        <span class="n">Logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">LOG_LEVELS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
 
 
-<span class="k">class</span> <span class="nc">ColonSplittingLogRecord</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">LogRecord</span><span class="p">):</span>
+<div class="viewcode-block" id="ColonSplittingLogRecord"><a class="viewcode-back" href="../../api-kivy.logger.html#kivy.logger.ColonSplittingLogRecord">[docs]</a><span class="k">class</span> <span class="nc">ColonSplittingLogRecord</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">LogRecord</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Clones an existing logRecord, but reformats the message field</span>
-<span class="sd">    if it contains a colon.&quot;&quot;&quot;</span>
+<span class="sd">    if it contains a colon.</span>
+
+<span class="sd">    .. versionadded:: 2.2.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logrecord</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
@@ -709,13 +809,15 @@
             <span class="n">exc_info</span><span class="o">=</span><span class="n">logrecord</span><span class="o">.</span><span class="n">exc_info</span><span class="p">,</span>
             <span class="n">func</span><span class="o">=</span><span class="n">logrecord</span><span class="o">.</span><span class="n">funcName</span><span class="p">,</span>
             <span class="n">sinfo</span><span class="o">=</span><span class="n">logrecord</span><span class="o">.</span><span class="n">stack_info</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="p">)</span></div>
 
 
-<span class="k">class</span> <span class="nc">ColoredLogRecord</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">LogRecord</span><span class="p">):</span>
+<div class="viewcode-block" id="ColoredLogRecord"><a class="viewcode-back" href="../../api-kivy.logger.html#kivy.logger.ColoredLogRecord">[docs]</a><span class="k">class</span> <span class="nc">ColoredLogRecord</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">LogRecord</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Clones an existing logRecord, but reformats the levelname to add</span>
 <span class="sd">    color, and the message to add bolding (where indicated by $BOLD</span>
-<span class="sd">    and $RESET in the message).&quot;&quot;&quot;</span>
+<span class="sd">    and $RESET in the message).</span>
+
+<span class="sd">    .. versionadded:: 2.2.0&quot;&quot;&quot;</span>
 
     <span class="n">BLACK</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">RED</span> <span class="o">=</span> <span class="mi">1</span>
@@ -766,7 +868,7 @@
             <span class="n">sinfo</span><span class="o">=</span><span class="n">logrecord</span><span class="o">.</span><span class="n">stack_info</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">levelname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_levelname</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">levelname</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span></div>
 
 
 <span class="c1"># Included for backward compatibility only.</span>
@@ -774,9 +876,11 @@
 <span class="n">COLORS</span> <span class="o">=</span> <span class="n">ColoredLogRecord</span><span class="o">.</span><span class="n">LEVEL_COLORS</span>
 
 
-<span class="k">class</span> <span class="nc">UncoloredLogRecord</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">LogRecord</span><span class="p">):</span>
+<div class="viewcode-block" id="UncoloredLogRecord"><a class="viewcode-back" href="../../api-kivy.logger.html#kivy.logger.UncoloredLogRecord">[docs]</a><span class="k">class</span> <span class="nc">UncoloredLogRecord</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">LogRecord</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Clones an existing logRecord, but reformats the message</span>
-<span class="sd">    to remove $BOLD/$RESET markup.&quot;&quot;&quot;</span>
+<span class="sd">    to remove $BOLD/$RESET markup.</span>
+
+<span class="sd">    .. versionadded:: 2.2.0&quot;&quot;&quot;</span>
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">_format_message</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
@@ -794,25 +898,32 @@
             <span class="n">func</span><span class="o">=</span><span class="n">logrecord</span><span class="o">.</span><span class="n">funcName</span><span class="p">,</span>
             <span class="n">sinfo</span><span class="o">=</span><span class="n">logrecord</span><span class="o">.</span><span class="n">stack_info</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_message</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span></div>
 
 
-<span class="k">class</span> <span class="nc">KivyFormatter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">):</span>
+<div class="viewcode-block" id="KivyFormatter"><a class="viewcode-back" href="../../api-kivy.logger.html#kivy.logger.KivyFormatter">[docs]</a><span class="k">class</span> <span class="nc">KivyFormatter</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Split out first field in message marked with a colon,</span>
 <span class="sd">    and either apply terminal color codes to the record, or strip</span>
-<span class="sd">    out color markup if colored logging is not available.&quot;&quot;&quot;</span>
+<span class="sd">    out color markup if colored logging is not available.</span>
+
+<span class="sd">    .. versionadded:: 2.2.0&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">use_color</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_coloring_cls</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">ColoredLogRecord</span> <span class="k">if</span> <span class="n">use_color</span> <span class="k">else</span> <span class="n">UncoloredLogRecord</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+<div class="viewcode-block" id="KivyFormatter.format"><a class="viewcode-back" href="../../api-kivy.logger.html#kivy.logger.KivyFormatter.format">[docs]</a>    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_coloring_cls</span><span class="p">(</span><span class="n">ColonSplittingLogRecord</span><span class="p">(</span><span class="n">record</span><span class="p">)))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_coloring_cls</span><span class="p">(</span><span class="n">ColonSplittingLogRecord</span><span class="p">(</span><span class="n">record</span><span class="p">)))</span></div></div>
 
 
-<span class="k">def</span> <span class="nf">is_color_terminal</span><span class="p">():</span>
+<div class="viewcode-block" id="is_color_terminal"><a class="viewcode-back" href="../../api-kivy.logger.html#kivy.logger.is_color_terminal">[docs]</a><span class="k">def</span> <span class="nf">is_color_terminal</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot; Detect whether the environment supports color codes in output.</span>
+
+<span class="sd">    .. versionadded:: 2.2.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">return</span> <span class="p">(</span>
             <span class="p">(</span>
                     <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;WT_SESSION&quot;</span><span class="p">)</span> <span class="ow">or</span>
@@ -828,10 +939,11 @@
                     <span class="p">)</span>
             <span class="p">)</span>
             <span class="ow">and</span> <span class="n">platform</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;android&#39;</span><span class="p">,</span> <span class="s1">&#39;ios&#39;</span><span class="p">)</span>
-    <span class="p">)</span>
+    <span class="p">)</span></div>
 
 
 <span class="c1">#: Kivy default logger instance</span>
+<span class="c1"># .. versionchanged:: 2.2.0</span>
 <span class="n">Logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;kivy&#39;</span><span class="p">)</span>
 <span class="n">Logger</span><span class="o">.</span><span class="n">logfile_activated</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="n">Logger</span><span class="o">.</span><span class="n">trace</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">Logger</span><span class="o">.</span><span class="n">log</span><span class="p">,</span> <span class="n">logging</span><span class="o">.</span><span class="n">TRACE</span><span class="p">)</span>
@@ -843,7 +955,18 @@
 <span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">add_kivy_handlers</span><span class="p">(</span><span class="n">logger</span><span class="p">):</span>
+<span class="c1"># Issue #7891 describes an undocumented feature that was since removed</span>
+<span class="c1"># Detect if a client was depending on it.</span>
+<span class="c1"># .. versionchanged:: 2.2.0</span>
+<span class="k">assert</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s1">&#39;_kivy_logging_handler&#39;</span><span class="p">),</span> \
+    <span class="s2">&quot;Not supported. Try logging.root.addHandler()&quot;</span>
+
+
+<div class="viewcode-block" id="add_kivy_handlers"><a class="viewcode-back" href="../../api-kivy.logger.html#kivy.logger.add_kivy_handlers">[docs]</a><span class="k">def</span> <span class="nf">add_kivy_handlers</span><span class="p">(</span><span class="n">logger</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Add Kivy-specific handlers to a logger.</span>
+
+<span class="sd">    .. versionadded:: 2.2.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># add default kivy logger</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">LoggerHistory</span><span class="p">())</span>
     <span class="k">if</span> <span class="n">file_log_handler</span><span class="p">:</span>
@@ -851,30 +974,26 @@
 
     <span class="c1"># Use the custom handler instead of streaming one.</span>
     <span class="k">if</span> <span class="s1">&#39;KIVY_NO_CONSOLELOG&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
-        <span class="c1"># This attribute is undocumented, and may be removed in a future</span>
-        <span class="c1"># release.</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s1">&#39;_kivy_logging_handler&#39;</span><span class="p">):</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s1">&#39;_kivy_logging_handler&#39;</span><span class="p">))</span>
+        <span class="n">use_color</span> <span class="o">=</span> <span class="n">is_color_terminal</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">use_color</span><span class="p">:</span>
+            <span class="c1"># No additional control characters will be inserted inside the</span>
+            <span class="c1"># levelname field, 7 chars will fit &quot;WARNING&quot;</span>
+            <span class="n">fmt</span> <span class="o">=</span> <span class="s2">&quot;[</span><span class="si">%(levelname)-7s</span><span class="s2">] </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">use_color</span> <span class="o">=</span> <span class="n">is_color_terminal</span><span class="p">()</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">use_color</span><span class="p">:</span>
-                <span class="c1"># No additional control characters will be inserted inside the</span>
-                <span class="c1"># levelname field, 7 chars will fit &quot;WARNING&quot;</span>
-                <span class="n">fmt</span> <span class="o">=</span> <span class="s2">&quot;[</span><span class="si">%(levelname)-7s</span><span class="s2">] </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># levelname field width need to take into account the length of</span>
-                <span class="c1"># the color control codes (7+4 chars for bold+color, and reset)</span>
-                <span class="n">fmt</span> <span class="o">=</span> <span class="s2">&quot;[</span><span class="si">%(levelname)-18s</span><span class="s2">] </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
-            <span class="n">formatter</span> <span class="o">=</span> <span class="n">KivyFormatter</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="n">use_color</span><span class="o">=</span><span class="n">use_color</span><span class="p">)</span>
-            <span class="n">console</span> <span class="o">=</span> <span class="n">ConsoleHandler</span><span class="p">()</span>
-            <span class="n">console</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">console</span><span class="p">)</span>
+            <span class="c1"># levelname field width need to take into account the length of</span>
+            <span class="c1"># the color control codes (7+4 chars for bold+color, and reset)</span>
+            <span class="n">fmt</span> <span class="o">=</span> <span class="s2">&quot;[</span><span class="si">%(levelname)-18s</span><span class="s2">] </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
+        <span class="n">formatter</span> <span class="o">=</span> <span class="n">KivyFormatter</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="n">use_color</span><span class="o">=</span><span class="n">use_color</span><span class="p">)</span>
+        <span class="n">console</span> <span class="o">=</span> <span class="n">ConsoleHandler</span><span class="p">()</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">console</span><span class="p">)</span></div>
 
 
-<span class="c1"># This environment variable is unsupported, and is expected to change before</span>
-<span class="c1"># the next release.</span>
-<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;KIVY_LOG_MODE&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;TEST&quot;</span><span class="p">:</span>
-    <span class="c1"># Add the Kivy handlers to the root logger, so it will be used</span>
+<span class="n">KIVY_LOG_MODE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;KIVY_LOG_MODE&quot;</span><span class="p">,</span> <span class="s2">&quot;KIVY&quot;</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">KIVY_LOG_MODE</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;KIVY&quot;</span><span class="p">,</span> <span class="s2">&quot;PYTHON&quot;</span><span class="p">,</span> <span class="s2">&quot;MIXED&quot;</span><span class="p">),</span> <span class="s2">&quot;Unknown log mode&quot;</span>
+
+<span class="k">if</span> <span class="n">KIVY_LOG_MODE</span> <span class="o">==</span> <span class="s2">&quot;KIVY&quot;</span><span class="p">:</span>
+    <span class="c1"># Add the Kivy handlers to the root logger, so they will be used</span>
     <span class="c1"># for all propagated log messages.</span>
     <span class="n">add_kivy_handlers</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
 
@@ -888,6 +1007,19 @@
     <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span> <span class="o">=</span> <span class="n">ProcessingStream</span><span class="p">(</span><span class="s2">&quot;stderr&quot;</span><span class="p">,</span> <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">)</span>
     <span class="c1"># Sends all messages written to stderr to the Logger, after prefixing it</span>
     <span class="c1"># with &quot;stderr:&quot;</span>
+<span class="k">elif</span> <span class="n">KIVY_LOG_MODE</span> <span class="o">==</span> <span class="s2">&quot;MIXED&quot;</span><span class="p">:</span>
+    <span class="c1"># Add the Kivy handlers to the Kivy logger, so they will be used</span>
+    <span class="c1"># for all messages sent through Logger, only.</span>
+    <span class="n">add_kivy_handlers</span><span class="p">(</span><span class="n">Logger</span><span class="p">)</span>
+
+    <span class="c1"># Don&#39;t spread Kivy-related log messages to the root logger.</span>
+    <span class="n">Logger</span><span class="o">.</span><span class="n">propagate</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># Don&#39;t set stderr redirection: it is too likely to cause loops with other</span>
+    <span class="c1"># handlers. Client can manually add it, if desired.</span>
+<span class="k">else</span><span class="p">:</span>  <span class="c1"># KIVY_LOG_MODE == &quot;PYTHON&quot;</span>
+    <span class="c1"># Don&#39;t add handlers or redirect stderr. Client can manually add if desired.</span>
+    <span class="k">pass</span>
 </pre></div>
 
             <div class="footerlinks">
@@ -926,7 +1058,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Aug 31, 2022.
+      Last updated on Sep 10, 2022.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 5.1.1.
 </div>
 -->
