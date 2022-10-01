@@ -19,6 +19,7 @@
             <script src="../../../_static/underscore.js"></script> 
             <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script> 
             <script src="../../../_static/doctools.js"></script> 
+            <script src="../../../_static/sphinx_highlight.js"></script> 
         
         <script>
             const currTheme = localStorage.getItem("theme");
@@ -2362,9 +2363,15 @@
                            <span class="s2">&quot;semantics.&quot;</span><span class="p">)</span>
 
         <span class="c1"># Quit if user presses ESC or the typical OSX shortcuts CMD+q or CMD+w</span>
+        <span class="c1"># On Android a back key/gesture is mapped to 27 and initiates a pause.</span>
+        <span class="c1"># Consume the event and tell Android to pause.</span>
         <span class="c1"># TODO If just CMD+w is pressed, only the window should be closed.</span>
         <span class="n">is_osx</span> <span class="o">=</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;darwin&#39;</span>
-        <span class="k">if</span> <span class="n">WindowBase</span><span class="o">.</span><span class="n">on_keyboard</span><span class="o">.</span><span class="n">exit_on_escape</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="mi">27</span> <span class="ow">and</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;android&#39;</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">android</span> <span class="kn">import</span> <span class="n">mActivity</span>
+            <span class="n">mActivity</span><span class="o">.</span><span class="n">moveTaskToBack</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">WindowBase</span><span class="o">.</span><span class="n">on_keyboard</span><span class="o">.</span><span class="n">exit_on_escape</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="mi">27</span> <span class="ow">or</span> <span class="nb">all</span><span class="p">([</span><span class="n">is_osx</span><span class="p">,</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">113</span><span class="p">,</span> <span class="mi">119</span><span class="p">],</span> <span class="n">modifier</span> <span class="o">==</span> <span class="mi">1024</span><span class="p">]):</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_request_close&#39;</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s1">&#39;keyboard&#39;</span><span class="p">):</span>
                     <span class="n">stopTouchApp</span><span class="p">()</span>
@@ -2874,8 +2881,8 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Sep 10, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 5.1.1.
+      Last updated on Oct 01, 2022.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 5.2.3.
 </div>
 -->
   </body>

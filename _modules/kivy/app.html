@@ -19,6 +19,7 @@
             <script src="../../_static/underscore.js"></script> 
             <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script> 
             <script src="../../_static/doctools.js"></script> 
+            <script src="../../_static/sphinx_highlight.js"></script> 
         
         <script>
             const currTheme = localStorage.getItem("theme");
@@ -662,9 +663,10 @@
 <span class="sd">       System due to the user switching to another application, a phone</span>
 <span class="sd">       shutdown or any other reason.</span>
 <span class="sd">    #. :meth:`App.on_pause` is called:</span>
-<span class="sd">    #. If False is returned, then :meth:`App.on_stop` is called.</span>
-<span class="sd">    #. If True is returned (default case), the application will sleep until</span>
-<span class="sd">       the OS resumes our App.</span>
+<span class="sd">    #. If False is returned or :meth:`App.on_pause` has no return statement,</span>
+<span class="sd">       then :meth:`App.on_stop` is called.</span>
+<span class="sd">    #. If True is returned or :meth:`App.on_pause` is not defined, the</span>
+<span class="sd">       application will sleep until the OS resumes our App.</span>
 <span class="sd">    #. When the app is resumed, :meth:`App.on_resume` is called.</span>
 <span class="sd">    #. If our app memory has been reclaimed by the OS, then nothing will be</span>
 <span class="sd">       called.</span>
@@ -1331,7 +1333,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_run_prepare</span><span class="p">()</span>
         <span class="n">runTouchApp</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stop</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="App.async_run"><a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.async_run">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">async_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">async_lib</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Identical to :meth:`run`, but is a coroutine and can be</span>
@@ -1343,14 +1345,22 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_run_prepare</span><span class="p">()</span>
         <span class="k">await</span> <span class="n">async_runTouchApp</span><span class="p">(</span><span class="n">async_lib</span><span class="o">=</span><span class="n">async_lib</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stop</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="App.stop"><a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Stop the application.</span>
 
 <span class="sd">        If you use this method, the whole application will stop by issuing</span>
 <span class="sd">        a call to :func:`~kivy.base.stopTouchApp`.</span>
+<span class="sd">        Except on Android, set Android state to stop, Kivy state then follows.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;android&#39;</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">android</span> <span class="kn">import</span> <span class="n">mActivity</span>
+            <span class="n">mActivity</span><span class="o">.</span><span class="n">finishAndRemoveTask</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stop</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_stop&#39;</span><span class="p">)</span>
         <span class="n">stopTouchApp</span><span class="p">()</span>
 
@@ -1358,7 +1368,20 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app_window</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app_window</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_app_window</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
-        <span class="n">App</span><span class="o">.</span><span class="n">_running_app</span> <span class="o">=</span> <span class="kc">None</span></div>
+        <span class="n">App</span><span class="o">.</span><span class="n">_running_app</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="App.pause"><a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.pause">[docs]</a>    <span class="k">def</span> <span class="nf">pause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Pause the application.</span>
+
+<span class="sd">        On Android set OS state to pause, Kivy app state follows.</span>
+<span class="sd">        No functionality on other OS.</span>
+<span class="sd">        .. versionadded:: 2.2.0</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;android&#39;</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">android</span> <span class="kn">import</span> <span class="n">mActivity</span>
+            <span class="n">mActivity</span><span class="o">.</span><span class="n">moveTaskToBack</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;App.pause() is not available on this OS.&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="App.on_start"><a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.on_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Event handler for the `on_start` event which is fired after</span>
@@ -1605,8 +1628,8 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Sep 10, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 5.1.1.
+      Last updated on Oct 01, 2022.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 5.2.3.
 </div>
 -->
   </body>
