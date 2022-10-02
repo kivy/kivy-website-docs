@@ -419,7 +419,6 @@
 <span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
 <span class="kn">from</span> <span class="nn">kivy.cache</span> <span class="kn">import</span> <span class="n">Cache</span>
 <span class="kn">from</span> <span class="nn">kivy.core.image</span> <span class="kn">import</span> <span class="n">ImageLoader</span><span class="p">,</span> <span class="n">Image</span>
-<span class="kn">from</span> <span class="nn">kivy.compat</span> <span class="kn">import</span> <span class="n">PY2</span><span class="p">,</span> <span class="n">string_types</span>
 <span class="kn">from</span> <span class="nn">kivy.config</span> <span class="kn">import</span> <span class="n">Config</span>
 <span class="kn">from</span> <span class="nn">kivy.utils</span> <span class="kn">import</span> <span class="n">platform</span>
 
@@ -503,10 +502,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_start_wanted</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">create_trigger</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_update</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">platform</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;android&#39;</span><span class="p">,</span> <span class="s1">&#39;ios&#39;</span><span class="p">]:</span>
-            <span class="kn">import</span> <span class="nn">certifi</span>
-            <span class="n">environ</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;SSL_CERT_FILE&#39;</span><span class="p">,</span> <span class="n">certifi</span><span class="o">.</span><span class="n">where</span><span class="p">())</span>
-
     <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
@@ -570,7 +565,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loading_image</span>
 
     <span class="k">def</span> <span class="nf">_set_loading_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_loading_image</span> <span class="o">=</span> <span class="n">ImageLoader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">image</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_loading_image</span> <span class="o">=</span> <span class="n">image</span>
@@ -593,7 +588,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error_image</span>
 
     <span class="k">def</span> <span class="nf">_set_error_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_error_image</span> <span class="o">=</span> <span class="n">ImageLoader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">image</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_error_image</span> <span class="o">=</span> <span class="n">image</span>
@@ -685,16 +680,9 @@
     <span class="k">def</span> <span class="nf">_load_urllib</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;(internal) Loading a network file. First download it, save it to a</span>
 <span class="sd">        temporary file, and pass it to _load_local().&#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="n">PY2</span><span class="p">:</span>
-            <span class="kn">import</span> <span class="nn">urllib2</span> <span class="k">as</span> <span class="nn">urllib_request</span>
+        <span class="kn">import</span> <span class="nn">urllib.request</span>
+        <span class="kn">import</span> <span class="nn">tempfile</span>
 
-            <span class="k">def</span> <span class="nf">gettype</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
-                <span class="k">return</span> <span class="n">info</span><span class="o">.</span><span class="n">gettype</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="kn">import</span> <span class="nn">urllib.request</span> <span class="k">as</span> <span class="nn">urllib_request</span>
-
-            <span class="k">def</span> <span class="nf">gettype</span><span class="p">(</span><span class="n">info</span><span class="p">):</span>
-                <span class="k">return</span> <span class="n">info</span><span class="o">.</span><span class="n">get_content_type</span><span class="p">()</span>
         <span class="n">proto</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">proto</span> <span class="o">==</span> <span class="s1">&#39;smb&#39;</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
@@ -705,29 +693,38 @@
                 <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
                     <span class="s1">&#39;Loader: can not load PySMB: make sure it is installed&#39;</span><span class="p">)</span>
                 <span class="k">return</span>
-        <span class="kn">import</span> <span class="nn">tempfile</span>
+
         <span class="n">data</span> <span class="o">=</span> <span class="n">fd</span> <span class="o">=</span> <span class="n">_out_osfd</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">_out_filename</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 
             <span class="k">if</span> <span class="n">proto</span> <span class="o">==</span> <span class="s1">&#39;smb&#39;</span><span class="p">:</span>
                 <span class="c1"># read from samba shares</span>
-                <span class="n">fd</span> <span class="o">=</span> <span class="n">urllib_request</span><span class="o">.</span><span class="n">build_opener</span><span class="p">(</span><span class="n">SMBHandler</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+                <span class="n">fd</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">build_opener</span><span class="p">(</span><span class="n">SMBHandler</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># read from internet</span>
-                <span class="n">request</span> <span class="o">=</span> <span class="n">urllib_request</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+                <span class="n">request</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">Config</span><span class="o">.</span><span class="n">has_option</span><span class="p">(</span><span class="s1">&#39;network&#39;</span><span class="p">,</span> <span class="s1">&#39;useragent&#39;</span><span class="p">):</span>
                     <span class="n">useragent</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;network&#39;</span><span class="p">,</span> <span class="s1">&#39;useragent&#39;</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">useragent</span><span class="p">:</span>
                         <span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s1">&#39;User-Agent&#39;</span><span class="p">,</span> <span class="n">useragent</span><span class="p">)</span>
-                <span class="n">opener</span> <span class="o">=</span> <span class="n">urllib_request</span><span class="o">.</span><span class="n">build_opener</span><span class="p">()</span>
-                <span class="n">fd</span> <span class="o">=</span> <span class="n">opener</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+                <span class="c1"># A custom context is only needed on Android and iOS</span>
+                <span class="c1"># as we need to use the certs provided via certifi.</span>
+                <span class="n">ssl_ctx</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">if</span> <span class="n">platform</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;android&#39;</span><span class="p">,</span> <span class="s1">&#39;ios&#39;</span><span class="p">]:</span>
+                    <span class="kn">import</span> <span class="nn">certifi</span>
+                    <span class="kn">import</span> <span class="nn">ssl</span>
+                    <span class="n">ssl_ctx</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">create_default_context</span><span class="p">(</span><span class="n">cafile</span><span class="o">=</span><span class="n">certifi</span><span class="o">.</span><span class="n">where</span><span class="p">())</span>
+                    <span class="n">ssl_ctx</span><span class="o">.</span><span class="n">verify_mode</span> <span class="o">=</span> <span class="n">ssl</span><span class="o">.</span><span class="n">CERT_REQUIRED</span>
+
+                <span class="n">fd</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="n">ssl_ctx</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="s1">&#39;#.&#39;</span> <span class="ow">in</span> <span class="n">filename</span><span class="p">:</span>
                 <span class="c1"># allow extension override from URL fragment</span>
                 <span class="n">suffix</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;#.&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">ctype</span> <span class="o">=</span> <span class="n">gettype</span><span class="p">(</span><span class="n">fd</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
+                <span class="n">ctype</span> <span class="o">=</span> <span class="n">fd</span><span class="o">.</span><span class="n">info</span><span class="p">()</span><span class="o">.</span><span class="n">get_content_type</span><span class="p">()</span>
                 <span class="n">suffix</span> <span class="o">=</span> <span class="n">mimetypes</span><span class="o">.</span><span class="n">guess_extension</span><span class="p">(</span><span class="n">ctype</span><span class="p">)</span>
                 <span class="n">suffix</span> <span class="o">=</span> <span class="n">LoaderBase</span><span class="o">.</span><span class="n">EXT_ALIAS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">suffix</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">suffix</span><span class="p">:</span>
