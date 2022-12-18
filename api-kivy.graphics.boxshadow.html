@@ -1,0 +1,633 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="twitter:site" content="@kivyframework">
+    <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
+    <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>BoxShadow &mdash; Kivy 2.2.0.dev0 documentation</title>
+    <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/fresh.css" type="text/css" />
+         
+          <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script> 
+            <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script> 
+            <script src="_static/jquery.js"></script> 
+            <script src="_static/underscore.js"></script> 
+            <script src="_static/_sphinx_javascript_frameworks_compat.js"></script> 
+            <script src="_static/doctools.js"></script> 
+            <script src="_static/sphinx_highlight.js"></script> 
+        
+        <script>
+            const currTheme = localStorage.getItem("theme");
+            if(currTheme){
+                document.documentElement.className = currTheme;
+            } else if(window.matchMedia){
+                document.documentElement.className = window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark": "light";
+            } else { // neither localStorage or window.matchMedia exists
+                document.documentElement.className = "light"; //todo should dark theme be the fallback value instead ?
+            }
+        </script>
+        <script type="text/javascript" src="_static/jquery-effects-core-and-slide.js"></script>
+        <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+        <script type="text/javascript" src="_static/kivy.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="Kivy 2.2.0.dev0 documentation" href="index.html" />
+    <link rel="up" title="Graphics" href="api-kivy.graphics.html" />
+    <link rel="next" title="Canvas" href="api-kivy.graphics.instructions.html" />
+    <link rel="prev" title="Graphics" href="api-kivy.graphics.html" /> 
+  </head>
+  <body>
+
+    <div id="topbar">
+        <div id="topwrapper">
+          <div id="toplogo">
+              <a href="https://kivy.org/">
+                  <img src="_static/logo-kivy.png" alt="Kivy"/>
+              </a>
+          </div>
+          <div id="topmenu">
+              <ul class="navigation">
+                  <li><a class="nav-guides" href="gettingstarted/intro.html">Guides</a></li>
+                  <li><a class="nav-garden" href="http://kivy-garden.github.io/">Garden</a></li>
+                  <li><a class="nav-api" href="api-kivy.html">API Reference</a></li>
+                  <li><a class="nav-pdf" href="https://media.readthedocs.org/pdf/kivy/latest/kivy.pdf">PDF</a></li>
+                  <li><a class="nav-wiki" href="http://wiki.kivy.org">Wiki</a></li>
+                  <li id="li_themeToggleSwitch">
+                        <button id="themeToggleSwitch" type="button">
+                            <span class="vt-switch-check">
+                                <span class="vt-switch-icon">
+                                    <!--[-->
+                                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" class="sun">
+                                        <path d="M12,18c-3.3,0-6-2.7-6-6s2.7-6,6-6s6,2.7,6,6S15.3,18,12,18zM12,8c-2.2,0-4,1.8-4,4c0,2.2,1.8,4,4,4c2.2,0,4-1.8,4-4C16,9.8,14.2,8,12,8z"></path>
+                                        <path d="M12,4c-0.6,0-1-0.4-1-1V1c0-0.6,0.4-1,1-1s1,0.4,1,1v2C13,3.6,12.6,4,12,4z"></path>
+                                        <path d="M12,24c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1s1,0.4,1,1v2C13,23.6,12.6,24,12,24z"></path>
+                                        <path d="M5.6,6.6c-0.3,0-0.5-0.1-0.7-0.3L3.5,4.9c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l1.4,1.4c0.4,0.4,0.4,1,0,1.4C6.2,6.5,5.9,6.6,5.6,6.6z"></path>
+                                        <path d="M19.8,20.8c-0.3,0-0.5-0.1-0.7-0.3l-1.4-1.4c-0.4-0.4-0.4-1,0-1.4s1-0.4,1.4,0l1.4,1.4c0.4,0.4,0.4,1,0,1.4C20.3,20.7,20,20.8,19.8,20.8z"></path>
+                                        <path d="M3,13H1c-0.6,0-1-0.4-1-1s0.4-1,1-1h2c0.6,0,1,0.4,1,1S3.6,13,3,13z"></path>
+                                        <path d="M23,13h-2c-0.6,0-1-0.4-1-1s0.4-1,1-1h2c0.6,0,1,0.4,1,1S23.6,13,23,13z"></path>
+                                        <path d="M4.2,20.8c-0.3,0-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.4l1.4-1.4c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-1.4,1.4C4.7,20.7,4.5,20.8,4.2,20.8z"></path>
+                                        <path d="M18.4,6.6c-0.3,0-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.4l1.4-1.4c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-1.4,1.4C18.9,6.5,18.6,6.6,18.4,6.6z"></path>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" class="moon">
+                                        <path d="M12.1,22c-0.3,0-0.6,0-0.9,0c-5.5-0.5-9.5-5.4-9-10.9c0.4-4.8,4.2-8.6,9-9c0.4,0,0.8,0.2,1,0.5c0.2,0.3,0.2,0.8-0.1,1.1c-2,2.7-1.4,6.4,1.3,8.4c2.1,1.6,5,1.6,7.1,0c0.3-0.2,0.7-0.3,1.1-0.1c0.3,0.2,0.5,0.6,0.5,1c-0.2,2.7-1.5,5.1-3.6,6.8C16.6,21.2,14.4,22,12.1,22zM9.3,4.4c-2.9,1-5,3.6-5.2,6.8c-0.4,4.4,2.8,8.3,7.2,8.7c2.1,0.2,4.2-0.4,5.8-1.8c1.1-0.9,1.9-2.1,2.4-3.4c-2.5,0.9-5.3,0.5-7.5-1.1C9.2,11.4,8.1,7.7,9.3,4.4z"></path>
+                                    </svg>
+                                    <!--]-->
+                                </span>
+                            </span>
+                        </button>
+
+                  </li>
+              </ul>
+          </div>
+        </div>
+    </div>
+<div id="contentall">
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3>Version</h3>
+            <select id="version_selector"></select>
+            <h3>Quick search</h3>
+            <form class="search" action="search.html" method="get">
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+                <input type="text" class="text" name="q" />
+                <button type="submit">Go</button>
+            </form>
+          <!--
+          <h3><a href="index.html">BoxShadow</a></h3>
+          <ul>
+<li><a class="reference internal" href="#">BoxShadow</a><ul>
+<li><a class="reference internal" href="#example">Example:</a></li>
+<li><a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow"><code class="docutils literal notranslate"><span class="pre">BoxShadow</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.blur_radius"><code class="docutils literal notranslate"><span class="pre">BoxShadow.blur_radius</span></code></a></li>
+<li><a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.border_radius"><code class="docutils literal notranslate"><span class="pre">BoxShadow.border_radius</span></code></a></li>
+<li><a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.offset"><code class="docutils literal notranslate"><span class="pre">BoxShadow.offset</span></code></a></li>
+<li><a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.pos"><code class="docutils literal notranslate"><span class="pre">BoxShadow.pos</span></code></a></li>
+<li><a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.size"><code class="docutils literal notranslate"><span class="pre">BoxShadow.size</span></code></a></li>
+<li><a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.spread_radius"><code class="docutils literal notranslate"><span class="pre">BoxShadow.spread_radius</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          <h3><a href="index.html">Table Of Contents</a></h3>
+          -->
+          <ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/index.html">Gallery of Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/gallery.html">Gallery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__3Drendering__main__py.html">3D Rotating Monkey Head</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__animation__animate__py.html">Widget animation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__application__app_suite__py.html">Suite of Application Builders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__application__app_with_build__py.html">Application example using build() + return</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__application__app_with_kv__py.html">Application built from a  .kv file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__application__app_with_kv_in_template1__py.html">Application from a .kv in a Template Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__camera__main__py.html">Camera Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__canvas__bezier__py.html">Bezier Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__canvas__canvas_stress__py.html">Canvas stress</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__canvas__circle__py.html">Circle Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__canvas__fbo_canvas__py.html">FBO Canvas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__canvas__lines__py.html">Line (SmoothLine) Experiment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__canvas__lines_extended__py.html">Lines Extended Demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__canvas__mesh__py.html">Mesh test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__canvas__multitexture__py.html">Multitexture Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__canvas__repeat_texture__py.html">Repeat Texture on Resize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__canvas__rotation__py.html">Rotation Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__canvas__stencil_canvas__py.html">Stencil demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__canvas__tesselate__py.html">Tesselate Demonstration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__canvas__texture__py.html">Texture Wrapping and Coordinates Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__demo__camera_puzzle__py.html">Shuffled Camera Feed Puzzle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__demo__kivycatalog__main__py.html">Kivy Catalog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__demo__multistroke__main__py.html">Multistroke Recognition Database Demonstration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__demo__pictures__main__py.html">Basic Picture Viewer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__demo__shadereditor__main__py.html">Live Shader Editor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__demo__showcase__main__py.html">Showcase of Kivy Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/gen__demo__touchtracer__main__py.html">Touch Tracer Line Drawing Demonstration</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted/index.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted/intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted/installation.html">Installing Kivy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted/first_app.html">A first App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted/properties.html">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted/rules.html">Kv Design Language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted/events.html">Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted/framework.html">Non-widget stuff</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted/layouts.html">Layouts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted/drawing.html">Drawing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted/packaging.html">Packaging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gettingstarted/diving.html">Diving in</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user-guide.html">Kivy Project</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="philosophy.html">Philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contribute.html">Contributing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html">FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contact.html">Contact Us</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="guide-index.html">Programming Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="guide/basic.html">Kivy Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/environment.html">Controlling the environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/config.html">Configure Kivy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/architecture.html">Architectural Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/events.html">Events and Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/inputs.html">Input management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/widgets.html">Widgets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/graphics.html">Graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/lang.html">Kv language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/other-frameworks.html">Integrating with other Frameworks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/packaging.html">Packaging your application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guide/licensing.html">Package licensing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials-index.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/pong.html">Pong Game Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/firstwidget.html">A Simple Paint App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/crashcourse.html">Crash Course</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="api-index.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.html">Kivy framework</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy._metrics.html">Low level Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.animation.html">Animation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.app.html">Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.atlas.html">Atlas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.base.html">Kivy Base</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.cache.html">Cache manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.clock.html">Clock object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.compat.html">Compatibility module for Python 2.7 and &gt;= 3.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.config.html">Configuration object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.context.html">Context</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.html">Core Abstraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.audio.html">Audio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.camera.html">Camera</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.clipboard.html">Clipboard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.gl.html">OpenGL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.image.html">Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.spelling.html">Spelling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.text.html">Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.text.markup.html">Text Markup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.text.text_layout.html">Text layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.video.html">Video</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.window.html">Window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.deps.html">Kivy module for binary dependencies.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.effects.html">Effects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.effects.dampedscroll.html">Damped scroll effect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.effects.kinetic.html">Kinetic effect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.effects.opacityscroll.html">Opacity scroll effect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.effects.scroll.html">Scroll effect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.event.html">Event dispatcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.eventmanager.html">Event Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.factory.html">Factory object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.garden.html">Garden</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.geometry.html">Geometry utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.gesture.html">Gesture recognition</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="api-kivy.graphics.html">Graphics</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">BoxShadow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.cgl.html">CGL: standard C interface for OpenGL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.compiler.html">Graphics compiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.context.html">Context management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.context_instructions.html">Context instructions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.fbo.html">Framebuffer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.gl_instructions.html">GL instructions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.instructions.html">Canvas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.opengl.html">OpenGL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.opengl_utils.html">OpenGL utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.scissor_instructions.html">Scissor Instructions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.shader.html">Shader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.stencil_instructions.html">Stencil instructions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.svg.html">SVG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.tesselator.html">Tesselator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.texture.html">Texture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.transformation.html">Transformation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.html">Input management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.factory.html">Motion Event Factory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.motionevent.html">Motion Event</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.postproc.html">Input Postprocessing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.postproc.calibration.html">Calibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.postproc.dejitter.html">Dejitter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.postproc.doubletap.html">Double Tap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.postproc.ignorelist.html">Ignore list</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.postproc.retaintouch.html">Retain Touch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.postproc.tripletap.html">Triple Tap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.provider.html">Motion Event Provider</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.providers.html">Providers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.providers.androidjoystick.html">Android Joystick Input Provider</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.providers.hidinput.html">Native support for HID input from the linux kernel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.providers.leapfinger.html">Leap Motion - finger only</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.providers.linuxwacom.html">Native support of Wacom tablet from linuxwacom driver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.providers.mactouch.html">Native support of MultitouchSupport framework for MacBook (MaxOSX platform)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.providers.mouse.html">Mouse provider implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.providers.mtdev.html">Native support for Multitouch devices on Linux, using libmtdev.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.providers.probesysfs.html">Auto Create Input Provider Config Entry for Available MT Hardware (linux only).</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.providers.tuio.html">TUIO Input Provider</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.providers.wm_common.html">Common definitions for a Windows provider</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.recorder.html">Input recorder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.input.shape.html">Motion Event Shape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.interactive.html">Interactive launcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.lang.html">Kivy Language</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.lang.builder.html">Builder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.lang.parser.html">Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.html">External libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.ddsfile.html">DDS File library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.gstplayer.html">GstPlayer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.mtdev.html">Python mtdev</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.loader.html">Asynchronous data loader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Kivy Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.metrics.html">Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.console.html">Console</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.inspector.html">Inspector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.joycursor.html">JoyCursor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.keybinding.html">Keybinding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.monitor.html">Monitor module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.recorder.html">Recorder module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.screen.html">Screen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.touchring.html">Touchring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.webdebugger.html">Web Debugger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.multistroke.html">Multistroke gesture recognizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.network.html">Network support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.network.urlrequest.html">UrlRequest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.parser.html">Parser utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.properties.html">Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.resources.html">Resources management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.storage.html">Storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.storage.dictstore.html">Dictionary store</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.storage.jsonstore.html">JSON store</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.storage.redisstore.html">Redis Store</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.support.html">Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.tools.html">Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.tools.packaging.html">Packaging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.tools.packaging.pyinstaller_hooks.html">Pyinstaller hooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.html">Widgets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.accordion.html">Accordion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.actionbar.html">Action Bar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.anchorlayout.html">Anchor Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.html">Behaviors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.button.html">Button Behavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.codenavigation.html">Code Navigation Behavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.compoundselection.html">Compound Selection Behavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.cover.html">Cover Behavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.drag.html">Drag Behavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.emacs.html">Emacs Behavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.focus.html">Focus Behavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.knspace.html">Kivy Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.togglebutton.html">ToggleButton Behavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.touchripple.html">Touch Ripple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.boxlayout.html">Box Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.bubble.html">Bubble</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.button.html">Button</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.camera.html">Camera</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.carousel.html">Carousel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.checkbox.html">CheckBox</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.codeinput.html">Code Input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.colorpicker.html">Color Picker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.dropdown.html">Drop-Down List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.effectwidget.html">EffectWidget</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.filechooser.html">FileChooser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.floatlayout.html">Float Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.gesturesurface.html">Gesture Surface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.gridlayout.html">Grid Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.image.html">Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.label.html">Label</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.layout.html">Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.modalview.html">ModalView</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.pagelayout.html">PageLayout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.popup.html">Popup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.progressbar.html">Progress Bar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.recycleboxlayout.html">RecycleBoxLayout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.recyclegridlayout.html">RecycleGridLayout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.recyclelayout.html">RecycleLayout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.recycleview.html">RecycleView</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.recycleview.datamodel.html">RecycleView Data Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.recycleview.layout.html">RecycleView Layouts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.recycleview.views.html">RecycleView Views</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.relativelayout.html">Relative Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.rst.html">reStructuredText renderer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.sandbox.html">Sandbox</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.scatter.html">Scatter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.scatterlayout.html">Scatter Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.screenmanager.html">Screen Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.scrollview.html">ScrollView</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.settings.html">Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.slider.html">Slider</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.spinner.html">Spinner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.splitter.html">Splitter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.stacklayout.html">Stack Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.stencilview.html">Stencil View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.switch.html">Switch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.tabbedpanel.html">TabbedPanel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.textinput.html">Text Input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.togglebutton.html">Toggle button</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.treeview.html">Tree View</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.video.html">Video</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.videoplayer.html">Video player</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.vkeyboard.html">VKeyboard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.widget.html">Widget class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.utils.html">Utils</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.vector.html">Vector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.weakmethod.html">Weak Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.weakproxy.html">Weak Proxy</a></li>
+</ul>
+</li>
+</ul>
+
+          <!--
+          <h3>Related Topics</h3>
+          <ul>
+              <li>Previous: <a href="api-kivy.graphics.html" title="previous chapter">Graphics</a></li>
+              <li>Next: <a href="api-kivy.graphics.instructions.html" title="next chapter">Canvas</a></li>
+          </ul>
+          -->
+        </div>
+      </div>
+  <div id="content">
+    <div class="wrapper">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            <div class="toc"><h2>Table Of Contents</h2><ul>
+<li><a class="reference internal" href="#">BoxShadow</a><ul>
+<li><a class="reference internal" href="#example">Example:</a></li>
+<li><a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow"><code class="docutils literal notranslate"><span class="pre">BoxShadow</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.blur_radius"><code class="docutils literal notranslate"><span class="pre">BoxShadow.blur_radius</span></code></a></li>
+<li><a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.border_radius"><code class="docutils literal notranslate"><span class="pre">BoxShadow.border_radius</span></code></a></li>
+<li><a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.offset"><code class="docutils literal notranslate"><span class="pre">BoxShadow.offset</span></code></a></li>
+<li><a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.pos"><code class="docutils literal notranslate"><span class="pre">BoxShadow.pos</span></code></a></li>
+<li><a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.size"><code class="docutils literal notranslate"><span class="pre">BoxShadow.size</span></code></a></li>
+<li><a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.spread_radius"><code class="docutils literal notranslate"><span class="pre">BoxShadow.spread_radius</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+            
+  <section id="module-kivy.graphics.boxshadow">
+<span id="boxshadow"></span><h1>BoxShadow<a class="headerlink" href="#module-kivy.graphics.boxshadow" title="Permalink to this heading">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.2.0.</span></p>
+</div>
+<p>BoxShadow is a graphical instruction used to add a shadow effect to an element.</p>
+<p>Its behavior is similar to the concept of a CSS3 box-shadow.</p>
+<img alt="_images/boxshadow.png" class="align-center" src="_images/boxshadow.png" />
+<p>The BoxShadow declaration must occur inside a <a class="reference internal" href="api-kivy.graphics.instructions.html#kivy.graphics.instructions.Canvas" title="kivy.graphics.instructions.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> statement. It works
+similarly to other graphical instructions such as <a class="reference internal" href="api-kivy.graphics.vertex_instructions.html#kivy.graphics.vertex_instructions.Rectangle" title="kivy.graphics.vertex_instructions.Rectangle"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rectangle</span></code></a>,
+<a class="reference internal" href="api-kivy.graphics.vertex_instructions.html#kivy.graphics.vertex_instructions.RoundedRectangle" title="kivy.graphics.vertex_instructions.RoundedRectangle"><code class="xref py py-class docutils literal notranslate"><span class="pre">RoundedRectangle</span></code></a>, etc.</p>
+<section id="example">
+<span id="id1"></span><h2>Example:<a class="headerlink" href="#example" title="Permalink to this heading">¶</a></h2>
+<blockquote>
+<div><img alt="_images/boxshadow_demo.gif" class="align-center" src="_images/boxshadow_demo.gif" />
+<div class="highlight-kv notranslate"><div class="highlight"><pre><span></span><span class="nn">&lt;MyWidget&gt;</span><span class="p">:</span>
+    <span class="nc">Button</span><span class="p">:</span>
+        <span class="na">pos_hint</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;center_x&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;center_y&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">}</span>
+        <span class="na">size_hint</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="na">size</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">150</span>
+        <span class="na">background_down</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">background_normal</span>
+        <span class="nc">canvas.before</span><span class="p">:</span>
+            <span class="nc">Color</span><span class="p">:</span>
+                <span class="na">rgba</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.85</span>
+            <span class="nc">BoxShadow</span><span class="p">:</span>
+                <span class="na">pos</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span>
+                <span class="na">size</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
+                <span class="na">offset</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span>
+                <span class="na">spread_radius</span><span class="p">:</span> <span class="o">-</span><span class="mi">20</span>
+                <span class="na">border_radius</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span>
+                <span class="na">blur_radius</span><span class="p">:</span> <span class="mi">80</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;normal&quot;</span> <span class="k">else</span> <span class="mi">50</span>
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="kivy.graphics.boxshadow.BoxShadow">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.graphics.boxshadow.</span></span><span class="sig-name descname"><span class="pre">BoxShadow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.graphics.boxshadow.BoxShadow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="api-kivy.graphics.fbo.html#kivy.graphics.fbo.Fbo" title="kivy.graphics.fbo.Fbo"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.graphics.fbo.Fbo</span></code></a></p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.2.0.</span></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>size</cite>: list | tuple, defaults to <code class="docutils literal notranslate"><span class="pre">(100.0,</span> <span class="pre">100.0)</span></code>.</dt><dd><p>Define the raw size of the shadow, that is, you should not take into account
+changes in the value of <a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.blur_radius" title="kivy.graphics.boxshadow.BoxShadow.blur_radius"><code class="xref py py-attr docutils literal notranslate"><span class="pre">blur_radius</span></code></a> and <a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.spread_radius" title="kivy.graphics.boxshadow.BoxShadow.spread_radius"><code class="xref py py-attr docutils literal notranslate"><span class="pre">spread_radius</span></code></a>
+properties when setting this parameter.</p>
+</dd>
+<dt><cite>pos</cite>: list | tuple, defaults to <code class="docutils literal notranslate"><span class="pre">(0.0,</span> <span class="pre">0.0)</span></code>.</dt><dd><p>Define the raw position of the shadow, that is, you should not take into account
+changes in the value of the <a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.offset" title="kivy.graphics.boxshadow.BoxShadow.offset"><code class="xref py py-attr docutils literal notranslate"><span class="pre">offset</span></code></a> property when setting this parameter.</p>
+</dd>
+<dt><cite>offset</cite>: list | tuple, defaults to <code class="docutils literal notranslate"><span class="pre">(0.0,</span> <span class="pre">0.0)</span></code>.</dt><dd><p>Specifies shadow offsets in <cite>(horizontal, vertical)</cite> format. 
+Positive values for the offset indicate that the shadow should move to the right and/or top.
+The negative ones indicate that the shadow should move to the left and/or down.</p>
+</dd>
+<dt><cite>blur_radius</cite>: float, defaults to <code class="docutils literal notranslate"><span class="pre">5.0</span></code>.</dt><dd><p>Define the shadow blur radius. Controls shadow expansion and softness.</p>
+</dd>
+<dt><cite>spread_radius</cite>: float, defaults to <code class="docutils literal notranslate"><span class="pre">0.0</span></code>.</dt><dd><p>Define the decrease/expansion of the shadow’s raw <a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.size" title="kivy.graphics.boxshadow.BoxShadow.size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">size</span></code></a>.</p>
+</dd>
+<dt><cite>border_radius</cite>: list | tuple, defaults to <code class="docutils literal notranslate"><span class="pre">(0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0)</span></code>.</dt><dd><p>Specifies the radii used for the rounded corners clockwise:
+top-left, top-right, bottom-right, bottom-left.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.graphics.boxshadow.BoxShadow.blur_radius">
+<span class="sig-name descname"><span class="pre">blur_radius</span></span><a class="headerlink" href="#kivy.graphics.boxshadow.BoxShadow.blur_radius" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define the shadow blur radius. Controls shadow expansion and softness.</p>
+<p>Defaults to <code class="docutils literal notranslate"><span class="pre">5.0</span></code>.</p>
+<p>In the image below, the start and end positions of the shadow blur
+effect length are indicated.
+The transition between color and transparency is seamless, and although
+the shadow appears to end before the red rectangle, its edge is made
+to be as smooth as possible.</p>
+<a class="reference internal image-reference" href="_images/boxshadow_blur_radius.svg"><img alt="_images/boxshadow_blur_radius.svg" class="align-center" height="290" src="_images/boxshadow_blur_radius.svg" width="621" /></a>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In some cases (<strong>if this is not your intention</strong>), placing an element
+above the shadow (before the blur radius ends) will result in a unwanted
+cropping/overlay behavior rather than continuity, breaking the
+shadow’s soft ending, as shown in the image below.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<img alt="_images/boxshadow_common_mistake_1.svg" class="align-center" src="_images/boxshadow_common_mistake_1.svg" /></div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.graphics.boxshadow.BoxShadow.border_radius">
+<span class="sig-name descname"><span class="pre">border_radius</span></span><a class="headerlink" href="#kivy.graphics.boxshadow.BoxShadow.border_radius" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the radii used for the rounded corners clockwise:
+top-left, top-right, bottom-right, bottom-left.</p>
+<p>Defaults to <code class="docutils literal notranslate"><span class="pre">(0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0)</span></code>.</p>
+<a class="reference internal image-reference" href="_images/boxshadow_border_radius.svg"><img alt="_images/boxshadow_border_radius.svg" class="align-center" height="261" src="_images/boxshadow_border_radius.svg" width="427" /></a>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.graphics.boxshadow.BoxShadow.offset">
+<span class="sig-name descname"><span class="pre">offset</span></span><a class="headerlink" href="#kivy.graphics.boxshadow.BoxShadow.offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies shadow offsets in <cite>[horizontal, vertical]</cite> format. 
+Positive values for the offset indicate that the shadow should move to
+the right and/or top.
+The negative ones indicate that the shadow should move to the left
+and/or down.</p>
+<p>Defaults to <code class="docutils literal notranslate"><span class="pre">(0.0,</span> <span class="pre">0.0)</span></code>.</p>
+<p>For this property to work as expected, it is indicated that the value
+of <a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.pos" title="kivy.graphics.boxshadow.BoxShadow.pos"><code class="xref py py-attr docutils literal notranslate"><span class="pre">pos</span></code></a> coincides with the position of the target element of the
+shadow, as in the example below:</p>
+<img alt="_images/boxshadow_offset.svg" class="align-center" src="_images/boxshadow_offset.svg" /></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.graphics.boxshadow.BoxShadow.pos">
+<span class="sig-name descname"><span class="pre">pos</span></span><a class="headerlink" href="#kivy.graphics.boxshadow.BoxShadow.pos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define the raw position of the shadow, that is, you should not take
+into account changes in the value of the <a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.offset" title="kivy.graphics.boxshadow.BoxShadow.offset"><code class="xref py py-attr docutils literal notranslate"><span class="pre">offset</span></code></a> property when
+setting this property.</p>
+<p>Returns the adjusted position of the shadow according to the adjusted
+<a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.size" title="kivy.graphics.boxshadow.BoxShadow.size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">size</span></code></a> of the shadow and <a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.offset" title="kivy.graphics.boxshadow.BoxShadow.offset"><code class="xref py py-attr docutils literal notranslate"><span class="pre">offset</span></code></a> property.</p>
+<p>Defaults to <code class="docutils literal notranslate"><span class="pre">(0.0,</span> <span class="pre">0.0)</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is recommended that this property matches the raw position of
+the shadow target element. To manipulate horizontal and vertical
+offset, use <a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.offset" title="kivy.graphics.boxshadow.BoxShadow.offset"><code class="xref py py-attr docutils literal notranslate"><span class="pre">offset</span></code></a> instead.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.graphics.boxshadow.BoxShadow.size">
+<span class="sig-name descname"><span class="pre">size</span></span><a class="headerlink" href="#kivy.graphics.boxshadow.BoxShadow.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define the raw size of the shadow, that is, you should not take into
+account changes in the value of <a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.blur_radius" title="kivy.graphics.boxshadow.BoxShadow.blur_radius"><code class="xref py py-attr docutils literal notranslate"><span class="pre">blur_radius</span></code></a> and <a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.spread_radius" title="kivy.graphics.boxshadow.BoxShadow.spread_radius"><code class="xref py py-attr docutils literal notranslate"><span class="pre">spread_radius</span></code></a> properties.</p>
+<p>Returns the adjusted size of the shadow according to the 
+<a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.blur_radius" title="kivy.graphics.boxshadow.BoxShadow.blur_radius"><code class="xref py py-attr docutils literal notranslate"><span class="pre">blur_radius</span></code></a> and <a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.spread_radius" title="kivy.graphics.boxshadow.BoxShadow.spread_radius"><code class="xref py py-attr docutils literal notranslate"><span class="pre">spread_radius</span></code></a> properties.</p>
+<p>Defaults to <code class="docutils literal notranslate"><span class="pre">(100.0,</span> <span class="pre">100.0)</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is recommended that this property matches the raw size of
+the shadow target element. To manipulate the decrease/expansion of
+the shadow’s raw <a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.size" title="kivy.graphics.boxshadow.BoxShadow.size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">size</span></code></a>, use <a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.spread_radius" title="kivy.graphics.boxshadow.BoxShadow.spread_radius"><code class="xref py py-attr docutils literal notranslate"><span class="pre">spread_radius</span></code></a> instead.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.graphics.boxshadow.BoxShadow.spread_radius">
+<span class="sig-name descname"><span class="pre">spread_radius</span></span><a class="headerlink" href="#kivy.graphics.boxshadow.BoxShadow.spread_radius" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define the decrease/expansion of the shadow’s inner size.</p>
+<p>Defaults to <code class="docutils literal notranslate"><span class="pre">0.0</span></code>.</p>
+<p>In the image below, the target element has a raw size of <code class="docutils literal notranslate"><span class="pre">200</span> <span class="pre">x</span> <span class="pre">150px</span></code>.
+Positive changes to the <a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.spread_radius" title="kivy.graphics.boxshadow.BoxShadow.spread_radius"><code class="xref py py-attr docutils literal notranslate"><span class="pre">spread_radius</span></code></a> value will cause the raw
+<a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.size" title="kivy.graphics.boxshadow.BoxShadow.size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">size</span></code></a> of the shadow to increase in both horizontal and vertical
+directions, while negative values will cause the shadow to decrease.</p>
+<p>This property is especially useful for cases where you want to achieve
+a softer shadow around the element, by setting a negative value for
+<a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.spread_radius" title="kivy.graphics.boxshadow.BoxShadow.spread_radius"><code class="xref py py-attr docutils literal notranslate"><span class="pre">spread_radius</span></code></a> and a larger value for <a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.blur_radius" title="kivy.graphics.boxshadow.BoxShadow.blur_radius"><code class="xref py py-attr docutils literal notranslate"><span class="pre">blur_radius</span></code></a> as
+in the <a class="reference internal" href="#example"><span class="std std-ref">example</span></a>.</p>
+<img alt="_images/boxshadow_spread_radius.svg" class="align-center" src="_images/boxshadow_spread_radius.svg" /></dd></dl>
+
+</dd></dl>
+
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+
+            <div class="footerlinks">
+            <table>
+                <tr>
+                    <td class="leftlink">
+                  <a href="api-kivy.graphics.html" title="previous chapter">&laquo; Graphics</a></li>
+                  </td>
+                  <td class="rightlink">
+                  <a href="api-kivy.graphics.instructions.html" title="next chapter">Canvas &raquo;</a>
+                      </td>
+                  </tr>
+              </table>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearer"></div>
+  </div>
+</div>
+<!-- Piwik -->
+<script>
+  var selector = $("#version_selector");
+
+  selector.on('change', function() {
+    // replace the version part of the url with the selected version
+    document.location.pathname = document.location.pathname.replace(
+      /^(\/.*?\/).*?(\/.*)/,
+     '$1' + this.value + '$2'
+    );
+  });
+
+  var url = "/doc/versions.json";
+
+  $.getJSON(url, function(versions) {
+    versions.forEach(function(version){
+      var current = window.location.pathname.split('/')[2]
+      selector.append(
+        $("<option " + (version == current ? "selected" : "") + "/>").val(version).html(version)
+      );
+    });
+  });
+</script>
+<!-- End Piwik Tracking Code -->
+    <!--
+    <div class="footer">
+      &copy; Copyright 2010, The Kivy Authors.
+      Last updated on Dec 18, 2022.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 5.3.0.
+</div>
+-->
+  </body>
+</html>
