@@ -16,9 +16,6 @@
          
           <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script> 
             <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script> 
-            <script src="../_static/jquery.js"></script> 
-            <script src="../_static/underscore.js"></script> 
-            <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script> 
             <script src="../_static/doctools.js"></script> 
             <script src="../_static/sphinx_highlight.js"></script> 
         
@@ -568,7 +565,7 @@ shader written in GLSL.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">faces</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">swapyz</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Loads a Wavefront OBJ file. &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads a Wavefront OBJ file. &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">objects</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vertices</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">normals</span> <span class="o">=</span> <span class="p">[]</span>
@@ -650,48 +647,48 @@ shader written in GLSL.</p>
 <span class="linenos"> 3</span><span class="cm">simple diffuse lighting based on laberts cosine law; see e.g.:</span>
 <span class="linenos"> 4</span><span class="cm">    http://en.wikipedia.org/wiki/Lambertian_reflectance</span>
 <span class="linenos"> 5</span><span class="cm">    http://en.wikipedia.org/wiki/Lambert%27s_cosine_law</span>
-<span class="linenos"> 6</span><span class="cm">*/</span><span class="w"></span>
-<span class="linenos"> 7</span><span class="o">---</span><span class="n">VERTEX</span><span class="w"> </span><span class="n">SHADER</span><span class="o">-------------------------------------------------------</span><span class="w"></span>
-<span class="linenos"> 8</span><span class="cp">#ifdef GL_ES</span><span class="w"></span>
-<span class="linenos"> 9</span><span class="w">    </span><span class="k">precision</span><span class="w"> </span><span class="k">highp</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span><span class="w"></span>
-<span class="linenos">10</span><span class="cp">#endif</span><span class="w"></span>
+<span class="linenos"> 6</span><span class="cm">*/</span>
+<span class="linenos"> 7</span><span class="o">---</span><span class="n">VERTEX</span><span class="w"> </span><span class="n">SHADER</span><span class="o">-------------------------------------------------------</span>
+<span class="linenos"> 8</span><span class="cp">#ifdef GL_ES</span>
+<span class="linenos"> 9</span><span class="w">    </span><span class="k">precision</span><span class="w"> </span><span class="k">highp</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span>
+<span class="linenos">10</span><span class="cp">#endif</span>
 <span class="linenos">11</span>
-<span class="linenos">12</span><span class="k">attribute</span><span class="w"> </span><span class="kt">vec3</span><span class="w">  </span><span class="n">v_pos</span><span class="p">;</span><span class="w"></span>
-<span class="linenos">13</span><span class="k">attribute</span><span class="w"> </span><span class="kt">vec3</span><span class="w">  </span><span class="n">v_normal</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">12</span><span class="k">attribute</span><span class="w"> </span><span class="kt">vec3</span><span class="w">  </span><span class="n">v_pos</span><span class="p">;</span>
+<span class="linenos">13</span><span class="k">attribute</span><span class="w"> </span><span class="kt">vec3</span><span class="w">  </span><span class="n">v_normal</span><span class="p">;</span>
 <span class="linenos">14</span>
-<span class="linenos">15</span><span class="k">uniform</span><span class="w"> </span><span class="kt">mat4</span><span class="w"> </span><span class="n">modelview_mat</span><span class="p">;</span><span class="w"></span>
-<span class="linenos">16</span><span class="k">uniform</span><span class="w"> </span><span class="kt">mat4</span><span class="w"> </span><span class="n">projection_mat</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">15</span><span class="k">uniform</span><span class="w"> </span><span class="kt">mat4</span><span class="w"> </span><span class="n">modelview_mat</span><span class="p">;</span>
+<span class="linenos">16</span><span class="k">uniform</span><span class="w"> </span><span class="kt">mat4</span><span class="w"> </span><span class="n">projection_mat</span><span class="p">;</span>
 <span class="linenos">17</span>
-<span class="linenos">18</span><span class="k">varying</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">normal_vec</span><span class="p">;</span><span class="w"></span>
-<span class="linenos">19</span><span class="k">varying</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">vertex_pos</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">18</span><span class="k">varying</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">normal_vec</span><span class="p">;</span>
+<span class="linenos">19</span><span class="k">varying</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">vertex_pos</span><span class="p">;</span>
 <span class="linenos">20</span>
-<span class="linenos">21</span><span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="linenos">22</span><span class="w">    </span><span class="c1">//compute vertex position in eye_space and normalize normal vector</span><span class="w"></span>
-<span class="linenos">23</span><span class="w">    </span><span class="kt">vec4</span><span class="w"> </span><span class="n">pos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">modelview_mat</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">v_pos</span><span class="p">,</span><span class="mf">1.0</span><span class="p">);</span><span class="w"></span>
-<span class="linenos">24</span><span class="w">    </span><span class="n">vertex_pos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pos</span><span class="p">;</span><span class="w"></span>
-<span class="linenos">25</span><span class="w">    </span><span class="n">normal_vec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">v_normal</span><span class="p">,</span><span class="mf">0.0</span><span class="p">);</span><span class="w"></span>
-<span class="linenos">26</span><span class="w">    </span><span class="nb">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">projection_mat</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pos</span><span class="p">;</span><span class="w"></span>
-<span class="linenos">27</span><span class="p">}</span><span class="w"></span>
+<span class="linenos">21</span><span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">22</span><span class="w">    </span><span class="c1">//compute vertex position in eye_space and normalize normal vector</span>
+<span class="linenos">23</span><span class="w">    </span><span class="kt">vec4</span><span class="w"> </span><span class="n">pos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">modelview_mat</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">v_pos</span><span class="p">,</span><span class="mf">1.0</span><span class="p">);</span>
+<span class="linenos">24</span><span class="w">    </span><span class="n">vertex_pos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">pos</span><span class="p">;</span>
+<span class="linenos">25</span><span class="w">    </span><span class="n">normal_vec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">v_normal</span><span class="p">,</span><span class="mf">0.0</span><span class="p">);</span>
+<span class="linenos">26</span><span class="w">    </span><span class="nb">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">projection_mat</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pos</span><span class="p">;</span>
+<span class="linenos">27</span><span class="p">}</span>
 <span class="linenos">28</span>
 <span class="linenos">29</span>
-<span class="linenos">30</span><span class="o">---</span><span class="n">FRAGMENT</span><span class="w"> </span><span class="n">SHADER</span><span class="o">-----------------------------------------------------</span><span class="w"></span>
-<span class="linenos">31</span><span class="cp">#ifdef GL_ES</span><span class="w"></span>
-<span class="linenos">32</span><span class="w">    </span><span class="k">precision</span><span class="w"> </span><span class="k">highp</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span><span class="w"></span>
-<span class="linenos">33</span><span class="cp">#endif</span><span class="w"></span>
+<span class="linenos">30</span><span class="o">---</span><span class="n">FRAGMENT</span><span class="w"> </span><span class="n">SHADER</span><span class="o">-----------------------------------------------------</span>
+<span class="linenos">31</span><span class="cp">#ifdef GL_ES</span>
+<span class="linenos">32</span><span class="w">    </span><span class="k">precision</span><span class="w"> </span><span class="k">highp</span><span class="w"> </span><span class="kt">float</span><span class="p">;</span>
+<span class="linenos">33</span><span class="cp">#endif</span>
 <span class="linenos">34</span>
-<span class="linenos">35</span><span class="k">varying</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">normal_vec</span><span class="p">;</span><span class="w"></span>
-<span class="linenos">36</span><span class="k">varying</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">vertex_pos</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">35</span><span class="k">varying</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">normal_vec</span><span class="p">;</span>
+<span class="linenos">36</span><span class="k">varying</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">vertex_pos</span><span class="p">;</span>
 <span class="linenos">37</span>
-<span class="linenos">38</span><span class="k">uniform</span><span class="w"> </span><span class="kt">mat4</span><span class="w"> </span><span class="n">normal_mat</span><span class="p">;</span><span class="w"></span>
+<span class="linenos">38</span><span class="k">uniform</span><span class="w"> </span><span class="kt">mat4</span><span class="w"> </span><span class="n">normal_mat</span><span class="p">;</span>
 <span class="linenos">39</span>
-<span class="linenos">40</span><span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="p">){</span><span class="w"></span>
-<span class="linenos">41</span><span class="w">    </span><span class="c1">//correct normal, and compute light vector (assume light at the eye)</span><span class="w"></span>
-<span class="linenos">42</span><span class="w">    </span><span class="kt">vec4</span><span class="w"> </span><span class="n">v_normal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="w"> </span><span class="n">normal_mat</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">normal_vec</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="w"></span>
-<span class="linenos">43</span><span class="w">    </span><span class="kt">vec4</span><span class="w"> </span><span class="n">v_light</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="mo">0</span><span class="p">,</span><span class="mo">0</span><span class="p">,</span><span class="mo">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">vertex_pos</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
-<span class="linenos">44</span><span class="w">    </span><span class="c1">//reflectance based on lamberts law of cosine</span><span class="w"></span>
-<span class="linenos">45</span><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clamp</span><span class="p">(</span><span class="n">dot</span><span class="p">(</span><span class="n">v_normal</span><span class="p">,</span><span class="w"> </span><span class="n">v_light</span><span class="p">),</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span><span class="w"></span>
-<span class="linenos">46</span><span class="w">    </span><span class="nb">gl_FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span><span class="w"></span>
-<span class="linenos">47</span><span class="p">}</span><span class="w"></span>
+<span class="linenos">40</span><span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="p">){</span>
+<span class="linenos">41</span><span class="w">    </span><span class="c1">//correct normal, and compute light vector (assume light at the eye)</span>
+<span class="linenos">42</span><span class="w">    </span><span class="kt">vec4</span><span class="w"> </span><span class="n">v_normal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="w"> </span><span class="n">normal_mat</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">normal_vec</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
+<span class="linenos">43</span><span class="w">    </span><span class="kt">vec4</span><span class="w"> </span><span class="n">v_light</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">normalize</span><span class="p">(</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="mo">0</span><span class="p">,</span><span class="mo">0</span><span class="p">,</span><span class="mo">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">vertex_pos</span><span class="w"> </span><span class="p">);</span>
+<span class="linenos">44</span><span class="w">    </span><span class="c1">//reflectance based on lamberts law of cosine</span>
+<span class="linenos">45</span><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">clamp</span><span class="p">(</span><span class="n">dot</span><span class="p">(</span><span class="n">v_normal</span><span class="p">,</span><span class="w"> </span><span class="n">v_light</span><span class="p">),</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="linenos">46</span><span class="w">    </span><span class="nb">gl_FragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">vec4</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span>
+<span class="linenos">47</span><span class="p">}</span>
 </pre></div>
 </div>
 </section>
@@ -744,8 +741,8 @@ shader written in GLSL.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Dec 18, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 5.3.0.
+      Last updated on Jan 01, 2023.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.0.0.
 </div>
 -->
   </body>
