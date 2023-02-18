@@ -104,12 +104,7 @@
 <li><a class="reference internal" href="#frameworks">Frameworks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#source-installation-dependencies">Source installation Dependencies</a><ul>
-<li><a class="reference internal" href="#id3">Homebrew</a></li>
-<li><a class="reference internal" href="#id4">MacPorts</a></li>
-<li><a class="reference internal" href="#id5">Frameworks</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#source-installation-dependencies">Source installation Dependencies</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#using-the-kivy-app">Using The Kivy.app</a><ul>
@@ -406,12 +401,7 @@
 <li><a class="reference internal" href="#frameworks">Frameworks</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#source-installation-dependencies">Source installation Dependencies</a><ul>
-<li><a class="reference internal" href="#id3">Homebrew</a></li>
-<li><a class="reference internal" href="#id4">MacPorts</a></li>
-<li><a class="reference internal" href="#id5">Frameworks</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#source-installation-dependencies">Source installation Dependencies</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#using-the-kivy-app">Using The Kivy.app</a><ul>
@@ -465,75 +455,19 @@ installation steps. You can read more about the installation in the
 </section>
 <section id="source-installation-dependencies">
 <span id="install-source-osx"></span><h3>Source installation Dependencies<a class="headerlink" href="#source-installation-dependencies" title="Permalink to this heading">¶</a></h3>
-<p>To install Kivy from source, please follow the installation guide until you reach the
+<p>To install Kivy from source, please follow the <a class="reference internal" href="../gettingstarted/installation.html#kivy-wheel-install"><span class="std std-ref">installation guide</span></a> until you reach the
 <a class="reference internal" href="../gettingstarted/installation.html#kivy-source-install"><span class="std std-ref">Kivy install step</span></a> and then install the additional dependencies
 below before continuing.</p>
-<section id="id3">
-<h4>Homebrew<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h4>
-<p>If you’re using Homebrew, you can install the (default) dependencies with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">install</span> <span class="n">pkg</span><span class="o">-</span><span class="n">config</span> <span class="n">sdl2</span> <span class="n">sdl2_image</span> <span class="n">sdl2_ttf</span> <span class="n">sdl2_mixer</span>
+<p><strong>pkg-config</strong> is required to build Kivy from source. If you’re using <code class="docutils literal notranslate"><span class="pre">brew</span></code> as your
+package manager, you can install it with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">install</span> <span class="n">pkg</span><span class="o">-</span><span class="n">config</span>
 </pre></div>
-</div>
-</section>
-<section id="id4">
-<h4>MacPorts<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h4>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>You will have to manually install gstreamer support if you wish to
-support video playback in your Kivy App. The latest port documents show the
-following <a class="reference external" href="https://trac.macports.org/ticket/44813">py-gst-python port</a>.</p>
-</div>
-<p>If you’re using MacPorts, you can install the dependencies with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">port</span> <span class="n">install</span> <span class="n">libsdl2</span> <span class="n">libsdl2_image</span> <span class="n">libsdl2_ttf</span> <span class="n">libsdl2_mixer</span>
-</pre></div>
-</div>
-</section>
-<section id="id5">
-<h4>Frameworks<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h4>
-<p>If you’re installing Python from a framework, you will need to install Kivy’s dependencies
-from frameworks as well. You can do that with the following commands (customize as needed):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># configure kivy
-export CC=clang
-export CXX=clang
-export FFLAGS=&#39;-ff2c&#39;
-export USE_SDL2=1
-export USE_GSTREAMER=0
-
-# get the dependencies
-export SDL2=2.0.20
-export SDL2_IMAGE=2.0.5
-export SDL2_MIXER=2.0.4
-export SDL2_TTF=2.0.18
-export GSTREAMER=1.16.2
-
-curl -O -L &quot;https://www.libsdl.org/release/SDL2-$SDL2.dmg&quot;
-curl -O -L &quot;https://www.libsdl.org/projects/SDL_image/release/SDL2_image-$SDL2_IMAGE.dmg&quot;
-curl -O -L &quot;https://www.libsdl.org/projects/SDL_mixer/release/SDL2_mixer-$SDL2_MIXER.dmg&quot;
-curl -O -L &quot;https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-$SDL2_TTF.dmg&quot;
-
-hdiutil attach SDL2-$SDL2.dmg
-sudo cp -a /Volumes/SDL2/SDL2.framework /Library/Frameworks/
-hdiutil attach SDL2_image-$SDL2_IMAGE.dmg
-sudo cp -a /Volumes/SDL2_image/SDL2_image.framework /Library/Frameworks/
-hdiutil attach SDL2_ttf-$SDL2_TTF.dmg
-sudo cp -a /Volumes/SDL2_ttf/SDL2_ttf.framework /Library/Frameworks/
-hdiutil attach SDL2_mixer-$SDL2_MIXER.dmg
-sudo cp -a /Volumes/SDL2_mixer/SDL2_mixer.framework /Library/Frameworks/
-</pre></div>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>At the time of writing, only certain SDL2 deps are shipped as universal2 frameworks
-with binaries for both Intel and Apple Silicon Macs. On our CI workflow that
-builds <code class="docutils literal notranslate"><span class="pre">.whl</span></code> and <code class="docutils literal notranslate"><span class="pre">Kivy.app</span></code> we’re building the Frameworks from source with
-universal2 support. (See: <a class="reference external" href="https://github.com/kivy/kivy-sdk-packager/blob/master/osx/create-osx-bundle.sh">create-osx-bundle.sh</a>)</p>
 </div>
 <p>Now that you have all the dependencies for kivy, you need to make sure
 you have the command line tools installed:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xcode</span><span class="o">-</span><span class="n">select</span> <span class="o">--</span><span class="n">install</span>
 </pre></div>
 </div>
-</section>
 </section>
 </section>
 <section id="using-the-kivy-app">

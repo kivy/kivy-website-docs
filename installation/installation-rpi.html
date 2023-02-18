@@ -105,16 +105,15 @@
 </li>
 <li><a class="reference internal" href="#source-installation-dependencies">Source installation Dependencies</a><ul>
 <li><a class="reference internal" href="#id1">Raspbian Jessie/Stretch/Buster</a><ul>
-<li><a class="reference internal" href="#raspberry-pi-1-4-desktop-environment">Raspberry Pi 1-4 Desktop environment</a></li>
 <li><a class="reference internal" href="#cross-compilation-for-raspberry-pi-1-3-headless-installation-on-raspbian-buster">Cross-Compilation for Raspberry Pi 1-3 headless installation on Raspbian Buster</a></li>
 <li><a class="reference internal" href="#raspberry-pi-4-headless-installation-on-raspbian-buster">Raspberry Pi 4 headless installation on Raspbian Buster</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id2">Arch Linux ARM</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li><a class="reference internal" href="#hardware-acceleration">Hardware acceleration</a></li>
 <li><a class="reference internal" href="#raspberry-pi-window-provider-and-gl-backend">Raspberry Pi window provider and GL backend</a></li>
 <li><a class="reference internal" href="#change-the-default-screen-to-use">Change the default screen to use</a></li>
 <li><a class="reference internal" href="#using-official-rpi-touch-display">Using Official RPi touch display</a></li>
@@ -408,16 +407,15 @@
 </li>
 <li><a class="reference internal" href="#source-installation-dependencies">Source installation Dependencies</a><ul>
 <li><a class="reference internal" href="#id1">Raspbian Jessie/Stretch/Buster</a><ul>
-<li><a class="reference internal" href="#raspberry-pi-1-4-desktop-environment">Raspberry Pi 1-4 Desktop environment</a></li>
 <li><a class="reference internal" href="#cross-compilation-for-raspberry-pi-1-3-headless-installation-on-raspbian-buster">Cross-Compilation for Raspberry Pi 1-3 headless installation on Raspbian Buster</a></li>
 <li><a class="reference internal" href="#raspberry-pi-4-headless-installation-on-raspbian-buster">Raspberry Pi 4 headless installation on Raspbian Buster</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id2">Arch Linux ARM</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li><a class="reference internal" href="#hardware-acceleration">Hardware acceleration</a></li>
 <li><a class="reference internal" href="#raspberry-pi-window-provider-and-gl-backend">Raspberry Pi window provider and GL backend</a></li>
 <li><a class="reference internal" href="#change-the-default-screen-to-use">Change the default screen to use</a></li>
 <li><a class="reference internal" href="#using-official-rpi-touch-display">Using Official RPi touch display</a></li>
@@ -466,7 +464,7 @@ https://archlinuxarm.org/
 </section>
 <section id="source-installation-dependencies">
 <span id="install-source-rpi"></span><h3>Source installation Dependencies<a class="headerlink" href="#source-installation-dependencies" title="Permalink to this heading">¶</a></h3>
-<p>To install Kivy from source, please follow the installation guide until you reach the
+<p>To install Kivy from source, please follow the <a class="reference internal" href="../gettingstarted/installation.html#kivy-wheel-install"><span class="std std-ref">installation guide</span></a> until you reach the
 <a class="reference internal" href="../gettingstarted/installation.html#kivy-source-install"><span class="std std-ref">Kivy install step</span></a> and then install the dependencies below
 before continuing.</p>
 <section id="id1">
@@ -480,16 +478,6 @@ before continuing.</p>
    <span class="n">xclip</span> <span class="n">xsel</span> <span class="n">libjpeg</span><span class="o">-</span><span class="n">dev</span>
 </pre></div>
 </div>
-<p>And then install SDL2 using either of the two options below depending on whether you
-will be running Kivy from a headless or desktop environment:</p>
-<section id="raspberry-pi-1-4-desktop-environment">
-<h5>Raspberry Pi 1-4 Desktop environment<a class="headerlink" href="#raspberry-pi-1-4-desktop-environment" title="Permalink to this heading">¶</a></h5>
-<p>If you have installed Raspbian with a desktop i.e. if your Raspberry Pi boots into a desktop environment
-then install SDL2 from apt:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">libsdl2</span><span class="o">-</span><span class="n">dev</span> <span class="n">libsdl2</span><span class="o">-</span><span class="n">image</span><span class="o">-</span><span class="n">dev</span> <span class="n">libsdl2</span><span class="o">-</span><span class="n">mixer</span><span class="o">-</span><span class="n">dev</span> <span class="n">libsdl2</span><span class="o">-</span><span class="n">ttf</span><span class="o">-</span><span class="n">dev</span>
-</pre></div>
-</div>
-</section>
 <section id="cross-compilation-for-raspberry-pi-1-3-headless-installation-on-raspbian-buster">
 <h5>Cross-Compilation for Raspberry Pi 1-3 headless installation on Raspbian Buster<a class="headerlink" href="#cross-compilation-for-raspberry-pi-1-3-headless-installation-on-raspbian-buster" title="Permalink to this heading">¶</a></h5>
 <p>The Raspberry OS project uses <cite>pi-gen</cite> project to create bootable images for Raspberry PI.</p>
@@ -507,57 +495,23 @@ The existing version check will refuse to compile the <cite>egl_rpi</cite> provi
 <section id="raspberry-pi-4-headless-installation-on-raspbian-buster">
 <h5>Raspberry Pi 4 headless installation on Raspbian Buster<a class="headerlink" href="#raspberry-pi-4-headless-installation-on-raspbian-buster" title="Permalink to this heading">¶</a></h5>
 <p>If you run Kivy from the console and not from a desktop environment, you need to compile SDL2
-from source, as the one bundled with Buster is not compiled with the <code class="docutils literal notranslate"><span class="pre">kmsdrm</span></code> backend,
-so it only works under <code class="docutils literal notranslate"><span class="pre">X11</span></code>.</p>
-<p>Install requirements:</p>
+with the <code class="docutils literal notranslate"><span class="pre">kmsdrm</span></code> backend. This is not the default, so you need add a few extra requirements, and
+then edit the build script located at <cite>tools/build_linux_dependencies.sh</cite> accordingly.</p>
+<p>Extra install requirements:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libfreetype6</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgl1</span><span class="o">-</span><span class="n">mesa</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgles2</span><span class="o">-</span><span class="n">mesa</span><span class="o">-</span><span class="n">dev</span> <span class="n">libdrm</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgbm</span><span class="o">-</span><span class="n">dev</span> <span class="n">libudev</span><span class="o">-</span><span class="n">dev</span> <span class="n">libasound2</span><span class="o">-</span><span class="n">dev</span> <span class="n">liblzma</span><span class="o">-</span><span class="n">dev</span> <span class="n">libjpeg</span><span class="o">-</span><span class="n">dev</span> <span class="n">libtiff</span><span class="o">-</span><span class="n">dev</span> <span class="n">libwebp</span><span class="o">-</span><span class="n">dev</span> <span class="n">git</span> <span class="n">build</span><span class="o">-</span><span class="n">essential</span>
 <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">gir1</span><span class="mf">.2</span><span class="o">-</span><span class="n">ibus</span><span class="o">-</span><span class="mf">1.0</span> <span class="n">libdbus</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">dev</span> <span class="n">libegl1</span><span class="o">-</span><span class="n">mesa</span><span class="o">-</span><span class="n">dev</span> <span class="n">libibus</span><span class="o">-</span><span class="mf">1.0</span><span class="o">-</span><span class="mi">5</span> <span class="n">libibus</span><span class="o">-</span><span class="mf">1.0</span><span class="o">-</span><span class="n">dev</span> <span class="n">libice</span><span class="o">-</span><span class="n">dev</span> <span class="n">libsm</span><span class="o">-</span><span class="n">dev</span> <span class="n">libsndio</span><span class="o">-</span><span class="n">dev</span> <span class="n">libwayland</span><span class="o">-</span><span class="nb">bin</span> <span class="n">libwayland</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxi</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxinerama</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxkbcommon</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxrandr</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxss</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxt</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxv</span><span class="o">-</span><span class="n">dev</span> <span class="n">x11proto</span><span class="o">-</span><span class="n">randr</span><span class="o">-</span><span class="n">dev</span> <span class="n">x11proto</span><span class="o">-</span><span class="n">scrnsaver</span><span class="o">-</span><span class="n">dev</span> <span class="n">x11proto</span><span class="o">-</span><span class="n">video</span><span class="o">-</span><span class="n">dev</span> <span class="n">x11proto</span><span class="o">-</span><span class="n">xinerama</span><span class="o">-</span><span class="n">dev</span>
 </pre></div>
 </div>
-<p>Install SDL2:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>wget https://libsdl.org/release/SDL2-2.0.10.tar.gz
-tar -zxvf SDL2-2.0.10.tar.gz
-pushd SDL2-2.0.10
-./configure --enable-video-kmsdrm --disable-video-opengl --disable-video-x11 --disable-video-rpi
-make -j$(nproc)
-sudo make install
-popd
+<p>Extra flags for <cite>configure</cite> step of <code class="docutils literal notranslate"><span class="pre">--</span> <span class="pre">Build</span> <span class="pre">SDL2</span></code> build phase</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">enable</span><span class="o">-</span><span class="n">video</span><span class="o">-</span><span class="n">kmsdrm</span> <span class="o">--</span><span class="n">disable</span><span class="o">-</span><span class="n">video</span><span class="o">-</span><span class="n">opengl</span> <span class="o">--</span><span class="n">disable</span><span class="o">-</span><span class="n">video</span><span class="o">-</span><span class="n">x11</span> <span class="o">--</span><span class="n">disable</span><span class="o">-</span><span class="n">video</span><span class="o">-</span><span class="n">rpi</span>
 </pre></div>
 </div>
-<p>Install SDL2_image:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>wget https://libsdl.org/projects/SDL_image/release/SDL2_image-2.0.5.tar.gz
-tar -zxvf SDL2_image-2.0.5.tar.gz
-pushd SDL2_image-2.0.5
-./configure
-make -j$(nproc)
-sudo make install
-popd
-</pre></div>
-</div>
-<p>Install SDL2_mixer:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>wget https://libsdl.org/projects/SDL_mixer/release/SDL2_mixer-2.0.4.tar.gz
-tar -zxvf SDL2_mixer-2.0.4.tar.gz
-pushd SDL2_mixer-2.0.4
-./configure
-make -j$(nproc)
-sudo make install
-popd
-</pre></div>
-</div>
-<p>Install SDL2_ttf:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>wget https://libsdl.org/projects/SDL_ttf/release/SDL2_ttf-2.0.15.tar.gz
-tar -zxvf SDL2_ttf-2.0.15.tar.gz
-pushd SDL2_ttf-2.0.15
-./configure
-make -j$(nproc)
-sudo make install
-popd
-</pre></div>
-</div>
-<p>Make sure the dynamic libraries cache is updated:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">ldconfig</span> <span class="o">-</span><span class="n">v</span>
-</pre></div>
-</div>
+</section>
+</section>
+</section>
+</section>
+<section id="hardware-acceleration">
+<h2>Hardware acceleration<a class="headerlink" href="#hardware-acceleration" title="Permalink to this heading">¶</a></h2>
 <p>If you are getting output similar to this when running your app:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">INFO</span>   <span class="p">]</span> <span class="n">GL</span><span class="p">:</span> <span class="n">OpenGL</span> <span class="n">vendor</span> <span class="o">&lt;</span><span class="sa">b</span><span class="s1">&#39;VMware, Inc.&#39;</span><span class="o">&gt;</span>
 <span class="p">[</span><span class="n">INFO</span>   <span class="p">]</span> <span class="n">GL</span><span class="p">:</span> <span class="n">OpenGL</span> <span class="n">renderer</span> <span class="o">&lt;</span><span class="sa">b</span><span class="s1">&#39;llvmpipe (LLVM 9.0.1, 128 bits)&#39;</span><span class="o">&gt;</span>
@@ -572,16 +526,6 @@ popd
 <span class="p">[</span><span class="n">INFO</span>   <span class="p">]</span> <span class="n">GL</span><span class="p">:</span> <span class="n">OpenGL</span> <span class="n">renderer</span> <span class="o">&lt;</span><span class="sa">b</span><span class="s1">&#39;V3D 4.2&#39;</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="id2">
-<h4>Arch Linux ARM<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h4>
-<p>Using pacman:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">S</span> <span class="n">sdl2</span> <span class="n">sdl2_gfx</span> <span class="n">sdl2_image</span> <span class="n">sdl2_net</span> <span class="n">sdl2_ttf</span> <span class="n">sdl2_mixer</span>
-</pre></div>
-</div>
-</section>
-</section>
 </section>
 <section id="raspberry-pi-window-provider-and-gl-backend">
 <h2>Raspberry Pi window provider and GL backend<a class="headerlink" href="#raspberry-pi-window-provider-and-gl-backend" title="Permalink to this heading">¶</a></h2>
