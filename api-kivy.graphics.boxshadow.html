@@ -422,6 +422,16 @@
 <p>The BoxShadow declaration must occur inside a <a class="reference internal" href="api-kivy.graphics.instructions.html#kivy.graphics.instructions.Canvas" title="kivy.graphics.instructions.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> statement. It works
 similarly to other graphical instructions such as <a class="reference internal" href="api-kivy.graphics.vertex_instructions.html#kivy.graphics.vertex_instructions.Rectangle" title="kivy.graphics.vertex_instructions.Rectangle"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rectangle</span></code></a>,
 <a class="reference internal" href="api-kivy.graphics.vertex_instructions.html#kivy.graphics.vertex_instructions.RoundedRectangle" title="kivy.graphics.vertex_instructions.RoundedRectangle"><code class="xref py py-class docutils literal notranslate"><span class="pre">RoundedRectangle</span></code></a>, etc.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the <code class="docutils literal notranslate"><span class="pre">BoxShadow</span></code> graphical instruction has a visually similar behavior to box-shadow (CSS), the hierarchy
+of the drawing layer of <code class="docutils literal notranslate"><span class="pre">BoxShadow</span></code> in relation to the target element must be defined following the same layer
+hierarchy rules as when declaring other canvas instructions.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>For more details, refer to the <a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.inset" title="kivy.graphics.boxshadow.BoxShadow.inset"><code class="xref py py-attr docutils literal notranslate"><span class="pre">inset</span></code></a> mode.</p>
+</div>
 <section id="example">
 <span id="id1"></span><h2>Example:<a class="headerlink" href="#example" title="Permalink to this heading">¶</a></h2>
 <blockquote>
@@ -456,7 +466,8 @@ similarly to other graphical instructions such as <a class="reference internal" 
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><cite>inset</cite>: bool, defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</dt><dd><p>Defines whether the shadow is drawn on the outside or inside of an element.</p>
+<dt><cite>inset</cite>: bool, defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</dt><dd><p>Defines whether the shadow is drawn from the inside out or from the
+outline to the inside of the <code class="docutils literal notranslate"><span class="pre">BoxShadow</span></code> instruction.</p>
 </dd>
 <dt><cite>size</cite>: list | tuple, defaults to <code class="docutils literal notranslate"><span class="pre">(100.0,</span> <span class="pre">100.0)</span></code>.</dt><dd><p>Define the raw size of the shadow, that is, you should not take into account
 changes in the value of <a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.blur_radius" title="kivy.graphics.boxshadow.BoxShadow.blur_radius"><code class="xref py py-attr docutils literal notranslate"><span class="pre">blur_radius</span></code></a> and <a class="reference internal" href="#kivy.graphics.boxshadow.BoxShadow.spread_radius" title="kivy.graphics.boxshadow.BoxShadow.spread_radius"><code class="xref py py-attr docutils literal notranslate"><span class="pre">spread_radius</span></code></a>
@@ -545,13 +556,110 @@ top-left, top-right, bottom-right, bottom-left.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kivy.graphics.boxshadow.BoxShadow.inset">
 <span class="sig-name descname"><span class="pre">inset</span></span><a class="headerlink" href="#kivy.graphics.boxshadow.BoxShadow.inset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Defines whether the shadow is drawn on the outside or inside of an element.</p>
+<dd><p>Defines whether the shadow is drawn from the inside out or from the outline to the inside of the <code class="docutils literal notranslate"><span class="pre">BoxShadow</span></code> instruction.</p>
 <p>Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Although the inset mode determines the drawing behavior of the shadow, the position of the <code class="docutils literal notranslate"><span class="pre">BoxShadow</span></code>
+instruction in the <code class="docutils literal notranslate"><span class="pre">canvas</span></code> hierarchy depends on the other graphic instructions present in the
+<a class="reference internal" href="api-kivy.graphics.instructions.html#kivy.graphics.instructions.Canvas" title="kivy.graphics.instructions.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a> instruction tree.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>In other words, if the <strong>target</strong> is in the <code class="docutils literal notranslate"><span class="pre">canvas</span></code> layer and you want to use the default <code class="docutils literal notranslate"><span class="pre">inset</span> <span class="pre">=</span> <span class="pre">False</span></code>
+mode to create an elevation effect, you must declare the <code class="docutils literal notranslate"><span class="pre">BoxShadow</span></code> instruction in <code class="docutils literal notranslate"><span class="pre">canvas.before</span></code> layer.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/boxshadow_example_1.png"><img alt="_images/boxshadow_example_1.png" class="align-center" src="_images/boxshadow_example_1.png" style="width: 300px;" /></a>
+<div class="highlight-kv notranslate"><div class="highlight"><pre><span></span><span class="nn">&lt;MyWidget@Widget&gt;</span><span class="p">:</span>
+    <span class="na">size_hint</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="na">size</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span>
+    <span class="na">pos</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span>
+
+    <span class="nc">canvas.before</span><span class="p">:</span>
+        <span class="c1"># BoxShadow statements</span>
+        <span class="nc">Color</span><span class="p">:</span>
+            <span class="na">rgba</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.65</span>
+        <span class="nc">BoxShadow</span><span class="p">:</span>
+            <span class="na">pos</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span>
+            <span class="na">size</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
+            <span class="na">offset</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span>
+            <span class="na">blur_radius</span><span class="p">:</span> <span class="mi">25</span>
+            <span class="na">spread_radius</span><span class="p">:</span> <span class="o">-</span><span class="mi">10</span>
+            <span class="na">border_radius</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span>
+
+    <span class="nc">canvas</span><span class="p">:</span>
+        <span class="c1"># target element statements</span>
+        <span class="nc">Color</span><span class="p">:</span>
+            <span class="na">rgba</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+        <span class="nc">Rectangle</span><span class="p">:</span>
+            <span class="na">pos</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span>
+            <span class="na">size</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Or, if the target is in the <code class="docutils literal notranslate"><span class="pre">canvas</span></code> layer and you want to use the <code class="docutils literal notranslate"><span class="pre">inset</span> <span class="pre">=</span> <span class="pre">True</span></code> mode to create an
+insertion effect, you must declare the <code class="docutils literal notranslate"><span class="pre">BoxShadow</span></code> instruction in the <code class="docutils literal notranslate"><span class="pre">canvas</span></code> layer, immediately after
+the <strong>target</strong> <code class="docutils literal notranslate"><span class="pre">canvas</span></code> declaration, or declare it in <code class="docutils literal notranslate"><span class="pre">canvas.after</span></code>.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/boxshadow_example_2.png"><img alt="_images/boxshadow_example_2.png" class="align-center" src="_images/boxshadow_example_2.png" style="width: 300px;" /></a>
+<div class="highlight-kv notranslate"><div class="highlight"><pre><span></span><span class="nn">&lt;MyWidget@Widget&gt;</span><span class="p">:</span>
+    <span class="na">size_hint</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="na">size</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span>
+    <span class="na">pos</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span>
+
+    <span class="nc">canvas</span><span class="p">:</span>
+        <span class="c1"># target element statements</span>
+        <span class="nc">Color</span><span class="p">:</span>
+            <span class="na">rgba</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+        <span class="nc">Rectangle</span><span class="p">:</span>
+            <span class="na">pos</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span>
+            <span class="na">size</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
+
+        <span class="c1"># BoxShadow statements</span>
+        <span class="nc">Color</span><span class="p">:</span>
+            <span class="na">rgba</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.65</span>
+        <span class="nc">BoxShadow</span><span class="p">:</span>
+            <span class="na">inset</span><span class="p">:</span> <span class="kc">True</span>
+            <span class="na">pos</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span>
+            <span class="na">size</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
+            <span class="na">offset</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span>
+            <span class="na">blur_radius</span><span class="p">:</span> <span class="mi">25</span>
+            <span class="na">spread_radius</span><span class="p">:</span> <span class="o">-</span><span class="mi">10</span>
+            <span class="na">border_radius</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p><strong>In summary:</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Elevation effect - <code class="docutils literal notranslate"><span class="pre">inset</span> <span class="pre">=</span> <span class="pre">False</span></code>: the <code class="docutils literal notranslate"><span class="pre">BoxShadow</span></code> instruction needs to be drawn <strong>before</strong> the target element.</p></li>
+<li><p>Insertion effect - <code class="docutils literal notranslate"><span class="pre">inset</span> <span class="pre">=</span> <span class="pre">True</span></code>: the <code class="docutils literal notranslate"><span class="pre">BoxShadow</span></code> instruction needs to be drawn <strong>after</strong> the target element.</p></li>
+</ul>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>In general, <code class="docutils literal notranslate"><span class="pre">BoxShadow</span></code> is more flexible than box-shadow (CSS) because the <code class="docutils literal notranslate"><span class="pre">inset</span> <span class="pre">=</span> <span class="pre">False</span></code> and
+<code class="docutils literal notranslate"><span class="pre">inset</span> <span class="pre">=</span> <span class="pre">True</span></code> modes do not limit the drawing of the shadow below and above the target element,
+respectively. Actually, you can define any hierarchy you want in the <a class="reference internal" href="api-kivy.graphics.instructions.html#kivy.graphics.instructions.Canvas" title="kivy.graphics.instructions.Canvas"><code class="xref py py-class docutils literal notranslate"><span class="pre">Canvas</span></code></a>
+declaration tree, to create more complex effects that go beyond common shadow effects.</p>
+</div>
 <p><strong>Modes:</strong></p>
 <blockquote>
 <div><ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">False</span></code> (default) - The shadow is drawn outside the boundaries of the element, creating a raised effect. This makes the shadow appear to be outside the element.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">True</span></code> - The shadow is drawn inside the boundaries of the element, creating a inset effect. This makes the shadow appear to be inside the element.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">False</span></code> (default) - The shadow is drawn inside out the <code class="docutils literal notranslate"><span class="pre">BoxShadow</span></code> instruction, creating a raised effect.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">True</span></code> - The shadow is drawn from the outline to the inside of the <code class="docutils literal notranslate"><span class="pre">BoxShadow</span></code> instruction, creating a inset effect.</p></li>
 </ul>
 </div></blockquote>
 <img alt="_images/boxshadow_inset.svg" class="align-center" src="_images/boxshadow_inset.svg" /></dd></dl>
@@ -725,7 +833,7 @@ while negative values will cause the shadow to shrink.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Feb 18, 2023.
+      Last updated on Feb 19, 2023.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.1.3.
 </div>
 -->
