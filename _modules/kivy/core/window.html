@@ -598,6 +598,10 @@
 <span class="sd">            Minimum width of the window (only works for sdl2 window provider).</span>
 <span class="sd">        `minimum_height`: int</span>
 <span class="sd">            Minimum height of the window (only works for sdl2 window provider).</span>
+<span class="sd">        `always_on_top`: bool</span>
+<span class="sd">            When enabled, the window will be brought to the front and will keep</span>
+<span class="sd">            the window above the rest. If disabled, it will restore the default</span>
+<span class="sd">            behavior. Only works for the sdl2 window provider.</span>
 <span class="sd">        `allow_screensaver`: bool</span>
 <span class="sd">            Allow the device to show a screen saver, or to go to sleep</span>
 <span class="sd">            on mobile devices. Defaults to True. Only works for sdl2 window</span>
@@ -826,6 +830,22 @@
 
 <span class="sd">    :attr:`minimum_height` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to 0.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">always_on_top</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;When enabled, the window will be brought to the front and will keep</span>
+<span class="sd">    the window above the rest. If disabled, it will restore the default</span>
+<span class="sd">    behavior.</span>
+
+<span class="sd">    This option can be toggled freely during the window&#39;s lifecycle.</span>
+
+<span class="sd">    Only works for the sdl2 window provider. Check the :mod:`~kivy.config`</span>
+<span class="sd">    documentation for a more detailed explanation on the values.</span>
+
+<span class="sd">    .. versionadded:: 2.2.0</span>
+
+<span class="sd">    :attr:`always_on_top` is a :class:`~kivy.properties.BooleanProperty` and</span>
+<span class="sd">    defaults to False.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">allow_screensaver</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
@@ -1398,6 +1418,10 @@
         <span class="k">if</span> <span class="s1">&#39;minimum_height&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
             <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;minimum_height&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s1">&#39;graphics&#39;</span><span class="p">,</span>
                                                      <span class="s1">&#39;minimum_height&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;always_on_top&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;always_on_top&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span>
+                <span class="s1">&#39;graphics&#39;</span><span class="p">,</span> <span class="s1">&#39;always_on_top&#39;</span>
+            <span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;allow_screensaver&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
             <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;allow_screensaver&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span>
                 <span class="s1">&#39;graphics&#39;</span><span class="p">,</span> <span class="s1">&#39;allow_screensaver&#39;</span><span class="p">)</span>
@@ -2886,7 +2910,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Feb 19, 2023.
+      Last updated on Feb 21, 2023.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.1.3.
 </div>
 -->
