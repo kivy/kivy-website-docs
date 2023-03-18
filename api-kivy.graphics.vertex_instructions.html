@@ -717,14 +717,12 @@ when the BorderImage is too small.</p>
 <dt class="sig sig-object py" id="kivy.graphics.vertex_instructions.Ellipse">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.graphics.vertex_instructions.</span></span><span class="sig-name descname"><span class="pre">Ellipse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.graphics.vertex_instructions.Ellipse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#kivy.graphics.vertex_instructions.Rectangle" title="kivy.graphics.vertex_instructions.Rectangle"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.graphics.vertex_instructions.Rectangle</span></code></a></p>
-<div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 1.0.7: </span>Added angle_start and angle_end.</p>
-</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><cite>segments</cite>: int, defaults to 180</dt><dd><p>Define how many segments are needed for drawing the ellipse.
-The drawing will be smoother if you have many segments.</p>
+<dt><cite>segments</cite>: int, the default value is calculated from the range between angle.</dt><dd><p>Define how many segments are needed for drawing the ellipse.
+The ellipse drawing will be smoother if you have many segments,
+however you can also use this property to create polygons with 3 or more sides.</p>
 </dd>
 <dt><cite>angle_start</cite>: float, defaults to 0.0</dt><dd><p>Specifies the starting angle, in degrees, of the disk portion.</p>
 </dd>
@@ -733,6 +731,13 @@ The drawing will be smoother if you have many segments.</p>
 </dl>
 </dd>
 </dl>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.0.7: </span>Added angle_start and angle_end.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.2.0: </span>The default number of segments is no longer 180, it is now calculated
+according to the angle range, as this is a more efficient approach.</p>
+</div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kivy.graphics.vertex_instructions.Ellipse.angle_end">
 <span class="sig-name descname"><span class="pre">angle_end</span></span><a class="headerlink" href="#kivy.graphics.vertex_instructions.Ellipse.angle_end" title="Permalink to this definition">¶</a></dt>
@@ -748,7 +753,15 @@ The drawing will be smoother if you have many segments.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kivy.graphics.vertex_instructions.Ellipse.segments">
 <span class="sig-name descname"><span class="pre">segments</span></span><a class="headerlink" href="#kivy.graphics.vertex_instructions.Ellipse.segments" title="Permalink to this definition">¶</a></dt>
-<dd><p>Property for getting/setting the number of segments of the ellipse.</p>
+<dd><p>Property for getting/setting the number of segments of the ellipse.
+The ellipse drawing will be smoother if you have many segments, however
+you can also use this property to create polygons with 3 or more sides.
+Values smaller than 3 will not be represented and the number of
+segments will be automatically calculated.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.2.0: </span>The minimum number of segments allowed is 3. Smaller values will be
+ignored and the number of segments will be automatically calculated.</p>
+</div>
 </dd></dl>
 
 </dd></dl>
@@ -1434,7 +1447,7 @@ are not supported.</p></li>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 12, 2023.
+      Last updated on Mar 18, 2023.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.1.3.
 </div>
 -->
