@@ -633,17 +633,19 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="k">def</span> <span class="nf">_set_on_focus_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39; If changing code, ensure following code is not infinite loop:</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;If changing focus, ensure your code does not create an infinite loop.</span>
+<span class="sd">        eg:</span>
+<span class="sd">        ```python</span>
 <span class="sd">        widget.focus_next = widget</span>
 <span class="sd">        widget.focus_previous = widget</span>
-<span class="sd">        widget.focus_previous = widget2</span>
+<span class="sd">        ```</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="nb">next</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_old_focus_next</span>
-        <span class="k">if</span> <span class="nb">next</span> <span class="ow">is</span> <span class="n">value</span><span class="p">:</span>   <span class="c1"># prevent infinite loop</span>
+        <span class="n">next_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_old_focus_next</span>
+        <span class="k">if</span> <span class="n">next_</span> <span class="ow">is</span> <span class="n">value</span><span class="p">:</span>   <span class="c1"># prevent infinite loop</span>
             <span class="k">return</span>
 
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">next</span><span class="p">,</span> <span class="n">FocusBehavior</span><span class="p">):</span>
-            <span class="nb">next</span><span class="o">.</span><span class="n">focus_previous</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">next_</span><span class="p">,</span> <span class="n">FocusBehavior</span><span class="p">):</span>
+            <span class="n">next_</span><span class="o">.</span><span class="n">focus_previous</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_old_focus_next</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">value</span> <span class="ow">is</span> <span class="ne">StopIteration</span><span class="p">:</span>
             <span class="k">return</span>
@@ -752,11 +754,10 @@
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Whether a instance should lose focus when clicked outside the instance.</span>
 
 <span class="sd">    When a user clicks on a widget that is focus aware and shares the same</span>
-<span class="sd">    keyboard as this widget (which in the case of only one keyboard, are</span>
-<span class="sd">    all focus aware widgets), then as the other widgets gains focus, this</span>
-<span class="sd">    widget loses focus. In addition to that, if this property is `True`,</span>
-<span class="sd">    clicking on any widget other than this widget, will remove focus form this</span>
-<span class="sd">    widget.</span>
+<span class="sd">    keyboard as this widget (which in the case with only one keyboard),</span>
+<span class="sd">    then as the other widgets gain focus, this widget loses focus. In addition</span>
+<span class="sd">    to that, if this property is `True`, clicking on any widget other than this</span>
+<span class="sd">    widget, will remove focus from this widget.</span>
 
 <span class="sd">    :attr:`unfocus_on_touch` is a :class:`~kivy.properties.BooleanProperty` and</span>
 <span class="sd">    defaults to `False` if the `keyboard_mode` in :attr:`~kivy.config.Config`</span>
@@ -902,7 +903,7 @@
 <div class="viewcode-block" id="FocusBehavior.get_focus_previous"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.focus.html#kivy.uix.behaviors.FocusBehavior.get_focus_previous">[docs]</a>    <span class="k">def</span> <span class="nf">get_focus_previous</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Returns the previous focusable widget using either</span>
 <span class="sd">           :attr:`focus_previous` or the :attr:`children` similar to the</span>
-<span class="sd">           order when ``tab`` + ``shift`` key are triggered together.</span>
+<span class="sd">           order when the ``tab`` + ``shift`` keys are triggered together.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_focus_next</span><span class="p">(</span><span class="s1">&#39;focus_previous&#39;</span><span class="p">)</span></div>
 
@@ -1007,7 +1008,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 23, 2023.
+      Last updated on Mar 24, 2023.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.1.3.
 </div>
 -->
