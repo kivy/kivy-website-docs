@@ -128,6 +128,7 @@
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.cap_precision"><code class="docutils literal notranslate"><span class="pre">Line.cap_precision</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.circle"><code class="docutils literal notranslate"><span class="pre">Line.circle</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.close"><code class="docutils literal notranslate"><span class="pre">Line.close</span></code></a></li>
+<li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.close_mode"><code class="docutils literal notranslate"><span class="pre">Line.close_mode</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dash_length"><code class="docutils literal notranslate"><span class="pre">Line.dash_length</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dash_offset"><code class="docutils literal notranslate"><span class="pre">Line.dash_offset</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dashes"><code class="docutils literal notranslate"><span class="pre">Line.dashes</span></code></a></li>
@@ -487,6 +488,7 @@
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.cap_precision"><code class="docutils literal notranslate"><span class="pre">Line.cap_precision</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.circle"><code class="docutils literal notranslate"><span class="pre">Line.circle</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.close"><code class="docutils literal notranslate"><span class="pre">Line.close</span></code></a></li>
+<li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.close_mode"><code class="docutils literal notranslate"><span class="pre">Line.close_mode</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dash_length"><code class="docutils literal notranslate"><span class="pre">Line.dash_length</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dash_offset"><code class="docutils literal notranslate"><span class="pre">Line.dash_offset</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dashes"><code class="docutils literal notranslate"><span class="pre">Line.dashes</span></code></a></li>
@@ -944,9 +946,28 @@ value is calculated from the range between angle.</p></li>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kivy.graphics.vertex_instructions.Line.close">
 <span class="sig-name descname"><span class="pre">close</span></span><a class="headerlink" href="#kivy.graphics.vertex_instructions.Line.close" title="Permalink to this definition">¶</a></dt>
-<dd><p>If True, the line will be closed.</p>
+<dd><p>If True, the line will be closed by joining the two ends, according to <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.close_mode" title="kivy.graphics.vertex_instructions.Line.close_mode"><code class="xref py py-attr docutils literal notranslate"><span class="pre">close_mode</span></code></a>.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4.1.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.graphics.vertex_instructions.Line.close_mode">
+<span class="sig-name descname"><span class="pre">close_mode</span></span><a class="headerlink" href="#kivy.graphics.vertex_instructions.Line.close_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines how the ends of the line will be connected.
+Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;straight-line&quot;</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Support for the different closing modes depends on drawing shapes.</p>
+</div>
+<p>Available modes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;straight-line&quot;</span></code> (all drawing shapes): the ends will be closed by a straight line.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;center-connected&quot;</span></code> (<a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.ellipse" title="kivy.graphics.vertex_instructions.Line.ellipse"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ellipse</span></code></a> specific): the ends will be closed by a line passing through the center of the ellipse.</p></li>
+</ul>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.2.0.</span></p>
 </div>
 </dd></dl>
 
@@ -995,7 +1016,10 @@ value is 0 and 360.</p></li>
 <li><p>(optional) segments is the precision of the ellipse. The default
 value is calculated from the range between angle.</p></li>
 </ul>
-<p>Note that it’s up to you to <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.close" title="kivy.graphics.vertex_instructions.Line.close"><code class="xref py py-attr docutils literal notranslate"><span class="pre">close</span></code></a> the ellipse or not.</p>
+<p>Note that it’s up to you to <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.close" title="kivy.graphics.vertex_instructions.Line.close"><code class="xref py py-attr docutils literal notranslate"><span class="pre">close</span></code></a> or not.
+If you choose to close, use <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.close_mode" title="kivy.graphics.vertex_instructions.Line.close_mode"><code class="xref py py-attr docutils literal notranslate"><span class="pre">close_mode</span></code></a> to define how the figure
+will be closed. Whether it will be by closed by a <code class="docutils literal notranslate"><span class="pre">&quot;straight-line&quot;</span></code>
+or by <code class="docutils literal notranslate"><span class="pre">&quot;center-connected&quot;</span></code>.</p>
 <p>For example, for building a simple ellipse, in python:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># simple ellipse</span>
 <span class="n">Line</span><span class="p">(</span><span class="n">ellipse</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">))</span>
@@ -1447,7 +1471,7 @@ are not supported.</p></li>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 25, 2023.
+      Last updated on Mar 26, 2023.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.1.3.
 </div>
 -->
