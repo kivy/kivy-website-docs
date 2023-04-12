@@ -465,6 +465,7 @@
 <span class="kn">from</span> <span class="nn">kivy.resources</span> <span class="kn">import</span> <span class="n">resource_find</span><span class="p">,</span> <span class="n">resource_add_path</span>
 <span class="kn">from</span> <span class="nn">kivy.compat</span> <span class="kn">import</span> <span class="n">PY2</span>
 <span class="kn">from</span> <span class="nn">kivy.setupconfig</span> <span class="kn">import</span> <span class="n">USE_SDL2</span><span class="p">,</span> <span class="n">USE_PANGOFT2</span>
+<span class="kn">from</span> <span class="nn">kivy.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
 
 
 <span class="k">if</span> <span class="s1">&#39;KIVY_DOC&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
@@ -507,8 +508,11 @@
 <span class="sd">        `text_size`: tuple, defaults to (None, None)</span>
 <span class="sd">            Add constraint to render the text (inside a bounding box).</span>
 <span class="sd">            If no size is given, the label size will be set to the text size.</span>
-<span class="sd">        `padding`: float, defaults to None</span>
-<span class="sd">            If it&#39;s a float, it will set padding_x and padding_y</span>
+<span class="sd">        `padding`: int|float or list|tuple, defaults to [0, 0, 0, 0].</span>
+<span class="sd">            Padding of the text in the format [padding_left, padding_top,</span>
+<span class="sd">            padding_right, padding_bottom].</span>
+<span class="sd">            ``padding`` should be int|float or a list|tuple with 1, 2 or 4</span>
+<span class="sd">            elements.</span>
 <span class="sd">        `padding_x`: float, defaults to 0.0</span>
 <span class="sd">            Left/right padding</span>
 <span class="sd">        `padding_y`: float, defaults to 0.0</span>
@@ -558,6 +562,14 @@
 <span class="sd">            or `&#39;weak_rtl&#39;` (Pango only)</span>
 <span class="sd">        `text_language`: str, defaults to None (user locale)</span>
 <span class="sd">            RFC-3066 format language tag as a string (Pango only)</span>
+
+<span class="sd">    .. deprecated:: 2.2.0</span>
+<span class="sd">        `padding_x` and `padding_y` have been deprecated. Please use `padding`</span>
+<span class="sd">        instead.</span>
+
+<span class="sd">    .. versionchanged:: 2.2.0</span>
+<span class="sd">        `padding` is now a list and defaults to [0, 0, 0, 0]. `padding` accepts</span>
+<span class="sd">        int|float or a list|tuple with 1, 2 or 4 elements.</span>
 
 <span class="sd">    .. versionchanged:: 1.10.1</span>
 <span class="sd">        `font_context`, `font_family`, `font_features`, `base_direction`</span>
@@ -643,11 +655,34 @@
         <span class="n">kwargs_get</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span>
         <span class="n">options</span><span class="p">[</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">color</span> <span class="ow">or</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="n">options</span><span class="p">[</span><span class="s1">&#39;outline_color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">outline_color</span> <span class="ow">or</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs_get</span><span class="p">(</span><span class="s1">&#39;padding&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">],</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
-            <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">],</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">])</span>
-        <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding_x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs_get</span><span class="p">(</span><span class="s1">&#39;padding_x&#39;</span><span class="p">,</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
-        <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding_y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs_get</span><span class="p">(</span><span class="s1">&#39;padding_y&#39;</span><span class="p">,</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs_get</span><span class="p">(</span><span class="s1">&#39;padding&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">],</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+            <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">]]</span> <span class="o">*</span> <span class="mi">4</span>
+        <span class="k">elif</span> <span class="p">(</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">],</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span>
+            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">])</span> <span class="o">!=</span> <span class="mi">4</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;padding should be int|float or a list|tuple with 1, 2 or &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;4 elements, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2"> with &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2"> elements.&quot;</span>
+                <span class="p">)</span>
+
+        <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding_x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs_get</span><span class="p">(</span><span class="s1">&#39;padding_x&#39;</span><span class="p">)</span>
+        <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding_y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs_get</span><span class="p">(</span><span class="s1">&#39;padding_y&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">padding_option</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;padding_x&#39;</span><span class="p">,</span> <span class="s1">&#39;padding_y&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">kwargs_get</span><span class="p">(</span><span class="n">padding_option</span><span class="p">):</span>
+                <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;LabelBase: The use of the </span><span class="si">{</span><span class="n">padding_option</span><span class="si">}</span><span class="s2"> parameter is &quot;</span>
+                    <span class="s2">&quot;deprecated, and will be removed in future versions. Use &quot;</span>
+                    <span class="s2">&quot;padding instead.&quot;</span>
+                <span class="p">)</span>
 
         <span class="k">if</span> <span class="s1">&#39;size&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
             <span class="n">options</span><span class="p">[</span><span class="s1">&#39;text_size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">]</span>
@@ -666,6 +701,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">texture</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_shortened</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">resolve_font_name</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_migrate_deprecated_padding_xy</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_migrate_deprecated_padding_xy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding_x&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">][::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding_x&#39;</span><span class="p">]]</span> <span class="o">*</span> <span class="mi">2</span>
+        <span class="k">if</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding_y&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding_y&#39;</span><span class="p">]]</span> <span class="o">*</span> <span class="mi">2</span>
 
 <div class="viewcode-block" id="LabelBase.register"><a class="viewcode-back" href="../../../api-kivy.core.text.html#kivy.core.text.LabelBase.register">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">fn_regular</span><span class="p">,</span> <span class="n">fn_italic</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fn_bold</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -839,7 +883,7 @@
             <span class="k">return</span> <span class="n">text</span>
 
         <span class="n">opts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span>
-        <span class="n">uw</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">uw</span> <span class="o">-</span> <span class="n">opts</span><span class="p">[</span><span class="s1">&#39;padding_x&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">margin</span><span class="p">))</span>
+        <span class="n">uw</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">uw</span> <span class="o">-</span> <span class="n">opts</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">opts</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">margin</span><span class="p">))</span>
         <span class="c1"># if larger, it won&#39;t fit so don&#39;t even try extents</span>
         <span class="nb">chr</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
         <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">),</span> <span class="nb">chr</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">))</span>
@@ -973,9 +1017,10 @@
     <span class="k">def</span> <span class="nf">render_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">render_text</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
         <span class="n">get_extents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_cached_extents</span><span class="p">()</span>
         <span class="n">uw</span><span class="p">,</span> <span class="n">uh</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;text_size&#39;</span><span class="p">]</span>
-        <span class="n">xpad</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding_x&#39;</span><span class="p">]</span>
+        <span class="n">padding_left</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">padding_right</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">uw</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">uww</span> <span class="o">=</span> <span class="n">uw</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">xpad</span>  <span class="c1"># real width of just text</span>
+            <span class="n">uww</span> <span class="o">=</span> <span class="n">uw</span> <span class="o">-</span> <span class="n">padding_left</span> <span class="o">-</span> <span class="n">padding_right</span>  <span class="c1"># real width of just text</span>
         <span class="n">w</span> <span class="o">=</span> <span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">sw</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;space_width&#39;</span><span class="p">]</span>
         <span class="n">halign</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;halign&#39;</span><span class="p">]</span>
@@ -992,14 +1037,22 @@
                 <span class="n">line</span> <span class="o">=</span> <span class="n">last_word</span><span class="o">.</span><span class="n">text</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">cur_base_dir</span><span class="p">:</span>
                     <span class="n">cur_base_dir</span> <span class="o">=</span> <span class="n">find_base_dir</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="n">xpad</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">padding_left</span>
             <span class="k">if</span> <span class="n">halign</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">cur_base_dir</span> <span class="ow">and</span> <span class="s1">&#39;rtl&#39;</span> <span class="ow">in</span> <span class="n">cur_base_dir</span><span class="p">:</span>
-                    <span class="n">x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">w</span> <span class="o">-</span> <span class="n">lw</span> <span class="o">-</span> <span class="n">xpad</span><span class="p">))</span>  <span class="c1"># right-align RTL text</span>
+                    <span class="c1"># right-align RTL text</span>
+                    <span class="n">x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">w</span> <span class="o">-</span> <span class="n">lw</span> <span class="o">-</span> <span class="n">padding_right</span><span class="p">))</span>
             <span class="k">elif</span> <span class="n">halign</span> <span class="o">==</span> <span class="s1">&#39;center&#39;</span><span class="p">:</span>
-                <span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">w</span> <span class="o">-</span> <span class="n">lw</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">)</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span>
+                    <span class="nb">int</span><span class="p">(</span><span class="n">w</span> <span class="o">-</span> <span class="n">lw</span><span class="p">),</span>
+                    <span class="nb">max</span><span class="p">(</span>
+                        <span class="nb">int</span><span class="p">(</span><span class="n">padding_left</span><span class="p">),</span>
+                        <span class="nb">int</span><span class="p">((</span><span class="n">w</span> <span class="o">-</span> <span class="n">lw</span> <span class="o">+</span> <span class="n">padding_left</span> <span class="o">-</span> <span class="n">padding_right</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
             <span class="k">elif</span> <span class="n">halign</span> <span class="o">==</span> <span class="s1">&#39;right&#39;</span><span class="p">:</span>
-                <span class="n">x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">w</span> <span class="o">-</span> <span class="n">lw</span> <span class="o">-</span> <span class="n">xpad</span><span class="p">))</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">w</span> <span class="o">-</span> <span class="n">lw</span> <span class="o">-</span> <span class="n">padding_right</span><span class="p">))</span>
 
             <span class="c1"># right left justify</span>
             <span class="c1"># divide left over space between `spaces`</span>
@@ -1051,11 +1104,13 @@
         <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
         <span class="n">valign</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;valign&#39;</span><span class="p">]</span>
 
-        <span class="n">y</span> <span class="o">=</span> <span class="n">ypad</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding_y&#39;</span><span class="p">]</span>  <span class="c1"># pos in the texture</span>
+        <span class="n">padding_top</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">valign</span> <span class="o">==</span> <span class="s1">&#39;bottom&#39;</span><span class="p">:</span>
-            <span class="n">y</span> <span class="o">=</span> <span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ih</span> <span class="o">+</span> <span class="n">ypad</span>
-        <span class="k">elif</span> <span class="n">valign</span> <span class="o">==</span> <span class="s1">&#39;middle&#39;</span> <span class="ow">or</span> <span class="n">valign</span> <span class="o">==</span> <span class="s1">&#39;center&#39;</span><span class="p">:</span>
-            <span class="n">y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ih</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">ypad</span><span class="p">)</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ih</span> <span class="o">+</span> <span class="n">padding_top</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">valign</span> <span class="o">==</span> <span class="s1">&#39;top&#39;</span><span class="p">:</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">padding_top</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">valign</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;middle&#39;</span><span class="p">,</span> <span class="s1">&#39;center&#39;</span><span class="p">):</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ih</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">padding_top</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_render_begin</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">render_lines</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_render_text</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
@@ -1202,7 +1257,9 @@
 <span class="sd">        any padding.&#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">texture</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">0</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">texture</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding_x&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">texture</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+        <span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">content_height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1210,7 +1267,9 @@
 <span class="sd">        any padding.&#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">texture</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">0</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">texture</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding_y&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">texture</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span>
+        <span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">content_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1379,7 +1438,6 @@
 
 <span class="k">if</span> <span class="s1">&#39;KIVY_DOC&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">Label</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">kivy.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
         <span class="kn">import</span> <span class="nn">sys</span>
         <span class="n">Logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s1">&#39;App: Unable to get a Text provider, abort.&#39;</span><span class="p">)</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
@@ -1432,7 +1490,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Apr 08, 2023.
+      Last updated on Apr 12, 2023.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.1.3.
 </div>
 -->

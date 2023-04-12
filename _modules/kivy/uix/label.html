@@ -662,8 +662,8 @@
 <span class="kn">from</span> <span class="nn">kivy.core.text</span> <span class="kn">import</span> <span class="n">Label</span> <span class="k">as</span> <span class="n">CoreLabel</span><span class="p">,</span> <span class="n">DEFAULT_FONT</span>
 <span class="kn">from</span> <span class="nn">kivy.core.text.markup</span> <span class="kn">import</span> <span class="n">MarkupLabel</span> <span class="k">as</span> <span class="n">CoreMarkupLabel</span>
 <span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">StringProperty</span><span class="p">,</span> <span class="n">OptionProperty</span><span class="p">,</span> \
-    <span class="n">NumericProperty</span><span class="p">,</span> <span class="n">BooleanProperty</span><span class="p">,</span> <span class="n">ReferenceListProperty</span><span class="p">,</span> \
-    <span class="n">ListProperty</span><span class="p">,</span> <span class="n">ObjectProperty</span><span class="p">,</span> <span class="n">DictProperty</span><span class="p">,</span> <span class="n">ColorProperty</span>
+    <span class="n">NumericProperty</span><span class="p">,</span> <span class="n">BooleanProperty</span><span class="p">,</span> <span class="n">ListProperty</span><span class="p">,</span> \
+    <span class="n">ObjectProperty</span><span class="p">,</span> <span class="n">DictProperty</span><span class="p">,</span> <span class="n">ColorProperty</span><span class="p">,</span> <span class="n">VariableListProperty</span>
 <span class="kn">from</span> <span class="nn">kivy.utils</span> <span class="kn">import</span> <span class="n">get_hex_from_color</span>
 
 
@@ -681,8 +681,8 @@
     <span class="n">_font_properties</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;font_size&#39;</span><span class="p">,</span> <span class="s1">&#39;font_name&#39;</span><span class="p">,</span> <span class="s1">&#39;font_script_name&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;font_direction&#39;</span><span class="p">,</span> <span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="s1">&#39;italic&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;underline&#39;</span><span class="p">,</span> <span class="s1">&#39;strikethrough&#39;</span><span class="p">,</span> <span class="s1">&#39;font_family&#39;</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;disabled_color&#39;</span><span class="p">,</span> <span class="s1">&#39;halign&#39;</span><span class="p">,</span> <span class="s1">&#39;valign&#39;</span><span class="p">,</span> <span class="s1">&#39;padding_x&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;padding_y&#39;</span><span class="p">,</span> <span class="s1">&#39;outline_width&#39;</span><span class="p">,</span> <span class="s1">&#39;disabled_outline_color&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;disabled_color&#39;</span><span class="p">,</span> <span class="s1">&#39;halign&#39;</span><span class="p">,</span> <span class="s1">&#39;valign&#39;</span><span class="p">,</span> <span class="s1">&#39;padding&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;outline_width&#39;</span><span class="p">,</span> <span class="s1">&#39;disabled_outline_color&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;outline_color&#39;</span><span class="p">,</span> <span class="s1">&#39;text_size&#39;</span><span class="p">,</span> <span class="s1">&#39;shorten&#39;</span><span class="p">,</span> <span class="s1">&#39;mipmap&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;line_height&#39;</span><span class="p">,</span> <span class="s1">&#39;max_lines&#39;</span><span class="p">,</span> <span class="s1">&#39;strip&#39;</span><span class="p">,</span> <span class="s1">&#39;shorten_from&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;split_str&#39;</span><span class="p">,</span> <span class="s1">&#39;ellipsis_options&#39;</span><span class="p">,</span> <span class="s1">&#39;unicode_errors&#39;</span><span class="p">,</span>
@@ -698,6 +698,11 @@
         <span class="n">d</span> <span class="o">=</span> <span class="n">Label</span><span class="o">.</span><span class="n">_font_properties</span>
         <span class="n">fbind</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span>
         <span class="n">update</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_texture_update</span>
+
+        <span class="c1"># NOTE: Compatibility code due to deprecated properties.</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;padding_x&#39;</span><span class="p">,</span> <span class="n">update</span><span class="p">,</span> <span class="s1">&#39;padding_x&#39;</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;padding_y&#39;</span><span class="p">,</span> <span class="n">update</span><span class="p">,</span> <span class="s1">&#39;padding_y&#39;</span><span class="p">)</span>
+
         <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;disabled&#39;</span><span class="p">,</span> <span class="n">update</span><span class="p">,</span> <span class="s1">&#39;disabled&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
             <span class="n">fbind</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">update</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
@@ -750,8 +755,17 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;outline_color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">disabled_outline_color</span> <span class="k">if</span> <span class="n">value</span> <span class="k">else</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">outline_color</span><span class="p">)</span>
+
+            <span class="c1"># NOTE: Compatibility code due to deprecated properties</span>
+            <span class="c1"># Must be removed along with padding_x and padding_y</span>
+            <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;padding_x&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">][::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">value</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span>
+            <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;padding_y&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">value</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span>
+
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_texture</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Label.texture_update"><a class="viewcode-back" href="../../../api-kivy.uix.label.html#kivy.uix.label.Label.texture_update">[docs]</a>    <span class="k">def</span> <span class="nf">texture_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
@@ -1109,7 +1123,7 @@
 <span class="sd">    defaults to False.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="n">padding_x</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">padding_x</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">deprecated</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Horizontal padding of the text inside the widget box.</span>
 
 <span class="sd">    :attr:`padding_x` is a :class:`~kivy.properties.NumericProperty` and</span>
@@ -1118,9 +1132,12 @@
 <span class="sd">    .. versionchanged:: 1.9.0</span>
 <span class="sd">        `padding_x` has been fixed to work as expected.</span>
 <span class="sd">        In the past, the text was padded by the negative of its values.</span>
+
+<span class="sd">    .. deprecated:: 2.2.0</span>
+<span class="sd">        Please use :attr:`padding` instead.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="n">padding_y</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">padding_y</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">deprecated</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Vertical padding of the text inside the widget box.</span>
 
 <span class="sd">    :attr:`padding_y` is a :class:`~kivy.properties.NumericProperty` and</span>
@@ -1129,13 +1146,23 @@
 <span class="sd">    .. versionchanged:: 1.9.0</span>
 <span class="sd">        `padding_y` has been fixed to work as expected.</span>
 <span class="sd">        In the past, the text was padded by the negative of its values.</span>
+
+<span class="sd">    .. deprecated:: 2.2.0</span>
+<span class="sd">        Please use :attr:`padding` instead.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="n">padding</span> <span class="o">=</span> <span class="n">ReferenceListProperty</span><span class="p">(</span><span class="n">padding_x</span><span class="p">,</span> <span class="n">padding_y</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Padding of the text in the format (padding_x, padding_y)</span>
+    <span class="n">padding</span> <span class="o">=</span> <span class="n">VariableListProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">lenght</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Padding of the text in the format [padding_left, padding_top,</span>
+<span class="sd">    padding_right, padding_bottom]</span>
 
-<span class="sd">    :attr:`padding` is a :class:`~kivy.properties.ReferenceListProperty` of</span>
-<span class="sd">    (:attr:`padding_x`, :attr:`padding_y`) properties.</span>
+<span class="sd">    ``padding`` also accepts a two argument form [padding_horizontal,</span>
+<span class="sd">    padding_vertical] and a one argument form [padding].</span>
+
+<span class="sd">    .. versionchanged:: 2.2.0</span>
+<span class="sd">        Replaced ReferenceListProperty with VariableListProperty.</span>
+
+<span class="sd">    :attr:`padding` is a :class:`~kivy.properties.VariableListProperty` and</span>
+<span class="sd">    defaults to [0, 0, 0, 0].</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">halign</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span>
@@ -1565,7 +1592,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Apr 08, 2023.
+      Last updated on Apr 12, 2023.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.1.3.
 </div>
 -->

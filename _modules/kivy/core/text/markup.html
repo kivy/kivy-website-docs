@@ -542,7 +542,7 @@
         <span class="c1"># flattened later when shortening and broken up lines if broken</span>
         <span class="c1"># mid-word will have space mid-word when lines are joined</span>
         <span class="n">uw_temp</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">shorten</span> <span class="k">else</span> <span class="n">uw</span>
-        <span class="n">xpad</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding_x&#39;</span><span class="p">]</span>
+        <span class="n">xpad</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
         <span class="n">uhh</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span> <span class="k">if</span> <span class="n">uh</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;valign&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;top&#39;</span> <span class="ow">or</span>
                <span class="n">options</span><span class="p">[</span><span class="s1">&#39;shorten&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="n">uh</span><span class="p">)</span>
         <span class="n">options</span><span class="p">[</span><span class="s1">&#39;strip&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;strip&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;halign&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;justify&#39;</span>
@@ -715,7 +715,7 @@
             <span class="c1"># XXX: update refs to justified pos</span>
             <span class="c1"># when justify, each line should&#39;ve been stripped already</span>
             <span class="n">split</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;( +)&#39;</span><span class="p">))</span>
-            <span class="n">uww</span> <span class="o">=</span> <span class="n">uw</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">xpad</span>
+            <span class="n">uww</span> <span class="o">=</span> <span class="n">uw</span> <span class="o">-</span> <span class="n">xpad</span>
             <span class="nb">chr</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
             <span class="n">space</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
             <span class="n">empty</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
@@ -830,7 +830,8 @@
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">render_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">render_text</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
-        <span class="n">xpad</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding_x&#39;</span><span class="p">]</span>
+        <span class="n">padding_left</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">padding_right</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
         <span class="n">w</span> <span class="o">=</span> <span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">halign</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;halign&#39;</span><span class="p">]</span>
         <span class="n">refs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_refs</span>
@@ -840,11 +841,17 @@
 
         <span class="k">for</span> <span class="n">layout_line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>  <span class="c1"># for plain label each line has only one str</span>
             <span class="n">lw</span><span class="p">,</span> <span class="n">lh</span> <span class="o">=</span> <span class="n">layout_line</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">layout_line</span><span class="o">.</span><span class="n">h</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="n">xpad</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">padding_left</span>
             <span class="k">if</span> <span class="n">halign</span> <span class="o">==</span> <span class="s1">&#39;center&#39;</span><span class="p">:</span>
-                <span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">w</span> <span class="o">-</span> <span class="n">lw</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">)</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span>
+                    <span class="nb">int</span><span class="p">(</span><span class="n">w</span> <span class="o">-</span> <span class="n">lw</span><span class="p">),</span>
+                    <span class="nb">max</span><span class="p">(</span>
+                        <span class="nb">int</span><span class="p">(</span><span class="n">padding_left</span><span class="p">),</span>
+                        <span class="nb">int</span><span class="p">((</span><span class="n">w</span> <span class="o">-</span> <span class="n">lw</span> <span class="o">+</span> <span class="n">padding_left</span> <span class="o">-</span> <span class="n">padding_right</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
             <span class="k">elif</span> <span class="n">halign</span> <span class="o">==</span> <span class="s1">&#39;right&#39;</span> <span class="ow">or</span> <span class="n">auto_halign_r</span><span class="p">:</span>
-                <span class="n">x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">w</span> <span class="o">-</span> <span class="n">lw</span> <span class="o">-</span> <span class="n">xpad</span><span class="p">))</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">w</span> <span class="o">-</span> <span class="n">lw</span> <span class="o">-</span> <span class="n">padding_right</span><span class="p">))</span>
             <span class="n">layout_line</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
             <span class="n">layout_line</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
             <span class="n">psp</span> <span class="o">=</span> <span class="n">pph</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1046,12 +1053,18 @@
         <span class="k">if</span> <span class="n">uw</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">lines</span>
         <span class="n">old_opts</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">)</span>
-        <span class="n">uw</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">uw</span> <span class="o">-</span> <span class="n">old_opts</span><span class="p">[</span><span class="s1">&#39;padding_x&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">margin</span><span class="p">))</span>
+        <span class="n">uw</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+            <span class="mi">0</span><span class="p">,</span>
+            <span class="nb">int</span><span class="p">(</span><span class="n">uw</span> <span class="o">-</span> <span class="n">old_opts</span><span class="p">[</span><span class="s2">&quot;padding&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">old_opts</span><span class="p">[</span><span class="s2">&quot;padding&quot;</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">margin</span><span class="p">),</span>
+        <span class="p">)</span>
         <span class="nb">chr</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
         <span class="n">ssize</span> <span class="o">=</span> <span class="n">textwidth</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
         <span class="n">c</span> <span class="o">=</span> <span class="n">old_opts</span><span class="p">[</span><span class="s1">&#39;split_str&#39;</span><span class="p">]</span>
         <span class="n">line_height</span> <span class="o">=</span> <span class="n">old_opts</span><span class="p">[</span><span class="s1">&#39;line_height&#39;</span><span class="p">]</span>
-        <span class="n">xpad</span><span class="p">,</span> <span class="n">ypad</span> <span class="o">=</span> <span class="n">old_opts</span><span class="p">[</span><span class="s1">&#39;padding_x&#39;</span><span class="p">],</span> <span class="n">old_opts</span><span class="p">[</span><span class="s1">&#39;padding_y&#39;</span><span class="p">]</span>
+        <span class="n">xpad</span><span class="p">,</span> <span class="n">ypad</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">old_opts</span><span class="p">[</span><span class="s2">&quot;padding&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">old_opts</span><span class="p">[</span><span class="s2">&quot;padding&quot;</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span>
+            <span class="n">old_opts</span><span class="p">[</span><span class="s2">&quot;padding&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">old_opts</span><span class="p">[</span><span class="s2">&quot;padding&quot;</span><span class="p">][</span><span class="mi">3</span><span class="p">],</span>
+        <span class="p">)</span>
         <span class="nb">dir</span> <span class="o">=</span> <span class="n">old_opts</span><span class="p">[</span><span class="s1">&#39;shorten_from&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 
         <span class="c1"># flatten lines into single line</span>
@@ -1073,8 +1086,8 @@
             <span class="n">lh</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">word</span><span class="o">.</span><span class="n">lh</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">line</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">line_height</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">is_shortened</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="k">return</span> <span class="p">(</span>
-                <span class="n">lw</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">xpad</span><span class="p">,</span>
-                <span class="n">lh</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">ypad</span><span class="p">,</span>
+                <span class="n">lw</span> <span class="o">+</span> <span class="n">xpad</span><span class="p">,</span>
+                <span class="n">lh</span> <span class="o">+</span> <span class="n">ypad</span><span class="p">,</span>
                 <span class="p">[</span><span class="n">LayoutLine</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">lw</span><span class="p">,</span> <span class="n">lh</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">line</span><span class="p">)]</span>
             <span class="p">)</span>
 
@@ -1091,8 +1104,8 @@
             <span class="n">s</span> <span class="o">=</span> <span class="n">textwidth</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">uw</span><span class="p">:</span>
                 <span class="k">return</span> <span class="p">(</span>
-                    <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">xpad</span><span class="p">,</span>
-                    <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">line_height</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">ypad</span><span class="p">,</span>
+                    <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">xpad</span><span class="p">,</span>
+                    <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">line_height</span> <span class="o">+</span> <span class="n">ypad</span><span class="p">,</span>
                     <span class="p">[</span><span class="n">LayoutLine</span><span class="p">(</span>
                         <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
                         <span class="p">[</span><span class="n">LayoutWord</span><span class="p">(</span><span class="n">old_opts</span><span class="p">,</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;..&#39;</span><span class="p">)])]</span>
@@ -1101,8 +1114,8 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">s</span> <span class="o">=</span> <span class="n">textwidth</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
                 <span class="k">return</span> <span class="p">(</span>
-                    <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">xpad</span><span class="p">,</span>
-                    <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">line_height</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">ypad</span><span class="p">,</span>
+                    <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">xpad</span><span class="p">,</span>
+                    <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">line_height</span> <span class="o">+</span> <span class="n">ypad</span><span class="p">,</span>
                     <span class="p">[</span><span class="n">LayoutLine</span><span class="p">(</span>
                         <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
                         <span class="p">[</span><span class="n">LayoutWord</span><span class="p">(</span><span class="n">old_opts</span><span class="p">,</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;.&#39;</span><span class="p">)])]</span>
@@ -1144,8 +1157,8 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">old_opts</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">is_shortened</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="k">return</span> <span class="p">(</span>
-                    <span class="n">lw</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">xpad</span><span class="p">,</span>
-                    <span class="n">lh</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">ypad</span><span class="p">,</span>
+                    <span class="n">lw</span> <span class="o">+</span> <span class="n">xpad</span><span class="p">,</span>
+                    <span class="n">lh</span> <span class="o">+</span> <span class="n">ypad</span><span class="p">,</span>
                     <span class="p">[</span><span class="n">LayoutLine</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">lw</span><span class="p">,</span> <span class="n">lh</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">line1</span><span class="p">)]</span>
                 <span class="p">)</span>
 
@@ -1207,8 +1220,8 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="n">old_opts</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">is_shortened</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="k">return</span> <span class="p">(</span>
-                    <span class="n">lw</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">xpad</span><span class="p">,</span>
-                    <span class="n">lh</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">ypad</span><span class="p">,</span>
+                    <span class="n">lw</span> <span class="o">+</span> <span class="n">xpad</span><span class="p">,</span>
+                    <span class="n">lh</span> <span class="o">+</span> <span class="n">ypad</span><span class="p">,</span>
                     <span class="p">[</span><span class="n">LayoutLine</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">lw</span><span class="p">,</span> <span class="n">lh</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">line1</span><span class="p">)]</span>
                 <span class="p">)</span>
 
@@ -1250,8 +1263,8 @@
         <span class="k">if</span> <span class="n">uw</span> <span class="o">&lt;</span> <span class="n">lw</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">is_shortened</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="n">lw</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">xpad</span><span class="p">,</span>
-            <span class="n">lh</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">ypad</span><span class="p">,</span>
+            <span class="n">lw</span> <span class="o">+</span> <span class="n">xpad</span><span class="p">,</span>
+            <span class="n">lh</span> <span class="o">+</span> <span class="n">ypad</span><span class="p">,</span>
             <span class="p">[</span><span class="n">LayoutLine</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">lw</span><span class="p">,</span> <span class="n">lh</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">line1</span><span class="p">)]</span>
         <span class="p">)</span></div></div>
 </pre></div>
@@ -1292,7 +1305,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Apr 08, 2023.
+      Last updated on Apr 12, 2023.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.1.3.
 </div>
 -->
