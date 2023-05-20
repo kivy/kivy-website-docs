@@ -8,16 +8,15 @@
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
     
-    <title>kivy.config &mdash; Kivy 2.1.0 documentation</title>
+    <title>kivy.config &mdash; Kivy 2.2.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/fresh.css" type="text/css" />
          
           <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script> 
             <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script> 
-            <script src="../../_static/jquery.js"></script> 
-            <script src="../../_static/underscore.js"></script> 
             <script src="../../_static/doctools.js"></script> 
+            <script src="../../_static/sphinx_highlight.js"></script> 
         
         <script>
             const currTheme = localStorage.getItem("theme");
@@ -34,7 +33,7 @@
         <script type="text/javascript" src="../../_static/kivy.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="top" title="Kivy 2.1.0 documentation" href="../../index.html" />
+    <link rel="top" title="Kivy 2.2.0 documentation" href="../../index.html" />
     <link rel="up" title="kivy" href="../kivy.html" /> 
   </head>
   <body>
@@ -178,7 +177,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../api-index.html">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.html">Kivy framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy._metrics.html">Low level Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.app.html">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.atlas.html">Atlas</a></li>
@@ -213,6 +211,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.geometry.html">Geometry utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.gesture.html">Gesture recognition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.graphics.html">Graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api-kivy.graphics.boxshadow.html">BoxShadow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.graphics.cgl.html">CGL: standard C interface for OpenGL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.graphics.compiler.html">Graphics compiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.graphics.context.html">Context management</a></li>
@@ -262,7 +261,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.lib.gstplayer.html">GstPlayer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.lib.mtdev.html">Python mtdev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.loader.html">Asynchronous data loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api-kivy.logger.html">Logger object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api-kivy.logger.html">Kivy Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.metrics.html">Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.modules.html">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.modules.console.html">Console</a></li>
@@ -498,6 +497,12 @@
 <span class="sd">        Path of log directory.</span>
 <span class="sd">    `log_enable`: int, 0 or 1</span>
 <span class="sd">        Activate file logging. 0 is disabled, 1 is enabled.</span>
+
+<span class="sd">        .. note::</span>
+<span class="sd">            Logging output can also be controlled by the environment variables</span>
+<span class="sd">            ``KIVY_LOG_MODE``, ``KIVY_NO_FILELOG`` and ``KIVY_NO_CONSOLELOG``.</span>
+<span class="sd">            More information is provided in the :mod:`kivy.logger` module.</span>
+
 <span class="sd">    `log_level`: string, one of |log_levels|</span>
 <span class="sd">        Set the minimum log level to use.</span>
 <span class="sd">    `log_name`: string</span>
@@ -621,6 +626,15 @@
 <span class="sd">        :class:`~kivy.uix.behaviors.buttonbehavior.ButtonBehavior` to</span>
 <span class="sd">        make sure they display their current visual state for the given</span>
 <span class="sd">        time.</span>
+<span class="sd">    `always_on_top`: int, one of ``0`` or ``1``, defaults to ``0``</span>
+<span class="sd">        When enabled, the window will be brought to the front and will keep</span>
+<span class="sd">        the window above the rest. Only works for the sdl2 window provider.</span>
+<span class="sd">        ``0`` is disabled, ``1`` is enabled.</span>
+<span class="sd">    `show_taskbar_icon`: int, one of ``0`` or ``1``, defaults to ``1``</span>
+<span class="sd">        Determines whether the app&#39;s icon will be added to the taskbar. Only</span>
+<span class="sd">        applicable for the SDL2 window provider.</span>
+<span class="sd">        ``0`` means the icon will not be shown in the taskbar and ``1`` means</span>
+<span class="sd">        it will.</span>
 <span class="sd">    `allow_screensaver`: int, one of 0 or 1, defaults to 1</span>
 <span class="sd">        Allow the device to show a screen saver, or to go to sleep</span>
 <span class="sd">        on mobile devices. Only works for the sdl2 window provider.</span>
@@ -704,6 +718,13 @@
 <span class="sd">    Check the specific module&#39;s documentation for a list of accepted</span>
 <span class="sd">    arguments.</span>
 
+<span class="sd">.. versionadded:: 2.2.0</span>
+<span class="sd">    `always_on_top` have been added to the `graphics` section.</span>
+<span class="sd">    `show_taskbar_icon` have been added to the `graphics` section.</span>
+
+<span class="sd">.. versionchanged:: 2.2.0</span>
+<span class="sd">    `implementation` has been added to the network section.</span>
+
 <span class="sd">.. versionchanged:: 2.1.0</span>
 <span class="sd">    `vsync` has been added to the graphics section.</span>
 <span class="sd">    `verify_gl_main_thread` has been added to the graphics section.</span>
@@ -713,6 +734,7 @@
 <span class="sd">    to the `graphics` section.</span>
 <span class="sd">    `kivy_clock` has been added to the kivy section.</span>
 <span class="sd">    `default_font` has beed added to the kivy section.</span>
+<span class="sd">    `useragent` has been added to the network section.</span>
 
 <span class="sd">.. versionchanged:: 1.9.0</span>
 <span class="sd">    `borderless` and `window_state` have been added to the graphics section.</span>
@@ -747,19 +769,20 @@
     <span class="kn">from</span> <span class="nn">ConfigParser</span> <span class="kn">import</span> <span class="n">ConfigParser</span> <span class="k">as</span> <span class="n">PythonConfigParser</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">configparser</span> <span class="kn">import</span> <span class="n">RawConfigParser</span> <span class="k">as</span> <span class="n">PythonConfigParser</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
 <span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">environ</span>
 <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span>
-<span class="kn">from</span> <span class="nn">kivy</span> <span class="kn">import</span> <span class="n">kivy_config_fn</span>
-<span class="kn">from</span> <span class="nn">kivy.logger</span> <span class="kn">import</span> <span class="n">Logger</span><span class="p">,</span> <span class="n">logger_config_update</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
-<span class="kn">from</span> <span class="nn">kivy.utils</span> <span class="kn">import</span> <span class="n">platform</span>
-<span class="kn">from</span> <span class="nn">kivy.compat</span> <span class="kn">import</span> <span class="n">PY2</span><span class="p">,</span> <span class="n">string_types</span>
 <span class="kn">from</span> <span class="nn">weakref</span> <span class="kn">import</span> <span class="n">ref</span>
+
+<span class="kn">from</span> <span class="nn">kivy</span> <span class="kn">import</span> <span class="n">kivy_config_fn</span>
+<span class="kn">from</span> <span class="nn">kivy.compat</span> <span class="kn">import</span> <span class="n">PY2</span><span class="p">,</span> <span class="n">string_types</span>
+<span class="kn">from</span> <span class="nn">kivy.logger</span> <span class="kn">import</span> <span class="n">Logger</span><span class="p">,</span> <span class="n">logger_config_update</span>
+<span class="kn">from</span> <span class="nn">kivy.utils</span> <span class="kn">import</span> <span class="n">platform</span>
 
 <span class="n">_is_rpi</span> <span class="o">=</span> <span class="n">exists</span><span class="p">(</span><span class="s1">&#39;/opt/vc/include/bcm_host.h&#39;</span><span class="p">)</span>
 
 <span class="c1"># Version number of current configuration format</span>
-<span class="n">KIVY_CONFIG_VERSION</span> <span class="o">=</span> <span class="mi">24</span>
+<span class="n">KIVY_CONFIG_VERSION</span> <span class="o">=</span> <span class="mi">27</span>
 
 <span class="n">Config</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="sd">&#39;&#39;&#39;The default Kivy configuration object. This is a :class:`ConfigParser`</span>
@@ -773,7 +796,7 @@
 
 
 <div class="viewcode-block" id="ConfigParser"><a class="viewcode-back" href="../../api-kivy.config.html#kivy.config.ConfigParser">[docs]</a><span class="k">class</span> <span class="nc">ConfigParser</span><span class="p">(</span><span class="n">PythonConfigParser</span><span class="p">,</span> <span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Enhanced ConfigParser class that supports the addition of default</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Enhanced ConfigParser class that supports the addition of default</span>
 <span class="sd">    sections and default values.</span>
 
 <span class="sd">    By default, the kivy ConfigParser instance, :attr:`~kivy.config.Config`,</span>
@@ -802,7 +825,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
 
 <div class="viewcode-block" id="ConfigParser.add_callback"><a class="viewcode-back" href="../../api-kivy.config.html#kivy.config.ConfigParser.add_callback">[docs]</a>    <span class="k">def</span> <span class="nf">add_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">section</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Add a callback to be called when a specific section or key has</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Add a callback to be called when a specific section or key has</span>
 <span class="sd">        changed. If you don&#39;t specify a section or key, it will call the</span>
 <span class="sd">        callback for all section/key changes.</span>
 
@@ -815,7 +838,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_callbacks</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">callback</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="ConfigParser.remove_callback"><a class="viewcode-back" href="../../api-kivy.config.html#kivy.config.ConfigParser.remove_callback">[docs]</a>    <span class="k">def</span> <span class="nf">remove_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">section</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Removes a callback added with :meth:`add_callback`.</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Removes a callback added with :meth:`add_callback`.</span>
 <span class="sd">        :meth:`remove_callback` must be called with the same parameters as</span>
 <span class="sd">        :meth:`add_callback`.</span>
 
@@ -834,7 +857,7 @@
             <span class="n">callback</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ConfigParser.read"><a class="viewcode-back" href="../../api-kivy.config.html#kivy.config.ConfigParser.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Read only one filename. In contrast to the original ConfigParser of</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Read only one filename. In contrast to the original ConfigParser of</span>
 <span class="sd">        Python, this one is able to read only one file at a time. The last</span>
 <span class="sd">        read file will be used for the :meth:`write` method.</span>
 
@@ -857,7 +880,7 @@
         <span class="c1">#    self.readfp(f)</span>
         <span class="n">old_vals</span> <span class="o">=</span> <span class="p">{</span><span class="n">sect</span><span class="p">:</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="n">sect</span><span class="p">)}</span> <span class="k">for</span> <span class="n">sect</span> <span class="ow">in</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">sections</span><span class="p">()}</span>
-        <span class="n">PythonConfigParser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="n">PythonConfigParser</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8-sig&quot;</span><span class="p">)</span>
 
         <span class="c1"># when reading new file, sections/keys are only increased, not removed</span>
         <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_do_callbacks</span>
@@ -873,7 +896,7 @@
                     <span class="n">f</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ConfigParser.set"><a class="viewcode-back" href="../../api-kivy.config.html#kivy.config.ConfigParser.set">[docs]</a>    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Functions similarly to PythonConfigParser&#39;s set method, except that</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Functions similarly to PythonConfigParser&#39;s set method, except that</span>
 <span class="sd">        the value is implicitly converted to a string.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">e_value</span> <span class="o">=</span> <span class="n">value</span>
@@ -885,7 +908,7 @@
         <span class="k">return</span> <span class="n">ret</span></div>
 
 <div class="viewcode-block" id="ConfigParser.setall"><a class="viewcode-back" href="../../api-kivy.config.html#kivy.config.ConfigParser.setall">[docs]</a>    <span class="k">def</span> <span class="nf">setall</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">keyvalues</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Sets multiple key-value pairs in a section. keyvalues should be a</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Sets multiple key-value pairs in a section. keyvalues should be a</span>
 <span class="sd">        dictionary containing the key-value pairs to be set.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">keyvalues</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -899,7 +922,7 @@
         <span class="k">return</span> <span class="n">value</span></div>
 
 <div class="viewcode-block" id="ConfigParser.setdefaults"><a class="viewcode-back" href="../../api-kivy.config.html#kivy.config.ConfigParser.setdefaults">[docs]</a>    <span class="k">def</span> <span class="nf">setdefaults</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">keyvalues</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Set multiple key-value defaults in a section. keyvalues should be</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Set multiple key-value defaults in a section. keyvalues should be</span>
 <span class="sd">        a dictionary containing the new key-value defaults.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">adddefaultsection</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
@@ -907,14 +930,14 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ConfigParser.setdefault"><a class="viewcode-back" href="../../api-kivy.config.html#kivy.config.ConfigParser.setdefault">[docs]</a>    <span class="k">def</span> <span class="nf">setdefault</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Set the default value for an option in the specified section.</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Set the default value for an option in the specified section.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_option</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">):</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ConfigParser.getdefault"><a class="viewcode-back" href="../../api-kivy.config.html#kivy.config.ConfigParser.getdefault">[docs]</a>    <span class="k">def</span> <span class="nf">getdefault</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">defaultvalue</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Get the value of an option in the specified section. If not found,</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Get the value of an option in the specified section. If not found,</span>
 <span class="sd">        it will return the default value.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_section</span><span class="p">(</span><span class="n">section</span><span class="p">):</span>
@@ -924,7 +947,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ConfigParser.getdefaultint"><a class="viewcode-back" href="../../api-kivy.config.html#kivy.config.ConfigParser.getdefaultint">[docs]</a>    <span class="k">def</span> <span class="nf">getdefaultint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">defaultvalue</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Get the value of an option in the specified section. If not found,</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Get the value of an option in the specified section. If not found,</span>
 <span class="sd">        it will return the default value. The value will always be</span>
 <span class="sd">        returned as an integer.</span>
 
@@ -933,15 +956,15 @@
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getdefault</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">defaultvalue</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="ConfigParser.adddefaultsection"><a class="viewcode-back" href="../../api-kivy.config.html#kivy.config.ConfigParser.adddefaultsection">[docs]</a>    <span class="k">def</span> <span class="nf">adddefaultsection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Add a section if the section is missing.</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Add a section if the section is missing.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">assert</span><span class="p">(</span><span class="s2">&quot;_&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">section</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="s2">&quot;_&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">section</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_section</span><span class="p">(</span><span class="n">section</span><span class="p">):</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="n">section</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ConfigParser.write"><a class="viewcode-back" href="../../api-kivy.config.html#kivy.config.ConfigParser.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Write the configuration to the last file opened using the</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Write the configuration to the last file opened using the</span>
 <span class="sd">        :meth:`read` method.</span>
 
 <span class="sd">        Return True if the write finished successfully, False otherwise.</span>
@@ -949,7 +972,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
                 <span class="n">PythonConfigParser</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fd</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
             <span class="n">Logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;Unable to write the config &lt;</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
@@ -957,7 +980,7 @@
         <span class="k">return</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="ConfigParser.update_config"><a class="viewcode-back" href="../../api-kivy.config.html#kivy.config.ConfigParser.update_config">[docs]</a>    <span class="k">def</span> <span class="nf">update_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Upgrade the configuration based on a new default config file.</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Upgrade the configuration based on a new default config file.</span>
 <span class="sd">        Overwrite any existing values if overwrite is True.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">pcp</span> <span class="o">=</span> <span class="n">PythonConfigParser</span><span class="p">()</span>
@@ -969,7 +992,7 @@
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_register_named_property</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">widget_ref</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39; Called by the ConfigParserProperty to register a property which</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39; Called by the ConfigParserProperty to register a property which</span>
 <span class="sd">        was created with a config name instead of a config object.</span>
 
 <span class="sd">        When a ConfigParser with this name is later created, the properties</span>
@@ -1009,7 +1032,7 @@
 
 <div class="viewcode-block" id="ConfigParser.get_configparser"><a class="viewcode-back" href="../../api-kivy.config.html#kivy.config.ConfigParser.get_configparser">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">get_configparser</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Returns the :class:`ConfigParser` instance whose name is `name`, or</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Returns the :class:`ConfigParser` instance whose name is `name`, or</span>
 <span class="sd">        None if not found.</span>
 
 <span class="sd">        :Parameters:</span>
@@ -1033,7 +1056,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39; The name associated with this ConfigParser instance, if not `&#39;&#39;`.</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39; The name associated with this ConfigParser instance, if not `&#39;&#39;`.</span>
 <span class="sd">        Defaults to `&#39;&#39;`. It can be safely changed dynamically or set to `&#39;&#39;`.</span>
 
 <span class="sd">        When a ConfigParser is given a name, that config object can be</span>
@@ -1099,7 +1122,7 @@
             <span class="s1">&#39;KIVY_NO_CONFIG&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">environ</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">Config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">kivy_config_fn</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="n">Logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;Core: error while reading local&#39;</span>
                              <span class="s1">&#39;configuration&#39;</span><span class="p">)</span>
 
@@ -1287,6 +1310,17 @@
             <span class="n">Config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;graphics&#39;</span><span class="p">,</span> <span class="s1">&#39;custom_titlebar&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span>
             <span class="n">Config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;graphics&#39;</span><span class="p">,</span> <span class="s1">&#39;custom_titlebar_border&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">)</span>
 
+        <span class="k">elif</span> <span class="n">version</span> <span class="o">==</span> <span class="mi">24</span><span class="p">:</span>
+            <span class="n">Config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;network&quot;</span><span class="p">,</span> <span class="s2">&quot;implementation&quot;</span><span class="p">,</span> <span class="s2">&quot;default&quot;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">version</span> <span class="o">==</span> <span class="mi">25</span><span class="p">:</span>
+            <span class="n">Config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;graphics&#39;</span><span class="p">,</span> <span class="s1">&#39;always_on_top&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">version</span> <span class="o">==</span> <span class="mi">26</span><span class="p">:</span>
+            <span class="n">Config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;graphics&quot;</span><span class="p">,</span> <span class="s2">&quot;show_taskbar_icon&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">)</span>
+
+        <span class="c1"># WARNING: When adding a new version migration here,</span>
+        <span class="c1"># don&#39;t forget to increment KIVY_CONFIG_VERSION !</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># for future.</span>
             <span class="k">break</span>
@@ -1306,7 +1340,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">Config</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">kivy_config_fn</span>
             <span class="n">Config</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="n">Logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;Core: Error while saving default config file&#39;</span><span class="p">)</span>
 
     <span class="c1"># Load configuration from env</span>
@@ -1383,8 +1417,8 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 06, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
+      Last updated on May 20, 2023.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
   </body>

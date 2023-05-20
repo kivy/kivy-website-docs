@@ -7,18 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
-    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Kivy Basics &mdash; Kivy 2.1.0 documentation</title>
+    <title>Kivy Basics &mdash; Kivy 2.2.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/fresh.css" type="text/css" />
          
           <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script> 
             <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script> 
-            <script src="../_static/jquery.js"></script> 
-            <script src="../_static/underscore.js"></script> 
             <script src="../_static/doctools.js"></script> 
+            <script src="../_static/sphinx_highlight.js"></script> 
         
         <script>
             const currTheme = localStorage.getItem("theme");
@@ -35,7 +34,7 @@
         <script type="text/javascript" src="../_static/kivy.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="Kivy 2.1.0 documentation" href="../index.html" />
+    <link rel="top" title="Kivy 2.2.0 documentation" href="../index.html" />
     <link rel="up" title="Programming Guide" href="../guide-index.html" />
     <link rel="next" title="Controlling the environment" href="environment.html" />
     <link rel="prev" title="Programming Guide" href="../guide-index.html" /> 
@@ -191,7 +190,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../api-index.html">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.html">Kivy framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy._metrics.html">Low level Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.app.html">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.atlas.html">Atlas</a></li>
@@ -226,6 +224,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.geometry.html">Geometry utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.gesture.html">Gesture recognition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.html">Graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.boxshadow.html">BoxShadow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.cgl.html">CGL: standard C interface for OpenGL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.compiler.html">Graphics compiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.context.html">Context management</a></li>
@@ -275,7 +274,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.lib.gstplayer.html">GstPlayer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.lib.mtdev.html">Python mtdev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.loader.html">Asynchronous data loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-kivy.logger.html">Logger object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-kivy.logger.html">Kivy Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.metrics.html">Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.modules.html">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.modules.console.html">Console</a></li>
@@ -401,9 +400,9 @@
 </div>
             
   <section id="kivy-basics">
-<span id="basic"></span><h1>Kivy Basics<a class="headerlink" href="#kivy-basics" title="Permalink to this headline">¶</a></h1>
+<span id="basic"></span><h1>Kivy Basics<a class="headerlink" href="#kivy-basics" title="Permalink to this heading">¶</a></h1>
 <section id="installation-of-the-kivy-environment">
-<h2>Installation of the Kivy environment<a class="headerlink" href="#installation-of-the-kivy-environment" title="Permalink to this headline">¶</a></h2>
+<h2>Installation of the Kivy environment<a class="headerlink" href="#installation-of-the-kivy-environment" title="Permalink to this heading">¶</a></h2>
 <p>Kivy depends on many libraries, such as SDL2, gstreamer, PIL,
 Cairo, and more. They are not all required, but depending on the
 platform you’re working on, they can be a pain to install. To ease your
@@ -413,6 +412,7 @@ development process, we provide pre-packaged binaries for Windows, macOS and Lin
 <li><p><a class="reference internal" href="../installation/installation-windows.html#installation-windows"><span class="std std-ref">Installation on Windows</span></a></p></li>
 <li><p><a class="reference internal" href="../installation/installation-osx.html#installation-osx"><span class="std std-ref">Installation on macOS</span></a></p></li>
 <li><p><a class="reference internal" href="../installation/installation-linux.html#installation-linux"><span class="std std-ref">Installation on Linux</span></a></p></li>
+<li><p><span class="xref std std-ref">installation_bsd</span></p></li>
 <li><p><a class="reference internal" href="../installation/installation-rpi.html#installation-rpi"><span class="std std-ref">Installation on Raspberry Pi</span></a></p></li>
 </ul>
 <p>Alternatively, instructions for the development version can be found here:</p>
@@ -421,7 +421,7 @@ development process, we provide pre-packaged binaries for Windows, macOS and Lin
 </ul>
 </section>
 <section id="create-an-application">
-<span id="quickstart"></span><h2>Create an application<a class="headerlink" href="#create-an-application" title="Permalink to this headline">¶</a></h2>
+<span id="quickstart"></span><h2>Create an application<a class="headerlink" href="#create-an-application" title="Permalink to this heading">¶</a></h2>
 <p>Creating a kivy application is as simple as:</p>
 <ul class="simple">
 <li><p>sub-classing the <a class="reference internal" href="../api-kivy.app.html#kivy.app.App" title="kivy.app.App"><code class="xref py py-class docutils literal notranslate"><span class="pre">App</span></code></a> class</p></li>
@@ -451,7 +451,7 @@ method.</p></li>
 <p>You can save this to a text file, <cite>main.py</cite> for example, and run it.</p>
 </section>
 <section id="kivy-app-life-cycle">
-<h2>Kivy App Life Cycle<a class="headerlink" href="#kivy-app-life-cycle" title="Permalink to this headline">¶</a></h2>
+<h2>Kivy App Life Cycle<a class="headerlink" href="#kivy-app-life-cycle" title="Permalink to this heading">¶</a></h2>
 <p>First off, let’s get familiar with the Kivy app life cycle.</p>
 <img alt="../_images/Kivy_App_Life_Cycle.png" src="../_images/Kivy_App_Life_Cycle.png" />
 <p>As you can see above, for all intents and purposes, our entry point into our App
@@ -508,7 +508,7 @@ the code provided above, at line 11 the class and function definition ends.</p>
 initializes and starts our Kivy application.</p>
 </section>
 <section id="running-the-application">
-<h2>Running the application<a class="headerlink" href="#running-the-application" title="Permalink to this headline">¶</a></h2>
+<h2>Running the application<a class="headerlink" href="#running-the-application" title="Permalink to this heading">¶</a></h2>
 <p>To run the application, follow the instructions for your operating system:</p>
 <p>For Windows, Linux, macOS, or the RPi. From the <a class="reference internal" href="../gettingstarted/installation.html#command-line"><span class="std std-ref">terminal</span></a>
 where you installed Kivy simply run:</p>
@@ -522,7 +522,7 @@ covers the entire window’s area. That’s all there is to it.</p>
 <img alt="../_images/quickstart.png" class="align-center" src="../_images/quickstart.png" />
 </section>
 <section id="customize-the-application">
-<h2>Customize the application<a class="headerlink" href="#customize-the-application" title="Permalink to this headline">¶</a></h2>
+<h2>Customize the application<a class="headerlink" href="#customize-the-application" title="Permalink to this heading">¶</a></h2>
 <p>Lets extend this application a bit, say a simple UserName/Password page.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.gridlayout</span> <span class="kn">import</span> <span class="n">GridLayout</span>
@@ -643,8 +643,8 @@ size and positioning in the coming sections.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 06, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
+      Last updated on May 20, 2023.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
   </body>

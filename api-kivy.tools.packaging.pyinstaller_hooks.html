@@ -7,18 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
-    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Pyinstaller hooks &mdash; Kivy 2.1.0 documentation</title>
+    <title>Pyinstaller hooks &mdash; Kivy 2.2.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/fresh.css" type="text/css" />
          
           <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script> 
             <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script> 
-            <script src="_static/jquery.js"></script> 
-            <script src="_static/underscore.js"></script> 
             <script src="_static/doctools.js"></script> 
+            <script src="_static/sphinx_highlight.js"></script> 
         
         <script>
             const currTheme = localStorage.getItem("theme");
@@ -35,7 +34,7 @@
         <script type="text/javascript" src="_static/kivy.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="Kivy 2.1.0 documentation" href="index.html" />
+    <link rel="top" title="Kivy 2.2.0 documentation" href="index.html" />
     <link rel="up" title="Packaging" href="api-kivy.tools.packaging.html" />
     <link rel="next" title="Widgets" href="api-kivy.uix.html" />
     <link rel="prev" title="Packaging" href="api-kivy.tools.packaging.html" /> 
@@ -104,6 +103,13 @@
 <li><a class="reference internal" href="#hooks">Hooks</a></li>
 <li><a class="reference internal" href="#hiddenimports">hiddenimports</a></li>
 <li><a class="reference internal" href="#hook-generator">Hook generator</a></li>
+<li><a class="reference internal" href="#kivy.tools.packaging.pyinstaller_hooks.add_dep_paths"><code class="docutils literal notranslate"><span class="pre">add_dep_paths()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.tools.packaging.pyinstaller_hooks.get_deps_all"><code class="docutils literal notranslate"><span class="pre">get_deps_all()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.tools.packaging.pyinstaller_hooks.get_deps_minimal"><code class="docutils literal notranslate"><span class="pre">get_deps_minimal()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.tools.packaging.pyinstaller_hooks.get_factory_modules"><code class="docutils literal notranslate"><span class="pre">get_factory_modules()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.tools.packaging.pyinstaller_hooks.get_hooks"><code class="docutils literal notranslate"><span class="pre">get_hooks()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.tools.packaging.pyinstaller_hooks.hookspath"><code class="docutils literal notranslate"><span class="pre">hookspath()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.tools.packaging.pyinstaller_hooks.runtime_hooks"><code class="docutils literal notranslate"><span class="pre">runtime_hooks()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -189,7 +195,6 @@
 <li class="toctree-l1 current"><a class="reference internal" href="api-index.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.html">Kivy framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy._metrics.html">Low level Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.app.html">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.atlas.html">Atlas</a></li>
@@ -224,6 +229,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.geometry.html">Geometry utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.gesture.html">Gesture recognition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.html">Graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.boxshadow.html">BoxShadow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.cgl.html">CGL: standard C interface for OpenGL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.compiler.html">Graphics compiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.context.html">Context management</a></li>
@@ -273,7 +279,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.gstplayer.html">GstPlayer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.mtdev.html">Python mtdev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.loader.html">Asynchronous data loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Logger object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Kivy Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.metrics.html">Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.html">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.console.html">Console</a></li>
@@ -391,16 +397,23 @@
 <li><a class="reference internal" href="#hooks">Hooks</a></li>
 <li><a class="reference internal" href="#hiddenimports">hiddenimports</a></li>
 <li><a class="reference internal" href="#hook-generator">Hook generator</a></li>
+<li><a class="reference internal" href="#kivy.tools.packaging.pyinstaller_hooks.add_dep_paths"><code class="docutils literal notranslate"><span class="pre">add_dep_paths()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.tools.packaging.pyinstaller_hooks.get_deps_all"><code class="docutils literal notranslate"><span class="pre">get_deps_all()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.tools.packaging.pyinstaller_hooks.get_deps_minimal"><code class="docutils literal notranslate"><span class="pre">get_deps_minimal()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.tools.packaging.pyinstaller_hooks.get_factory_modules"><code class="docutils literal notranslate"><span class="pre">get_factory_modules()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.tools.packaging.pyinstaller_hooks.get_hooks"><code class="docutils literal notranslate"><span class="pre">get_hooks()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.tools.packaging.pyinstaller_hooks.hookspath"><code class="docutils literal notranslate"><span class="pre">hookspath()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.tools.packaging.pyinstaller_hooks.runtime_hooks"><code class="docutils literal notranslate"><span class="pre">runtime_hooks()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </div>
             
   <section id="module-kivy.tools.packaging.pyinstaller_hooks">
-<span id="pyinstaller-hooks"></span><h1>Pyinstaller hooks<a class="headerlink" href="#module-kivy.tools.packaging.pyinstaller_hooks" title="Permalink to this headline">¶</a></h1>
+<span id="pyinstaller-hooks"></span><h1>Pyinstaller hooks<a class="headerlink" href="#module-kivy.tools.packaging.pyinstaller_hooks" title="Permalink to this heading">¶</a></h1>
 <p>Module that exports pyinstaller related methods and parameters.</p>
 <section id="hooks">
-<h2>Hooks<a class="headerlink" href="#hooks" title="Permalink to this headline">¶</a></h2>
+<h2>Hooks<a class="headerlink" href="#hooks" title="Permalink to this heading">¶</a></h2>
 <p>PyInstaller comes with a default hook for kivy that lists the indirectly
 imported modules that pyinstaller would not find on its own using
 <a class="reference internal" href="#kivy.tools.packaging.pyinstaller_hooks.get_deps_all" title="kivy.tools.packaging.pyinstaller_hooks.get_deps_all"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_deps_all()</span></code></a>. <a class="reference internal" href="#kivy.tools.packaging.pyinstaller_hooks.hookspath" title="kivy.tools.packaging.pyinstaller_hooks.hookspath"><code class="xref py py-func docutils literal notranslate"><span class="pre">hookspath()</span></code></a> returns the path to an alternate kivy
@@ -419,7 +432,7 @@ cases, <code class="docutils literal notranslate"><span class="pre">HOOKSPATH</s
 after the default hook.</p>
 </section>
 <section id="hiddenimports">
-<h2>hiddenimports<a class="headerlink" href="#hiddenimports" title="Permalink to this headline">¶</a></h2>
+<h2>hiddenimports<a class="headerlink" href="#hiddenimports" title="Permalink to this heading">¶</a></h2>
 <p>When a module is imported indirectly, e.g. with <code class="docutils literal notranslate"><span class="pre">__import__</span></code>, pyinstaller
 won’t know about it and the module has to be added through <code class="docutils literal notranslate"><span class="pre">hiddenimports</span></code>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">hiddenimports</span></code> and other hook variables can be specified within a hook as
@@ -434,7 +447,7 @@ modules and adds them manually in a modified hook or passes them to
 <code class="docutils literal notranslate"><span class="pre">Analysis</span></code> in the spec file.</p>
 </section>
 <section id="hook-generator">
-<h2>Hook generator<a class="headerlink" href="#hook-generator" title="Permalink to this headline">¶</a></h2>
+<h2>Hook generator<a class="headerlink" href="#hook-generator" title="Permalink to this heading">¶</a></h2>
 <p><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyinstaller_hooks</span></code> includes a tool to generate a hook which lists
 all the provider modules in a list so that one can manually comment out
 the providers not to be included. To use, do:</p>
@@ -443,6 +456,7 @@ the providers not to be included. To use, do:</p>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">filename</span></code> is the name and path of the hook file to create. If <code class="docutils literal notranslate"><span class="pre">filename</span></code>
 is not provided the hook is printed to the terminal.</p>
+</section>
 <dl class="py function">
 <dt class="sig sig-object py" id="kivy.tools.packaging.pyinstaller_hooks.add_dep_paths">
 <span class="sig-prename descclassname"><span class="pre">kivy.tools.packaging.pyinstaller_hooks.</span></span><span class="sig-name descname"><span class="pre">add_dep_paths</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/tools/packaging/pyinstaller_hooks.html#add_dep_paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.tools.packaging.pyinstaller_hooks.add_dep_paths" title="Permalink to this definition">¶</a></dt>
@@ -461,7 +475,7 @@ the possible kivy providers.</p>
 which can then manually be included/excluded by commenting out elements
 in the list instead of passing on all the items. See module description.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><p>A dict with three keys, <code class="docutils literal notranslate"><span class="pre">hiddenimports</span></code>, <code class="docutils literal notranslate"><span class="pre">excludes</span></code>, and
 <code class="docutils literal notranslate"><span class="pre">binaries</span></code>. Their values are a list of the corresponding modules to
 include/exclude. This can be passed directly to <cite>Analysis`</cite> with
@@ -508,7 +522,7 @@ library is <code class="docutils literal notranslate"><span class="pre">None</sp
 library not be included in the hiddenimports but it’ll also added to the
 excluded imports to prevent it being included accidentally by pyinstaller.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><p>A dict with three keys, <code class="docutils literal notranslate"><span class="pre">hiddenimports</span></code>, <code class="docutils literal notranslate"><span class="pre">excludes</span></code>, and
 <code class="docutils literal notranslate"><span class="pre">binaries</span></code>. Their values are a list of the corresponding modules to
 include/exclude. This can be passed directly to <cite>Analysis`</cite> with
@@ -564,7 +578,6 @@ or <a class="reference internal" href="#kivy.tools.packaging.pyinstaller_hooks.g
 preinstalled with this hook.</p>
 </dd></dl>
 
-</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -616,8 +629,8 @@ preinstalled with this hook.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 06, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
+      Last updated on May 20, 2023.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
   </body>

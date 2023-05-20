@@ -7,18 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
-    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Input recorder &mdash; Kivy 2.1.0 documentation</title>
+    <title>Input recorder &mdash; Kivy 2.2.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/fresh.css" type="text/css" />
          
           <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script> 
             <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script> 
-            <script src="_static/jquery.js"></script> 
-            <script src="_static/underscore.js"></script> 
             <script src="_static/doctools.js"></script> 
+            <script src="_static/sphinx_highlight.js"></script> 
         
         <script>
             const currTheme = localStorage.getItem("theme");
@@ -35,7 +34,7 @@
         <script type="text/javascript" src="_static/kivy.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="Kivy 2.1.0 documentation" href="index.html" />
+    <link rel="top" title="Kivy 2.2.0 documentation" href="index.html" />
     <link rel="up" title="Input management" href="api-kivy.input.html" />
     <link rel="next" title="Motion Event" href="api-kivy.input.motionevent.html" />
     <link rel="prev" title="TUIO Input Provider" href="api-kivy.input.providers.tuio.html" /> 
@@ -105,6 +104,16 @@
 <li><a class="reference internal" href="#manual-play">Manual play</a></li>
 <li><a class="reference internal" href="#recording-more-attributes">Recording more attributes</a></li>
 <li><a class="reference internal" href="#known-limitations">Known limitations</a></li>
+<li><a class="reference internal" href="#kivy.input.recorder.Recorder"><code class="docutils literal notranslate"><span class="pre">Recorder</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.input.recorder.Recorder.counter"><code class="docutils literal notranslate"><span class="pre">Recorder.counter</span></code></a></li>
+<li><a class="reference internal" href="#kivy.input.recorder.Recorder.filename"><code class="docutils literal notranslate"><span class="pre">Recorder.filename</span></code></a></li>
+<li><a class="reference internal" href="#kivy.input.recorder.Recorder.play"><code class="docutils literal notranslate"><span class="pre">Recorder.play</span></code></a></li>
+<li><a class="reference internal" href="#kivy.input.recorder.Recorder.record"><code class="docutils literal notranslate"><span class="pre">Recorder.record</span></code></a></li>
+<li><a class="reference internal" href="#kivy.input.recorder.Recorder.record_attrs"><code class="docutils literal notranslate"><span class="pre">Recorder.record_attrs</span></code></a></li>
+<li><a class="reference internal" href="#kivy.input.recorder.Recorder.record_profile_mask"><code class="docutils literal notranslate"><span class="pre">Recorder.record_profile_mask</span></code></a></li>
+<li><a class="reference internal" href="#kivy.input.recorder.Recorder.window"><code class="docutils literal notranslate"><span class="pre">Recorder.window</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -190,7 +199,6 @@
 <li class="toctree-l1 current"><a class="reference internal" href="api-index.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.html">Kivy framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy._metrics.html">Low level Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.app.html">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.atlas.html">Atlas</a></li>
@@ -225,6 +233,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.geometry.html">Geometry utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.gesture.html">Gesture recognition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.html">Graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.boxshadow.html">BoxShadow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.cgl.html">CGL: standard C interface for OpenGL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.compiler.html">Graphics compiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.context.html">Context management</a></li>
@@ -274,7 +283,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.gstplayer.html">GstPlayer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.mtdev.html">Python mtdev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.loader.html">Asynchronous data loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Logger object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Kivy Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.metrics.html">Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.html">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.console.html">Console</a></li>
@@ -393,13 +402,23 @@
 <li><a class="reference internal" href="#manual-play">Manual play</a></li>
 <li><a class="reference internal" href="#recording-more-attributes">Recording more attributes</a></li>
 <li><a class="reference internal" href="#known-limitations">Known limitations</a></li>
+<li><a class="reference internal" href="#kivy.input.recorder.Recorder"><code class="docutils literal notranslate"><span class="pre">Recorder</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.input.recorder.Recorder.counter"><code class="docutils literal notranslate"><span class="pre">Recorder.counter</span></code></a></li>
+<li><a class="reference internal" href="#kivy.input.recorder.Recorder.filename"><code class="docutils literal notranslate"><span class="pre">Recorder.filename</span></code></a></li>
+<li><a class="reference internal" href="#kivy.input.recorder.Recorder.play"><code class="docutils literal notranslate"><span class="pre">Recorder.play</span></code></a></li>
+<li><a class="reference internal" href="#kivy.input.recorder.Recorder.record"><code class="docutils literal notranslate"><span class="pre">Recorder.record</span></code></a></li>
+<li><a class="reference internal" href="#kivy.input.recorder.Recorder.record_attrs"><code class="docutils literal notranslate"><span class="pre">Recorder.record_attrs</span></code></a></li>
+<li><a class="reference internal" href="#kivy.input.recorder.Recorder.record_profile_mask"><code class="docutils literal notranslate"><span class="pre">Recorder.record_profile_mask</span></code></a></li>
+<li><a class="reference internal" href="#kivy.input.recorder.Recorder.window"><code class="docutils literal notranslate"><span class="pre">Recorder.window</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
             
   <section id="module-kivy.input.recorder">
-<span id="input-recorder"></span><h1>Input recorder<a class="headerlink" href="#module-kivy.input.recorder" title="Permalink to this headline">¶</a></h1>
+<span id="input-recorder"></span><h1>Input recorder<a class="headerlink" href="#module-kivy.input.recorder" title="Permalink to this heading">¶</a></h1>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.1.0.</span></p>
 </div>
@@ -417,7 +436,7 @@ dispatch it to the event loop.</p>
 <p>By default, only the position is saved (‘pos’ profile and ‘sx’, ‘sy’,
 attributes). Change it only if you understand how input handling works.</p>
 <section id="recording-events">
-<h2>Recording events<a class="headerlink" href="#recording-events" title="Permalink to this headline">¶</a></h2>
+<h2>Recording events<a class="headerlink" href="#recording-events" title="Permalink to this heading">¶</a></h2>
 <p>The best way is to use the “recorder” module. Check the <a class="reference internal" href="api-kivy.modules.html"><span class="doc">Modules</span></a>
 documentation to see how to activate a module.</p>
 <p>Once activated, you can press F8 to start the recording. By default,
@@ -427,7 +446,7 @@ stop recording, press F8 again.</p>
 <p>Check the <a class="reference internal" href="api-kivy.modules.recorder.html"><span class="doc">Recorder module</span></a> module for more information.</p>
 </section>
 <section id="manual-play">
-<h2>Manual play<a class="headerlink" href="#manual-play" title="Permalink to this headline">¶</a></h2>
+<h2>Manual play<a class="headerlink" href="#manual-play" title="Permalink to this heading">¶</a></h2>
 <p>You can manually open a recorder file, and play it by doing:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kivy.input.recorder</span> <span class="kn">import</span> <span class="n">Recorder</span>
 
@@ -449,7 +468,7 @@ stop recording, press F8 again.</p>
 </div>
 </section>
 <section id="recording-more-attributes">
-<h2>Recording more attributes<a class="headerlink" href="#recording-more-attributes" title="Permalink to this headline">¶</a></h2>
+<h2>Recording more attributes<a class="headerlink" href="#recording-more-attributes" title="Permalink to this heading">¶</a></h2>
 <p>You can extend the attributes to save on one condition: attributes values must
 be simple values, not instances of complex classes.</p>
 <p>Let’s say you want to save the angle and pressure of the touch, if available:</p>
@@ -467,7 +486,7 @@ be simple values, not instances of complex classes.</p>
 </div>
 </section>
 <section id="known-limitations">
-<h2>Known limitations<a class="headerlink" href="#known-limitations" title="Permalink to this headline">¶</a></h2>
+<h2>Known limitations<a class="headerlink" href="#known-limitations" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
 <li><p>Unable to save attributes with instances of complex classes.</p></li>
@@ -477,13 +496,14 @@ this could lead to ghost touches.</p></li>
 <li><p>Stopping the replay before the end can lead to ghost touches.</p></li>
 </ul>
 </div></blockquote>
+</section>
 <dl class="py class">
 <dt class="sig sig-object py" id="kivy.input.recorder.Recorder">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.input.recorder.</span></span><span class="sig-name descname"><span class="pre">Recorder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/input/recorder.html#Recorder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.input.recorder.Recorder" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="api-kivy.event.html#kivy.event.EventDispatcher" title="kivy.event.EventDispatcher"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.event.EventDispatcher</span></code></a></p>
 <p>Recorder class. Please check module documentation for more information.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Events</dt>
+<dt class="field-odd">Events<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><cite>on_stop</cite>:</dt><dd><p>Fired when the playing stops.</p>
 </dd>
@@ -552,7 +572,6 @@ defaults to None.</p>
 
 </dd></dl>
 
-</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -604,8 +623,8 @@ defaults to None.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 06, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
+      Last updated on May 20, 2023.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
   </body>

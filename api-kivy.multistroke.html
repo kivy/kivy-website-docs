@@ -7,18 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
-    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Multistroke gesture recognizer &mdash; Kivy 2.1.0 documentation</title>
+    <title>Multistroke gesture recognizer &mdash; Kivy 2.2.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/fresh.css" type="text/css" />
          
           <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script> 
             <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script> 
-            <script src="_static/jquery.js"></script> 
-            <script src="_static/underscore.js"></script> 
             <script src="_static/doctools.js"></script> 
+            <script src="_static/sphinx_highlight.js"></script> 
         
         <script>
             const currTheme = localStorage.getItem("theme");
@@ -35,7 +34,7 @@
         <script type="text/javascript" src="_static/kivy.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="Kivy 2.1.0 documentation" href="index.html" />
+    <link rel="top" title="Kivy 2.2.0 documentation" href="index.html" />
     <link rel="up" title="Kivy framework" href="api-kivy.html" />
     <link rel="next" title="Parser utilities" href="api-kivy.parser.html" />
     <link rel="prev" title="Metrics" href="api-kivy.metrics.html" /> 
@@ -104,6 +103,43 @@
 <li><a class="reference internal" href="#conceptual-overview">Conceptual Overview</a></li>
 <li><a class="reference internal" href="#usage-examples">Usage examples</a></li>
 <li><a class="reference internal" href="#algorithm-details">Algorithm details</a></li>
+<li><a class="reference internal" href="#kivy.multistroke.Candidate"><code class="docutils literal notranslate"><span class="pre">Candidate</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.multistroke.Candidate.add_stroke"><code class="docutils literal notranslate"><span class="pre">Candidate.add_stroke()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.Candidate.get_angle_similarity"><code class="docutils literal notranslate"><span class="pre">Candidate.get_angle_similarity()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.Candidate.get_protractor_vector"><code class="docutils literal notranslate"><span class="pre">Candidate.get_protractor_vector()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.Candidate.get_start_unit_vector"><code class="docutils literal notranslate"><span class="pre">Candidate.get_start_unit_vector()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.Candidate.prepare"><code class="docutils literal notranslate"><span class="pre">Candidate.prepare()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kivy.multistroke.MultistrokeGesture"><code class="docutils literal notranslate"><span class="pre">MultistrokeGesture</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.multistroke.MultistrokeGesture.add_stroke"><code class="docutils literal notranslate"><span class="pre">MultistrokeGesture.add_stroke()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.MultistrokeGesture.get_distance"><code class="docutils literal notranslate"><span class="pre">MultistrokeGesture.get_distance()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.MultistrokeGesture.match_candidate"><code class="docutils literal notranslate"><span class="pre">MultistrokeGesture.match_candidate()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.MultistrokeGesture.permute"><code class="docutils literal notranslate"><span class="pre">MultistrokeGesture.permute()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kivy.multistroke.ProgressTracker"><code class="docutils literal notranslate"><span class="pre">ProgressTracker</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.multistroke.ProgressTracker.best"><code class="docutils literal notranslate"><span class="pre">ProgressTracker.best</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.ProgressTracker.progress"><code class="docutils literal notranslate"><span class="pre">ProgressTracker.progress</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.ProgressTracker.stop"><code class="docutils literal notranslate"><span class="pre">ProgressTracker.stop()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kivy.multistroke.Recognizer"><code class="docutils literal notranslate"><span class="pre">Recognizer</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.multistroke.Recognizer.add_gesture"><code class="docutils literal notranslate"><span class="pre">Recognizer.add_gesture()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.Recognizer.export_gesture"><code class="docutils literal notranslate"><span class="pre">Recognizer.export_gesture()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.Recognizer.filter"><code class="docutils literal notranslate"><span class="pre">Recognizer.filter()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.Recognizer.import_gesture"><code class="docutils literal notranslate"><span class="pre">Recognizer.import_gesture()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.Recognizer.parse_gesture"><code class="docutils literal notranslate"><span class="pre">Recognizer.parse_gesture()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.Recognizer.prepare_templates"><code class="docutils literal notranslate"><span class="pre">Recognizer.prepare_templates()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.Recognizer.recognize"><code class="docutils literal notranslate"><span class="pre">Recognizer.recognize()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.Recognizer.transfer_gesture"><code class="docutils literal notranslate"><span class="pre">Recognizer.transfer_gesture()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kivy.multistroke.UnistrokeTemplate"><code class="docutils literal notranslate"><span class="pre">UnistrokeTemplate</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.multistroke.UnistrokeTemplate.add_point"><code class="docutils literal notranslate"><span class="pre">UnistrokeTemplate.add_point()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.UnistrokeTemplate.prepare"><code class="docutils literal notranslate"><span class="pre">UnistrokeTemplate.prepare()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -189,7 +225,6 @@
 <li class="toctree-l1 current"><a class="reference internal" href="api-index.html">API Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="api-kivy.html">Kivy framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy._metrics.html">Low level Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.app.html">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.atlas.html">Atlas</a></li>
@@ -224,6 +259,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.geometry.html">Geometry utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.gesture.html">Gesture recognition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.html">Graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.boxshadow.html">BoxShadow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.cgl.html">CGL: standard C interface for OpenGL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.compiler.html">Graphics compiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.context.html">Context management</a></li>
@@ -273,7 +309,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.gstplayer.html">GstPlayer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.mtdev.html">Python mtdev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.loader.html">Asynchronous data loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Logger object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Kivy Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.metrics.html">Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.html">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.console.html">Console</a></li>
@@ -391,13 +427,50 @@
 <li><a class="reference internal" href="#conceptual-overview">Conceptual Overview</a></li>
 <li><a class="reference internal" href="#usage-examples">Usage examples</a></li>
 <li><a class="reference internal" href="#algorithm-details">Algorithm details</a></li>
+<li><a class="reference internal" href="#kivy.multistroke.Candidate"><code class="docutils literal notranslate"><span class="pre">Candidate</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.multistroke.Candidate.add_stroke"><code class="docutils literal notranslate"><span class="pre">Candidate.add_stroke()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.Candidate.get_angle_similarity"><code class="docutils literal notranslate"><span class="pre">Candidate.get_angle_similarity()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.Candidate.get_protractor_vector"><code class="docutils literal notranslate"><span class="pre">Candidate.get_protractor_vector()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.Candidate.get_start_unit_vector"><code class="docutils literal notranslate"><span class="pre">Candidate.get_start_unit_vector()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.Candidate.prepare"><code class="docutils literal notranslate"><span class="pre">Candidate.prepare()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kivy.multistroke.MultistrokeGesture"><code class="docutils literal notranslate"><span class="pre">MultistrokeGesture</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.multistroke.MultistrokeGesture.add_stroke"><code class="docutils literal notranslate"><span class="pre">MultistrokeGesture.add_stroke()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.MultistrokeGesture.get_distance"><code class="docutils literal notranslate"><span class="pre">MultistrokeGesture.get_distance()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.MultistrokeGesture.match_candidate"><code class="docutils literal notranslate"><span class="pre">MultistrokeGesture.match_candidate()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.MultistrokeGesture.permute"><code class="docutils literal notranslate"><span class="pre">MultistrokeGesture.permute()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kivy.multistroke.ProgressTracker"><code class="docutils literal notranslate"><span class="pre">ProgressTracker</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.multistroke.ProgressTracker.best"><code class="docutils literal notranslate"><span class="pre">ProgressTracker.best</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.ProgressTracker.progress"><code class="docutils literal notranslate"><span class="pre">ProgressTracker.progress</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.ProgressTracker.stop"><code class="docutils literal notranslate"><span class="pre">ProgressTracker.stop()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kivy.multistroke.Recognizer"><code class="docutils literal notranslate"><span class="pre">Recognizer</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.multistroke.Recognizer.add_gesture"><code class="docutils literal notranslate"><span class="pre">Recognizer.add_gesture()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.Recognizer.export_gesture"><code class="docutils literal notranslate"><span class="pre">Recognizer.export_gesture()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.Recognizer.filter"><code class="docutils literal notranslate"><span class="pre">Recognizer.filter()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.Recognizer.import_gesture"><code class="docutils literal notranslate"><span class="pre">Recognizer.import_gesture()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.Recognizer.parse_gesture"><code class="docutils literal notranslate"><span class="pre">Recognizer.parse_gesture()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.Recognizer.prepare_templates"><code class="docutils literal notranslate"><span class="pre">Recognizer.prepare_templates()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.Recognizer.recognize"><code class="docutils literal notranslate"><span class="pre">Recognizer.recognize()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.Recognizer.transfer_gesture"><code class="docutils literal notranslate"><span class="pre">Recognizer.transfer_gesture()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kivy.multistroke.UnistrokeTemplate"><code class="docutils literal notranslate"><span class="pre">UnistrokeTemplate</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.multistroke.UnistrokeTemplate.add_point"><code class="docutils literal notranslate"><span class="pre">UnistrokeTemplate.add_point()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.multistroke.UnistrokeTemplate.prepare"><code class="docutils literal notranslate"><span class="pre">UnistrokeTemplate.prepare()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
             
   <section id="module-kivy.multistroke">
-<span id="multistroke-gesture-recognizer"></span><h1>Multistroke gesture recognizer<a class="headerlink" href="#module-kivy.multistroke" title="Permalink to this headline">¶</a></h1>
+<span id="multistroke-gesture-recognizer"></span><h1>Multistroke gesture recognizer<a class="headerlink" href="#module-kivy.multistroke" title="Permalink to this heading">¶</a></h1>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.9.0.</span></p>
 </div>
@@ -409,7 +482,7 @@ is present.</p>
 <p>See <code class="file docutils literal notranslate"><span class="pre">kivy/examples/demo/multistroke/main.py</span></code> for a complete application
 example.</p>
 <section id="conceptual-overview">
-<h2>Conceptual Overview<a class="headerlink" href="#conceptual-overview" title="Permalink to this headline">¶</a></h2>
+<h2>Conceptual Overview<a class="headerlink" href="#conceptual-overview" title="Permalink to this heading">¶</a></h2>
 <p>This module implements the Protractor gesture recognition algorithm.</p>
 <p><a class="reference internal" href="#kivy.multistroke.Recognizer" title="kivy.multistroke.Recognizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Recognizer</span></code></a> is the search/database API similar to
 <a class="reference internal" href="api-kivy.gesture.html#kivy.gesture.GestureDatabase" title="kivy.gesture.GestureDatabase"><code class="xref py py-class docutils literal notranslate"><span class="pre">GestureDatabase</span></code></a>. It maintains a list of
@@ -430,7 +503,7 @@ the gesture database for matches. It is normally instantiated automatically
 by calling <a class="reference internal" href="#kivy.multistroke.Recognizer.recognize" title="kivy.multistroke.Recognizer.recognize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Recognizer.recognize()</span></code></a>.</p>
 </section>
 <section id="usage-examples">
-<h2>Usage examples<a class="headerlink" href="#usage-examples" title="Permalink to this headline">¶</a></h2>
+<h2>Usage examples<a class="headerlink" href="#usage-examples" title="Permalink to this heading">¶</a></h2>
 <p>See <code class="file docutils literal notranslate"><span class="pre">kivy/examples/demo/multistroke/main.py</span></code> for a complete application
 example.</p>
 <p>You can bind to events on <a class="reference internal" href="#kivy.multistroke.Recognizer" title="kivy.multistroke.Recognizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Recognizer</span></code></a> to track the state of all
@@ -489,7 +562,7 @@ value (also a <a class="reference internal" href="#kivy.multistroke.ProgressTrac
 </div>
 </section>
 <section id="algorithm-details">
-<h2>Algorithm details<a class="headerlink" href="#algorithm-details" title="Permalink to this headline">¶</a></h2>
+<h2>Algorithm details<a class="headerlink" href="#algorithm-details" title="Permalink to this heading">¶</a></h2>
 <p>For more information about the matching algorithm, see:</p>
 <dl class="simple">
 <dt>“Protractor: A fast and accurate gesture recognizer” by Yang Li</dt><dd><p><a class="reference external" href="http://yangl.org/pdf/protractor-chi2010.pdf">http://yangl.org/pdf/protractor-chi2010.pdf</a></p>
@@ -499,6 +572,7 @@ value (also a <a class="reference internal" href="#kivy.multistroke.ProgressTrac
 <dt>Some of the code is derived from the JavaScript implementation here:</dt><dd><p><a class="reference external" href="http://depts.washington.edu/aimgroup/proj/dollar/ndollar.html">http://depts.washington.edu/aimgroup/proj/dollar/ndollar.html</a></p>
 </dd>
 </dl>
+</section>
 <dl class="py class">
 <dt class="sig sig-object py" id="kivy.multistroke.Candidate">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.multistroke.</span></span><span class="sig-name descname"><span class="pre">Candidate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">strokes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numpoints</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/multistroke.html#Candidate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.multistroke.Candidate" title="Permalink to this definition">¶</a></dt>
@@ -508,7 +582,7 @@ against a <a class="reference internal" href="#kivy.multistroke.UnistrokeTemplat
 By default, data is precomputed to match both rotation bounded and fully
 invariant <a class="reference internal" href="#kivy.multistroke.UnistrokeTemplate" title="kivy.multistroke.UnistrokeTemplate"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnistrokeTemplate</span></code></a> objects.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Arguments</dt>
+<dt class="field-odd">Arguments<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><cite>strokes</cite></dt><dd><p>See <code class="xref py py-data docutils literal notranslate"><span class="pre">MultistrokeGesture.strokes</span></code> for format example. The
 Candidate strokes are simply combined to a unistroke in the order
@@ -580,7 +654,7 @@ use by <cite>get_distance</cite> and <cite>get_angle_similarity</cite>)</p>
 permutations that are used for evaluating candidates against this gesture
 later.</p>
 <dl class="field-list">
-<dt class="field-odd">Arguments</dt>
+<dt class="field-odd">Arguments<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
 <dt><cite>name</cite></dt><dd><p>Identifies the name of the gesture - it is returned to you in the
 results of a <a class="reference internal" href="#kivy.multistroke.Recognizer.recognize" title="kivy.multistroke.Recognizer.recognize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Recognizer.recognize()</span></code></a> search. You can have any
@@ -715,7 +789,7 @@ operation progresses.</p>
 <p>You do not need to instantiate this class.</p>
 </div>
 <dl class="field-list">
-<dt class="field-odd">Arguments</dt>
+<dt class="field-odd">Arguments<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><cite>candidate</cite></dt><dd><p><a class="reference internal" href="#kivy.multistroke.Candidate" title="kivy.multistroke.Candidate"><code class="xref py py-class docutils literal notranslate"><span class="pre">Candidate</span></code></a> object to be evaluated</p>
 </dd>
@@ -723,7 +797,7 @@ operation progresses.</p>
 </dd>
 </dl>
 </dd>
-<dt class="field-even">Events</dt>
+<dt class="field-even">Events<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
 <dt><cite>on_progress</cite></dt><dd><p>Fired for every gesture that is processed</p>
 </dd>
@@ -735,7 +809,7 @@ for the <cite>name</cite> so far, or a consecutive match with better score.</p>
 </dd>
 </dl>
 </dd>
-<dt class="field-odd">Attributes</dt>
+<dt class="field-odd">Attributes<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
 <dt><cite>results</cite></dt><dd><p>A dictionary of all results (so far). The key is the name of the
 gesture (ie <code class="xref py py-attr docutils literal notranslate"><span class="pre">UnistrokeTemplate.name</span></code> usually inherited from
@@ -812,7 +886,7 @@ be stopped on the next clock tick (if it is still running).</p>
 <p><a class="reference internal" href="#kivy.multistroke.Recognizer" title="kivy.multistroke.Recognizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Recognizer</span></code></a> provides a gesture database with matching
 facilities.</p>
 <dl class="field-list">
-<dt class="field-odd">Events</dt>
+<dt class="field-odd">Events<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><cite>on_search_start</cite></dt><dd><p>Fired when a new search is started using this Recognizer.</p>
 </dd>
@@ -821,7 +895,7 @@ facilities.</p>
 </dd>
 </dl>
 </dd>
-<dt class="field-even">Properties</dt>
+<dt class="field-even">Properties<span class="colon">:</span></dt>
 <dd class="field-even"><dl>
 <dt><cite>db</cite></dt><dd><p>A <code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code> that contains the available
 <a class="reference internal" href="#kivy.multistroke.MultistrokeGesture" title="kivy.multistroke.MultistrokeGesture"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultistrokeGesture</span></code></a> objects.</p>
@@ -866,7 +940,7 @@ used when calling <a class="reference internal" href="#kivy.multistroke.Recogniz
 <a class="reference internal" href="#kivy.multistroke.Recognizer.export_gesture" title="kivy.multistroke.Recognizer.export_gesture"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Recognizer.export_gesture()</span></code></a>. You normally don’t need to call
 this directly.</p>
 <dl class="field-list">
-<dt class="field-odd">Arguments</dt>
+<dt class="field-odd">Arguments<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
 <dt><cite>name</cite></dt><dd><p>Limits the returned list to gestures where
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">MultistrokeGesture.name</span></code> matches given regular
@@ -984,7 +1058,7 @@ do this.</p>
 <a class="reference internal" href="#kivy.multistroke.ProgressTracker" title="kivy.multistroke.ProgressTracker"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProgressTracker</span></code></a> instance.</p>
 <p>This method accepts optional <a class="reference internal" href="#kivy.multistroke.Recognizer.filter" title="kivy.multistroke.Recognizer.filter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Recognizer.filter()</span></code></a> arguments.</p>
 <dl class="field-list">
-<dt class="field-odd">Arguments</dt>
+<dt class="field-odd">Arguments<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
 <dt><cite>strokes</cite></dt><dd><p>A list of stroke paths (list of lists of
 <a class="reference internal" href="api-kivy.vector.html#kivy.vector.Vector" title="kivy.vector.Vector"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vector</span></code></a> objects) that will be matched
@@ -1061,7 +1135,7 @@ unless you understand what it does).</p>
 is instantiated by MultistrokeGesture and not by the programmer directly.
 However, it is possible to manually compose UnistrokeTemplate objects.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Arguments</dt>
+<dt class="field-odd">Arguments<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><cite>name</cite></dt><dd><p>Identifies the name of the gesture. This is normally inherited from
 the parent MultistrokeGesture object when a template is generated.</p>
@@ -1101,7 +1175,6 @@ target number of points (for resample). 16 is optimal.</p>
 
 </dd></dl>
 
-</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -1153,8 +1226,8 @@ target number of points (for resample). 16 is optimal.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 06, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
+      Last updated on May 20, 2023.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
   </body>

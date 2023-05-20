@@ -7,18 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
-    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Metrics &mdash; Kivy 2.1.0 documentation</title>
+    <title>Metrics &mdash; Kivy 2.2.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/fresh.css" type="text/css" />
          
           <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script> 
             <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script> 
-            <script src="_static/jquery.js"></script> 
-            <script src="_static/underscore.js"></script> 
             <script src="_static/doctools.js"></script> 
+            <script src="_static/sphinx_highlight.js"></script> 
         
         <script>
             const currTheme = localStorage.getItem("theme");
@@ -35,7 +34,7 @@
         <script type="text/javascript" src="_static/kivy.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="Kivy 2.1.0 documentation" href="index.html" />
+    <link rel="top" title="Kivy 2.2.0 documentation" href="index.html" />
     <link rel="up" title="Kivy framework" href="api-kivy.html" />
     <link rel="next" title="Multistroke gesture recognizer" href="api-kivy.multistroke.html" />
     <link rel="prev" title="Low level Metrics" href="api-kivy._metrics.html" /> 
@@ -104,6 +103,29 @@
 <li><a class="reference internal" href="#dimensions">Dimensions</a></li>
 <li><a class="reference internal" href="#examples">Examples</a></li>
 <li><a class="reference internal" href="#manual-control-of-metrics">Manual control of metrics</a></li>
+<li><a class="reference internal" href="#kivy.metrics.Metrics"><code class="docutils literal notranslate"><span class="pre">Metrics</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase"><code class="docutils literal notranslate"><span class="pre">MetricsBase</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase.cm"><code class="docutils literal notranslate"><span class="pre">MetricsBase.cm</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase.density"><code class="docutils literal notranslate"><span class="pre">MetricsBase.density</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase.dp"><code class="docutils literal notranslate"><span class="pre">MetricsBase.dp</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase.dpi"><code class="docutils literal notranslate"><span class="pre">MetricsBase.dpi</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase.dpi_rounded"><code class="docutils literal notranslate"><span class="pre">MetricsBase.dpi_rounded</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase.fontscale"><code class="docutils literal notranslate"><span class="pre">MetricsBase.fontscale</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase.inch"><code class="docutils literal notranslate"><span class="pre">MetricsBase.inch</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase.mm"><code class="docutils literal notranslate"><span class="pre">MetricsBase.mm</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase.pt"><code class="docutils literal notranslate"><span class="pre">MetricsBase.pt</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase.reset_dpi"><code class="docutils literal notranslate"><span class="pre">MetricsBase.reset_dpi()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase.reset_metrics"><code class="docutils literal notranslate"><span class="pre">MetricsBase.reset_metrics()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase.sp"><code class="docutils literal notranslate"><span class="pre">MetricsBase.sp</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kivy.metrics.cm"><code class="docutils literal notranslate"><span class="pre">cm()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.dp"><code class="docutils literal notranslate"><span class="pre">dp()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.dpi2px"><code class="docutils literal notranslate"><span class="pre">dpi2px()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.inch"><code class="docutils literal notranslate"><span class="pre">inch()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.mm"><code class="docutils literal notranslate"><span class="pre">mm()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.pt"><code class="docutils literal notranslate"><span class="pre">pt()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.sp"><code class="docutils literal notranslate"><span class="pre">sp()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -189,7 +211,6 @@
 <li class="toctree-l1 current"><a class="reference internal" href="api-index.html">API Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="api-kivy.html">Kivy framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy._metrics.html">Low level Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.app.html">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.atlas.html">Atlas</a></li>
@@ -224,6 +245,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.geometry.html">Geometry utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.gesture.html">Gesture recognition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.html">Graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.boxshadow.html">BoxShadow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.cgl.html">CGL: standard C interface for OpenGL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.compiler.html">Graphics compiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.context.html">Context management</a></li>
@@ -273,7 +295,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.gstplayer.html">GstPlayer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.mtdev.html">Python mtdev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.loader.html">Asynchronous data loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Logger object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Kivy Logging</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.html">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.console.html">Console</a></li>
@@ -391,13 +413,36 @@
 <li><a class="reference internal" href="#dimensions">Dimensions</a></li>
 <li><a class="reference internal" href="#examples">Examples</a></li>
 <li><a class="reference internal" href="#manual-control-of-metrics">Manual control of metrics</a></li>
+<li><a class="reference internal" href="#kivy.metrics.Metrics"><code class="docutils literal notranslate"><span class="pre">Metrics</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase"><code class="docutils literal notranslate"><span class="pre">MetricsBase</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase.cm"><code class="docutils literal notranslate"><span class="pre">MetricsBase.cm</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase.density"><code class="docutils literal notranslate"><span class="pre">MetricsBase.density</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase.dp"><code class="docutils literal notranslate"><span class="pre">MetricsBase.dp</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase.dpi"><code class="docutils literal notranslate"><span class="pre">MetricsBase.dpi</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase.dpi_rounded"><code class="docutils literal notranslate"><span class="pre">MetricsBase.dpi_rounded</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase.fontscale"><code class="docutils literal notranslate"><span class="pre">MetricsBase.fontscale</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase.inch"><code class="docutils literal notranslate"><span class="pre">MetricsBase.inch</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase.mm"><code class="docutils literal notranslate"><span class="pre">MetricsBase.mm</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase.pt"><code class="docutils literal notranslate"><span class="pre">MetricsBase.pt</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase.reset_dpi"><code class="docutils literal notranslate"><span class="pre">MetricsBase.reset_dpi()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase.reset_metrics"><code class="docutils literal notranslate"><span class="pre">MetricsBase.reset_metrics()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.MetricsBase.sp"><code class="docutils literal notranslate"><span class="pre">MetricsBase.sp</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kivy.metrics.cm"><code class="docutils literal notranslate"><span class="pre">cm()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.dp"><code class="docutils literal notranslate"><span class="pre">dp()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.dpi2px"><code class="docutils literal notranslate"><span class="pre">dpi2px()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.inch"><code class="docutils literal notranslate"><span class="pre">inch()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.mm"><code class="docutils literal notranslate"><span class="pre">mm()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.pt"><code class="docutils literal notranslate"><span class="pre">pt()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.metrics.sp"><code class="docutils literal notranslate"><span class="pre">sp()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </div>
             
   <section id="module-kivy.metrics">
-<span id="metrics"></span><h1>Metrics<a class="headerlink" href="#module-kivy.metrics" title="Permalink to this headline">¶</a></h1>
+<span id="metrics"></span><h1>Metrics<a class="headerlink" href="#module-kivy.metrics" title="Permalink to this heading">¶</a></h1>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.5.0.</span></p>
 </div>
@@ -407,11 +452,11 @@ factors are essential for creating UI’s with correct size everywhere.</p>
 measurement unit is problematic because sizes change according to the
 screen.</p>
 <section id="dimensions">
-<h2>Dimensions<a class="headerlink" href="#dimensions" title="Permalink to this headline">¶</a></h2>
+<h2>Dimensions<a class="headerlink" href="#dimensions" title="Permalink to this heading">¶</a></h2>
 <p>If you want to design your UI for different screen sizes, you will want better
 measurement units to work with. Kivy provides some more scalable alternatives.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Units</dt>
+<dt class="field-odd">Units<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><cite>pt</cite></dt><dd><p>Points - 1/72 of an inch based on the physical size of the screen.
 Prefer to use sp instead of pt.</p>
@@ -444,7 +489,7 @@ both the screen density and the user’s preference.</p>
 </dl>
 </section>
 <section id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">¶</a></h2>
 <p>Here is an example of creating a label with a sp font_size and setting the
 height manually with a 10dp margin:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#:kivy 1.5.0</span>
@@ -458,7 +503,7 @@ height manually with a 10dp margin:</p>
 </div>
 </section>
 <section id="manual-control-of-metrics">
-<h2>Manual control of metrics<a class="headerlink" href="#manual-control-of-metrics" title="Permalink to this headline">¶</a></h2>
+<h2>Manual control of metrics<a class="headerlink" href="#manual-control-of-metrics" title="Permalink to this heading">¶</a></h2>
 <p>The metrics cannot be changed at runtime. Once a value has been converted to
 pixels, you can’t retrieve the original value anymore. This stems from the fact
 that the DPI and density of a device cannot be changed at runtime.</p>
@@ -488,9 +533,10 @@ X):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">KIVY_METRICS_FONTSCALE</span><span class="o">=</span><span class="mf">1.2</span> <span class="n">python</span> <span class="n">main</span><span class="o">.</span><span class="n">py</span>
 </pre></div>
 </div>
+</section>
 <dl class="py data">
 <dt class="sig sig-object py" id="kivy.metrics.Metrics">
-<span class="sig-prename descclassname"><span class="pre">kivy.metrics.</span></span><span class="sig-name descname"><span class="pre">Metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#kivy.metrics.MetricsBase" title="kivy.metrics.MetricsBase"><span class="pre">kivy.metrics.MetricsBase</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;kivy.metrics.MetricsBase</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#kivy.metrics.Metrics" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">kivy.metrics.</span></span><span class="sig-name descname"><span class="pre">Metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#kivy.metrics.MetricsBase" title="kivy.metrics.MetricsBase"><span class="pre">MetricsBase</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;kivy.metrics.MetricsBase</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#kivy.metrics.Metrics" title="Permalink to this definition">¶</a></dt>
 <dd><p>The metrics object storing the window scaling factors.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.7.0.</span></p>
@@ -661,7 +707,6 @@ update width when <a class="reference internal" href="#kivy.metrics.sp" title="k
 <dd><p>Convert from scale-independent pixels to pixels</p>
 </dd></dl>
 
-</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -713,8 +758,8 @@ update width when <a class="reference internal" href="#kivy.metrics.sp" title="k
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 06, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
+      Last updated on May 20, 2023.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
   </body>

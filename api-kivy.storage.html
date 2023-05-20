@@ -7,18 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
-    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Storage &mdash; Kivy 2.1.0 documentation</title>
+    <title>Storage &mdash; Kivy 2.2.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/fresh.css" type="text/css" />
          
           <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script> 
             <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script> 
-            <script src="_static/jquery.js"></script> 
-            <script src="_static/underscore.js"></script> 
             <script src="_static/doctools.js"></script> 
+            <script src="_static/sphinx_highlight.js"></script> 
         
         <script>
             const currTheme = localStorage.getItem("theme");
@@ -35,7 +34,7 @@
         <script type="text/javascript" src="_static/kivy.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="Kivy 2.1.0 documentation" href="index.html" />
+    <link rel="top" title="Kivy 2.2.0 documentation" href="index.html" />
     <link rel="up" title="API Reference" href="api-index.html" />
     <link rel="next" title="Dictionary store" href="api-kivy.storage.dictstore.html" />
     <link rel="prev" title="UrlRequest" href="api-kivy.network.urlrequest.html" /> 
@@ -105,6 +104,25 @@
 <li><a class="reference internal" href="#examples">Examples</a></li>
 <li><a class="reference internal" href="#synchronous-asynchronous-api">Synchronous / Asynchronous API</a></li>
 <li><a class="reference internal" href="#synchronous-container-type">Synchronous container type</a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore"><code class="docutils literal notranslate"><span class="pre">AbstractStore</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.async_clear"><code class="docutils literal notranslate"><span class="pre">AbstractStore.async_clear()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.async_count"><code class="docutils literal notranslate"><span class="pre">AbstractStore.async_count()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.async_delete"><code class="docutils literal notranslate"><span class="pre">AbstractStore.async_delete()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.async_exists"><code class="docutils literal notranslate"><span class="pre">AbstractStore.async_exists()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.async_find"><code class="docutils literal notranslate"><span class="pre">AbstractStore.async_find()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.async_get"><code class="docutils literal notranslate"><span class="pre">AbstractStore.async_get()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.async_keys"><code class="docutils literal notranslate"><span class="pre">AbstractStore.async_keys()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.async_put"><code class="docutils literal notranslate"><span class="pre">AbstractStore.async_put()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.clear"><code class="docutils literal notranslate"><span class="pre">AbstractStore.clear()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.count"><code class="docutils literal notranslate"><span class="pre">AbstractStore.count()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.delete"><code class="docutils literal notranslate"><span class="pre">AbstractStore.delete()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.exists"><code class="docutils literal notranslate"><span class="pre">AbstractStore.exists()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.find"><code class="docutils literal notranslate"><span class="pre">AbstractStore.find()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.get"><code class="docutils literal notranslate"><span class="pre">AbstractStore.get()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.keys"><code class="docutils literal notranslate"><span class="pre">AbstractStore.keys()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.put"><code class="docutils literal notranslate"><span class="pre">AbstractStore.put()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -190,7 +208,6 @@
 <li class="toctree-l1 current"><a class="reference internal" href="api-index.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.html">Kivy framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy._metrics.html">Low level Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.app.html">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.atlas.html">Atlas</a></li>
@@ -225,6 +242,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.geometry.html">Geometry utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.gesture.html">Gesture recognition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.html">Graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.boxshadow.html">BoxShadow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.cgl.html">CGL: standard C interface for OpenGL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.compiler.html">Graphics compiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.context.html">Context management</a></li>
@@ -274,7 +292,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.gstplayer.html">GstPlayer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.mtdev.html">Python mtdev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.loader.html">Asynchronous data loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Logger object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Kivy Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.metrics.html">Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.html">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.console.html">Console</a></li>
@@ -393,13 +411,32 @@
 <li><a class="reference internal" href="#examples">Examples</a></li>
 <li><a class="reference internal" href="#synchronous-asynchronous-api">Synchronous / Asynchronous API</a></li>
 <li><a class="reference internal" href="#synchronous-container-type">Synchronous container type</a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore"><code class="docutils literal notranslate"><span class="pre">AbstractStore</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.async_clear"><code class="docutils literal notranslate"><span class="pre">AbstractStore.async_clear()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.async_count"><code class="docutils literal notranslate"><span class="pre">AbstractStore.async_count()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.async_delete"><code class="docutils literal notranslate"><span class="pre">AbstractStore.async_delete()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.async_exists"><code class="docutils literal notranslate"><span class="pre">AbstractStore.async_exists()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.async_find"><code class="docutils literal notranslate"><span class="pre">AbstractStore.async_find()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.async_get"><code class="docutils literal notranslate"><span class="pre">AbstractStore.async_get()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.async_keys"><code class="docutils literal notranslate"><span class="pre">AbstractStore.async_keys()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.async_put"><code class="docutils literal notranslate"><span class="pre">AbstractStore.async_put()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.clear"><code class="docutils literal notranslate"><span class="pre">AbstractStore.clear()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.count"><code class="docutils literal notranslate"><span class="pre">AbstractStore.count()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.delete"><code class="docutils literal notranslate"><span class="pre">AbstractStore.delete()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.exists"><code class="docutils literal notranslate"><span class="pre">AbstractStore.exists()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.find"><code class="docutils literal notranslate"><span class="pre">AbstractStore.find()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.get"><code class="docutils literal notranslate"><span class="pre">AbstractStore.get()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.keys"><code class="docutils literal notranslate"><span class="pre">AbstractStore.keys()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.storage.AbstractStore.put"><code class="docutils literal notranslate"><span class="pre">AbstractStore.put()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
             
   <section id="module-kivy.storage">
-<span id="storage"></span><h1>Storage<a class="headerlink" href="#module-kivy.storage" title="Permalink to this headline">¶</a></h1>
+<span id="storage"></span><h1>Storage<a class="headerlink" href="#module-kivy.storage" title="Permalink to this heading">¶</a></h1>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.7.0.</span></p>
 </div>
@@ -409,7 +446,7 @@
 future version.</p>
 </div>
 <section id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">¶</a></h2>
 <p>The idea behind the Storage module is to be able to load/store any number of
 key-value pairs via an indexed key. The default model is abstract so you
 cannot use it directly. We provide some implementations such as:</p>
@@ -422,7 +459,7 @@ database with <a class="reference external" href="https://github.com/andymccurdy
 </ul>
 </section>
 <section id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">¶</a></h2>
 <p>For example, let’s use a JsonStore:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kivy.storage.jsonstore</span> <span class="kn">import</span> <span class="n">JsonStore</span>
 
@@ -455,7 +492,7 @@ database with <a class="reference external" href="https://github.com/andymccurdy
 </div>
 </section>
 <section id="synchronous-asynchronous-api">
-<h2>Synchronous / Asynchronous API<a class="headerlink" href="#synchronous-asynchronous-api" title="Permalink to this headline">¶</a></h2>
+<h2>Synchronous / Asynchronous API<a class="headerlink" href="#synchronous-asynchronous-api" title="Permalink to this heading">¶</a></h2>
 <p>All the standard methods (<a class="reference internal" href="#kivy.storage.AbstractStore.get" title="kivy.storage.AbstractStore.get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get()</span></code></a>,
 <a class="reference internal" href="#kivy.storage.AbstractStore.put" title="kivy.storage.AbstractStore.put"><code class="xref py py-meth docutils literal notranslate"><span class="pre">put()</span></code></a> , <a class="reference internal" href="#kivy.storage.AbstractStore.exists" title="kivy.storage.AbstractStore.exists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">exists()</span></code></a>,
 <a class="reference internal" href="#kivy.storage.AbstractStore.delete" title="kivy.storage.AbstractStore.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">delete()</span></code></a>, <a class="reference internal" href="#kivy.storage.AbstractStore.find" title="kivy.storage.AbstractStore.find"><code class="xref py py-meth docutils literal notranslate"><span class="pre">find()</span></code></a>) have an
@@ -477,7 +514,7 @@ request will be synchronous and the result will be returned directly.</p>
 </div>
 <p>The callback signature (for almost all methods) is:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">store</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    store: the `Store` instance currently used.</span>
 <span class="sd">    key: the key sought for.</span>
 <span class="sd">    result: the result of the lookup for the key.</span>
@@ -486,7 +523,7 @@ request will be synchronous and the result will be returned directly.</p>
 </div>
 </section>
 <section id="synchronous-container-type">
-<h2>Synchronous container type<a class="headerlink" href="#synchronous-container-type" title="Permalink to this headline">¶</a></h2>
+<h2>Synchronous container type<a class="headerlink" href="#synchronous-container-type" title="Permalink to this heading">¶</a></h2>
 <p>The storage API emulates the container type for the synchronous API:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">store</span> <span class="o">=</span> <span class="n">JsonStore</span><span class="p">(</span><span class="s1">&#39;hello.json&#39;</span><span class="p">)</span>
 
@@ -510,6 +547,7 @@ request will be synchronous and the result will be returned directly.</p>
     <span class="k">pass</span>
 </pre></div>
 </div>
+</section>
 <dl class="py class">
 <dt class="sig sig-object py" id="kivy.storage.AbstractStore">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.storage.</span></span><span class="sig-name descname"><span class="pre">AbstractStore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/storage.html#AbstractStore"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.storage.AbstractStore" title="Permalink to this definition">¶</a></dt>
@@ -532,7 +570,7 @@ request will be synchronous and the result will be returned directly.</p>
 <span class="sig-name descname"><span class="pre">async_delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/storage.html#AbstractStore.async_delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.storage.AbstractStore.async_delete" title="Permalink to this definition">¶</a></dt>
 <dd><p>Asynchronous version of <a class="reference internal" href="#kivy.storage.AbstractStore.delete" title="kivy.storage.AbstractStore.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">delete()</span></code></a>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Callback arguments</dt>
+<dt class="field-odd">Callback arguments<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><cite>store</cite>: <a class="reference internal" href="#kivy.storage.AbstractStore" title="kivy.storage.AbstractStore"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractStore</span></code></a> instance</dt><dd><p>Store instance</p>
 </dd>
@@ -551,7 +589,7 @@ nothing has been done (no changes). None if any error.</p>
 <span class="sig-name descname"><span class="pre">async_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/storage.html#AbstractStore.async_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.storage.AbstractStore.async_exists" title="Permalink to this definition">¶</a></dt>
 <dd><p>Asynchronous version of <a class="reference internal" href="#kivy.storage.AbstractStore.exists" title="kivy.storage.AbstractStore.exists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">exists()</span></code></a>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Callback arguments</dt>
+<dt class="field-odd">Callback arguments<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><cite>store</cite>: <a class="reference internal" href="#kivy.storage.AbstractStore" title="kivy.storage.AbstractStore"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractStore</span></code></a> instance</dt><dd><p>Store instance</p>
 </dd>
@@ -570,7 +608,7 @@ nothing has been done (no changes). None if any error.</p>
 <dd><p>Asynchronous version of <a class="reference internal" href="#kivy.storage.AbstractStore.find" title="kivy.storage.AbstractStore.find"><code class="xref py py-meth docutils literal notranslate"><span class="pre">find()</span></code></a>.</p>
 <p>The callback will be called for each entry in the result.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Callback arguments</dt>
+<dt class="field-odd">Callback arguments<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><cite>store</cite>: <a class="reference internal" href="#kivy.storage.AbstractStore" title="kivy.storage.AbstractStore"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractStore</span></code></a> instance</dt><dd><p>Store instance</p>
 </dd>
@@ -590,7 +628,7 @@ nothing has been done (no changes). None if any error.</p>
 <span class="sig-name descname"><span class="pre">async_get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/storage.html#AbstractStore.async_get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.storage.AbstractStore.async_get" title="Permalink to this definition">¶</a></dt>
 <dd><p>Asynchronous version of <a class="reference internal" href="#kivy.storage.AbstractStore.get" title="kivy.storage.AbstractStore.get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get()</span></code></a>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Callback arguments</dt>
+<dt class="field-odd">Callback arguments<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><cite>store</cite>: <a class="reference internal" href="#kivy.storage.AbstractStore" title="kivy.storage.AbstractStore"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractStore</span></code></a> instance</dt><dd><p>Store instance</p>
 </dd>
@@ -614,7 +652,7 @@ nothing has been done (no changes). None if any error.</p>
 <span class="sig-name descname"><span class="pre">async_put</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/storage.html#AbstractStore.async_put"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.storage.AbstractStore.async_put" title="Permalink to this definition">¶</a></dt>
 <dd><p>Asynchronous version of <a class="reference internal" href="#kivy.storage.AbstractStore.put" title="kivy.storage.AbstractStore.put"><code class="xref py py-meth docutils literal notranslate"><span class="pre">put()</span></code></a>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Callback arguments</dt>
+<dt class="field-odd">Callback arguments<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><cite>store</cite>: <a class="reference internal" href="#kivy.storage.AbstractStore" title="kivy.storage.AbstractStore"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractStore</span></code></a> instance</dt><dd><p>Store instance</p>
 </dd>
@@ -695,16 +733,18 @@ existing key-value pairs will be removed.</p>
 
 </dd></dl>
 
-</section>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api-kivy.storage.dictstore.html">Dictionary store</a><ul class="simple">
+<li class="toctree-l1"><a class="reference internal" href="api-kivy.storage.dictstore.html">Dictionary store</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.storage.dictstore.html#kivy.storage.dictstore.DictStore"><code class="docutils literal notranslate"><span class="pre">DictStore</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api-kivy.storage.jsonstore.html">JSON store</a><ul class="simple">
+<li class="toctree-l1"><a class="reference internal" href="api-kivy.storage.jsonstore.html">JSON store</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.storage.jsonstore.html#kivy.storage.jsonstore.JsonStore"><code class="docutils literal notranslate"><span class="pre">JsonStore</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api-kivy.storage.redisstore.html">Redis Store</a><ul class="simple">
+<li class="toctree-l1"><a class="reference internal" href="api-kivy.storage.redisstore.html">Redis Store</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.storage.redisstore.html#kivy.storage.redisstore.RedisStore"><code class="docutils literal notranslate"><span class="pre">RedisStore</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -758,8 +798,8 @@ existing key-value pairs will be removed.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 06, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
+      Last updated on May 20, 2023.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
   </body>

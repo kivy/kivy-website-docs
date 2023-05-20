@@ -7,18 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
-    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Unit tests &mdash; Kivy 2.1.0 documentation</title>
+    <title>Unit tests &mdash; Kivy 2.2.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/fresh.css" type="text/css" />
          
           <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script> 
             <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script> 
-            <script src="_static/jquery.js"></script> 
-            <script src="_static/underscore.js"></script> 
             <script src="_static/doctools.js"></script> 
+            <script src="_static/sphinx_highlight.js"></script> 
         
         <script>
             const currTheme = localStorage.getItem("theme");
@@ -35,7 +34,7 @@
         <script type="text/javascript" src="_static/kivy.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="Kivy 2.1.0 documentation" href="index.html" />
+    <link rel="top" title="Kivy 2.2.0 documentation" href="index.html" />
     <link rel="up" title="Contributing" href="contribute.html" />
     <link rel="next" title="Google Summer of Code - 2017" href="gsoc.html" />
     <link rel="prev" title="Contributing" href="contribute.html" /> 
@@ -193,7 +192,6 @@
 <li class="toctree-l1"><a class="reference internal" href="api-index.html">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.html">Kivy framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy._metrics.html">Low level Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.app.html">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.atlas.html">Atlas</a></li>
@@ -228,6 +226,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.geometry.html">Geometry utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.gesture.html">Gesture recognition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.html">Graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.boxshadow.html">BoxShadow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.cgl.html">CGL: standard C interface for OpenGL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.compiler.html">Graphics compiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.context.html">Context management</a></li>
@@ -277,7 +276,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.gstplayer.html">GstPlayer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.mtdev.html">Python mtdev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.loader.html">Asynchronous data loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Logger object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Kivy Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.metrics.html">Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.html">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.console.html">Console</a></li>
@@ -405,12 +404,12 @@
 </div>
             
   <section id="unit-tests">
-<h1>Unit tests<a class="headerlink" href="#unit-tests" title="Permalink to this headline">¶</a></h1>
+<h1>Unit tests<a class="headerlink" href="#unit-tests" title="Permalink to this heading">¶</a></h1>
 <p>Tests are located in the <cite>kivy/tests</cite> folder. If you find a bug in Kivy, a good
 thing to do can be to write a minimal case showing the issue and to ask core
 devs if the behaviour shown is intended or a real bug. If you write your code
 as a <a class="reference external" href="http://docs.python.org/2/library/unittest.html">unittest</a>
-, it will prevent the bug from coming back unnoticed in the future, and wil
+, it will prevent the bug from coming back unnoticed in the future, and will
 make Kivy a better, stronger project. Writing a unittest may be a really good
 way to get familiar with Kivy while doing something useful.</p>
 <p>Unit tests are separated into two cases:</p>
@@ -431,7 +430,7 @@ that:</p>
 </pre></div>
 </div>
 <section id="how-it-works">
-<h2>How it works<a class="headerlink" href="#how-it-works" title="Permalink to this headline">¶</a></h2>
+<h2>How it works<a class="headerlink" href="#how-it-works" title="Permalink to this heading">¶</a></h2>
 <p>All the tests are located in <cite>kivy/tests</cite>, and the filename starts with
 <cite>test_&lt;name&gt;.py</cite>. Pytest will automatically gather all the files and classes
 inside this folder, and use them to generate test cases.</p>
@@ -470,7 +469,7 @@ the test with <cite>python test_yourtestcase.py</cite>:</p>
 </div>
 </section>
 <section id="graphical-unit-tests">
-<h2>Graphical unit tests<a class="headerlink" href="#graphical-unit-tests" title="Permalink to this headline">¶</a></h2>
+<h2>Graphical unit tests<a class="headerlink" href="#graphical-unit-tests" title="Permalink to this heading">¶</a></h2>
 <p>While simple unit tests are fine and useful to keep things granular, in certain
 cases we need to test Kivy after the GL Window is created to interact with the
 graphics, widgets and to test more advanced stuff such as widget, modules,
@@ -567,7 +566,7 @@ multiply it by the <cite>Window.size</cite> in your test.</p>
 comprehensive test cases.</p>
 </div>
 <section id="gl-unit-tests">
-<h3>GL unit tests<a class="headerlink" href="#gl-unit-tests" title="Permalink to this headline">¶</a></h3>
+<h3>GL unit tests<a class="headerlink" href="#gl-unit-tests" title="Permalink to this heading">¶</a></h3>
 <p>GL unit test are more difficult. You must know that even if OpenGL is a
 standard, the output/rendering is not. It depends on your GPU and the driver
 used. For these tests, the goal is to save the output of the rendering at
@@ -603,7 +602,7 @@ want that, just use pytest command.</p>
 </section>
 </section>
 <section id="writing-gl-unit-tests">
-<h2>Writing GL Unit tests<a class="headerlink" href="#writing-gl-unit-tests" title="Permalink to this headline">¶</a></h2>
+<h2>Writing GL Unit tests<a class="headerlink" href="#writing-gl-unit-tests" title="Permalink to this heading">¶</a></h2>
 <p>The idea is to create a root widget, as you would do in
 <a class="reference internal" href="api-kivy.app.html#kivy.app.App.build" title="kivy.app.App.build"><code class="xref py py-meth docutils literal notranslate"><span class="pre">build()</span></code></a>, or in <a class="reference internal" href="api-kivy.base.html#kivy.base.runTouchApp" title="kivy.base.runTouchApp"><code class="xref py py-func docutils literal notranslate"><span class="pre">kivy.base.runTouchApp()</span></code></a>.
 You’ll give that root widget to a rendering function which will capture the
@@ -650,7 +649,7 @@ inside the test function.</p>
 <p>You can easily replace the reference image with a new one if you wish.</p>
 </section>
 <section id="coverage-reports">
-<h2>Coverage reports<a class="headerlink" href="#coverage-reports" title="Permalink to this headline">¶</a></h2>
+<h2>Coverage reports<a class="headerlink" href="#coverage-reports" title="Permalink to this heading">¶</a></h2>
 <p>Coverage is based on the execution of previous tests. Statistics on code
 coverage are automatically calculated during execution. You can generate an html
 report of the coverage with the command:</p>
@@ -708,8 +707,8 @@ report of the coverage with the command:</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 06, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
+      Last updated on May 20, 2023.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
   </body>

@@ -7,18 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
-    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Asynchronous data loader &mdash; Kivy 2.1.0 documentation</title>
+    <title>Asynchronous data loader &mdash; Kivy 2.2.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/fresh.css" type="text/css" />
          
           <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script> 
             <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script> 
-            <script src="_static/jquery.js"></script> 
-            <script src="_static/underscore.js"></script> 
             <script src="_static/doctools.js"></script> 
+            <script src="_static/sphinx_highlight.js"></script> 
         
         <script>
             const currTheme = localStorage.getItem("theme");
@@ -35,7 +34,7 @@
         <script type="text/javascript" src="_static/kivy.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="Kivy 2.1.0 documentation" href="index.html" />
+    <link rel="top" title="Kivy 2.2.0 documentation" href="index.html" />
     <link rel="up" title="Kivy framework" href="api-kivy.html" />
     <link rel="next" title="Atlas" href="api-kivy.atlas.html" />
     <link rel="prev" title="Application" href="api-kivy.app.html" /> 
@@ -102,6 +101,20 @@
           <ul>
 <li><a class="reference internal" href="#">Asynchronous data loader</a><ul>
 <li><a class="reference internal" href="#tweaking-the-asynchronous-loader">Tweaking the asynchronous loader</a></li>
+<li><a class="reference internal" href="#kivy.loader.LoaderBase"><code class="docutils literal notranslate"><span class="pre">LoaderBase</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.loader.LoaderBase.error_image"><code class="docutils literal notranslate"><span class="pre">LoaderBase.error_image</span></code></a></li>
+<li><a class="reference internal" href="#kivy.loader.LoaderBase.image"><code class="docutils literal notranslate"><span class="pre">LoaderBase.image()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.loader.LoaderBase.loading_image"><code class="docutils literal notranslate"><span class="pre">LoaderBase.loading_image</span></code></a></li>
+<li><a class="reference internal" href="#kivy.loader.LoaderBase.max_upload_per_frame"><code class="docutils literal notranslate"><span class="pre">LoaderBase.max_upload_per_frame</span></code></a></li>
+<li><a class="reference internal" href="#kivy.loader.LoaderBase.num_workers"><code class="docutils literal notranslate"><span class="pre">LoaderBase.num_workers</span></code></a></li>
+<li><a class="reference internal" href="#kivy.loader.LoaderBase.pause"><code class="docutils literal notranslate"><span class="pre">LoaderBase.pause()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.loader.LoaderBase.resume"><code class="docutils literal notranslate"><span class="pre">LoaderBase.resume()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.loader.LoaderBase.run"><code class="docutils literal notranslate"><span class="pre">LoaderBase.run()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.loader.LoaderBase.start"><code class="docutils literal notranslate"><span class="pre">LoaderBase.start()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.loader.LoaderBase.stop"><code class="docutils literal notranslate"><span class="pre">LoaderBase.stop()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kivy.loader.ProxyImage"><code class="docutils literal notranslate"><span class="pre">ProxyImage</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -187,7 +200,6 @@
 <li class="toctree-l1 current"><a class="reference internal" href="api-index.html">API Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="api-kivy.html">Kivy framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy._metrics.html">Low level Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.app.html">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.atlas.html">Atlas</a></li>
@@ -222,6 +234,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.geometry.html">Geometry utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.gesture.html">Gesture recognition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.html">Graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.boxshadow.html">BoxShadow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.cgl.html">CGL: standard C interface for OpenGL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.compiler.html">Graphics compiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.context.html">Context management</a></li>
@@ -271,7 +284,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.gstplayer.html">GstPlayer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.mtdev.html">Python mtdev</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Asynchronous data loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Logger object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Kivy Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.metrics.html">Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.html">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.console.html">Console</a></li>
@@ -387,13 +400,27 @@
             <div class="toc"><h2>Table Of Contents</h2><ul>
 <li><a class="reference internal" href="#">Asynchronous data loader</a><ul>
 <li><a class="reference internal" href="#tweaking-the-asynchronous-loader">Tweaking the asynchronous loader</a></li>
+<li><a class="reference internal" href="#kivy.loader.LoaderBase"><code class="docutils literal notranslate"><span class="pre">LoaderBase</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.loader.LoaderBase.error_image"><code class="docutils literal notranslate"><span class="pre">LoaderBase.error_image</span></code></a></li>
+<li><a class="reference internal" href="#kivy.loader.LoaderBase.image"><code class="docutils literal notranslate"><span class="pre">LoaderBase.image()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.loader.LoaderBase.loading_image"><code class="docutils literal notranslate"><span class="pre">LoaderBase.loading_image</span></code></a></li>
+<li><a class="reference internal" href="#kivy.loader.LoaderBase.max_upload_per_frame"><code class="docutils literal notranslate"><span class="pre">LoaderBase.max_upload_per_frame</span></code></a></li>
+<li><a class="reference internal" href="#kivy.loader.LoaderBase.num_workers"><code class="docutils literal notranslate"><span class="pre">LoaderBase.num_workers</span></code></a></li>
+<li><a class="reference internal" href="#kivy.loader.LoaderBase.pause"><code class="docutils literal notranslate"><span class="pre">LoaderBase.pause()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.loader.LoaderBase.resume"><code class="docutils literal notranslate"><span class="pre">LoaderBase.resume()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.loader.LoaderBase.run"><code class="docutils literal notranslate"><span class="pre">LoaderBase.run()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.loader.LoaderBase.start"><code class="docutils literal notranslate"><span class="pre">LoaderBase.start()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.loader.LoaderBase.stop"><code class="docutils literal notranslate"><span class="pre">LoaderBase.stop()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kivy.loader.ProxyImage"><code class="docutils literal notranslate"><span class="pre">ProxyImage</span></code></a></li>
 </ul>
 </li>
 </ul>
 </div>
             
   <section id="module-kivy.loader">
-<span id="asynchronous-data-loader"></span><h1>Asynchronous data loader<a class="headerlink" href="#module-kivy.loader" title="Permalink to this headline">¶</a></h1>
+<span id="asynchronous-data-loader"></span><h1>Asynchronous data loader<a class="headerlink" href="#module-kivy.loader" title="Permalink to this heading">¶</a></h1>
 <p>This is the Asynchronous Loader. You can use it to load an image
 and use it, even if data are not yet available. You must specify a default
 loading image when using the loader:</p>
@@ -410,7 +437,7 @@ loading image when using the loader:</p>
 </pre></div>
 </div>
 <section id="tweaking-the-asynchronous-loader">
-<h2>Tweaking the asynchronous loader<a class="headerlink" href="#tweaking-the-asynchronous-loader" title="Permalink to this headline">¶</a></h2>
+<h2>Tweaking the asynchronous loader<a class="headerlink" href="#tweaking-the-asynchronous-loader" title="Permalink to this heading">¶</a></h2>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.6.0.</span></p>
 </div>
@@ -423,6 +450,7 @@ loading images.</p></li>
 <li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Loader.max_upload_per_frame</span></code> - define the maximum image uploads in
 GPU to do per frame.</p></li>
 </ul>
+</section>
 <dl class="py class">
 <dt class="sig sig-object py" id="kivy.loader.LoaderBase">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.loader.</span></span><span class="sig-name descname"><span class="pre">LoaderBase</span></span><a class="reference internal" href="_modules/kivy/loader.html#LoaderBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.loader.LoaderBase" title="Permalink to this definition">¶</a></dt>
@@ -567,13 +595,13 @@ was completely blocking the application.</p>
 <dd><p>Bases: <a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.Image" title="kivy.core.image.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.core.image.Image</span></code></a></p>
 <p>Image returned by the Loader.image() function.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Properties</dt>
+<dt class="field-odd">Properties<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><cite>loaded</cite>: bool, defaults to False</dt><dd><p>This value may be True if the image is already cached.</p>
 </dd>
 </dl>
 </dd>
-<dt class="field-even">Events</dt>
+<dt class="field-even">Events<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
 <dt><cite>on_load</cite></dt><dd><p>Fired when the image is loaded or changed.</p>
 </dd>
@@ -585,7 +613,6 @@ was completely blocking the application.</p>
 </dl>
 </dd></dl>
 
-</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -637,8 +664,8 @@ was completely blocking the application.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 06, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
+      Last updated on May 20, 2023.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
   </body>

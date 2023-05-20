@@ -7,18 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
-    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Installation on Raspberry Pi &mdash; Kivy 2.1.0 documentation</title>
+    <title>Installation on Raspberry Pi &mdash; Kivy 2.2.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/fresh.css" type="text/css" />
          
           <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script> 
             <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script> 
-            <script src="../_static/jquery.js"></script> 
-            <script src="../_static/underscore.js"></script> 
             <script src="../_static/doctools.js"></script> 
+            <script src="../_static/sphinx_highlight.js"></script> 
         
         <script>
             const currTheme = localStorage.getItem("theme");
@@ -35,7 +34,7 @@
         <script type="text/javascript" src="../_static/kivy.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="Kivy 2.1.0 documentation" href="../index.html" /> 
+    <link rel="top" title="Kivy 2.2.0 documentation" href="../index.html" /> 
   </head>
   <body>
 
@@ -100,22 +99,19 @@
 <li><a class="reference internal" href="#">Installation on Raspberry Pi</a><ul>
 <li><a class="reference internal" href="#installation-components">Installation components</a><ul>
 <li><a class="reference internal" href="#installing-python">Installing Python</a><ul>
-<li><a class="reference internal" href="#raspbian-jessie-stretch-buster">Raspbian Jessie/Stretch/Buster</a></li>
+<li><a class="reference internal" href="#raspberry-pi-os-buster-bullseye">Raspberry Pi OS Buster/Bullseye</a></li>
 <li><a class="reference internal" href="#arch-linux-arm">Arch Linux ARM</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#source-installation-dependencies">Source installation Dependencies</a><ul>
-<li><a class="reference internal" href="#id1">Raspbian Jessie/Stretch/Buster</a><ul>
-<li><a class="reference internal" href="#raspberry-pi-1-4-desktop-environment">Raspberry Pi 1-4 Desktop environment</a></li>
-<li><a class="reference internal" href="#cross-compilation-for-raspberry-pi-1-3-headless-installation-on-raspbian-buster">Cross-Compilation for Raspberry Pi 1-3 headless installation on Raspbian Buster</a></li>
-<li><a class="reference internal" href="#raspberry-pi-4-headless-installation-on-raspbian-buster">Raspberry Pi 4 headless installation on Raspbian Buster</a></li>
+<li><a class="reference internal" href="#id1">Raspberry Pi OS Buster/Bullseye</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id2">Arch Linux ARM</a></li>
+<li><a class="reference internal" href="#cross-compilation-for-raspberry-pi-os-buster-bullseye-32-bit">Cross-Compilation for Raspberry Pi OS Buster/Bullseye (32 bit)</a></li>
 </ul>
 </li>
-</ul>
-</li>
+<li><a class="reference internal" href="#headless-support-on-raspberry-pi">Headless support on Raspberry Pi</a></li>
+<li><a class="reference internal" href="#hardware-acceleration">Hardware acceleration</a></li>
 <li><a class="reference internal" href="#raspberry-pi-window-provider-and-gl-backend">Raspberry Pi window provider and GL backend</a></li>
 <li><a class="reference internal" href="#change-the-default-screen-to-use">Change the default screen to use</a></li>
 <li><a class="reference internal" href="#using-official-rpi-touch-display">Using Official RPi touch display</a></li>
@@ -204,7 +200,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../api-index.html">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.html">Kivy framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy._metrics.html">Low level Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.app.html">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.atlas.html">Atlas</a></li>
@@ -239,6 +234,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.geometry.html">Geometry utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.gesture.html">Gesture recognition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.html">Graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.boxshadow.html">BoxShadow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.cgl.html">CGL: standard C interface for OpenGL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.compiler.html">Graphics compiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.context.html">Context management</a></li>
@@ -288,7 +284,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.lib.gstplayer.html">GstPlayer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.lib.mtdev.html">Python mtdev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.loader.html">Asynchronous data loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-kivy.logger.html">Logger object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-kivy.logger.html">Kivy Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.metrics.html">Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.modules.html">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.modules.console.html">Console</a></li>
@@ -403,22 +399,19 @@
 <li><a class="reference internal" href="#">Installation on Raspberry Pi</a><ul>
 <li><a class="reference internal" href="#installation-components">Installation components</a><ul>
 <li><a class="reference internal" href="#installing-python">Installing Python</a><ul>
-<li><a class="reference internal" href="#raspbian-jessie-stretch-buster">Raspbian Jessie/Stretch/Buster</a></li>
+<li><a class="reference internal" href="#raspberry-pi-os-buster-bullseye">Raspberry Pi OS Buster/Bullseye</a></li>
 <li><a class="reference internal" href="#arch-linux-arm">Arch Linux ARM</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#source-installation-dependencies">Source installation Dependencies</a><ul>
-<li><a class="reference internal" href="#id1">Raspbian Jessie/Stretch/Buster</a><ul>
-<li><a class="reference internal" href="#raspberry-pi-1-4-desktop-environment">Raspberry Pi 1-4 Desktop environment</a></li>
-<li><a class="reference internal" href="#cross-compilation-for-raspberry-pi-1-3-headless-installation-on-raspbian-buster">Cross-Compilation for Raspberry Pi 1-3 headless installation on Raspbian Buster</a></li>
-<li><a class="reference internal" href="#raspberry-pi-4-headless-installation-on-raspbian-buster">Raspberry Pi 4 headless installation on Raspbian Buster</a></li>
+<li><a class="reference internal" href="#id1">Raspberry Pi OS Buster/Bullseye</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id2">Arch Linux ARM</a></li>
+<li><a class="reference internal" href="#cross-compilation-for-raspberry-pi-os-buster-bullseye-32-bit">Cross-Compilation for Raspberry Pi OS Buster/Bullseye (32 bit)</a></li>
 </ul>
 </li>
-</ul>
-</li>
+<li><a class="reference internal" href="#headless-support-on-raspberry-pi">Headless support on Raspberry Pi</a></li>
+<li><a class="reference internal" href="#hardware-acceleration">Hardware acceleration</a></li>
 <li><a class="reference internal" href="#raspberry-pi-window-provider-and-gl-backend">Raspberry Pi window provider and GL backend</a></li>
 <li><a class="reference internal" href="#change-the-default-screen-to-use">Change the default screen to use</a></li>
 <li><a class="reference internal" href="#using-official-rpi-touch-display">Using Official RPi touch display</a></li>
@@ -428,25 +421,25 @@
 </div>
             
   <section id="installation-on-raspberry-pi">
-<span id="installation-rpi"></span><h1>Installation on Raspberry Pi<a class="headerlink" href="#installation-on-raspberry-pi" title="Permalink to this headline">¶</a></h1>
+<span id="installation-rpi"></span><h1>Installation on Raspberry Pi<a class="headerlink" href="#installation-on-raspberry-pi" title="Permalink to this heading">¶</a></h1>
 <p>To install Kivy on the RPi using <code class="docutils literal notranslate"><span class="pre">pip</span></code>, please follow the main <a class="reference internal" href="../gettingstarted/installation.html#installation-canonical"><span class="std std-ref">installation guide</span></a>.</p>
 <section id="installation-components">
-<h2>Installation components<a class="headerlink" href="#installation-components" title="Permalink to this headline">¶</a></h2>
+<h2>Installation components<a class="headerlink" href="#installation-components" title="Permalink to this heading">¶</a></h2>
 <p>Following, are additional information linked to from some of the steps in the
 main <a class="reference internal" href="../gettingstarted/installation.html#installation-canonical"><span class="std std-ref">pip installation guide</span></a>, specific to the RPi.</p>
 <section id="installing-python">
-<span id="install-python-rpi"></span><h3>Installing Python<a class="headerlink" href="#installing-python" title="Permalink to this headline">¶</a></h3>
+<span id="install-python-rpi"></span><h3>Installing Python<a class="headerlink" href="#installing-python" title="Permalink to this heading">¶</a></h3>
 <p>Python and python-pip must be installed from the package manager:</p>
-<section id="raspbian-jessie-stretch-buster">
-<h4>Raspbian Jessie/Stretch/Buster<a class="headerlink" href="#raspbian-jessie-stretch-buster" title="Permalink to this headline">¶</a></h4>
+<section id="raspberry-pi-os-buster-bullseye">
+<h4>Raspberry Pi OS Buster/Bullseye<a class="headerlink" href="#raspberry-pi-os-buster-bullseye" title="Permalink to this heading">¶</a></h4>
 <p>Using apt:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">update</span>
-<span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">python3</span><span class="o">-</span><span class="n">setuptools</span> <span class="n">git</span><span class="o">-</span><span class="n">core</span> <span class="n">python3</span><span class="o">-</span><span class="n">dev</span>
+<span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">python3</span> <span class="n">python3</span><span class="o">-</span><span class="n">pip</span>
 </pre></div>
 </div>
 </section>
 <section id="arch-linux-arm">
-<h4>Arch Linux ARM<a class="headerlink" href="#arch-linux-arm" title="Permalink to this headline">¶</a></h4>
+<h4>Arch Linux ARM<a class="headerlink" href="#arch-linux-arm" title="Permalink to this heading">¶</a></h4>
 <p>Images to use:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>http://raspex.exton.se/?p=859 (recommended)
 https://archlinuxarm.org/
@@ -466,99 +459,69 @@ https://archlinuxarm.org/
 </section>
 </section>
 <section id="source-installation-dependencies">
-<span id="install-source-rpi"></span><h3>Source installation Dependencies<a class="headerlink" href="#source-installation-dependencies" title="Permalink to this headline">¶</a></h3>
-<p>To install Kivy from source, please follow the installation guide until you reach the
+<span id="install-source-rpi"></span><h3>Source installation Dependencies<a class="headerlink" href="#source-installation-dependencies" title="Permalink to this heading">¶</a></h3>
+<p>To install Kivy from source, please follow the <a class="reference internal" href="../gettingstarted/installation.html#kivy-wheel-install"><span class="std std-ref">installation guide</span></a> until you reach the
 <a class="reference internal" href="../gettingstarted/installation.html#kivy-source-install"><span class="std std-ref">Kivy install step</span></a> and then install the dependencies below
 before continuing.</p>
 <section id="id1">
-<h4>Raspbian Jessie/Stretch/Buster<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<h4>Raspberry Pi OS Buster/Bullseye<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h4>
 <p>Using apt:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">update</span>
-<span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">pkg</span><span class="o">-</span><span class="n">config</span> <span class="n">libgl1</span><span class="o">-</span><span class="n">mesa</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgles2</span><span class="o">-</span><span class="n">mesa</span><span class="o">-</span><span class="n">dev</span> \
-   <span class="n">libgstreamer1</span><span class="mf">.0</span><span class="o">-</span><span class="n">dev</span> \
-   <span class="n">gstreamer1</span><span class="mf">.0</span><span class="o">-</span><span class="n">plugins</span><span class="o">-</span><span class="p">{</span><span class="n">bad</span><span class="p">,</span><span class="n">base</span><span class="p">,</span><span class="n">good</span><span class="p">,</span><span class="n">ugly</span><span class="p">}</span> \
-   <span class="n">gstreamer1</span><span class="mf">.0</span><span class="o">-</span><span class="p">{</span><span class="n">omx</span><span class="p">,</span><span class="n">alsa</span><span class="p">}</span> <span class="n">libmtdev</span><span class="o">-</span><span class="n">dev</span> \
-   <span class="n">xclip</span> <span class="n">xsel</span> <span class="n">libjpeg</span><span class="o">-</span><span class="n">dev</span>
-</pre></div>
-</div>
-<p>And then install SDL2 using either of the two options below depending on whether you
-will be running Kivy from a headless or desktop environment:</p>
-<section id="raspberry-pi-1-4-desktop-environment">
-<h5>Raspberry Pi 1-4 Desktop environment<a class="headerlink" href="#raspberry-pi-1-4-desktop-environment" title="Permalink to this headline">¶</a></h5>
-<p>If you have installed Raspbian with a desktop i.e. if your Raspberry Pi boots into a desktop environment
-then install SDL2 from apt:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">libsdl2</span><span class="o">-</span><span class="n">dev</span> <span class="n">libsdl2</span><span class="o">-</span><span class="n">image</span><span class="o">-</span><span class="n">dev</span> <span class="n">libsdl2</span><span class="o">-</span><span class="n">mixer</span><span class="o">-</span><span class="n">dev</span> <span class="n">libsdl2</span><span class="o">-</span><span class="n">ttf</span><span class="o">-</span><span class="n">dev</span>
+<span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">build</span><span class="o">-</span><span class="n">essential</span> <span class="n">git</span> <span class="n">make</span> <span class="n">autoconf</span> <span class="n">automake</span> <span class="n">libtool</span> \
+      <span class="n">pkg</span><span class="o">-</span><span class="n">config</span> <span class="n">cmake</span> <span class="n">ninja</span><span class="o">-</span><span class="n">build</span> <span class="n">libasound2</span><span class="o">-</span><span class="n">dev</span> <span class="n">libpulse</span><span class="o">-</span><span class="n">dev</span> <span class="n">libaudio</span><span class="o">-</span><span class="n">dev</span> \
+      <span class="n">libjack</span><span class="o">-</span><span class="n">dev</span> <span class="n">libsndio</span><span class="o">-</span><span class="n">dev</span> <span class="n">libsamplerate0</span><span class="o">-</span><span class="n">dev</span> <span class="n">libx11</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxext</span><span class="o">-</span><span class="n">dev</span> \
+      <span class="n">libxrandr</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxcursor</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxfixes</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxi</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxss</span><span class="o">-</span><span class="n">dev</span> <span class="n">libwayland</span><span class="o">-</span><span class="n">dev</span> \
+      <span class="n">libxkbcommon</span><span class="o">-</span><span class="n">dev</span> <span class="n">libdrm</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgbm</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgl1</span><span class="o">-</span><span class="n">mesa</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgles2</span><span class="o">-</span><span class="n">mesa</span><span class="o">-</span><span class="n">dev</span> \
+      <span class="n">libegl1</span><span class="o">-</span><span class="n">mesa</span><span class="o">-</span><span class="n">dev</span> <span class="n">libdbus</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">dev</span> <span class="n">libibus</span><span class="o">-</span><span class="mf">1.0</span><span class="o">-</span><span class="n">dev</span> <span class="n">libudev</span><span class="o">-</span><span class="n">dev</span> <span class="n">fcitx</span><span class="o">-</span><span class="n">libs</span><span class="o">-</span><span class="n">dev</span>
+
+<span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">xorg</span> <span class="n">wget</span> <span class="n">libxrender</span><span class="o">-</span><span class="n">dev</span> <span class="n">lsb</span><span class="o">-</span><span class="n">release</span> <span class="n">libraspberrypi</span><span class="o">-</span><span class="n">dev</span> <span class="n">raspberrypi</span><span class="o">-</span><span class="n">kernel</span><span class="o">-</span><span class="n">headers</span>
+
+<span class="c1"># If we&#39;re on Debian buster, we need to install cmake from backports as the cmake version</span>
+<span class="c1"># in buster is too old to build sdl2</span>
+<span class="k">if</span> <span class="p">[</span> <span class="s2">&quot;$(lsb_release -cs)&quot;</span> <span class="o">=</span> <span class="s2">&quot;buster&quot;</span> <span class="p">];</span> <span class="n">then</span> \
+    <span class="n">echo</span> <span class="s2">&quot;deb http://deb.debian.org/debian buster-backports main&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="o">.</span><span class="n">list</span><span class="p">;</span> \
+    <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span><span class="p">;</span> \
+    <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="o">-</span><span class="n">t</span> <span class="n">buster</span><span class="o">-</span><span class="n">backports</span> <span class="n">cmake</span><span class="p">;</span> \
+<span class="n">fi</span>
 </pre></div>
 </div>
 </section>
-<section id="cross-compilation-for-raspberry-pi-1-3-headless-installation-on-raspbian-buster">
-<h5>Cross-Compilation for Raspberry Pi 1-3 headless installation on Raspbian Buster<a class="headerlink" href="#cross-compilation-for-raspberry-pi-1-3-headless-installation-on-raspbian-buster" title="Permalink to this headline">¶</a></h5>
-<p>The Raspberry OS project uses <cite>pi-gen</cite> project to create bootable images for Raspberry PI.</p>
-<p>Kivy determines automatically the sub-packages to build based on the environment it is compiled within. By default, the <cite>egl_rpi</cite> renderer that uses the (now deprecated but still useful) DISPMANX API is only compiled when running on a Raspberry Pi.
-In order to build Kivy in such <cite>pi-gen</cite> environment, the auto-detection of the Raspberry Pi hardware version needs to be disabled.</p>
-<p>When cross-compiling using e.g. <cite>pi-gen</cite>, the build system can be forced into compiling for Raspberry Pi with <cite>egl_rpi</cite> support by setting the environment variabel <cite>KIVY_RPI_VERSION</cite> to any number &lt; 4, e.g. <cite>3</cite>.</p>
-<p>The install command then looks something like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apt</span> <span class="n">install</span> <span class="n">build</span><span class="o">-</span><span class="n">essential</span> <span class="n">libraspberrypi</span><span class="o">-</span><span class="n">dev</span> <span class="n">raspberrypi</span><span class="o">-</span><span class="n">kernel</span><span class="o">-</span><span class="n">headers</span>
-<span class="n">KIVY_RPI_VERSION</span><span class="o">=</span><span class="mi">3</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;kivy[base]&quot;</span> <span class="n">kivy_examples</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">binary</span> <span class="n">kivy</span>
-</pre></div>
-</div>
-<p>Please note that the <cite>egl_rpi</cite> window handler is not supported on Raspberry Pi 4 and higher.
-The existing version check will refuse to compile the <cite>egl_rpi</cite> provider when detecting or forcing the Raspberry Pi version to 4 or higher.</p>
 </section>
-<section id="raspberry-pi-4-headless-installation-on-raspbian-buster">
-<h5>Raspberry Pi 4 headless installation on Raspbian Buster<a class="headerlink" href="#raspberry-pi-4-headless-installation-on-raspbian-buster" title="Permalink to this headline">¶</a></h5>
-<p>If you run Kivy from the console and not from a desktop environment, you need to compile SDL2
-from source, as the one bundled with Buster is not compiled with the <code class="docutils literal notranslate"><span class="pre">kmsdrm</span></code> backend,
-so it only works under <code class="docutils literal notranslate"><span class="pre">X11</span></code>.</p>
-<p>Install requirements:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libfreetype6</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgl1</span><span class="o">-</span><span class="n">mesa</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgles2</span><span class="o">-</span><span class="n">mesa</span><span class="o">-</span><span class="n">dev</span> <span class="n">libdrm</span><span class="o">-</span><span class="n">dev</span> <span class="n">libgbm</span><span class="o">-</span><span class="n">dev</span> <span class="n">libudev</span><span class="o">-</span><span class="n">dev</span> <span class="n">libasound2</span><span class="o">-</span><span class="n">dev</span> <span class="n">liblzma</span><span class="o">-</span><span class="n">dev</span> <span class="n">libjpeg</span><span class="o">-</span><span class="n">dev</span> <span class="n">libtiff</span><span class="o">-</span><span class="n">dev</span> <span class="n">libwebp</span><span class="o">-</span><span class="n">dev</span> <span class="n">git</span> <span class="n">build</span><span class="o">-</span><span class="n">essential</span>
-<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">gir1</span><span class="mf">.2</span><span class="o">-</span><span class="n">ibus</span><span class="o">-</span><span class="mf">1.0</span> <span class="n">libdbus</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">dev</span> <span class="n">libegl1</span><span class="o">-</span><span class="n">mesa</span><span class="o">-</span><span class="n">dev</span> <span class="n">libibus</span><span class="o">-</span><span class="mf">1.0</span><span class="o">-</span><span class="mi">5</span> <span class="n">libibus</span><span class="o">-</span><span class="mf">1.0</span><span class="o">-</span><span class="n">dev</span> <span class="n">libice</span><span class="o">-</span><span class="n">dev</span> <span class="n">libsm</span><span class="o">-</span><span class="n">dev</span> <span class="n">libsndio</span><span class="o">-</span><span class="n">dev</span> <span class="n">libwayland</span><span class="o">-</span><span class="nb">bin</span> <span class="n">libwayland</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxi</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxinerama</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxkbcommon</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxrandr</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxss</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxt</span><span class="o">-</span><span class="n">dev</span> <span class="n">libxv</span><span class="o">-</span><span class="n">dev</span> <span class="n">x11proto</span><span class="o">-</span><span class="n">randr</span><span class="o">-</span><span class="n">dev</span> <span class="n">x11proto</span><span class="o">-</span><span class="n">scrnsaver</span><span class="o">-</span><span class="n">dev</span> <span class="n">x11proto</span><span class="o">-</span><span class="n">video</span><span class="o">-</span><span class="n">dev</span> <span class="n">x11proto</span><span class="o">-</span><span class="n">xinerama</span><span class="o">-</span><span class="n">dev</span>
+<section id="cross-compilation-for-raspberry-pi-os-buster-bullseye-32-bit">
+<h3>Cross-Compilation for Raspberry Pi OS Buster/Bullseye (32 bit)<a class="headerlink" href="#cross-compilation-for-raspberry-pi-os-buster-bullseye-32-bit" title="Permalink to this heading">¶</a></h3>
+<p>Kivy performs a dockerized cross-compilation for Raspberry Pi OS Buster/Bullseye (32 bit) wheels.
+The base images used for cross-compilation are the <a class="reference external" href="https://www.balena.io/docs/reference/base-images/base-images-ref/">balenalib</a> images for raspberrypi3 (buster and bullseye).</p>
+<p>The docker images are built using the <cite>Dockerfile.armv7l</cite> file in the <cite>.ci</cite> directory.</p>
+<p>The raspberrypi3 balenalib images have almost the same environment as the real Raspberry Pi OS Buster/Bullseye (32 bit) system,
+which makes it possible to include/exclude RPi specific features (like the <cite>egl_rpi</cite> window provider) during the build process.</p>
+<p>We have an helper, named <cite>generate_rpi_wheels</cite>, that can be used to easily generate the wheels and copy the artifacts for Raspberry Pi OS Buster/Bullseye (32 bit).
+To cross-compile the wheels, you need to run the following commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">.</span><span class="n">ci</span><span class="o">/</span><span class="n">ubuntu_ci</span><span class="o">.</span><span class="n">sh</span>
+
+<span class="c1"># Generate wheels for Raspberry Pi OS Buster (32 bit, Python 3.7)</span>
+<span class="n">generate_rpi_wheels</span> <span class="n">balenalib</span><span class="o">/</span><span class="n">raspberrypi3</span><span class="o">-</span><span class="n">debian</span><span class="o">-</span><span class="n">python</span><span class="p">:</span><span class="mf">3.7</span><span class="o">-</span><span class="n">buster</span>
+
+<span class="c1"># Generate wheels for Raspberry Pi OS Bullseye (32 bit, Python 3.9)</span>
+<span class="n">generate_rpi_wheels</span> <span class="n">balenalib</span><span class="o">/</span><span class="n">raspberrypi3</span><span class="o">-</span><span class="n">debian</span><span class="o">-</span><span class="n">python</span><span class="p">:</span><span class="mf">3.9</span><span class="o">-</span><span class="n">bullseye</span>
 </pre></div>
 </div>
-<p>Install SDL2:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>wget https://libsdl.org/release/SDL2-2.0.10.tar.gz
-tar -zxvf SDL2-2.0.10.tar.gz
-pushd SDL2-2.0.10
-./configure --enable-video-kmsdrm --disable-video-opengl --disable-video-x11 --disable-video-rpi
-make -j$(nproc)
-sudo make install
-popd
-</pre></div>
-</div>
-<p>Install SDL2_image:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>wget https://libsdl.org/projects/SDL_image/release/SDL2_image-2.0.5.tar.gz
-tar -zxvf SDL2_image-2.0.5.tar.gz
-pushd SDL2_image-2.0.5
-./configure
-make -j$(nproc)
-sudo make install
-popd
-</pre></div>
-</div>
-<p>Install SDL2_mixer:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>wget https://libsdl.org/projects/SDL_mixer/release/SDL2_mixer-2.0.4.tar.gz
-tar -zxvf SDL2_mixer-2.0.4.tar.gz
-pushd SDL2_mixer-2.0.4
-./configure
-make -j$(nproc)
-sudo make install
-popd
-</pre></div>
-</div>
-<p>Install SDL2_ttf:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>wget https://libsdl.org/projects/SDL_ttf/release/SDL2_ttf-2.0.15.tar.gz
-tar -zxvf SDL2_ttf-2.0.15.tar.gz
-pushd SDL2_ttf-2.0.15
-./configure
-make -j$(nproc)
-sudo make install
-popd
-</pre></div>
-</div>
-<p>Make sure the dynamic libraries cache is updated:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">ldconfig</span> <span class="o">-</span><span class="n">v</span>
-</pre></div>
-</div>
+<p>Kivy determines automatically the sub-packages to build based on the environment it is compiled within. By default, the <cite>egl_rpi</cite> renderer that
+uses the (now deprecated but still useful) DISPMANX API is only compiled when running on a Raspberry Pi with Raspberry Pi OS Buster (32 bit), as it is the only
+platform that still  supports it.</p>
+<p>Please note that the <cite>egl_rpi</cite> window handler is not supported on Raspberry Pi 4 and higher.</p>
+</section>
+</section>
+<section id="headless-support-on-raspberry-pi">
+<h2>Headless support on Raspberry Pi<a class="headerlink" href="#headless-support-on-raspberry-pi" title="Permalink to this heading">¶</a></h2>
+<p>If you followed the previous steps, or you’re using the pre-built wheels, the headless support is enabled by default.</p>
+<p>On supported platforms (RPi 1-3 with Raspberry Pi OS Buster), the <cite>egl_rpi</cite> window provider is used by default. This window provider uses the
+(deprecated, will be removed in future) DISPMANX API to create a headless GL context.</p>
+<p>On other platforms (e.g RPi 4 or 64 bit OS), the <cite>sdl2</cite> window provider is used by default. If during the build process for the <cite>sdl2</cite>
+dependencies the <cite>kmsdrm</cite> headers and libraries are found, the <cite>kmsdrm</cite> backend is enabled. This backend allows to create a headless
+GL context using the KMS/DRM API.</p>
+</section>
+<section id="hardware-acceleration">
+<h2>Hardware acceleration<a class="headerlink" href="#hardware-acceleration" title="Permalink to this heading">¶</a></h2>
 <p>If you are getting output similar to this when running your app:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">INFO</span>   <span class="p">]</span> <span class="n">GL</span><span class="p">:</span> <span class="n">OpenGL</span> <span class="n">vendor</span> <span class="o">&lt;</span><span class="sa">b</span><span class="s1">&#39;VMware, Inc.&#39;</span><span class="o">&gt;</span>
 <span class="p">[</span><span class="n">INFO</span>   <span class="p">]</span> <span class="n">GL</span><span class="p">:</span> <span class="n">OpenGL</span> <span class="n">renderer</span> <span class="o">&lt;</span><span class="sa">b</span><span class="s1">&#39;llvmpipe (LLVM 9.0.1, 128 bits)&#39;</span><span class="o">&gt;</span>
@@ -574,31 +537,12 @@ popd
 </pre></div>
 </div>
 </section>
-</section>
-<section id="id2">
-<h4>Arch Linux ARM<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
-<p>Using pacman:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">S</span> <span class="n">sdl2</span> <span class="n">sdl2_gfx</span> <span class="n">sdl2_image</span> <span class="n">sdl2_net</span> <span class="n">sdl2_ttf</span> <span class="n">sdl2_mixer</span>
-</pre></div>
-</div>
-</section>
-</section>
-</section>
 <section id="raspberry-pi-window-provider-and-gl-backend">
-<h2>Raspberry Pi window provider and GL backend<a class="headerlink" href="#raspberry-pi-window-provider-and-gl-backend" title="Permalink to this headline">¶</a></h2>
-<p>By default the Raspberry Pi 1-3 will use the <code class="docutils literal notranslate"><span class="pre">egl_rpi</span></code> window provider and the <code class="docutils literal notranslate"><span class="pre">gl</span></code> GL backend.</p>
-<p>Since the <code class="docutils literal notranslate"><span class="pre">egl_rpi</span></code> window provider is not available on the Raspberry Pi 4 it uses the <code class="docutils literal notranslate"><span class="pre">sdl2</span></code> window provider and the <code class="docutils literal notranslate"><span class="pre">sdl2</span></code> GL backend by default.</p>
+<h2>Raspberry Pi window provider and GL backend<a class="headerlink" href="#raspberry-pi-window-provider-and-gl-backend" title="Permalink to this heading">¶</a></h2>
+<p>Where applicable, Kivy will use the <cite>egl_rpi</cite> window provider by default.</p>
 <p>The window provider and GL backend can be changed at runtime by setting the <a class="reference external" href="https://kivy.org/doc/stable/guide/environment.html#restrict-core-to-specific-implementation">KIVY_WINDOW</a> and <a class="reference external" href="https://kivy.org/doc/stable/guide/environment.html#restrict-core-to-specific-implementation">KIVY_GL_BACKEND</a> environmental variables.</p>
 <p>The table below shows the supported combinations of window provider and GL backend on the 4 platforms:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 36%" />
-<col style="width: 35%" />
-<col style="width: 7%" />
-<col style="width: 7%" />
-<col style="width: 7%" />
-<col style="width: 7%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Window provider (<a class="reference external" href="https://kivy.org/doc/stable/guide/environment.html#restrict-core-to-specific-implementation">KIVY_WINDOW</a>=)</p></th>
 <th class="head"><p>GL backend (<a class="reference external" href="https://kivy.org/doc/stable/guide/environment.html#restrict-core-to-specific-implementation">KIVY_GL_BACKEND</a>=)</p></th>
@@ -625,16 +569,17 @@ popd
 </tr>
 <tr class="row-even"><td><p>egl_rpi</p></td>
 <td><p>gl</p></td>
-<td><p>y</p></td>
-<td><p>y</p></td>
-<td><p>y</p></td>
+<td><p>y*</p></td>
+<td><p>y*</p></td>
+<td><p>y*</p></td>
 <td><p>n</p></td>
 </tr>
 </tbody>
 </table>
+<p><a href="#id2"><span class="problematic" id="id3">*</span></a>The <code class="docutils literal notranslate"><span class="pre">egl_rpi</span></code> (deprecated) window provider is only available on Raspberry Pi OS Buster (32 bit).</p>
 </section>
 <section id="change-the-default-screen-to-use">
-<h2>Change the default screen to use<a class="headerlink" href="#change-the-default-screen-to-use" title="Permalink to this headline">¶</a></h2>
+<h2>Change the default screen to use<a class="headerlink" href="#change-the-default-screen-to-use" title="Permalink to this heading">¶</a></h2>
 <p>You can set an environment variable named <cite>KIVY_BCM_DISPMANX_ID</cite> in order to
 change the display used to run Kivy. For example, to force the display to be
 HDMI, use:</p>
@@ -642,9 +587,10 @@ HDMI, use:</p>
 </pre></div>
 </div>
 <p>Check <a class="reference internal" href="../guide/environment.html#environment"><span class="std std-ref">Controlling the environment</span></a> to see all the possible values.</p>
+<p>Note that this is only available on Raspberry Pi OS Buster (32 bit) and only when using the <cite>egl_rpi</cite> window provider.</p>
 </section>
 <section id="using-official-rpi-touch-display">
-<h2>Using Official RPi touch display<a class="headerlink" href="#using-official-rpi-touch-display" title="Permalink to this headline">¶</a></h2>
+<h2>Using Official RPi touch display<a class="headerlink" href="#using-official-rpi-touch-display" title="Permalink to this heading">¶</a></h2>
 <p>If you are using the official Raspberry Pi touch display, you need to
 configure Kivy to use it as an input source. To do this, edit the file
 <code class="docutils literal notranslate"><span class="pre">~/.kivy/config.ini</span></code> and go to the <code class="docutils literal notranslate"><span class="pre">[input]</span></code> section. Add this:</p>
@@ -694,8 +640,8 @@ configure Kivy to use it as an input source. To do this, edit the file
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 06, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
+      Last updated on May 20, 2023.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
   </body>

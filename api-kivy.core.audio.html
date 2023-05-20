@@ -7,18 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
-    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Audio &mdash; Kivy 2.1.0 documentation</title>
+    <title>Audio &mdash; Kivy 2.2.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/fresh.css" type="text/css" />
          
           <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script> 
             <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script> 
-            <script src="_static/jquery.js"></script> 
-            <script src="_static/underscore.js"></script> 
             <script src="_static/doctools.js"></script> 
+            <script src="_static/sphinx_highlight.js"></script> 
         
         <script>
             const currTheme = localStorage.getItem("theme");
@@ -35,7 +34,7 @@
         <script type="text/javascript" src="_static/kivy.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="Kivy 2.1.0 documentation" href="index.html" />
+    <link rel="top" title="Kivy 2.2.0 documentation" href="index.html" />
     <link rel="up" title="Core Abstraction" href="api-kivy.core.html" />
     <link rel="next" title="Camera" href="api-kivy.core.camera.html" />
     <link rel="prev" title="Core Abstraction" href="api-kivy.core.html" /> 
@@ -102,6 +101,28 @@
           <ul>
 <li><a class="reference internal" href="#">Audio</a><ul>
 <li><a class="reference internal" href="#event-dispatching-and-state-changes">Event dispatching and state changes</a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound"><code class="docutils literal notranslate"><span class="pre">Sound</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.filename"><code class="docutils literal notranslate"><span class="pre">Sound.filename</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.get_pos"><code class="docutils literal notranslate"><span class="pre">Sound.get_pos()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.length"><code class="docutils literal notranslate"><span class="pre">Sound.length</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.load"><code class="docutils literal notranslate"><span class="pre">Sound.load()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.loop"><code class="docutils literal notranslate"><span class="pre">Sound.loop</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.pitch"><code class="docutils literal notranslate"><span class="pre">Sound.pitch</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.play"><code class="docutils literal notranslate"><span class="pre">Sound.play()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.seek"><code class="docutils literal notranslate"><span class="pre">Sound.seek()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.source"><code class="docutils literal notranslate"><span class="pre">Sound.source</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.state"><code class="docutils literal notranslate"><span class="pre">Sound.state</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.status"><code class="docutils literal notranslate"><span class="pre">Sound.status</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.stop"><code class="docutils literal notranslate"><span class="pre">Sound.stop()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.unload"><code class="docutils literal notranslate"><span class="pre">Sound.unload()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.volume"><code class="docutils literal notranslate"><span class="pre">Sound.volume</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kivy.core.audio.SoundLoader"><code class="docutils literal notranslate"><span class="pre">SoundLoader</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.core.audio.SoundLoader.load"><code class="docutils literal notranslate"><span class="pre">SoundLoader.load()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.SoundLoader.register"><code class="docutils literal notranslate"><span class="pre">SoundLoader.register()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -187,7 +208,6 @@
 <li class="toctree-l1 current"><a class="reference internal" href="api-index.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.html">Kivy framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy._metrics.html">Low level Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.app.html">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.atlas.html">Atlas</a></li>
@@ -222,6 +242,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.geometry.html">Geometry utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.gesture.html">Gesture recognition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.html">Graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.boxshadow.html">BoxShadow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.cgl.html">CGL: standard C interface for OpenGL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.compiler.html">Graphics compiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.context.html">Context management</a></li>
@@ -271,7 +292,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.gstplayer.html">GstPlayer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.mtdev.html">Python mtdev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.loader.html">Asynchronous data loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Logger object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Kivy Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.metrics.html">Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.html">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.console.html">Console</a></li>
@@ -387,13 +408,35 @@
             <div class="toc"><h2>Table Of Contents</h2><ul>
 <li><a class="reference internal" href="#">Audio</a><ul>
 <li><a class="reference internal" href="#event-dispatching-and-state-changes">Event dispatching and state changes</a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound"><code class="docutils literal notranslate"><span class="pre">Sound</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.filename"><code class="docutils literal notranslate"><span class="pre">Sound.filename</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.get_pos"><code class="docutils literal notranslate"><span class="pre">Sound.get_pos()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.length"><code class="docutils literal notranslate"><span class="pre">Sound.length</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.load"><code class="docutils literal notranslate"><span class="pre">Sound.load()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.loop"><code class="docutils literal notranslate"><span class="pre">Sound.loop</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.pitch"><code class="docutils literal notranslate"><span class="pre">Sound.pitch</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.play"><code class="docutils literal notranslate"><span class="pre">Sound.play()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.seek"><code class="docutils literal notranslate"><span class="pre">Sound.seek()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.source"><code class="docutils literal notranslate"><span class="pre">Sound.source</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.state"><code class="docutils literal notranslate"><span class="pre">Sound.state</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.status"><code class="docutils literal notranslate"><span class="pre">Sound.status</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.stop"><code class="docutils literal notranslate"><span class="pre">Sound.stop()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.unload"><code class="docutils literal notranslate"><span class="pre">Sound.unload()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.Sound.volume"><code class="docutils literal notranslate"><span class="pre">Sound.volume</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kivy.core.audio.SoundLoader"><code class="docutils literal notranslate"><span class="pre">SoundLoader</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.core.audio.SoundLoader.load"><code class="docutils literal notranslate"><span class="pre">SoundLoader.load()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.audio.SoundLoader.register"><code class="docutils literal notranslate"><span class="pre">SoundLoader.register()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
             
   <section id="module-kivy.core.audio">
-<span id="audio"></span><h1>Audio<a class="headerlink" href="#module-kivy.core.audio" title="Permalink to this headline">¶</a></h1>
+<span id="audio"></span><h1>Audio<a class="headerlink" href="#module-kivy.core.audio" title="Permalink to this heading">¶</a></h1>
 <p>Load an audio sound and play it with:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kivy.core.audio</span> <span class="kn">import</span> <span class="n">SoundLoader</span>
 
@@ -408,7 +451,7 @@
 <a class="reference internal" href="#kivy.core.audio.SoundLoader.load" title="kivy.core.audio.SoundLoader.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">SoundLoader.load()</span></code></a> will be the best sound provider for that particular
 file type, so it might return different Sound classes depending the file type.</p>
 <section id="event-dispatching-and-state-changes">
-<h2>Event dispatching and state changes<a class="headerlink" href="#event-dispatching-and-state-changes" title="Permalink to this headline">¶</a></h2>
+<h2>Event dispatching and state changes<a class="headerlink" href="#event-dispatching-and-state-changes" title="Permalink to this heading">¶</a></h2>
 <p>Audio is often processed in parallel to your code. This means you often need to
 enter the Kivy <a class="reference internal" href="api-kivy.base.html#kivy.base.EventLoopBase" title="kivy.base.EventLoopBase"><code class="xref py py-func docutils literal notranslate"><span class="pre">eventloop</span></code></a> in order to allow
 events and state changes to be dispatched correctly.</p>
@@ -431,6 +474,7 @@ working only for Python 2 + Gstreamer 0.10.</p>
 this functionality, please refer to the
 <a class="reference external" href="https://github.com/kivy/audiostream">audiostream</a> extension.</p>
 </div>
+</section>
 <dl class="py class">
 <dt class="sig sig-object py" id="kivy.core.audio.Sound">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.core.audio.</span></span><span class="sig-name descname"><span class="pre">Sound</span></span><a class="reference internal" href="_modules/kivy/core/audio.html#Sound"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.audio.Sound" title="Permalink to this definition">¶</a></dt>
@@ -439,7 +483,7 @@ this functionality, please refer to the
 directly.</p>
 <p>Use SoundLoader to load a sound.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Events</dt>
+<dt class="field-odd">Events<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><cite>on_play</cite>: None</dt><dd><p>Fired when the sound is played.</p>
 </dd>
@@ -592,7 +636,6 @@ to 1.</p>
 
 </dd></dl>
 
-</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -644,8 +687,8 @@ to 1.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 06, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
+      Last updated on May 20, 2023.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
   </body>

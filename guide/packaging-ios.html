@@ -7,18 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
-    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Create a package for iOS &mdash; Kivy 2.1.0 documentation</title>
+    <title>Create a package for iOS &mdash; Kivy 2.2.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/fresh.css" type="text/css" />
          
           <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script> 
             <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script> 
-            <script src="../_static/jquery.js"></script> 
-            <script src="../_static/underscore.js"></script> 
             <script src="../_static/doctools.js"></script> 
+            <script src="../_static/sphinx_highlight.js"></script> 
         
         <script>
             const currTheme = localStorage.getItem("theme");
@@ -35,7 +34,7 @@
         <script type="text/javascript" src="../_static/kivy.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="Kivy 2.1.0 documentation" href="../index.html" />
+    <link rel="top" title="Kivy 2.2.0 documentation" href="../index.html" />
     <link rel="up" title="Packaging your application" href="packaging.html" />
     <link rel="next" title="Package licensing" href="licensing.html" />
     <link rel="prev" title="iOS Prerequisites" href="packaging-ios-prerequisites.html" /> 
@@ -198,7 +197,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../api-index.html">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.html">Kivy framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy._metrics.html">Low level Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.app.html">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.atlas.html">Atlas</a></li>
@@ -233,6 +231,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.geometry.html">Geometry utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.gesture.html">Gesture recognition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.html">Graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.boxshadow.html">BoxShadow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.cgl.html">CGL: standard C interface for OpenGL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.compiler.html">Graphics compiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.context.html">Context management</a></li>
@@ -282,7 +281,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.lib.gstplayer.html">GstPlayer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.lib.mtdev.html">Python mtdev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.loader.html">Asynchronous data loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-kivy.logger.html">Logger object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-kivy.logger.html">Kivy Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.metrics.html">Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.modules.html">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.modules.console.html">Console</a></li>
@@ -415,7 +414,7 @@
 </div>
             
   <section id="create-a-package-for-ios">
-<span id="packaging-ios"></span><h1>Create a package for iOS<a class="headerlink" href="#create-a-package-for-ios" title="Permalink to this headline">¶</a></h1>
+<span id="packaging-ios"></span><h1>Create a package for iOS<a class="headerlink" href="#create-a-package-for-ios" title="Permalink to this heading">¶</a></h1>
 <p>The overall process for creating a package for iOS can be explained in 4 steps:</p>
 <ol class="arabic simple">
 <li><p><a class="reference internal" href="#compile-the-distribution"><span class="std std-ref">Compile the distribution</span></a> (python + modules for iOS)</p></li>
@@ -424,18 +423,18 @@
 <li><p><a class="reference internal" href="#customize"><span class="std std-ref">Customize the Xcode project</span></a></p></li>
 </ol>
 <section id="prerequisites">
-<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading">¶</a></h2>
 <p>You need to install some dependencies, like Cython, autotools, etc. We
 encourage you to use <a class="reference external" href="https://brew.sh">Homebrew</a> to install
 those dependencies:</p>
 <pre class="literal-block">$ brew install autoconf automake libtool pkg-config
 $ brew link libtool
-$ pip install Cython==0.29.28</pre>
+$ pip install Cython==0.29.33</pre>
 <p>For more detail, see <a class="reference internal" href="packaging-ios-prerequisites.html#packaging-ios-prerequisites"><span class="std std-ref">iOS Prerequisites</span></a>.
 Just ensure that everything is ok before starting the second step!</p>
 </section>
 <section id="compile-the-distribution">
-<span id="id1"></span><h2>Compile the distribution<a class="headerlink" href="#compile-the-distribution" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2>Compile the distribution<a class="headerlink" href="#compile-the-distribution" title="Permalink to this heading">¶</a></h2>
 <p>Open a terminal, and type:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install kivy-ios
 $ toolchain build kivy
@@ -446,7 +445,7 @@ $ toolchain build kivy
 <a class="reference external" href="https://github.com/kivy/kivy-ios">kivy-ios project page</a>.</p>
 </section>
 <section id="create-an-xcode-project">
-<span id="id2"></span><h2>Create an Xcode project<a class="headerlink" href="#create-an-xcode-project" title="Permalink to this headline">¶</a></h2>
+<span id="id2"></span><h2>Create an Xcode project<a class="headerlink" href="#create-an-xcode-project" title="Permalink to this heading">¶</a></h2>
 <p>Before proceeding to the next step, ensure your application entry point is a file
 named <cite>main.py</cite>.</p>
 <p>We provide a script that creates an initial Xcode project to start with. In the
@@ -474,7 +473,7 @@ directory directly.</p>
 </div>
 </section>
 <section id="update-the-xcode-project">
-<span id="id3"></span><h2>Update the Xcode project<a class="headerlink" href="#update-the-xcode-project" title="Permalink to this headline">¶</a></h2>
+<span id="id3"></span><h2>Update the Xcode project<a class="headerlink" href="#update-the-xcode-project" title="Permalink to this heading">¶</a></h2>
 <p>Let’s say you want to add numpy to your project but you did not compile it
 prior to creating your XCode project. First, ensure it is built:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ toolchain build numpy
@@ -488,13 +487,13 @@ prior to creating your XCode project. First, ensure it is built:</p>
 added to your Xcode project.</p>
 </section>
 <section id="customize-the-xcode-project">
-<span id="customize"></span><h2>Customize the Xcode project<a class="headerlink" href="#customize-the-xcode-project" title="Permalink to this headline">¶</a></h2>
+<span id="customize"></span><h2>Customize the Xcode project<a class="headerlink" href="#customize-the-xcode-project" title="Permalink to this heading">¶</a></h2>
 <p>There are various ways to customize and configure your app. Please refer
 to the <a class="reference external" href="http://www.github.com/kivy/kivy-ios">kivy-ios</a> documentation
 for more information.</p>
 </section>
 <section id="known-issues">
-<span id="id4"></span><h2>Known issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h2>
+<span id="id4"></span><h2>Known issues<a class="headerlink" href="#known-issues" title="Permalink to this heading">¶</a></h2>
 <p>All known issues with packaging for iOS are currently tracked on our
 <a class="reference external" href="https://github.com/kivy/kivy-ios/issues">issues</a>  page. If you encounter
 an issue specific to packaging for iOS that isn’t listed there, please feel
@@ -505,22 +504,22 @@ possible because the kivy project requires it. We will fix this and others
 in future versions.</p>
 </section>
 <section id="faq">
-<span id="ios-packaging-faq"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<span id="ios-packaging-faq"></span><h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this heading">¶</a></h2>
 <section id="application-quit-abnormally">
-<h3>Application quit abnormally!<a class="headerlink" href="#application-quit-abnormally" title="Permalink to this headline">¶</a></h3>
+<h3>Application quit abnormally!<a class="headerlink" href="#application-quit-abnormally" title="Permalink to this heading">¶</a></h3>
 <p>In debug mode, all the print statements are sent to the Xcode console.
 Looking and grep’ing these logs is highly encouraged. You’ll probably find
 that you missed to build/install a required dependency. Not your case?
 Feel free to ask on our Discord <code class="docutils literal notranslate"><span class="pre">support</span></code> channels.</p>
 </section>
 <section id="how-can-apple-accept-a-python-app">
-<h3>How can Apple accept a python app?<a class="headerlink" href="#how-can-apple-accept-a-python-app" title="Permalink to this headline">¶</a></h3>
+<h3>How can Apple accept a python app?<a class="headerlink" href="#how-can-apple-accept-a-python-app" title="Permalink to this heading">¶</a></h3>
 <p>We managed to merge the app binary with all the libraries into a single binary,
 called libpython. This means all binary modules are loaded beforehand, so
 nothing is dynamically loaded.</p>
 </section>
 <section id="have-you-already-submitted-a-kivy-application-to-the-app-store">
-<h3>Have you already submitted a Kivy application to the App store?<a class="headerlink" href="#have-you-already-submitted-a-kivy-application-to-the-app-store" title="Permalink to this headline">¶</a></h3>
+<h3>Have you already submitted a Kivy application to the App store?<a class="headerlink" href="#have-you-already-submitted-a-kivy-application-to-the-app-store" title="Permalink to this heading">¶</a></h3>
 <p>Yes, absolutely. <a class="reference external" href="https://github.com/kivy/kivy/wiki/List-of-Kivy-Projects#kivy-apps-in-the-apple-app-store">Kivy Apps in the Apple App Store</a>.</p>
 </section>
 </section>
@@ -573,8 +572,8 @@ nothing is dynamically loaded.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 06, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
+      Last updated on May 20, 2023.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
   </body>

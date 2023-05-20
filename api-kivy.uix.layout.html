@@ -7,18 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
-    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Layout &mdash; Kivy 2.1.0 documentation</title>
+    <title>Layout &mdash; Kivy 2.2.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/fresh.css" type="text/css" />
          
           <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script> 
             <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script> 
-            <script src="_static/jquery.js"></script> 
-            <script src="_static/underscore.js"></script> 
             <script src="_static/doctools.js"></script> 
+            <script src="_static/sphinx_highlight.js"></script> 
         
         <script>
             const currTheme = localStorage.getItem("theme");
@@ -35,7 +34,7 @@
         <script type="text/javascript" src="_static/kivy.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="Kivy 2.1.0 documentation" href="index.html" />
+    <link rel="top" title="Kivy 2.2.0 documentation" href="index.html" />
     <link rel="up" title="Widgets" href="api-kivy.uix.html" />
     <link rel="next" title="ModalView" href="api-kivy.uix.modalview.html" />
     <link rel="prev" title="Label" href="api-kivy.uix.label.html" /> 
@@ -102,6 +101,13 @@
           <ul>
 <li><a class="reference internal" href="#">Layout</a><ul>
 <li><a class="reference internal" href="#understanding-the-size-hint-property-in-widget">Understanding the <cite>size_hint</cite> Property in <cite>Widget</cite></a></li>
+<li><a class="reference internal" href="#kivy.uix.layout.Layout"><code class="docutils literal notranslate"><span class="pre">Layout</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.uix.layout.Layout.add_widget"><code class="docutils literal notranslate"><span class="pre">Layout.add_widget()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.layout.Layout.do_layout"><code class="docutils literal notranslate"><span class="pre">Layout.do_layout()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.layout.Layout.layout_hint_with_bounds"><code class="docutils literal notranslate"><span class="pre">Layout.layout_hint_with_bounds()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.layout.Layout.remove_widget"><code class="docutils literal notranslate"><span class="pre">Layout.remove_widget()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -187,7 +193,6 @@
 <li class="toctree-l1 current"><a class="reference internal" href="api-index.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.html">Kivy framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy._metrics.html">Low level Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.app.html">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.atlas.html">Atlas</a></li>
@@ -222,6 +227,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.geometry.html">Geometry utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.gesture.html">Gesture recognition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.html">Graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.boxshadow.html">BoxShadow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.cgl.html">CGL: standard C interface for OpenGL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.compiler.html">Graphics compiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.context.html">Context management</a></li>
@@ -271,7 +277,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.gstplayer.html">GstPlayer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.mtdev.html">Python mtdev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.loader.html">Asynchronous data loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Logger object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Kivy Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.metrics.html">Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.html">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.console.html">Console</a></li>
@@ -387,13 +393,20 @@
             <div class="toc"><h2>Table Of Contents</h2><ul>
 <li><a class="reference internal" href="#">Layout</a><ul>
 <li><a class="reference internal" href="#understanding-the-size-hint-property-in-widget">Understanding the <cite>size_hint</cite> Property in <cite>Widget</cite></a></li>
+<li><a class="reference internal" href="#kivy.uix.layout.Layout"><code class="docutils literal notranslate"><span class="pre">Layout</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.uix.layout.Layout.add_widget"><code class="docutils literal notranslate"><span class="pre">Layout.add_widget()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.layout.Layout.do_layout"><code class="docutils literal notranslate"><span class="pre">Layout.do_layout()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.layout.Layout.layout_hint_with_bounds"><code class="docutils literal notranslate"><span class="pre">Layout.layout_hint_with_bounds()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.layout.Layout.remove_widget"><code class="docutils literal notranslate"><span class="pre">Layout.remove_widget()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
             
   <section id="module-kivy.uix.layout">
-<span id="layout"></span><h1>Layout<a class="headerlink" href="#module-kivy.uix.layout" title="Permalink to this headline">¶</a></h1>
+<span id="layout"></span><h1>Layout<a class="headerlink" href="#module-kivy.uix.layout" title="Permalink to this heading">¶</a></h1>
 <p>Layouts are used to calculate and assign widget positions.</p>
 <p>The <a class="reference internal" href="#kivy.uix.layout.Layout" title="kivy.uix.layout.Layout"><code class="xref py py-class docutils literal notranslate"><span class="pre">Layout</span></code></a> class itself cannot be used directly.
 You should use one of the following layout classes:</p>
@@ -408,7 +421,7 @@ You should use one of the following layout classes:</p>
 <li><p>Stack layout: <a class="reference internal" href="api-kivy.uix.stacklayout.html#kivy.uix.stacklayout.StackLayout" title="kivy.uix.stacklayout.StackLayout"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.stacklayout.StackLayout</span></code></a></p></li>
 </ul>
 <section id="understanding-the-size-hint-property-in-widget">
-<h2>Understanding the <cite>size_hint</cite> Property in <cite>Widget</cite><a class="headerlink" href="#understanding-the-size-hint-property-in-widget" title="Permalink to this headline">¶</a></h2>
+<h2>Understanding the <cite>size_hint</cite> Property in <cite>Widget</cite><a class="headerlink" href="#understanding-the-size-hint-property-in-widget" title="Permalink to this heading">¶</a></h2>
 <p>The <code class="xref py py-attr docutils literal notranslate"><span class="pre">size_hint</span></code> is a tuple of values used by
 layouts to manage the sizes of their children. It indicates the size
 relative to the layout’s size instead of an absolute size (in
@@ -439,6 +452,7 @@ constructor arguments:</p>
 <p><span class="versionmodified changed">Changed in version 1.4.1: </span>The <cite>reposition_child</cite> internal method (made public by mistake) has
 been removed.</p>
 </div>
+</section>
 <dl class="py class">
 <dt class="sig sig-object py" id="kivy.uix.layout.Layout">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.uix.layout.</span></span><span class="sig-name descname"><span class="pre">Layout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/uix/layout.html#Layout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.uix.layout.Layout" title="Permalink to this definition">¶</a></dt>
@@ -451,7 +465,7 @@ documentation for more information.</p>
 <dd><p>Add a new widget as a child of this widget.</p>
 <blockquote>
 <div><dl class="field-list">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
 <dt><cite>widget</cite>: <code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code></dt><dd><p>Widget to add to our list of children.</p>
 </dd>
@@ -513,7 +527,7 @@ size hint.</p>
 passed through the input params, so it’s fairly generic for laying
 things out according to constraints using size hints.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><cite>sh_sum</cite>: float</dt><dd><p>The sum of the size hints (basically <code class="docutils literal notranslate"><span class="pre">sum(size_hint)</span></code>).</p>
 </dd>
@@ -538,7 +552,7 @@ violated.</p>
 </dd>
 </dl>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Nothing. <code class="docutils literal notranslate"><span class="pre">hint</span></code> is updated in place.</p>
 </dd>
 </dl>
@@ -550,7 +564,7 @@ violated.</p>
 <dd><p>Remove a widget from the children of this widget.</p>
 <blockquote>
 <div><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><cite>widget</cite>: <code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code></dt><dd><p>Widget to remove from our children list.</p>
 </dd>
@@ -569,7 +583,6 @@ violated.</p>
 
 </dd></dl>
 
-</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -621,8 +634,8 @@ violated.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 06, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
+      Last updated on May 20, 2023.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
   </body>

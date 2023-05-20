@@ -7,18 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
-    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Dejitter &mdash; Kivy 2.1.0 documentation</title>
+    <title>Dejitter &mdash; Kivy 2.2.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/fresh.css" type="text/css" />
          
           <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script> 
             <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script> 
-            <script src="_static/jquery.js"></script> 
-            <script src="_static/underscore.js"></script> 
             <script src="_static/doctools.js"></script> 
+            <script src="_static/sphinx_highlight.js"></script> 
         
         <script>
             const currTheme = localStorage.getItem("theme");
@@ -35,7 +34,7 @@
         <script type="text/javascript" src="_static/kivy.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="Kivy 2.1.0 documentation" href="index.html" />
+    <link rel="top" title="Kivy 2.2.0 documentation" href="index.html" />
     <link rel="up" title="Input Postprocessing" href="api-kivy.input.postproc.html" />
     <link rel="next" title="Double Tap" href="api-kivy.input.postproc.doubletap.html" />
     <link rel="prev" title="Calibration" href="api-kivy.input.postproc.calibration.html" /> 
@@ -100,7 +99,10 @@
           <!--
           <h3><a href="index.html">Dejitter</a></h3>
           <ul>
-<li><a class="reference internal" href="#">Dejitter</a></li>
+<li><a class="reference internal" href="#">Dejitter</a><ul>
+<li><a class="reference internal" href="#kivy.input.postproc.dejitter.InputPostprocDejitter"><code class="docutils literal notranslate"><span class="pre">InputPostprocDejitter</span></code></a></li>
+</ul>
+</li>
 </ul>
 
           <h3><a href="index.html">Table Of Contents</a></h3>
@@ -184,7 +186,6 @@
 <li class="toctree-l1 current"><a class="reference internal" href="api-index.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.html">Kivy framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy._metrics.html">Low level Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.app.html">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.atlas.html">Atlas</a></li>
@@ -219,6 +220,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.geometry.html">Geometry utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.gesture.html">Gesture recognition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.html">Graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.boxshadow.html">BoxShadow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.cgl.html">CGL: standard C interface for OpenGL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.compiler.html">Graphics compiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.context.html">Context management</a></li>
@@ -268,7 +270,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.gstplayer.html">GstPlayer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.mtdev.html">Python mtdev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.loader.html">Asynchronous data loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Logger object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Kivy Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.metrics.html">Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.html">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.console.html">Console</a></li>
@@ -382,12 +384,15 @@
         <div class="bodywrapper">
           <div class="body">
             <div class="toc"><h2>Table Of Contents</h2><ul>
-<li><a class="reference internal" href="#">Dejitter</a></li>
+<li><a class="reference internal" href="#">Dejitter</a><ul>
+<li><a class="reference internal" href="#kivy.input.postproc.dejitter.InputPostprocDejitter"><code class="docutils literal notranslate"><span class="pre">InputPostprocDejitter</span></code></a></li>
+</ul>
+</li>
 </ul>
 </div>
             
   <section id="module-kivy.input.postproc.dejitter">
-<span id="dejitter"></span><h1>Dejitter<a class="headerlink" href="#module-kivy.input.postproc.dejitter" title="Permalink to this headline">¶</a></h1>
+<span id="dejitter"></span><h1>Dejitter<a class="headerlink" href="#module-kivy.input.postproc.dejitter" title="Permalink to this heading">¶</a></h1>
 <p>Prevent blob jittering.</p>
 <p>A problem that is often faced (esp. in optical MT setups) is that of
 jitterish BLOBs caused by bad camera characteristics. With this module
@@ -407,7 +412,7 @@ Example:</p>
 </pre></div>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">Configuration</dt>
+<dt class="field-odd">Configuration<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><cite>jitter_distance</cite>: float</dt><dd><p>A float in range 0-1.</p>
 </dd>
@@ -471,8 +476,8 @@ very precise already).</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 06, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
+      Last updated on May 20, 2023.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
   </body>

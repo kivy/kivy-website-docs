@@ -7,18 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
-    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Emacs Behavior &mdash; Kivy 2.1.0 documentation</title>
+    <title>Emacs Behavior &mdash; Kivy 2.2.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/fresh.css" type="text/css" />
          
           <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script> 
             <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script> 
-            <script src="_static/jquery.js"></script> 
-            <script src="_static/underscore.js"></script> 
             <script src="_static/doctools.js"></script> 
+            <script src="_static/sphinx_highlight.js"></script> 
         
         <script>
             const currTheme = localStorage.getItem("theme");
@@ -35,7 +34,7 @@
         <script type="text/javascript" src="_static/kivy.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="Kivy 2.1.0 documentation" href="index.html" />
+    <link rel="top" title="Kivy 2.2.0 documentation" href="index.html" />
     <link rel="up" title="Behaviors" href="api-kivy.uix.behaviors.html" />
     <link rel="next" title="Focus Behavior" href="api-kivy.uix.behaviors.focus.html" />
     <link rel="prev" title="Drag Behavior" href="api-kivy.uix.behaviors.drag.html" /> 
@@ -102,6 +101,12 @@
           <ul>
 <li><a class="reference internal" href="#">Emacs Behavior</a><ul>
 <li><a class="reference internal" href="#emacs-shortcuts">Emacs shortcuts</a></li>
+<li><a class="reference internal" href="#kivy.uix.behaviors.emacs.EmacsBehavior"><code class="docutils literal notranslate"><span class="pre">EmacsBehavior</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.uix.behaviors.emacs.EmacsBehavior.delete_word_left"><code class="docutils literal notranslate"><span class="pre">EmacsBehavior.delete_word_left()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.behaviors.emacs.EmacsBehavior.delete_word_right"><code class="docutils literal notranslate"><span class="pre">EmacsBehavior.delete_word_right()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.behaviors.emacs.EmacsBehavior.key_bindings"><code class="docutils literal notranslate"><span class="pre">EmacsBehavior.key_bindings</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -187,7 +192,6 @@
 <li class="toctree-l1 current"><a class="reference internal" href="api-index.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.html">Kivy framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy._metrics.html">Low level Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.app.html">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.atlas.html">Atlas</a></li>
@@ -222,6 +226,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.geometry.html">Geometry utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.gesture.html">Gesture recognition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.html">Graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.boxshadow.html">BoxShadow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.cgl.html">CGL: standard C interface for OpenGL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.compiler.html">Graphics compiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.context.html">Context management</a></li>
@@ -271,7 +276,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.gstplayer.html">GstPlayer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.mtdev.html">Python mtdev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.loader.html">Asynchronous data loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Logger object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Kivy Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.metrics.html">Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.html">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.console.html">Console</a></li>
@@ -387,25 +392,27 @@
             <div class="toc"><h2>Table Of Contents</h2><ul>
 <li><a class="reference internal" href="#">Emacs Behavior</a><ul>
 <li><a class="reference internal" href="#emacs-shortcuts">Emacs shortcuts</a></li>
+<li><a class="reference internal" href="#kivy.uix.behaviors.emacs.EmacsBehavior"><code class="docutils literal notranslate"><span class="pre">EmacsBehavior</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.uix.behaviors.emacs.EmacsBehavior.delete_word_left"><code class="docutils literal notranslate"><span class="pre">EmacsBehavior.delete_word_left()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.behaviors.emacs.EmacsBehavior.delete_word_right"><code class="docutils literal notranslate"><span class="pre">EmacsBehavior.delete_word_right()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.behaviors.emacs.EmacsBehavior.key_bindings"><code class="docutils literal notranslate"><span class="pre">EmacsBehavior.key_bindings</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
             
   <section id="module-kivy.uix.behaviors.emacs">
-<span id="emacs-behavior"></span><h1>Emacs Behavior<a class="headerlink" href="#module-kivy.uix.behaviors.emacs" title="Permalink to this headline">¶</a></h1>
+<span id="emacs-behavior"></span><h1>Emacs Behavior<a class="headerlink" href="#module-kivy.uix.behaviors.emacs" title="Permalink to this heading">¶</a></h1>
 <p>The <a class="reference internal" href="#kivy.uix.behaviors.emacs.EmacsBehavior" title="kivy.uix.behaviors.emacs.EmacsBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">EmacsBehavior</span></code></a>
 <a class="reference external" href="https://en.wikipedia.org/wiki/Mixin">mixin</a> allows you to add
 <a class="reference external" href="https://www.gnu.org/software/emacs/">Emacs</a> keyboard shortcuts for basic
 movement and editing to the <a class="reference internal" href="api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput" title="kivy.uix.textinput.TextInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextInput</span></code></a> widget.
 The shortcuts currently available are listed below:</p>
 <section id="emacs-shortcuts">
-<h2>Emacs shortcuts<a class="headerlink" href="#emacs-shortcuts" title="Permalink to this headline">¶</a></h2>
+<h2>Emacs shortcuts<a class="headerlink" href="#emacs-shortcuts" title="Permalink to this heading">¶</a></h2>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 21%" />
-<col style="width: 79%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p>Shortcut</p></td>
 <td><p>Description</p></td>
@@ -452,6 +459,7 @@ shortcut for opening the inspector (Control + e) conflicts with the
 Emacs shortcut to move to the end of the line (it will still move the
 cursor to the end of the line, but the inspector will open as well).</p>
 </div>
+</section>
 <dl class="py class">
 <dt class="sig sig-object py" id="kivy.uix.behaviors.emacs.EmacsBehavior">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.uix.behaviors.emacs.</span></span><span class="sig-name descname"><span class="pre">EmacsBehavior</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/uix/behaviors/emacs.html#EmacsBehavior"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.uix.behaviors.emacs.EmacsBehavior" title="Permalink to this definition">¶</a></dt>
@@ -493,7 +501,6 @@ and defaults to <code class="docutils literal notranslate"><span class="pre">'em
 
 </dd></dl>
 
-</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -545,8 +552,8 @@ and defaults to <code class="docutils literal notranslate"><span class="pre">'em
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 06, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
+      Last updated on May 20, 2023.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
   </body>

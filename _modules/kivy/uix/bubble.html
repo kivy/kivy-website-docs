@@ -8,16 +8,15 @@
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
     
-    <title>kivy.uix.bubble &mdash; Kivy 2.1.0 documentation</title>
+    <title>kivy.uix.bubble &mdash; Kivy 2.2.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/fresh.css" type="text/css" />
          
           <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script> 
             <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script> 
-            <script src="../../../_static/jquery.js"></script> 
-            <script src="../../../_static/underscore.js"></script> 
             <script src="../../../_static/doctools.js"></script> 
+            <script src="../../../_static/sphinx_highlight.js"></script> 
         
         <script>
             const currTheme = localStorage.getItem("theme");
@@ -34,7 +33,7 @@
         <script type="text/javascript" src="../../../_static/kivy.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="top" title="Kivy 2.1.0 documentation" href="../../../index.html" />
+    <link rel="top" title="Kivy 2.2.0 documentation" href="../../../index.html" />
     <link rel="up" title="kivy" href="../../kivy.html" /> 
   </head>
   <body>
@@ -178,7 +177,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../api-index.html">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.html">Kivy framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy._metrics.html">Low level Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.app.html">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.atlas.html">Atlas</a></li>
@@ -213,6 +211,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.geometry.html">Geometry utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.gesture.html">Gesture recognition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.graphics.html">Graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.graphics.boxshadow.html">BoxShadow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.graphics.cgl.html">CGL: standard C interface for OpenGL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.graphics.compiler.html">Graphics compiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.graphics.context.html">Context management</a></li>
@@ -262,7 +261,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.lib.gstplayer.html">GstPlayer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.lib.mtdev.html">Python mtdev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.loader.html">Asynchronous data loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.logger.html">Logger object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.logger.html">Kivy Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.metrics.html">Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.modules.html">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.modules.console.html">Console</a></li>
@@ -385,11 +384,60 @@
 <span class="sd">.. image:: images/bubble.jpg</span>
 <span class="sd">    :align: right</span>
 
-<span class="sd">The Bubble widget is a form of menu or a small popup where the menu options</span>
-<span class="sd">are stacked either vertically or horizontally.</span>
+<span class="sd">The :class:`Bubble` widget is a form of menu or a small popup with an arrow</span>
+<span class="sd">arranged on one side of it&#39;s content.</span>
 
-<span class="sd">The :class:`Bubble` contains an arrow pointing in the direction you</span>
-<span class="sd">choose.</span>
+<span class="sd">The :class:`Bubble` contains an arrow attached to the content</span>
+<span class="sd">(e.g., :class:`BubbleContent`) pointing in the direction you choose. It can</span>
+<span class="sd">be placed either at a predefined location or flexibly by specifying a relative</span>
+<span class="sd">position on the border of the widget.</span>
+
+<span class="sd">The :class:`BubbleContent` is a styled BoxLayout and is thought to be added to</span>
+<span class="sd">the :class:`Bubble` as a child widget. The :class:`Bubble` will then arrange</span>
+<span class="sd">an arrow around the content as desired. Instead of the class:`BubbleContent`,</span>
+<span class="sd">you can theoretically use any other :class:`Widget` as well as long as it</span>
+<span class="sd">supports the &#39;bind&#39; and &#39;unbind&#39; function of the :class:`EventDispatcher` and</span>
+<span class="sd">is compatible with Kivy to be placed inside a :class:`BoxLayout`.</span>
+
+<span class="sd">The :class:`BubbleButton`is a styled Button. It suits to the style of</span>
+<span class="sd">:class:`Bubble` and :class:`BubbleContent`. Feel free to place other Widgets</span>
+<span class="sd">inside the &#39;content&#39; of the :class:`Bubble`.</span>
+
+
+<span class="sd">.. versionchanged:: 2.2.0</span>
+<span class="sd">The properties :attr:`background_image`, :attr:`background_color`,</span>
+<span class="sd">:attr:`border` and :attr:`border_auto_scale` were removed from :class:`Bubble`.</span>
+<span class="sd">These properties had only been used by the content widget that now uses it&#39;s</span>
+<span class="sd">own properties instead. The color of the arrow is now changed with</span>
+<span class="sd">:attr:`arrow_color` instead of :attr:`background_color`.</span>
+<span class="sd">These changes makes the :class:`Bubble` transparent to use with other layouts</span>
+<span class="sd">as content without any side-effects due to property inheritance.</span>
+
+<span class="sd">The property :attr:`flex_arrow_pos` has been added to allow further</span>
+<span class="sd">customization of the arrow positioning.</span>
+
+<span class="sd">The properties :attr:`arrow_margin`, :attr:`arrow_margin_x`,</span>
+<span class="sd">:attr:`arrow_margin_y`, :attr:`content_size`, :attr:`content_width` and</span>
+<span class="sd">:attr:`content_height` have been added to ease proper sizing of a</span>
+<span class="sd">:class:`Bubble` e.g., based on it&#39;s content size.</span>
+
+<span class="sd">BubbleContent</span>
+<span class="sd">=============</span>
+
+<span class="sd">The :class:`BubbleContent` is a styled BoxLayout that can be used to</span>
+<span class="sd">add e.g., :class:`BubbleButtons` as menu items.</span>
+
+<span class="sd">.. versionchanged:: 2.2.0</span>
+<span class="sd">The properties :attr:`background_image`, :attr:`background_color`,</span>
+<span class="sd">:attr:`border` and :attr:`border_auto_scale` were added to the</span>
+<span class="sd">:class:`BubbleContent`. The :class:`BubbleContent` does no longer rely on these</span>
+<span class="sd">properties being present in the parent class.</span>
+
+<span class="sd">BubbleButton</span>
+<span class="sd">============</span>
+
+<span class="sd">The :class:`BubbleButton` is a styled :class:`Button` that can be used to be</span>
+<span class="sd">added to the :class:`BubbleContent`.</span>
 
 <span class="sd">Simple example</span>
 <span class="sd">--------------</span>
@@ -403,57 +451,57 @@
 <span class="sd">You can choose the direction in which the arrow points::</span>
 
 <span class="sd">    Bubble(arrow_pos=&#39;top_mid&#39;)</span>
-
-<span class="sd">The widgets added to the Bubble are ordered horizontally by default, like a</span>
-<span class="sd">Boxlayout. You can change that by::</span>
-
-<span class="sd">    orientation = &#39;vertical&#39;</span>
-
-<span class="sd">To add items to the bubble::</span>
-
-<span class="sd">    bubble = Bubble(orientation = &#39;vertical&#39;)</span>
-<span class="sd">    bubble.add_widget(your_widget_instance)</span>
-
-<span class="sd">To remove items::</span>
-
-<span class="sd">    bubble.remove_widget(widget)</span>
 <span class="sd">    or</span>
-<span class="sd">    bubble.clear_widgets()</span>
+<span class="sd">    Bubble(size=(200, 40), flex_arrow_pos=(175, 40))</span>
 
-<span class="sd">To access the list of children, use content.children::</span>
+<span class="sd">    Similarly, the corresponding properties in the &#39;.kv&#39; language can be used</span>
+<span class="sd">    as well.</span>
 
-<span class="sd">    bubble.content.children</span>
+<span class="sd">You can change the appearance of the bubble::</span>
 
-<span class="sd">.. warning::</span>
-<span class="sd">  This is important! Do not use bubble.children</span>
+<span class="sd">    Bubble(</span>
+<span class="sd">        arrow_image=&#39;/path/to/arrow/image&#39;,</span>
+<span class="sd">        arrow_color=(1, 0, 0, .5)),</span>
+<span class="sd">    )</span>
+<span class="sd">    BubbleContent(</span>
+<span class="sd">        background_image=&#39;/path/to/background/image&#39;,</span>
+<span class="sd">        background_color=(1, 0, 0, .5),  # 50% translucent red</span>
+<span class="sd">        border=(0,0,0,0),</span>
+<span class="sd">    )</span>
 
-<span class="sd">To change the appearance of the bubble::</span>
+<span class="sd">    Similarly, the corresponding properties in the &#39;.kv&#39; language can be used</span>
+<span class="sd">    as well.</span>
 
-<span class="sd">    bubble.background_color = (1, 0, 0, .5) #50% translucent red</span>
-<span class="sd">    bubble.border = [0, 0, 0, 0]</span>
-<span class="sd">    background_image = &#39;path/to/background/image&#39;</span>
-<span class="sd">    arrow_image = &#39;path/to/arrow/image&#39;</span>
+<span class="sd">-----------------------------</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Bubble&#39;</span><span class="p">,</span> <span class="s1">&#39;BubbleButton&#39;</span><span class="p">,</span> <span class="s1">&#39;BubbleContent&#39;</span><span class="p">)</span>
 
 <span class="kn">from</span> <span class="nn">kivy.uix.image</span> <span class="kn">import</span> <span class="n">Image</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.widget</span> <span class="kn">import</span> <span class="n">Widget</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.scatter</span> <span class="kn">import</span> <span class="n">Scatter</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.gridlayout</span> <span class="kn">import</span> <span class="n">GridLayout</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.boxlayout</span> <span class="kn">import</span> <span class="n">BoxLayout</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.relativelayout</span> <span class="kn">import</span> <span class="n">RelativeLayout</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.button</span> <span class="kn">import</span> <span class="n">Button</span>
-<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">ObjectProperty</span><span class="p">,</span> <span class="n">StringProperty</span><span class="p">,</span> <span class="n">OptionProperty</span><span class="p">,</span> \
-    <span class="n">ListProperty</span><span class="p">,</span> <span class="n">BooleanProperty</span><span class="p">,</span> <span class="n">ColorProperty</span>
-<span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
+<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">ObjectProperty</span>
+<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">StringProperty</span>
+<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">OptionProperty</span>
+<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">ListProperty</span>
+<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">BooleanProperty</span>
+<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">ColorProperty</span>
+<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">NumericProperty</span>
+<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">ReferenceListProperty</span>
 <span class="kn">from</span> <span class="nn">kivy.base</span> <span class="kn">import</span> <span class="n">EventLoop</span>
 <span class="kn">from</span> <span class="nn">kivy.metrics</span> <span class="kn">import</span> <span class="n">dp</span>
 
 
+<span class="k">class</span> <span class="nc">BubbleException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
 <div class="viewcode-block" id="BubbleButton"><a class="viewcode-back" href="../../../api-kivy.uix.bubble.html#kivy.uix.bubble.BubbleButton">[docs]</a><span class="k">class</span> <span class="nc">BubbleButton</span><span class="p">(</span><span class="n">Button</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;A button intended for use in a Bubble widget.</span>
-<span class="sd">    You can use a &quot;normal&quot; button class, but it will not look good unless</span>
-<span class="sd">    the background is changed.</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;A button intended for use in a BubbleContent widget.</span>
+<span class="sd">    You can use a &quot;normal&quot; button class, but it will not look good unless the</span>
+<span class="sd">    background is changed.</span>
 
 <span class="sd">    Rather use this BubbleButton widget that is already defined and provides a</span>
 <span class="sd">    suitable background for you.</span>
@@ -461,98 +509,48 @@
     <span class="k">pass</span></div>
 
 
-<div class="viewcode-block" id="BubbleContent"><a class="viewcode-back" href="../../../api-kivy.uix.bubble.html#kivy.uix.bubble.BubbleContent">[docs]</a><span class="k">class</span> <span class="nc">BubbleContent</span><span class="p">(</span><span class="n">GridLayout</span><span class="p">):</span>
-    <span class="k">pass</span></div>
+<div class="viewcode-block" id="BubbleContent"><a class="viewcode-back" href="../../../api-kivy.uix.bubble.html#kivy.uix.bubble.BubbleContent">[docs]</a><span class="k">class</span> <span class="nc">BubbleContent</span><span class="p">(</span><span class="n">BoxLayout</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;A styled BoxLayout that can be used as the content widget of a Bubble.</span>
 
-
-<div class="viewcode-block" id="Bubble"><a class="viewcode-back" href="../../../api-kivy.uix.bubble.html#kivy.uix.bubble.Bubble">[docs]</a><span class="k">class</span> <span class="nc">Bubble</span><span class="p">(</span><span class="n">GridLayout</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Bubble class. See module documentation for more information.</span>
+<span class="sd">    .. versionchanged:: 2.2.0</span>
+<span class="sd">    The graphical appearance of :class:`BubbleContent` is now based on it&#39;s</span>
+<span class="sd">    own properties :attr:`background_image`, :attr:`background_color`,</span>
+<span class="sd">    :attr:`border` and :attr:`border_auto_scale`. The parent widget properties</span>
+<span class="sd">    are no longer considered. This makes the BubbleContent a standalone themed</span>
+<span class="sd">    BoxLayout.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">background_color</span> <span class="o">=</span> <span class="n">ColorProperty</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-    <span class="sd">&#39;&#39;&#39;Background color, in the format (r, g, b, a). To use it you have to set</span>
-<span class="sd">    either :attr:`background_image` or :attr:`arrow_image` first.</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Background color, in the format (r, g, b, a). To use it you have to set</span>
+<span class="sd">    :attr:`background_image` first.</span>
+
+<span class="sd">    .. versionadded:: 2.2.0</span>
 
 <span class="sd">    :attr:`background_color` is a :class:`~kivy.properties.ColorProperty` and</span>
 <span class="sd">    defaults to [1, 1, 1, 1].</span>
+<span class="sd">    &#39;&#39;&#39;</span>
 
-<span class="sd">    .. versionchanged:: 2.0.0</span>
-<span class="sd">        Changed from :class:`~kivy.properties.ListProperty` to</span>
-<span class="sd">        :class:`~kivy.properties.ColorProperty`.</span>
+    <span class="n">background_image</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">&#39;atlas://data/images/defaulttheme/bubble&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Background image of the bubble.</span>
+
+<span class="sd">    .. versionadded:: 2.2.0</span>
+
+<span class="sd">    :attr:`background_image` is a :class:`~kivy.properties.StringProperty` and</span>
+<span class="sd">    defaults to &#39;atlas://data/images/defaulttheme/bubble&#39;.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">border</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">])</span>
-    <span class="sd">&#39;&#39;&#39;Border used for :class:`~kivy.graphics.vertex_instructions.BorderImage`</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Border used for :class:`~kivy.graphics.vertex_instructions.BorderImage`</span>
 <span class="sd">    graphics instruction. Used with the :attr:`background_image`.</span>
 <span class="sd">    It should be used when using custom backgrounds.</span>
 
 <span class="sd">    It must be a list of 4 values: (bottom, right, top, left). Read the</span>
 <span class="sd">    BorderImage instructions for more information about how to use it.</span>
 
+<span class="sd">    .. versionadded:: 2.2.0</span>
+
 <span class="sd">    :attr:`border` is a :class:`~kivy.properties.ListProperty` and defaults to</span>
 <span class="sd">    (16, 16, 16, 16)</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-
-    <span class="n">background_image</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span>
-        <span class="s1">&#39;atlas://data/images/defaulttheme/bubble&#39;</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Background image of the bubble.</span>
-
-<span class="sd">    :attr:`background_image` is a :class:`~kivy.properties.StringProperty` and</span>
-<span class="sd">    defaults to &#39;atlas://data/images/defaulttheme/bubble&#39;.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-
-    <span class="n">arrow_image</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span>
-        <span class="s1">&#39;atlas://data/images/defaulttheme/bubble_arrow&#39;</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39; Image of the arrow pointing to the bubble.</span>
-
-<span class="sd">    :attr:`arrow_image` is a :class:`~kivy.properties.StringProperty` and</span>
-<span class="sd">    defaults to &#39;atlas://data/images/defaulttheme/bubble_arrow&#39;.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-
-    <span class="n">show_arrow</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39; Indicates whether to show arrow.</span>
-
-<span class="sd">    .. versionadded:: 1.8.0</span>
-
-<span class="sd">    :attr:`show_arrow` is a :class:`~kivy.properties.BooleanProperty` and</span>
-<span class="sd">    defaults to `True`.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-
-    <span class="n">arrow_pos</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">&#39;bottom_mid&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">(</span>
-        <span class="s1">&#39;left_top&#39;</span><span class="p">,</span> <span class="s1">&#39;left_mid&#39;</span><span class="p">,</span> <span class="s1">&#39;left_bottom&#39;</span><span class="p">,</span> <span class="s1">&#39;top_left&#39;</span><span class="p">,</span> <span class="s1">&#39;top_mid&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;top_right&#39;</span><span class="p">,</span> <span class="s1">&#39;right_top&#39;</span><span class="p">,</span> <span class="s1">&#39;right_mid&#39;</span><span class="p">,</span> <span class="s1">&#39;right_bottom&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;bottom_left&#39;</span><span class="p">,</span> <span class="s1">&#39;bottom_mid&#39;</span><span class="p">,</span> <span class="s1">&#39;bottom_right&#39;</span><span class="p">))</span>
-    <span class="sd">&#39;&#39;&#39;Specifies the position of the arrow relative to the bubble.</span>
-<span class="sd">    Can be one of: left_top, left_mid, left_bottom top_left, top_mid, top_right</span>
-<span class="sd">    right_top, right_mid, right_bottom bottom_left, bottom_mid, bottom_right.</span>
-
-<span class="sd">    :attr:`arrow_pos` is a :class:`~kivy.properties.OptionProperty` and</span>
-<span class="sd">    defaults to &#39;bottom_mid&#39;.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-
-    <span class="n">content</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;This is the object where the main content of the bubble is held.</span>
-
-<span class="sd">    :attr:`content` is a :class:`~kivy.properties.ObjectProperty` and</span>
-<span class="sd">    defaults to &#39;None&#39;.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-
-    <span class="n">orientation</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">&#39;horizontal&#39;</span><span class="p">,</span>
-                                 <span class="n">options</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;horizontal&#39;</span><span class="p">,</span> <span class="s1">&#39;vertical&#39;</span><span class="p">))</span>
-    <span class="sd">&#39;&#39;&#39;This specifies the manner in which the children inside bubble</span>
-<span class="sd">    are arranged. Can be one of &#39;vertical&#39; or &#39;horizontal&#39;.</span>
-
-<span class="sd">    :attr:`orientation` is a :class:`~kivy.properties.OptionProperty` and</span>
-<span class="sd">    defaults to &#39;horizontal&#39;.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-
-    <span class="n">limit_to</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Specifies the widget to which the bubbles position is restricted.</span>
-
-<span class="sd">    .. versionadded:: 1.6.0</span>
-
-<span class="sd">    :attr:`limit_to` is a :class:`~kivy.properties.ObjectProperty` and</span>
-<span class="sd">    defaults to &#39;None&#39;.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">border_auto_scale</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span>
@@ -562,222 +560,397 @@
             <span class="s1">&#39;x_full_y_lower&#39;</span><span class="p">,</span> <span class="s1">&#39;both_lower&#39;</span>
         <span class="p">]</span>
     <span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Specifies the :attr:`kivy.graphics.BorderImage.auto_scale`</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Specifies the :attr:`kivy.graphics.BorderImage.auto_scale`</span>
 <span class="sd">    value on the background BorderImage.</span>
 
-<span class="sd">    .. versionadded:: 1.11.0</span>
+<span class="sd">    .. versionadded:: 2.2.0</span>
 
 <span class="sd">    :attr:`border_auto_scale` is a</span>
 <span class="sd">    :class:`~kivy.properties.OptionProperty` and defaults to</span>
 <span class="sd">    &#39;both_lower&#39;.</span>
+<span class="sd">    &#39;&#39;&#39;</span></div>
+
+
+<div class="viewcode-block" id="Bubble"><a class="viewcode-back" href="../../../api-kivy.uix.bubble.html#kivy.uix.bubble.Bubble">[docs]</a><span class="k">class</span> <span class="nc">Bubble</span><span class="p">(</span><span class="n">BoxLayout</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Bubble class. See module documentation for more information.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
+    <span class="n">content</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;This is the object where the main content of the bubble is held.</span>
+
+<span class="sd">    The content of the Bubble set by &#39;add_widget&#39; and removed with</span>
+<span class="sd">    &#39;remove_widget&#39; similarly to the :class:`ActionView` which is placed into</span>
+<span class="sd">    a class:`ActionBar`</span>
+
+<span class="sd">    :attr:`content` is a :class:`~kivy.properties.ObjectProperty` and defaults</span>
+<span class="sd">    to None.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">arrow_image</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span>
+        <span class="s1">&#39;atlas://data/images/defaulttheme/bubble_arrow&#39;</span>
+    <span class="p">)</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; Image of the arrow pointing to the bubble.</span>
+
+<span class="sd">    :attr:`arrow_image` is a :class:`~kivy.properties.StringProperty` and</span>
+<span class="sd">    defaults to &#39;atlas://data/images/defaulttheme/bubble_arrow&#39;.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">arrow_color</span> <span class="o">=</span> <span class="n">ColorProperty</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Arrow color, in the format (r, g, b, a). To use it you have to set</span>
+<span class="sd">    :attr:`arrow_image` first.</span>
+
+<span class="sd">    .. versionadded:: 2.2.0</span>
+
+<span class="sd">    :attr:`arrow_color` is a :class:`~kivy.properties.ColorProperty` and</span>
+<span class="sd">    defaults to [1, 1, 1, 1].</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">show_arrow</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; Indicates whether to show arrow.</span>
+
+<span class="sd">    .. versionadded:: 1.8.0</span>
+
+<span class="sd">    :attr:`show_arrow` is a :class:`~kivy.properties.BooleanProperty` and</span>
+<span class="sd">    defaults to `True`.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">arrow_pos</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span>
+        <span class="s1">&#39;bottom_mid&#39;</span><span class="p">,</span>
+        <span class="n">options</span><span class="o">=</span><span class="p">(</span>
+            <span class="s1">&#39;left_top&#39;</span><span class="p">,</span> <span class="s1">&#39;left_mid&#39;</span><span class="p">,</span> <span class="s1">&#39;left_bottom&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;top_left&#39;</span><span class="p">,</span> <span class="s1">&#39;top_mid&#39;</span><span class="p">,</span> <span class="s1">&#39;top_right&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;right_top&#39;</span><span class="p">,</span> <span class="s1">&#39;right_mid&#39;</span><span class="p">,</span> <span class="s1">&#39;right_bottom&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;bottom_left&#39;</span><span class="p">,</span> <span class="s1">&#39;bottom_mid&#39;</span><span class="p">,</span> <span class="s1">&#39;bottom_right&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Specifies the position of the arrow as predefined relative position to</span>
+<span class="sd">    the bubble.</span>
+<span class="sd">    Can be one of: left_top, left_mid, left_bottom top_left, top_mid, top_right</span>
+<span class="sd">    right_top, right_mid, right_bottom bottom_left, bottom_mid, bottom_right.</span>
+
+<span class="sd">    :attr:`arrow_pos` is a :class:`~kivy.properties.OptionProperty` and</span>
+<span class="sd">    defaults to &#39;bottom_mid&#39;.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">flex_arrow_pos</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Specifies the position of the arrow as flex coordinate around the</span>
+<span class="sd">    border of the :class:`Bubble` Widget.</span>
+<span class="sd">    If this property is set to a proper position (relative pixel coordinates</span>
+<span class="sd">    within the :class:`Bubble` widget, it overwrites the setting</span>
+<span class="sd">    :attr:`arrow_pos`.</span>
+
+<span class="sd">    .. versionadded:: 2.2.0</span>
+
+<span class="sd">    :attr:`flex_arrow_pos` is a :class:`~kivy.properties.ListProperty` and</span>
+<span class="sd">    defaults to None.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">limit_to</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Specifies the widget to which the bubbles position is restricted.</span>
+
+<span class="sd">    .. versionadded:: 1.6.0</span>
+
+<span class="sd">    :attr:`limit_to` is a :class:`~kivy.properties.ObjectProperty` and defaults</span>
+<span class="sd">    to &#39;None&#39;.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">arrow_margin_x</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Automatically computed margin in x direction that the arrow widget</span>
+<span class="sd">    occupies in pixel.</span>
+
+<span class="sd">    In combination with the :attr:`content_width`, this property can be used</span>
+<span class="sd">    to determine the correct width of the Bubble to exactly enclose the</span>
+<span class="sd">    arrow + content by adding :attr:`content_width` and :attr:`arrow_margin_x`</span>
+
+<span class="sd">    .. versionadded:: 2.2.0</span>
+
+<span class="sd">    :attr:`arrow_margin_x` is a :class:`~kivy.properties.NumericProperty` and</span>
+<span class="sd">    represents the added margin in x direction due to the arrow widget.</span>
+<span class="sd">    It defaults to 0 and is read only.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">arrow_margin_y</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Automatically computed margin in y direction that the arrow widget</span>
+<span class="sd">    occupies in pixel.</span>
+
+<span class="sd">    In combination with the :attr:`content_height`, this property can be used</span>
+<span class="sd">    to determine the correct height of the Bubble to exactly enclose the</span>
+<span class="sd">    arrow + content by adding :attr:`content_height` and :attr:`arrow_margin_y`</span>
+
+<span class="sd">    .. versionadded:: 2.2.0</span>
+
+<span class="sd">    :attr:`arrow_margin_y` is a :class:`~kivy.properties.NumericProperty` and</span>
+<span class="sd">    represents the added margin in y direction due to the arrow widget.</span>
+<span class="sd">    It defaults to 0 and is read only.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">arrow_margin</span> <span class="o">=</span> <span class="n">ReferenceListProperty</span><span class="p">(</span><span class="n">arrow_margin_x</span><span class="p">,</span> <span class="n">arrow_margin_y</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Automatically computed margin that the arrow widget occupies in</span>
+<span class="sd">    x and y direction in pixel.</span>
+
+<span class="sd">    Check the description of :attr:`arrow_margin_x` and :attr:`arrow_margin_y`.</span>
+
+<span class="sd">    .. versionadded:: 2.2.0</span>
+
+<span class="sd">    :attr:`arrow_margin` is a :class:`~kivy.properties.ReferenceListProperty`</span>
+<span class="sd">    of (:attr:`arrow_margin_x`, :attr:`arrow_margin_y`) properties.</span>
+<span class="sd">    It is read only.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">content_width</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;The width of the content Widget.</span>
+
+<span class="sd">    .. versionadded:: 2.2.0</span>
+
+<span class="sd">    :attr:`content_width` is a :class:`~kivy.properties.NumericProperty` and</span>
+<span class="sd">    is the same as self.content.width if content is not None, else it defaults</span>
+<span class="sd">    to 0. It is read only.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">content_height</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;The height of the content Widget.</span>
+
+<span class="sd">    .. versionadded:: 2.2.0</span>
+
+<span class="sd">    :attr:`content_height` is a :class:`~kivy.properties.NumericProperty` and</span>
+<span class="sd">    is the same as self.content.height if content is not None, else it defaults</span>
+<span class="sd">    to 0. It is read only.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">content_size</span> <span class="o">=</span> <span class="n">ReferenceListProperty</span><span class="p">(</span><span class="n">content_width</span><span class="p">,</span> <span class="n">content_height</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; The size of the content Widget.</span>
+
+<span class="sd">    .. versionadded:: 2.2.0</span>
+
+<span class="sd">    :attr:`content_size` is a :class:`~kivy.properties.ReferenceListProperty`</span>
+<span class="sd">    of (:attr:`content_width`, :attr:`content_height`) properties.</span>
+<span class="sd">    It is read only.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="c1"># Internal map that specifies the different parameters for fixed arrow</span>
+    <span class="c1"># position layouts. The flex_arrow_pos uses these parameter sets</span>
+    <span class="c1"># as a template.</span>
+    <span class="c1"># 0: orientation of the children of Bubble ([content, arrow])</span>
+    <span class="c1"># 1: order of widgets to add to the BoxLayout (default: [content, arrow])</span>
+    <span class="c1"># 2: size_hint of _arrow_image_layout</span>
+    <span class="c1"># 3: rotation of the _arrow_image</span>
+    <span class="c1"># 4: pos_hint of the _arrow_image_layout</span>
+    <span class="n">ARROW_LAYOUTS</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;bottom_left&quot;</span><span class="p">:</span>  <span class="p">(</span>   <span class="s2">&quot;vertical&quot;</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span> <span class="p">(</span>   <span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>   <span class="mi">0</span><span class="p">,</span> <span class="p">{</span>   <span class="s2">&quot;top&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>        <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">}),</span>  <span class="c1"># noqa: E201,E241,E501</span>
+        <span class="s2">&quot;bottom_mid&quot;</span><span class="p">:</span>   <span class="p">(</span>   <span class="s2">&quot;vertical&quot;</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span> <span class="p">(</span>   <span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>   <span class="mi">0</span><span class="p">,</span> <span class="p">{</span>   <span class="s2">&quot;top&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;center_x&quot;</span><span class="p">:</span> <span class="mf">0.50</span><span class="p">}),</span>  <span class="c1"># noqa: E201,E241,E501</span>
+        <span class="s2">&quot;bottom_right&quot;</span><span class="p">:</span> <span class="p">(</span>   <span class="s2">&quot;vertical&quot;</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span> <span class="p">(</span>   <span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>   <span class="mi">0</span><span class="p">,</span> <span class="p">{</span>   <span class="s2">&quot;top&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>    <span class="s2">&quot;right&quot;</span><span class="p">:</span> <span class="mf">0.95</span><span class="p">}),</span>  <span class="c1"># noqa: E201,E241,E501</span>
+        <span class="s2">&quot;right_bottom&quot;</span><span class="p">:</span> <span class="p">(</span> <span class="s2">&quot;horizontal&quot;</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span>    <span class="mi">1</span><span class="p">),</span>  <span class="mi">90</span><span class="p">,</span> <span class="p">{</span>  <span class="s2">&quot;left&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>        <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">}),</span>  <span class="c1"># noqa: E201,E241,E501</span>
+        <span class="s2">&quot;right_mid&quot;</span><span class="p">:</span>    <span class="p">(</span> <span class="s2">&quot;horizontal&quot;</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span>    <span class="mi">1</span><span class="p">),</span>  <span class="mi">90</span><span class="p">,</span> <span class="p">{</span>  <span class="s2">&quot;left&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;center_y&quot;</span><span class="p">:</span> <span class="mf">0.50</span><span class="p">}),</span>  <span class="c1"># noqa: E201,E241,E501</span>
+        <span class="s2">&quot;right_top&quot;</span><span class="p">:</span>    <span class="p">(</span> <span class="s2">&quot;horizontal&quot;</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span>    <span class="mi">1</span><span class="p">),</span>  <span class="mi">90</span><span class="p">,</span> <span class="p">{</span>  <span class="s2">&quot;left&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>      <span class="s2">&quot;top&quot;</span><span class="p">:</span> <span class="mf">0.95</span><span class="p">}),</span>  <span class="c1"># noqa: E201,E241,E501</span>
+        <span class="s2">&quot;top_left&quot;</span><span class="p">:</span>     <span class="p">(</span>   <span class="s2">&quot;vertical&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span>   <span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="mi">180</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;bottom&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>        <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">}),</span>  <span class="c1"># noqa: E201,E241,E501</span>
+        <span class="s2">&quot;top_mid&quot;</span><span class="p">:</span>      <span class="p">(</span>   <span class="s2">&quot;vertical&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span>   <span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="mi">180</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;bottom&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;center_x&quot;</span><span class="p">:</span> <span class="mf">0.50</span><span class="p">}),</span>  <span class="c1"># noqa: E201,E241,E501</span>
+        <span class="s2">&quot;top_right&quot;</span><span class="p">:</span>    <span class="p">(</span>   <span class="s2">&quot;vertical&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span>   <span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="mi">180</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;bottom&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>    <span class="s2">&quot;right&quot;</span><span class="p">:</span> <span class="mf">0.95</span><span class="p">}),</span>  <span class="c1"># noqa: E201,E241,E501</span>
+        <span class="s2">&quot;left_bottom&quot;</span><span class="p">:</span>  <span class="p">(</span> <span class="s2">&quot;horizontal&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span>    <span class="mi">1</span><span class="p">),</span> <span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;right&quot;</span><span class="p">:</span>  <span class="mf">1.0</span><span class="p">,</span>        <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">}),</span>  <span class="c1"># noqa: E201,E241,E501</span>
+        <span class="s2">&quot;left_mid&quot;</span><span class="p">:</span>     <span class="p">(</span> <span class="s2">&quot;horizontal&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span>    <span class="mi">1</span><span class="p">),</span> <span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;right&quot;</span><span class="p">:</span>  <span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;center_y&quot;</span><span class="p">:</span> <span class="mf">0.50</span><span class="p">}),</span>  <span class="c1"># noqa: E201,E241,E501</span>
+        <span class="s2">&quot;left_top&quot;</span><span class="p">:</span>     <span class="p">(</span> <span class="s2">&quot;horizontal&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span>    <span class="mi">1</span><span class="p">),</span> <span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;right&quot;</span><span class="p">:</span>  <span class="mf">1.0</span><span class="p">,</span>      <span class="s2">&quot;top&quot;</span><span class="p">:</span> <span class="mf">0.95</span><span class="p">}),</span>  <span class="c1"># noqa: E201,E241,E501</span>
+    <span class="p">}</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_prev_arrow_pos</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_layout</span> <span class="o">=</span> <span class="n">BoxLayout</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_bk_img</span> <span class="o">=</span> <span class="n">Image</span><span class="p">(</span>
-            <span class="n">source</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">background_image</span><span class="p">,</span> <span class="n">allow_stretch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">keep_ratio</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">background_color</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">background_texture</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bk_img</span><span class="o">.</span><span class="n">texture</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_img</span> <span class="o">=</span> <span class="n">Image</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">arrow_image</span><span class="p">,</span>
-                                <span class="n">allow_stretch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                                <span class="n">color</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">background_color</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">content</span> <span class="o">=</span> <span class="n">BubbleContent</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Bubble</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="n">content</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">on_arrow_pos</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_flex_arrow_layout_params</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_temporarily_ignore_limits</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image</span> <span class="o">=</span> <span class="n">Image</span><span class="p">(</span>
+            <span class="n">source</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">arrow_image</span><span class="p">,</span>
+            <span class="n">fit_mode</span><span class="o">=</span><span class="s2">&quot;scale-down&quot;</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">arrow_color</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image</span><span class="o">.</span><span class="n">texture_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">dp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image</span><span class="o">.</span><span class="n">texture_size</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image_scatter</span> <span class="o">=</span> <span class="n">Scatter</span><span class="p">(</span>
+            <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="n">do_scale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">do_rotation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">do_translation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image_scatter</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image_scatter</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image</span><span class="o">.</span><span class="n">texture_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image_scatter_wrapper</span> <span class="o">=</span> <span class="n">BoxLayout</span><span class="p">(</span>
+            <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image_scatter_wrapper</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image_scatter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image_layout</span> <span class="o">=</span> <span class="n">RelativeLayout</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image_layout</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image_scatter_wrapper</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_layout</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reposition_inner_widgets</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Bubble.add_widget"><a class="viewcode-back" href="../../../api-kivy.uix.bubble.html#kivy.uix.bubble.Bubble.add_widget">[docs]</a>    <span class="k">def</span> <span class="nf">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span>
-        <span class="k">if</span> <span class="n">content</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span>
-        <span class="k">if</span> <span class="n">widget</span> <span class="o">==</span> <span class="n">content</span> <span class="ow">or</span> <span class="n">widget</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_img</span>\
-                <span class="ow">or</span> <span class="n">widget</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_layout</span><span class="p">:</span>
-            <span class="nb">super</span><span class="p">(</span><span class="n">Bubble</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">widget</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">content_size</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">size</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">update_content_size</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reposition_inner_widgets</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">content</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="n">BubbleException</span><span class="p">(</span>
+                <span class="s2">&quot;Bubble can only contain a single Widget or Layout&quot;</span>
+            <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Bubble.remove_widget"><a class="viewcode-back" href="../../../api-kivy.uix.bubble.html#kivy.uix.bubble.Bubble.remove_widget">[docs]</a>    <span class="k">def</span> <span class="nf">remove_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">widget</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">update_content_size</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">content_size</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reposition_inner_widgets</span><span class="p">()</span>
+            <span class="k">return</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">on_content_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">adjust_position</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">on_limit_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">adjust_position</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">on_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">adjust_position</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">on_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reposition_inner_widgets</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">on_arrow_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrow_image</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image</span><span class="o">.</span><span class="n">texture_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">dp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image</span><span class="o">.</span><span class="n">texture_size</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image_scatter</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image</span><span class="o">.</span><span class="n">texture_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reposition_inner_widgets</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">on_arrow_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrow_color</span>
+
+    <span class="k">def</span> <span class="nf">on_arrow_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reposition_inner_widgets</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">on_flex_arrow_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_flex_arrow_layout_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_flex_arrow_layout_params</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reposition_inner_widgets</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">get_flex_arrow_layout_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">flex_arrow_pos</span>
+
+        <span class="k">if</span> <span class="n">pos</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">pos</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">y</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># the order of the following list defines the side that the arrow</span>
+        <span class="c1"># will be attached to in case of ambiguity (same distances)</span>
+        <span class="n">base_layouts_map</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span><span class="s2">&quot;bottom_mid&quot;</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;top_mid&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="n">y</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;left_mid&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;right_mid&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="n">x</span><span class="p">),</span>
+        <span class="p">]</span>
+        <span class="n">base_layout_key</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">base_layouts_map</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">val</span><span class="p">:</span> <span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">arrow_layout</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">Bubble</span><span class="o">.</span><span class="n">ARROW_LAYOUTS</span><span class="p">[</span><span class="n">base_layout_key</span><span class="p">])</span>
+
+        <span class="n">arrow_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image</span><span class="o">.</span><span class="n">width</span>
+
+        <span class="c1"># This function calculates the proper value for pos_hint, i.e., the</span>
+        <span class="c1"># arrow texture does not &#39;overflow&#39; and stays entirely connected to</span>
+        <span class="c1"># the side of the content.</span>
+        <span class="k">def</span> <span class="nf">calc_x0</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="p">(</span><span class="n">length</span> <span class="o">-</span> <span class="n">arrow_width</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">length</span> <span class="o">*</span> <span class="n">length</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">base_layout_key</span> <span class="o">==</span> <span class="s2">&quot;bottom_mid&quot;</span><span class="p">:</span>
+            <span class="n">arrow_layout</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;top&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">calc_x0</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">)}</span>
+        <span class="k">elif</span> <span class="n">base_layout_key</span> <span class="o">==</span> <span class="s2">&quot;top_mid&quot;</span><span class="p">:</span>
+            <span class="n">arrow_layout</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;bottom&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="n">calc_x0</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">)}</span>
+        <span class="k">elif</span> <span class="n">base_layout_key</span> <span class="o">==</span> <span class="s2">&quot;left_mid&quot;</span><span class="p">:</span>
+            <span class="n">arrow_layout</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;right&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">calc_x0</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">)}</span>
+        <span class="k">elif</span> <span class="n">base_layout_key</span> <span class="o">==</span> <span class="s2">&quot;right_mid&quot;</span><span class="p">:</span>
+            <span class="n">arrow_layout</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;left&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">calc_x0</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">)}</span>
+        <span class="k">return</span> <span class="n">arrow_layout</span>
+
+    <span class="k">def</span> <span class="nf">update_content_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">content_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">size</span>
+
+    <span class="k">def</span> <span class="nf">adjust_position</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">limit_to</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temporarily_ignore_limits</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">limit_to</span> <span class="ow">is</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span><span class="p">:</span>
+                <span class="n">lim_x</span><span class="p">,</span> <span class="n">lim_y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+                <span class="n">lim_top</span><span class="p">,</span> <span class="n">lim_right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">limit_to</span><span class="o">.</span><span class="n">size</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">lim_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">limit_to</span><span class="o">.</span><span class="n">x</span>
+                <span class="n">lim_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">limit_to</span><span class="o">.</span><span class="n">y</span>
+                <span class="n">lim_top</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">limit_to</span><span class="o">.</span><span class="n">top</span>
+                <span class="n">lim_right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">limit_to</span><span class="o">.</span><span class="n">right</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_temporarily_ignore_limits</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">lim_x</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="ow">and</span> <span class="n">lim_right</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">lim_x</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">lim_right</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">lim_y</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="ow">and</span> <span class="n">lim_right</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">lim_top</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">lim_y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_temporarily_ignore_limits</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">reposition_inner_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">arrow_image_layout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image_layout</span>
+        <span class="n">arrow_image_scatter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image_scatter</span>
+        <span class="n">arrow_image_scatter_wrapper</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_image_scatter_wrapper</span>
         <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">content</span><span class="p">:</span>
+
+        <span class="c1"># Remove the children of the Bubble (BoxLayout) as a first step</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">):</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">content</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="k">if</span> <span class="n">widget</span> <span class="o">==</span> <span class="n">content</span> <span class="ow">or</span> <span class="n">widget</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_img</span>\
-                <span class="ow">or</span> <span class="n">widget</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_layout</span><span class="p">:</span>
-            <span class="nb">super</span><span class="p">(</span><span class="n">Bubble</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># find the layout parameters that define a specific bubble setup</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flex_arrow_layout_params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">layout_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flex_arrow_layout_params</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">content</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+            <span class="n">layout_params</span> <span class="o">=</span> <span class="n">Bubble</span><span class="o">.</span><span class="n">ARROW_LAYOUTS</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">arrow_pos</span><span class="p">]</span>
+        <span class="p">(</span><span class="n">bubble_orientation</span><span class="p">,</span>
+         <span class="n">widget_order</span><span class="p">,</span>
+         <span class="n">arrow_size_hint</span><span class="p">,</span>
+         <span class="n">arrow_rotation</span><span class="p">,</span>
+         <span class="n">arrow_pos_hint</span><span class="p">)</span> <span class="o">=</span> <span class="n">layout_params</span>
 
-<div class="viewcode-block" id="Bubble.clear_widgets"><a class="viewcode-back" href="../../../api-kivy.uix.bubble.html#kivy.uix.bubble.Bubble.clear_widgets">[docs]</a>    <span class="k">def</span> <span class="nf">clear_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">clear_widgets</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        <span class="c1"># rotate the arrow, place it at the right pos and setup the size</span>
+        <span class="c1"># of the widget, so the BoxLayout can do the rest.</span>
+        <span class="n">arrow_image_scatter</span><span class="o">.</span><span class="n">rotation</span> <span class="o">=</span> <span class="n">arrow_rotation</span>
+        <span class="n">arrow_image_scatter_wrapper</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">arrow_image_scatter</span><span class="o">.</span><span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">arrow_image_scatter_wrapper</span><span class="o">.</span><span class="n">pos_hint</span> <span class="o">=</span> <span class="n">arrow_pos_hint</span>
+        <span class="n">arrow_image_layout</span><span class="o">.</span><span class="n">size_hint</span> <span class="o">=</span> <span class="n">arrow_size_hint</span>
+        <span class="n">arrow_image_layout</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">arrow_image_scatter</span><span class="o">.</span><span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">on_show_arrow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_img</span><span class="o">.</span><span class="n">opacity</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="c1"># set the orientation of the Bubble (BoxLayout)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="n">bubble_orientation</span>
 
-    <span class="k">def</span> <span class="nf">on_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_update_arrow</span><span class="p">)</span>
+        <span class="c1"># Add the updated children of the Bubble (BoxLayout) and update</span>
+        <span class="c1"># properties</span>
+        <span class="n">widgets_to_add</span> <span class="o">=</span> <span class="p">[</span><span class="n">content</span><span class="p">,</span> <span class="n">arrow_image_layout</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">on_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
-        <span class="n">lt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">limit_to</span>
-
-        <span class="k">if</span> <span class="n">lt</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">limit_to</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">if</span> <span class="n">lt</span> <span class="ow">is</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span><span class="p">:</span>
-                <span class="n">x</span> <span class="o">=</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="n">top</span> <span class="o">=</span> <span class="n">lt</span><span class="o">.</span><span class="n">height</span>
-                <span class="n">right</span> <span class="o">=</span> <span class="n">lt</span><span class="o">.</span><span class="n">width</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">lt</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">lt</span><span class="o">.</span><span class="n">y</span>
-                <span class="n">top</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="n">lt</span><span class="o">.</span><span class="n">top</span><span class="p">,</span> <span class="n">lt</span><span class="o">.</span><span class="n">right</span>
-
-            <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="n">right</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">top</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">top</span><span class="p">,</span> <span class="n">top</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">limit_to</span> <span class="o">=</span> <span class="n">lt</span>
-
-    <span class="k">def</span> <span class="nf">on_background_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">l</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_bk_img</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">background_image</span>
-
-    <span class="k">def</span> <span class="nf">on_background_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">l</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_img</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bk_img</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">background_color</span>
-
-    <span class="k">def</span> <span class="nf">on_orientation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">l</span><span class="p">):</span>
-        <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">content</span><span class="p">:</span>
-            <span class="k">return</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;v&#39;</span><span class="p">:</span>
-            <span class="n">content</span><span class="o">.</span><span class="n">cols</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="n">content</span><span class="o">.</span><span class="n">rows</span> <span class="o">=</span> <span class="mi">99</span>
+        <span class="c1"># Set the arrow_margin, so we can use this property for proper sizing</span>
+        <span class="c1"># of the Bubble Widget.</span>
+        <span class="c1"># Determine whether to add the arrow_image_layout to the</span>
+        <span class="c1"># Bubble (BoxLayout) or not.</span>
+        <span class="n">arrow_margin_x</span><span class="p">,</span> <span class="n">arrow_margin_y</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">show_arrow</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">bubble_orientation</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;h&quot;</span><span class="p">:</span>
+                <span class="n">arrow_margin_x</span> <span class="o">=</span> <span class="n">arrow_image_layout</span><span class="o">.</span><span class="n">width</span>
+            <span class="k">elif</span> <span class="n">bubble_orientation</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;v&quot;</span><span class="p">:</span>
+                <span class="n">arrow_margin_y</span> <span class="o">=</span> <span class="n">arrow_image_layout</span><span class="o">.</span><span class="n">height</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">content</span><span class="o">.</span><span class="n">cols</span> <span class="o">=</span> <span class="mi">99</span>
-            <span class="n">content</span><span class="o">.</span><span class="n">rows</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">widgets_to_add</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">on_arrow_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">l</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_img</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrow_image</span>
+        <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="n">widgets_to_add</span><span class="p">[::</span><span class="n">widget_order</span><span class="p">]:</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">on_arrow_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">l</span><span class="p">):</span>
-        <span class="n">self_content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">self_content</span><span class="p">:</span>
-            <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_arrow_pos</span><span class="p">)</span>
-            <span class="k">return</span>
-        <span class="k">if</span> <span class="n">self_content</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
-            <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_arrow_pos</span><span class="p">)</span>
-            <span class="k">return</span>
-        <span class="n">self_arrow_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrow_pos</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prev_arrow_pos</span> <span class="o">==</span> <span class="n">self_arrow_pos</span><span class="p">:</span>
-            <span class="k">return</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_prev_arrow_pos</span> <span class="o">=</span> <span class="n">self_arrow_pos</span>
-
-        <span class="n">self_arrow_layout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_layout</span>
-        <span class="n">self_arrow_layout</span><span class="o">.</span><span class="n">clear_widgets</span><span class="p">()</span>
-        <span class="n">self_arrow_img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_img</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_sctr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_img</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">Bubble</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">clear_widgets</span><span class="p">()</span>
-        <span class="n">self_content</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span>
-
-        <span class="n">self_arrow_img</span><span class="o">.</span><span class="n">size_hint</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="n">self_arrow_img</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">dp</span><span class="p">(</span><span class="n">self_arrow_img</span><span class="o">.</span><span class="n">texture_size</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="n">self_arrow_img</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
-        <span class="n">widget_list</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">arrow_list</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">parent</span> <span class="o">=</span> <span class="n">self_arrow_img</span><span class="o">.</span><span class="n">parent</span>
-        <span class="k">if</span> <span class="n">parent</span><span class="p">:</span>
-            <span class="n">parent</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="n">self_arrow_img</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">self_arrow_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;b&#39;</span> <span class="ow">or</span> <span class="n">self_arrow_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;t&#39;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">cols</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">rows</span> <span class="o">=</span> <span class="mi">3</span>
-            <span class="n">self_arrow_layout</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="s1">&#39;horizontal&#39;</span>
-            <span class="n">self_arrow_img</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">3</span>
-            <span class="n">self_arrow_layout</span><span class="o">.</span><span class="n">size_hint</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-            <span class="n">self_arrow_layout</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">self_arrow_img</span><span class="o">.</span><span class="n">height</span>
-            <span class="k">if</span> <span class="n">self_arrow_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">self_arrow_pos</span> <span class="o">==</span> <span class="s1">&#39;bottom_mid&#39;</span><span class="p">:</span>
-                    <span class="n">widget_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">self_content</span><span class="p">,</span> <span class="n">self_arrow_img</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">self_arrow_pos</span> <span class="o">==</span> <span class="s1">&#39;bottom_left&#39;</span><span class="p">:</span>
-                        <span class="n">arrow_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">self_arrow_img</span><span class="p">,</span> <span class="n">Widget</span><span class="p">(),</span> <span class="n">Widget</span><span class="p">())</span>
-                    <span class="k">elif</span> <span class="n">self_arrow_pos</span> <span class="o">==</span> <span class="s1">&#39;bottom_right&#39;</span><span class="p">:</span>
-                        <span class="c1"># add two dummy widgets</span>
-                        <span class="n">arrow_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">Widget</span><span class="p">(),</span> <span class="n">Widget</span><span class="p">(),</span> <span class="n">self_arrow_img</span><span class="p">)</span>
-                    <span class="n">widget_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">self_content</span><span class="p">,</span> <span class="n">self_arrow_layout</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">sctr</span> <span class="o">=</span> <span class="n">Scatter</span><span class="p">(</span><span class="n">do_translation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                               <span class="n">rotation</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span>
-                               <span class="n">do_rotation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                               <span class="n">do_scale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                               <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-                               <span class="n">size</span><span class="o">=</span><span class="n">self_arrow_img</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
-                <span class="n">sctr</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">self_arrow_img</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">self_arrow_pos</span> <span class="o">==</span> <span class="s1">&#39;top_mid&#39;</span><span class="p">:</span>
-                    <span class="c1"># add two dummy widgets</span>
-                    <span class="n">arrow_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">Widget</span><span class="p">(),</span> <span class="n">sctr</span><span class="p">,</span> <span class="n">Widget</span><span class="p">())</span>
-                <span class="k">elif</span> <span class="n">self_arrow_pos</span> <span class="o">==</span> <span class="s1">&#39;top_left&#39;</span><span class="p">:</span>
-                    <span class="n">arrow_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">sctr</span><span class="p">,</span> <span class="n">Widget</span><span class="p">(),</span> <span class="n">Widget</span><span class="p">())</span>
-                <span class="k">elif</span> <span class="n">self_arrow_pos</span> <span class="o">==</span> <span class="s1">&#39;top_right&#39;</span><span class="p">:</span>
-                    <span class="n">arrow_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">Widget</span><span class="p">(),</span> <span class="n">Widget</span><span class="p">(),</span> <span class="n">sctr</span><span class="p">)</span>
-                <span class="n">widget_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">self_arrow_layout</span><span class="p">,</span> <span class="n">self_content</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">self_arrow_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;l&#39;</span> <span class="ow">or</span> <span class="n">self_arrow_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">cols</span> <span class="o">=</span> <span class="mi">3</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">rows</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="n">self_arrow_img</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="mi">3</span>
-            <span class="n">self_arrow_layout</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="s1">&#39;vertical&#39;</span>
-            <span class="n">self_arrow_layout</span><span class="o">.</span><span class="n">cols</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="n">self_arrow_layout</span><span class="o">.</span><span class="n">size_hint</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">self_arrow_layout</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">self_arrow_img</span><span class="o">.</span><span class="n">height</span>
-
-            <span class="n">rotation</span> <span class="o">=</span> <span class="o">-</span><span class="mi">90</span> <span class="k">if</span> <span class="n">self_arrow_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;l&#39;</span> <span class="k">else</span> <span class="mi">90</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_sctr</span> <span class="o">=</span> <span class="n">sctr</span> <span class="o">=</span> <span class="n">Scatter</span><span class="p">(</span><span class="n">do_translation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                                        <span class="n">rotation</span><span class="o">=</span><span class="n">rotation</span><span class="p">,</span>
-                                        <span class="n">do_rotation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                                        <span class="n">do_scale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                                        <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-                                        <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">self_arrow_img</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
-            <span class="n">sctr</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">self_arrow_img</span><span class="p">)</span>
-
-            <span class="k">if</span> <span class="n">self_arrow_pos</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span> <span class="o">==</span> <span class="s1">&#39;_top&#39;</span><span class="p">:</span>
-                <span class="n">arrow_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">Widget</span><span class="p">(</span><span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">.07</span><span class="p">)),</span>
-                              <span class="n">sctr</span><span class="p">,</span> <span class="n">Widget</span><span class="p">(</span><span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">.3</span><span class="p">)))</span>
-            <span class="k">elif</span> <span class="n">self_arrow_pos</span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span> <span class="o">==</span> <span class="s1">&#39;_mid&#39;</span><span class="p">:</span>
-                <span class="n">arrow_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">Widget</span><span class="p">(),</span> <span class="n">sctr</span><span class="p">,</span> <span class="n">Widget</span><span class="p">())</span>
-                <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_update_arrow</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">self_arrow_pos</span><span class="p">[</span><span class="o">-</span><span class="mi">7</span><span class="p">:]</span> <span class="o">==</span> <span class="s1">&#39;_bottom&#39;</span><span class="p">:</span>
-                <span class="n">arrow_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">Widget</span><span class="p">(),</span> <span class="n">Widget</span><span class="p">(),</span> <span class="n">sctr</span><span class="p">)</span>
-
-            <span class="k">if</span> <span class="n">self_arrow_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;l&#39;</span><span class="p">:</span>
-                <span class="n">widget_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">self_arrow_layout</span><span class="p">,</span> <span class="n">self_content</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">widget_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">self_content</span><span class="p">,</span> <span class="n">self_arrow_layout</span><span class="p">)</span>
-
-        <span class="c1"># add widgets to arrow_layout</span>
-        <span class="n">add</span> <span class="o">=</span> <span class="n">self_arrow_layout</span><span class="o">.</span><span class="n">add_widget</span>
-        <span class="k">for</span> <span class="n">widg</span> <span class="ow">in</span> <span class="n">arrow_list</span><span class="p">:</span>
-            <span class="n">add</span><span class="p">(</span><span class="n">widg</span><span class="p">)</span>
-
-        <span class="c1"># add widgets to self</span>
-        <span class="n">add</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span>
-        <span class="k">for</span> <span class="n">widg</span> <span class="ow">in</span> <span class="n">widget_list</span><span class="p">:</span>
-            <span class="n">add</span><span class="p">(</span><span class="n">widg</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">_update_arrow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">dt</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrow_pos</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;left_mid&#39;</span><span class="p">,</span> <span class="s1">&#39;right_mid&#39;</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_sctr</span><span class="o">.</span><span class="n">center_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_layout</span><span class="o">.</span><span class="n">center_y</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">_fills_row_first</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="kc">True</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">_fills_from_left_to_right</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="kc">True</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">_fills_from_top_to_bottom</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="kc">True</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arrow_margin</span> <span class="o">=</span> <span class="p">(</span><span class="n">arrow_margin_x</span><span class="p">,</span> <span class="n">arrow_margin_y</span><span class="p">)</span></div>
 </pre></div>
 
             <div class="footerlinks">
@@ -816,8 +989,8 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 06, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
+      Last updated on May 20, 2023.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
   </body>

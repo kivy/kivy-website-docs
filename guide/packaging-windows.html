@@ -7,18 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
-    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Create a package for Windows &mdash; Kivy 2.1.0 documentation</title>
+    <title>Create a package for Windows &mdash; Kivy 2.2.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/fresh.css" type="text/css" />
          
           <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script> 
             <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script> 
-            <script src="../_static/jquery.js"></script> 
-            <script src="../_static/underscore.js"></script> 
             <script src="../_static/doctools.js"></script> 
+            <script src="../_static/sphinx_highlight.js"></script> 
         
         <script>
             const currTheme = localStorage.getItem("theme");
@@ -35,7 +34,7 @@
         <script type="text/javascript" src="../_static/kivy.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="Kivy 2.1.0 documentation" href="../index.html" />
+    <link rel="top" title="Kivy 2.2.0 documentation" href="../index.html" />
     <link rel="up" title="Packaging your application" href="packaging.html" />
     <link rel="next" title="Create a package for Android" href="packaging-android.html" />
     <link rel="prev" title="Packaging your application" href="packaging.html" /> 
@@ -195,7 +194,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../api-index.html">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.html">Kivy framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy._metrics.html">Low level Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.app.html">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.atlas.html">Atlas</a></li>
@@ -230,6 +228,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.geometry.html">Geometry utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.gesture.html">Gesture recognition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.html">Graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.boxshadow.html">BoxShadow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.cgl.html">CGL: standard C interface for OpenGL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.compiler.html">Graphics compiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.context.html">Context management</a></li>
@@ -279,7 +278,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.lib.gstplayer.html">GstPlayer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.lib.mtdev.html">Python mtdev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.loader.html">Asynchronous data loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-kivy.logger.html">Logger object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-kivy.logger.html">Kivy Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.metrics.html">Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.modules.html">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.modules.console.html">Console</a></li>
@@ -409,7 +408,7 @@
 </div>
             
   <section id="create-a-package-for-windows">
-<span id="packaging-win"></span><h1>Create a package for Windows<a class="headerlink" href="#create-a-package-for-windows" title="Permalink to this headline">¶</a></h1>
+<span id="packaging-win"></span><h1>Create a package for Windows<a class="headerlink" href="#create-a-package-for-windows" title="Permalink to this heading">¶</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This document only applies for kivy <code class="docutils literal notranslate"><span class="pre">1.9.1</span></code> and greater.</p>
@@ -420,7 +419,7 @@ Windows OS. The following process has been tested on Windows with the Kivy
 <p>The package will be either 32 or 64 bits depending on which version of Python
 you ran it with.</p>
 <section id="requirements">
-<span id="packaging-windows-requirements"></span><h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<span id="packaging-windows-requirements"></span><h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
 <li><p>Latest Kivy (installed as described in <a class="reference internal" href="../installation/installation-windows.html#installation-windows"><span class="std std-ref">Installation on Windows</span></a>).</p></li>
@@ -429,13 +428,13 @@ you ran it with.</p>
 </div></blockquote>
 </section>
 <section id="pyinstaller-default-hook">
-<span id="create-the-spec-file"></span><h2>PyInstaller default hook<a class="headerlink" href="#pyinstaller-default-hook" title="Permalink to this headline">¶</a></h2>
+<span id="create-the-spec-file"></span><h2>PyInstaller default hook<a class="headerlink" href="#pyinstaller-default-hook" title="Permalink to this heading">¶</a></h2>
 <p>This section applies to PyInstaller (&gt;= 3.1) that includes the kivy hooks.
 To overwrite the default hook the
 following examples need to be slightly modified. See <a class="reference internal" href="#overwrite-win-hook"><span class="std std-ref">Overwriting the default hook</span></a>.</p>
 </section>
 <section id="packaging-a-simple-app">
-<h2>Packaging a simple app<a class="headerlink" href="#packaging-a-simple-app" title="Permalink to this headline">¶</a></h2>
+<h2>Packaging a simple app<a class="headerlink" href="#packaging-a-simple-app" title="Permalink to this heading">¶</a></h2>
 <p>For this example, we’ll package the <strong>touchtracer</strong> example project and embed
 a custom icon. The location of the kivy examples is, when using the wheels,
 installed to <code class="docutils literal notranslate"><span class="pre">python\\share\\kivy-examples</span></code> and when using the github source
@@ -498,7 +497,7 @@ something like:</p>
 </ol>
 </section>
 <section id="single-file-application">
-<h2>Single File Application<a class="headerlink" href="#single-file-application" title="Permalink to this headline">¶</a></h2>
+<h2>Single File Application<a class="headerlink" href="#single-file-application" title="Permalink to this heading">¶</a></h2>
 <p>Next, we will modify the example above to package the <strong>touchtracer</strong> example project as a single file application. Following the same steps as above, instead issue the following command:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">PyInstaller</span> <span class="o">--</span><span class="n">onefile</span> <span class="o">--</span><span class="n">name</span> <span class="n">touchtracer</span> <span class="n">examples</span><span class="o">-</span><span class="n">path</span>\<span class="n">demo</span>\<span class="n">touchtracer</span>\<span class="n">main</span><span class="o">.</span><span class="n">py</span>
 </pre></div>
@@ -511,7 +510,7 @@ something like:</p>
      <span class="n">a</span><span class="o">.</span><span class="n">zipfiles</span><span class="p">,</span>
      <span class="n">a</span><span class="o">.</span><span class="n">datas</span><span class="p">,</span>
      <span class="o">*</span><span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">(</span><span class="n">sdl2</span><span class="o">.</span><span class="n">dep_bins</span> <span class="o">+</span> <span class="n">glew</span><span class="o">.</span><span class="n">dep_bins</span><span class="p">)],</span>
-     <span class="n">upx</span><span class="o">=</span><span class="kc">True</span>
+     <span class="n">upx</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
      <span class="n">name</span><span class="o">=</span><span class="s1">&#39;touchtracer&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -525,7 +524,7 @@ something like:</p>
 </ol>
 </section>
 <section id="bundling-data-files">
-<h2>Bundling Data Files<a class="headerlink" href="#bundling-data-files" title="Permalink to this headline">¶</a></h2>
+<h2>Bundling Data Files<a class="headerlink" href="#bundling-data-files" title="Permalink to this heading">¶</a></h2>
 <p>We will again modify the previous example to include bundled data files. PyInstaller allows inclusion of outside data files (such as images, databases, etc) that the project needs to run. When running an app on Windows, the executable extracts to a temporary folder which the Kivy project doesn’t know about, so it can’t locate these data files. We can fix that with a few lines.</p>
 <ol class="arabic">
 <li><p>First, follow PyInstaller documentation on how to include data files in your application.</p></li>
@@ -547,7 +546,7 @@ something like:</p>
 </ol>
 </section>
 <section id="packaging-a-video-app-with-gstreamer">
-<h2>Packaging a video app with gstreamer<a class="headerlink" href="#packaging-a-video-app-with-gstreamer" title="Permalink to this headline">¶</a></h2>
+<h2>Packaging a video app with gstreamer<a class="headerlink" href="#packaging-a-video-app-with-gstreamer" title="Permalink to this heading">¶</a></h2>
 <p>Following we’ll slightly modify the example above to package a app that uses
 gstreamer for video. We’ll use the <code class="docutils literal notranslate"><span class="pre">videoplayer</span></code> example found at
 <code class="docutils literal notranslate"><span class="pre">examples-path\widgets\videoplayer.py</span></code>. Create a folder somewhere called
@@ -598,10 +597,10 @@ the imports add the following:</p>
 </div>
 </section>
 <section id="overwriting-the-default-hook">
-<span id="overwrite-win-hook"></span><h2>Overwriting the default hook<a class="headerlink" href="#overwriting-the-default-hook" title="Permalink to this headline">¶</a></h2>
+<span id="overwrite-win-hook"></span><h2>Overwriting the default hook<a class="headerlink" href="#overwriting-the-default-hook" title="Permalink to this heading">¶</a></h2>
 </section>
 <section id="including-excluding-video-and-audio-and-reducing-app-size">
-<h2>Including/excluding video and audio and reducing app size<a class="headerlink" href="#including-excluding-video-and-audio-and-reducing-app-size" title="Permalink to this headline">¶</a></h2>
+<h2>Including/excluding video and audio and reducing app size<a class="headerlink" href="#including-excluding-video-and-audio-and-reducing-app-size" title="Permalink to this heading">¶</a></h2>
 <p>PyInstaller includes a hook for kivy that by default adds <strong>all</strong> the core
 modules used by kivy, e.g. audio, video, spelling etc (you still need to
 package the gstreamer dlls manually with <code class="docutils literal notranslate"><span class="pre">Tree()</span></code> - see the example above)
@@ -664,7 +663,7 @@ video in this example) with
 <a class="reference internal" href="../api-kivy.tools.packaging.pyinstaller_hooks.html#kivy.tools.packaging.pyinstaller_hooks.get_deps_minimal" title="kivy.tools.packaging.pyinstaller_hooks.get_deps_minimal"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_deps_minimal()</span></code></a>.</p>
 </section>
 <section id="alternate-installations">
-<h2>Alternate installations<a class="headerlink" href="#alternate-installations" title="Permalink to this headline">¶</a></h2>
+<h2>Alternate installations<a class="headerlink" href="#alternate-installations" title="Permalink to this heading">¶</a></h2>
 <p>The previous examples used e.g.
 <code class="docutils literal notranslate"><span class="pre">*[Tree(p)</span> <span class="pre">for</span> <span class="pre">p</span> <span class="pre">in</span> <span class="pre">(sdl2.dep_bins</span> <span class="pre">+</span> <span class="pre">glew.dep_bins</span> <span class="pre">+</span> <span class="pre">gstreamer.dep_bins)],</span></code>
 to make PyInstaller add all the dlls used by these dependencies. If kivy
@@ -722,8 +721,8 @@ as the example.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 06, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
+      Last updated on May 20, 2023.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
   </body>

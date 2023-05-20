@@ -7,18 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
-    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>A Simple Paint App &mdash; Kivy 2.1.0 documentation</title>
+    <title>A Simple Paint App &mdash; Kivy 2.2.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/fresh.css" type="text/css" />
          
           <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script> 
             <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script> 
-            <script src="../_static/jquery.js"></script> 
-            <script src="../_static/underscore.js"></script> 
             <script src="../_static/doctools.js"></script> 
+            <script src="../_static/sphinx_highlight.js"></script> 
         
         <script>
             const currTheme = localStorage.getItem("theme");
@@ -35,7 +34,7 @@
         <script type="text/javascript" src="../_static/kivy.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="Kivy 2.1.0 documentation" href="../index.html" />
+    <link rel="top" title="Kivy 2.2.0 documentation" href="../index.html" />
     <link rel="up" title="Tutorials" href="../tutorials-index.html" />
     <link rel="next" title="Crash Course" href="crashcourse.html" />
     <link rel="prev" title="Pong Game Tutorial" href="pong.html" /> 
@@ -193,7 +192,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../api-index.html">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.html">Kivy framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy._metrics.html">Low level Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.app.html">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.atlas.html">Atlas</a></li>
@@ -228,6 +226,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.geometry.html">Geometry utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.gesture.html">Gesture recognition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.html">Graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.boxshadow.html">BoxShadow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.cgl.html">CGL: standard C interface for OpenGL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.compiler.html">Graphics compiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.context.html">Context management</a></li>
@@ -277,7 +276,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.lib.gstplayer.html">GstPlayer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.lib.mtdev.html">Python mtdev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.loader.html">Asynchronous data loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-kivy.logger.html">Logger object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-kivy.logger.html">Kivy Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.metrics.html">Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.modules.html">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.modules.console.html">Console</a></li>
@@ -405,13 +404,13 @@
 </div>
             
   <section id="a-simple-paint-app">
-<h1>A Simple Paint App<a class="headerlink" href="#a-simple-paint-app" title="Permalink to this headline">¶</a></h1>
+<h1>A Simple Paint App<a class="headerlink" href="#a-simple-paint-app" title="Permalink to this heading">¶</a></h1>
 <p>In the following tutorial, you will be guided through the creation of your
 first widget. This provides powerful and important knowledge when
 programming Kivy applications, as it lets you create completely new user
 interfaces with custom elements for your specific purpose.</p>
 <section id="basic-considerations">
-<h2>Basic Considerations<a class="headerlink" href="#basic-considerations" title="Permalink to this headline">¶</a></h2>
+<h2>Basic Considerations<a class="headerlink" href="#basic-considerations" title="Permalink to this heading">¶</a></h2>
 <p>When creating an application, you have to ask yourself three important questions:</p>
 <blockquote>
 <div><ul class="simple">
@@ -446,14 +445,14 @@ widgets or compose other widgets of smaller widgets. We try to adhere to the
 <a class="reference external" href="http://en.wikipedia.org/wiki/Single_responsibility_principle">Single Responsibility Principle</a>).</p>
 </section>
 <section id="paint-widget">
-<h2>Paint Widget<a class="headerlink" href="#paint-widget" title="Permalink to this headline">¶</a></h2>
+<h2>Paint Widget<a class="headerlink" href="#paint-widget" title="Permalink to this heading">¶</a></h2>
 <p>We’re sure one of your childhood dreams has always been creating your own
 multitouch paint program. Allow us to help you achieve that. In the
 following sections you will successively learn how to write a program like
 that using Kivy. Make sure that you have read and understood
 <a class="reference internal" href="../guide/basic.html#quickstart"><span class="std std-ref">Create an application</span></a>. You have? Great! Let’s get started!</p>
 <section id="initial-structure">
-<h3>Initial Structure<a class="headerlink" href="#initial-structure" title="Permalink to this headline">¶</a></h3>
+<h3>Initial Structure<a class="headerlink" href="#initial-structure" title="Permalink to this heading">¶</a></h3>
 <p>Let’s start by writing the very basic code structure that we need.  By the way,
 all the different pieces of code that are used in this section are also
 available in the <code class="docutils literal notranslate"><span class="pre">examples/guide/firstwidget</span></code> directory that comes with Kivy,
@@ -499,7 +498,7 @@ faster and cleaner.</p>
 </div>
 </section>
 <section id="adding-behaviour">
-<h3>Adding Behaviour<a class="headerlink" href="#adding-behaviour" title="Permalink to this headline">¶</a></h3>
+<h3>Adding Behaviour<a class="headerlink" href="#adding-behaviour" title="Permalink to this heading">¶</a></h3>
 <p>Let’s now add some actual behaviour to the widget, i.e. make it react to user
 input. Change the code like so:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
@@ -735,7 +734,7 @@ always be equally bright: only the hue changes.</p>
 </div>
 </section>
 <section id="bonus-points">
-<h3>Bonus Points<a class="headerlink" href="#bonus-points" title="Permalink to this headline">¶</a></h3>
+<h3>Bonus Points<a class="headerlink" href="#bonus-points" title="Permalink to this heading">¶</a></h3>
 <p>At this point, we could say we are done. The widget does what it’s
 supposed to do: it traces the touches and draws lines. It even draws
 circles at the positions where a line begins.</p>
@@ -900,8 +899,8 @@ are ready for more, we encourage you to read on.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 06, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
+      Last updated on May 20, 2023.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
   </body>

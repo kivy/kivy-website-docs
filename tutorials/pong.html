@@ -7,18 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
-    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Pong Game Tutorial &mdash; Kivy 2.1.0 documentation</title>
+    <title>Pong Game Tutorial &mdash; Kivy 2.2.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/fresh.css" type="text/css" />
          
           <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script> 
             <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script> 
-            <script src="../_static/jquery.js"></script> 
-            <script src="../_static/underscore.js"></script> 
             <script src="../_static/doctools.js"></script> 
+            <script src="../_static/sphinx_highlight.js"></script> 
         
         <script>
             const currTheme = localStorage.getItem("theme");
@@ -35,7 +34,7 @@
         <script type="text/javascript" src="../_static/kivy.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="Kivy 2.1.0 documentation" href="../index.html" />
+    <link rel="top" title="Kivy 2.2.0 documentation" href="../index.html" />
     <link rel="up" title="Tutorials" href="../tutorials-index.html" />
     <link rel="next" title="A Simple Paint App" href="firstwidget.html" />
     <link rel="prev" title="Tutorials" href="../tutorials-index.html" /> 
@@ -203,7 +202,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../api-index.html">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.html">Kivy framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy._metrics.html">Low level Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.app.html">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.atlas.html">Atlas</a></li>
@@ -238,6 +236,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.geometry.html">Geometry utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.gesture.html">Gesture recognition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.html">Graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.boxshadow.html">BoxShadow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.cgl.html">CGL: standard C interface for OpenGL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.compiler.html">Graphics compiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.context.html">Context management</a></li>
@@ -287,7 +286,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.lib.gstplayer.html">GstPlayer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.lib.mtdev.html">Python mtdev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.loader.html">Asynchronous data loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-kivy.logger.html">Logger object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-kivy.logger.html">Kivy Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.metrics.html">Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.modules.html">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.modules.console.html">Console</a></li>
@@ -425,9 +424,9 @@
 </div>
             
   <section id="pong-game-tutorial">
-<h1>Pong Game Tutorial<a class="headerlink" href="#pong-game-tutorial" title="Permalink to this headline">¶</a></h1>
+<h1>Pong Game Tutorial<a class="headerlink" href="#pong-game-tutorial" title="Permalink to this heading">¶</a></h1>
 <section id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <div class="title docutils container">
 <p>Welcome to the Pong tutorial</p>
 </div>
@@ -448,13 +447,13 @@ concepts (<a class="reference internal" href="firstwidget.html"><span class="doc
 steps and go straight to step 3.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You can find the entire source code, and source code files for each step in
-the Kivy examples directory under <cite>tutorials/pong/</cite></p>
+<p>You can find the entire source code–and source code files for each step–in
+the Kivy examples directory under <cite>tutorials/pong/</cite>.</p>
 </div>
 <p>Ready? Sweet, let’s get started!</p>
 </section>
 <section id="getting-started">
-<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading">¶</a></h2>
 <div class="title docutils container">
 <p>Getting Started</p>
 </div>
@@ -486,7 +485,7 @@ default Window. In the next step, we will draw the
 Pong background and scores by defining how the <code class="docutils literal notranslate"><span class="pre">PongGame</span> <span class="pre">widget</span></code> looks.</p>
 </section>
 <section id="add-simple-graphics">
-<h2>Add Simple Graphics<a class="headerlink" href="#add-simple-graphics" title="Permalink to this headline">¶</a></h2>
+<h2>Add Simple Graphics<a class="headerlink" href="#add-simple-graphics" title="Permalink to this heading">¶</a></h2>
 <div class="title docutils container">
 <p>Creation of pong.kv</p>
 </div>
@@ -524,7 +523,7 @@ e.g. PongApp (the part before the App ending).</p>
 <p>If you run the app now, you should see a vertical bar in the middle, and two
 zeros where the player scores will be displayed.</p>
 <section id="explaining-the-kv-file-syntax">
-<h3>Explaining the Kv File Syntax<a class="headerlink" href="#explaining-the-kv-file-syntax" title="Permalink to this headline">¶</a></h3>
+<h3>Explaining the Kv File Syntax<a class="headerlink" href="#explaining-the-kv-file-syntax" title="Permalink to this heading">¶</a></h3>
 <p>Before going on to the next step, you might want to take a closer look at
 the contents of the kv file we just created and figure out what is going on.
 If you understand what’s happening, you can probably skip ahead to the next
@@ -612,7 +611,7 @@ case):</p>
 </section>
 </section>
 <section id="add-the-ball">
-<h2>Add the Ball<a class="headerlink" href="#add-the-ball" title="Permalink to this headline">¶</a></h2>
+<h2>Add the Ball<a class="headerlink" href="#add-the-ball" title="Permalink to this heading">¶</a></h2>
 <div class="title docutils container">
 <p>Add the Ball</p>
 </div>
@@ -620,7 +619,7 @@ case):</p>
 a ball to hit around.  Let’s start with the ball.  We’ll add a new <cite>PongBall</cite>
 class to create a widget that will be our ball and make it bounce around.</p>
 <section id="pongball-class">
-<h3>PongBall Class<a class="headerlink" href="#pongball-class" title="Permalink to this headline">¶</a></h3>
+<h3>PongBall Class<a class="headerlink" href="#pongball-class" title="Permalink to this heading">¶</a></h3>
 <p>Here is the Python code for the PongBall class:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">class</span> <span class="nc">PongBall</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
 <span class="linenos"> 2</span>
@@ -720,14 +719,14 @@ child widget <cite>PongBall</cite> in the <cite>&lt;PongGame&gt;</cite> widget r
 </section>
 </section>
 <section id="adding-ball-animation">
-<h2>Adding Ball Animation<a class="headerlink" href="#adding-ball-animation" title="Permalink to this headline">¶</a></h2>
+<h2>Adding Ball Animation<a class="headerlink" href="#adding-ball-animation" title="Permalink to this heading">¶</a></h2>
 <div class="title docutils container">
 <p>Making the ball move</p>
 </div>
 <p>Cool, so now we have a ball, and it even has a <code class="docutils literal notranslate"><span class="pre">move</span></code> function… but it’s not
 moving yet. Let’s fix that.</p>
 <section id="scheduling-functions-on-the-clock">
-<h3>Scheduling Functions on the Clock<a class="headerlink" href="#scheduling-functions-on-the-clock" title="Permalink to this headline">¶</a></h3>
+<h3>Scheduling Functions on the Clock<a class="headerlink" href="#scheduling-functions-on-the-clock" title="Permalink to this heading">¶</a></h3>
 <p>We need the <code class="docutils literal notranslate"><span class="pre">move</span></code> method of our ball to be called regularly. Luckily, Kivy
 makes this pretty easy by letting us schedule any function we want using the
 <a class="reference internal" href="../api-kivy.clock.html#kivy.clock.Clock" title="kivy.clock.Clock"><code class="xref py py-class docutils literal notranslate"><span class="pre">Clock</span></code></a> and specifying the interval:</p>
@@ -738,7 +737,7 @@ makes this pretty easy by letting us schedule any function we want using the
 be called once every 60th of a second (60 times per second).</p>
 </section>
 <section id="object-properties-references">
-<h3>Object Properties/References<a class="headerlink" href="#object-properties-references" title="Permalink to this headline">¶</a></h3>
+<h3>Object Properties/References<a class="headerlink" href="#object-properties-references" title="Permalink to this heading">¶</a></h3>
 <p>We have another problem though.  We’d like to make sure the PongBall has its
 <code class="docutils literal notranslate"><span class="pre">move</span></code> function called regularly, but in our code we don’t have any references
 to the ball object since we just added it via the kv file
@@ -899,7 +898,7 @@ can use it later to reset the ball when a player has scored a point.</p>
 </section>
 </section>
 <section id="connect-input-events">
-<h2>Connect Input Events<a class="headerlink" href="#connect-input-events" title="Permalink to this headline">¶</a></h2>
+<h2>Connect Input Events<a class="headerlink" href="#connect-input-events" title="Permalink to this heading">¶</a></h2>
 <div class="title docutils container">
 <p>Adding Players and reacting to touch input</p>
 </div>
@@ -937,7 +936,7 @@ occurs because Kivy <a class="reference internal" href="../api-kivy.properties.h
 in their corresponding kv files. When the ball
 escapes out of the sides, we’ll update the score and serve the ball
 again by changing the <code class="docutils literal notranslate"><span class="pre">update</span></code> method in the <code class="docutils literal notranslate"><span class="pre">PongGame</span></code> class. The <code class="docutils literal notranslate"><span class="pre">PongPaddle</span></code>
-class also implements a <code class="docutils literal notranslate"><span class="pre">bounce_ball</span> <span class="pre">method</span></code>, so that the ball bounces
+class also implements a <code class="docutils literal notranslate"><span class="pre">bounce_ball</span></code> method, so that the ball bounces
 differently based on where it hits the racket. Here is the code for the
 <cite>PongPaddle</cite> class:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">class</span> <span class="nc">PongPaddle</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
@@ -1001,7 +1000,7 @@ try to fix yourself if you like.</p>
 <span class="linenos">40</span>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
 <span class="linenos">41</span>        <span class="bp">self</span><span class="o">.</span><span class="n">ball</span><span class="o">.</span><span class="n">move</span><span class="p">()</span>
 <span class="linenos">42</span>
-<span class="linenos">43</span>        <span class="c1"># bounce of paddles</span>
+<span class="linenos">43</span>        <span class="c1"># bounce off paddles</span>
 <span class="linenos">44</span>        <span class="bp">self</span><span class="o">.</span><span class="n">player1</span><span class="o">.</span><span class="n">bounce_ball</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ball</span><span class="p">)</span>
 <span class="linenos">45</span>        <span class="bp">self</span><span class="o">.</span><span class="n">player2</span><span class="o">.</span><span class="n">bounce_ball</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ball</span><span class="p">)</span>
 <span class="linenos">46</span>
@@ -1009,7 +1008,7 @@ try to fix yourself if you like.</p>
 <span class="linenos">48</span>        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ball</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ball</span><span class="o">.</span><span class="n">top</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">top</span><span class="p">):</span>
 <span class="linenos">49</span>            <span class="bp">self</span><span class="o">.</span><span class="n">ball</span><span class="o">.</span><span class="n">velocity_y</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
 <span class="linenos">50</span>
-<span class="linenos">51</span>        <span class="c1"># went of to a side to score point?</span>
+<span class="linenos">51</span>        <span class="c1"># went off to a side to score point?</span>
 <span class="linenos">52</span>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ball</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">:</span>
 <span class="linenos">53</span>            <span class="bp">self</span><span class="o">.</span><span class="n">player2</span><span class="o">.</span><span class="n">score</span> <span class="o">+=</span> <span class="mi">1</span>
 <span class="linenos">54</span>            <span class="bp">self</span><span class="o">.</span><span class="n">serve_ball</span><span class="p">(</span><span class="n">vel</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
@@ -1097,7 +1096,7 @@ try to fix yourself if you like.</p>
 </div></blockquote>
 </section>
 <section id="where-to-go-now">
-<h2>Where To Go Now?<a class="headerlink" href="#where-to-go-now" title="Permalink to this headline">¶</a></h2>
+<h2>Where To Go Now?<a class="headerlink" href="#where-to-go-now" title="Permalink to this heading">¶</a></h2>
 <div class="title docutils container">
 <p>Have some fun</p>
 </div>
@@ -1117,7 +1116,7 @@ to start, pause and reset the game. (Hint: check out the
 <a class="reference internal" href="../api-kivy.uix.button.html#kivy.uix.button.Button" title="kivy.uix.button.Button"><code class="xref py py-class docutils literal notranslate"><span class="pre">Button</span></code></a> and
 <a class="reference internal" href="../api-kivy.uix.label.html#kivy.uix.label.Label" title="kivy.uix.label.Label"><code class="xref py py-class docutils literal notranslate"><span class="pre">Label</span></code></a>
 classes, and figure out how to use their <cite>add_widget</cite> and <cite>remove_widget</cite>
-functions to add or remove widgets dynamically.</p></li>
+functions to add or remove widgets dynamically.)</p></li>
 <li><p>Make it a 4 player Pong Game.  Most tablets have Multi-Touch support, so
 wouldn’t it be cool to have a player on each side and have four
 people play at the same time?</p></li>
@@ -1126,8 +1125,8 @@ the paddle results in a more realistic bounce.</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You can find the entire source code and source code files for each step in
-the Kivy examples directory under tutorials/pong/</p>
+<p>You can find the entire source code–and source code files for each step–in
+the Kivy examples directory under <cite>tutorials/pong/</cite>.</p>
 </div>
 </section>
 </section>
@@ -1179,8 +1178,8 @@ the Kivy examples directory under tutorials/pong/</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 06, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
+      Last updated on May 20, 2023.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
   </body>

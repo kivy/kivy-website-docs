@@ -7,18 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
-    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Core Abstraction &mdash; Kivy 2.1.0 documentation</title>
+    <title>Core Abstraction &mdash; Kivy 2.2.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/fresh.css" type="text/css" />
          
           <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script> 
             <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script> 
-            <script src="_static/jquery.js"></script> 
-            <script src="_static/underscore.js"></script> 
             <script src="_static/doctools.js"></script> 
+            <script src="_static/sphinx_highlight.js"></script> 
         
         <script>
             const currTheme = localStorage.getItem("theme");
@@ -35,7 +34,7 @@
         <script type="text/javascript" src="_static/kivy.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="Kivy 2.1.0 documentation" href="index.html" />
+    <link rel="top" title="Kivy 2.2.0 documentation" href="index.html" />
     <link rel="up" title="API Reference" href="api-index.html" />
     <link rel="next" title="Audio" href="api-kivy.core.audio.html" />
     <link rel="prev" title="Weak Proxy" href="api-kivy.weakproxy.html" /> 
@@ -100,7 +99,10 @@
           <!--
           <h3><a href="index.html">Core Abstraction</a></h3>
           <ul>
-<li><a class="reference internal" href="#">Core Abstraction</a></li>
+<li><a class="reference internal" href="#">Core Abstraction</a><ul>
+<li><a class="reference internal" href="#kivy.core.CoreCriticalException"><code class="docutils literal notranslate"><span class="pre">CoreCriticalException</span></code></a></li>
+</ul>
+</li>
 </ul>
 
           <h3><a href="index.html">Table Of Contents</a></h3>
@@ -184,7 +186,6 @@
 <li class="toctree-l1 current"><a class="reference internal" href="api-index.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.html">Kivy framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy._metrics.html">Low level Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.app.html">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.atlas.html">Atlas</a></li>
@@ -219,6 +220,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.geometry.html">Geometry utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.gesture.html">Gesture recognition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.html">Graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.boxshadow.html">BoxShadow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.cgl.html">CGL: standard C interface for OpenGL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.compiler.html">Graphics compiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.context.html">Context management</a></li>
@@ -268,7 +270,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.gstplayer.html">GstPlayer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.mtdev.html">Python mtdev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.loader.html">Asynchronous data loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Logger object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Kivy Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.metrics.html">Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.html">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.console.html">Console</a></li>
@@ -382,12 +384,15 @@
         <div class="bodywrapper">
           <div class="body">
             <div class="toc"><h2>Table Of Contents</h2><ul>
-<li><a class="reference internal" href="#">Core Abstraction</a></li>
+<li><a class="reference internal" href="#">Core Abstraction</a><ul>
+<li><a class="reference internal" href="#kivy.core.CoreCriticalException"><code class="docutils literal notranslate"><span class="pre">CoreCriticalException</span></code></a></li>
+</ul>
+</li>
 </ul>
 </div>
             
   <section id="module-kivy.core">
-<span id="core-abstraction"></span><h1>Core Abstraction<a class="headerlink" href="#module-kivy.core" title="Permalink to this headline">¶</a></h1>
+<span id="core-abstraction"></span><h1>Core Abstraction<a class="headerlink" href="#module-kivy.core" title="Permalink to this heading">¶</a></h1>
 <p>This module defines the abstraction layers for our core providers and their
 implementations. For further information, please refer to
 <a class="reference internal" href="guide/architecture.html#architecture"><span class="std std-ref">Architectural Overview</span></a> and the <a class="reference internal" href="guide/architecture.html#providers"><span class="std std-ref">Core Providers and Input Providers</span></a> section of the documentation.</p>
@@ -412,9 +417,40 @@ looking for widgets, please refer to <a class="reference internal" href="api-kiv
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api-kivy.core.audio.html">Audio</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.core.audio.html#event-dispatching-and-state-changes">Event dispatching and state changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.audio.html#kivy.core.audio.Sound"><code class="docutils literal notranslate"><span class="pre">Sound</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.audio.html#kivy.core.audio.Sound.filename"><code class="docutils literal notranslate"><span class="pre">Sound.filename</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.audio.html#kivy.core.audio.Sound.get_pos"><code class="docutils literal notranslate"><span class="pre">Sound.get_pos()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.audio.html#kivy.core.audio.Sound.length"><code class="docutils literal notranslate"><span class="pre">Sound.length</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.audio.html#kivy.core.audio.Sound.load"><code class="docutils literal notranslate"><span class="pre">Sound.load()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.audio.html#kivy.core.audio.Sound.loop"><code class="docutils literal notranslate"><span class="pre">Sound.loop</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.audio.html#kivy.core.audio.Sound.pitch"><code class="docutils literal notranslate"><span class="pre">Sound.pitch</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.audio.html#kivy.core.audio.Sound.play"><code class="docutils literal notranslate"><span class="pre">Sound.play()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.audio.html#kivy.core.audio.Sound.seek"><code class="docutils literal notranslate"><span class="pre">Sound.seek()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.audio.html#kivy.core.audio.Sound.source"><code class="docutils literal notranslate"><span class="pre">Sound.source</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.audio.html#kivy.core.audio.Sound.state"><code class="docutils literal notranslate"><span class="pre">Sound.state</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.audio.html#kivy.core.audio.Sound.status"><code class="docutils literal notranslate"><span class="pre">Sound.status</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.audio.html#kivy.core.audio.Sound.stop"><code class="docutils literal notranslate"><span class="pre">Sound.stop()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.audio.html#kivy.core.audio.Sound.unload"><code class="docutils literal notranslate"><span class="pre">Sound.unload()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.audio.html#kivy.core.audio.Sound.volume"><code class="docutils literal notranslate"><span class="pre">Sound.volume</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api-kivy.core.camera.html">Camera</a><ul class="simple">
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.audio.html#kivy.core.audio.SoundLoader"><code class="docutils literal notranslate"><span class="pre">SoundLoader</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.audio.html#kivy.core.audio.SoundLoader.load"><code class="docutils literal notranslate"><span class="pre">SoundLoader.load()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.audio.html#kivy.core.audio.SoundLoader.register"><code class="docutils literal notranslate"><span class="pre">SoundLoader.register()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api-kivy.core.camera.html">Camera</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.camera.html#kivy.core.camera.CameraBase"><code class="docutils literal notranslate"><span class="pre">CameraBase</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.camera.html#kivy.core.camera.CameraBase.index"><code class="docutils literal notranslate"><span class="pre">CameraBase.index</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.camera.html#kivy.core.camera.CameraBase.init_camera"><code class="docutils literal notranslate"><span class="pre">CameraBase.init_camera()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.camera.html#kivy.core.camera.CameraBase.resolution"><code class="docutils literal notranslate"><span class="pre">CameraBase.resolution</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.camera.html#kivy.core.camera.CameraBase.start"><code class="docutils literal notranslate"><span class="pre">CameraBase.start()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.camera.html#kivy.core.camera.CameraBase.stop"><code class="docutils literal notranslate"><span class="pre">CameraBase.stop()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.camera.html#kivy.core.camera.CameraBase.texture"><code class="docutils literal notranslate"><span class="pre">CameraBase.texture</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api-kivy.core.clipboard.html">Clipboard</a><ul class="simple">
@@ -426,25 +462,244 @@ looking for widgets, please refer to <a class="reference internal" href="api-kiv
 <li class="toctree-l1"><a class="reference internal" href="api-kivy.core.image.html">Image</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.core.image.html#in-memory-image-loading">In-memory image loading</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.core.image.html#saving-an-image">Saving an image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.Image"><code class="docutils literal notranslate"><span class="pre">Image</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.Image.anim_available"><code class="docutils literal notranslate"><span class="pre">Image.anim_available</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.Image.anim_delay"><code class="docutils literal notranslate"><span class="pre">Image.anim_delay</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.Image.anim_index"><code class="docutils literal notranslate"><span class="pre">Image.anim_index</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.Image.anim_reset"><code class="docutils literal notranslate"><span class="pre">Image.anim_reset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.Image.filename"><code class="docutils literal notranslate"><span class="pre">Image.filename</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.Image.height"><code class="docutils literal notranslate"><span class="pre">Image.height</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.Image.image"><code class="docutils literal notranslate"><span class="pre">Image.image</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.Image.load"><code class="docutils literal notranslate"><span class="pre">Image.load()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.Image.load_memory"><code class="docutils literal notranslate"><span class="pre">Image.load_memory()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.Image.nocache"><code class="docutils literal notranslate"><span class="pre">Image.nocache</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.Image.on_texture"><code class="docutils literal notranslate"><span class="pre">Image.on_texture()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.Image.read_pixel"><code class="docutils literal notranslate"><span class="pre">Image.read_pixel()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.Image.remove_from_cache"><code class="docutils literal notranslate"><span class="pre">Image.remove_from_cache()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.Image.save"><code class="docutils literal notranslate"><span class="pre">Image.save()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.Image.size"><code class="docutils literal notranslate"><span class="pre">Image.size</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.Image.texture"><code class="docutils literal notranslate"><span class="pre">Image.texture</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.Image.width"><code class="docutils literal notranslate"><span class="pre">Image.width</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api-kivy.core.spelling.html">Spelling</a><ul class="simple">
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.ImageData"><code class="docutils literal notranslate"><span class="pre">ImageData</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.ImageData.add_mipmap"><code class="docutils literal notranslate"><span class="pre">ImageData.add_mipmap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.ImageData.data"><code class="docutils literal notranslate"><span class="pre">ImageData.data</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.ImageData.flip_vertical"><code class="docutils literal notranslate"><span class="pre">ImageData.flip_vertical</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.ImageData.fmt"><code class="docutils literal notranslate"><span class="pre">ImageData.fmt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.ImageData.get_mipmap"><code class="docutils literal notranslate"><span class="pre">ImageData.get_mipmap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.ImageData.height"><code class="docutils literal notranslate"><span class="pre">ImageData.height</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.ImageData.iterate_mipmaps"><code class="docutils literal notranslate"><span class="pre">ImageData.iterate_mipmaps()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.ImageData.mipmaps"><code class="docutils literal notranslate"><span class="pre">ImageData.mipmaps</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.ImageData.rowlength"><code class="docutils literal notranslate"><span class="pre">ImageData.rowlength</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.ImageData.size"><code class="docutils literal notranslate"><span class="pre">ImageData.size</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.ImageData.source"><code class="docutils literal notranslate"><span class="pre">ImageData.source</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.image.html#kivy.core.image.ImageData.width"><code class="docutils literal notranslate"><span class="pre">ImageData.width</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api-kivy.core.spelling.html">Spelling</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.spelling.html#kivy.core.spelling.NoLanguageSelectedError"><code class="docutils literal notranslate"><span class="pre">NoLanguageSelectedError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.spelling.html#kivy.core.spelling.NoSuchLangError"><code class="docutils literal notranslate"><span class="pre">NoSuchLangError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.spelling.html#kivy.core.spelling.SpellingBase"><code class="docutils literal notranslate"><span class="pre">SpellingBase</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.spelling.html#kivy.core.spelling.SpellingBase.check"><code class="docutils literal notranslate"><span class="pre">SpellingBase.check()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.spelling.html#kivy.core.spelling.SpellingBase.list_languages"><code class="docutils literal notranslate"><span class="pre">SpellingBase.list_languages()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.spelling.html#kivy.core.spelling.SpellingBase.select_language"><code class="docutils literal notranslate"><span class="pre">SpellingBase.select_language()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.spelling.html#kivy.core.spelling.SpellingBase.suggest"><code class="docutils literal notranslate"><span class="pre">SpellingBase.suggest()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api-kivy.core.text.html">Text</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.core.text.html#font-context-manager">Font Context Manager</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.text.text_layout.html">Text layout</a><ul class="simple">
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.text.html#kivy.core.text.LabelBase"><code class="docutils literal notranslate"><span class="pre">LabelBase</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.text.html#kivy.core.text.LabelBase.content_height"><code class="docutils literal notranslate"><span class="pre">LabelBase.content_height</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.text.html#kivy.core.text.LabelBase.content_size"><code class="docutils literal notranslate"><span class="pre">LabelBase.content_size</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.text.html#kivy.core.text.LabelBase.content_width"><code class="docutils literal notranslate"><span class="pre">LabelBase.content_width</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.text.html#kivy.core.text.LabelBase.find_base_direction"><code class="docutils literal notranslate"><span class="pre">LabelBase.find_base_direction()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.text.html#kivy.core.text.LabelBase.fontid"><code class="docutils literal notranslate"><span class="pre">LabelBase.fontid</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.text.html#kivy.core.text.LabelBase.get_cached_extents"><code class="docutils literal notranslate"><span class="pre">LabelBase.get_cached_extents()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.text.html#kivy.core.text.LabelBase.get_extents"><code class="docutils literal notranslate"><span class="pre">LabelBase.get_extents()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.text.html#kivy.core.text.LabelBase.get_system_fonts_dir"><code class="docutils literal notranslate"><span class="pre">LabelBase.get_system_fonts_dir()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.text.html#kivy.core.text.LabelBase.label"><code class="docutils literal notranslate"><span class="pre">LabelBase.label</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.text.html#kivy.core.text.LabelBase.refresh"><code class="docutils literal notranslate"><span class="pre">LabelBase.refresh()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.text.html#kivy.core.text.LabelBase.register"><code class="docutils literal notranslate"><span class="pre">LabelBase.register()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.text.html#kivy.core.text.LabelBase.render"><code class="docutils literal notranslate"><span class="pre">LabelBase.render()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.text.html#kivy.core.text.LabelBase.shorten"><code class="docutils literal notranslate"><span class="pre">LabelBase.shorten()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.text.html#kivy.core.text.LabelBase.text"><code class="docutils literal notranslate"><span class="pre">LabelBase.text</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.text.html#kivy.core.text.LabelBase.text_size"><code class="docutils literal notranslate"><span class="pre">LabelBase.text_size</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.text.html#kivy.core.text.LabelBase.usersize"><code class="docutils literal notranslate"><span class="pre">LabelBase.usersize</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.text.markup.html">Text Markup</a><ul class="simple">
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.text.text_layout.html">Text layout</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.text.text_layout.html#kivy.core.text.text_layout.LayoutLine"><code class="docutils literal notranslate"><span class="pre">LayoutLine</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api-kivy.core.text.text_layout.html#kivy.core.text.text_layout.LayoutLine.h"><code class="docutils literal notranslate"><span class="pre">LayoutLine.h</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api-kivy.core.text.text_layout.html#kivy.core.text.text_layout.LayoutLine.is_last_line"><code class="docutils literal notranslate"><span class="pre">LayoutLine.is_last_line</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api-kivy.core.text.text_layout.html#kivy.core.text.text_layout.LayoutLine.line_wrap"><code class="docutils literal notranslate"><span class="pre">LayoutLine.line_wrap</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api-kivy.core.text.text_layout.html#kivy.core.text.text_layout.LayoutLine.w"><code class="docutils literal notranslate"><span class="pre">LayoutLine.w</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api-kivy.core.text.text_layout.html#kivy.core.text.text_layout.LayoutLine.words"><code class="docutils literal notranslate"><span class="pre">LayoutLine.words</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api-kivy.core.text.text_layout.html#kivy.core.text.text_layout.LayoutLine.x"><code class="docutils literal notranslate"><span class="pre">LayoutLine.x</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api-kivy.core.text.text_layout.html#kivy.core.text.text_layout.LayoutLine.y"><code class="docutils literal notranslate"><span class="pre">LayoutLine.y</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.text.text_layout.html#kivy.core.text.text_layout.LayoutWord"><code class="docutils literal notranslate"><span class="pre">LayoutWord</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api-kivy.core.text.text_layout.html#kivy.core.text.text_layout.LayoutWord.lh"><code class="docutils literal notranslate"><span class="pre">LayoutWord.lh</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api-kivy.core.text.text_layout.html#kivy.core.text.text_layout.LayoutWord.lw"><code class="docutils literal notranslate"><span class="pre">LayoutWord.lw</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api-kivy.core.text.text_layout.html#kivy.core.text.text_layout.LayoutWord.options"><code class="docutils literal notranslate"><span class="pre">LayoutWord.options</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api-kivy.core.text.text_layout.html#kivy.core.text.text_layout.LayoutWord.text"><code class="docutils literal notranslate"><span class="pre">LayoutWord.text</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.text.text_layout.html#kivy.core.text.text_layout.layout_text"><code class="docutils literal notranslate"><span class="pre">layout_text()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.text.markup.html">Text Markup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.text.markup.html#kivy.core.text.markup.MarkupLabel"><code class="docutils literal notranslate"><span class="pre">MarkupLabel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api-kivy.core.text.markup.html#kivy.core.text.markup.MarkupLabel.anchors"><code class="docutils literal notranslate"><span class="pre">MarkupLabel.anchors</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api-kivy.core.text.markup.html#kivy.core.text.markup.MarkupLabel.markup"><code class="docutils literal notranslate"><span class="pre">MarkupLabel.markup</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api-kivy.core.text.markup.html#kivy.core.text.markup.MarkupLabel.refs"><code class="docutils literal notranslate"><span class="pre">MarkupLabel.refs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api-kivy.core.text.markup.html#kivy.core.text.markup.MarkupLabel.render"><code class="docutils literal notranslate"><span class="pre">MarkupLabel.render()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api-kivy.core.text.markup.html#kivy.core.text.markup.MarkupLabel.shorten_post"><code class="docutils literal notranslate"><span class="pre">MarkupLabel.shorten_post()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api-kivy.core.video.html">Video</a><ul class="simple">
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api-kivy.core.window.html">Window</a><ul class="simple">
+<li class="toctree-l1"><a class="reference internal" href="api-kivy.core.video.html">Video</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.video.html#kivy.core.video.VideoBase"><code class="docutils literal notranslate"><span class="pre">VideoBase</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.video.html#kivy.core.video.VideoBase.duration"><code class="docutils literal notranslate"><span class="pre">VideoBase.duration</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.video.html#kivy.core.video.VideoBase.filename"><code class="docutils literal notranslate"><span class="pre">VideoBase.filename</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.video.html#kivy.core.video.VideoBase.load"><code class="docutils literal notranslate"><span class="pre">VideoBase.load()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.video.html#kivy.core.video.VideoBase.pause"><code class="docutils literal notranslate"><span class="pre">VideoBase.pause()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.video.html#kivy.core.video.VideoBase.play"><code class="docutils literal notranslate"><span class="pre">VideoBase.play()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.video.html#kivy.core.video.VideoBase.position"><code class="docutils literal notranslate"><span class="pre">VideoBase.position</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.video.html#kivy.core.video.VideoBase.seek"><code class="docutils literal notranslate"><span class="pre">VideoBase.seek()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.video.html#kivy.core.video.VideoBase.state"><code class="docutils literal notranslate"><span class="pre">VideoBase.state</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.video.html#kivy.core.video.VideoBase.stop"><code class="docutils literal notranslate"><span class="pre">VideoBase.stop()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.video.html#kivy.core.video.VideoBase.texture"><code class="docutils literal notranslate"><span class="pre">VideoBase.texture</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.video.html#kivy.core.video.VideoBase.unload"><code class="docutils literal notranslate"><span class="pre">VideoBase.unload()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.video.html#kivy.core.video.VideoBase.volume"><code class="docutils literal notranslate"><span class="pre">VideoBase.volume</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api-kivy.core.window.html">Window</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.Keyboard"><code class="docutils literal notranslate"><span class="pre">Keyboard</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.Keyboard.callback"><code class="docutils literal notranslate"><span class="pre">Keyboard.callback</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.Keyboard.keycode_to_string"><code class="docutils literal notranslate"><span class="pre">Keyboard.keycode_to_string()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.Keyboard.release"><code class="docutils literal notranslate"><span class="pre">Keyboard.release()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.Keyboard.string_to_keycode"><code class="docutils literal notranslate"><span class="pre">Keyboard.string_to_keycode()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.Keyboard.target"><code class="docutils literal notranslate"><span class="pre">Keyboard.target</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.Keyboard.widget"><code class="docutils literal notranslate"><span class="pre">Keyboard.widget</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.Keyboard.window"><code class="docutils literal notranslate"><span class="pre">Keyboard.window</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase"><code class="docutils literal notranslate"><span class="pre">WindowBase</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.add_widget"><code class="docutils literal notranslate"><span class="pre">WindowBase.add_widget()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.allow_screensaver"><code class="docutils literal notranslate"><span class="pre">WindowBase.allow_screensaver</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.always_on_top"><code class="docutils literal notranslate"><span class="pre">WindowBase.always_on_top</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.borderless"><code class="docutils literal notranslate"><span class="pre">WindowBase.borderless</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.center"><code class="docutils literal notranslate"><span class="pre">WindowBase.center</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.children"><code class="docutils literal notranslate"><span class="pre">WindowBase.children</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.clear"><code class="docutils literal notranslate"><span class="pre">WindowBase.clear()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.clearcolor"><code class="docutils literal notranslate"><span class="pre">WindowBase.clearcolor</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.close"><code class="docutils literal notranslate"><span class="pre">WindowBase.close()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.create_window"><code class="docutils literal notranslate"><span class="pre">WindowBase.create_window()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.custom_titlebar"><code class="docutils literal notranslate"><span class="pre">WindowBase.custom_titlebar</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.dpi"><code class="docutils literal notranslate"><span class="pre">WindowBase.dpi</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.event_managers"><code class="docutils literal notranslate"><span class="pre">WindowBase.event_managers</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.event_managers_dict"><code class="docutils literal notranslate"><span class="pre">WindowBase.event_managers_dict</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.flip"><code class="docutils literal notranslate"><span class="pre">WindowBase.flip()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.focus"><code class="docutils literal notranslate"><span class="pre">WindowBase.focus</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.fullscreen"><code class="docutils literal notranslate"><span class="pre">WindowBase.fullscreen</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.get_gl_backend_name"><code class="docutils literal notranslate"><span class="pre">WindowBase.get_gl_backend_name()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.gl_backends_allowed"><code class="docutils literal notranslate"><span class="pre">WindowBase.gl_backends_allowed</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.gl_backends_ignored"><code class="docutils literal notranslate"><span class="pre">WindowBase.gl_backends_ignored</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.grab_mouse"><code class="docutils literal notranslate"><span class="pre">WindowBase.grab_mouse()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.height"><code class="docutils literal notranslate"><span class="pre">WindowBase.height</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.hide"><code class="docutils literal notranslate"><span class="pre">WindowBase.hide()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.icon"><code class="docutils literal notranslate"><span class="pre">WindowBase.icon</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.keyboard_anim_args"><code class="docutils literal notranslate"><span class="pre">WindowBase.keyboard_anim_args</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.keyboard_height"><code class="docutils literal notranslate"><span class="pre">WindowBase.keyboard_height</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.keyboard_padding"><code class="docutils literal notranslate"><span class="pre">WindowBase.keyboard_padding</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.left"><code class="docutils literal notranslate"><span class="pre">WindowBase.left</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.mainloop"><code class="docutils literal notranslate"><span class="pre">WindowBase.mainloop()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.managed_textinput"><code class="docutils literal notranslate"><span class="pre">WindowBase.managed_textinput</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.maximize"><code class="docutils literal notranslate"><span class="pre">WindowBase.maximize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.minimize"><code class="docutils literal notranslate"><span class="pre">WindowBase.minimize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.minimum_height"><code class="docutils literal notranslate"><span class="pre">WindowBase.minimum_height</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.minimum_width"><code class="docutils literal notranslate"><span class="pre">WindowBase.minimum_width</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.modifiers"><code class="docutils literal notranslate"><span class="pre">WindowBase.modifiers</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.mouse_pos"><code class="docutils literal notranslate"><span class="pre">WindowBase.mouse_pos</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_close"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_close()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_cursor_enter"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_cursor_enter()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_cursor_leave"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_cursor_leave()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_drop_begin"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_drop_begin()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_drop_end"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_drop_end()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_drop_file"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_drop_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_drop_text"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_drop_text()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_flip"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_flip()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_hide"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_hide()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_joy_axis"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_joy_axis()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_joy_ball"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_joy_ball()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_joy_button_down"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_joy_button_down()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_joy_button_up"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_joy_button_up()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_joy_hat"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_joy_hat()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_key_down"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_key_down()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_key_up"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_key_up()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_keyboard"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_keyboard()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_maximize"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_maximize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_memorywarning"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_memorywarning()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_minimize"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_minimize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_motion"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_motion()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_mouse_down"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_mouse_down()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_mouse_move"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_mouse_move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_mouse_up"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_mouse_up()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_request_close"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_request_close()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_resize"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_resize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_restore"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_restore()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_rotate"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_rotate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_show"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_show()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_textedit"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_textedit()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_textinput"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_textinput()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_touch_down"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_touch_down()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_touch_move"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_touch_move()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.on_touch_up"><code class="docutils literal notranslate"><span class="pre">WindowBase.on_touch_up()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.parent"><code class="docutils literal notranslate"><span class="pre">WindowBase.parent</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.raise_window"><code class="docutils literal notranslate"><span class="pre">WindowBase.raise_window()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.register_event_manager"><code class="docutils literal notranslate"><span class="pre">WindowBase.register_event_manager()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.release_all_keyboards"><code class="docutils literal notranslate"><span class="pre">WindowBase.release_all_keyboards()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.release_keyboard"><code class="docutils literal notranslate"><span class="pre">WindowBase.release_keyboard()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.remove_widget"><code class="docutils literal notranslate"><span class="pre">WindowBase.remove_widget()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.request_keyboard"><code class="docutils literal notranslate"><span class="pre">WindowBase.request_keyboard()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.restore"><code class="docutils literal notranslate"><span class="pre">WindowBase.restore()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.rotation"><code class="docutils literal notranslate"><span class="pre">WindowBase.rotation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.screenshot"><code class="docutils literal notranslate"><span class="pre">WindowBase.screenshot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.set_custom_titlebar"><code class="docutils literal notranslate"><span class="pre">WindowBase.set_custom_titlebar()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.set_icon"><code class="docutils literal notranslate"><span class="pre">WindowBase.set_icon()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.set_system_cursor"><code class="docutils literal notranslate"><span class="pre">WindowBase.set_system_cursor()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.set_title"><code class="docutils literal notranslate"><span class="pre">WindowBase.set_title()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.set_vkeyboard_class"><code class="docutils literal notranslate"><span class="pre">WindowBase.set_vkeyboard_class()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.shape_color_key"><code class="docutils literal notranslate"><span class="pre">WindowBase.shape_color_key</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.shape_cutoff"><code class="docutils literal notranslate"><span class="pre">WindowBase.shape_cutoff</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.shape_image"><code class="docutils literal notranslate"><span class="pre">WindowBase.shape_image</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.shape_mode"><code class="docutils literal notranslate"><span class="pre">WindowBase.shape_mode</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.shaped"><code class="docutils literal notranslate"><span class="pre">WindowBase.shaped</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.show"><code class="docutils literal notranslate"><span class="pre">WindowBase.show()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.show_cursor"><code class="docutils literal notranslate"><span class="pre">WindowBase.show_cursor</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.size"><code class="docutils literal notranslate"><span class="pre">WindowBase.size</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.softinput_mode"><code class="docutils literal notranslate"><span class="pre">WindowBase.softinput_mode</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.system_size"><code class="docutils literal notranslate"><span class="pre">WindowBase.system_size</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.to_normalized_pos"><code class="docutils literal notranslate"><span class="pre">WindowBase.to_normalized_pos()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.toggle_fullscreen"><code class="docutils literal notranslate"><span class="pre">WindowBase.toggle_fullscreen()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.top"><code class="docutils literal notranslate"><span class="pre">WindowBase.top</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.transform_motion_event_2d"><code class="docutils literal notranslate"><span class="pre">WindowBase.transform_motion_event_2d()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.ungrab_mouse"><code class="docutils literal notranslate"><span class="pre">WindowBase.ungrab_mouse()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.unregister_event_manager"><code class="docutils literal notranslate"><span class="pre">WindowBase.unregister_event_manager()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.width"><code class="docutils literal notranslate"><span class="pre">WindowBase.width</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -498,8 +753,8 @@ looking for widgets, please refer to <a class="reference internal" href="api-kiv
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 06, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
+      Last updated on May 20, 2023.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
   </body>

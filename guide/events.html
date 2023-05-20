@@ -7,18 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
-    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Events and Properties &mdash; Kivy 2.1.0 documentation</title>
+    <title>Events and Properties &mdash; Kivy 2.2.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../_static/fresh.css" type="text/css" />
          
           <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script> 
             <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script> 
-            <script src="../_static/jquery.js"></script> 
-            <script src="../_static/underscore.js"></script> 
             <script src="../_static/doctools.js"></script> 
+            <script src="../_static/sphinx_highlight.js"></script> 
         
         <script>
             const currTheme = localStorage.getItem("theme");
@@ -35,7 +34,7 @@
         <script type="text/javascript" src="../_static/kivy.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="Kivy 2.1.0 documentation" href="../index.html" />
+    <link rel="top" title="Kivy 2.2.0 documentation" href="../index.html" />
     <link rel="up" title="Programming Guide" href="../guide-index.html" />
     <link rel="next" title="Input management" href="inputs.html" />
     <link rel="prev" title="Architectural Overview" href="architecture.html" /> 
@@ -200,7 +199,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../api-index.html">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.html">Kivy framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy._metrics.html">Low level Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.app.html">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.atlas.html">Atlas</a></li>
@@ -235,6 +233,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.geometry.html">Geometry utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.gesture.html">Gesture recognition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.html">Graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.boxshadow.html">BoxShadow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.cgl.html">CGL: standard C interface for OpenGL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.compiler.html">Graphics compiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.graphics.context.html">Context management</a></li>
@@ -284,7 +283,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.lib.gstplayer.html">GstPlayer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.lib.mtdev.html">Python mtdev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.loader.html">Asynchronous data loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-kivy.logger.html">Logger object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-kivy.logger.html">Kivy Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.metrics.html">Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.modules.html">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.modules.console.html">Console</a></li>
@@ -419,7 +418,7 @@
 </div>
             
   <section id="events-and-properties">
-<span id="properties"></span><span id="events"></span><h1>Events and Properties<a class="headerlink" href="#events-and-properties" title="Permalink to this headline">¶</a></h1>
+<span id="properties"></span><span id="events"></span><h1>Events and Properties<a class="headerlink" href="#events-and-properties" title="Permalink to this heading">¶</a></h1>
 <p>Events are an important part of Kivy programming. That may not be surprising to
 those with GUI development experience, but it’s an important concept for
 newcomers. Once you understand how events work and how to bind to them, you
@@ -428,7 +427,7 @@ you want into Kivy.</p>
 <p>The following illustration shows how events are handled in the Kivy framework.</p>
 <img alt="../_images/Events.png" src="../_images/Events.png" />
 <section id="introduction-to-the-event-dispatcher">
-<h2>Introduction to the Event Dispatcher<a class="headerlink" href="#introduction-to-the-event-dispatcher" title="Permalink to this headline">¶</a></h2>
+<h2>Introduction to the Event Dispatcher<a class="headerlink" href="#introduction-to-the-event-dispatcher" title="Permalink to this heading">¶</a></h2>
 <p>One of the most important base classes of the framework is the
 <a class="reference internal" href="../api-kivy.event.html#kivy.event.EventDispatcher" title="kivy.event.EventDispatcher"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventDispatcher</span></code></a> class. This class allows you to register
 event types, and to dispatch them to interested parties (usually other event
@@ -439,7 +438,7 @@ examples of event dispatchers.</p>
 handle events.</p>
 </section>
 <section id="main-loop">
-<h2>Main loop<a class="headerlink" href="#main-loop" title="Permalink to this headline">¶</a></h2>
+<h2>Main loop<a class="headerlink" href="#main-loop" title="Permalink to this heading">¶</a></h2>
 <p>As outlined in the illustration above, Kivy has a <cite>main loop</cite>. This loop is
 running during all of the application’s lifetime and only quits when exiting
 the application.</p>
@@ -461,7 +460,7 @@ doing all of the other things that need doing. As a result, all you’ll see is 
 black window which you won’t be able to interact with. Instead, you need to
 “schedule” your <code class="docutils literal notranslate"><span class="pre">animate_something()</span></code> function to be called repeatedly.</p>
 <section id="scheduling-a-repetitive-event">
-<h3>Scheduling a repetitive event<a class="headerlink" href="#scheduling-a-repetitive-event" title="Permalink to this headline">¶</a></h3>
+<h3>Scheduling a repetitive event<a class="headerlink" href="#scheduling-a-repetitive-event" title="Permalink to this heading">¶</a></h3>
 <p>You can call a function or a method every X times per second using
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">schedule_interval()</span></code>. Here is an example of calling a
 function named my_callback 30 times per second:</p>
@@ -494,7 +493,7 @@ unscheduled:</p>
 </div>
 </section>
 <section id="scheduling-a-one-time-event">
-<h3>Scheduling a one-time event<a class="headerlink" href="#scheduling-a-one-time-event" title="Permalink to this headline">¶</a></h3>
+<h3>Scheduling a one-time event<a class="headerlink" href="#scheduling-a-one-time-event" title="Permalink to this heading">¶</a></h3>
 <p>Using <code class="xref py py-meth docutils literal notranslate"><span class="pre">schedule_once()</span></code>, you can call a function “later”,
 like in the next frame, or in X seconds:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_callback</span><span class="p">(</span><span class="n">dt</span><span class="p">):</span>
@@ -534,7 +533,7 @@ be called at least one second after the last iteration ends. With
 every second.</p>
 </section>
 <section id="trigger-events">
-<h3>Trigger events<a class="headerlink" href="#trigger-events" title="Permalink to this headline">¶</a></h3>
+<h3>Trigger events<a class="headerlink" href="#trigger-events" title="Permalink to this heading">¶</a></h3>
 <p>Sometimes you may want to schedule a function to be called only once for the next
 frame, preventing duplicate calls. You might be tempted to achieve that like so:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># First, schedule once.</span>
@@ -559,7 +558,7 @@ it was already scheduled, it will not be rescheduled.</p>
 </section>
 </section>
 <section id="widget-events">
-<h2>Widget events<a class="headerlink" href="#widget-events" title="Permalink to this headline">¶</a></h2>
+<h2>Widget events<a class="headerlink" href="#widget-events" title="Permalink to this heading">¶</a></h2>
 <p>A widget has 2 default types of events:</p>
 <ul class="simple">
 <li><p>Property event: if your widget changes its position or size, an event is fired.</p></li>
@@ -570,7 +569,7 @@ released.</p></li>
 to the <a class="reference internal" href="../api-kivy.uix.widget.html#widget-event-bubbling"><span class="std std-ref">Widget touch event bubbling</span></a> section.</p>
 </section>
 <section id="creating-custom-events">
-<h2>Creating custom events<a class="headerlink" href="#creating-custom-events" title="Permalink to this headline">¶</a></h2>
+<h2>Creating custom events<a class="headerlink" href="#creating-custom-events" title="Permalink to this heading">¶</a></h2>
 <p>To create an event dispatcher with custom events, you need to register the name
 of the event in the class and then create a method of the same name.</p>
 <p>See the following example:</p>
@@ -590,7 +589,7 @@ of the event in the class and then create a method of the same name.</p>
 </div>
 </section>
 <section id="attaching-callbacks">
-<h2>Attaching callbacks<a class="headerlink" href="#attaching-callbacks" title="Permalink to this headline">¶</a></h2>
+<h2>Attaching callbacks<a class="headerlink" href="#attaching-callbacks" title="Permalink to this heading">¶</a></h2>
 <p>To use events, you have to bind callbacks to them. When the event is
 dispatched, your callbacks will be called with the parameters relevant to
 that specific event.</p>
@@ -611,7 +610,7 @@ the arguments that the event emits. For this, it’s usually safest to accept th
 documentation for more examples on how to attach callbacks.</p>
 </section>
 <section id="introduction-to-properties">
-<h2>Introduction to Properties<a class="headerlink" href="#introduction-to-properties" title="Permalink to this headline">¶</a></h2>
+<h2>Introduction to Properties<a class="headerlink" href="#introduction-to-properties" title="Permalink to this heading">¶</a></h2>
 <p>Properties are an awesome way to define events and bind to them. Essentially,
 they produce events such that when an attribute of your object changes,
 all properties that reference that attribute are automatically updated.</p>
@@ -631,7 +630,7 @@ handle.</p>
 </ul>
 </section>
 <section id="declaration-of-a-property">
-<h2>Declaration of a Property<a class="headerlink" href="#declaration-of-a-property" title="Permalink to this headline">¶</a></h2>
+<h2>Declaration of a Property<a class="headerlink" href="#declaration-of-a-property" title="Permalink to this heading">¶</a></h2>
 <p>To declare properties, you must declare them at the class level. The class will then do
 the work to instantiate the real attributes when your object is created. These properties
 are not attributes: they are mechanisms for creating events based on your
@@ -649,7 +648,7 @@ the parent’s <cite>__init__</cite> method, passing in your class instance:</p>
 </div>
 </section>
 <section id="dispatching-a-property-event">
-<h2>Dispatching a Property event<a class="headerlink" href="#dispatching-a-property-event" title="Permalink to this headline">¶</a></h2>
+<h2>Dispatching a Property event<a class="headerlink" href="#dispatching-a-property-event" title="Permalink to this heading">¶</a></h2>
 <p>Kivy properties, by default, provide an <cite>on_&lt;property_name&gt;</cite> event. This event is
 called when the value of the property is changed.</p>
 <div class="admonition note">
@@ -806,7 +805,7 @@ use to copy and paste into an editor to experiment.</p>
 touch/click on the black area to see the output on your console.</p>
 </section>
 <section id="compound-properties">
-<h2>Compound Properties<a class="headerlink" href="#compound-properties" title="Permalink to this headline">¶</a></h2>
+<h2>Compound Properties<a class="headerlink" href="#compound-properties" title="Permalink to this heading">¶</a></h2>
 <p>When defining an <a class="reference internal" href="../api-kivy.properties.html#kivy.properties.AliasProperty" title="kivy.properties.AliasProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">AliasProperty</span></code></a>, you normally define
 a getter and a setter function yourself. Here, it falls on to you to define
 when the getter and the setter functions are called using the <cite>bind</cite> argument.</p>
@@ -816,7 +815,7 @@ when the getter and the setter functions are called using the <cite>bind</cite> 
 <span class="linenos"> 3</span>                                  <span class="s1">&#39;focus&#39;</span><span class="p">,</span> <span class="s1">&#39;scroll_x&#39;</span><span class="p">,</span> <span class="s1">&#39;scroll_y&#39;</span><span class="p">,</span>
 <span class="linenos"> 4</span>                                  <span class="s1">&#39;line_height&#39;</span><span class="p">,</span> <span class="s1">&#39;line_spacing&#39;</span><span class="p">),</span>
 <span class="linenos"> 5</span>                            <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="linenos"> 6</span> <span class="sd">&#39;&#39;&#39;Current position of the cursor, in (x, y).</span>
+<span class="linenos"> 6</span><span class="w"> </span><span class="sd">&#39;&#39;&#39;Current position of the cursor, in (x, y).</span>
 <span class="linenos"> 7</span>
 <span class="linenos"> 8</span><span class="sd"> :attr:`cursor_pos` is an :class:`~kivy.properties.AliasProperty`,</span>
 <span class="linenos"> 9</span><span class="sd"> read-only.</span>
@@ -878,8 +877,8 @@ when any of the properties used in the <cite>bind=</cite> argument change.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 06, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
+      Last updated on May 20, 2023.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
   </body>

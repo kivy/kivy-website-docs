@@ -8,16 +8,15 @@
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
     
-    <title>kivy.uix.label &mdash; Kivy 2.1.0 documentation</title>
+    <title>kivy.uix.label &mdash; Kivy 2.2.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/fresh.css" type="text/css" />
          
           <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script> 
             <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script> 
-            <script src="../../../_static/jquery.js"></script> 
-            <script src="../../../_static/underscore.js"></script> 
             <script src="../../../_static/doctools.js"></script> 
+            <script src="../../../_static/sphinx_highlight.js"></script> 
         
         <script>
             const currTheme = localStorage.getItem("theme");
@@ -34,7 +33,7 @@
         <script type="text/javascript" src="../../../_static/kivy.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="top" title="Kivy 2.1.0 documentation" href="../../../index.html" />
+    <link rel="top" title="Kivy 2.2.0 documentation" href="../../../index.html" />
     <link rel="up" title="kivy" href="../../kivy.html" /> 
   </head>
   <body>
@@ -178,7 +177,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../api-index.html">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.html">Kivy framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy._metrics.html">Low level Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.app.html">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.atlas.html">Atlas</a></li>
@@ -213,6 +211,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.geometry.html">Geometry utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.gesture.html">Gesture recognition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.graphics.html">Graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.graphics.boxshadow.html">BoxShadow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.graphics.cgl.html">CGL: standard C interface for OpenGL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.graphics.compiler.html">Graphics compiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.graphics.context.html">Context management</a></li>
@@ -262,7 +261,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.lib.gstplayer.html">GstPlayer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.lib.mtdev.html">Python mtdev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.loader.html">Asynchronous data loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.logger.html">Logger object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.logger.html">Kivy Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.metrics.html">Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.modules.html">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.modules.console.html">Console</a></li>
@@ -663,13 +662,13 @@
 <span class="kn">from</span> <span class="nn">kivy.core.text</span> <span class="kn">import</span> <span class="n">Label</span> <span class="k">as</span> <span class="n">CoreLabel</span><span class="p">,</span> <span class="n">DEFAULT_FONT</span>
 <span class="kn">from</span> <span class="nn">kivy.core.text.markup</span> <span class="kn">import</span> <span class="n">MarkupLabel</span> <span class="k">as</span> <span class="n">CoreMarkupLabel</span>
 <span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">StringProperty</span><span class="p">,</span> <span class="n">OptionProperty</span><span class="p">,</span> \
-    <span class="n">NumericProperty</span><span class="p">,</span> <span class="n">BooleanProperty</span><span class="p">,</span> <span class="n">ReferenceListProperty</span><span class="p">,</span> \
-    <span class="n">ListProperty</span><span class="p">,</span> <span class="n">ObjectProperty</span><span class="p">,</span> <span class="n">DictProperty</span><span class="p">,</span> <span class="n">ColorProperty</span>
+    <span class="n">NumericProperty</span><span class="p">,</span> <span class="n">BooleanProperty</span><span class="p">,</span> <span class="n">ListProperty</span><span class="p">,</span> \
+    <span class="n">ObjectProperty</span><span class="p">,</span> <span class="n">DictProperty</span><span class="p">,</span> <span class="n">ColorProperty</span><span class="p">,</span> <span class="n">VariableListProperty</span>
 <span class="kn">from</span> <span class="nn">kivy.utils</span> <span class="kn">import</span> <span class="n">get_hex_from_color</span>
 
 
 <div class="viewcode-block" id="Label"><a class="viewcode-back" href="../../../api-kivy.uix.label.html#kivy.uix.label.Label">[docs]</a><span class="k">class</span> <span class="nc">Label</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Label class, see module documentation for more information.</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Label class, see module documentation for more information.</span>
 
 <span class="sd">    :Events:</span>
 <span class="sd">        `on_ref_press`</span>
@@ -679,10 +678,11 @@
 
     <span class="n">__events__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;on_ref_press&#39;</span><span class="p">]</span>
 
-    <span class="n">_font_properties</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;font_size&#39;</span><span class="p">,</span> <span class="s1">&#39;font_name&#39;</span><span class="p">,</span> <span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="s1">&#39;italic&#39;</span><span class="p">,</span>
+    <span class="n">_font_properties</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;font_size&#39;</span><span class="p">,</span> <span class="s1">&#39;font_name&#39;</span><span class="p">,</span> <span class="s1">&#39;font_script_name&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;font_direction&#39;</span><span class="p">,</span> <span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="s1">&#39;italic&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;underline&#39;</span><span class="p">,</span> <span class="s1">&#39;strikethrough&#39;</span><span class="p">,</span> <span class="s1">&#39;font_family&#39;</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;disabled_color&#39;</span><span class="p">,</span> <span class="s1">&#39;halign&#39;</span><span class="p">,</span> <span class="s1">&#39;valign&#39;</span><span class="p">,</span> <span class="s1">&#39;padding_x&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;padding_y&#39;</span><span class="p">,</span> <span class="s1">&#39;outline_width&#39;</span><span class="p">,</span> <span class="s1">&#39;disabled_outline_color&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;disabled_color&#39;</span><span class="p">,</span> <span class="s1">&#39;halign&#39;</span><span class="p">,</span> <span class="s1">&#39;valign&#39;</span><span class="p">,</span> <span class="s1">&#39;padding&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;outline_width&#39;</span><span class="p">,</span> <span class="s1">&#39;disabled_outline_color&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;outline_color&#39;</span><span class="p">,</span> <span class="s1">&#39;text_size&#39;</span><span class="p">,</span> <span class="s1">&#39;shorten&#39;</span><span class="p">,</span> <span class="s1">&#39;mipmap&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;line_height&#39;</span><span class="p">,</span> <span class="s1">&#39;max_lines&#39;</span><span class="p">,</span> <span class="s1">&#39;strip&#39;</span><span class="p">,</span> <span class="s1">&#39;shorten_from&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;split_str&#39;</span><span class="p">,</span> <span class="s1">&#39;ellipsis_options&#39;</span><span class="p">,</span> <span class="s1">&#39;unicode_errors&#39;</span><span class="p">,</span>
@@ -698,6 +698,11 @@
         <span class="n">d</span> <span class="o">=</span> <span class="n">Label</span><span class="o">.</span><span class="n">_font_properties</span>
         <span class="n">fbind</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span>
         <span class="n">update</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_texture_update</span>
+
+        <span class="c1"># NOTE: Compatibility code due to deprecated properties.</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;padding_x&#39;</span><span class="p">,</span> <span class="n">update</span><span class="p">,</span> <span class="s1">&#39;padding_x&#39;</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;padding_y&#39;</span><span class="p">,</span> <span class="n">update</span><span class="p">,</span> <span class="s1">&#39;padding_y&#39;</span><span class="p">)</span>
+
         <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;disabled&#39;</span><span class="p">,</span> <span class="n">update</span><span class="p">,</span> <span class="s1">&#39;disabled&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
             <span class="n">fbind</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">update</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
@@ -750,12 +755,21 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;outline_color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">disabled_outline_color</span> <span class="k">if</span> <span class="n">value</span> <span class="k">else</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">outline_color</span><span class="p">)</span>
+
+            <span class="c1"># NOTE: Compatibility code due to deprecated properties</span>
+            <span class="c1"># Must be removed along with padding_x and padding_y</span>
+            <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;padding_x&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">][::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">value</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span>
+            <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;padding_y&#39;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;padding&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">value</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span>
+
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_label</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_texture</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Label.texture_update"><a class="viewcode-back" href="../../../api-kivy.uix.label.html#kivy.uix.label.Label.texture_update">[docs]</a>    <span class="k">def</span> <span class="nf">texture_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;Force texture recreation with the current Label properties.</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Force texture recreation with the current Label properties.</span>
 
 <span class="sd">        After this function call, the :attr:`texture` and :attr:`texture_size`</span>
 <span class="sd">        will be updated in this order.</span>
@@ -823,7 +837,7 @@
     <span class="c1">#</span>
 
     <span class="n">disabled_color</span> <span class="o">=</span> <span class="n">ColorProperty</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">.3</span><span class="p">])</span>
-    <span class="sd">&#39;&#39;&#39;The color of the text when the widget is disabled, in the (r, g, b, a)</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;The color of the text when the widget is disabled, in the (r, g, b, a)</span>
 <span class="sd">    format.</span>
 
 <span class="sd">    .. versionadded:: 1.8.0</span>
@@ -837,7 +851,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">text</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Text of the label.</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Text of the label.</span>
 
 <span class="sd">    Creation of a simple hello world::</span>
 
@@ -848,7 +862,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">text_size</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span>
-    <span class="sd">&#39;&#39;&#39;By default, the label is not constrained to any bounding box.</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;By default, the label is not constrained to any bounding box.</span>
 <span class="sd">    You can set the size constraint of the label with this property.</span>
 <span class="sd">    The text will autoflow into the constraints. So although the font size</span>
 <span class="sd">    will not be reduced, the text will be arranged to fit into the box as best</span>
@@ -877,7 +891,7 @@
     <span class="n">base_direction</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span>
                      <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ltr&#39;</span><span class="p">,</span> <span class="s1">&#39;rtl&#39;</span><span class="p">,</span> <span class="s1">&#39;weak_rtl&#39;</span><span class="p">,</span> <span class="s1">&#39;weak_ltr&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
                      <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Base direction of text, this impacts horizontal alignment when</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Base direction of text, this impacts horizontal alignment when</span>
 <span class="sd">    :attr:`halign` is `auto` (the default). Available options are: None,</span>
 <span class="sd">    &quot;ltr&quot; (left to right), &quot;rtl&quot; (right to left) plus &quot;weak_ltr&quot; and</span>
 <span class="sd">    &quot;weak_rtl&quot;.</span>
@@ -896,7 +910,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">text_language</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Language of the text, if None Pango will determine it from locale.</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Language of the text, if None Pango will determine it from locale.</span>
 <span class="sd">    This is an RFC-3066 format language tag (as a string), for example</span>
 <span class="sd">    &quot;en_US&quot;, &quot;zh_CN&quot;, &quot;fr&quot; or &quot;ja&quot;. This can impact font selection, metrics</span>
 <span class="sd">    and rendering. For example, the same bytes of text can look different</span>
@@ -912,7 +926,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">font_context</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Font context. `None` means the font is used in isolation, so you are</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Font context. `None` means the font is used in isolation, so you are</span>
 <span class="sd">    guaranteed to be drawing with the TTF file resolved by :attr:`font_name`.</span>
 <span class="sd">    Specifying a value here will load the font file into a named context,</span>
 <span class="sd">    enabling fallback between all fonts in the same context. If a font</span>
@@ -924,7 +938,7 @@
 <span class="sd">    you can load the system fonts by specifying a font context starting</span>
 <span class="sd">    with the special string `system://`. This will load the system</span>
 <span class="sd">    fontconfig configuration, and add your application-specific fonts on</span>
-<span class="sd">    top of it (this imposes a signifficant risk of family name collision,</span>
+<span class="sd">    top of it (this imposes a significant risk of family name collision,</span>
 <span class="sd">    Pango may not use your custom font file, but pick one from the system)</span>
 
 <span class="sd">    .. note::</span>
@@ -937,7 +951,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">font_family</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Font family, this is only applicable when using :attr:`font_context`</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Font family, this is only applicable when using :attr:`font_context`</span>
 <span class="sd">    option. The specified font family will be requested, but note that it may</span>
 <span class="sd">    not be available, or there could be multiple fonts registered with the</span>
 <span class="sd">    same family. The value can be a family name (string) available in the</span>
@@ -961,7 +975,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">font_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="n">DEFAULT_FONT</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Filename of the font to use. The path can be absolute or relative.</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Filename of the font to use. The path can be absolute or relative.</span>
 <span class="sd">    Relative paths are resolved by the :func:`~kivy.resources.resource_find`</span>
 <span class="sd">    function.</span>
 
@@ -983,15 +997,59 @@
 <span class="sd">    from :class:`~kivy.config.Config`.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
+    <span class="n">font_script_name</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">&#39;Latn&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Zyyy&#39;</span><span class="p">,</span> <span class="s1">&#39;Latn&#39;</span><span class="p">,</span> <span class="s1">&#39;Hani&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Cyrl&#39;</span><span class="p">,</span> <span class="s1">&#39;Hira&#39;</span><span class="p">,</span> <span class="s1">&#39;Kana&#39;</span><span class="p">,</span> <span class="s1">&#39;Thai&#39;</span><span class="p">,</span> <span class="s1">&#39;Arab&#39;</span><span class="p">,</span> <span class="s1">&#39;Hang&#39;</span><span class="p">,</span> <span class="s1">&#39;Deva&#39;</span><span class="p">,</span> <span class="s1">&#39;Grek&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Hebr&#39;</span><span class="p">,</span> <span class="s1">&#39;Taml&#39;</span><span class="p">,</span> <span class="s1">&#39;Knda&#39;</span><span class="p">,</span> <span class="s1">&#39;Geor&#39;</span><span class="p">,</span> <span class="s1">&#39;Mlym&#39;</span><span class="p">,</span> <span class="s1">&#39;Telu&#39;</span><span class="p">,</span> <span class="s1">&#39;Mymr&#39;</span><span class="p">,</span> <span class="s1">&#39;Gujr&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Beng&#39;</span><span class="p">,</span> <span class="s1">&#39;Guru&#39;</span><span class="p">,</span> <span class="s1">&#39;Laoo&#39;</span><span class="p">,</span> <span class="s1">&#39;Zinh&#39;</span><span class="p">,</span> <span class="s1">&#39;Khmr&#39;</span><span class="p">,</span> <span class="s1">&#39;Tibt&#39;</span><span class="p">,</span> <span class="s1">&#39;Sinh&#39;</span><span class="p">,</span> <span class="s1">&#39;Ethi&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Thaa&#39;</span><span class="p">,</span> <span class="s1">&#39;Orya&#39;</span><span class="p">,</span> <span class="s1">&#39;Zzzz&#39;</span><span class="p">,</span> <span class="s1">&#39;Cans&#39;</span><span class="p">,</span> <span class="s1">&#39;Syrc&#39;</span><span class="p">,</span> <span class="s1">&#39;Bopo&#39;</span><span class="p">,</span> <span class="s1">&#39;Nkoo&#39;</span><span class="p">,</span> <span class="s1">&#39;Cher&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Yiii&#39;</span><span class="p">,</span> <span class="s1">&#39;Samr&#39;</span><span class="p">,</span> <span class="s1">&#39;Copt&#39;</span><span class="p">,</span> <span class="s1">&#39;Mong&#39;</span><span class="p">,</span> <span class="s1">&#39;Glag&#39;</span><span class="p">,</span> <span class="s1">&#39;Vaii&#39;</span><span class="p">,</span> <span class="s1">&#39;Bali&#39;</span><span class="p">,</span> <span class="s1">&#39;Tfng&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Bamu&#39;</span><span class="p">,</span> <span class="s1">&#39;Batk&#39;</span><span class="p">,</span> <span class="s1">&#39;Cham&#39;</span><span class="p">,</span> <span class="s1">&#39;Java&#39;</span><span class="p">,</span> <span class="s1">&#39;Kali&#39;</span><span class="p">,</span> <span class="s1">&#39;Lepc&#39;</span><span class="p">,</span> <span class="s1">&#39;Limb&#39;</span><span class="p">,</span> <span class="s1">&#39;Lisu&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Mand&#39;</span><span class="p">,</span> <span class="s1">&#39;Mtei&#39;</span><span class="p">,</span> <span class="s1">&#39;Talu&#39;</span><span class="p">,</span> <span class="s1">&#39;Olck&#39;</span><span class="p">,</span> <span class="s1">&#39;Saur&#39;</span><span class="p">,</span> <span class="s1">&#39;Sund&#39;</span><span class="p">,</span> <span class="s1">&#39;Sylo&#39;</span><span class="p">,</span> <span class="s1">&#39;Tale&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Lana&#39;</span><span class="p">,</span> <span class="s1">&#39;Avst&#39;</span><span class="p">,</span> <span class="s1">&#39;Brah&#39;</span><span class="p">,</span> <span class="s1">&#39;Bugi&#39;</span><span class="p">,</span> <span class="s1">&#39;Buhd&#39;</span><span class="p">,</span> <span class="s1">&#39;Cari&#39;</span><span class="p">,</span> <span class="s1">&#39;Xsux&#39;</span><span class="p">,</span> <span class="s1">&#39;Cprt&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Dsrt&#39;</span><span class="p">,</span> <span class="s1">&#39;Egyp&#39;</span><span class="p">,</span> <span class="s1">&#39;Goth&#39;</span><span class="p">,</span> <span class="s1">&#39;Hano&#39;</span><span class="p">,</span> <span class="s1">&#39;Armi&#39;</span><span class="p">,</span> <span class="s1">&#39;Phli&#39;</span><span class="p">,</span> <span class="s1">&#39;Prti&#39;</span><span class="p">,</span> <span class="s1">&#39;Kthi&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Khar&#39;</span><span class="p">,</span> <span class="s1">&#39;Linb&#39;</span><span class="p">,</span> <span class="s1">&#39;Lyci&#39;</span><span class="p">,</span> <span class="s1">&#39;Lydi&#39;</span><span class="p">,</span> <span class="s1">&#39;Ogam&#39;</span><span class="p">,</span> <span class="s1">&#39;Ital&#39;</span><span class="p">,</span> <span class="s1">&#39;Xpeo&#39;</span><span class="p">,</span> <span class="s1">&#39;Sarb&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Orkh&#39;</span><span class="p">,</span> <span class="s1">&#39;Osma&#39;</span><span class="p">,</span> <span class="s1">&#39;Phag&#39;</span><span class="p">,</span> <span class="s1">&#39;Phnx&#39;</span><span class="p">,</span> <span class="s1">&#39;Rjng&#39;</span><span class="p">,</span> <span class="s1">&#39;Runr&#39;</span><span class="p">,</span> <span class="s1">&#39;Shaw&#39;</span><span class="p">,</span> <span class="s1">&#39;Tglg&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Tagb&#39;</span><span class="p">,</span> <span class="s1">&#39;Ugar&#39;</span><span class="p">,</span> <span class="s1">&#39;Cakm&#39;</span><span class="p">,</span> <span class="s1">&#39;Merc&#39;</span><span class="p">,</span> <span class="s1">&#39;Mero&#39;</span><span class="p">,</span> <span class="s1">&#39;Plrd&#39;</span><span class="p">,</span> <span class="s1">&#39;Shrd&#39;</span><span class="p">,</span> <span class="s1">&#39;Sora&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Takr&#39;</span><span class="p">,</span> <span class="s1">&#39;Brai&#39;</span><span class="p">,</span> <span class="s1">&#39;Aghb&#39;</span><span class="p">,</span> <span class="s1">&#39;Bass&#39;</span><span class="p">,</span> <span class="s1">&#39;Dupl&#39;</span><span class="p">,</span> <span class="s1">&#39;Elba&#39;</span><span class="p">,</span> <span class="s1">&#39;Gran&#39;</span><span class="p">,</span> <span class="s1">&#39;Khoj&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Lina&#39;</span><span class="p">,</span> <span class="s1">&#39;Mahj&#39;</span><span class="p">,</span> <span class="s1">&#39;Mani&#39;</span><span class="p">,</span> <span class="s1">&#39;Modi&#39;</span><span class="p">,</span> <span class="s1">&#39;Mroo&#39;</span><span class="p">,</span> <span class="s1">&#39;Narb&#39;</span><span class="p">,</span> <span class="s1">&#39;Nbat&#39;</span><span class="p">,</span> <span class="s1">&#39;Palm&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Pauc&#39;</span><span class="p">,</span> <span class="s1">&#39;Perm&#39;</span><span class="p">,</span> <span class="s1">&#39;Phlp&#39;</span><span class="p">,</span> <span class="s1">&#39;Sidd&#39;</span><span class="p">,</span> <span class="s1">&#39;Sind&#39;</span><span class="p">,</span> <span class="s1">&#39;Tirh&#39;</span><span class="p">,</span> <span class="s1">&#39;Wara&#39;</span><span class="p">,</span> <span class="s1">&#39;Ahom&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Hluw&#39;</span><span class="p">,</span> <span class="s1">&#39;Hatr&#39;</span><span class="p">,</span> <span class="s1">&#39;Mult&#39;</span><span class="p">,</span> <span class="s1">&#39;Hung&#39;</span><span class="p">,</span> <span class="s1">&#39;Sgnw&#39;</span><span class="p">,</span> <span class="s1">&#39;Adlm&#39;</span><span class="p">,</span> <span class="s1">&#39;Bhks&#39;</span><span class="p">,</span> <span class="s1">&#39;Marc&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Osge&#39;</span><span class="p">,</span> <span class="s1">&#39;Tang&#39;</span><span class="p">,</span> <span class="s1">&#39;Newa&#39;</span><span class="p">,</span> <span class="s1">&#39;Gonm&#39;</span><span class="p">,</span> <span class="s1">&#39;Nshu&#39;</span><span class="p">,</span> <span class="s1">&#39;Soyo&#39;</span><span class="p">,</span> <span class="s1">&#39;Zanb&#39;</span><span class="p">,</span> <span class="s1">&#39;Dogr&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Gong&#39;</span><span class="p">,</span> <span class="s1">&#39;Rohg&#39;</span><span class="p">,</span> <span class="s1">&#39;Maka&#39;</span><span class="p">,</span> <span class="s1">&#39;Medf&#39;</span><span class="p">,</span> <span class="s1">&#39;Sogo&#39;</span><span class="p">,</span> <span class="s1">&#39;Sogd&#39;</span><span class="p">,</span> <span class="s1">&#39;Elym&#39;</span><span class="p">,</span> <span class="s1">&#39;Hmnp&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Nand&#39;</span><span class="p">,</span> <span class="s1">&#39;Wcho&#39;</span><span class="p">,</span> <span class="s1">&#39;Chrs&#39;</span><span class="p">,</span> <span class="s1">&#39;Diak&#39;</span><span class="p">,</span> <span class="s1">&#39;Kits&#39;</span><span class="p">,</span> <span class="s1">&#39;Yezi&#39;</span><span class="p">,</span> <span class="s1">&#39;Cpmn&#39;</span><span class="p">,</span> <span class="s1">&#39;Ougr&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Tnsa&#39;</span><span class="p">,</span> <span class="s1">&#39;Toto&#39;</span><span class="p">,</span> <span class="s1">&#39;Vith&#39;</span><span class="p">,</span> <span class="s1">&#39;Kawi&#39;</span><span class="p">,</span> <span class="s1">&#39;Nagm&#39;</span><span class="p">])</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;`script_code` from https://bit.ly/TypeScriptCodes .</span>
+
+<span class="sd">    .. versionadded:: 2.2.0</span>
+
+<span class="sd">    .. warning::</span>
+
+<span class="sd">        font_script_name is only currently supported in SDL2 ttf providers.</span>
+
+
+<span class="sd">    :attr:`font_script_name` is a :class:`~kivy.properties.OptionProperty` and</span>
+<span class="sd">    defaults to &#39;Latn&#39;.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">font_direction</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">&#39;ltr&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;rtl&#39;</span><span class="p">,</span> <span class="s1">&#39;ltr&#39;</span><span class="p">,</span> <span class="s1">&#39;ttb&#39;</span><span class="p">,</span> <span class="s1">&#39;btt&#39;</span><span class="p">])</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Direction for the specific font, can be one of `ltr`, `rtl`, `ttb`,`btt`.</span>
+
+<span class="sd">    font_direction currently only works with SDL2 ttf providers.</span>
+
+<span class="sd">    .. versionadded:: 2.2.0</span>
+
+<span class="sd">    :attr:`font_direction` is a :class:`~kivy.properties.OptionProperty` and</span>
+<span class="sd">    defults to &#39;ltr&#39;. &#39;&#39;&#39;</span>
+
     <span class="n">font_size</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="s1">&#39;15sp&#39;</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Font size of the text, in pixels.</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Font size of the text, in pixels.</span>
 
 <span class="sd">    :attr:`font_size` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to 15sp.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">font_features</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">()</span>
-    <span class="sd">&#39;&#39;&#39;OpenType font features, in CSS format, this is passed straight</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;OpenType font features, in CSS format, this is passed straight</span>
 <span class="sd">    through to Pango. The effects of requesting a feature depends on loaded</span>
 <span class="sd">    fonts, library versions, etc. For a complete list of features, see:</span>
 
@@ -1008,7 +1066,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">line_height</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Line Height for the text. e.g. line_height = 2 will cause the spacing</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Line Height for the text. e.g. line_height = 2 will cause the spacing</span>
 <span class="sd">    between lines to be twice the size.</span>
 
 <span class="sd">    :attr:`line_height` is a :class:`~kivy.properties.NumericProperty` and</span>
@@ -1018,7 +1076,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">bold</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Indicates use of the bold version of your font.</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Indicates use of the bold version of your font.</span>
 
 <span class="sd">    .. note::</span>
 
@@ -1030,7 +1088,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">italic</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Indicates use of the italic version of your font.</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Indicates use of the italic version of your font.</span>
 
 <span class="sd">    .. note::</span>
 
@@ -1042,7 +1100,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">underline</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Adds an underline to the text.</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Adds an underline to the text.</span>
 
 <span class="sd">    .. note::</span>
 <span class="sd">        This feature requires the SDL2 text provider.</span>
@@ -1054,7 +1112,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">strikethrough</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Adds a strikethrough line to the text.</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Adds a strikethrough line to the text.</span>
 
 <span class="sd">    .. note::</span>
 <span class="sd">        This feature requires the SDL2 text provider.</span>
@@ -1065,8 +1123,8 @@
 <span class="sd">    defaults to False.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="n">padding_x</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Horizontal padding of the text inside the widget box.</span>
+    <span class="n">padding_x</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">deprecated</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Horizontal padding of the text inside the widget box.</span>
 
 <span class="sd">    :attr:`padding_x` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to 0.</span>
@@ -1074,10 +1132,13 @@
 <span class="sd">    .. versionchanged:: 1.9.0</span>
 <span class="sd">        `padding_x` has been fixed to work as expected.</span>
 <span class="sd">        In the past, the text was padded by the negative of its values.</span>
+
+<span class="sd">    .. deprecated:: 2.2.0</span>
+<span class="sd">        Please use :attr:`padding` instead.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="n">padding_y</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Vertical padding of the text inside the widget box.</span>
+    <span class="n">padding_y</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">deprecated</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Vertical padding of the text inside the widget box.</span>
 
 <span class="sd">    :attr:`padding_y` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to 0.</span>
@@ -1085,18 +1146,28 @@
 <span class="sd">    .. versionchanged:: 1.9.0</span>
 <span class="sd">        `padding_y` has been fixed to work as expected.</span>
 <span class="sd">        In the past, the text was padded by the negative of its values.</span>
+
+<span class="sd">    .. deprecated:: 2.2.0</span>
+<span class="sd">        Please use :attr:`padding` instead.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="n">padding</span> <span class="o">=</span> <span class="n">ReferenceListProperty</span><span class="p">(</span><span class="n">padding_x</span><span class="p">,</span> <span class="n">padding_y</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Padding of the text in the format (padding_x, padding_y)</span>
+    <span class="n">padding</span> <span class="o">=</span> <span class="n">VariableListProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">lenght</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Padding of the text in the format [padding_left, padding_top,</span>
+<span class="sd">    padding_right, padding_bottom]</span>
 
-<span class="sd">    :attr:`padding` is a :class:`~kivy.properties.ReferenceListProperty` of</span>
-<span class="sd">    (:attr:`padding_x`, :attr:`padding_y`) properties.</span>
+<span class="sd">    ``padding`` also accepts a two argument form [padding_horizontal,</span>
+<span class="sd">    padding_vertical] and a one argument form [padding].</span>
+
+<span class="sd">    .. versionchanged:: 2.2.0</span>
+<span class="sd">        Replaced ReferenceListProperty with VariableListProperty.</span>
+
+<span class="sd">    :attr:`padding` is a :class:`~kivy.properties.VariableListProperty` and</span>
+<span class="sd">    defaults to [0, 0, 0, 0].</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">halign</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span>
                             <span class="s1">&#39;justify&#39;</span><span class="p">,</span> <span class="s1">&#39;auto&#39;</span><span class="p">])</span>
-    <span class="sd">&#39;&#39;&#39;Horizontal alignment of the text.</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Horizontal alignment of the text.</span>
 
 <span class="sd">    :attr:`halign` is an :class:`~kivy.properties.OptionProperty` and</span>
 <span class="sd">    defaults to &#39;auto&#39;. Available options are : auto, left, center, right and</span>
@@ -1119,7 +1190,7 @@
 
     <span class="n">valign</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span>
                             <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="s1">&#39;middle&#39;</span><span class="p">,</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="s1">&#39;top&#39;</span><span class="p">])</span>
-    <span class="sd">&#39;&#39;&#39;Vertical alignment of the text.</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Vertical alignment of the text.</span>
 
 <span class="sd">    :attr:`valign` is an :class:`~kivy.properties.OptionProperty` and defaults</span>
 <span class="sd">    to &#39;bottom&#39;. Available options are : `&#39;bottom&#39;`,</span>
@@ -1137,7 +1208,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">color</span> <span class="o">=</span> <span class="n">ColorProperty</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-    <span class="sd">&#39;&#39;&#39;Text color, in the format (r, g, b, a).</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Text color, in the format (r, g, b, a).</span>
 
 <span class="sd">    :attr:`color` is a :class:`~kivy.properties.ColorProperty` and defaults to</span>
 <span class="sd">    [1, 1, 1, 1].</span>
@@ -1148,7 +1219,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">outline_width</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Width in pixels for the outline around the text. No outline will be</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Width in pixels for the outline around the text. No outline will be</span>
 <span class="sd">    rendered if the value is None.</span>
 
 <span class="sd">    .. note::</span>
@@ -1161,7 +1232,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">outline_color</span> <span class="o">=</span> <span class="n">ColorProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-    <span class="sd">&#39;&#39;&#39;The color of the text outline, in the (r, g, b) format.</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;The color of the text outline, in the (r, g, b) format.</span>
 
 <span class="sd">    .. note::</span>
 <span class="sd">        This feature requires the SDL2 text provider.</span>
@@ -1178,7 +1249,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">disabled_outline_color</span> <span class="o">=</span> <span class="n">ColorProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-    <span class="sd">&#39;&#39;&#39;The color of the text outline when the widget is disabled, in the</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;The color of the text outline when the widget is disabled, in the</span>
 <span class="sd">    (r, g, b) format.</span>
 
 <span class="sd">    .. note::</span>
@@ -1196,7 +1267,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">texture</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Texture object of the text.</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Texture object of the text.</span>
 <span class="sd">    The text is rendered automatically when a property changes. The OpenGL</span>
 <span class="sd">    texture created in this operation is stored in this property. You can use</span>
 <span class="sd">    this :attr:`texture` for any graphics elements.</span>
@@ -1223,7 +1294,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">texture_size</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-    <span class="sd">&#39;&#39;&#39;Texture size of the text. The size is determined by the font size and</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Texture size of the text. The size is determined by the font size and</span>
 <span class="sd">    text. If :attr:`text_size` is [None, None], the texture will be the size</span>
 <span class="sd">    required to fit the text, otherwise it&#39;s clipped to fit :attr:`text_size`.</span>
 
@@ -1240,7 +1311,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">mipmap</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Indicates whether OpenGL mipmapping is applied to the texture or not.</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Indicates whether OpenGL mipmapping is applied to the texture or not.</span>
 <span class="sd">    Read :ref:`mipmap` for more information.</span>
 
 <span class="sd">    .. versionadded:: 1.0.7</span>
@@ -1250,7 +1321,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">shorten</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Indicates whether the label should attempt to shorten its textual contents</span>
 <span class="sd">    as much as possible if a :attr:`text_size` is given. Setting this to True</span>
 <span class="sd">    without an appropriately set :attr:`text_size` will lead to unexpected</span>
@@ -1266,7 +1337,7 @@
 
     <span class="n">shorten_from</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span>
                                                      <span class="s1">&#39;right&#39;</span><span class="p">])</span>
-    <span class="sd">&#39;&#39;&#39;The side from which we should shorten the text from, can be left,</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;The side from which we should shorten the text from, can be left,</span>
 <span class="sd">    right, or center.</span>
 
 <span class="sd">    For example, if left, the ellipsis will appear towards the left side and we</span>
@@ -1282,7 +1353,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">is_shortened</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;This property indicates if :attr:`text` was rendered with or without</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;This property indicates if :attr:`text` was rendered with or without</span>
 <span class="sd">    shortening when :attr:`shorten` is True.</span>
 
 <span class="sd">    .. versionadded:: 1.10.0</span>
@@ -1292,7 +1363,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">split_str</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;The string used to split the :attr:`text` while shortening the string</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;The string used to split the :attr:`text` while shortening the string</span>
 <span class="sd">    when :attr:`shorten` is True.</span>
 
 <span class="sd">    For example, if it&#39;s a space, the string will be broken into words and as</span>
@@ -1307,7 +1378,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">ellipsis_options</span> <span class="o">=</span> <span class="n">DictProperty</span><span class="p">({})</span>
-    <span class="sd">&#39;&#39;&#39;Font options for the ellipsis string(&#39;...&#39;) used to split the text.</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Font options for the ellipsis string(&#39;...&#39;) used to split the text.</span>
 
 <span class="sd">    Accepts a dict as option name with the value. Only applied when</span>
 <span class="sd">    :attr:`markup` is true and text is shortened. All font options which work</span>
@@ -1330,7 +1401,7 @@
 
     <span class="n">unicode_errors</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span>
         <span class="s1">&#39;replace&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;strict&#39;</span><span class="p">,</span> <span class="s1">&#39;replace&#39;</span><span class="p">,</span> <span class="s1">&#39;ignore&#39;</span><span class="p">))</span>
-    <span class="sd">&#39;&#39;&#39;How to handle unicode decode errors. Can be `&#39;strict&#39;`, `&#39;replace&#39;` or</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;How to handle unicode decode errors. Can be `&#39;strict&#39;`, `&#39;replace&#39;` or</span>
 <span class="sd">    `&#39;ignore&#39;`.</span>
 
 <span class="sd">    .. versionadded:: 1.9.0</span>
@@ -1340,7 +1411,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">markup</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    .. versionadded:: 1.1.0</span>
 
 <span class="sd">    If True, the text will be rendered using the</span>
@@ -1353,7 +1424,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">refs</span> <span class="o">=</span> <span class="n">DictProperty</span><span class="p">({})</span>
-    <span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    .. versionadded:: 1.1.0</span>
 
 <span class="sd">    List of ``[ref=xxx]`` markup items in the text with the bounding box of</span>
@@ -1391,7 +1462,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">anchors</span> <span class="o">=</span> <span class="n">DictProperty</span><span class="p">({})</span>
-    <span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    .. versionadded:: 1.1.0</span>
 
 <span class="sd">    Position of all the ``[anchor=xxx]`` markup in the text.</span>
@@ -1423,7 +1494,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">max_lines</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Maximum number of lines to use, defaults to 0, which means unlimited.</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Maximum number of lines to use, defaults to 0, which means unlimited.</span>
 <span class="sd">    Please note that :attr:`shorten` take over this property. (with</span>
 <span class="sd">    shorten, the text is always one line.)</span>
 
@@ -1434,7 +1505,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">strip</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Whether leading and trailing spaces and newlines should be stripped from</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Whether leading and trailing spaces and newlines should be stripped from</span>
 <span class="sd">    each displayed line. If True, every line will start at the right or left</span>
 <span class="sd">    edge, depending on :attr:`halign`. If :attr:`halign` is `justify` it is</span>
 <span class="sd">    implicitly True.</span>
@@ -1447,7 +1518,7 @@
 
     <span class="n">font_hinting</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span>
         <span class="s1">&#39;normal&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;normal&#39;</span><span class="p">,</span> <span class="s1">&#39;light&#39;</span><span class="p">,</span> <span class="s1">&#39;mono&#39;</span><span class="p">],</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;What hinting option to use for font rendering.</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;What hinting option to use for font rendering.</span>
 <span class="sd">    Can be one of `&#39;normal&#39;`, `&#39;light&#39;`, `&#39;mono&#39;` or None.</span>
 
 <span class="sd">    .. note::</span>
@@ -1460,7 +1531,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">font_kerning</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Whether kerning is enabled for font rendering. You should normally</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Whether kerning is enabled for font rendering. You should normally</span>
 <span class="sd">    only disable this if rendering is broken with a particular font file.</span>
 
 <span class="sd">    .. note::</span>
@@ -1473,7 +1544,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">font_blended</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-    <span class="sd">&#39;&#39;&#39;Whether blended or solid font rendering should be used.</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Whether blended or solid font rendering should be used.</span>
 
 <span class="sd">    .. note::</span>
 <span class="sd">        This feature requires the SDL2 text provider.</span>
@@ -1521,8 +1592,8 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 06, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
+      Last updated on May 20, 2023.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
   </body>

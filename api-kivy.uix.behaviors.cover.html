@@ -7,18 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
-    <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Cover Behavior &mdash; Kivy 2.1.0 documentation</title>
+    <title>Cover Behavior &mdash; Kivy 2.2.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/fresh.css" type="text/css" />
          
           <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script> 
             <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script> 
-            <script src="_static/jquery.js"></script> 
-            <script src="_static/underscore.js"></script> 
             <script src="_static/doctools.js"></script> 
+            <script src="_static/sphinx_highlight.js"></script> 
         
         <script>
             const currTheme = localStorage.getItem("theme");
@@ -35,7 +34,7 @@
         <script type="text/javascript" src="_static/kivy.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="Kivy 2.1.0 documentation" href="index.html" />
+    <link rel="top" title="Kivy 2.2.0 documentation" href="index.html" />
     <link rel="up" title="Behaviors" href="api-kivy.uix.behaviors.html" />
     <link rel="next" title="Drag Behavior" href="api-kivy.uix.behaviors.drag.html" />
     <link rel="prev" title="Compound Selection Behavior" href="api-kivy.uix.behaviors.compoundselection.html" /> 
@@ -102,6 +101,12 @@
           <ul>
 <li><a class="reference internal" href="#">Cover Behavior</a><ul>
 <li><a class="reference internal" href="#example">Example</a></li>
+<li><a class="reference internal" href="#kivy.uix.behaviors.cover.CoverBehavior"><code class="docutils literal notranslate"><span class="pre">CoverBehavior</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.uix.behaviors.cover.CoverBehavior.cover_pos"><code class="docutils literal notranslate"><span class="pre">CoverBehavior.cover_pos</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.behaviors.cover.CoverBehavior.cover_size"><code class="docutils literal notranslate"><span class="pre">CoverBehavior.cover_size</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.behaviors.cover.CoverBehavior.reference_size"><code class="docutils literal notranslate"><span class="pre">CoverBehavior.reference_size</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -187,7 +192,6 @@
 <li class="toctree-l1 current"><a class="reference internal" href="api-index.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.html">Kivy framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy._metrics.html">Low level Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy._version.html">NO DOCUMENTATION (module kivy.uix.recycleview)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.animation.html">Animation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.app.html">Application</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.atlas.html">Atlas</a></li>
@@ -222,6 +226,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.geometry.html">Geometry utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.gesture.html">Gesture recognition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.html">Graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.boxshadow.html">BoxShadow</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.cgl.html">CGL: standard C interface for OpenGL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.compiler.html">Graphics compiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.context.html">Context management</a></li>
@@ -271,7 +276,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.gstplayer.html">GstPlayer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.lib.mtdev.html">Python mtdev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.loader.html">Asynchronous data loader</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Logger object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.logger.html">Kivy Logging</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.metrics.html">Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.html">Modules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.modules.console.html">Console</a></li>
@@ -387,13 +392,19 @@
             <div class="toc"><h2>Table Of Contents</h2><ul>
 <li><a class="reference internal" href="#">Cover Behavior</a><ul>
 <li><a class="reference internal" href="#example">Example</a></li>
+<li><a class="reference internal" href="#kivy.uix.behaviors.cover.CoverBehavior"><code class="docutils literal notranslate"><span class="pre">CoverBehavior</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.uix.behaviors.cover.CoverBehavior.cover_pos"><code class="docutils literal notranslate"><span class="pre">CoverBehavior.cover_pos</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.behaviors.cover.CoverBehavior.cover_size"><code class="docutils literal notranslate"><span class="pre">CoverBehavior.cover_size</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.behaviors.cover.CoverBehavior.reference_size"><code class="docutils literal notranslate"><span class="pre">CoverBehavior.reference_size</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
             
   <section id="module-kivy.uix.behaviors.cover">
-<span id="cover-behavior"></span><h1>Cover Behavior<a class="headerlink" href="#module-kivy.uix.behaviors.cover" title="Permalink to this headline">¶</a></h1>
+<span id="cover-behavior"></span><h1>Cover Behavior<a class="headerlink" href="#module-kivy.uix.behaviors.cover" title="Permalink to this heading">¶</a></h1>
 <p>The <a class="reference internal" href="#kivy.uix.behaviors.cover.CoverBehavior" title="kivy.uix.behaviors.cover.CoverBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoverBehavior</span></code></a>
 <a class="reference external" href="https://en.wikipedia.org/wiki/Mixin">mixin</a> is intended for rendering
 textures to full widget size keeping the aspect ratio of the original texture.</p>
@@ -402,7 +413,7 @@ a dynamic layout.</p>
 <p>For an overview of behaviors, please refer to the <a class="reference internal" href="api-kivy.uix.behaviors.html#module-kivy.uix.behaviors" title="kivy.uix.behaviors"><code class="xref py py-mod docutils literal notranslate"><span class="pre">behaviors</span></code></a>
 documentation.</p>
 <section id="example">
-<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this heading">¶</a></h2>
 <p>The following examples add cover behavior to an image:</p>
 <p>In python:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
@@ -436,6 +447,7 @@ documentation.</p>
 </pre></div>
 </div>
 <p>See <a class="reference internal" href="#kivy.uix.behaviors.cover.CoverBehavior" title="kivy.uix.behaviors.cover.CoverBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoverBehavior</span></code></a> for details.</p>
+</section>
 <dl class="py class">
 <dt class="sig sig-object py" id="kivy.uix.behaviors.cover.CoverBehavior">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.uix.behaviors.cover.</span></span><span class="sig-name descname"><span class="pre">CoverBehavior</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/uix/behaviors/cover.html#CoverBehavior"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.uix.behaviors.cover.CoverBehavior" title="Permalink to this definition">¶</a></dt>
@@ -474,7 +486,6 @@ defaults to <cite>[]</cite>.</p>
 
 </dd></dl>
 
-</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -526,8 +537,8 @@ defaults to <cite>[]</cite>.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Mar 06, 2022.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 4.4.0.
+      Last updated on May 20, 2023.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
   </body>
