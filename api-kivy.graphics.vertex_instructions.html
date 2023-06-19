@@ -135,6 +135,7 @@
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dash_offset"><code class="docutils literal notranslate"><span class="pre">Line.dash_offset</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dashes"><code class="docutils literal notranslate"><span class="pre">Line.dashes</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.ellipse"><code class="docutils literal notranslate"><span class="pre">Line.ellipse</span></code></a></li>
+<li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.force_custom_drawing_method"><code class="docutils literal notranslate"><span class="pre">Line.force_custom_drawing_method</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.joint"><code class="docutils literal notranslate"><span class="pre">Line.joint</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.joint_precision"><code class="docutils literal notranslate"><span class="pre">Line.joint_precision</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.points"><code class="docutils literal notranslate"><span class="pre">Line.points</span></code></a></li>
@@ -495,6 +496,7 @@
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dash_offset"><code class="docutils literal notranslate"><span class="pre">Line.dash_offset</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dashes"><code class="docutils literal notranslate"><span class="pre">Line.dashes</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.ellipse"><code class="docutils literal notranslate"><span class="pre">Line.ellipse</span></code></a></li>
+<li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.force_custom_drawing_method"><code class="docutils literal notranslate"><span class="pre">Line.force_custom_drawing_method</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.joint"><code class="docutils literal notranslate"><span class="pre">Line.joint</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.joint_precision"><code class="docutils literal notranslate"><span class="pre">Line.joint_precision</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.points"><code class="docutils literal notranslate"><span class="pre">Line.points</span></code></a></li>
@@ -789,12 +791,14 @@ ignored and the number of segments will be automatically calculated.</p>
 <p>The line has 3 internal drawing modes that you should be aware of
 for optimal results:</p>
 <ol class="arabic simple">
-<li><p>If the <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.width" title="kivy.graphics.vertex_instructions.Line.width"><code class="xref py py-attr docutils literal notranslate"><span class="pre">width</span></code></a> is 1.0, then the standard GL_LINE drawing from
-OpenGL will be used. <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dash_length" title="kivy.graphics.vertex_instructions.Line.dash_length"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dash_length</span></code></a>, <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dash_offset" title="kivy.graphics.vertex_instructions.Line.dash_offset"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dash_offset</span></code></a>, and <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dashes" title="kivy.graphics.vertex_instructions.Line.dashes"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dashes</span></code></a> will
-work, while properties for cap and joint have no meaning here.</p></li>
-<li><p>If the <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.width" title="kivy.graphics.vertex_instructions.Line.width"><code class="xref py py-attr docutils literal notranslate"><span class="pre">width</span></code></a> is greater than 1.0, then a custom drawing method,
-based on triangulation, will be used. <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dash_length" title="kivy.graphics.vertex_instructions.Line.dash_length"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dash_length</span></code></a>,
-<a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dash_offset" title="kivy.graphics.vertex_instructions.Line.dash_offset"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dash_offset</span></code></a>, and <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dashes" title="kivy.graphics.vertex_instructions.Line.dashes"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dashes</span></code></a> do not work in this mode.
+<li><p>If the <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.width" title="kivy.graphics.vertex_instructions.Line.width"><code class="xref py py-attr docutils literal notranslate"><span class="pre">width</span></code></a> is 1.0 and <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.force_custom_drawing_method" title="kivy.graphics.vertex_instructions.Line.force_custom_drawing_method"><code class="xref py py-attr docutils literal notranslate"><span class="pre">force_custom_drawing_method</span></code></a> is False, then the
+standard GL_LINE drawing from OpenGL will be used. <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dash_length" title="kivy.graphics.vertex_instructions.Line.dash_length"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dash_length</span></code></a>,
+<a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dash_offset" title="kivy.graphics.vertex_instructions.Line.dash_offset"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dash_offset</span></code></a>, and <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dashes" title="kivy.graphics.vertex_instructions.Line.dashes"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dashes</span></code></a> will work, while properties for
+cap and joint have no meaning here.</p></li>
+<li><p>If the <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.width" title="kivy.graphics.vertex_instructions.Line.width"><code class="xref py py-attr docutils literal notranslate"><span class="pre">width</span></code></a> is greater than 1.0 or <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.force_custom_drawing_method" title="kivy.graphics.vertex_instructions.Line.force_custom_drawing_method"><code class="xref py py-attr docutils literal notranslate"><span class="pre">force_custom_drawing_method</span></code></a>
+is True, then a custom drawing method, based on triangulation,
+will be used. <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dash_length" title="kivy.graphics.vertex_instructions.Line.dash_length"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dash_length</span></code></a>, <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dash_offset" title="kivy.graphics.vertex_instructions.Line.dash_offset"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dash_offset</span></code></a>,
+and <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dashes" title="kivy.graphics.vertex_instructions.Line.dashes"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dashes</span></code></a> do not work in this mode.
 Additionally, if the current color has an alpha less than 1.0, a
 stencil will be used internally to draw the line.</p></li>
 </ol>
@@ -843,6 +847,9 @@ See <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.
 </dd>
 <dt><cite>bezier_precision</cite>: int, defaults to 180</dt><dd><p>Precision of the Bezier drawing.</p>
 </dd>
+<dt><cite>force_custom_drawing_method</cite>: bool, defaults to False</dt><dd><p>Should the custom drawing method be used, instead of it depending on <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.width" title="kivy.graphics.vertex_instructions.Line.width"><code class="xref py py-attr docutils literal notranslate"><span class="pre">width</span></code></a>
+being equal to 1.o or not.</p>
+</dd>
 </dl>
 </dd>
 </dl>
@@ -858,6 +865,9 @@ See <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.
 </div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 1.11.0: </span><cite>dashes</cite> have been added</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.3.0: </span><cite>force_custom_drawing_method</cite> has been added</p>
 </div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kivy.graphics.vertex_instructions.Line.bezier">
@@ -1043,6 +1053,15 @@ or by <code class="docutils literal notranslate"><span class="pre">&quot;center-
 <p><span class="versionmodified changed">Changed in version 2.2.0: </span>Now you can get the ellipse generated through the property.</p>
 <p>The minimum number of segments allowed is 3. Smaller values will be
 ignored and the number of segments will be automatically calculated.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.graphics.vertex_instructions.Line.force_custom_drawing_method">
+<span class="sig-name descname"><span class="pre">force_custom_drawing_method</span></span><a class="headerlink" href="#kivy.graphics.vertex_instructions.Line.force_custom_drawing_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>If True, the line will be drawn using the custom drawing method, no matter what the width is.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.3.0.</span></p>
 </div>
 </dd></dl>
 
@@ -1478,7 +1497,7 @@ are not supported.</p></li>
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Jun 18, 2023.
+      Last updated on Jun 19, 2023.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
