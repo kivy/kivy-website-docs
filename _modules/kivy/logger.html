@@ -974,7 +974,9 @@
         <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">file_log_handler</span><span class="p">)</span>
 
     <span class="c1"># Use the custom handler instead of streaming one.</span>
-    <span class="k">if</span> <span class="s1">&#39;KIVY_NO_CONSOLELOG&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+    <span class="c1"># Don&#39;t output to stderr if it is set to None</span>
+    <span class="c1"># stderr is set to None by pythonw and pyinstaller 5.7+</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span> <span class="ow">and</span> <span class="s1">&#39;KIVY_NO_CONSOLELOG&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
         <span class="n">use_color</span> <span class="o">=</span> <span class="n">is_color_terminal</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">use_color</span><span class="p">:</span>
             <span class="c1"># No additional control characters will be inserted inside the</span>
