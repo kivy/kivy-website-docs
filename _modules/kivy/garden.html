@@ -8,7 +8,7 @@
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
     
-    <title>kivy.cache &mdash; Kivy 2.3.0.dev0 documentation</title>
+    <title>kivy.garden &mdash; Kivy 2.3.0.dev0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/fresh.css" type="text/css" />
@@ -96,7 +96,7 @@
                 <button type="submit">Go</button>
             </form>
           <!--
-          <h3><a href="../../index.html">kivy.cache</a></h3>
+          <h3><a href="../../index.html">kivy.garden</a></h3>
           
           <h3><a href="../../index.html">Table Of Contents</a></h3>
           -->
@@ -376,269 +376,193 @@
           <div class="body">
             <div class="toc"><h2>Table Of Contents</h2></div>
             
-  <h1>Source code for kivy.cache</h1><div class="highlight"><pre>
+  <h1>Source code for kivy.garden</h1><div class="highlight"><pre>
 <span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Cache manager</span>
-<span class="sd">=============</span>
+<span class="sd">Garden</span>
+<span class="sd">======</span>
 
-<span class="sd">The cache manager can be used to store python objects attached to a unique</span>
-<span class="sd">key. The cache can be controlled in two ways: with a object limit or a</span>
-<span class="sd">timeout.</span>
+<span class="sd">.. versionadded:: 1.7.0</span>
 
-<span class="sd">For example, we can create a new cache with a limit of 10 objects and a</span>
-<span class="sd">timeout of 5 seconds::</span>
+<span class="sd">.. versionchanged:: 1.11.1</span>
 
-<span class="sd">    # register a new Cache</span>
-<span class="sd">    Cache.register(&#39;mycache&#39;, limit=10, timeout=5)</span>
+<span class="sd">Garden is a project to centralize addons for Kivy maintained by users. You can</span>
+<span class="sd">find more information at `Kivy Garden &lt;http://kivy-garden.github.io/&gt;`_. All</span>
+<span class="sd">the garden packages are centralized on the `kivy-garden Github</span>
+<span class="sd">&lt;https://github.com/kivy-garden&gt;`_ repository.</span>
 
-<span class="sd">    # create an object + id</span>
-<span class="sd">    key = &#39;objectid&#39;</span>
-<span class="sd">    instance = Label(text=text)</span>
-<span class="sd">    Cache.append(&#39;mycache&#39;, key, instance)</span>
+<span class="sd">.. warning::</span>
 
-<span class="sd">    # retrieve the cached object</span>
-<span class="sd">    instance = Cache.get(&#39;mycache&#39;, key)</span>
+<span class="sd">    The garden flower widgets are contributed by regular users such as</span>
+<span class="sd">    yourself. The kivy developers do not take any responsibility for the code</span>
+<span class="sd">    hosted in the garden organization repositories - we do not actively monitor</span>
+<span class="sd">    the flower repos. Please use at your own risk.</span>
 
-<span class="sd">If the instance is NULL, the cache may have trashed it because you&#39;ve</span>
-<span class="sd">not used the label for 5 seconds and you&#39;ve reach the limit.</span>
+<span class="sd">Update to garden structure</span>
+<span class="sd">--------------------------</span>
+
+<span class="sd">Starting with the kivy 1.11.0 release, kivy has</span>
+<span class="sd">`shifted &lt;https://github.com/kivy/kivy/wiki/Moving-kivy.garden.xxx-to-kivy_\</span>
+<span class="sd">garden.xxx-and-kivy.deps.xxx-to-kivy_deps.xxx&gt;`_ from using the garden legacy</span>
+<span class="sd">tool that installs flowers with `garden install flower` where the flower</span>
+<span class="sd">does not have a proper python package structure to flowers that can be</span>
+<span class="sd">installed with pip and uploaded to pypi. Kivy supports the legacy garden</span>
+<span class="sd">flowers side by side with the newer packages so the garden tool and legacy</span>
+<span class="sd">flowers will be able to be used indefinitely. But we will only provide support</span>
+<span class="sd">for the newer packages format in the future.</span>
+
+<span class="sd">For garden package maintainers - for a guide how to migrate your garden package</span>
+<span class="sd">from the legacy structure `garden.flower` to the newer `flower` structure used</span>
+<span class="sd">with the pip, see `this guide</span>
+<span class="sd">&lt;https://kivy-garden.github.io/#guideformigratingflowersfromlegacystructure&gt;`_.</span>
+
+<span class="sd">We hope most garden packages will be converted to the newer format to help</span>
+<span class="sd">with installation.</span>
+
+<span class="sd">General Usage Guidelines</span>
+<span class="sd">------------------------</span>
+
+<span class="sd">To use a kivy garden flower, first check if the flower is in the legacy format.</span>
+<span class="sd">If the flower name is in the format of `garden.flower`, such as</span>
+<span class="sd">`garden.graph &lt;https://github.com/kivy-garden/garden.graph&gt;`_ it is a legacy</span>
+<span class="sd">flower. If it is just `flower` such as</span>
+<span class="sd">`graph &lt;https://github.com/kivy-garden/graph&gt;`_ it is in the present format.</span>
+<span class="sd">If it is in the legacy format see `Legacy garden tool instructions`_ for how to</span>
+<span class="sd">install and use it. Otherwise, continue with the guide below.</span>
+
+<span class="sd">Garden flowers can now be installed with the `pip` tool like a normal python</span>
+<span class="sd">package. Given a flower that you want to install, lets use</span>
+<span class="sd">`graph &lt;https://github.com/kivy-garden/graph&gt;`_ as an example. You can install</span>
+<span class="sd">master directly from github with::</span>
+
+<span class="sd">    python -m pip install \</span>
+<span class="sd">https://github.com/kivy-garden/graph/archive/master.zip</span>
+
+<span class="sd">Look under the repository&#39;s releases tab if you&#39;d like to install a specific</span>
+<span class="sd">release or a pre-compiled wheel, if the flower has any. Then use the url with</span>
+<span class="sd">`pip`.</span>
+
+<span class="sd">Or you can automatically install it using garden&#39;s pypi server with::</span>
+
+<span class="sd">    python -m pip install kivy_garden.graph \</span>
+<span class="sd">--extra-index-url https://kivy-garden.github.io/simple/</span>
+
+<span class="sd">To permanently add our garden server to your pip configuration so that you</span>
+<span class="sd">don&#39;t have to specify it with `--extra-index-url`, add::</span>
+
+<span class="sd">    [global]</span>
+<span class="sd">    timeout = 60</span>
+<span class="sd">    index-url = https://kivy-garden.github.io/simple/</span>
+
+<span class="sd">to your `pip.conf &lt;https://pip.pypa.io/en/stable/user_guide/#config-file&gt;`_.</span>
+
+<span class="sd">If the flower maintainer has uploaded the flower to</span>
+<span class="sd">`pypi &lt;https://pypi.org/&gt;`_, you can just install it with</span>
+<span class="sd">`pip install kivy_garden.flower`.</span>
+
+
+<span class="sd">Legacy garden tool instructions</span>
+<span class="sd">-------------------------------</span>
+
+<span class="sd">Garden is now distributed as a separate Python module, kivy-garden. You can</span>
+<span class="sd">install it with pip::</span>
+
+<span class="sd">    pip install kivy-garden</span>
+
+<span class="sd">The garden module does not initially include any packages. You can download</span>
+<span class="sd">them with the garden tool installed by the pip package::</span>
+
+<span class="sd">    # Installing a garden package</span>
+<span class="sd">    garden install graph</span>
+
+<span class="sd">    # Upgrade a garden package</span>
+<span class="sd">    garden install --upgrade graph</span>
+
+<span class="sd">    # Uninstall a garden package</span>
+<span class="sd">    garden uninstall graph</span>
+
+<span class="sd">    # List all the garden packages installed</span>
+<span class="sd">    garden list</span>
+
+<span class="sd">    # Search new packages</span>
+<span class="sd">    garden search</span>
+
+<span class="sd">    # Search all the packages that contain &quot;graph&quot;</span>
+<span class="sd">    garden search graph</span>
+
+<span class="sd">    # Show the help</span>
+<span class="sd">    garden --help</span>
+
+<span class="sd">All the garden packages are installed by default in `~/.kivy/garden`.</span>
+
+<span class="sd">.. Note:: In previous versions of Kivy, garden was a tool at</span>
+<span class="sd">          kivy/tools/garden. This no longer exists, but the</span>
+<span class="sd">          kivy-garden module provides exactly the same functionality.</span>
+
+<span class="sd">Packaging</span>
+<span class="sd">~~~~~~~~~</span>
+
+<span class="sd">If you want to include garden packages in your application, you can add `--app`</span>
+<span class="sd">to the `install` command. This will create a `libs/garden` directory in your</span>
+<span class="sd">current directory which will be used by `kivy.garden`.</span>
+
+<span class="sd">For example::</span>
+
+<span class="sd">    cd myapp</span>
+<span class="sd">    garden install --app graph</span>
+
+
 <span class="sd">&#39;&#39;&#39;</span>
 
-<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">environ</span>
-<span class="kn">from</span> <span class="nn">kivy.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
-<span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
+<span class="n">__path__</span> <span class="o">=</span> <span class="s1">&#39;kivy.garden&#39;</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Cache&#39;</span><span class="p">,</span> <span class="p">)</span>
+<span class="kn">import</span> <span class="nn">importlib.util</span>
+<span class="kn">from</span> <span class="nn">importlib.abc</span> <span class="kn">import</span> <span class="n">MetaPathFinder</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">join</span><span class="p">,</span> <span class="n">realpath</span><span class="p">,</span> <span class="n">exists</span><span class="p">,</span> <span class="n">abspath</span>
+<span class="kn">from</span> <span class="nn">kivy</span> <span class="kn">import</span> <span class="n">kivy_home_dir</span>
+<span class="kn">from</span> <span class="nn">kivy.utils</span> <span class="kn">import</span> <span class="n">platform</span>
+<span class="kn">import</span> <span class="nn">kivy</span>
 
+<span class="c1">#: system path where garden modules can be installed</span>
+<span class="n">garden_system_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">kivy_home_dir</span><span class="p">,</span> <span class="s1">&#39;garden&#39;</span><span class="p">)</span>
+<span class="n">garden_kivy_dir</span> <span class="o">=</span> <span class="n">abspath</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">kivy</span><span class="o">.</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;garden&#39;</span><span class="p">))</span>
 
-<div class="viewcode-block" id="Cache"><a class="viewcode-back" href="../../api-kivy.cache.html#kivy.cache.Cache">[docs]</a><span class="k">class</span> <span class="nc">Cache</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;See module documentation for more information.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-
-    <span class="n">_categories</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">_objects</span> <span class="o">=</span> <span class="p">{}</span>
-
-<div class="viewcode-block" id="Cache.register"><a class="viewcode-back" href="../../api-kivy.cache.html#kivy.cache.Cache.register">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Register a new category in the cache with the specified limit.</span>
-
-<span class="sd">        :Parameters:</span>
-<span class="sd">            `category`: str</span>
-<span class="sd">                Identifier of the category.</span>
-<span class="sd">            `limit`: int (optional)</span>
-<span class="sd">                Maximum number of objects allowed in the cache.</span>
-<span class="sd">                If None, no limit is applied.</span>
-<span class="sd">            `timeout`: double (optional)</span>
-<span class="sd">                Time after which to delete the object if it has not been used.</span>
-<span class="sd">                If None, no timeout is applied.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="n">Cache</span><span class="o">.</span><span class="n">_categories</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;limit&#39;</span><span class="p">:</span> <span class="n">limit</span><span class="p">,</span>
-            <span class="s1">&#39;timeout&#39;</span><span class="p">:</span> <span class="n">timeout</span><span class="p">}</span>
-        <span class="n">Cache</span><span class="o">.</span><span class="n">_objects</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-            <span class="s1">&#39;Cache: register &lt;</span><span class="si">%s</span><span class="s1">&gt; with limit=</span><span class="si">%s</span><span class="s1">, timeout=</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span>
-            <span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">limit</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">timeout</span><span class="p">)))</span></div>
-
-<div class="viewcode-block" id="Cache.append"><a class="viewcode-back" href="../../api-kivy.cache.html#kivy.cache.Cache.append">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Add a new object to the cache.</span>
-
-<span class="sd">        :Parameters:</span>
-<span class="sd">            `category`: str</span>
-<span class="sd">                Identifier of the category.</span>
-<span class="sd">            `key`: str</span>
-<span class="sd">                Unique identifier of the object to store.</span>
-<span class="sd">            `obj`: object</span>
-<span class="sd">                Object to store in cache.</span>
-<span class="sd">            `timeout`: double (optional)</span>
-<span class="sd">                Time after which to delete the object if it has not been used.</span>
-<span class="sd">                If None, no timeout is applied.</span>
-
-<span class="sd">        :raises:</span>
-<span class="sd">            `ValueError`: If `None` is used as `key`.</span>
-
-<span class="sd">        .. versionchanged:: 2.0.0</span>
-<span class="sd">            Raises `ValueError` if `None` is used as `key`.</span>
-
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="c1"># check whether obj should not be cached first</span>
-        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s1">&#39;_nocache&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
-            <span class="k">return</span>
-        <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># This check is added because of the case when key is None and</span>
-            <span class="c1"># one of purge methods gets called. Then loop in purge method will</span>
-            <span class="c1"># call Cache.remove with key None which then clears entire</span>
-            <span class="c1"># category from Cache making next iteration of loop to raise a</span>
-            <span class="c1"># KeyError because next key will not exist.</span>
-            <span class="c1"># See: https://github.com/kivy/kivy/pull/6950</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;&quot;None&quot; cannot be used as key in Cache&#39;</span><span class="p">)</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">cat</span> <span class="o">=</span> <span class="n">Cache</span><span class="o">.</span><span class="n">_categories</span><span class="p">[</span><span class="n">category</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Cache: category &lt;</span><span class="si">%s</span><span class="s1">&gt; does not exist&#39;</span> <span class="o">%</span> <span class="n">category</span><span class="p">)</span>
-            <span class="k">return</span>
-
-        <span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span> <span class="ow">or</span> <span class="n">cat</span><span class="p">[</span><span class="s1">&#39;timeout&#39;</span><span class="p">]</span>
-
-        <span class="n">limit</span> <span class="o">=</span> <span class="n">cat</span><span class="p">[</span><span class="s1">&#39;limit&#39;</span><span class="p">]</span>
-
-        <span class="k">if</span> <span class="n">limit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">Cache</span><span class="o">.</span><span class="n">_objects</span><span class="p">[</span><span class="n">category</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">limit</span><span class="p">:</span>
-            <span class="n">Cache</span><span class="o">.</span><span class="n">_purge_oldest</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
-
-        <span class="n">Cache</span><span class="o">.</span><span class="n">_objects</span><span class="p">[</span><span class="n">category</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;object&#39;</span><span class="p">:</span> <span class="n">obj</span><span class="p">,</span>
-            <span class="s1">&#39;timeout&#39;</span><span class="p">:</span> <span class="n">timeout</span><span class="p">,</span>
-            <span class="s1">&#39;lastaccess&#39;</span><span class="p">:</span> <span class="n">Clock</span><span class="o">.</span><span class="n">get_time</span><span class="p">(),</span>
-            <span class="s1">&#39;timestamp&#39;</span><span class="p">:</span> <span class="n">Clock</span><span class="o">.</span><span class="n">get_time</span><span class="p">()}</span></div>
-
-<div class="viewcode-block" id="Cache.get"><a class="viewcode-back" href="../../api-kivy.cache.html#kivy.cache.Cache.get">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Get a object from the cache.</span>
-
-<span class="sd">        :Parameters:</span>
-<span class="sd">            `category`: str</span>
-<span class="sd">                Identifier of the category.</span>
-<span class="sd">            `key`: str</span>
-<span class="sd">                Unique identifier of the object in the store.</span>
-<span class="sd">            `default`: anything, defaults to None</span>
-<span class="sd">                Default value to be returned if the key is not found.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">Cache</span><span class="o">.</span><span class="n">_objects</span><span class="p">[</span><span class="n">category</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;lastaccess&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span>
-            <span class="k">return</span> <span class="n">Cache</span><span class="o">.</span><span class="n">_objects</span><span class="p">[</span><span class="n">category</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;object&#39;</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">default</span></div>
-
-<div class="viewcode-block" id="Cache.get_timestamp"><a class="viewcode-back" href="../../api-kivy.cache.html#kivy.cache.Cache.get_timestamp">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_timestamp</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Get the object timestamp in the cache.</span>
-
-<span class="sd">        :Parameters:</span>
-<span class="sd">            `category`: str</span>
-<span class="sd">                Identifier of the category.</span>
-<span class="sd">            `key`: str</span>
-<span class="sd">                Unique identifier of the object in the store.</span>
-<span class="sd">            `default`: anything, defaults to None</span>
-<span class="sd">                Default value to be returned if the key is not found.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Cache</span><span class="o">.</span><span class="n">_objects</span><span class="p">[</span><span class="n">category</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;timestamp&#39;</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">default</span></div>
-
-<div class="viewcode-block" id="Cache.get_lastaccess"><a class="viewcode-back" href="../../api-kivy.cache.html#kivy.cache.Cache.get_lastaccess">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_lastaccess</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Get the objects last access time in the cache.</span>
-
-<span class="sd">        :Parameters:</span>
-<span class="sd">            `category`: str</span>
-<span class="sd">                Identifier of the category.</span>
-<span class="sd">            `key`: str</span>
-<span class="sd">                Unique identifier of the object in the store.</span>
-<span class="sd">            `default`: anything, defaults to None</span>
-<span class="sd">                Default value to be returned if the key is not found.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Cache</span><span class="o">.</span><span class="n">_objects</span><span class="p">[</span><span class="n">category</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;lastaccess&#39;</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">default</span></div>
-
-<div class="viewcode-block" id="Cache.remove"><a class="viewcode-back" href="../../api-kivy.cache.html#kivy.cache.Cache.remove">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Purge the cache.</span>
-
-<span class="sd">        :Parameters:</span>
-<span class="sd">            `category`: str</span>
-<span class="sd">                Identifier of the category.</span>
-<span class="sd">            `key`: str (optional)</span>
-<span class="sd">                Unique identifier of the object in the store. If this</span>
-<span class="sd">                argument is not supplied, the entire category will be purged.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">del</span> <span class="n">Cache</span><span class="o">.</span><span class="n">_objects</span><span class="p">[</span><span class="n">category</span><span class="p">][</span><span class="n">key</span><span class="p">]</span>
-                <span class="n">Logger</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;Cache: Removed </span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1"> from cache&#39;</span> <span class="o">%</span>
-                             <span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">Cache</span><span class="o">.</span><span class="n">_objects</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-                <span class="n">Logger</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;Cache: Flushed category </span><span class="si">%s</span><span class="s1"> from cache&#39;</span> <span class="o">%</span>
-                             <span class="n">category</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="k">pass</span></div>
-
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_purge_oldest</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">maxpurge</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="n">Logger</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;Cache: Remove oldest in </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">category</span><span class="p">)</span>
-        <span class="kn">import</span> <span class="nn">heapq</span>
-        <span class="n">time</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span>
-        <span class="n">heap_list</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">Cache</span><span class="o">.</span><span class="n">_objects</span><span class="p">[</span><span class="n">category</span><span class="p">]:</span>
-            <span class="n">obj</span> <span class="o">=</span> <span class="n">Cache</span><span class="o">.</span><span class="n">_objects</span><span class="p">[</span><span class="n">category</span><span class="p">][</span><span class="n">key</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;lastaccess&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;timestamp&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">time</span><span class="p">:</span>
-                <span class="k">continue</span>
-            <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="n">heap_list</span><span class="p">,</span> <span class="p">(</span><span class="n">obj</span><span class="p">[</span><span class="s1">&#39;lastaccess&#39;</span><span class="p">],</span> <span class="n">key</span><span class="p">))</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;Cache: &lt;&lt;&lt; </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">obj</span><span class="p">[</span><span class="s1">&#39;lastaccess&#39;</span><span class="p">])</span>
-        <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">while</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="n">maxpurge</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
-                <span class="n">lastaccess</span><span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="n">heapq</span><span class="o">.</span><span class="n">heappop</span><span class="p">(</span><span class="n">heap_list</span><span class="p">)</span>
-                <span class="n">Logger</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;Cache: </span><span class="si">%d</span><span class="s1"> =&gt; </span><span class="si">%s</span><span class="s1"> </span><span class="si">%f</span><span class="s1"> </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span>
-                             <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">lastaccess</span><span class="p">,</span> <span class="n">Clock</span><span class="o">.</span><span class="n">get_time</span><span class="p">()))</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-                <span class="k">return</span>
-            <span class="n">Cache</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
-
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_purge_by_timeout</span><span class="p">(</span><span class="n">dt</span><span class="p">):</span>
-        <span class="n">curtime</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span>
-
-        <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">Cache</span><span class="o">.</span><span class="n">_objects</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">category</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Cache</span><span class="o">.</span><span class="n">_categories</span><span class="p">:</span>
-                <span class="k">continue</span>
-            <span class="n">timeout</span> <span class="o">=</span> <span class="n">Cache</span><span class="o">.</span><span class="n">_categories</span><span class="p">[</span><span class="n">category</span><span class="p">][</span><span class="s1">&#39;timeout&#39;</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">dt</span> <span class="o">&gt;</span> <span class="n">timeout</span><span class="p">:</span>
-                <span class="c1"># XXX got a lag ! that may be because the frame take lot of</span>
-                <span class="c1"># time to draw. and the timeout is not adapted to the current</span>
-                <span class="c1"># framerate. So, increase the timeout by two.</span>
-                <span class="c1"># ie: if the timeout is 1 sec, and framerate go to 0.7, newly</span>
-                <span class="c1"># object added will be automatically trashed.</span>
-                <span class="n">timeout</span> <span class="o">*=</span> <span class="mi">2</span>
-                <span class="n">Cache</span><span class="o">.</span><span class="n">_categories</span><span class="p">[</span><span class="n">category</span><span class="p">][</span><span class="s1">&#39;timeout&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timeout</span>
-                <span class="k">continue</span>
-
-            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">Cache</span><span class="o">.</span><span class="n">_objects</span><span class="p">[</span><span class="n">category</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
-                <span class="n">lastaccess</span> <span class="o">=</span> <span class="n">Cache</span><span class="o">.</span><span class="n">_objects</span><span class="p">[</span><span class="n">category</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;lastaccess&#39;</span><span class="p">]</span>
-                <span class="n">objtimeout</span> <span class="o">=</span> <span class="n">Cache</span><span class="o">.</span><span class="n">_objects</span><span class="p">[</span><span class="n">category</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;timeout&#39;</span><span class="p">]</span>
-
-                <span class="c1"># take the object timeout if available</span>
-                <span class="k">if</span> <span class="n">objtimeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">timeout</span> <span class="o">=</span> <span class="n">objtimeout</span>
-
-                <span class="c1"># no timeout, cancel</span>
-                <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="k">continue</span>
-
-                <span class="k">if</span> <span class="n">curtime</span> <span class="o">-</span> <span class="n">lastaccess</span> <span class="o">&gt;</span> <span class="n">timeout</span><span class="p">:</span>
-                    <span class="n">Logger</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;Cache: Removed </span><span class="si">%s</span><span class="s1">:</span><span class="si">%s</span><span class="s1"> from cache due to &#39;</span>
-                                 <span class="s1">&#39;timeout&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
-                    <span class="n">Cache</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
-
-<div class="viewcode-block" id="Cache.print_usage"><a class="viewcode-back" href="../../api-kivy.cache.html#kivy.cache.Cache.print_usage">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">print_usage</span><span class="p">():</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Print the cache usage to the console.&#39;&#39;&#39;</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Cache usage :&#39;</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">Cache</span><span class="o">.</span><span class="n">_categories</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; * </span><span class="si">%s</span><span class="s1"> : </span><span class="si">%d</span><span class="s1"> / </span><span class="si">%s</span><span class="s1">, timeout=</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
-                <span class="n">category</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span>
-                <span class="nb">len</span><span class="p">(</span><span class="n">Cache</span><span class="o">.</span><span class="n">_objects</span><span class="p">[</span><span class="n">category</span><span class="p">]),</span>
-                <span class="nb">str</span><span class="p">(</span><span class="n">Cache</span><span class="o">.</span><span class="n">_categories</span><span class="p">[</span><span class="n">category</span><span class="p">][</span><span class="s1">&#39;limit&#39;</span><span class="p">]),</span>
-                <span class="nb">str</span><span class="p">(</span><span class="n">Cache</span><span class="o">.</span><span class="n">_categories</span><span class="p">[</span><span class="n">category</span><span class="p">][</span><span class="s1">&#39;timeout&#39;</span><span class="p">])))</span></div></div>
+<span class="c1">#: application path where garden modules can be installed</span>
+<span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s1">&#39;frozen&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s1">&#39;_MEIPASS&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="n">garden_app_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">realpath</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">_MEIPASS</span><span class="p">),</span> <span class="s1">&#39;libs&#39;</span><span class="p">,</span> <span class="s1">&#39;garden&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">garden_app_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">realpath</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="s1">&#39;libs&#39;</span><span class="p">,</span> <span class="s1">&#39;garden&#39;</span><span class="p">)</span>
+<span class="c1">#: Fixes issue #4030 in kivy where garden path is incorrect on iOS</span>
+<span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s2">&quot;ios&quot;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">dirname</span>
+    <span class="kn">import</span> <span class="nn">__main__</span>
+    <span class="n">main_py_file</span> <span class="o">=</span> <span class="n">__main__</span><span class="o">.</span><span class="vm">__file__</span>
+    <span class="n">garden_app_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">main_py_file</span><span class="p">),</span> <span class="s1">&#39;libs&#39;</span><span class="p">,</span> <span class="s1">&#39;garden&#39;</span><span class="p">)</span>
 
 
-<span class="k">if</span> <span class="s1">&#39;KIVY_DOC_INCLUDE&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">environ</span><span class="p">:</span>
-    <span class="c1"># install the schedule clock for purging</span>
-    <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_interval</span><span class="p">(</span><span class="n">Cache</span><span class="o">.</span><span class="n">_purge_by_timeout</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<div class="viewcode-block" id="GardenImporter"><a class="viewcode-back" href="../../api-kivy.garden.html#kivy.garden.GardenImporter">[docs]</a><span class="k">class</span> <span class="nc">GardenImporter</span><span class="p">(</span><span class="n">MetaPathFinder</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">find_spec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fullname</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="o">!=</span> <span class="s2">&quot;kivy.garden&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">moddir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span>
+            <span class="n">garden_kivy_dir</span><span class="p">,</span> <span class="n">fullname</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;__init__.py&quot;</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">exists</span><span class="p">(</span><span class="n">moddir</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">spec_from_file_location</span><span class="p">(</span><span class="n">fullname</span><span class="p">,</span> <span class="n">moddir</span><span class="p">)</span>
+
+        <span class="n">modname</span> <span class="o">=</span> <span class="n">fullname</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">directory</span> <span class="ow">in</span> <span class="p">(</span><span class="n">garden_app_dir</span><span class="p">,</span> <span class="n">garden_system_dir</span><span class="p">):</span>
+            <span class="n">moddir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">modname</span><span class="p">,</span> <span class="s2">&quot;__init__.py&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">exists</span><span class="p">(</span><span class="n">moddir</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">spec_from_file_location</span><span class="p">(</span><span class="n">fullname</span><span class="p">,</span> <span class="n">moddir</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<span class="c1"># insert the garden importer as ultimate importer</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">GardenImporter</span><span class="p">())</span>
 </pre></div>
 
             <div class="footerlinks">
