@@ -864,12 +864,13 @@
                 <span class="n">wh</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;line_height&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">word</span><span class="o">.</span><span class="n">lh</span>
                 <span class="c1"># calculate sub/super script pos</span>
                 <span class="k">if</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;script&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;superscript&#39;</span><span class="p">:</span>
-                    <span class="n">script_pos</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">psp</span> <span class="k">if</span> <span class="n">psp</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_descent</span><span class="p">())</span>
+                    <span class="n">script_pos</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">psp</span> <span class="k">if</span> <span class="n">psp</span> <span class="ow">and</span> <span class="p">(</span><span class="n">wh</span> <span class="o">&lt;</span> <span class="n">pph</span><span class="p">)</span>
+                                     <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_descent</span><span class="p">())</span>
                     <span class="n">psp</span> <span class="o">=</span> <span class="n">script_pos</span>
                     <span class="n">pph</span> <span class="o">=</span> <span class="n">wh</span>
                 <span class="k">elif</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;script&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;subscript&#39;</span><span class="p">:</span>
                     <span class="n">script_pos</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">lh</span> <span class="o">-</span> <span class="n">wh</span><span class="p">,</span> <span class="p">((</span><span class="n">psp</span> <span class="o">+</span> <span class="n">pph</span><span class="p">)</span> <span class="o">-</span> <span class="n">wh</span><span class="p">)</span>
-                                     <span class="k">if</span> <span class="n">pph</span> <span class="k">else</span> <span class="p">(</span><span class="n">lh</span> <span class="o">-</span> <span class="n">wh</span><span class="p">))</span>
+                                     <span class="k">if</span> <span class="n">pph</span> <span class="ow">and</span> <span class="p">(</span><span class="n">wh</span> <span class="o">&lt;</span> <span class="n">pph</span><span class="p">)</span> <span class="k">else</span> <span class="p">(</span><span class="n">lh</span> <span class="o">-</span> <span class="n">wh</span><span class="p">))</span>
                     <span class="n">pph</span> <span class="o">=</span> <span class="n">wh</span>
                     <span class="n">psp</span> <span class="o">=</span> <span class="n">script_pos</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -1308,7 +1309,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Nov 16, 2023.
+      Last updated on Nov 18, 2023.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
