@@ -1074,6 +1074,8 @@
                             <span class="bp">self</span><span class="p">,</span> <span class="n">ln</span><span class="p">,</span> <span class="s1">&#39;clear previous, `-`, not allowed here&#39;</span><span class="p">)</span>
                     <span class="n">_objects</span><span class="p">,</span> <span class="n">_lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_level</span><span class="p">(</span>
                         <span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">:],</span> <span class="n">spaces</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">current_object</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">ParserException</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ln</span><span class="p">,</span> <span class="s1">&#39;Invalid indentation&#39;</span><span class="p">)</span>
                     <span class="n">current_object</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="n">_objects</span>
                     <span class="n">lines</span> <span class="o">=</span> <span class="n">_lines</span>
                     <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1132,6 +1134,9 @@
                     <span class="k">if</span> <span class="n">current_propobject</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                         <span class="n">current_propobject</span> <span class="o">=</span> <span class="n">ParserRuleProperty</span><span class="p">(</span>
                             <span class="bp">self</span><span class="p">,</span> <span class="n">ln</span><span class="p">,</span> <span class="n">current_property</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">current_property</span><span class="p">:</span>
+                            <span class="k">raise</span> <span class="n">ParserException</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ln</span><span class="p">,</span>
+                                                  <span class="s2">&quot;Invalid indentation&quot;</span><span class="p">)</span>
                         <span class="k">if</span> <span class="n">current_property</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;on_&#39;</span><span class="p">:</span>
                             <span class="n">current_object</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_propobject</span><span class="p">)</span>
                         <span class="k">else</span><span class="p">:</span>
@@ -1232,7 +1237,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Nov 23, 2023.
+      Last updated on Nov 25, 2023.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
