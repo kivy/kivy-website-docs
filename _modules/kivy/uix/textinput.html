@@ -1315,6 +1315,7 @@
                 <span class="n">substring</span> <span class="o">=</span> <span class="n">x_item</span><span class="p">[</span><span class="s1">&#39;undo_command&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">:][</span><span class="mi">0</span><span class="p">]</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">insert_text</span><span class="p">(</span><span class="n">substring</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_redo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x_item</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_max_scroll_x</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
             <span class="c1"># reached at top of undo list</span>
             <span class="k">pass</span></div>
@@ -1373,7 +1374,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_unredo_bkspc</span><span class="p">(</span>
             <span class="n">cursor_index</span><span class="p">,</span>
             <span class="n">cursor_index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
-            <span class="n">substring</span><span class="p">,</span> <span class="n">from_undo</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span></div>
+            <span class="n">substring</span><span class="p">,</span> <span class="n">from_undo</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_max_scroll_x</span><span class="p">()</span></div>
 
     <span class="k">def</span> <span class="nf">_set_unredo_bkspc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ol_index</span><span class="p">,</span> <span class="n">new_index</span><span class="p">,</span> <span class="n">substring</span><span class="p">,</span> <span class="n">from_undo</span><span class="p">,</span>
                           <span class="n">mode</span><span class="p">):</span>
@@ -1799,6 +1801,17 @@
 
         <span class="k">return</span> <span class="n">cursor_x</span><span class="p">,</span> <span class="n">cursor_y</span></div>
 
+<div class="viewcode-block" id="TextInput.get_max_scroll_x"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.get_max_scroll_x">[docs]</a>    <span class="k">def</span> <span class="nf">get_max_scroll_x</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Return how many pixels it needs to scroll to the right</span>
+<span class="sd">        to reveal the remaining content of a text that extends</span>
+<span class="sd">        beyond the visible width of a TextInput</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">minimum_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_row_width</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">max_scroll_x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">minimum_width</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">max_scroll_x</span></div>
+
     <span class="c1">#</span>
     <span class="c1"># Selection control</span>
     <span class="c1">#</span>
@@ -1980,9 +1993,7 @@
                                             <span class="bp">self</span><span class="o">.</span><span class="n">lines_to_scroll</span><span class="p">)</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update_graphics</span><span class="p">()</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">minimum_width</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_row_width</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span>
-                                     <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-                    <span class="n">max_scroll_x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">minimum_width</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
+                    <span class="n">max_scroll_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_max_scroll_x</span><span class="p">()</span>
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">&lt;</span> <span class="n">max_scroll_x</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">max_scroll_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">+</span>
                                             <span class="bp">self</span><span class="o">.</span><span class="n">line_height</span><span class="p">)</span>
@@ -2132,11 +2143,7 @@
                 <span class="n">max_scroll_y</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">minimum_width</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_get_row_width</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-                <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-            <span class="p">)</span>
-            <span class="n">max_scroll_x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">minimum_width</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
+            <span class="n">max_scroll_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_max_scroll_x</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span>
                 <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">dx</span><span class="p">),</span>
                 <span class="n">max_scroll_x</span>
@@ -2453,6 +2460,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_clipboard</span><span class="p">()</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">Clipboard</span><span class="o">.</span><span class="n">paste</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">delete_selection</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiline</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">insert_text</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_update_cutbuffer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
@@ -4455,7 +4464,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Dec 06, 2023.
+      Last updated on Dec 07, 2023.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
