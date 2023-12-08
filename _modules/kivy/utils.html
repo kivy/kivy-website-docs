@@ -397,7 +397,8 @@
            <span class="s1">&#39;is_color_transparent&#39;</span><span class="p">,</span> <span class="s1">&#39;hex_colormap&#39;</span><span class="p">,</span> <span class="s1">&#39;colormap&#39;</span><span class="p">,</span> <span class="s1">&#39;boundary&#39;</span><span class="p">,</span>
            <span class="s1">&#39;deprecated&#39;</span><span class="p">,</span> <span class="s1">&#39;SafeList&#39;</span><span class="p">,</span>
            <span class="s1">&#39;interpolate&#39;</span><span class="p">,</span> <span class="s1">&#39;QueryDict&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;platform&#39;</span><span class="p">,</span> <span class="s1">&#39;escape_markup&#39;</span><span class="p">,</span> <span class="s1">&#39;reify&#39;</span><span class="p">,</span> <span class="s1">&#39;rgba&#39;</span><span class="p">,</span> <span class="s1">&#39;pi_version&#39;</span><span class="p">)</span>
+           <span class="s1">&#39;platform&#39;</span><span class="p">,</span> <span class="s1">&#39;escape_markup&#39;</span><span class="p">,</span> <span class="s1">&#39;reify&#39;</span><span class="p">,</span> <span class="s1">&#39;rgba&#39;</span><span class="p">,</span> <span class="s1">&#39;pi_version&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;format_bytes_to_human&#39;</span><span class="p">)</span>
 
 <span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">environ</span><span class="p">,</span> <span class="n">path</span>
 <span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">platform</span> <span class="k">as</span> <span class="n">_sys_platform</span>
@@ -418,29 +419,6 @@
 <div class="viewcode-block" id="difference"><a class="viewcode-back" href="../../api-kivy.utils.html#kivy.utils.difference">[docs]</a><span class="k">def</span> <span class="nf">difference</span><span class="p">(</span><span class="n">set1</span><span class="p">,</span> <span class="n">set2</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Return the difference between 2 lists.&#39;&#39;&#39;</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">set1</span> <span class="k">if</span> <span class="n">s</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">set2</span><span class="p">]</span></div>
-
-
-<div class="viewcode-block" id="interpolate"><a class="viewcode-back" href="../../api-kivy.utils.html#kivy.utils.interpolate">[docs]</a><span class="k">def</span> <span class="nf">interpolate</span><span class="p">(</span><span class="n">value_from</span><span class="p">,</span> <span class="n">value_to</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Interpolate between two values. This can be useful for smoothing some</span>
-<span class="sd">    transitions. For example::</span>
-
-<span class="sd">        # instead of setting directly</span>
-<span class="sd">        self.pos = pos</span>
-
-<span class="sd">        # use interpolate, and you&#39;ll have a nicer transition</span>
-<span class="sd">        self.pos = interpolate(self.pos, new_pos)</span>
-
-<span class="sd">    .. warning::</span>
-<span class="sd">        These interpolations work only on lists/tuples/doubles with the same</span>
-<span class="sd">        dimensions. No test is done to check the dimensions are the same.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">value_from</span><span class="p">)</span> <span class="ow">in</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">value_from</span><span class="p">,</span> <span class="n">value_to</span><span class="p">):</span>
-            <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">interpolate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">step</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">out</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">value_from</span> <span class="o">+</span> <span class="p">(</span><span class="n">value_to</span> <span class="o">-</span> <span class="n">value_from</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">step</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="strtotuple"><a class="viewcode-back" href="../../api-kivy.utils.html#kivy.utils.strtotuple">[docs]</a><span class="k">def</span> <span class="nf">strtotuple</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
@@ -733,6 +711,28 @@
     <span class="k">return</span> <span class="n">new_func</span></div>
 
 
+<div class="viewcode-block" id="interpolate"><a class="viewcode-back" href="../../api-kivy.utils.html#kivy.utils.interpolate">[docs]</a><span class="nd">@deprecated</span>
+<span class="k">def</span> <span class="nf">interpolate</span><span class="p">(</span><span class="n">value_from</span><span class="p">,</span> <span class="n">value_to</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Interpolate between two values, by providing the</span>
+<span class="sd">    reciprocal of the proportion between two points.</span>
+
+<span class="sd">    .. deprecated:: 2.3.0</span>
+<span class="sd">        For animations, consider using the</span>
+<span class="sd">        `AnimationTransition.linear()` for a similar purpose.</span>
+
+<span class="sd">    .. warning::</span>
+<span class="sd">        These interpolations work only on lists/tuples/doubles with the same</span>
+<span class="sd">        dimensions. No test is done to check the dimensions are the same.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">value_from</span><span class="p">)</span> <span class="ow">in</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">value_from</span><span class="p">,</span> <span class="n">value_to</span><span class="p">):</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">interpolate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">step</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">out</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">value_from</span> <span class="o">+</span> <span class="p">(</span><span class="n">value_to</span> <span class="o">-</span> <span class="n">value_from</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">step</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="SafeList"><a class="viewcode-back" href="../../api-kivy.utils.html#kivy.utils.SafeList">[docs]</a><span class="k">class</span> <span class="nc">SafeList</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;List with a clear() method.</span>
 
@@ -772,13 +772,14 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">QueryDict</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__getattr__</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%r</span><span class="s2"> object has no attribute </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">__name__self</span><span class="p">,</span> <span class="n">attr</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">format_bytes_to_human</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<div class="viewcode-block" id="format_bytes_to_human"><a class="viewcode-back" href="../../api-kivy.utils.html#kivy.utils.format_bytes_to_human">[docs]</a><span class="k">def</span> <span class="nf">format_bytes_to_human</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Format a byte value to a human readable representation (B, KB, MB...).</span>
 
 <span class="sd">    .. versionadded:: 1.0.8</span>
@@ -802,7 +803,7 @@
     <span class="k">for</span> <span class="n">unit</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;KB&#39;</span><span class="p">,</span> <span class="s1">&#39;MB&#39;</span><span class="p">,</span> <span class="s1">&#39;GB&#39;</span><span class="p">,</span> <span class="s1">&#39;TB&#39;</span><span class="p">]:</span>
         <span class="k">if</span> <span class="n">size</span> <span class="o">&lt;</span> <span class="mf">1024.0</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">fmt</span> <span class="o">%</span> <span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">unit</span><span class="p">)</span>
-        <span class="n">size</span> <span class="o">/=</span> <span class="mf">1024.0</span>
+        <span class="n">size</span> <span class="o">/=</span> <span class="mf">1024.0</span></div>
 
 
 <span class="k">def</span> <span class="nf">_get_platform</span><span class="p">():</span>
