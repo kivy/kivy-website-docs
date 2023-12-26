@@ -564,6 +564,17 @@
 <span class="sd">            or `&#39;weak_rtl&#39;` (Pango only)</span>
 <span class="sd">        `text_language`: str, defaults to None (user locale)</span>
 <span class="sd">            RFC-3066 format language tag as a string (Pango only)</span>
+<span class="sd">        `limit_render_to_text_bbox`: bool, defaults to False. PIL only.</span>
+<span class="sd">            If set to ``True``, this parameter indicates that rendering should</span>
+<span class="sd">            be limited to the bounding box of the text, excluding any</span>
+<span class="sd">            additional white spaces designated for ascent and descent.</span>
+<span class="sd">            By limiting the rendering to the bounding box of the text, it</span>
+<span class="sd">            ensures a more precise alignment with surrounding elements when</span>
+<span class="sd">            utilizing properties such as `valign`, `y`, `pos`, `pos_hint`, etc.</span>
+
+<span class="sd">    .. versionadded:: 2.3.0</span>
+<span class="sd">        `limit_render_to_text_bbox` was added to allow to limit text rendering</span>
+<span class="sd">        to the text bounding box (PIL only).</span>
 
 <span class="sd">    .. deprecated:: 2.2.0</span>
 <span class="sd">        `padding_x` and `padding_y` have been deprecated. Please use `padding`</span>
@@ -628,6 +639,7 @@
         <span class="n">outline_width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">outline_color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">font_context</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">font_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">base_direction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">font_direction</span><span class="o">=</span><span class="s1">&#39;ltr&#39;</span><span class="p">,</span>
         <span class="n">font_script_name</span><span class="o">=</span><span class="s1">&#39;Latin&#39;</span><span class="p">,</span> <span class="n">text_language</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">limit_render_to_text_bbox</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 
         <span class="c1"># Include system fonts_dir in resource paths.</span>
@@ -652,7 +664,8 @@
                    <span class="s1">&#39;base_direction&#39;</span><span class="p">:</span> <span class="n">base_direction</span><span class="p">,</span>
                    <span class="s1">&#39;font_direction&#39;</span><span class="p">:</span> <span class="n">font_direction</span><span class="p">,</span>
                    <span class="s1">&#39;font_script_name&#39;</span><span class="p">:</span> <span class="n">font_script_name</span><span class="p">,</span>
-                   <span class="s1">&#39;text_language&#39;</span><span class="p">:</span> <span class="n">text_language</span><span class="p">}</span>
+                   <span class="s1">&#39;text_language&#39;</span><span class="p">:</span> <span class="n">text_language</span><span class="p">,</span>
+                   <span class="s1">&#39;limit_render_to_text_bbox&#39;</span><span class="p">:</span> <span class="n">limit_render_to_text_bbox</span><span class="p">}</span>
 
         <span class="n">kwargs_get</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span>
         <span class="n">options</span><span class="p">[</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">color</span> <span class="ow">or</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
