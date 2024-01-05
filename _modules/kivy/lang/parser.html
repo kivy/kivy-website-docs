@@ -8,7 +8,7 @@
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
     
-    <title>kivy.lang.parser &mdash; Kivy 2.2.1 documentation</title>
+    <title>kivy.lang.parser &mdash; Kivy 2.3.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/fresh.css" type="text/css" />
@@ -35,7 +35,7 @@
         <script type="text/javascript" src="../../../_static/kivy.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="top" title="Kivy 2.2.1 documentation" href="../../../index.html" />
+    <link rel="top" title="Kivy 2.3.0 documentation" href="../../../index.html" />
     <link rel="up" title="kivy" href="../../kivy.html" /> 
   </head>
   <body>
@@ -150,7 +150,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../user-guide.html">Kivy Project</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../philosophy.html">Philosophy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../contribute.html">Contributing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contribute.html">Contribution Guidelines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../faq.html">FAQ</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../contact.html">Contact Us</a></li>
 </ul>
@@ -1074,6 +1074,8 @@
                             <span class="bp">self</span><span class="p">,</span> <span class="n">ln</span><span class="p">,</span> <span class="s1">&#39;clear previous, `-`, not allowed here&#39;</span><span class="p">)</span>
                     <span class="n">_objects</span><span class="p">,</span> <span class="n">_lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_level</span><span class="p">(</span>
                         <span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">:],</span> <span class="n">spaces</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">current_object</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">ParserException</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ln</span><span class="p">,</span> <span class="s1">&#39;Invalid indentation&#39;</span><span class="p">)</span>
                     <span class="n">current_object</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="n">_objects</span>
                     <span class="n">lines</span> <span class="o">=</span> <span class="n">_lines</span>
                     <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1132,6 +1134,9 @@
                     <span class="k">if</span> <span class="n">current_propobject</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                         <span class="n">current_propobject</span> <span class="o">=</span> <span class="n">ParserRuleProperty</span><span class="p">(</span>
                             <span class="bp">self</span><span class="p">,</span> <span class="n">ln</span><span class="p">,</span> <span class="n">current_property</span><span class="p">,</span> <span class="n">content</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">current_property</span><span class="p">:</span>
+                            <span class="k">raise</span> <span class="n">ParserException</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ln</span><span class="p">,</span>
+                                                  <span class="s2">&quot;Invalid indentation&quot;</span><span class="p">)</span>
                         <span class="k">if</span> <span class="n">current_property</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;on_&#39;</span><span class="p">:</span>
                             <span class="n">current_object</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">current_propobject</span><span class="p">)</span>
                         <span class="k">else</span><span class="p">:</span>
@@ -1231,8 +1236,8 @@
 <!-- End Piwik Tracking Code -->
     <!--
     <div class="footer">
-      &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Jun 17, 2023.
+      &copy; Copyright 2010-2024, Kivy Team and other contributors.
+      Last updated on Jan 05, 2024.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

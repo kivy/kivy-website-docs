@@ -8,7 +8,7 @@
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
     
-    <title>kivy.core.window &mdash; Kivy 2.2.1 documentation</title>
+    <title>kivy.core.window &mdash; Kivy 2.3.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/fresh.css" type="text/css" />
@@ -35,7 +35,7 @@
         <script type="text/javascript" src="../../../_static/kivy.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="top" title="Kivy 2.2.1 documentation" href="../../../index.html" />
+    <link rel="top" title="Kivy 2.3.0 documentation" href="../../../index.html" />
     <link rel="up" title="kivy.core" href="../core.html" /> 
   </head>
   <body>
@@ -150,7 +150,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../user-guide.html">Kivy Project</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../philosophy.html">Philosophy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../contribute.html">Contributing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contribute.html">Contribution Guidelines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../faq.html">FAQ</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../contact.html">Contact Us</a></li>
 </ul>
@@ -631,7 +631,7 @@
 <span class="sd">            Fired when the event loop wants to close the window, or if the</span>
 <span class="sd">            escape key is pressed and `exit_on_escape` is `True`. If a function</span>
 <span class="sd">            bound to this event returns `True`, the window will not be closed.</span>
-<span class="sd">            If the the event is triggered because of the keyboard escape key,</span>
+<span class="sd">            If the event is triggered because of the keyboard escape key,</span>
 <span class="sd">            the keyword argument `source` is dispatched along with a value of</span>
 <span class="sd">            `keyboard` to the bound functions.</span>
 
@@ -668,7 +668,7 @@
 <span class="sd">            .. versionadded:: 1.10.0</span>
 
 <span class="sd">        `on_show`:</span>
-<span class="sd">            Fired when when the window is shown.</span>
+<span class="sd">            Fired when the window is shown.</span>
 
 <span class="sd">            .. versionadded:: 1.10.0</span>
 
@@ -1312,6 +1312,33 @@
 <span class="sd">    the position set in :class:`~kivy.config.Config`.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
+    <span class="k">def</span> <span class="nf">_get_opacity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_window_opacity</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_set_opacity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opacity</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_window_opacity</span><span class="p">(</span><span class="n">opacity</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_window_opacity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Window: Opacity is not implemented in the current &#39;</span>
+                       <span class="s1">&#39;window provider&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_set_window_opacity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">opacity</span><span class="p">):</span>
+        <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Window: Opacity is not implemented in the current &#39;</span>
+                       <span class="s1">&#39;window provider&#39;</span><span class="p">)</span>
+
+    <span class="n">opacity</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_opacity</span><span class="p">,</span> <span class="n">_set_opacity</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Opacity of the window. Accepts a value between 0.0 (transparent) and</span>
+<span class="sd">    1.0 (opaque).</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">        This feature requires the SDL2 window provider.</span>
+
+<span class="sd">    .. versionadded:: 2.3.0</span>
+
+<span class="sd">    :attr:`opacity` is an :class:`~kivy.properties.AliasProperty` and defaults</span>
+<span class="sd">    to `1.0`.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">__self__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span>
@@ -1559,15 +1586,6 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="WindowBase.toggle_fullscreen"><a class="viewcode-back" href="../../../api-kivy.core.window.html#kivy.core.window.WindowBase.toggle_fullscreen">[docs]</a>    <span class="nd">@deprecated</span>
-    <span class="k">def</span> <span class="nf">toggle_fullscreen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Toggle between fullscreen and windowed mode.</span>
-
-<span class="sd">        .. deprecated:: 1.9.0</span>
-<span class="sd">            Use :attr:`fullscreen` instead.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">pass</span></div>
-
 <div class="viewcode-block" id="WindowBase.maximize"><a class="viewcode-back" href="../../../api-kivy.core.window.html#kivy.core.window.WindowBase.maximize">[docs]</a>    <span class="k">def</span> <span class="nf">maximize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Maximizes the window. This method should be used on desktop</span>
 <span class="sd">        platforms only.</span>
@@ -1698,7 +1716,7 @@
 <span class="sd">        If you set the property `draggable` on a layout,</span>
 <span class="sd">        all the child in the layout will receive touch events</span>
 
-<span class="sd">        If you want to override default behaviour, add function `in_drag_area(x,y)`</span>
+<span class="sd">        If you want to override default behavior, add function `in_drag_area(x,y)`</span>
 <span class="sd">        to the widget</span>
 
 <span class="sd">        The function is call with two args x,y which are mouse.x, and mouse.y</span>
@@ -2307,7 +2325,7 @@
 
 <div class="viewcode-block" id="WindowBase.on_request_close"><a class="viewcode-back" href="../../../api-kivy.core.window.html#kivy.core.window.WindowBase.on_request_close">[docs]</a>    <span class="k">def</span> <span class="nf">on_request_close</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Event called before we close the window. If a bound function returns</span>
-<span class="sd">        `True`, the window will not be closed. If the the event is triggered</span>
+<span class="sd">        `True`, the window will not be closed. If the event is triggered</span>
 <span class="sd">        because of the keyboard escape key, the keyword argument `source` is</span>
 <span class="sd">        dispatched along with a value of `keyboard` to the bound functions.</span>
 
@@ -2911,8 +2929,8 @@
 <!-- End Piwik Tracking Code -->
     <!--
     <div class="footer">
-      &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Jun 17, 2023.
+      &copy; Copyright 2010-2024, Kivy Team and other contributors.
+      Last updated on Jan 05, 2024.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

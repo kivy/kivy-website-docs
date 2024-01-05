@@ -9,7 +9,7 @@
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
     <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Vertex Instructions &mdash; Kivy 2.2.1 documentation</title>
+    <title>Vertex Instructions &mdash; Kivy 2.3.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/fresh.css" type="text/css" />
@@ -36,7 +36,7 @@
         <script type="text/javascript" src="_static/kivy.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="Kivy 2.2.1 documentation" href="index.html" />
+    <link rel="top" title="Kivy 2.3.0 documentation" href="index.html" />
     <link rel="up" title="Graphics" href="api-kivy.graphics.html" />
     <link rel="next" title="Input management" href="api-kivy.input.html" />
     <link rel="prev" title="Transformation" href="api-kivy.graphics.transformation.html" /> 
@@ -135,6 +135,7 @@
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dash_offset"><code class="docutils literal notranslate"><span class="pre">Line.dash_offset</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dashes"><code class="docutils literal notranslate"><span class="pre">Line.dashes</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.ellipse"><code class="docutils literal notranslate"><span class="pre">Line.ellipse</span></code></a></li>
+<li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.force_custom_drawing_method"><code class="docutils literal notranslate"><span class="pre">Line.force_custom_drawing_method</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.joint"><code class="docutils literal notranslate"><span class="pre">Line.joint</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.joint_precision"><code class="docutils literal notranslate"><span class="pre">Line.joint_precision</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.points"><code class="docutils literal notranslate"><span class="pre">Line.points</span></code></a></li>
@@ -160,6 +161,7 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Rectangle"><code class="docutils literal notranslate"><span class="pre">Rectangle</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Rectangle.points"><code class="docutils literal notranslate"><span class="pre">Rectangle.points</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Rectangle.pos"><code class="docutils literal notranslate"><span class="pre">Rectangle.pos</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Rectangle.size"><code class="docutils literal notranslate"><span class="pre">Rectangle.size</span></code></a></li>
 </ul>
@@ -234,7 +236,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="user-guide.html">Kivy Project</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="philosophy.html">Philosophy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contribute.html">Contributing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contribute.html">Contribution Guidelines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faq.html">FAQ</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contact.html">Contact Us</a></li>
 </ul>
@@ -495,6 +497,7 @@
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dash_offset"><code class="docutils literal notranslate"><span class="pre">Line.dash_offset</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dashes"><code class="docutils literal notranslate"><span class="pre">Line.dashes</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.ellipse"><code class="docutils literal notranslate"><span class="pre">Line.ellipse</span></code></a></li>
+<li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.force_custom_drawing_method"><code class="docutils literal notranslate"><span class="pre">Line.force_custom_drawing_method</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.joint"><code class="docutils literal notranslate"><span class="pre">Line.joint</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.joint_precision"><code class="docutils literal notranslate"><span class="pre">Line.joint_precision</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.points"><code class="docutils literal notranslate"><span class="pre">Line.points</span></code></a></li>
@@ -520,6 +523,7 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Rectangle"><code class="docutils literal notranslate"><span class="pre">Rectangle</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Rectangle.points"><code class="docutils literal notranslate"><span class="pre">Rectangle.points</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Rectangle.pos"><code class="docutils literal notranslate"><span class="pre">Rectangle.pos</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.vertex_instructions.Rectangle.size"><code class="docutils literal notranslate"><span class="pre">Rectangle.size</span></code></a></li>
 </ul>
@@ -789,12 +793,14 @@ ignored and the number of segments will be automatically calculated.</p>
 <p>The line has 3 internal drawing modes that you should be aware of
 for optimal results:</p>
 <ol class="arabic simple">
-<li><p>If the <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.width" title="kivy.graphics.vertex_instructions.Line.width"><code class="xref py py-attr docutils literal notranslate"><span class="pre">width</span></code></a> is 1.0, then the standard GL_LINE drawing from
-OpenGL will be used. <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dash_length" title="kivy.graphics.vertex_instructions.Line.dash_length"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dash_length</span></code></a>, <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dash_offset" title="kivy.graphics.vertex_instructions.Line.dash_offset"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dash_offset</span></code></a>, and <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dashes" title="kivy.graphics.vertex_instructions.Line.dashes"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dashes</span></code></a> will
-work, while properties for cap and joint have no meaning here.</p></li>
-<li><p>If the <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.width" title="kivy.graphics.vertex_instructions.Line.width"><code class="xref py py-attr docutils literal notranslate"><span class="pre">width</span></code></a> is greater than 1.0, then a custom drawing method,
-based on triangulation, will be used. <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dash_length" title="kivy.graphics.vertex_instructions.Line.dash_length"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dash_length</span></code></a>,
-<a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dash_offset" title="kivy.graphics.vertex_instructions.Line.dash_offset"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dash_offset</span></code></a>, and <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dashes" title="kivy.graphics.vertex_instructions.Line.dashes"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dashes</span></code></a> do not work in this mode.
+<li><p>If the <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.width" title="kivy.graphics.vertex_instructions.Line.width"><code class="xref py py-attr docutils literal notranslate"><span class="pre">width</span></code></a> is 1.0 and <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.force_custom_drawing_method" title="kivy.graphics.vertex_instructions.Line.force_custom_drawing_method"><code class="xref py py-attr docutils literal notranslate"><span class="pre">force_custom_drawing_method</span></code></a> is False, then the
+standard GL_LINE drawing from OpenGL will be used. <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dash_length" title="kivy.graphics.vertex_instructions.Line.dash_length"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dash_length</span></code></a>,
+<a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dash_offset" title="kivy.graphics.vertex_instructions.Line.dash_offset"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dash_offset</span></code></a>, and <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dashes" title="kivy.graphics.vertex_instructions.Line.dashes"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dashes</span></code></a> will work, while properties for
+cap and joint have no meaning here.</p></li>
+<li><p>If the <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.width" title="kivy.graphics.vertex_instructions.Line.width"><code class="xref py py-attr docutils literal notranslate"><span class="pre">width</span></code></a> is greater than 1.0 or <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.force_custom_drawing_method" title="kivy.graphics.vertex_instructions.Line.force_custom_drawing_method"><code class="xref py py-attr docutils literal notranslate"><span class="pre">force_custom_drawing_method</span></code></a>
+is True, then a custom drawing method, based on triangulation,
+will be used. <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dash_length" title="kivy.graphics.vertex_instructions.Line.dash_length"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dash_length</span></code></a>, <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dash_offset" title="kivy.graphics.vertex_instructions.Line.dash_offset"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dash_offset</span></code></a>,
+and <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.dashes" title="kivy.graphics.vertex_instructions.Line.dashes"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dashes</span></code></a> do not work in this mode.
 Additionally, if the current color has an alpha less than 1.0, a
 stencil will be used internally to draw the line.</p></li>
 </ol>
@@ -843,6 +849,9 @@ See <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.
 </dd>
 <dt><cite>bezier_precision</cite>: int, defaults to 180</dt><dd><p>Precision of the Bezier drawing.</p>
 </dd>
+<dt><cite>force_custom_drawing_method</cite>: bool, defaults to False</dt><dd><p>Should the custom drawing method be used, instead of it depending on <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.width" title="kivy.graphics.vertex_instructions.Line.width"><code class="xref py py-attr docutils literal notranslate"><span class="pre">width</span></code></a>
+being equal to 1.o or not.</p>
+</dd>
 </dl>
 </dd>
 </dl>
@@ -858,6 +867,9 @@ See <a class="reference internal" href="#kivy.graphics.vertex_instructions.Line.
 </div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 1.11.0: </span><cite>dashes</cite> have been added</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.3.0: </span><cite>force_custom_drawing_method</cite> has been added</p>
 </div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kivy.graphics.vertex_instructions.Line.bezier">
@@ -1043,6 +1055,15 @@ or by <code class="docutils literal notranslate"><span class="pre">&quot;center-
 <p><span class="versionmodified changed">Changed in version 2.2.0: </span>Now you can get the ellipse generated through the property.</p>
 <p>The minimum number of segments allowed is 3. Smaller values will be
 ignored and the number of segments will be automatically calculated.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.graphics.vertex_instructions.Line.force_custom_drawing_method">
+<span class="sig-name descname"><span class="pre">force_custom_drawing_method</span></span><a class="headerlink" href="#kivy.graphics.vertex_instructions.Line.force_custom_drawing_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>If True, the line will be drawn using the custom drawing method, no matter what the width is.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.3.0.</span></p>
 </div>
 </dd></dl>
 
@@ -1263,7 +1284,7 @@ limit inside Point() class is 2^15-2.</p>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.graphics.vertex_instructions.Point.add_point">
-<span class="sig-name descname"><span class="pre">add_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">float</span> <span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">float</span> <span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.graphics.vertex_instructions.Point.add_point" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">float</span> <span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">float</span> <span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.graphics.vertex_instructions.Point.add_point" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a point to the current <a class="reference internal" href="#kivy.graphics.vertex_instructions.Point.points" title="kivy.graphics.vertex_instructions.Point.points"><code class="xref py py-attr docutils literal notranslate"><span class="pre">points</span></code></a> list.</p>
 <p>If you intend to add multiple points, prefer to use this method instead
 of reassigning a new <a class="reference internal" href="#kivy.graphics.vertex_instructions.Point.points" title="kivy.graphics.vertex_instructions.Point.points"><code class="xref py py-attr docutils literal notranslate"><span class="pre">points</span></code></a> list. Assigning a new <a class="reference internal" href="#kivy.graphics.vertex_instructions.Point.points" title="kivy.graphics.vertex_instructions.Point.points"><code class="xref py py-attr docutils literal notranslate"><span class="pre">points</span></code></a>
@@ -1322,6 +1343,15 @@ means the real size will be 2.0 x 2.0.</p>
 </dl>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.graphics.vertex_instructions.Rectangle.points">
+<span class="sig-name descname"><span class="pre">points</span></span><a class="headerlink" href="#kivy.graphics.vertex_instructions.Rectangle.points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Property for getting the points used to draw the vertices.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.3.0.</span></p>
+</div>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kivy.graphics.vertex_instructions.Rectangle.pos">
 <span class="sig-name descname"><span class="pre">pos</span></span><a class="headerlink" href="#kivy.graphics.vertex_instructions.Rectangle.pos" title="Permalink to this definition">¶</a></dt>
@@ -1402,7 +1432,7 @@ are not supported.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.graphics.vertex_instructions.SmoothLine.premultiplied_texture">
-<span class="sig-name descname"><span class="pre">premultiplied_texture</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#kivy.graphics.vertex_instructions.SmoothLine.premultiplied_texture" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">premultiplied_texture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.graphics.vertex_instructions.SmoothLine.premultiplied_texture" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -1477,8 +1507,8 @@ are not supported.</p></li>
 <!-- End Piwik Tracking Code -->
     <!--
     <div class="footer">
-      &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Jun 17, 2023.
+      &copy; Copyright 2010-2024, Kivy Team and other contributors.
+      Last updated on Jan 05, 2024.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

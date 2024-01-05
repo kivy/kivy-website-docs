@@ -8,7 +8,7 @@
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
     
-    <title>kivy.parser &mdash; Kivy 2.3.0 documentation</title>
+    <title>kivy.garden &mdash; Kivy 2.3.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/fresh.css" type="text/css" />
@@ -96,7 +96,7 @@
                 <button type="submit">Go</button>
             </form>
           <!--
-          <h3><a href="../../index.html">kivy.parser</a></h3>
+          <h3><a href="../../index.html">kivy.garden</a></h3>
           
           <h3><a href="../../index.html">Table Of Contents</a></h3>
           -->
@@ -376,161 +376,193 @@
           <div class="body">
             <div class="toc"><h2>Table Of Contents</h2></div>
             
-  <h1>Source code for kivy.parser</h1><div class="highlight"><pre>
+  <h1>Source code for kivy.garden</h1><div class="highlight"><pre>
 <span></span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Parser utilities</span>
-<span class="sd">================</span>
+<span class="sd">Garden</span>
+<span class="sd">======</span>
 
-<span class="sd">Helper functions used for CSS parsing.</span>
+<span class="sd">.. versionadded:: 1.7.0</span>
+
+<span class="sd">.. versionchanged:: 1.11.1</span>
+
+<span class="sd">Garden is a project to centralize addons for Kivy maintained by users. You can</span>
+<span class="sd">find more information at `Kivy Garden &lt;http://kivy-garden.github.io/&gt;`_. All</span>
+<span class="sd">the garden packages are centralized on the `kivy-garden Github</span>
+<span class="sd">&lt;https://github.com/kivy-garden&gt;`_ repository.</span>
+
+<span class="sd">.. warning::</span>
+
+<span class="sd">    The garden flower widgets are contributed by regular users such as</span>
+<span class="sd">    yourself. The kivy developers do not take any responsibility for the code</span>
+<span class="sd">    hosted in the garden organization repositories - we do not actively monitor</span>
+<span class="sd">    the flower repos. Please use at your own risk.</span>
+
+<span class="sd">Update to garden structure</span>
+<span class="sd">--------------------------</span>
+
+<span class="sd">Starting with the kivy 1.11.0 release, kivy has</span>
+<span class="sd">`shifted &lt;https://github.com/kivy/kivy/wiki/Moving-kivy.garden.xxx-to-kivy_\</span>
+<span class="sd">garden.xxx-and-kivy.deps.xxx-to-kivy_deps.xxx&gt;`_ from using the garden legacy</span>
+<span class="sd">tool that installs flowers with `garden install flower` where the flower</span>
+<span class="sd">does not have a proper python package structure to flowers that can be</span>
+<span class="sd">installed with pip and uploaded to pypi. Kivy supports the legacy garden</span>
+<span class="sd">flowers side by side with the newer packages so the garden tool and legacy</span>
+<span class="sd">flowers will be able to be used indefinitely. But we will only provide support</span>
+<span class="sd">for the newer packages format in the future.</span>
+
+<span class="sd">For garden package maintainers - for a guide how to migrate your garden package</span>
+<span class="sd">from the legacy structure `garden.flower` to the newer `flower` structure used</span>
+<span class="sd">with the pip, see `this guide</span>
+<span class="sd">&lt;https://kivy-garden.github.io/#guideformigratingflowersfromlegacystructure&gt;`_.</span>
+
+<span class="sd">We hope most garden packages will be converted to the newer format to help</span>
+<span class="sd">with installation.</span>
+
+<span class="sd">General Usage Guidelines</span>
+<span class="sd">------------------------</span>
+
+<span class="sd">To use a kivy garden flower, first check if the flower is in the legacy format.</span>
+<span class="sd">If the flower name is in the format of `garden.flower`, such as</span>
+<span class="sd">`garden.graph &lt;https://github.com/kivy-garden/garden.graph&gt;`_ it is a legacy</span>
+<span class="sd">flower. If it is just `flower` such as</span>
+<span class="sd">`graph &lt;https://github.com/kivy-garden/graph&gt;`_ it is in the present format.</span>
+<span class="sd">If it is in the legacy format see `Legacy garden tool instructions`_ for how to</span>
+<span class="sd">install and use it. Otherwise, continue with the guide below.</span>
+
+<span class="sd">Garden flowers can now be installed with the `pip` tool like a normal python</span>
+<span class="sd">package. Given a flower that you want to install, lets use</span>
+<span class="sd">`graph &lt;https://github.com/kivy-garden/graph&gt;`_ as an example. You can install</span>
+<span class="sd">master directly from github with::</span>
+
+<span class="sd">    python -m pip install \</span>
+<span class="sd">https://github.com/kivy-garden/graph/archive/master.zip</span>
+
+<span class="sd">Look under the repository&#39;s releases tab if you&#39;d like to install a specific</span>
+<span class="sd">release or a pre-compiled wheel, if the flower has any. Then use the url with</span>
+<span class="sd">`pip`.</span>
+
+<span class="sd">Or you can automatically install it using garden&#39;s pypi server with::</span>
+
+<span class="sd">    python -m pip install kivy_garden.graph \</span>
+<span class="sd">--extra-index-url https://kivy-garden.github.io/simple/</span>
+
+<span class="sd">To permanently add our garden server to your pip configuration so that you</span>
+<span class="sd">don&#39;t have to specify it with `--extra-index-url`, add::</span>
+
+<span class="sd">    [global]</span>
+<span class="sd">    timeout = 60</span>
+<span class="sd">    index-url = https://kivy-garden.github.io/simple/</span>
+
+<span class="sd">to your `pip.conf &lt;https://pip.pypa.io/en/stable/user_guide/#config-file&gt;`_.</span>
+
+<span class="sd">If the flower maintainer has uploaded the flower to</span>
+<span class="sd">`pypi &lt;https://pypi.org/&gt;`_, you can just install it with</span>
+<span class="sd">`pip install kivy_garden.flower`.</span>
+
+
+<span class="sd">Legacy garden tool instructions</span>
+<span class="sd">-------------------------------</span>
+
+<span class="sd">Garden is now distributed as a separate Python module, kivy-garden. You can</span>
+<span class="sd">install it with pip::</span>
+
+<span class="sd">    pip install kivy-garden</span>
+
+<span class="sd">The garden module does not initially include any packages. You can download</span>
+<span class="sd">them with the garden tool installed by the pip package::</span>
+
+<span class="sd">    # Installing a garden package</span>
+<span class="sd">    garden install graph</span>
+
+<span class="sd">    # Upgrade a garden package</span>
+<span class="sd">    garden install --upgrade graph</span>
+
+<span class="sd">    # Uninstall a garden package</span>
+<span class="sd">    garden uninstall graph</span>
+
+<span class="sd">    # List all the garden packages installed</span>
+<span class="sd">    garden list</span>
+
+<span class="sd">    # Search new packages</span>
+<span class="sd">    garden search</span>
+
+<span class="sd">    # Search all the packages that contain &quot;graph&quot;</span>
+<span class="sd">    garden search graph</span>
+
+<span class="sd">    # Show the help</span>
+<span class="sd">    garden --help</span>
+
+<span class="sd">All the garden packages are installed by default in `~/.kivy/garden`.</span>
+
+<span class="sd">.. Note:: In previous versions of Kivy, garden was a tool at</span>
+<span class="sd">          kivy/tools/garden. This no longer exists, but the</span>
+<span class="sd">          kivy-garden module provides exactly the same functionality.</span>
+
+<span class="sd">Packaging</span>
+<span class="sd">~~~~~~~~~</span>
+
+<span class="sd">If you want to include garden packages in your application, you can add `--app`</span>
+<span class="sd">to the `install` command. This will create a `libs/garden` directory in your</span>
+<span class="sd">current directory which will be used by `kivy.garden`.</span>
+
+<span class="sd">For example::</span>
+
+<span class="sd">    cd myapp</span>
+<span class="sd">    garden install --app graph</span>
+
+
 <span class="sd">&#39;&#39;&#39;</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;parse_color&#39;</span><span class="p">,</span> <span class="s1">&#39;parse_int&#39;</span><span class="p">,</span> <span class="s1">&#39;parse_float&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;parse_string&#39;</span><span class="p">,</span> <span class="s1">&#39;parse_bool&#39;</span><span class="p">,</span> <span class="s1">&#39;parse_int2&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;parse_float4&#39;</span><span class="p">,</span> <span class="s1">&#39;parse_filename&#39;</span><span class="p">)</span>
+<span class="n">__path__</span> <span class="o">=</span> <span class="s1">&#39;kivy.garden&#39;</span>
 
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">from</span> <span class="nn">kivy.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
-<span class="kn">from</span> <span class="nn">kivy.resources</span> <span class="kn">import</span> <span class="n">resource_find</span>
+<span class="kn">import</span> <span class="nn">importlib.util</span>
+<span class="kn">from</span> <span class="nn">importlib.abc</span> <span class="kn">import</span> <span class="n">MetaPathFinder</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">join</span><span class="p">,</span> <span class="n">realpath</span><span class="p">,</span> <span class="n">exists</span><span class="p">,</span> <span class="n">abspath</span>
+<span class="kn">from</span> <span class="nn">kivy</span> <span class="kn">import</span> <span class="n">kivy_home_dir</span>
+<span class="kn">from</span> <span class="nn">kivy.utils</span> <span class="kn">import</span> <span class="n">platform</span>
+<span class="kn">import</span> <span class="nn">kivy</span>
 
+<span class="c1">#: system path where garden modules can be installed</span>
+<span class="n">garden_system_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">kivy_home_dir</span><span class="p">,</span> <span class="s1">&#39;garden&#39;</span><span class="p">)</span>
+<span class="n">garden_kivy_dir</span> <span class="o">=</span> <span class="n">abspath</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">kivy</span><span class="o">.</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;garden&#39;</span><span class="p">))</span>
 
-<span class="k">class</span> <span class="nc">ColorException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="k">pass</span>
-
-
-<div class="viewcode-block" id="parse_filename"><a class="viewcode-back" href="../../api-kivy.parser.html#kivy.parser.parse_filename">[docs]</a><span class="k">def</span> <span class="nf">parse_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Parse a filename and search for it using `resource_find()`.</span>
-<span class="sd">    If found, the resource path is returned, otherwise return the unmodified</span>
-<span class="sd">    filename (as specified by the caller).&#39;&#39;&#39;</span>
-    <span class="n">filename</span> <span class="o">=</span> <span class="n">parse_string</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">resource_find</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Resource: unable to find &lt;</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">result</span> <span class="ow">or</span> <span class="n">filename</span></div>
-
-
-<span class="k">def</span> <span class="nf">color_error</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-    <span class="c1"># show warning and return a sane value</span>
-    <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="c1">#: application path where garden modules can be installed</span>
+<span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s1">&#39;frozen&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s1">&#39;_MEIPASS&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="n">garden_app_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">realpath</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">_MEIPASS</span><span class="p">),</span> <span class="s1">&#39;libs&#39;</span><span class="p">,</span> <span class="s1">&#39;garden&#39;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">garden_app_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">realpath</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="s1">&#39;libs&#39;</span><span class="p">,</span> <span class="s1">&#39;garden&#39;</span><span class="p">)</span>
+<span class="c1">#: Fixes issue #4030 in kivy where garden path is incorrect on iOS</span>
+<span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s2">&quot;ios&quot;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">dirname</span>
+    <span class="kn">import</span> <span class="nn">__main__</span>
+    <span class="n">main_py_file</span> <span class="o">=</span> <span class="n">__main__</span><span class="o">.</span><span class="vm">__file__</span>
+    <span class="n">garden_app_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">main_py_file</span><span class="p">),</span> <span class="s1">&#39;libs&#39;</span><span class="p">,</span> <span class="s1">&#39;garden&#39;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="parse_color"><a class="viewcode-back" href="../../api-kivy.parser.html#kivy.parser.parse_color">[docs]</a><span class="k">def</span> <span class="nf">parse_color</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Parse a string to a kivy color. Supported formats:</span>
+<div class="viewcode-block" id="GardenImporter"><a class="viewcode-back" href="../../api-kivy.garden.html#kivy.garden.GardenImporter">[docs]</a><span class="k">class</span> <span class="nc">GardenImporter</span><span class="p">(</span><span class="n">MetaPathFinder</span><span class="p">):</span>
 
-<span class="sd">        * rgb(r, g, b)</span>
-<span class="sd">        * rgba(r, g, b, a)</span>
-<span class="sd">        * rgb</span>
-<span class="sd">        * rgba</span>
-<span class="sd">        * rrggbb</span>
-<span class="sd">        * rrggbbaa</span>
+    <span class="k">def</span> <span class="nf">find_spec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fullname</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="o">!=</span> <span class="s2">&quot;kivy.garden&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
 
-<span class="sd">    For hexadecimal values, you case also use:</span>
+        <span class="n">moddir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span>
+            <span class="n">garden_kivy_dir</span><span class="p">,</span> <span class="n">fullname</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;__init__.py&quot;</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">exists</span><span class="p">(</span><span class="n">moddir</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">spec_from_file_location</span><span class="p">(</span><span class="n">fullname</span><span class="p">,</span> <span class="n">moddir</span><span class="p">)</span>
 
-<span class="sd">        * #rgb</span>
-<span class="sd">        * #rgba</span>
-<span class="sd">        * #rrggbb</span>
-<span class="sd">        * #rrggbbaa</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;rgb&#39;</span><span class="p">):</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;rgba?\((.*)\)&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">res</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="c1"># default r/g/b values to 1 if greater than 255 else x/255</span>
-                <span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">255.</span> <span class="k">else</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.</span><span class="p">)</span>
-                         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;, ?&#39;</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">0</span><span class="p">])]</span>
-                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
-                    <span class="c1"># in case of invalid input like rgb()/rgb(r)/rgb(r, g)</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span>
-            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">color_error</span><span class="p">(</span><span class="s1">&#39;ColorParser: Invalid color for </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">color_error</span><span class="p">(</span><span class="s1">&#39;ColorParser: Invalid color for </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">color_error</span><span class="p">(</span><span class="s1">&#39;ColorParser: Invalid color for </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="n">value</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">1.</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="n">text</span>
-        <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;#&#39;</span><span class="p">:</span>
-            <span class="n">res</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-        <span class="n">lres</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">lres</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">or</span> <span class="n">lres</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
-            <span class="n">res</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">x</span> <span class="o">+</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">res</span><span class="p">])</span>
-        <span class="k">elif</span> <span class="n">lres</span> <span class="o">!=</span> <span class="mi">6</span> <span class="ow">and</span> <span class="n">lres</span> <span class="o">!=</span> <span class="mi">8</span><span class="p">:</span>
-            <span class="c1"># raise ColorException(&#39;Invalid color format for %r&#39; % text)</span>
-            <span class="k">return</span> <span class="n">color_error</span><span class="p">(</span>
-                <span class="s1">&#39;ColorParser: Invalid color format for </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.</span>
-                     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">),</span> <span class="mi">2</span><span class="p">)]</span>
-        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">color_error</span><span class="p">(</span><span class="s1">&#39;ColorParser: Invalid color for </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">lres</span> <span class="o">==</span> <span class="mi">6</span> <span class="ow">or</span> <span class="n">lres</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="n">value</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">1.</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">value</span></div>
+        <span class="n">modname</span> <span class="o">=</span> <span class="n">fullname</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">directory</span> <span class="ow">in</span> <span class="p">(</span><span class="n">garden_app_dir</span><span class="p">,</span> <span class="n">garden_system_dir</span><span class="p">):</span>
+            <span class="n">moddir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">modname</span><span class="p">,</span> <span class="s2">&quot;__init__.py&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">exists</span><span class="p">(</span><span class="n">moddir</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">spec_from_file_location</span><span class="p">(</span><span class="n">fullname</span><span class="p">,</span> <span class="n">moddir</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="parse_bool"><a class="viewcode-back" href="../../api-kivy.parser.html#kivy.parser.parse_bool">[docs]</a><span class="k">def</span> <span class="nf">parse_bool</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Parse a string to a boolean, ignoring case. &quot;true&quot;/&quot;1&quot; is True,</span>
-<span class="sd">    &quot;false&quot;/&quot;0&quot; is False. Anything else throws an exception.&#39;&#39;&#39;</span>
-    <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">):</span>
-        <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">elif</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;false&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">):</span>
-        <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid boolean: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="parse_string"><a class="viewcode-back" href="../../api-kivy.parser.html#kivy.parser.parse_string">[docs]</a><span class="k">def</span> <span class="nf">parse_string</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Parse a string to a string (removing single and double quotes).&#39;&#39;&#39;</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s2">&quot;&#39;&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">text</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s2">&quot;&#39;&quot;</span><span class="p">):</span>
-        <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
-
-
-<div class="viewcode-block" id="parse_int2"><a class="viewcode-back" href="../../api-kivy.parser.html#kivy.parser.parse_int2">[docs]</a><span class="k">def</span> <span class="nf">parse_int2</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Parse a string to a list of exactly 2 integers.</span>
-
-<span class="sd">        &gt;&gt;&gt; print(parse_int2(&quot;12 54&quot;))</span>
-<span class="sd">        12, 54</span>
-
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">texts</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">]</span>
-    <span class="n">value</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">parse_int</span><span class="p">,</span> <span class="n">texts</span><span class="p">))</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid int2 format: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
-    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Too many values in </span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
-    <span class="k">return</span> <span class="n">value</span></div>
-
-
-<div class="viewcode-block" id="parse_float4"><a class="viewcode-back" href="../../api-kivy.parser.html#kivy.parser.parse_float4">[docs]</a><span class="k">def</span> <span class="nf">parse_float4</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Parse a string to a list of exactly 4 floats.</span>
-
-<span class="sd">        &gt;&gt;&gt; parse_float4(&#39;54 87. 35 0&#39;)</span>
-<span class="sd">        54, 87., 35, 0</span>
-
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">texts</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">]</span>
-    <span class="n">value</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">parse_float</span><span class="p">,</span> <span class="n">texts</span><span class="p">))</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid float4 format: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
-    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
-    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-        <span class="c1"># ambiguous case!</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
-    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Too many values in </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">value</span></div>
-
-
-<span class="n">parse_int</span> <span class="o">=</span> <span class="nb">int</span>
-<span class="n">parse_float</span> <span class="o">=</span> <span class="nb">float</span>
+<span class="c1"># insert the garden importer as ultimate importer</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">meta_path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">GardenImporter</span><span class="p">())</span>
 </pre></div>
 
             <div class="footerlinks">

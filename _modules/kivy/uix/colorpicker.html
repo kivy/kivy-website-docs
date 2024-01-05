@@ -8,7 +8,7 @@
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
     
-    <title>kivy.uix.colorpicker &mdash; Kivy 2.2.1 documentation</title>
+    <title>kivy.uix.colorpicker &mdash; Kivy 2.3.0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/fresh.css" type="text/css" />
@@ -35,7 +35,7 @@
         <script type="text/javascript" src="../../../_static/kivy.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="top" title="Kivy 2.2.1 documentation" href="../../../index.html" />
+    <link rel="top" title="Kivy 2.3.0 documentation" href="../../../index.html" />
     <link rel="up" title="kivy" href="../../kivy.html" /> 
   </head>
   <body>
@@ -150,7 +150,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../user-guide.html">Kivy Project</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../philosophy.html">Philosophy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../contribute.html">Contributing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../contribute.html">Contribution Guidelines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../faq.html">FAQ</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../contact.html">Contact Us</a></li>
 </ul>
@@ -414,18 +414,19 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;ColorPicker&#39;</span><span class="p">,</span> <span class="s1">&#39;ColorWheel&#39;</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">kivy.uix.relativelayout</span> <span class="kn">import</span> <span class="n">RelativeLayout</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.widget</span> <span class="kn">import</span> <span class="n">Widget</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">atan</span>
+<span class="kn">from</span> <span class="nn">colorsys</span> <span class="kn">import</span> <span class="n">rgb_to_hsv</span><span class="p">,</span> <span class="n">hsv_to_rgb</span>
+
+<span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
+<span class="kn">from</span> <span class="nn">kivy.graphics</span> <span class="kn">import</span> <span class="n">Mesh</span><span class="p">,</span> <span class="n">InstructionGroup</span><span class="p">,</span> <span class="n">Color</span>
+<span class="kn">from</span> <span class="nn">kivy.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
 <span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="p">(</span><span class="n">NumericProperty</span><span class="p">,</span> <span class="n">BoundedNumericProperty</span><span class="p">,</span>
                              <span class="n">ListProperty</span><span class="p">,</span> <span class="n">ObjectProperty</span><span class="p">,</span>
                              <span class="n">ReferenceListProperty</span><span class="p">,</span> <span class="n">StringProperty</span><span class="p">,</span>
                              <span class="n">AliasProperty</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
-<span class="kn">from</span> <span class="nn">kivy.graphics</span> <span class="kn">import</span> <span class="n">Mesh</span><span class="p">,</span> <span class="n">InstructionGroup</span><span class="p">,</span> <span class="n">Color</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.relativelayout</span> <span class="kn">import</span> <span class="n">RelativeLayout</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.widget</span> <span class="kn">import</span> <span class="n">Widget</span>
 <span class="kn">from</span> <span class="nn">kivy.utils</span> <span class="kn">import</span> <span class="n">get_color_from_hex</span><span class="p">,</span> <span class="n">get_hex_from_color</span>
-<span class="kn">from</span> <span class="nn">kivy.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
-<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">atan</span>
-<span class="kn">from</span> <span class="nn">colorsys</span> <span class="kn">import</span> <span class="n">rgb_to_hsv</span><span class="p">,</span> <span class="n">hsv_to_rgb</span>
 
 
 <span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="n">pt1</span><span class="p">,</span> <span class="n">pt2</span><span class="p">):</span>
@@ -439,11 +440,11 @@
 <span class="k">def</span> <span class="nf">rect_to_polar</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="n">origin</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
         <span class="k">if</span> <span class="n">y</span> <span class="o">==</span> <span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
-            <span class="k">return</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
         <span class="k">elif</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
-            <span class="k">return</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">pi</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">y</span> <span class="o">-</span> <span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">(</span><span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">y</span><span class="p">,</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">y</span><span class="p">,</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span>
     <span class="n">t</span> <span class="o">=</span> <span class="n">atan</span><span class="p">(</span><span class="nb">float</span><span class="p">((</span><span class="n">y</span> <span class="o">-</span> <span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">/</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">origin</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
     <span class="k">if</span> <span class="n">x</span> <span class="o">-</span> <span class="n">origin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">t</span> <span class="o">+=</span> <span class="n">pi</span>
@@ -451,7 +452,7 @@
     <span class="k">if</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">t</span> <span class="o">+=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span>
 
-    <span class="k">return</span> <span class="p">(</span><span class="n">distance</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">origin</span><span class="p">),</span> <span class="n">t</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">distance</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">origin</span><span class="p">),</span> <span class="n">t</span>
 
 
 <div class="viewcode-block" id="ColorWheel"><a class="viewcode-back" href="../../../api-kivy.uix.colorpicker.html#kivy.uix.colorpicker.ColorWheel">[docs]</a><span class="k">class</span> <span class="nc">ColorWheel</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
@@ -475,28 +476,28 @@
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;The Green value of the color currently selected.</span>
 
 <span class="sd">    :attr:`g` is a :class:`~kivy.properties.BoundedNumericProperty`</span>
-<span class="sd">    and can be a value from 0 to 1.</span>
+<span class="sd">    and can be a value from 0 to 1. It defaults to 0.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">b</span> <span class="o">=</span> <span class="n">BoundedNumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;The Blue value of the color currently selected.</span>
 
 <span class="sd">    :attr:`b` is a :class:`~kivy.properties.BoundedNumericProperty` and</span>
-<span class="sd">    can be a value from 0 to 1.</span>
+<span class="sd">    can be a value from 0 to 1. It defaults to 0.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">a</span> <span class="o">=</span> <span class="n">BoundedNumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;The Alpha value of the color currently selected.</span>
 
 <span class="sd">    :attr:`a` is a :class:`~kivy.properties.BoundedNumericProperty` and</span>
-<span class="sd">    can be a value from 0 to 1.</span>
+<span class="sd">    can be a value from 0 to 1. It defaults to 0.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">color</span> <span class="o">=</span> <span class="n">ReferenceListProperty</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;The holds the color currently selected.</span>
 
 <span class="sd">    :attr:`color` is a :class:`~kivy.properties.ReferenceListProperty` and</span>
-<span class="sd">    contains a list of `r`, `g`, `b`, `a` values.</span>
+<span class="sd">    contains a list of `r`, `g`, `b`, `a` values. It defaults to `[0, 0, 0, 0]`.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">_origin</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
@@ -511,22 +512,23 @@
     <span class="n">_num_touches</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">_pinch_flag</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="n">_hsv</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ColorWheel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arcs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sv_idx</span> <span class="o">=</span> <span class="mi">0</span>
 
         <span class="n">pdv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_piece_divisions</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sv_s</span> <span class="o">=</span> <span class="p">[(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="n">pdv</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">pdv</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span>
             <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="n">pdv</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">pdv</span><span class="p">))]</span>
 
-    <span class="k">def</span> <span class="nf">on__origin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">init_wheel</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ColorWheel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">on__radius</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">init_wheel</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">on__origin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_instance</span><span class="p">,</span> <span class="n">_value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reset_canvas</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">init_wheel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">on__radius</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_instance</span><span class="p">,</span> <span class="n">_value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reset_canvas</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_reset_canvas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># initialize list to hold all meshes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">arcs</span> <span class="o">=</span> <span class="p">[]</span>
@@ -612,9 +614,8 @@
                             <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_radius</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_piece_divisions</span><span class="p">)))</span>
 
         <span class="k">if</span> <span class="p">(</span>
-            <span class="n">goal_sv_idx</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sv_idx</span> <span class="ow">and</span>
-            <span class="n">goal_sv_idx</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span>
-            <span class="n">goal_sv_idx</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sv_s</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_piece_divisions</span>
+                <span class="n">goal_sv_idx</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sv_idx</span> <span class="ow">and</span>
+                <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">goal_sv_idx</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sv_s</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_piece_divisions</span>
         <span class="p">):</span>
             <span class="c1"># this is a pinch to zoom</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_pinch_flag</span> <span class="o">=</span> <span class="kc">True</span>
@@ -809,12 +810,12 @@
         <span class="c1"># to prevent interaction between hsv/rgba, we work internally using rgba</span>
         <span class="n">mode</span><span class="p">,</span> <span class="n">clr_idx</span><span class="p">,</span> <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_upd_clr_list</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">text</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">text</span><span class="p">)))</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mf">255.0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">text</span><span class="p">)))</span>
             <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;rgb&#39;</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">[</span><span class="n">clr_idx</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">[</span><span class="n">clr_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">text</span> <span class="o">/</span> <span class="mi">255</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">hsv</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hsv</span><span class="p">[:])</span>
-                <span class="n">hsv</span><span class="p">[</span><span class="n">clr_idx</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.</span>
+                <span class="n">hsv</span><span class="p">[</span><span class="n">clr_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">text</span> <span class="o">/</span> <span class="mi">255</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">hsv_to_rgb</span><span class="p">(</span><span class="o">*</span><span class="n">hsv</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
             <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;ColorPicker: invalid value : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
@@ -899,8 +900,8 @@
 <!-- End Piwik Tracking Code -->
     <!--
     <div class="footer">
-      &copy; Copyright 2010, The Kivy Authors.
-      Last updated on Jun 17, 2023.
+      &copy; Copyright 2010-2024, Kivy Team and other contributors.
+      Last updated on Jan 05, 2024.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
