@@ -214,6 +214,7 @@
 <li><a class="reference internal" href="#kivy.core.window.WindowBase.transform_motion_event_2d"><code class="docutils literal notranslate"><span class="pre">WindowBase.transform_motion_event_2d()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.window.WindowBase.ungrab_mouse"><code class="docutils literal notranslate"><span class="pre">WindowBase.ungrab_mouse()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.window.WindowBase.unregister_event_manager"><code class="docutils literal notranslate"><span class="pre">WindowBase.unregister_event_manager()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.window.WindowBase.unrotated_size"><code class="docutils literal notranslate"><span class="pre">WindowBase.unrotated_size</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.window.WindowBase.width"><code class="docutils literal notranslate"><span class="pre">WindowBase.width</span></code></a></li>
 </ul>
 </li>
@@ -613,6 +614,7 @@
 <li><a class="reference internal" href="#kivy.core.window.WindowBase.transform_motion_event_2d"><code class="docutils literal notranslate"><span class="pre">WindowBase.transform_motion_event_2d()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.window.WindowBase.ungrab_mouse"><code class="docutils literal notranslate"><span class="pre">WindowBase.ungrab_mouse()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.window.WindowBase.unregister_event_manager"><code class="docutils literal notranslate"><span class="pre">WindowBase.unregister_event_manager()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.window.WindowBase.unrotated_size"><code class="docutils literal notranslate"><span class="pre">WindowBase.unrotated_size</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.window.WindowBase.width"><code class="docutils literal notranslate"><span class="pre">WindowBase.width</span></code></a></li>
 </ul>
 </li>
@@ -2287,8 +2289,18 @@ defaults to True.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kivy.core.window.WindowBase.size">
 <span class="sig-name descname"><span class="pre">size</span></span><a class="headerlink" href="#kivy.core.window.WindowBase.size" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the rotated size of the window. If <a class="reference internal" href="#kivy.core.window.WindowBase.rotation" title="kivy.core.window.WindowBase.rotation"><code class="xref py py-attr docutils literal notranslate"><span class="pre">rotation</span></code></a> is set, then the
-size will change to reflect the rotation.</p>
+<dd><p>The rotated size of the window in drawable pixels. This is the actual
+pixel size of the drawable area of the window, and takes into account the
+window’s <a class="reference internal" href="#kivy.core.window.WindowBase.rotation" title="kivy.core.window.WindowBase.rotation"><code class="xref py py-attr docutils literal notranslate"><span class="pre">rotation</span></code></a> and pixel density.</p>
+<p>The pixel density is the ratio of the physical pixels to the size of the
+window in window coordinates. For example, on a Retina HiDPI display, the
+pixel density is typically 2.0, meaning that the window’s drawable size in
+pixels is twice the size in window coordinates.</p>
+<p>Consider using <a class="reference internal" href="#kivy.core.window.WindowBase.system_size" title="kivy.core.window.WindowBase.system_size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">system_size</span></code></a> if you want to programmatically set the
+window size, as is more portable, and will give a nicer UX across different
+OSes and displays.</p>
+<p>This property differs from <a class="reference internal" href="#kivy.core.window.WindowBase.unrotated_size" title="kivy.core.window.WindowBase.unrotated_size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">unrotated_size</span></code></a> as it also accounts for
+the window’s rotation.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.0.9.</span></p>
 </div>
@@ -2345,9 +2357,15 @@ defaults to ‘’.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kivy.core.window.WindowBase.system_size">
 <span class="sig-name descname"><span class="pre">system_size</span></span><a class="headerlink" href="#kivy.core.window.WindowBase.system_size" title="Permalink to this definition">¶</a></dt>
-<dd><p>Real size of the window ignoring rotation. If the density is
-not 1, the <a class="reference internal" href="#kivy.core.window.WindowBase.system_size" title="kivy.core.window.WindowBase.system_size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">system_size</span></code></a> is the <a class="reference internal" href="#kivy.core.window.WindowBase.size" title="kivy.core.window.WindowBase.size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">size</span></code></a> divided by
-density.</p>
+<dd><p>Size in window coordinates of the window.</p>
+<p>This property is used to set and retrieve the window size in window
+coordinates (which is different from the drawable size).
+The actual <a class="reference internal" href="#kivy.core.window.WindowBase.size" title="kivy.core.window.WindowBase.size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">size</span></code></a> of the window will be adjusted to account
+for the window’s rotation and pixel density.</p>
+<p>Setting the window size in window coordinates is more portable and will
+give a nicer UX across different OSes and displays, therefore it is
+recommended to use this property to set the window size instead of
+<a class="reference internal" href="#kivy.core.window.WindowBase.size" title="kivy.core.window.WindowBase.size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">size</span></code></a>.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.0.9.</span></p>
 </div>
@@ -2431,6 +2449,23 @@ call to preserve previous values of <cite>me</cite>’s attributes.</p>
 is present as it can be changed or removed in the next versions of
 Kivy.</p>
 </div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.core.window.WindowBase.unrotated_size">
+<span class="sig-name descname"><span class="pre">unrotated_size</span></span><a class="headerlink" href="#kivy.core.window.WindowBase.unrotated_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The unrotated size of the window in drawable pixels. This is the actual
+pixel size of the drawable area of the window, and takes into account the
+window’s pixel density.</p>
+<p>The pixel density is the ratio of the physical pixels to the size of the
+window in window coordinates. For example, on a Retina HiDPI display, the
+pixel density is typically 2.0, meaning that the window’s drawable size in
+pixels is twice the size in window coordinates.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
+<p><a class="reference internal" href="#kivy.core.window.WindowBase.unrotated_size" title="kivy.core.window.WindowBase.unrotated_size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">unrotated_size</span></code></a> is a
+read-only <a class="reference internal" href="api-kivy.properties.html#kivy.properties.AliasProperty" title="kivy.properties.AliasProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">AliasProperty</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py attribute">

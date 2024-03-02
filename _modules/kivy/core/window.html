@@ -796,26 +796,6 @@
 <span class="sd">    :attr:`modifiers` is an :class:`~kivy.properties.AliasProperty`.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="nf">_get_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rotation</span>
-        <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span>
-        <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;win&#39;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_density</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_win</span><span class="o">.</span><span class="n">_get_gl_size</span><span class="p">()</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">softinput_mode</span> <span class="o">==</span> <span class="s1">&#39;resize&#39;</span><span class="p">:</span>
-            <span class="n">h</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyboard_height</span>
-        <span class="k">if</span> <span class="n">r</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">180</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span>
-        <span class="k">return</span> <span class="n">h</span><span class="p">,</span> <span class="n">w</span>
-
-    <span class="k">def</span> <span class="nf">_set_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span> <span class="o">!=</span> <span class="n">size</span><span class="p">:</span>
-            <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rotation</span>
-            <span class="k">if</span> <span class="n">r</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">180</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_size</span> <span class="o">=</span> <span class="n">size</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_size</span> <span class="o">=</span> <span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_pre_resize&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">size</span><span class="p">)</span>
-
     <span class="n">minimum_width</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;The minimum width to restrict the window to.</span>
 
@@ -860,9 +840,76 @@
 <span class="sd">    and defaults to True.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
+    <span class="k">def</span> <span class="nf">_get_unrotated_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span>
+
+        <span class="n">w</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_density</span>
+        <span class="n">h</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_density</span>
+
+        <span class="k">return</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span>
+
+    <span class="n">unrotated_size</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span>
+        <span class="n">_get_unrotated_size</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;_size&quot;</span><span class="p">,</span> <span class="s2">&quot;_density&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;The unrotated size of the window in drawable pixels. This is the actual</span>
+<span class="sd">    pixel size of the drawable area of the window, and takes into account the</span>
+<span class="sd">    window&#39;s pixel density.</span>
+
+<span class="sd">    The pixel density is the ratio of the physical pixels to the size of the</span>
+<span class="sd">    window in window coordinates. For example, on a Retina HiDPI display, the</span>
+<span class="sd">    pixel density is typically 2.0, meaning that the window&#39;s drawable size in</span>
+<span class="sd">    pixels is twice the size in window coordinates.</span>
+
+<span class="sd">    .. versionadded:: 3.0.0</span>
+
+<span class="sd">    :attr:`unrotated_size` is a</span>
+<span class="sd">    read-only :class:`~kivy.properties.AliasProperty`.</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">_get_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_unrotated_size</span><span class="p">()</span>
+
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rotation</span>
+
+        <span class="k">if</span> <span class="n">r</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">180</span><span class="p">):</span>
+            <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span>
+
+        <span class="k">return</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span>
+
+    <span class="k">def</span> <span class="nf">_set_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rotation</span>
+        <span class="n">new_w</span><span class="p">,</span> <span class="n">new_h</span> <span class="o">=</span> <span class="n">size</span>
+
+        <span class="k">if</span> <span class="n">r</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">180</span><span class="p">):</span>
+            <span class="n">new_h</span><span class="p">,</span> <span class="n">new_w</span> <span class="o">=</span> <span class="n">new_w</span><span class="p">,</span> <span class="n">new_h</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">new_w</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_density</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">new_h</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_density</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="c1"># The size is the same, no need to resize anything</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">new_w</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_density</span><span class="p">,</span> <span class="n">new_h</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_density</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_pre_resize&#39;</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_size</span><span class="p">)</span>
+
     <span class="n">size</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_size</span><span class="p">,</span> <span class="n">_set_size</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;_size&#39;</span><span class="p">,</span> <span class="s1">&#39;_rotation&#39;</span><span class="p">))</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Get the rotated size of the window. If :attr:`rotation` is set, then the</span>
-<span class="sd">    size will change to reflect the rotation.</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;The rotated size of the window in drawable pixels. This is the actual</span>
+<span class="sd">    pixel size of the drawable area of the window, and takes into account the</span>
+<span class="sd">    window&#39;s :attr:`rotation` and pixel density.</span>
+
+<span class="sd">    The pixel density is the ratio of the physical pixels to the size of the</span>
+<span class="sd">    window in window coordinates. For example, on a Retina HiDPI display, the</span>
+<span class="sd">    pixel density is typically 2.0, meaning that the window&#39;s drawable size in</span>
+<span class="sd">    pixels is twice the size in window coordinates.</span>
+
+<span class="sd">    Consider using :attr:`system_size` if you want to programmatically set the</span>
+<span class="sd">    window size, as is more portable, and will give a nicer UX across different</span>
+<span class="sd">    OSes and displays.</span>
+
+<span class="sd">    This property differs from :attr:`unrotated_size` as it also accounts for</span>
+<span class="sd">    the window&#39;s rotation.</span>
 
 <span class="sd">    .. versionadded:: 1.0.9</span>
 
@@ -897,13 +944,7 @@
 
     <span class="c1"># make some property read-only</span>
     <span class="k">def</span> <span class="nf">_get_width</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span>
-        <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;win&#39;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_density</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_win</span><span class="o">.</span><span class="n">_get_gl_size</span><span class="p">()</span>
-        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rotation</span>
-        <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">r</span> <span class="o">==</span> <span class="mi">180</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_size</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="n">width</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_width</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;_rotation&#39;</span><span class="p">,</span> <span class="s1">&#39;_size&#39;</span><span class="p">,</span> <span class="s1">&#39;_density&#39;</span><span class="p">))</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Rotated window width.</span>
@@ -913,14 +954,7 @@
 
     <span class="k">def</span> <span class="nf">_get_height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Rotated window height&#39;&#39;&#39;</span>
-        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rotation</span>
-        <span class="n">_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_size</span>
-        <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;win&#39;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_density</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_win</span><span class="o">.</span><span class="n">_get_gl_size</span><span class="p">()</span>
-        <span class="n">kb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyboard_height</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">softinput_mode</span> <span class="o">==</span> <span class="s1">&#39;resize&#39;</span> <span class="k">else</span> <span class="mi">0</span>
-        <span class="k">if</span> <span class="n">r</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">r</span> <span class="o">==</span> <span class="mi">180</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">kb</span>
-        <span class="k">return</span> <span class="n">_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">kb</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_size</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="n">height</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_height</span><span class="p">,</span>
                            <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;_rotation&#39;</span><span class="p">,</span> <span class="s1">&#39;_size&#39;</span><span class="p">,</span> <span class="s1">&#39;_density&#39;</span><span class="p">))</span>
@@ -1108,26 +1142,22 @@
 
     <span class="n">system_size</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_system_size</span><span class="p">,</span> <span class="n">_set_system_size</span><span class="p">,</span>
                                 <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;_size&#39;</span><span class="p">,))</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Real size of the window ignoring rotation. If the density is</span>
-<span class="sd">    not 1, the :attr:`system_size` is the :attr:`size` divided by</span>
-<span class="sd">    density.</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;Size in window coordinates of the window.</span>
+
+<span class="sd">    This property is used to set and retrieve the window size in window</span>
+<span class="sd">    coordinates (which is different from the drawable size).</span>
+<span class="sd">    The actual :attr:`size` of the window will be adjusted to account</span>
+<span class="sd">    for the window&#39;s rotation and pixel density.</span>
+
+<span class="sd">    Setting the window size in window coordinates is more portable and will</span>
+<span class="sd">    give a nicer UX across different OSes and displays, therefore it is</span>
+<span class="sd">    recommended to use this property to set the window size instead of</span>
+<span class="sd">    :attr:`size`.</span>
 
 <span class="sd">    .. versionadded:: 1.0.9</span>
 
 <span class="sd">    :attr:`system_size` is an :class:`~kivy.properties.AliasProperty`.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-
-    <span class="k">def</span> <span class="nf">_get_effective_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;On density=1 and non-ios / non-Windows displays,</span>
-<span class="sd">        return :attr:`system_size`, else return scaled / rotated :attr:`size`.</span>
-
-<span class="sd">        Used by MouseMotionEvent.update_graphics() and WindowBase.on_motion().</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">system_size</span>
-        <span class="k">if</span> <span class="n">platform</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;ios&#39;</span><span class="p">,</span> <span class="s1">&#39;win&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_density</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
-
-        <span class="k">return</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span>
 
     <span class="n">borderless</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;When set to True, this property removes the window border/decoration.</span>
@@ -2011,7 +2041,7 @@
 
 <span class="sd">        .. versionadded:: 2.1.0</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_effective_size</span><span class="p">()</span>
+        <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">unrotated_size</span>
         <span class="n">me</span><span class="o">.</span><span class="n">scale_for_screen</span><span class="p">(</span>
             <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span>
             <span class="n">rotation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rotation</span><span class="p">,</span>
@@ -2149,7 +2179,7 @@
         <span class="kn">from</span> <span class="nn">kivy.graphics.transformation</span> <span class="kn">import</span> <span class="n">Matrix</span>
         <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">radians</span>
 
-        <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_effective_size</span><span class="p">()</span>
+        <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">unrotated_size</span>
 
         <span class="n">smode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">softinput_mode</span>
         <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_system_keyboard</span><span class="o">.</span><span class="n">target</span>
