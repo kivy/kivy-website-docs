@@ -584,7 +584,9 @@ from source code and compiled directly on your system.</p>
 <p>In past, for macOS, Linux and BSD Kivy required the installation of the SDL dependencies from package
 managers (e.g. <code class="docutils literal notranslate"><span class="pre">apt</span></code> or <code class="docutils literal notranslate"><span class="pre">brew</span></code>). However, this is no longer officially supported as the version
 of SDL provided by the package managers is often outdated and may not work with Kivy as we
-try to keep up with the latest SDL versions in order to support the latest features and bugfixes.</p>
+try to keep up with the latest SDL versions in order to support the latest features and bugfixes.
+Additionally, on macOS, we now build SDL without OpenGL support by default, as is deprecated by Apple and
+we now use ANGLE via Metal backend for OpenGL support.</p>
 <p><strong>You can still install the SDL dependencies from package managers if you wish, but we no longer
 offer support for this.</strong></p>
 <p>Instead, we recommend installing the SDL dependencies from source. This is the same process
@@ -619,6 +621,13 @@ from source. This script is located in the <code class="docutils literal notrans
 <p>The script will download and build the SDL dependencies from source. It will also install
 the dependencies into a directory named <cite>kivy-dependencies</cite>. This directory will be used
 by Kivy to build and install Kivy from source with SDL support.</p>
+<p>On macOS it is still possible to build SDL2 with the Apple-provided OpenGL framework, but it is
+deprecated by Apple and we recommend using (default) ANGLE via Metal backend for OpenGL support.</p>
+<p>To build SDL2 with Apple-provided OpenGL framework, you can run the script with the
+<code class="docutils literal notranslate"><span class="pre">USE_LEGACY_OPENGL</span></code> environment variable set to <code class="docutils literal notranslate"><span class="pre">1</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">USE_LEGACY_OPENGL</span><span class="o">=</span><span class="mi">1</span> <span class="o">./</span><span class="n">build_kivy_deps</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
 <p>Kivy will need to know where the SDL dependencies are installed. To do so, you must set
 the <code class="docutils literal notranslate"><span class="pre">KIVY_DEPS_ROOT</span></code> environment variable to the path of the <code class="docutils literal notranslate"><span class="pre">kivy-dependencies</span></code> directory.
 For example, if you are in the <code class="docutils literal notranslate"><span class="pre">kivy-deps-build</span></code> directory, you can set the environment
@@ -633,6 +642,12 @@ variable with:</p>
 </div>
 <p>To install the latest cutting-edge Kivy from <strong>master</strong>, instead do:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;kivy[base] @ https://github.com/kivy/kivy/archive/master.zip&quot;</span>
+</pre></div>
+</div>
+<p>If <code class="docutils literal notranslate"><span class="pre">USE_LEGACY_OPENGL=1</span></code> has been used to build SDL2 with Apple-provided OpenGL framework, you will need to
+build Kivy without ANGLE support. To do so, you can set the <code class="docutils literal notranslate"><span class="pre">USE_ANGLE_GL_BACKEND</span></code> environment variable to
+<code class="docutils literal notranslate"><span class="pre">0</span></code> before while installing Kivy. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">USE_ANGLE_GL_BACKEND</span><span class="o">=</span><span class="mi">0</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="s2">&quot;kivy[base]&quot;</span> <span class="n">kivy_examples</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">binary</span> <span class="n">kivy</span>
 </pre></div>
 </div>
 <p>If you want to install Kivy from a different branch, from your forked repository, or
@@ -909,7 +924,7 @@ issues during development. If you encounter any bugs, please report them.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010-2024, Kivy Team and other contributors.
-      Last updated on Mar 10, 2024.
+      Last updated on Mar 13, 2024.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
