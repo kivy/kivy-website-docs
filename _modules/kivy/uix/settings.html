@@ -185,7 +185,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.base.html">Kivy Base</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.cache.html">Cache manager</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.clock.html">Clock object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.compat.html">Compatibility module for Python 2.7 and &gt;= 3.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.config.html">Configuration object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.context.html">Context</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.core.html">Core Abstraction</a></li>
@@ -556,7 +555,6 @@
 <span class="kn">from</span> <span class="nn">kivy.metrics</span> <span class="kn">import</span> <span class="n">dp</span>
 <span class="kn">from</span> <span class="nn">kivy.config</span> <span class="kn">import</span> <span class="n">ConfigParser</span>
 <span class="kn">from</span> <span class="nn">kivy.animation</span> <span class="kn">import</span> <span class="n">Animation</span>
-<span class="kn">from</span> <span class="nn">kivy.compat</span> <span class="kn">import</span> <span class="n">string_types</span><span class="p">,</span> <span class="n">text_type</span>
 <span class="kn">from</span> <span class="nn">kivy.core.window</span> <span class="kn">import</span> <span class="n">Window</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.boxlayout</span> <span class="kn">import</span> <span class="n">BoxLayout</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.tabbedpanel</span> <span class="kn">import</span> <span class="n">TabbedPanelHeader</span>
@@ -703,7 +701,7 @@
             <span class="k">return</span>
         <span class="c1"># get current value in config</span>
         <span class="n">panel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">panel</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">value</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
         <span class="n">panel</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">section</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
 
@@ -981,9 +979,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_dismiss</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">is_float</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">text_type</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">textinput</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">textinput</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">text_type</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">textinput</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">textinput</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
             <span class="k">return</span></div>
 
@@ -1402,7 +1400,7 @@
 <span class="sd">        to the user.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface_cls</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="bp">cls</span> <span class="o">=</span> <span class="n">Factory</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
         <span class="n">interface</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">interface</span> <span class="o">=</span> <span class="n">interface</span>

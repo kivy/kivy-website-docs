@@ -185,7 +185,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.base.html">Kivy Base</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.cache.html">Cache manager</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.clock.html">Clock object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.compat.html">Compatibility module for Python 2.7 and &gt;= 3.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.config.html">Configuration object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.context.html">Context</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.core.html">Core Abstraction</a></li>
@@ -408,7 +407,6 @@
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">json</span> <span class="kn">import</span> <span class="n">loads</span><span class="p">,</span> <span class="n">dumps</span>
-<span class="kn">from</span> <span class="nn">kivy.compat</span> <span class="kn">import</span> <span class="n">iteritems</span>
 <span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">StringProperty</span>
 <span class="kn">from</span> <span class="nn">kivy.storage</span> <span class="kn">import</span> <span class="n">AbstractStore</span>
 
@@ -453,7 +451,7 @@
         <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;.d.&#39;</span> <span class="o">+</span> <span class="n">key</span>
         <span class="n">pipe</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">pipeline</span><span class="p">()</span>
         <span class="n">pipe</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">iteritems</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">pipe</span><span class="o">.</span><span class="n">hset</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">dumps</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
         <span class="n">pipe</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
         <span class="k">return</span> <span class="kc">True</span>

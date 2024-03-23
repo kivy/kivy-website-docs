@@ -185,7 +185,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.base.html">Kivy Base</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.cache.html">Cache manager</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.clock.html">Clock object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.compat.html">Compatibility module for Python 2.7 and &gt;= 3.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.config.html">Configuration object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.context.html">Context</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.core.html">Core Abstraction</a></li>
@@ -569,7 +568,6 @@
            <span class="s1">&#39;FallOutTransition&#39;</span><span class="p">,</span> <span class="s1">&#39;RiseInTransition&#39;</span><span class="p">,</span> <span class="s1">&#39;NoTransition&#39;</span><span class="p">,</span>
            <span class="s1">&#39;CardTransition&#39;</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">kivy.compat</span> <span class="kn">import</span> <span class="n">iteritems</span>
 <span class="kn">from</span> <span class="nn">kivy.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
 <span class="kn">from</span> <span class="nn">kivy.event</span> <span class="kn">import</span> <span class="n">EventDispatcher</span>
 <span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
@@ -1467,8 +1465,7 @@
         <span class="k">return</span> <span class="nb">bool</span><span class="p">([</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">screens</span> <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">])</span></div>
 
     <span class="k">def</span> <span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Py2K backwards compatibility without six or other lib.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the name of the next screen from the screen list.&#39;&#39;&#39;</span>
         <span class="n">screens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">screens</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">screens</span><span class="p">:</span>
             <span class="k">return</span>
@@ -1478,10 +1475,6 @@
             <span class="k">return</span> <span class="n">screens</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
             <span class="k">return</span>
-
-<div class="viewcode-block" id="ScreenManager.next"><a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.ScreenManager.next">[docs]</a>    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the name of the next screen from the screen list.&#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__next__</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="ScreenManager.previous"><a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.ScreenManager.previous">[docs]</a>    <span class="k">def</span> <span class="nf">previous</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the name of the previous screen from the screen list.</span>
@@ -1542,7 +1535,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">transition</span> <span class="o">=</span> <span class="n">specified_transition</span>
 
         <span class="c1"># change the transition options</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">iteritems</span><span class="p">(</span><span class="n">options</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transition</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
         <span class="c1"># add and leave if we are set as the current screen</span>

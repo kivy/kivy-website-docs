@@ -185,7 +185,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.base.html">Kivy Base</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.cache.html">Cache manager</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.clock.html">Clock object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.compat.html">Compatibility module for Python 2.7 and &gt;= 3.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.config.html">Configuration object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.context.html">Context</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../api-kivy.core.html">Core Abstraction</a></li>
@@ -390,7 +389,6 @@
 
 <span class="kn">import</span> <span class="nn">errno</span>
 <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">exists</span><span class="p">,</span> <span class="n">abspath</span><span class="p">,</span> <span class="n">dirname</span>
-<span class="kn">from</span> <span class="nn">kivy.compat</span> <span class="kn">import</span> <span class="n">iteritems</span>
 <span class="kn">from</span> <span class="nn">kivy.storage</span> <span class="kn">import</span> <span class="n">AbstractStore</span>
 <span class="kn">from</span> <span class="nn">json</span> <span class="kn">import</span> <span class="n">loads</span><span class="p">,</span> <span class="n">dump</span>
 
@@ -452,9 +450,9 @@
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">store_find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">iteritems</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="k">for</span> <span class="n">fkey</span><span class="p">,</span> <span class="n">fvalue</span> <span class="ow">in</span> <span class="n">iteritems</span><span class="p">(</span><span class="n">filters</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">fkey</span><span class="p">,</span> <span class="n">fvalue</span> <span class="ow">in</span> <span class="n">filters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">fkey</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
                     <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
                     <span class="k">break</span>

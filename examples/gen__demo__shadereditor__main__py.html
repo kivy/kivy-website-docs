@@ -195,7 +195,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.base.html">Kivy Base</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.cache.html">Cache manager</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.clock.html">Clock object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-kivy.compat.html">Compatibility module for Python 2.7 and &gt;= 3.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.config.html">Configuration object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.context.html">Context</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.core.html">Core Abstraction</a></li>
@@ -435,7 +434,6 @@ is visible as logging message in your terminal.</p>
 <span class="kn">from</span> <span class="nn">kivy.graphics</span> <span class="kn">import</span> <span class="n">RenderContext</span>
 <span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">StringProperty</span><span class="p">,</span> <span class="n">ObjectProperty</span>
 <span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
-<span class="kn">from</span> <span class="nn">kivy.compat</span> <span class="kn">import</span> <span class="n">PY2</span>
 
 <span class="n">fs_header</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
 <span class="s1">#ifdef GL_ES</span>
@@ -531,13 +529,8 @@ is visible as logging message in your terminal.</p>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="p">:</span>
             <span class="k">return</span>
 
-        <span class="c1"># we don&#39;t use str() here because it will crash with non-ascii char</span>
-        <span class="k">if</span> <span class="n">PY2</span><span class="p">:</span>
-            <span class="n">fs</span> <span class="o">=</span> <span class="n">fs_header</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
-            <span class="n">vs</span> <span class="o">=</span> <span class="n">vs_header</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">vs</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">fs</span> <span class="o">=</span> <span class="n">fs_header</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span>
-            <span class="n">vs</span> <span class="o">=</span> <span class="n">vs_header</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">vs</span>
+        <span class="n">fs</span> <span class="o">=</span> <span class="n">fs_header</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">fs</span>
+        <span class="n">vs</span> <span class="o">=</span> <span class="n">vs_header</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">vs</span>
 
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--&gt;&#39;</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">viewer</span><span class="o">.</span><span class="n">fs</span> <span class="o">=</span> <span class="n">fs</span>

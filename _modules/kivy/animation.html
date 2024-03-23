@@ -185,7 +185,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.base.html">Kivy Base</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.cache.html">Cache manager</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.clock.html">Clock object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api-kivy.compat.html">Compatibility module for Python 2.7 and &gt;= 3.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.config.html">Configuration object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.context.html">Context</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.core.html">Core Abstraction</a></li>
@@ -466,7 +465,6 @@
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">ChainMap</span>
 <span class="kn">from</span> <span class="nn">kivy.event</span> <span class="kn">import</span> <span class="n">EventDispatcher</span>
 <span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
-<span class="kn">from</span> <span class="nn">kivy.compat</span> <span class="kn">import</span> <span class="n">string_types</span><span class="p">,</span> <span class="n">iterkeys</span>
 <span class="kn">from</span> <span class="nn">kivy.weakproxy</span> <span class="kn">import</span> <span class="n">WeakProxy</span>
 
 
@@ -514,7 +512,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_duration</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;duration&#39;</span><span class="p">,</span> <span class="mf">1.</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_transition</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;transition&#39;</span><span class="p">,</span> <span class="s1">&#39;linear&#39;</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_step</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">kw</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;step&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_transition</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_transition</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_transition</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">AnimationTransition</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transition</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_animated_properties</span> <span class="o">=</span> <span class="n">kw</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_widgets</span> <span class="o">=</span> <span class="p">{}</span>
@@ -758,7 +756,7 @@
             <span class="k">return</span> <span class="n">tp</span><span class="p">([</span><span class="n">_calculate</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">x</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">x</span><span class="p">],</span> <span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">))])</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
-            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">iterkeys</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">a</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">b</span><span class="p">:</span>
                     <span class="c1"># User requested to animate only part of the dict.</span>
                     <span class="c1"># Copy the rest</span>

@@ -185,7 +185,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.base.html">Kivy Base</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.cache.html">Cache manager</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.clock.html">Clock object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api-kivy.compat.html">Compatibility module for Python 2.7 and &gt;= 3.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.config.html">Configuration object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.context.html">Context</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.core.html">Core Abstraction</a></li>
@@ -777,7 +776,6 @@
 <span class="kn">from</span> <span class="nn">weakref</span> <span class="kn">import</span> <span class="n">ref</span>
 
 <span class="kn">from</span> <span class="nn">kivy</span> <span class="kn">import</span> <span class="n">kivy_config_fn</span>
-<span class="kn">from</span> <span class="nn">kivy.compat</span> <span class="kn">import</span> <span class="n">PY2</span><span class="p">,</span> <span class="n">string_types</span>
 <span class="kn">from</span> <span class="nn">kivy.logger</span> <span class="kn">import</span> <span class="n">Logger</span><span class="p">,</span> <span class="n">logger_config_update</span>
 <span class="kn">from</span> <span class="nn">kivy.utils</span> <span class="kn">import</span> <span class="n">platform</span>
 
@@ -867,9 +865,8 @@
 <span class="sd">            :meth:`read` now calls the callbacks if read changed any values.</span>
 
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Only one filename is accepted (</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">string_types</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Only one filename is accepted (str)&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
         <span class="c1"># If we try to open directly the configuration file in utf-8,</span>
         <span class="c1"># we correctly get the unicode value by default.</span>
@@ -902,7 +899,7 @@
 <span class="sd">        the value is implicitly converted to a string.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">e_value</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="c1"># might be boolean, int, etc.</span>
             <span class="n">e_value</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="n">PythonConfigParser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">e_value</span><span class="p">)</span>
@@ -918,9 +915,6 @@
 
 <div class="viewcode-block" id="ConfigParser.get"><a class="viewcode-back" href="../../api-kivy.config.html#kivy.config.ConfigParser.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">PythonConfigParser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">PY2</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">value</span></div>
 
 <div class="viewcode-block" id="ConfigParser.setdefaults"><a class="viewcode-back" href="../../api-kivy.config.html#kivy.config.ConfigParser.setdefaults">[docs]</a>    <span class="k">def</span> <span class="nf">setdefaults</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">keyvalues</span><span class="p">):</span>

@@ -200,7 +200,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.base.html">Kivy Base</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.cache.html">Cache manager</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.clock.html">Clock object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../api-kivy.compat.html">Compatibility module for Python 2.7 and &gt;= 3.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.config.html">Configuration object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.context.html">Context</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api-kivy.core.html">Core Abstraction</a></li>
@@ -621,12 +620,10 @@ file.</p>
 <span class="kn">from</span> <span class="nn">kivy.uix.label</span> <span class="kn">import</span> <span class="n">Label</span>
 <span class="kn">from</span> <span class="nn">kivy.graphics</span> <span class="kn">import</span> <span class="n">Color</span><span class="p">,</span> <span class="n">Line</span>
 <span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">ObjectProperty</span><span class="p">,</span> <span class="n">BooleanProperty</span>
-<span class="kn">from</span> <span class="nn">kivy.compat</span> <span class="kn">import</span> <span class="n">PY2</span>
 
 <span class="c1"># local libraries</span>
 <span class="kn">from</span> <span class="nn">helpers</span> <span class="kn">import</span> <span class="n">InformationPopup</span>
 <span class="kn">from</span> <span class="nn">settings</span> <span class="kn">import</span> <span class="n">MultistrokeSettingsContainer</span>
-
 
 <span class="c1"># refuse heap permute for gestures with more strokes than 3</span>
 <span class="c1"># (you can increase it, but 4 strokes = 384 templates, 5 = 3840)</span>
@@ -762,6 +759,7 @@ file.</p>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Contains a ScrollView of RecognizerResultLabels, ie the list of</span>
 <span class="sd">    matched gestures and their score/distance (is a child of</span>
 <span class="sd">    GestureHistoryManager)&#39;&#39;&#39;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">RecognizerResultDetails</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">register_event_type</span><span class="p">(</span><span class="s1">&#39;on_reanalyze_selected&#39;</span><span class="p">)</span>
@@ -808,12 +806,7 @@ file.</p>
             <span class="n">scrollv</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">=</span> <span class="mi">1</span>
             <span class="k">return</span>
 
-        <span class="k">if</span> <span class="n">PY2</span><span class="p">:</span>
-            <span class="n">d</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">iteritems</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">d</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">items</span>
-
-        <span class="k">for</span> <span class="n">one</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">d</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;score&#39;</span><span class="p">],</span>
+        <span class="k">for</span> <span class="n">one</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;score&#39;</span><span class="p">],</span>
                           <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">one</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">lbl</span> <span class="o">=</span> <span class="n">RecognizerResultLabel</span><span class="p">(</span>
