@@ -456,7 +456,12 @@
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="n">kivy_deps</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="kn">from</span> <span class="nn">kivy.factory</span> <span class="kn">import</span> <span class="n">Factory</span>
-<span class="kn">from</span> <span class="nn">PyInstaller.depend</span> <span class="kn">import</span> <span class="n">bindepend</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Pyinstaller &gt;= 6</span>
+    <span class="kn">from</span> <span class="nn">PyInstaller.depend.bindepend</span> <span class="kn">import</span> <span class="n">get_imports</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="c1"># Pyinstaller &lt; 6</span>
+    <span class="kn">from</span> <span class="nn">PyInstaller.depend.bindepend</span> <span class="kn">import</span> <span class="n">selectImports</span> <span class="k">as</span> <span class="n">get_imports</span>
 
 <span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">environ</span>
 <span class="k">if</span> <span class="s1">&#39;KIVY_DOC&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">environ</span><span class="p">:</span>
@@ -745,7 +750,7 @@
 
     <span class="n">lib_filepaths</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">plugin_filepath</span> <span class="ow">in</span> <span class="n">plugin_filepaths</span><span class="p">:</span>
-        <span class="n">plugin_deps</span> <span class="o">=</span> <span class="n">bindepend</span><span class="o">.</span><span class="n">selectImports</span><span class="p">(</span><span class="n">plugin_filepath</span><span class="p">)</span>
+        <span class="n">plugin_deps</span> <span class="o">=</span> <span class="n">get_imports</span><span class="p">(</span><span class="n">plugin_filepath</span><span class="p">)</span>
         <span class="n">lib_filepaths</span><span class="o">.</span><span class="n">update</span><span class="p">([</span><span class="n">path</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">plugin_deps</span><span class="p">])</span>
 
     <span class="n">plugin_binaries</span> <span class="o">=</span> <span class="p">[(</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;gst-plugins&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">plugin_filepaths</span><span class="p">]</span>
