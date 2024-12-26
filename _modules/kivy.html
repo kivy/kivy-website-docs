@@ -8,10 +8,10 @@
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
     
-    <title>kivy &mdash; Kivy 2.3.0 documentation</title>
+    <title>kivy &mdash; Kivy 2.3.1 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/fresh.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> 
+      <link rel="stylesheet" href="../_static/fresh.css" type="text/css" />
          
           <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script> 
             <script src="../_static/jquery.js"></script> 
@@ -35,7 +35,7 @@
         <script type="text/javascript" src="../_static/kivy.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="Kivy 2.3.0 documentation" href="../index.html" />
+    <link rel="top" title="Kivy 2.3.1 documentation" href="../index.html" />
     <link rel="up" title="Module code" href="index.html" /> 
   </head>
   <body>
@@ -713,45 +713,6 @@
             <span class="s1">&#39;deps: Error importing dependency &quot;</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">&quot;: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span>
             <span class="nb">format</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">modname</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
 
-<span class="c1"># if there are deps, import them so they can do their magic.</span>
-<span class="kn">import</span> <span class="nn">kivy.deps</span>
-<span class="n">_packages</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">importer</span><span class="p">,</span> <span class="n">modname</span><span class="p">,</span> <span class="n">ispkg</span> <span class="ow">in</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">iter_modules</span><span class="p">(</span><span class="n">kivy</span><span class="o">.</span><span class="n">deps</span><span class="o">.</span><span class="n">__path__</span><span class="p">):</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">ispkg</span><span class="p">:</span>
-        <span class="k">continue</span>
-    <span class="k">if</span> <span class="n">modname</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;gst&#39;</span><span class="p">):</span>
-        <span class="n">_packages</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">importer</span><span class="p">,</span> <span class="n">modname</span><span class="p">,</span> <span class="s1">&#39;kivy.deps&#39;</span><span class="p">))</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">_packages</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">importer</span><span class="p">,</span> <span class="n">modname</span><span class="p">,</span> <span class="s1">&#39;kivy.deps&#39;</span><span class="p">))</span>
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">kivy_deps</span>
-    <span class="k">for</span> <span class="n">importer</span><span class="p">,</span> <span class="n">modname</span><span class="p">,</span> <span class="n">ispkg</span> <span class="ow">in</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">iter_modules</span><span class="p">(</span><span class="n">kivy_deps</span><span class="o">.</span><span class="n">__path__</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">ispkg</span><span class="p">:</span>
-            <span class="k">continue</span>
-        <span class="k">if</span> <span class="n">modname</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;gst&#39;</span><span class="p">):</span>
-            <span class="n">_packages</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">importer</span><span class="p">,</span> <span class="n">modname</span><span class="p">,</span> <span class="s1">&#39;kivy_deps&#39;</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">_packages</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">importer</span><span class="p">,</span> <span class="n">modname</span><span class="p">,</span> <span class="s1">&#39;kivy_deps&#39;</span><span class="p">))</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="k">pass</span>
-
-<span class="n">_logging_msgs</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">importer</span><span class="p">,</span> <span class="n">modname</span><span class="p">,</span> <span class="n">package</span> <span class="ow">in</span> <span class="n">_packages</span><span class="p">:</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">mod</span> <span class="o">=</span> <span class="n">importer</span><span class="o">.</span><span class="n">find_module</span><span class="p">(</span><span class="n">modname</span><span class="p">)</span><span class="o">.</span><span class="n">load_module</span><span class="p">(</span><span class="n">modname</span><span class="p">)</span>
-
-        <span class="n">version</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="s1">&#39;__version__&#39;</span><span class="p">):</span>
-            <span class="n">version</span> <span class="o">=</span> <span class="s1">&#39; </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mod</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
-        <span class="n">_logging_msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-            <span class="s1">&#39;deps: Successfully imported &quot;</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">&quot;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span>
-            <span class="nb">format</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">modname</span><span class="p">,</span> <span class="n">version</span><span class="p">))</span>
-    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-            <span class="s1">&#39;deps: Error importing dependency &quot;</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">&quot;: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span>
-            <span class="nb">format</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">modname</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
-
 <span class="c1"># Don&#39;t go further if we generate documentation</span>
 <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">name</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">(</span>
         <span class="s1">&#39;sphinx-build&#39;</span><span class="p">,</span> <span class="s1">&#39;autobuild.py&#39;</span><span class="p">,</span> <span class="s1">&#39;sphinx&#39;</span>
@@ -898,8 +859,8 @@
 
     <span class="k">if</span> <span class="n">need_save</span> <span class="ow">and</span> <span class="s1">&#39;KIVY_NO_CONFIG&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">environ</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">kivy_config_fn</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
-                <span class="n">Config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
+            <span class="n">Config</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">kivy_config_fn</span>
+            <span class="n">Config</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">Logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;Core: error while saving default&#39;</span>
                              <span class="s1">&#39;configuration file:&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
@@ -973,7 +934,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010-2024, Kivy Team and other contributors.
-      Last updated on Jan 05, 2024.
+      Last updated on Dec 26, 2024.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
