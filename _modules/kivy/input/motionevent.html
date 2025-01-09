@@ -507,30 +507,30 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;MotionEvent&#39;</span><span class="p">,</span> <span class="p">)</span>
 
-<span class="kn">import</span> <span class="nn">weakref</span>
-<span class="kn">from</span> <span class="nn">inspect</span> <span class="kn">import</span> <span class="n">isroutine</span>
-<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span>
-<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">weakref</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">inspect</span><span class="w"> </span><span class="kn">import</span> <span class="n">isroutine</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">copy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">time</span>
 
-<span class="kn">from</span> <span class="nn">kivy.eventmanager</span> <span class="kn">import</span> <span class="n">MODE_DEFAULT_DISPATCH</span>
-<span class="kn">from</span> <span class="nn">kivy.vector</span> <span class="kn">import</span> <span class="n">Vector</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.eventmanager</span><span class="w"> </span><span class="kn">import</span> <span class="n">MODE_DEFAULT_DISPATCH</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.vector</span><span class="w"> </span><span class="kn">import</span> <span class="n">Vector</span>
 
 
-<span class="k">class</span> <span class="nc">EnhancedDictionary</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">EnhancedDictionary</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">EnhancedDictionary</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__getattr__</span><span class="p">(</span><span class="n">attr</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">MotionEventMetaclass</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MotionEventMetaclass</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="n">mcs</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">attrs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__new__</span><span class="p">(</span><span class="n">mcs</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">attrs</span><span class="p">):</span>
         <span class="n">__attrs__</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">base</span> <span class="ow">in</span> <span class="n">bases</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="s1">&#39;__attrs__&#39;</span><span class="p">):</span>
@@ -545,7 +545,7 @@
 <span class="n">MotionEventBase</span> <span class="o">=</span> <span class="n">MotionEventMetaclass</span><span class="p">(</span><span class="s1">&#39;MotionEvent&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="p">),</span> <span class="p">{})</span>
 
 
-<div class="viewcode-block" id="MotionEvent"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent">[docs]</a><span class="k">class</span> <span class="nc">MotionEvent</span><span class="p">(</span><span class="n">MotionEventBase</span><span class="p">):</span>
+<div class="viewcode-block" id="MotionEvent"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">MotionEvent</span><span class="p">(</span><span class="n">MotionEventBase</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Abstract class that represents an input event.</span>
 
 <span class="sd">    :Parameters:</span>
@@ -580,7 +580,7 @@
          <span class="s1">&#39;is_triple_tap&#39;</span><span class="p">,</span> <span class="s1">&#39;triple_tap_time&#39;</span><span class="p">,</span>
          <span class="s1">&#39;ud&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">is_touch</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">type_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">is_touch</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">type_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span> <span class="o">==</span> <span class="n">MotionEvent</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;class MotionEvent is abstract&#39;</span><span class="p">)</span>
         <span class="n">MotionEvent</span><span class="o">.</span><span class="n">__uniq_id</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -743,7 +743,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">depack</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 
-<div class="viewcode-block" id="MotionEvent.depack"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.depack">[docs]</a>    <span class="k">def</span> <span class="nf">depack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="MotionEvent.depack"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.depack">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">depack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Depack `args` into attributes of the class&#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">osx</span> <span class="ow">is</span> <span class="kc">None</span> \
                 <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">sync_with_dispatch</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_first_dispatch_done</span><span class="p">:</span>
@@ -757,7 +757,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">dsy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sy</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">psy</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dsz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sz</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">psz</span></div>
 
-<div class="viewcode-block" id="MotionEvent.grab"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.grab">[docs]</a>    <span class="k">def</span> <span class="nf">grab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_instance</span><span class="p">,</span> <span class="n">exclusive</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="MotionEvent.grab"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.grab">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">grab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_instance</span><span class="p">,</span> <span class="n">exclusive</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Grab this motion event.</span>
 
 <span class="sd">        If this event is a touch you can grab it if you want to receive</span>
@@ -794,7 +794,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">grab_exclusive_class</span> <span class="o">=</span> <span class="n">class_instance</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">grab_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">class_instance</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MotionEvent.ungrab"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.ungrab">[docs]</a>    <span class="k">def</span> <span class="nf">ungrab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_instance</span><span class="p">):</span>
+<div class="viewcode-block" id="MotionEvent.ungrab"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.ungrab">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">ungrab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_instance</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Ungrab a previously grabbed motion event.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">class_instance</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">ref</span><span class="p">(</span><span class="n">class_instance</span><span class="o">.</span><span class="vm">__self__</span><span class="p">)</span>
@@ -803,7 +803,7 @@
         <span class="k">if</span> <span class="n">class_instance</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">grab_list</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">grab_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">class_instance</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MotionEvent.dispatch_done"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.dispatch_done">[docs]</a>    <span class="k">def</span> <span class="nf">dispatch_done</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MotionEvent.dispatch_done"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.dispatch_done">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">dispatch_done</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Notify that dispatch to the listeners is done.</span>
 
 <span class="sd">        Called by the :meth:`EventLoopBase.post_dispatch_input`.</span>
@@ -813,7 +813,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_keep_prev_pos</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_first_dispatch_done</span> <span class="o">=</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="MotionEvent.move"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.move">[docs]</a>    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="MotionEvent.move"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.move">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Move to another position.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sync_with_dispatch</span><span class="p">:</span>
@@ -825,7 +825,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">time_update</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">depack</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MotionEvent.scale_for_screen"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.scale_for_screen">[docs]</a>    <span class="k">def</span> <span class="nf">scale_for_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<div class="viewcode-block" id="MotionEvent.scale_for_screen"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.scale_for_screen">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">scale_for_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
                          <span class="n">smode</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="n">kheight</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Scale position for the screen.</span>
 
@@ -860,7 +860,7 @@
         <span class="c1"># Cache position</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span></div>
 
-<div class="viewcode-block" id="MotionEvent.to_absolute_pos"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.to_absolute_pos">[docs]</a>    <span class="k">def</span> <span class="nf">to_absolute_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">y_max</span><span class="p">,</span> <span class="n">rotation</span><span class="p">):</span>
+<div class="viewcode-block" id="MotionEvent.to_absolute_pos"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.to_absolute_pos">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_absolute_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">y_max</span><span class="p">,</span> <span class="n">rotation</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Transforms normalized (0-1) coordinates `nx` and `ny` to absolute</span>
 <span class="sd">        coordinates using `x_max`, `y_max` and `rotation`.</span>
 
@@ -880,7 +880,7 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid rotation </span><span class="si">%s</span><span class="s1">, &#39;</span>
                          <span class="s1">&#39;valid values are 0, 90, 180 or 270&#39;</span> <span class="o">%</span> <span class="n">rotation</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MotionEvent.push"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.push">[docs]</a>    <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="MotionEvent.push"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.push">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Push attribute values in `attrs` onto the stack.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">attrs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -888,14 +888,14 @@
         <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">push_attrs_stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">attrs</span><span class="p">,</span> <span class="n">values</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="MotionEvent.pop"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.pop">[docs]</a>    <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MotionEvent.pop"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.pop">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Pop attributes values from the stack.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">attrs</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">push_attrs_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">attrs</span><span class="p">)):</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="MotionEvent.apply_transform_2d"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.apply_transform_2d">[docs]</a>    <span class="k">def</span> <span class="nf">apply_transform_2d</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transform</span><span class="p">):</span>
+<div class="viewcode-block" id="MotionEvent.apply_transform_2d"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.apply_transform_2d">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">apply_transform_2d</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">transform</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Apply a transformation on x, y, z, px, py, pz,</span>
 <span class="sd">        ox, oy, oz, dx, dy, dz.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
@@ -905,50 +905,50 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">dx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">px</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">py</span></div>
 
-<div class="viewcode-block" id="MotionEvent.copy_to"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.copy_to">[docs]</a>    <span class="k">def</span> <span class="nf">copy_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to</span><span class="p">):</span>
+<div class="viewcode-block" id="MotionEvent.copy_to"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.copy_to">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">copy_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">to</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Copy some attribute to another motion event object.&#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__attrs__</span><span class="p">:</span>
             <span class="n">to</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">attr</span><span class="p">)))</span></div>
 
-<div class="viewcode-block" id="MotionEvent.distance"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.distance">[docs]</a>    <span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other_touch</span><span class="p">):</span>
+<div class="viewcode-block" id="MotionEvent.distance"><a class="viewcode-back" href="../../../api-kivy.input.motionevent.html#kivy.input.MotionEvent.distance">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other_touch</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the distance between the two events.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="n">Vector</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span><span class="o">.</span><span class="n">distance</span><span class="p">(</span><span class="n">other_touch</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">update_time_end</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_time_end</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">time_end</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
 
     <span class="c1"># facilities</span>
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">dpos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dpos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Return delta between last position and current position, in the</span>
 <span class="sd">        screen coordinate system (self.dx, self.dy).&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dy</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">opos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">opos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the initial position of the motion event in the screen</span>
 <span class="sd">        coordinate system (self.ox, self.oy).&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ox</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">oy</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">ppos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ppos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the previous position of the motion event in the screen</span>
 <span class="sd">        coordinate system (self.px, self.py).&#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">px</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">py</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">spos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">spos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the position in the 0-1 coordinate system (self.sx, self.sy).</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sy</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">basename</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
         <span class="n">classname</span> <span class="o">=</span> <span class="n">basename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1"> spos=</span><span class="si">%s</span><span class="s1"> pos=</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">classname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">spos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">out</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="n">v</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
@@ -962,7 +962,7 @@
             <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out</span><span class="p">))</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">is_mouse_scrolling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_mouse_scrolling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Returns True if the touch event is a mousewheel scrolling</span>
 
 <span class="sd">        .. versionadded:: 1.6.0</span>
@@ -1006,7 +1006,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Jan 01, 2025.
+      Last updated on Jan 09, 2025.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

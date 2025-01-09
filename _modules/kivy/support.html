@@ -393,17 +393,17 @@
            <span class="s1">&#39;uninstall_twisted_reactor&#39;</span><span class="p">,</span> <span class="s1">&#39;install_android&#39;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="install_gobject_iteration"><a class="viewcode-back" href="../../api-kivy.support.html#kivy.support.install_gobject_iteration">[docs]</a><span class="k">def</span> <span class="nf">install_gobject_iteration</span><span class="p">():</span>
+<div class="viewcode-block" id="install_gobject_iteration"><a class="viewcode-back" href="../../api-kivy.support.html#kivy.support.install_gobject_iteration">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">install_gobject_iteration</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Import and install gobject context iteration inside our event loop.</span>
 <span class="sd">    This is used as soon as gobject is used (like gstreamer).</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.clock</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clock</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">gi.repository</span> <span class="kn">import</span> <span class="n">GObject</span> <span class="k">as</span> <span class="n">gobject</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">gi.repository</span><span class="w"> </span><span class="kn">import</span> <span class="n">GObject</span> <span class="k">as</span> <span class="n">gobject</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-        <span class="kn">import</span> <span class="nn">gobject</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">gobject</span>
 
     <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">gobject</span><span class="p">,</span> <span class="s1">&#39;_gobject_already_installed&#39;</span><span class="p">):</span>
         <span class="c1"># already installed, don&#39;t do it twice.</span>
@@ -417,7 +417,7 @@
     <span class="n">context</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">get_context</span><span class="p">()</span>
 
     <span class="c1"># schedule the iteration each frame</span>
-    <span class="k">def</span> <span class="nf">_gobject_iteration</span><span class="p">(</span><span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_gobject_iteration</span><span class="p">(</span><span class="o">*</span><span class="n">largs</span><span class="p">):</span>
         <span class="c1"># XXX we need to loop over context here, otherwise, we might have a lag</span>
         <span class="n">loop</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">while</span> <span class="n">context</span><span class="o">.</span><span class="n">pending</span><span class="p">()</span> <span class="ow">and</span> <span class="n">loop</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
@@ -434,32 +434,32 @@
 <span class="n">_redraw_event</span> <span class="o">=</span> <span class="kc">None</span>
 
 
-<span class="k">def</span> <span class="nf">_android_ask_redraw</span><span class="p">(</span><span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_android_ask_redraw</span><span class="p">(</span><span class="o">*</span><span class="n">largs</span><span class="p">):</span>
     <span class="c1"># after wakeup, we need to redraw more than once, otherwise we get a</span>
     <span class="c1"># black screen</span>
     <span class="k">global</span> <span class="n">g_android_redraw_count</span>
-    <span class="kn">from</span> <span class="nn">kivy.core.window</span> <span class="kn">import</span> <span class="n">Window</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.window</span><span class="w"> </span><span class="kn">import</span> <span class="n">Window</span>
     <span class="n">Window</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">ask_update</span><span class="p">()</span>
     <span class="n">g_android_redraw_count</span> <span class="o">-=</span> <span class="mi">1</span>
     <span class="k">if</span> <span class="n">g_android_redraw_count</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
 
 
-<div class="viewcode-block" id="install_android"><a class="viewcode-back" href="../../api-kivy.support.html#kivy.support.install_android">[docs]</a><span class="k">def</span> <span class="nf">install_android</span><span class="p">():</span>
+<div class="viewcode-block" id="install_android"><a class="viewcode-back" href="../../api-kivy.support.html#kivy.support.install_android">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">install_android</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Install hooks for the android platform.</span>
 
 <span class="sd">    * Automatically sleep when the device is paused.</span>
 <span class="sd">    * Automatically kill the application when the return key is pressed.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="kn">import</span> <span class="nn">android</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">android</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Android lib is missing, cannot install android hooks&#39;</span><span class="p">)</span>
         <span class="k">return</span>
 
-    <span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
-    <span class="kn">from</span> <span class="nn">kivy.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
-    <span class="kn">import</span> <span class="nn">pygame</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.clock</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clock</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">Logger</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">pygame</span>
 
     <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Support: Android install hooks&#39;</span><span class="p">)</span>
 
@@ -470,15 +470,15 @@
 
     <span class="c1"># Check if android should be paused or not.</span>
     <span class="c1"># If pause is requested, just leave the app.</span>
-    <span class="k">def</span> <span class="nf">android_check_pause</span><span class="p">(</span><span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">android_check_pause</span><span class="p">(</span><span class="o">*</span><span class="n">largs</span><span class="p">):</span>
         <span class="c1"># do nothing until android asks for it.</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">android</span><span class="o">.</span><span class="n">check_pause</span><span class="p">():</span>
             <span class="k">return</span>
 
-        <span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
-        <span class="kn">from</span> <span class="nn">kivy.base</span> <span class="kn">import</span> <span class="n">stopTouchApp</span>
-        <span class="kn">from</span> <span class="nn">kivy.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
-        <span class="kn">from</span> <span class="nn">kivy.core.window</span> <span class="kn">import</span> <span class="n">Window</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">stopTouchApp</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">Logger</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.window</span><span class="w"> </span><span class="kn">import</span> <span class="n">Window</span>
         <span class="k">global</span> <span class="n">g_android_redraw_count</span><span class="p">,</span> <span class="n">_redraw_event</span>
 
         <span class="c1"># try to get the current running application</span>
@@ -529,7 +529,7 @@
 <span class="n">_twisted_reactor_work</span> <span class="o">=</span> <span class="kc">None</span>
 
 
-<div class="viewcode-block" id="install_twisted_reactor"><a class="viewcode-back" href="../../api-kivy.support.html#kivy.support.install_twisted_reactor">[docs]</a><span class="k">def</span> <span class="nf">install_twisted_reactor</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="install_twisted_reactor"><a class="viewcode-back" href="../../api-kivy.support.html#kivy.support.install_twisted_reactor">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">install_twisted_reactor</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Installs a threaded twisted reactor, which will schedule one</span>
 <span class="sd">    reactor iteration before the next frame only when twisted needs</span>
 <span class="sd">    to do some work.</span>
@@ -550,7 +550,7 @@
 <span class="sd">        application directory.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="kn">import</span> <span class="nn">twisted</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">twisted</span>
 
     <span class="c1"># prevent installing more than once</span>
     <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">twisted</span><span class="p">,</span> <span class="s1">&#39;_kivy_twisted_reactor_installed&#39;</span><span class="p">):</span>
@@ -561,23 +561,23 @@
     <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;installSignalHandlers&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
     <span class="c1"># install threaded-select reactor, to use with own event loop</span>
-    <span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">_threadedselect</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">twisted.internet</span><span class="w"> </span><span class="kn">import</span> <span class="n">_threadedselect</span>
     <span class="n">_threadedselect</span><span class="o">.</span><span class="n">install</span><span class="p">()</span>
 
     <span class="c1"># now we can import twisted reactor as usual</span>
-    <span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
-    <span class="kn">from</span> <span class="nn">twisted.internet.error</span> <span class="kn">import</span> <span class="n">ReactorNotRunning</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">twisted.internet</span><span class="w"> </span><span class="kn">import</span> <span class="n">reactor</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">twisted.internet.error</span><span class="w"> </span><span class="kn">import</span> <span class="n">ReactorNotRunning</span>
 
-    <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
-    <span class="kn">from</span> <span class="nn">kivy.base</span> <span class="kn">import</span> <span class="n">EventLoop</span>
-    <span class="kn">from</span> <span class="nn">kivy.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
-    <span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">deque</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">EventLoop</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">Logger</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.clock</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clock</span>
 
     <span class="c1"># will hold callbacks to twisted callbacks</span>
     <span class="n">q</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
 
     <span class="c1"># twisted will call the wake function when it needs to do work</span>
-    <span class="k">def</span> <span class="nf">reactor_wake</span><span class="p">(</span><span class="n">twisted_loop_next</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reactor_wake</span><span class="p">(</span><span class="n">twisted_loop_next</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Wakeup the twisted reactor to start processing the task queue</span>
 <span class="sd">        &#39;&#39;&#39;</span>
 
@@ -585,7 +585,7 @@
         <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">twisted_loop_next</span><span class="p">)</span>
 
     <span class="c1"># called every frame, to process the reactors work in main thread</span>
-    <span class="k">def</span> <span class="nf">reactor_work</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reactor_work</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Process the twisted reactor task queue</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">Logger</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;Support: processing twisted task queue&quot;</span><span class="p">)</span>
@@ -595,7 +595,7 @@
     <span class="n">_twisted_reactor_work</span> <span class="o">=</span> <span class="n">reactor_work</span>
 
     <span class="c1"># start the reactor, by telling twisted how to wake, and process</span>
-    <span class="k">def</span> <span class="nf">reactor_start</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reactor_start</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Start the twisted reactor main loop</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Support: Starting twisted reactor&quot;</span><span class="p">)</span>
@@ -603,7 +603,7 @@
         <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_interval</span><span class="p">(</span><span class="n">reactor_work</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
     <span class="c1"># make sure twisted reactor is shutdown if eventloop exists</span>
-    <span class="k">def</span> <span class="nf">reactor_stop</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reactor_stop</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Shutdown the twisted reactor main loop</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">reactor</span><span class="o">.</span><span class="n">threadpool</span><span class="p">:</span>
@@ -616,7 +616,7 @@
         <span class="k">except</span> <span class="n">ReactorNotRunning</span><span class="p">:</span>
             <span class="k">pass</span>
 
-        <span class="kn">import</span> <span class="nn">sys</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;twisted.internet.reactor&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
     <span class="k">global</span> <span class="n">_twisted_reactor_stopper</span>
@@ -627,7 +627,7 @@
     <span class="n">EventLoop</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_stop</span><span class="o">=</span><span class="n">reactor_stop</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="uninstall_twisted_reactor"><a class="viewcode-back" href="../../api-kivy.support.html#kivy.support.uninstall_twisted_reactor">[docs]</a><span class="k">def</span> <span class="nf">uninstall_twisted_reactor</span><span class="p">():</span>
+<div class="viewcode-block" id="uninstall_twisted_reactor"><a class="viewcode-back" href="../../api-kivy.support.html#kivy.support.uninstall_twisted_reactor">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">uninstall_twisted_reactor</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Uninstalls the Kivy&#39;s threaded Twisted Reactor. No more Twisted</span>
 <span class="sd">    tasks will run after this got called. Use this to clean the</span>
 <span class="sd">    `twisted.internet.reactor` .</span>
@@ -635,13 +635,13 @@
 <span class="sd">    .. versionadded:: 1.9.0</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="kn">import</span> <span class="nn">twisted</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">twisted</span>
 
     <span class="c1"># prevent uninstalling more than once</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">twisted</span><span class="p">,</span> <span class="s1">&#39;_kivy_twisted_reactor_installed&#39;</span><span class="p">):</span>
         <span class="k">return</span>
 
-    <span class="kn">from</span> <span class="nn">kivy.base</span> <span class="kn">import</span> <span class="n">EventLoop</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">EventLoop</span>
 
     <span class="k">global</span> <span class="n">_twisted_reactor_stopper</span>
     <span class="n">_twisted_reactor_stopper</span><span class="p">()</span>
@@ -686,7 +686,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Jan 01, 2025.
+      Last updated on Jan 09, 2025.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

@@ -685,7 +685,7 @@ The tag <code class="docutils literal notranslate"><span class="pre">[ref=xxx]</
 <p>In this example, we are creating a reference on the word “World”. When
 this word is clicked, the function <code class="docutils literal notranslate"><span class="pre">print_it</span></code> will be called with the
 name of the reference:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">print_it</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">print_it</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;User clicked on&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 <span class="n">widget</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Hello [ref=world]World[/ref]&#39;</span><span class="p">,</span> <span class="n">markup</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">widget</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_ref_press</span><span class="o">=</span><span class="n">print_it</span><span class="p">)</span>
@@ -714,27 +714,27 @@ only applied at load time.</p>
 <section id="usage-example">
 <h2>Usage example<a class="headerlink" href="#usage-example" title="Permalink to this heading">¶</a></h2>
 <p>The following example marks the anchors and references contained in a label:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.label</span> <span class="kn">import</span> <span class="n">Label</span>
-<span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
-<span class="kn">from</span> <span class="nn">kivy.graphics</span> <span class="kn">import</span> <span class="n">Color</span><span class="p">,</span> <span class="n">Rectangle</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.label</span><span class="w"> </span><span class="kn">import</span> <span class="n">Label</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.clock</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clock</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.graphics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Color</span><span class="p">,</span> <span class="n">Rectangle</span>
 
 
-<span class="k">class</span> <span class="nc">TestApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TestApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_x</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">ref_x</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_x</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">ref_x</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot; Return the x value of the ref/anchor relative to the canvas &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">label</span><span class="o">.</span><span class="n">center_x</span> <span class="o">-</span> <span class="n">label</span><span class="o">.</span><span class="n">texture_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="o">+</span> <span class="n">ref_x</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_y</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">ref_y</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_y</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">ref_y</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot; Return the y value of the ref/anchor relative to the canvas &quot;&quot;&quot;</span>
         <span class="c1"># Note the inversion of direction, as y values start at the top of</span>
         <span class="c1"># the texture and increase downwards</span>
         <span class="k">return</span> <span class="n">label</span><span class="o">.</span><span class="n">center_y</span> <span class="o">+</span> <span class="n">label</span><span class="o">.</span><span class="n">texture_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="o">-</span> <span class="n">ref_y</span>
 
-    <span class="k">def</span> <span class="nf">show_marks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">show_marks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
 
         <span class="c1"># Indicate the position of the anchors with a red top marker</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">anc</span> <span class="ow">in</span> <span class="n">label</span><span class="o">.</span><span class="n">anchors</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -754,7 +754,7 @@ only applied at load time.</p>
                               <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
                                     <span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">box</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>
 
-    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">label</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
             <span class="n">text</span><span class="o">=</span><span class="s1">&#39;[anchor=a]a</span><span class="se">\n</span><span class="s1">Chars [anchor=b]b</span><span class="se">\n</span><span class="s1">[ref=myref]ref[/ref]&#39;</span><span class="p">,</span>
             <span class="n">markup</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1338,7 +1338,7 @@ to this list.</p>
 your markup text, automatically doing the collision with the touch and
 dispatching an <cite>on_ref_press</cite> event.</p>
 <p>You can bind a ref event like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">print_it</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">print_it</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;User click on&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 <span class="n">widget</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Hello [ref=world]World[/ref]&#39;</span><span class="p">,</span> <span class="n">markup</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">widget</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_ref_press</span><span class="o">=</span><span class="n">print_it</span><span class="p">)</span>
@@ -1639,7 +1639,7 @@ or set a <a class="reference internal" href="#kivy.uix.label.Label.text_size" ti
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Jan 01, 2025.
+      Last updated on Jan 09, 2025.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

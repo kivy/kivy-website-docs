@@ -418,30 +418,30 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;ColorPicker&#39;</span><span class="p">,</span> <span class="s1">&#39;ColorWheel&#39;</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">atan</span>
-<span class="kn">from</span> <span class="nn">colorsys</span> <span class="kn">import</span> <span class="n">rgb_to_hsv</span><span class="p">,</span> <span class="n">hsv_to_rgb</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">atan</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">colorsys</span><span class="w"> </span><span class="kn">import</span> <span class="n">rgb_to_hsv</span><span class="p">,</span> <span class="n">hsv_to_rgb</span>
 
-<span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
-<span class="kn">from</span> <span class="nn">kivy.graphics</span> <span class="kn">import</span> <span class="n">Mesh</span><span class="p">,</span> <span class="n">InstructionGroup</span><span class="p">,</span> <span class="n">Color</span>
-<span class="kn">from</span> <span class="nn">kivy.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
-<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="p">(</span><span class="n">NumericProperty</span><span class="p">,</span> <span class="n">BoundedNumericProperty</span><span class="p">,</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.clock</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clock</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.graphics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Mesh</span><span class="p">,</span> <span class="n">InstructionGroup</span><span class="p">,</span> <span class="n">Color</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">Logger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.properties</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">NumericProperty</span><span class="p">,</span> <span class="n">BoundedNumericProperty</span><span class="p">,</span>
                              <span class="n">ListProperty</span><span class="p">,</span> <span class="n">ObjectProperty</span><span class="p">,</span>
                              <span class="n">ReferenceListProperty</span><span class="p">,</span> <span class="n">StringProperty</span><span class="p">,</span>
                              <span class="n">AliasProperty</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.relativelayout</span> <span class="kn">import</span> <span class="n">RelativeLayout</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.widget</span> <span class="kn">import</span> <span class="n">Widget</span>
-<span class="kn">from</span> <span class="nn">kivy.utils</span> <span class="kn">import</span> <span class="n">get_color_from_hex</span><span class="p">,</span> <span class="n">get_hex_from_color</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.relativelayout</span><span class="w"> </span><span class="kn">import</span> <span class="n">RelativeLayout</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.widget</span><span class="w"> </span><span class="kn">import</span> <span class="n">Widget</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_color_from_hex</span><span class="p">,</span> <span class="n">get_hex_from_color</span>
 
 
-<span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="n">pt1</span><span class="p">,</span> <span class="n">pt2</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">distance</span><span class="p">(</span><span class="n">pt1</span><span class="p">,</span> <span class="n">pt2</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">sqrt</span><span class="p">((</span><span class="n">pt1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">pt2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">**</span> <span class="mf">2.</span> <span class="o">+</span> <span class="p">(</span><span class="n">pt1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">pt2</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">**</span> <span class="mf">2.</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">polar_to_rect</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">polar_to_rect</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">origin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">r</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">r</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">rect_to_polar</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">rect_to_polar</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="n">origin</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
         <span class="k">if</span> <span class="n">y</span> <span class="o">==</span> <span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
             <span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
@@ -459,7 +459,7 @@
     <span class="k">return</span> <span class="n">distance</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">origin</span><span class="p">),</span> <span class="n">t</span>
 
 
-<div class="viewcode-block" id="ColorWheel"><a class="viewcode-back" href="../../../api-kivy.uix.colorpicker.html#kivy.uix.colorpicker.ColorWheel">[docs]</a><span class="k">class</span> <span class="nc">ColorWheel</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+<div class="viewcode-block" id="ColorWheel"><a class="viewcode-back" href="../../../api-kivy.uix.colorpicker.html#kivy.uix.colorpicker.ColorWheel">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ColorWheel</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Chromatic wheel for the ColorPicker.</span>
 
 <span class="sd">    .. versionchanged:: 1.7.1</span>
@@ -516,7 +516,7 @@
     <span class="n">_num_touches</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">_pinch_flag</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">arcs</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sv_idx</span> <span class="o">=</span> <span class="mi">0</span>
 
@@ -526,13 +526,13 @@
 
         <span class="nb">super</span><span class="p">(</span><span class="n">ColorWheel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">on__origin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_instance</span><span class="p">,</span> <span class="n">_value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on__origin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_instance</span><span class="p">,</span> <span class="n">_value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_reset_canvas</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">on__radius</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_instance</span><span class="p">,</span> <span class="n">_value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on__radius</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_instance</span><span class="p">,</span> <span class="n">_value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_reset_canvas</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_reset_canvas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_reset_canvas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># initialize list to hold all meshes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">arcs</span> <span class="o">=</span> <span class="p">[]</span>
@@ -556,17 +556,17 @@
 
                 <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arcs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
-    <span class="k">def</span> <span class="nf">recolor_wheel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">recolor_wheel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">ppie</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pieces_of_pie</span>
         <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">segment</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arcs</span><span class="p">):</span>
             <span class="n">segment</span><span class="o">.</span><span class="n">change_color</span><span class="p">(</span>
                 <span class="n">sv</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sv_s</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sv_idx</span> <span class="o">+</span> <span class="n">idx</span> <span class="o">/</span> <span class="n">ppie</span><span class="p">)])</span>
 
-    <span class="k">def</span> <span class="nf">change_alpha</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">change_alpha</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">segment</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arcs</span><span class="p">):</span>
             <span class="n">segment</span><span class="o">.</span><span class="n">change_color</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">val</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">inertial_incr_sv_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">inertial_incr_sv_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
         <span class="c1"># if its already zoomed all the way out, cancel the inertial zoom</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sv_idx</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sv_s</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_piece_divisions</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
@@ -579,7 +579,7 @@
             <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inertial_incr_sv_idx</span><span class="p">,</span>
                                 <span class="n">dt</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inertia_slowdown</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">inertial_decr_sv_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">inertial_decr_sv_idx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
         <span class="c1"># if its already zoomed all the way in, cancel the inertial zoom</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sv_idx</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
@@ -591,7 +591,7 @@
             <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inertial_decr_sv_idx</span><span class="p">,</span>
                                 <span class="n">dt</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inertia_slowdown</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ColorWheel.on_touch_down"><a class="viewcode-back" href="../../../api-kivy.uix.colorpicker.html#kivy.uix.colorpicker.ColorWheel.on_touch_down">[docs]</a>    <span class="k">def</span> <span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+<div class="viewcode-block" id="ColorWheel.on_touch_down"><a class="viewcode-back" href="../../../api-kivy.uix.colorpicker.html#kivy.uix.colorpicker.ColorWheel.on_touch_down">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_touch_r</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">r</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_radius</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
@@ -609,7 +609,7 @@
         <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;orig_sv_idx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sv_idx</span>
         <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;orig_time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ColorWheel.on_touch_move"><a class="viewcode-back" href="../../../api-kivy.uix.colorpicker.html#kivy.uix.colorpicker.ColorWheel.on_touch_move">[docs]</a>    <span class="k">def</span> <span class="nf">on_touch_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+<div class="viewcode-block" id="ColorWheel.on_touch_move"><a class="viewcode-back" href="../../../api-kivy.uix.colorpicker.html#kivy.uix.colorpicker.ColorWheel.on_touch_move">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">on_touch_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">grab_current</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_touch_r</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span>
@@ -626,7 +626,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">sv_idx</span> <span class="o">=</span> <span class="n">goal_sv_idx</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">recolor_wheel</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ColorWheel.on_touch_up"><a class="viewcode-back" href="../../../api-kivy.uix.colorpicker.html#kivy.uix.colorpicker.ColorWheel.on_touch_up">[docs]</a>    <span class="k">def</span> <span class="nf">on_touch_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+<div class="viewcode-block" id="ColorWheel.on_touch_up"><a class="viewcode-back" href="../../../api-kivy.uix.colorpicker.html#kivy.uix.colorpicker.ColorWheel.on_touch_up">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">on_touch_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">grab_current</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="n">touch</span><span class="o">.</span><span class="n">ungrab</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -667,12 +667,12 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">arcs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_pieces_of_pie</span> <span class="o">*</span> <span class="n">division</span> <span class="o">+</span> <span class="n">piece</span><span class="p">]</span><span class="o">.</span><span class="n">color</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">hsv_to_rgb</span><span class="p">(</span><span class="o">*</span><span class="n">hsva</span><span class="p">[:</span><span class="mi">3</span><span class="p">]))</span> <span class="o">+</span> <span class="n">hsva</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span></div>
 
-    <span class="k">def</span> <span class="nf">_get_touch_r</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_touch_r</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">distance</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_origin</span><span class="p">)</span></div>
 
 
-<span class="k">class</span> <span class="nc">_ColorArc</span><span class="p">(</span><span class="n">InstructionGroup</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r_min</span><span class="p">,</span> <span class="n">r_max</span><span class="p">,</span> <span class="n">theta_min</span><span class="p">,</span> <span class="n">theta_max</span><span class="p">,</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">_ColorArc</span><span class="p">(</span><span class="n">InstructionGroup</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r_min</span><span class="p">,</span> <span class="n">r_max</span><span class="p">,</span> <span class="n">theta_min</span><span class="p">,</span> <span class="n">theta_max</span><span class="p">,</span>
                  <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">origin</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">_ColorArc</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="n">origin</span>
@@ -686,12 +686,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">mesh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mesh</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;r_min: </span><span class="si">%s</span><span class="s2"> r_max: </span><span class="si">%s</span><span class="s2"> theta_min: </span><span class="si">%s</span><span class="s2"> theta_max: </span><span class="si">%s</span><span class="s2"> color: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">r_min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">theta_min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">theta_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">color</span>
         <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">get_mesh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_mesh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">v</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="c1"># first calculate the distance between endpoints of the outer</span>
         <span class="c1"># arc, so we know how many steps to use when calculating</span>
@@ -726,7 +726,7 @@
         <span class="k">return</span> <span class="n">Mesh</span><span class="p">(</span><span class="n">vertices</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)),</span>
                     <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;triangle_strip&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">change_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color_delta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sv</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">change_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color_delta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sv</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_instr</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">color</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">color</span>
@@ -740,7 +740,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_instr</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="ColorPicker"><a class="viewcode-back" href="../../../api-kivy.uix.colorpicker.html#kivy.uix.colorpicker.ColorPicker">[docs]</a><span class="k">class</span> <span class="nc">ColorPicker</span><span class="p">(</span><span class="n">RelativeLayout</span><span class="p">):</span>
+<div class="viewcode-block" id="ColorPicker"><a class="viewcode-back" href="../../../api-kivy.uix.colorpicker.html#kivy.uix.colorpicker.ColorPicker">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ColorPicker</span><span class="p">(</span><span class="n">RelativeLayout</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    See module documentation.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -759,10 +759,10 @@
 <span class="sd">    (1, 1, 1, 1).</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="nf">_get_hsv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_hsv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">rgb_to_hsv</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
 
-    <span class="k">def</span> <span class="nf">_set_hsv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_hsv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_updating_clr</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
@@ -773,10 +773,10 @@
 <span class="sd">    :attr:`hsv` is a :class:`~kivy.properties.ListProperty` and defaults to</span>
 <span class="sd">    (1, 1, 1).</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">def</span> <span class="nf">_get_hex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_hex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">get_hex_from_color</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_set_hex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_hex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_updating_clr</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="n">get_color_from_hex</span><span class="p">(</span><span class="n">value</span><span class="p">)[:</span><span class="mi">4</span><span class="p">])</span>
@@ -800,7 +800,7 @@
     <span class="c1"># now used only internally.</span>
     <span class="n">foreground_color</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">_trigger_update_clr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">clr_idx</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_trigger_update_clr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">clr_idx</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_updating_clr</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_updating_clr</span> <span class="o">=</span> <span class="kc">True</span>
@@ -810,7 +810,7 @@
             <span class="n">ev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_clr_ev</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">create_trigger</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_update_clr</span><span class="p">)</span>
         <span class="n">ev</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_update_clr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_clr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
         <span class="c1"># to prevent interaction between hsv/rgba, we work internally using rgba</span>
         <span class="n">mode</span><span class="p">,</span> <span class="n">clr_idx</span><span class="p">,</span> <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_upd_clr_list</span>
         <span class="k">try</span><span class="p">:</span>
@@ -826,7 +826,7 @@
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_updating_clr</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="nf">_update_hex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_hex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_upd_hex_list</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">9</span><span class="p">:</span>
                 <span class="k">return</span>
@@ -835,7 +835,7 @@
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_updating_clr</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="nf">_trigger_update_hex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_trigger_update_hex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_updating_clr</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_updating_clr</span> <span class="o">=</span> <span class="kc">True</span>
@@ -845,7 +845,7 @@
             <span class="n">ev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_hex_ev</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">create_trigger</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_update_hex</span><span class="p">)</span>
         <span class="n">ev</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">set_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_updating_clr</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">color</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">color</span>
@@ -853,16 +853,16 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">color</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_updating_clr</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_updating_clr</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ColorPicker</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;__android__&#39;</span><span class="p">,</span> <span class="s1">&#39;__main__&#39;</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
 
-    <span class="k">class</span> <span class="nc">ColorPickerApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
-        <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">class</span><span class="w"> </span><span class="nc">ColorPickerApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="n">cp</span> <span class="o">=</span> <span class="n">ColorPicker</span><span class="p">(</span><span class="n">pos_hint</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;center_x&#39;</span><span class="p">:</span> <span class="mf">.5</span><span class="p">,</span> <span class="s1">&#39;center_y&#39;</span><span class="p">:</span> <span class="mf">.5</span><span class="p">},</span>
                              <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
             <span class="k">return</span> <span class="n">cp</span>
@@ -905,7 +905,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Jan 01, 2025.
+      Last updated on Jan 09, 2025.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

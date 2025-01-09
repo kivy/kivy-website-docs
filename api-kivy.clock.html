@@ -636,7 +636,7 @@ future; once or repeatedly at specified intervals. You can get the time
 elapsed between the scheduling and the calling of the callback via the
 <cite>dt</cite> argument:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># dt means delta-time</span>
-<span class="k">def</span> <span class="nf">my_callback</span><span class="p">(</span><span class="n">dt</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">my_callback</span><span class="p">(</span><span class="n">dt</span><span class="p">):</span>
     <span class="k">pass</span>
 
 <span class="c1"># call my_callback every 0.5 seconds</span>
@@ -657,9 +657,9 @@ repeat.</p>
 <p>If you want to schedule a function to call with default arguments, you can use
 the <a class="reference external" href="http://docs.python.org/library/functools.html#functools.partial">functools.partial</a> python
 module:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
 
-<span class="k">def</span> <span class="nf">my_callback</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">my_callback</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
     <span class="k">pass</span>
 
 <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_interval</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">my_callback</span><span class="p">,</span> <span class="s1">&#39;my value&#39;</span><span class="p">,</span> <span class="s1">&#39;my key&#39;</span><span class="p">),</span> <span class="mf">0.5</span><span class="p">)</span>
@@ -668,7 +668,7 @@ module:</p>
 <p>Conversely, if you want to schedule a function that doesn’t accept the dt
 argument, you can use a <a class="reference external" href="http://docs.python.org/2/reference/expressions.html#lambda">lambda</a> expression
 to write a short function that does accept dt. For Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">no_args_func</span><span class="p">():</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">no_args_func</span><span class="p">():</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I accept no arguments, so don&#39;t schedule me in the clock&quot;</span><span class="p">)</span>
 
 <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="k">lambda</span> <span class="n">dt</span><span class="p">:</span> <span class="n">no_args_func</span><span class="p">(),</span> <span class="mf">0.5</span><span class="p">)</span>
@@ -687,11 +687,11 @@ parameters.</p>
 keeping a reference to your original object/callback. If you don’t keep a
 reference, the ClockBase will never execute your callback. For
 example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Foo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Foo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_interval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">callback</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;In callback&#39;</span><span class="p">)</span>
 
 <span class="c1"># A Foo object is created and the method start is called.</span>
@@ -727,7 +727,7 @@ more than 10 times, it will leave the loop and send a warning to the console,
 then continue after the next frame. This is implemented to prevent bugs from
 hanging or crashing the application.</p>
 <p>If you need to increase the limit, set the <code class="xref py py-attr docutils literal notranslate"><span class="pre">max_iteration</span></code> property:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.clock</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clock</span>
 <span class="n">Clock</span><span class="o">.</span><span class="n">max_iteration</span> <span class="o">=</span> <span class="mi">20</span>
 </pre></div>
 </div>
@@ -762,16 +762,16 @@ with <a class="reference internal" href="#kivy.clock.CyClockBase.schedule_once" 
 <p>In addition, it is more convenient to create and bind to
 the triggered event than using <a class="reference internal" href="#kivy.clock.CyClockBase.schedule_once" title="kivy.clock.CyClockBase.schedule_once"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CyClockBase.schedule_once()</span></code></a> in a
 function:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.widget</span> <span class="kn">import</span> <span class="n">Widget</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.clock</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clock</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.widget</span><span class="w"> </span><span class="kn">import</span> <span class="n">Widget</span>
 
-<span class="k">class</span> <span class="nc">Sample</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Sample</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">create_trigger</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cb</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Sample</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_trigger</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_trigger</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
         <span class="k">pass</span>
 </pre></div>
 </div>
@@ -783,7 +783,7 @@ function:</p>
 <a class="reference internal" href="#kivy.clock.CyClockBase.schedule_interval" title="kivy.clock.CyClockBase.schedule_interval"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CyClockBase.schedule_interval()</span></code></a>, or with
 <a class="reference internal" href="#kivy.clock.CyClockBase.create_trigger" title="kivy.clock.CyClockBase.create_trigger"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CyClockBase.create_trigger()</span></code></a> and then triggered can be unscheduled in
 multiple ways. E.g:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_callback</span><span class="p">(</span><span class="n">dt</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">my_callback</span><span class="p">(</span><span class="n">dt</span><span class="p">):</span>
     <span class="k">pass</span>
 
 <span class="c1"># call my_callback every 0.5 seconds</span>
@@ -858,9 +858,9 @@ including exceptions raised by clock callbacks, without crashing the
 application. By default when an exception is raised, the app will crash.
 But, if a handler is registered with the exception manager and the handler
 handles the exception, the app will not crash and will continue as normal.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kivy.base</span> <span class="kn">import</span> <span class="n">ExceptionHandler</span><span class="p">,</span> <span class="n">ExceptionManager</span>
-<span class="k">class</span> <span class="nc">MyHandler</span><span class="p">(</span><span class="n">ExceptionHandler</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">handle_exception</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inst</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExceptionHandler</span><span class="p">,</span> <span class="n">ExceptionManager</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MyHandler</span><span class="p">(</span><span class="n">ExceptionHandler</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_exception</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inst</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inst</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
             <span class="n">Logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;ValueError caught by MyHandler&#39;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">ExceptionManager</span><span class="o">.</span><span class="n">PASS</span>
@@ -1866,7 +1866,7 @@ programming: you cannot do any OpenGL-related work in a thread.</p>
 <p>Please note that this method will return directly and no result can be
 returned:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@mainthread</span>
-<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The request succeeded!&#39;</span><span class="p">,</span>
           <span class="s1">&#39;This callback is called in the main thread.&#39;</span><span class="p">)</span>
 
@@ -1958,7 +1958,7 @@ The callback has been called with id=2</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Jan 01, 2025.
+      Last updated on Jan 09, 2025.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

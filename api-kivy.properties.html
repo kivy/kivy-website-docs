@@ -620,14 +620,14 @@ instances.</p>
 <h3>Basic example<a class="headerlink" href="#basic-example" title="Permalink to this heading">¶</a></h3>
 <p>Let’s compare Python and Kivy properties by creating a Python class with ‘a’
 as a float property:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">MyClass</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span>
 </pre></div>
 </div>
 <p>With Kivy, you can do:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -648,16 +648,16 @@ as a float property:</p>
 <h3>Value checking<a class="headerlink" href="#value-checking" title="Permalink to this heading">¶</a></h3>
 <p>If you wanted to add a check for a minimum / maximum value allowed for a
 property, here is a possible implementation in Python:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">MyClass</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">a_min</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">a_max</span> <span class="o">=</span> <span class="mi">100</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span>
 
-    <span class="k">def</span> <span class="nf">_get_a</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_a</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_a</span>
-    <span class="k">def</span> <span class="nf">_set_a</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_a</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">a_min</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">a_max</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;a out of bounds&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_a</span> <span class="o">=</span> <span class="n">value</span>
@@ -667,7 +667,7 @@ property, here is a possible implementation in Python:</p>
 <p>The disadvantage is you have to do that work yourself. And it becomes
 laborious and complex if you have many properties.
 With Kivy, you can simplify the process:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">BoundedNumericProperty</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -698,8 +698,8 @@ inherits from <a class="reference internal" href="api-kivy.event.html#kivy.event
 <a class="reference internal" href="api-kivy.uix.widget.html#kivy.uix.widget.Widget" title="kivy.uix.widget.Widget"><code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code></a>, the properties protect
 you from a Python 3 object error. This error occurs when passing kwargs to the
 <cite>object</cite> instance through a <cite>super()</cite> call:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">MyClass</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">my_string</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;my_string&#39;</span><span class="p">)</span>
 
@@ -714,23 +714,23 @@ in Python 3 with:</p>
 <p>Logically, to fix that you’d either put <cite>my_string</cite> directly in the
 <cite>__init__()</cite> definition as a required argument or as an optional keyword
 argument with a default value i.e.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">my_string</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">my_string</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">MyClass</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">my_string</span> <span class="o">=</span> <span class="n">my_string</span>
 </pre></div>
 </div>
 <p>or:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">my_string</span><span class="o">=</span><span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">my_string</span><span class="o">=</span><span class="s1">&#39;default&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">MyClass</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">my_string</span> <span class="o">=</span> <span class="n">my_string</span>
 </pre></div>
 </div>
 <p>Alternatively, you could pop the key-value pair from the <cite>kwargs</cite> dictionary
 before calling <cite>super()</cite>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">my_string</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;my_string&#39;</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">MyClass</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
@@ -738,9 +738,9 @@ before calling <cite>super()</cite>:</p>
 <p>Kivy properties are more flexible and do the required <cite>kwargs.pop()</cite>
 in the background automatically (within the <cite>super()</cite> call
 to <a class="reference internal" href="api-kivy.event.html#kivy.event.EventDispatcher" title="kivy.event.EventDispatcher"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventDispatcher</span></code></a>) to prevent this distraction:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
     <span class="n">my_string</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">MyClass</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">MyClass</span><span class="p">(</span><span class="n">my_string</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">my_string</span><span class="p">)</span>
@@ -763,10 +763,10 @@ function called when the value changes.</p>
 <h3>Observe using bind()<a class="headerlink" href="#observe-using-bind" title="Permalink to this heading">¶</a></h3>
 <p>You can observe a property change by using the bind() method outside of the
 class:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">callback</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;My callback is call from&#39;</span><span class="p">,</span> <span class="n">instance</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;and the a value changed to&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
@@ -790,10 +790,10 @@ the property object with a simple int.</p>
 <section id="observe-using-on-propname">
 <h3>Observe using ‘on_&lt;propname&gt;’<a class="headerlink" href="#observe-using-on-propname" title="Permalink to this heading">¶</a></h3>
 <p>If you defined the class yourself, you can use the ‘on_&lt;propname&gt;’ callback:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyClass</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">on_a</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_a</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;My property a changed to&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -839,16 +839,16 @@ was enabled. See <a class="reference internal" href="#kivy.properties.ObjectProp
 your own by creating custom Python getter and setter methods.</p>
 <p>Example from kivy/uix/widget.py where <cite>x</cite> and <cite>width</cite> are instances of
 <a class="reference internal" href="#kivy.properties.NumericProperty" title="kivy.properties.NumericProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">NumericProperty</span></code></a>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_right</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">get_right</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span>
-<span class="k">def</span> <span class="nf">set_right</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_right</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">value</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span>
 <span class="n">right</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">get_right</span><span class="p">,</span> <span class="n">set_right</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;width&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>If <cite>x</cite> were a non Kivy property then you have to return <cite>True</cite> from setter
 to dispatch new value of <cite>right</cite>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">set_right</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">set_right</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">value</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span>
     <span class="k">return</span> <span class="kc">True</span>
 </pre></div>
@@ -998,7 +998,7 @@ in <cite>obj</cite>. Return None if no maximum value is set. Check
 <span class="sig-name descname"><span class="pre">get_min</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EventDispatcher</span> <span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.properties.BoundedNumericProperty.get_min" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the minimum value acceptable for the BoundedNumericProperty
 in <cite>obj</cite>. Return None if no minimum value is set:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyWidget</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyWidget</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
     <span class="n">number</span> <span class="o">=</span> <span class="n">BoundedNumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 
 <span class="n">widget</span> <span class="o">=</span> <span class="n">MyWidget</span><span class="p">()</span>
@@ -1031,7 +1031,7 @@ Check <a class="reference internal" href="#kivy.properties.BoundedNumericPropert
 <span class="sig-name descname"><span class="pre">set_min</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EventDispatcher</span> <span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.properties.BoundedNumericProperty.set_min" title="Permalink to this definition">¶</a></dt>
 <dd><p>Change the minimum value acceptable for the BoundedNumericProperty,
 only for the <cite>obj</cite> instance. Set to None if you want to disable it:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyWidget</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyWidget</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
     <span class="n">number</span> <span class="o">=</span> <span class="n">BoundedNumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 
 <span class="n">widget</span> <span class="o">=</span> <span class="n">MyWidget</span><span class="p">()</span>
@@ -1101,12 +1101,12 @@ on other kivy properties.</p>
 its value, represented as an int, in the <cite>info</cite> section of a ConfigParser.
 Also, the textinputs should update its values from the ConfigParser’s
 fields. Finally, their values should be displayed in a label. In py:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Info</span><span class="p">(</span><span class="n">Label</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Info</span><span class="p">(</span><span class="n">Label</span><span class="p">):</span>
 
     <span class="n">number</span> <span class="o">=</span> <span class="n">ConfigParserProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;info&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="s1">&#39;example&#39;</span><span class="p">,</span>
                                   <span class="n">val_type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">errorvalue</span><span class="o">=</span><span class="mi">41</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Info</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
         <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;example&#39;</span><span class="p">)</span>
 </pre></div>
@@ -1235,7 +1235,7 @@ changes. If None, it disconnects the currently used
 </dl>
 </dd>
 </dl>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyWidget</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyWidget</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
     <span class="n">username</span> <span class="o">=</span> <span class="n">ConfigParserProperty</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;info&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
 <span class="n">widget</span> <span class="o">=</span> <span class="n">MyWidget</span><span class="p">()</span>
@@ -1304,7 +1304,7 @@ dict and not the original dict. See <a class="reference internal" href="#kivy.pr
 <p>When assigning a list to a <a class="reference internal" href="#kivy.properties.ListProperty" title="kivy.properties.ListProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a>, the list stored in
 the property is a shallow copy of the list and not the original list. This can
 be demonstrated with the following example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyWidget</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">MyWidget</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
 <span class="gp">&gt;&gt;&gt; </span>    <span class="n">my_list</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([])</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">widget</span> <span class="o">=</span> <span class="n">MyWidget</span><span class="p">()</span>
@@ -1349,7 +1349,7 @@ E.g. <code class="docutils literal notranslate"><span class="pre">widget.num</sp
 supported at all, even by ObjectProperty because their comparison does not return
 a bool. But if you must use a Kivy property, use a ObjectProperty with <code class="docutils literal notranslate"><span class="pre">comparator</span></code>
 set to <code class="docutils literal notranslate"><span class="pre">np.array_equal</span></code>. E.g.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span><span class="w"> </span><span class="nc">A</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">data</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="n">comparator</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">A</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="nb">print</span><span class="p">)</span>
@@ -1470,7 +1470,7 @@ of valid options.</p>
 </dd>
 </dl>
 <p>For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyWidget</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyWidget</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
     <span class="n">state</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;On&quot;</span><span class="p">,</span> <span class="s2">&quot;Off&quot;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
@@ -1493,7 +1493,7 @@ of valid options.</p>
 the observer list and storage initialisation. This class should not be
 directly instantiated.</p>
 <p>By default, a <a class="reference internal" href="#kivy.properties.Property" title="kivy.properties.Property"><code class="xref py py-class docutils literal notranslate"><span class="pre">Property</span></code></a> always takes a default value:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyObject</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyObject</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
 
     <span class="n">hello</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="s1">&#39;Hello world&#39;</span><span class="p">)</span>
 </pre></div>
@@ -1504,7 +1504,7 @@ StringProperty will check the default value.</p>
 <p>None is a special case: you can set the default value of a Property to
 None, but you can’t set None to a property afterward.  If you really want
 to do that, you must declare the Property with <cite>allownone=True</cite>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyObject</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyObject</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
 
     <span class="n">hello</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
@@ -1615,7 +1615,7 @@ which searches for all matches.</p>
 <p>When a widget is defined and uses a <a class="reference internal" href="#kivy.properties.Property" title="kivy.properties.Property"><code class="xref py py-class docutils literal notranslate"><span class="pre">Property</span></code></a> class, the
 creation of the property object happens, but the instance doesn’t know
 anything about its name in the widget class:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyWidget</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyWidget</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
     <span class="n">uid</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1671,7 +1671,7 @@ fbind using the uid.</p>
 If you read the value of <cite>pos</cite>, it will return a tuple with the values of
 <cite>x</cite> and <cite>y</cite>.</p>
 <p>For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyWidget</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyWidget</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">pos</span> <span class="o">=</span> <span class="n">ReferenceListProperty</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
@@ -1822,7 +1822,7 @@ here are some examples of how VariableListProperty is handled.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Jan 01, 2025.
+      Last updated on Jan 09, 2025.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

@@ -509,20 +509,20 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;CompoundSelectionBehavior&#39;</span><span class="p">,</span> <span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">environ</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">os</span><span class="w"> </span><span class="kn">import</span> <span class="n">environ</span>
 
-<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">NumericProperty</span><span class="p">,</span> <span class="n">BooleanProperty</span><span class="p">,</span> <span class="n">ListProperty</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.properties</span><span class="w"> </span><span class="kn">import</span> <span class="n">NumericProperty</span><span class="p">,</span> <span class="n">BooleanProperty</span><span class="p">,</span> <span class="n">ListProperty</span>
 
 
 <span class="k">if</span> <span class="s1">&#39;KIVY_DOC&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">environ</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">kivy.config</span> <span class="kn">import</span> <span class="n">Config</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
     <span class="n">_is_desktop</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s1">&#39;kivy&#39;</span><span class="p">,</span> <span class="s1">&#39;desktop&#39;</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="n">_is_desktop</span> <span class="o">=</span> <span class="kc">False</span>
 
 
-<div class="viewcode-block" id="CompoundSelectionBehavior"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior">[docs]</a><span class="k">class</span> <span class="nc">CompoundSelectionBehavior</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="CompoundSelectionBehavior"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">CompoundSelectionBehavior</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;The Selection behavior `mixin &lt;https://en.wikipedia.org/wiki/Mixin&gt;`_</span>
 <span class="sd">    implements the logic behind keyboard and touch</span>
 <span class="sd">    selection of selectable widgets managed by the derived widget. Please see</span>
@@ -659,11 +659,11 @@
     <span class="n">_key_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># keys that are already pressed, to not press continuously</span>
     <span class="n">_offset_counts</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># cache of counts for faster access</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">CompoundSelectionBehavior</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_key_list</span> <span class="o">=</span> <span class="p">[]</span>
 
-        <span class="k">def</span> <span class="nf">ensure_single_select</span><span class="p">(</span><span class="o">*</span><span class="n">l</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">ensure_single_select</span><span class="p">(</span><span class="o">*</span><span class="n">l</span><span class="p">):</span>
             <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiselect</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_nodes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">clear_selection</span><span class="p">()</span>
         <span class="n">update_counts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_counts</span>
@@ -675,7 +675,7 @@
         <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;right_count&#39;</span><span class="p">,</span> <span class="n">update_counts</span><span class="p">)</span>
         <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;scroll_count&#39;</span><span class="p">,</span> <span class="n">update_counts</span><span class="p">)</span>
 
-<div class="viewcode-block" id="CompoundSelectionBehavior.select_with_touch"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.select_with_touch">[docs]</a>    <span class="k">def</span> <span class="nf">select_with_touch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">touch</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CompoundSelectionBehavior.select_with_touch"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.select_with_touch">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">select_with_touch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">touch</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;(internal) Processes a touch on the node. This should be called by</span>
 <span class="sd">        the derived widget when a node is touched and is to be used for</span>
 <span class="sd">        selection. Depending on the keyboard keys pressed and the</span>
@@ -729,7 +729,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">select_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="CompoundSelectionBehavior.select_with_key_down"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.select_with_key_down">[docs]</a>    <span class="k">def</span> <span class="nf">select_with_key_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keyboard</span><span class="p">,</span> <span class="n">scancode</span><span class="p">,</span> <span class="n">codepoint</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">,</span>
+<div class="viewcode-block" id="CompoundSelectionBehavior.select_with_key_down"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.select_with_key_down">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">select_with_key_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keyboard</span><span class="p">,</span> <span class="n">scancode</span><span class="p">,</span> <span class="n">codepoint</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">,</span>
                              <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Processes a key press. This is called when a key press is to be used</span>
 <span class="sd">        for selection. Depending on the keyboard keys pressed and the</span>
@@ -805,7 +805,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_word_filter</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="CompoundSelectionBehavior.select_with_key_up"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.select_with_key_up">[docs]</a>    <span class="k">def</span> <span class="nf">select_with_key_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keyboard</span><span class="p">,</span> <span class="n">scancode</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="CompoundSelectionBehavior.select_with_key_up"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.select_with_key_up">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">select_with_key_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keyboard</span><span class="p">,</span> <span class="n">scancode</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;(internal) Processes a key release. This must be called by the</span>
 <span class="sd">        derived widget when a key that :meth:`select_with_key_down` returned</span>
 <span class="sd">        True is released.</span>
@@ -828,7 +828,7 @@
                 <span class="k">return</span> <span class="kc">False</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
-    <span class="k">def</span> <span class="nf">_update_counts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_counts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
         <span class="c1"># doesn&#39;t invert indices here</span>
         <span class="n">pc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">page_count</span>
         <span class="n">uc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">up_count</span>
@@ -838,7 +838,7 @@
         <span class="s1">&#39;down&#39;</span><span class="p">:</span> <span class="n">uc</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">:</span> <span class="n">rc</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">:</span> <span class="o">-</span><span class="n">rc</span><span class="p">,</span> <span class="s1">&#39;scrollup&#39;</span><span class="p">:</span> <span class="n">sc</span><span class="p">,</span>
         <span class="s1">&#39;scrolldown&#39;</span><span class="p">:</span> <span class="o">-</span><span class="n">sc</span><span class="p">,</span> <span class="s1">&#39;scrollright&#39;</span><span class="p">:</span> <span class="o">-</span><span class="n">sc</span><span class="p">,</span> <span class="s1">&#39;scrollleft&#39;</span><span class="p">:</span> <span class="n">sc</span><span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">_resolve_last_node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_resolve_last_node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># for offset selection, we have a anchor, and we select everything</span>
         <span class="c1"># between anchor and added offset relative to last node</span>
         <span class="n">sister_nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_selectable_nodes</span><span class="p">()</span>
@@ -861,7 +861,7 @@
                 <span class="k">return</span> <span class="n">sister_nodes</span><span class="p">[</span><span class="n">end</span><span class="p">],</span> <span class="n">end</span>
         <span class="k">return</span> <span class="n">last_node</span><span class="p">,</span> <span class="n">last_idx</span>
 
-    <span class="k">def</span> <span class="nf">_select_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">multiselect</span><span class="p">,</span> <span class="n">keep_anchor</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_select_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">multiselect</span><span class="p">,</span> <span class="n">keep_anchor</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Selects a range between self._anchor and node or idx.</span>
 <span class="sd">        If multiselect is True, it will be added to the selection, otherwise</span>
 <span class="sd">        it will unselect everything before selecting the range. This is only</span>
@@ -907,7 +907,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_last_selected_node</span> <span class="o">=</span> <span class="n">node</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_last_node_idx</span> <span class="o">=</span> <span class="n">idx</span>
 
-<div class="viewcode-block" id="CompoundSelectionBehavior.clear_selection"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.clear_selection">[docs]</a>    <span class="k">def</span> <span class="nf">clear_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CompoundSelectionBehavior.clear_selection"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.clear_selection">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">clear_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39; Deselects all the currently selected nodes.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="c1"># keep the anchor and last selected node</span>
@@ -917,7 +917,7 @@
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">[:]:</span>
             <span class="n">deselect</span><span class="p">(</span><span class="n">node</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CompoundSelectionBehavior.get_selectable_nodes"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.get_selectable_nodes">[docs]</a>    <span class="k">def</span> <span class="nf">get_selectable_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CompoundSelectionBehavior.get_selectable_nodes"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.get_selectable_nodes">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_selectable_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;(internal) Returns a list of the nodes that can be selected. It can</span>
 <span class="sd">        be overwritten by the derived widget to return the correct list.</span>
 
@@ -952,13 +952,13 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span></div>
 
-<div class="viewcode-block" id="CompoundSelectionBehavior.get_index_of_node"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.get_index_of_node">[docs]</a>    <span class="k">def</span> <span class="nf">get_index_of_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">selectable_nodes</span><span class="p">):</span>
+<div class="viewcode-block" id="CompoundSelectionBehavior.get_index_of_node"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.get_index_of_node">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_index_of_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">selectable_nodes</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;(internal) Returns the index of the `node` within the</span>
 <span class="sd">        `selectable_nodes` returned by :meth:`get_selectable_nodes`.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="n">selectable_nodes</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">node</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CompoundSelectionBehavior.goto_node"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.goto_node">[docs]</a>    <span class="k">def</span> <span class="nf">goto_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">last_node</span><span class="p">,</span> <span class="n">last_node_idx</span><span class="p">):</span>
+<div class="viewcode-block" id="CompoundSelectionBehavior.goto_node"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.goto_node">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">goto_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">last_node</span><span class="p">,</span> <span class="n">last_node_idx</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;(internal) Used by the controller to get the node at the position</span>
 <span class="sd">        indicated by key. The key can be keyboard inputs, e.g. pageup,</span>
 <span class="sd">        or scroll inputs from the mouse scroll wheel, e.g. scrollup.</span>
@@ -1016,7 +1016,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">last_node</span><span class="p">,</span> <span class="n">last_node_idx</span></div>
 
-<div class="viewcode-block" id="CompoundSelectionBehavior.select_node"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.select_node">[docs]</a>    <span class="k">def</span> <span class="nf">select_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+<div class="viewcode-block" id="CompoundSelectionBehavior.select_node"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.select_node">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">select_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39; Selects a node.</span>
 
 <span class="sd">        It is called by the controller when it selects a node and can be</span>
@@ -1048,7 +1048,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_last_selected_node</span> <span class="o">=</span> <span class="n">node</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="CompoundSelectionBehavior.deselect_node"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.deselect_node">[docs]</a>    <span class="k">def</span> <span class="nf">deselect_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+<div class="viewcode-block" id="CompoundSelectionBehavior.deselect_node"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.deselect_node">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">deselect_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39; Deselects a possibly selected node.</span>
 
 <span class="sd">        It is called by the controller when it deselects a node and can also</span>
@@ -1107,7 +1107,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Jan 01, 2025.
+      Last updated on Jan 09, 2025.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

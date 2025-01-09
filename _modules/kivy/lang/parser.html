@@ -387,25 +387,25 @@
 
 <span class="sd">Class used for the parsing of .kv files into rules.</span>
 <span class="sd">&#39;&#39;&#39;</span>
-<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">traceback</span>
-<span class="kn">import</span> <span class="nn">ast</span>
-<span class="kn">import</span> <span class="nn">importlib</span>
-<span class="kn">from</span> <span class="nn">re</span> <span class="kn">import</span> <span class="n">sub</span><span class="p">,</span> <span class="n">findall</span>
-<span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">CodeType</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span><span class="p">,</span> <span class="n">defaultdict</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ast</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">re</span><span class="w"> </span><span class="kn">import</span> <span class="n">sub</span><span class="p">,</span> <span class="n">findall</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">types</span><span class="w"> </span><span class="kn">import</span> <span class="n">CodeType</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrderedDict</span><span class="p">,</span> <span class="n">defaultdict</span>
 
-<span class="kn">import</span> <span class="nn">kivy.lang.builder</span>  <span class="c1"># imported as absolute to avoid circular import</span>
-<span class="kn">from</span> <span class="nn">kivy.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
-<span class="kn">from</span> <span class="nn">kivy.cache</span> <span class="kn">import</span> <span class="n">Cache</span>
-<span class="kn">from</span> <span class="nn">kivy</span> <span class="kn">import</span> <span class="n">require</span>
-<span class="kn">from</span> <span class="nn">kivy.resources</span> <span class="kn">import</span> <span class="n">resource_find</span>
-<span class="kn">from</span> <span class="nn">kivy.utils</span> <span class="kn">import</span> <span class="n">rgba</span>
-<span class="kn">import</span> <span class="nn">kivy.metrics</span> <span class="k">as</span> <span class="nn">Metrics</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">kivy.lang.builder</span>  <span class="c1"># imported as absolute to avoid circular import</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">Logger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cache</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy</span><span class="w"> </span><span class="kn">import</span> <span class="n">require</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.resources</span><span class="w"> </span><span class="kn">import</span> <span class="n">resource_find</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">rgba</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">kivy.metrics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">Metrics</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Parser&#39;</span><span class="p">,</span> <span class="s1">&#39;ParserException&#39;</span><span class="p">)</span>
 
@@ -440,20 +440,20 @@
 <span class="n">_handlers</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">defaultdict</span><span class="p">,</span> <span class="nb">list</span><span class="p">))</span>
 
 
-<span class="k">class</span> <span class="nc">ProxyApp</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ProxyApp</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="c1"># proxy app object</span>
     <span class="c1"># taken from http://code.activestate.com/recipes/496741-object-proxying/</span>
 
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;_obj&#39;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">object</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_obj&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_ensure_app</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_ensure_app</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">app</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_obj&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">app</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
             <span class="n">app</span> <span class="o">=</span> <span class="n">App</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span>
             <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_obj&#39;</span><span class="p">,</span> <span class="n">app</span><span class="p">)</span>
             <span class="c1"># Clear cached application instance, when it stops</span>
@@ -461,27 +461,27 @@
                      <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_obj&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">app</span>
 
-    <span class="k">def</span> <span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_ensure_app&#39;</span><span class="p">)()</span>
         <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_obj&#39;</span><span class="p">),</span> <span class="n">name</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__delattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__delattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_ensure_app&#39;</span><span class="p">)()</span>
         <span class="nb">delattr</span><span class="p">(</span><span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_obj&#39;</span><span class="p">),</span> <span class="n">name</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_ensure_app&#39;</span><span class="p">)()</span>
         <span class="nb">setattr</span><span class="p">(</span><span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_obj&#39;</span><span class="p">),</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_ensure_app&#39;</span><span class="p">)()</span>
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_obj&#39;</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_ensure_app&#39;</span><span class="p">)()</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_obj&#39;</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_ensure_app&#39;</span><span class="p">)()</span>
         <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_obj&#39;</span><span class="p">))</span>
 
@@ -496,11 +496,11 @@
 <span class="n">global_idmap</span><span class="p">[</span><span class="s1">&#39;rgba&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rgba</span>
 
 
-<div class="viewcode-block" id="ParserException"><a class="viewcode-back" href="../../../api-kivy.lang.parser.html#kivy.lang.ParserException">[docs]</a><span class="k">class</span> <span class="nc">ParserException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="ParserException"><a class="viewcode-back" href="../../../api-kivy.lang.parser.html#kivy.lang.ParserException">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ParserException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Exception raised when something wrong happened in a kv file.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">cause</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">cause</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">filename</span> <span class="ow">or</span> <span class="s1">&#39;&lt;inline&gt;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="n">line</span>
         <span class="n">sourcecode</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">sourcecode</span>
@@ -523,14 +523,14 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">ParserException</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 
-<span class="k">class</span> <span class="nc">ParserRuleProperty</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ParserRuleProperty</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Represent a property inside a rule.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;ctx&#39;</span><span class="p">,</span> <span class="s1">&#39;line&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="s1">&#39;co_value&#39;</span><span class="p">,</span>
                  <span class="s1">&#39;watched_keys&#39;</span><span class="p">,</span> <span class="s1">&#39;mode&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="s1">&#39;ignore_prev&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">ignore_prev</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">ignore_prev</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ParserRuleProperty</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="c1">#: Associated parser</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span> <span class="o">=</span> <span class="n">ctx</span>
@@ -551,7 +551,7 @@
         <span class="c1">#: whether previous rules targeting name should be cleared</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ignore_prev</span> <span class="o">=</span> <span class="n">ignore_prev</span>
 
-    <span class="k">def</span> <span class="nf">precompile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">precompile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
         <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
 
@@ -604,7 +604,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">watched_keys</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;_&#39;</span><span class="p">]]</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">get_names_from_expression</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_names_from_expression</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Look for all the symbols used in an ast node.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -670,14 +670,14 @@
             <span class="k">for</span> <span class="n">keyword</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">keywords</span><span class="p">:</span>
                 <span class="k">yield from</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_names_from_expression</span><span class="p">(</span><span class="n">keyword</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;&lt;ParserRuleProperty name=</span><span class="si">%r</span><span class="s1"> filename=</span><span class="si">%s</span><span class="s1">:</span><span class="si">%d</span><span class="s1"> &#39;</span> \
                <span class="s1">&#39;value=</span><span class="si">%r</span><span class="s1"> watched_keys=</span><span class="si">%r</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span>
                    <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
                    <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">watched_keys</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">ParserRule</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ParserRule</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Represents a rule, in terms of the Kivy internal language.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
@@ -685,7 +685,7 @@
                  <span class="s1">&#39;canvas_before&#39;</span><span class="p">,</span> <span class="s1">&#39;canvas_root&#39;</span><span class="p">,</span> <span class="s1">&#39;canvas_after&#39;</span><span class="p">,</span>
                  <span class="s1">&#39;handlers&#39;</span><span class="p">,</span> <span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="s1">&#39;cache_marked&#39;</span><span class="p">,</span> <span class="s1">&#39;avoid_previous_rules&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">level</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">level</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ParserRule</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="c1">#: Level of the rule in the kv</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">level</span>
@@ -719,7 +719,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_forbid_selectors</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">precompile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">precompile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="n">x</span><span class="o">.</span><span class="n">precompile</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">handlers</span><span class="p">:</span>
@@ -733,7 +733,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas_after</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">canvas_after</span><span class="o">.</span><span class="n">precompile</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">create_missing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_missing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
         <span class="c1"># check first if the widget class already been processed by this rule</span>
         <span class="bp">cls</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="vm">__class__</span>
         <span class="k">if</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache_marked</span><span class="p">:</span>
@@ -747,14 +747,14 @@
                 <span class="n">value</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="n">widget</span><span class="o">.</span><span class="n">create_property</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">default_value</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_forbid_selectors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_forbid_selectors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;&lt;&#39;</span> <span class="ow">or</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;[&#39;</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ParserException</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">,</span>
                 <span class="s1">&#39;Selectors rules are allowed only at the first level&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_detect_selectors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_detect_selectors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s1">&#39;&lt;&#39;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_build_rule</span><span class="p">()</span>
@@ -767,7 +767,7 @@
                     <span class="s1">&#39;Only one root object is allowed by .kv&#39;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="bp">self</span>
 
-    <span class="k">def</span> <span class="nf">_build_rule</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_rule</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
         <span class="k">if</span> <span class="n">__debug__</span><span class="p">:</span>
             <span class="n">trace</span><span class="p">(</span><span class="s1">&#39;Builder: build rule for </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
@@ -810,7 +810,7 @@
 
             <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">rules</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">crule</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">_build_template</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_template</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
         <span class="n">exception</span> <span class="o">=</span> <span class="n">ParserException</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">,</span>
@@ -833,11 +833,11 @@
         <span class="n">template_name</span><span class="p">,</span> <span class="n">template_root_cls</span> <span class="o">=</span> <span class="n">item_content</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;@&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">templates</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">template_name</span><span class="p">,</span> <span class="n">template_root_cls</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;&lt;ParserRule name=</span><span class="si">%r</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="p">)</span>
 
 
-<div class="viewcode-block" id="Parser"><a class="viewcode-back" href="../../../api-kivy.lang.parser.html#kivy.lang.Parser">[docs]</a><span class="k">class</span> <span class="nc">Parser</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="Parser"><a class="viewcode-back" href="../../../api-kivy.lang.parser.html#kivy.lang.Parser">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">Parser</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Create a Parser object to parse a Kivy language file or Kivy content.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
@@ -851,7 +851,7 @@
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;rules&#39;</span><span class="p">,</span> <span class="s1">&#39;templates&#39;</span><span class="p">,</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span> <span class="s1">&#39;sourcecode&#39;</span><span class="p">,</span>
                  <span class="s1">&#39;directives&#39;</span><span class="p">,</span> <span class="s1">&#39;filename&#39;</span><span class="p">,</span> <span class="s1">&#39;dynamic_classes&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Parser</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rules</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">templates</span> <span class="o">=</span> <span class="p">[]</span>
@@ -865,7 +865,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;No content passed&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">execute_directives</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">execute_directives</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">global</span> <span class="n">__KV_INCLUDES__</span>
         <span class="k">for</span> <span class="n">ln</span><span class="p">,</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">directives</span><span class="p">:</span>
             <span class="n">cmd</span> <span class="o">=</span> <span class="n">cmd</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
@@ -951,7 +951,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">ParserException</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ln</span><span class="p">,</span> <span class="s1">&#39;Unknown directive&#39;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Parser.parse"><a class="viewcode-back" href="../../../api-kivy.lang.parser.html#kivy.lang.Parser.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
+<div class="viewcode-block" id="Parser.parse"><a class="viewcode-back" href="../../../api-kivy.lang.parser.html#kivy.lang.Parser.parse">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Parse the contents of a Parser file and return a list</span>
 <span class="sd">        of root objects.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
@@ -985,7 +985,7 @@
             <span class="n">ln</span><span class="p">,</span> <span class="n">content</span> <span class="o">=</span> <span class="n">remaining_lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="k">raise</span> <span class="n">ParserException</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ln</span><span class="p">,</span> <span class="s1">&#39;Invalid data (not parsed)&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Parser.strip_comments"><a class="viewcode-back" href="../../../api-kivy.lang.parser.html#kivy.lang.Parser.strip_comments">[docs]</a>    <span class="k">def</span> <span class="nf">strip_comments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
+<div class="viewcode-block" id="Parser.strip_comments"><a class="viewcode-back" href="../../../api-kivy.lang.parser.html#kivy.lang.Parser.strip_comments">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">strip_comments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Remove all comments from all lines in-place.</span>
 <span class="sd">           Comments need to be on a single line and not at the end of a line.</span>
 <span class="sd">           i.e. a comment line&#39;s first non-whitespace character must be a #.</span>
@@ -1000,7 +1000,7 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="n">stripped</span><span class="p">:</span>
                 <span class="n">lines</span><span class="o">.</span><span class="n">remove</span><span class="p">((</span><span class="n">ln</span><span class="p">,</span> <span class="n">line</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Parser.parse_level"><a class="viewcode-back" href="../../../api-kivy.lang.parser.html#kivy.lang.Parser.parse_level">[docs]</a>    <span class="k">def</span> <span class="nf">parse_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">spaces</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="Parser.parse_level"><a class="viewcode-back" href="../../../api-kivy.lang.parser.html#kivy.lang.Parser.parse_level">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">parse_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">spaces</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Parse the current level (level * spaces) indentation.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">indent</span> <span class="o">=</span> <span class="n">spaces</span> <span class="o">*</span> <span class="n">level</span> <span class="k">if</span> <span class="n">spaces</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
@@ -1160,29 +1160,29 @@
         <span class="k">return</span> <span class="n">objects</span><span class="p">,</span> <span class="p">[]</span></div></div>
 
 
-<span class="k">class</span> <span class="nc">ParserSelector</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ParserSelector</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1"> key=</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">ParserSelectorClass</span><span class="p">(</span><span class="n">ParserSelector</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ParserSelectorClass</span><span class="p">(</span><span class="n">ParserSelector</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="ow">in</span> <span class="n">widget</span><span class="o">.</span><span class="n">cls</span>
 
 
-<span class="k">class</span> <span class="nc">ParserSelectorName</span><span class="p">(</span><span class="n">ParserSelector</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ParserSelectorName</span><span class="p">(</span><span class="n">ParserSelector</span><span class="p">):</span>
 
     <span class="n">parents</span> <span class="o">=</span> <span class="p">{}</span>
 
-    <span class="k">def</span> <span class="nf">get_bases</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_bases</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">base</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__bases__</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">base</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;object&#39;</span><span class="p">:</span>
                 <span class="k">break</span>
@@ -1192,7 +1192,7 @@
             <span class="k">for</span> <span class="n">cbase</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_bases</span><span class="p">(</span><span class="n">base</span><span class="p">):</span>
                 <span class="k">yield</span> <span class="n">cbase</span>
 
-    <span class="k">def</span> <span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
         <span class="n">parents</span> <span class="o">=</span> <span class="n">ParserSelectorName</span><span class="o">.</span><span class="n">parents</span>
         <span class="bp">cls</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="vm">__class__</span>
         <span class="k">if</span> <span class="bp">cls</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">parents</span><span class="p">:</span>
@@ -1201,7 +1201,7 @@
             <span class="n">parents</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span> <span class="o">=</span> <span class="n">classes</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="ow">in</span> <span class="n">parents</span><span class="p">[</span><span class="bp">cls</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">match_rule_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rule_name</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">match_rule_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rule_name</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">==</span> <span class="n">rule_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 </pre></div>
 
@@ -1241,7 +1241,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Jan 01, 2025.
+      Last updated on Jan 09, 2025.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

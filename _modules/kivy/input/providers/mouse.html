@@ -463,24 +463,24 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;MouseMotionEventProvider&#39;</span><span class="p">,</span> <span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">kivy.base</span> <span class="kn">import</span> <span class="n">EventLoop</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
-<span class="kn">from</span> <span class="nn">kivy.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
-<span class="kn">from</span> <span class="nn">kivy.input.provider</span> <span class="kn">import</span> <span class="n">MotionEventProvider</span>
-<span class="kn">from</span> <span class="nn">kivy.input.factory</span> <span class="kn">import</span> <span class="n">MotionEventFactory</span>
-<span class="kn">from</span> <span class="nn">kivy.input.motionevent</span> <span class="kn">import</span> <span class="n">MotionEvent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">EventLoop</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">deque</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">Logger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.input.provider</span><span class="w"> </span><span class="kn">import</span> <span class="n">MotionEventProvider</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.input.factory</span><span class="w"> </span><span class="kn">import</span> <span class="n">MotionEventFactory</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.input.motionevent</span><span class="w"> </span><span class="kn">import</span> <span class="n">MotionEvent</span>
 
 <span class="c1"># late binding</span>
 <span class="n">Color</span> <span class="o">=</span> <span class="n">Ellipse</span> <span class="o">=</span> <span class="kc">None</span>
 
 
-<span class="k">class</span> <span class="nc">MouseMotionEvent</span><span class="p">(</span><span class="n">MotionEvent</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MouseMotionEvent</span><span class="p">(</span><span class="n">MotionEvent</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">multitouch_sim</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">depack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">depack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sy</span> <span class="o">=</span> <span class="n">args</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
         <span class="n">profile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_touch</span><span class="p">:</span>
@@ -501,12 +501,12 @@
     <span class="c1"># Create automatically touch on the surface.</span>
     <span class="c1">#</span>
 
-    <span class="k">def</span> <span class="nf">update_graphics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">create</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_graphics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">create</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="k">global</span> <span class="n">Color</span><span class="p">,</span> <span class="n">Ellipse</span>
         <span class="n">de</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ud</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;_drawelement&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">de</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">create</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">Color</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="kn">from</span> <span class="nn">kivy.graphics</span> <span class="kn">import</span> <span class="n">Color</span><span class="p">,</span> <span class="n">Ellipse</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.graphics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Color</span><span class="p">,</span> <span class="n">Ellipse</span>
             <span class="k">with</span> <span class="n">win</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">after</span><span class="p">:</span>
                 <span class="n">de</span> <span class="o">=</span> <span class="p">(</span>
                     <span class="n">Color</span><span class="p">(</span><span class="mf">.8</span><span class="p">,</span> <span class="mf">.2</span><span class="p">,</span> <span class="mf">.2</span><span class="p">,</span> <span class="mf">.7</span><span class="p">),</span>
@@ -524,17 +524,17 @@
             <span class="n">de</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="mi">10</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="mi">10</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">clear_graphics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clear_graphics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">):</span>
         <span class="n">de</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ud</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;_drawelement&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">de</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">win</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">de</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
             <span class="n">win</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">de</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
 
-<div class="viewcode-block" id="MouseMotionEventProvider"><a class="viewcode-back" href="../../../../api-kivy.input.providers.mouse.html#kivy.input.providers.mouse.MouseMotionEventProvider">[docs]</a><span class="k">class</span> <span class="nc">MouseMotionEventProvider</span><span class="p">(</span><span class="n">MotionEventProvider</span><span class="p">):</span>
+<div class="viewcode-block" id="MouseMotionEventProvider"><a class="viewcode-back" href="../../../../api-kivy.input.providers.mouse.html#kivy.input.providers.mouse.MouseMotionEventProvider">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">MouseMotionEventProvider</span><span class="p">(</span><span class="n">MotionEventProvider</span><span class="p">):</span>
     <span class="n">__handlers__</span> <span class="o">=</span> <span class="p">{}</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">MouseMotionEventProvider</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">waiting_event</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">touches</span> <span class="o">=</span> <span class="p">{}</span>
@@ -564,10 +564,10 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Mouse: unknown parameter &lt;</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="n">arg</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_disable_hover</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_disable_hover</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_disable_hover</span>
 
-    <span class="k">def</span> <span class="nf">_set_disable_hover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_disable_hover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_disable_hover</span> <span class="o">!=</span> <span class="n">value</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_running</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
@@ -586,7 +586,7 @@
 <span class="sd">    .. versionadded:: 2.1.0</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-<div class="viewcode-block" id="MouseMotionEventProvider.start"><a class="viewcode-back" href="../../../../api-kivy.input.providers.mouse.html#kivy.input.providers.mouse.MouseMotionEventProvider.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MouseMotionEventProvider.start"><a class="viewcode-back" href="../../../../api-kivy.input.providers.mouse.html#kivy.input.providers.mouse.MouseMotionEventProvider.start">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Start the mouse provider&#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span><span class="p">:</span>
             <span class="k">return</span>
@@ -600,7 +600,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_start_hover_events</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_running</span> <span class="o">=</span> <span class="kc">True</span></div>
 
-    <span class="k">def</span> <span class="nf">_start_hover_events</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_start_hover_events</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">fbind</span> <span class="o">=</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">fbind</span>
         <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;mouse_pos&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">begin_or_update_hover_event</span><span class="p">)</span>
         <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;system_size&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_hover_event</span><span class="p">)</span>
@@ -609,7 +609,7 @@
         <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;on_close&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_hover_event</span><span class="p">)</span>
         <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;on_rotate&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_hover_event</span><span class="p">)</span>
 
-<div class="viewcode-block" id="MouseMotionEventProvider.stop"><a class="viewcode-back" href="../../../../api-kivy.input.providers.mouse.html#kivy.input.providers.mouse.MouseMotionEventProvider.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MouseMotionEventProvider.stop"><a class="viewcode-back" href="../../../../api-kivy.input.providers.mouse.html#kivy.input.providers.mouse.MouseMotionEventProvider.stop">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Stop the mouse provider&#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span><span class="p">:</span>
             <span class="k">return</span>
@@ -623,7 +623,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_stop_hover_events</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_running</span> <span class="o">=</span> <span class="kc">False</span></div>
 
-    <span class="k">def</span> <span class="nf">_stop_hover_events</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_stop_hover_events</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">funbind</span> <span class="o">=</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">funbind</span>
         <span class="n">funbind</span><span class="p">(</span><span class="s1">&#39;mouse_pos&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">begin_or_update_hover_event</span><span class="p">)</span>
         <span class="n">funbind</span><span class="p">(</span><span class="s1">&#39;system_size&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_hover_event</span><span class="p">)</span>
@@ -632,7 +632,7 @@
         <span class="n">funbind</span><span class="p">(</span><span class="s1">&#39;on_close&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_hover_event</span><span class="p">)</span>
         <span class="n">funbind</span><span class="p">(</span><span class="s1">&#39;on_rotate&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_hover_event</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">test_activity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_activity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">disable_on_activity</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="c1"># trying to get if we currently have other touch than us</span>
@@ -646,18 +646,18 @@
                 <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="nf">find_touch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">find_touch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="n">factor</span> <span class="o">=</span> <span class="mf">10.</span> <span class="o">/</span> <span class="n">win</span><span class="o">.</span><span class="n">system_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">touch</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">touches</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">sx</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">factor</span> <span class="ow">and</span> <span class="nb">abs</span><span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">sy</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">factor</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">touch</span>
         <span class="k">return</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">create_event_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_event_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">counter</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">create_touch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">is_double_tap</span><span class="p">,</span> <span class="n">do_graphics</span><span class="p">,</span> <span class="n">button</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_touch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">is_double_tap</span><span class="p">,</span> <span class="n">do_graphics</span><span class="p">,</span> <span class="n">button</span><span class="p">):</span>
         <span class="n">event_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_event_id</span><span class="p">()</span>
         <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">button</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">do_graphics</span><span class="p">:</span>
@@ -682,14 +682,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">waiting_event</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;begin&#39;</span><span class="p">,</span> <span class="n">touch</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">touch</span>
 
-    <span class="k">def</span> <span class="nf">remove_touch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_touch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">touches</span><span class="p">:</span>
             <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">touches</span><span class="p">[</span><span class="n">touch</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
             <span class="n">touch</span><span class="o">.</span><span class="n">update_time_end</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">waiting_event</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;end&#39;</span><span class="p">,</span> <span class="n">touch</span><span class="p">))</span>
             <span class="n">touch</span><span class="o">.</span><span class="n">clear_graphics</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">create_hover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">etype</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_hover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">etype</span><span class="p">):</span>
         <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">to_normalized_pos</span><span class="p">(</span><span class="o">*</span><span class="n">win</span><span class="o">.</span><span class="n">mouse_pos</span><span class="p">)</span>
         <span class="c1"># Divide by density because it&#39;s used by mouse_pos</span>
         <span class="n">nx</span> <span class="o">/=</span> <span class="n">win</span><span class="o">.</span><span class="n">_density</span>
@@ -710,7 +710,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">hover_event</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">waiting_event</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">etype</span><span class="p">,</span> <span class="n">hover</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">on_mouse_motion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_mouse_motion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
         <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">to_normalized_pos</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
         <span class="n">ny</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">ny</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_drag</span><span class="p">:</span>
@@ -723,7 +723,7 @@
             <span class="n">is_double_tap</span> <span class="o">=</span> <span class="s1">&#39;shift&#39;</span> <span class="ow">in</span> <span class="n">modifiers</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">create_touch</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">is_double_tap</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="p">[])</span>
 
-    <span class="k">def</span> <span class="nf">on_mouse_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_mouse_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_activity</span><span class="p">():</span>
             <span class="k">return</span>
         <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span> <span class="o">=</span> <span class="n">win</span><span class="o">.</span><span class="n">to_normalized_pos</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
@@ -744,7 +744,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">alt_touch</span> <span class="o">=</span> <span class="n">touch</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">current_drag</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">on_mouse_release</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_mouse_release</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">button</span> <span class="o">==</span> <span class="s1">&#39;all&#39;</span><span class="p">:</span>
             <span class="c1"># Special case, if button is all,</span>
             <span class="c1"># then remove all the current touches.</span>
@@ -773,27 +773,27 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">remove_touch</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">alt_touch</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">alt_touch</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">update_touch_graphics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_touch_graphics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">touch</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">touches</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="n">touch</span><span class="o">.</span><span class="n">update_graphics</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">begin_or_update_hover_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">begin_or_update_hover_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="n">etype</span> <span class="o">=</span> <span class="s1">&#39;update&#39;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hover_event</span> <span class="k">else</span> <span class="s1">&#39;begin&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_hover</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">etype</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">begin_hover_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">begin_hover_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">hover_event</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">create_hover</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="s1">&#39;begin&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">update_hover_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_hover_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hover_event</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">create_hover</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="s1">&#39;update&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">end_hover_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">end_hover_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hover_event</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">create_hover</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="MouseMotionEventProvider.update"><a class="viewcode-back" href="../../../../api-kivy.input.providers.mouse.html#kivy.input.providers.mouse.MouseMotionEventProvider.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dispatch_fn</span><span class="p">):</span>
+<div class="viewcode-block" id="MouseMotionEventProvider.update"><a class="viewcode-back" href="../../../../api-kivy.input.providers.mouse.html#kivy.input.providers.mouse.MouseMotionEventProvider.update">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dispatch_fn</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Update the mouse provider (pop event from the queue)&#39;&#39;&#39;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
@@ -843,7 +843,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Jan 01, 2025.
+      Last updated on Jan 09, 2025.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

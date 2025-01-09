@@ -443,41 +443,41 @@ in the textbox.</p>
 <section id="server-app">
 <h3>Server App<a class="headerlink" href="#server-app" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># install_twisted_rector must be called before importing and using the reactor</span>
-<span class="kn">from</span> <span class="nn">kivy.support</span> <span class="kn">import</span> <span class="n">install_twisted_reactor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.support</span><span class="w"> </span><span class="kn">import</span> <span class="n">install_twisted_reactor</span>
 
 <span class="n">install_twisted_reactor</span><span class="p">()</span>
 
-<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span>
-<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">protocol</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">twisted.internet</span><span class="w"> </span><span class="kn">import</span> <span class="n">reactor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">twisted.internet</span><span class="w"> </span><span class="kn">import</span> <span class="n">protocol</span>
 
 
-<span class="k">class</span> <span class="nc">EchoServer</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">Protocol</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">EchoServer</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">Protocol</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">handle_message</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">response</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">EchoServerFactory</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">Factory</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">EchoServerFactory</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">Factory</span><span class="p">):</span>
     <span class="n">protocol</span> <span class="o">=</span> <span class="n">EchoServer</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">app</span>
 
 
-<span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.label</span> <span class="kn">import</span> <span class="n">Label</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.label</span><span class="w"> </span><span class="kn">import</span> <span class="n">Label</span>
 
 
-<span class="k">class</span> <span class="nc">TwistedServerApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TwistedServerApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
     <span class="n">label</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;server started</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">reactor</span><span class="o">.</span><span class="n">listenTCP</span><span class="p">(</span><span class="mi">8000</span><span class="p">,</span> <span class="n">EchoServerFactory</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span>
 
-    <span class="k">def</span> <span class="nf">handle_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;received:  </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
@@ -497,60 +497,60 @@ in the textbox.</p>
 <section id="client-app">
 <h3>Client App<a class="headerlink" href="#client-app" title="Permalink to this heading">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># install_twisted_rector must be called before importing the reactor</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">unicode_literals</span>
 
-<span class="kn">from</span> <span class="nn">kivy.support</span> <span class="kn">import</span> <span class="n">install_twisted_reactor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.support</span><span class="w"> </span><span class="kn">import</span> <span class="n">install_twisted_reactor</span>
 
 <span class="n">install_twisted_reactor</span><span class="p">()</span>
 
 <span class="c1"># A Simple Client that send messages to the Echo Server</span>
-<span class="kn">from</span> <span class="nn">twisted.internet</span> <span class="kn">import</span> <span class="n">reactor</span><span class="p">,</span> <span class="n">protocol</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">twisted.internet</span><span class="w"> </span><span class="kn">import</span> <span class="n">reactor</span><span class="p">,</span> <span class="n">protocol</span>
 
 
-<span class="k">class</span> <span class="nc">EchoClient</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">Protocol</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">EchoClient</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">Protocol</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">connectionMade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">on_connection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dataReceived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">factory</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
 
 
-<span class="k">class</span> <span class="nc">EchoClientFactory</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">ClientFactory</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">EchoClientFactory</span><span class="p">(</span><span class="n">protocol</span><span class="o">.</span><span class="n">ClientFactory</span><span class="p">):</span>
     <span class="n">protocol</span> <span class="o">=</span> <span class="n">EchoClient</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">app</span>
 
-    <span class="k">def</span> <span class="nf">startedConnecting</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">startedConnecting</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">&#39;Started to connect.&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">clientConnectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clientConnectionLost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">&#39;Lost connection.&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">clientConnectionFailed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clientConnectionFailed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">,</span> <span class="n">reason</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s1">&#39;Connection failed.&#39;</span><span class="p">)</span>
 
 
-<span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.label</span> <span class="kn">import</span> <span class="n">Label</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.textinput</span> <span class="kn">import</span> <span class="n">TextInput</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.boxlayout</span> <span class="kn">import</span> <span class="n">BoxLayout</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.label</span><span class="w"> </span><span class="kn">import</span> <span class="n">Label</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.textinput</span><span class="w"> </span><span class="kn">import</span> <span class="n">TextInput</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.boxlayout</span><span class="w"> </span><span class="kn">import</span> <span class="n">BoxLayout</span>
 
 
 <span class="c1"># A simple kivy App, with a textbox to enter messages, and</span>
 <span class="c1"># a large label to display all the messages received from</span>
 <span class="c1"># the server</span>
-<span class="k">class</span> <span class="nc">TwistedClientApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TwistedClientApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
     <span class="n">connection</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">textbox</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">label</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_gui</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connect_to_server</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">root</span>
 
-    <span class="k">def</span> <span class="nf">setup_gui</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup_gui</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">textbox</span> <span class="o">=</span> <span class="n">TextInput</span><span class="p">(</span><span class="n">size_hint_y</span><span class="o">=</span><span class="mf">.1</span><span class="p">,</span> <span class="n">multiline</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">textbox</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_text_validate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">send_message</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;connecting...</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -559,20 +559,20 @@ in the textbox.</p>
         <span class="n">layout</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">textbox</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">layout</span>
 
-    <span class="k">def</span> <span class="nf">connect_to_server</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">connect_to_server</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">reactor</span><span class="o">.</span><span class="n">connectTCP</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">8000</span><span class="p">,</span> <span class="n">EchoClientFactory</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">on_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">print_message</span><span class="p">(</span><span class="s2">&quot;Connected successfully!&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">connection</span>
 
-    <span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">send_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">textbox</span><span class="o">.</span><span class="n">text</span>
         <span class="k">if</span> <span class="n">msg</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">textbox</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">print_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">print_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">text</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
 
@@ -631,7 +631,7 @@ in the textbox.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Jan 01, 2025.
+      Last updated on Jan 09, 2025.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

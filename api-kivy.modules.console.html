@@ -528,20 +528,20 @@ widget</p></li>
 <p>An addon must inherit from the <a class="reference internal" href="#kivy.modules.console.ConsoleAddon" title="kivy.modules.console.ConsoleAddon"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConsoleAddon</span></code></a> class.</p>
 <p>For example, here is a simple addon for displaying the FPS at the top/right
 of the Console:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kivy.modules.console</span> <span class="kn">import</span> <span class="n">Console</span><span class="p">,</span> <span class="n">ConsoleAddon</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.modules.console</span><span class="w"> </span><span class="kn">import</span> <span class="n">Console</span><span class="p">,</span> <span class="n">ConsoleAddon</span>
 
-<span class="k">class</span> <span class="nc">ConsoleAddonFps</span><span class="p">(</span><span class="n">ConsoleAddon</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ConsoleAddonFps</span><span class="p">(</span><span class="n">ConsoleAddon</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lbl</span> <span class="o">=</span> <span class="n">ConsoleLabel</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;0 Fps&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">console</span><span class="o">.</span><span class="n">add_toolbar_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lbl</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_interval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_fps</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">deactivated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">deactivated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">update_fps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_fps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="n">fps</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">get_fps</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lbl</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> Fps&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">fps</span><span class="p">))</span>
 
@@ -552,24 +552,24 @@ of the Console:</p>
 tied to the addon activation/deactivation, but in some cases, you can use the
 same callback for deactivating the addon and the panel. Here is a simple
 “About” panel addon:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kivy.modules.console</span> <span class="kn">import</span> <span class="n">Console</span><span class="p">,</span> <span class="n">ConsoleAddon</span><span class="p">,</span> <span class="n">ConsoleLabel</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.modules.console</span><span class="w"> </span><span class="kn">import</span> <span class="n">Console</span><span class="p">,</span> <span class="n">ConsoleAddon</span><span class="p">,</span> <span class="n">ConsoleLabel</span>
 
-<span class="k">class</span> <span class="nc">ConsoleAddonAbout</span><span class="p">(</span><span class="n">ConsoleAddon</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ConsoleAddonAbout</span><span class="p">(</span><span class="n">ConsoleAddon</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">console</span><span class="o">.</span><span class="n">add_panel</span><span class="p">(</span><span class="s2">&quot;About&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">panel_activate</span><span class="p">,</span>
                                <span class="bp">self</span><span class="o">.</span><span class="n">panel_deactivate</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">panel_activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">panel_activate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">console</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">update_content</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_content</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">panel_deactivate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">panel_deactivate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">console</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">update_content</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">deactivate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">deactivate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">panel_deactivate</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">update_content</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_content</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">console</span><span class="o">.</span><span class="n">widget</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">widget</span><span class="p">:</span>
             <span class="k">return</span>
@@ -838,7 +838,7 @@ capturing the keyboard shortcut.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Jan 01, 2025.
+      Last updated on Jan 09, 2025.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

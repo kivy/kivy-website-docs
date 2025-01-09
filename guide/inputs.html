@@ -515,7 +515,7 @@ made available to you. For example, a touch input has an (x,y) position, but
 might also have pressure information, blob size, an acceleration vector, etc.</p>
 <p>A profile is a string that indicates what features are available inside the
 motion event. Let’s imagine that you are in an <code class="docutils literal notranslate"><span class="pre">on_touch_move</span></code> method:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">on_touch_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_touch_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">profile</span><span class="p">)</span>
     <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_touch_move</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
 </pre></div>
@@ -535,7 +535,7 @@ available. With the <code class="docutils literal notranslate"><span class="pre"
 As we said, for touch events <code class="docutils literal notranslate"><span class="pre">'pos'</span></code> is a mandatory profile, but not
 <code class="docutils literal notranslate"><span class="pre">'angle'</span></code>. You can extend your interaction by checking if the <code class="docutils literal notranslate"><span class="pre">'angle'</span></code>
 profile exists:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">on_touch_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_touch_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The touch is at position&#39;</span><span class="p">,</span> <span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span>
     <span class="k">if</span> <span class="s1">&#39;angle&#39;</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">profile</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The touch angle is&#39;</span><span class="p">,</span> <span class="n">touch</span><span class="o">.</span><span class="n">a</span><span class="p">)</span>
@@ -566,7 +566,7 @@ that wants to know about them and react to them.</p>
 <p>In order to provide the maximum flexibility, Kivy dispatches the events to
 all the widgets and lets them decide how to react to them. If you only want
 to respond to touch events inside the widget, you simply check:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">collide_point</span><span class="p">(</span><span class="o">*</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">):</span>
         <span class="c1"># The touch has occurred inside the widgets area. Do stuff!</span>
         <span class="k">pass</span>
@@ -595,7 +595,7 @@ children.</p>
 </div></blockquote>
 <p>You must use one of them to scale coordinates correctly to the context.
 Let’s look the scatter implementation:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
     <span class="c1"># push the current coordinate, to be able to restore it later</span>
     <span class="n">touch</span><span class="o">.</span><span class="n">push</span><span class="p">()</span>
 
@@ -619,9 +619,9 @@ Let’s look the scatter implementation:</p>
 <h3>Touch shapes<a class="headerlink" href="#touch-shapes" title="Permalink to this heading">¶</a></h3>
 <p>If the touch has a shape, it will be reflected in the ‘shape’ property. Right
 now, only a <a class="reference internal" href="../api-kivy.input.shape.html#kivy.input.shape.ShapeRect" title="kivy.input.shape.ShapeRect"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShapeRect</span></code></a> can be exposed:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">kivy.input.shape</span> <span class="kn">import</span> <span class="n">ShapeRect</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.input.shape</span><span class="w"> </span><span class="kn">import</span> <span class="n">ShapeRect</span>
 
-<span class="k">def</span> <span class="nf">on_touch_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">on_touch_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">ShapeRect</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;My touch have a rectangle shape of size&#39;</span><span class="p">,</span>
             <span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">touch</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">height</span><span class="p">))</span>
@@ -634,7 +634,7 @@ now, only a <a class="reference internal" href="../api-kivy.input.shape.html#kiv
 <p>A double tap is the action of tapping twice within a time and a distance.
 It’s calculated by the doubletap post-processing module. You can test if the
 current touch is one of a double tap or not:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">is_double_tap</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Touch is a double tap !&#39;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; - interval is&#39;</span><span class="p">,</span> <span class="n">touch</span><span class="o">.</span><span class="n">double_tap_time</span><span class="p">)</span>
@@ -648,7 +648,7 @@ current touch is one of a double tap or not:</p>
 <p>A triple tap is the action of tapping thrice within a time and a distance.
 It’s calculated by the tripletap post-processing module. You can test if the
 current touch is one of a triple tap or not:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">is_triple_tap</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Touch is a triple tap !&#39;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39; - interval is&#39;</span><span class="p">,</span> <span class="n">touch</span><span class="o">.</span><span class="n">triple_tap_time</span><span class="p">)</span>
@@ -679,7 +679,7 @@ the grabbed state.</p></li>
 </ul>
 </div></blockquote>
 <p>Here is an example of how to use grabbing:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">collide_point</span><span class="p">(</span><span class="o">*</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">):</span>
 
         <span class="c1"># if the touch collides with our widget, let&#39;s grab it</span>
@@ -688,7 +688,7 @@ the grabbed state.</p></li>
         <span class="c1"># and accept the touch.</span>
         <span class="k">return</span> <span class="kc">True</span>
 
-<span class="k">def</span> <span class="nf">on_touch_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">on_touch_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
     <span class="c1"># here, you don&#39;t check if the touch collides or things like that.</span>
     <span class="c1"># you just need to check if it&#39;s a grabbed touch event</span>
     <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">grab_current</span> <span class="ow">is</span> <span class="bp">self</span><span class="p">:</span>
@@ -771,7 +771,7 @@ joystick event like this:</p>
 </div>
 <p>Then you need to fetch the parameters specified in
 <code class="xref py py-class docutils literal notranslate"><span class="pre">Window</span></code> for each event you use, for example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">on_joy_axis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">stickid</span><span class="p">,</span> <span class="n">axisid</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_joy_axis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">stickid</span><span class="p">,</span> <span class="n">axisid</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">stickid</span><span class="p">,</span> <span class="n">axisid</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -900,7 +900,7 @@ controller emulators, such as <a class="reference external" href="https://vjoyst
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Jan 01, 2025.
+      Last updated on Jan 09, 2025.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

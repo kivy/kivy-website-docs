@@ -545,34 +545,34 @@
 <span class="sd">&#39;&#39;&#39;</span>
 
 
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">environ</span>
-<span class="kn">from</span> <span class="nn">weakref</span> <span class="kn">import</span> <span class="n">ref</span>
-<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span><span class="p">,</span> <span class="n">islice</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">os</span><span class="w"> </span><span class="kn">import</span> <span class="n">environ</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">weakref</span><span class="w"> </span><span class="kn">import</span> <span class="n">ref</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">chain</span><span class="p">,</span> <span class="n">islice</span>
 
-<span class="kn">from</span> <span class="nn">kivy.animation</span> <span class="kn">import</span> <span class="n">Animation</span>
-<span class="kn">from</span> <span class="nn">kivy.base</span> <span class="kn">import</span> <span class="n">EventLoop</span>
-<span class="kn">from</span> <span class="nn">kivy.cache</span> <span class="kn">import</span> <span class="n">Cache</span>
-<span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
-<span class="kn">from</span> <span class="nn">kivy.config</span> <span class="kn">import</span> <span class="n">Config</span>
-<span class="kn">from</span> <span class="nn">kivy.core.window</span> <span class="kn">import</span> <span class="n">Window</span>
-<span class="kn">from</span> <span class="nn">kivy.metrics</span> <span class="kn">import</span> <span class="n">inch</span>
-<span class="kn">from</span> <span class="nn">kivy.utils</span> <span class="kn">import</span> <span class="n">boundary</span><span class="p">,</span> <span class="n">platform</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.behaviors</span> <span class="kn">import</span> <span class="n">FocusBehavior</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.animation</span><span class="w"> </span><span class="kn">import</span> <span class="n">Animation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">EventLoop</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cache</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.clock</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clock</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.window</span><span class="w"> </span><span class="kn">import</span> <span class="n">Window</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">inch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">boundary</span><span class="p">,</span> <span class="n">platform</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.behaviors</span><span class="w"> </span><span class="kn">import</span> <span class="n">FocusBehavior</span>
 
-<span class="kn">from</span> <span class="nn">kivy.core.text</span> <span class="kn">import</span> <span class="n">Label</span><span class="p">,</span> <span class="n">DEFAULT_FONT</span>
-<span class="kn">from</span> <span class="nn">kivy.graphics</span> <span class="kn">import</span> <span class="n">Color</span><span class="p">,</span> <span class="n">Rectangle</span><span class="p">,</span> <span class="n">PushMatrix</span><span class="p">,</span> <span class="n">PopMatrix</span><span class="p">,</span> <span class="n">Callback</span>
-<span class="kn">from</span> <span class="nn">kivy.graphics.context_instructions</span> <span class="kn">import</span> <span class="n">Transform</span>
-<span class="kn">from</span> <span class="nn">kivy.graphics.texture</span> <span class="kn">import</span> <span class="n">Texture</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">Label</span><span class="p">,</span> <span class="n">DEFAULT_FONT</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.graphics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Color</span><span class="p">,</span> <span class="n">Rectangle</span><span class="p">,</span> <span class="n">PushMatrix</span><span class="p">,</span> <span class="n">PopMatrix</span><span class="p">,</span> <span class="n">Callback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.graphics.context_instructions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Transform</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.graphics.texture</span><span class="w"> </span><span class="kn">import</span> <span class="n">Texture</span>
 
-<span class="kn">from</span> <span class="nn">kivy.uix.widget</span> <span class="kn">import</span> <span class="n">Widget</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.bubble</span> <span class="kn">import</span> <span class="n">Bubble</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.behaviors</span> <span class="kn">import</span> <span class="n">ButtonBehavior</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.image</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.widget</span><span class="w"> </span><span class="kn">import</span> <span class="n">Widget</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.bubble</span><span class="w"> </span><span class="kn">import</span> <span class="n">Bubble</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.behaviors</span><span class="w"> </span><span class="kn">import</span> <span class="n">ButtonBehavior</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.image</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
 
-<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">StringProperty</span><span class="p">,</span> <span class="n">NumericProperty</span><span class="p">,</span> \
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.properties</span><span class="w"> </span><span class="kn">import</span> <span class="n">StringProperty</span><span class="p">,</span> <span class="n">NumericProperty</span><span class="p">,</span> \
     <span class="n">BooleanProperty</span><span class="p">,</span> <span class="n">AliasProperty</span><span class="p">,</span> <span class="n">OptionProperty</span><span class="p">,</span> \
     <span class="n">ListProperty</span><span class="p">,</span> <span class="n">ObjectProperty</span><span class="p">,</span> <span class="n">VariableListProperty</span><span class="p">,</span> <span class="n">ColorProperty</span><span class="p">,</span> \
     <span class="n">BoundedNumericProperty</span>
@@ -581,14 +581,14 @@
 
 
 <span class="k">if</span> <span class="s1">&#39;KIVY_DOC&#39;</span> <span class="ow">in</span> <span class="n">environ</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">triggered</span><span class="p">(</span><span class="o">*</span><span class="n">_</span><span class="p">,</span> <span class="o">**</span><span class="n">__</span><span class="p">):</span>
-        <span class="k">def</span> <span class="nf">decorator_func</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-            <span class="k">def</span> <span class="nf">decorated_func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">triggered</span><span class="p">(</span><span class="o">*</span><span class="n">_</span><span class="p">,</span> <span class="o">**</span><span class="n">__</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">decorator_func</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">decorated_func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">decorated_func</span>
         <span class="k">return</span> <span class="n">decorator_func</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">triggered</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.clock</span><span class="w"> </span><span class="kn">import</span> <span class="n">triggered</span>
 
 
 <span class="n">Cache_register</span> <span class="o">=</span> <span class="n">Cache</span><span class="o">.</span><span class="n">register</span>
@@ -626,7 +626,7 @@
 <span class="c1"># register an observer to clear the textinput cache when OpenGL will reload</span>
 <span class="k">if</span> <span class="s1">&#39;KIVY_DOC&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">environ</span><span class="p">:</span>
 
-    <span class="k">def</span> <span class="nf">_textinput_clear_cache</span><span class="p">(</span><span class="o">*</span><span class="n">l</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_textinput_clear_cache</span><span class="p">(</span><span class="o">*</span><span class="n">l</span><span class="p">):</span>
         <span class="n">Cache_remove</span><span class="p">(</span><span class="s1">&#39;textinput.label&#39;</span><span class="p">)</span>
         <span class="n">Cache_remove</span><span class="p">(</span><span class="s1">&#39;textinput.width&#39;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">wr</span> <span class="ow">in</span> <span class="n">_textinput_list</span><span class="p">[:]:</span>
@@ -637,11 +637,11 @@
                 <span class="n">textinput</span><span class="o">.</span><span class="n">_trigger_refresh_text</span><span class="p">()</span>
                 <span class="n">textinput</span><span class="o">.</span><span class="n">_refresh_hint_text</span><span class="p">()</span>
 
-    <span class="kn">from</span> <span class="nn">kivy.graphics.context</span> <span class="kn">import</span> <span class="n">get_context</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.graphics.context</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_context</span>
     <span class="n">get_context</span><span class="p">()</span><span class="o">.</span><span class="n">add_reload_observer</span><span class="p">(</span><span class="n">_textinput_clear_cache</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">Selector</span><span class="p">(</span><span class="n">ButtonBehavior</span><span class="p">,</span> <span class="n">Image</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Selector</span><span class="p">(</span><span class="n">ButtonBehavior</span><span class="p">,</span> <span class="n">Image</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Default template for the selection Handles</span>
 
 <span class="sd">    In order to customize the look of the Selection Handles,</span>
@@ -655,7 +655,7 @@
     <span class="n">target</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span>
     <span class="n">matrix</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">always_release</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">get_window_matrix</span><span class="p">()</span>
@@ -668,20 +668,20 @@
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">after</span><span class="p">:</span>
             <span class="n">PopMatrix</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">update_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cb</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cb</span><span class="p">):</span>
         <span class="n">matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">get_window_matrix</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix</span> <span class="o">!=</span> <span class="n">matrix</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">matrix</span> <span class="o">=</span> <span class="n">matrix</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">identity</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">transform_touch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">transform_touch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="n">matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix</span><span class="o">.</span><span class="n">inverse</span><span class="p">()</span>
         <span class="n">touch</span><span class="o">.</span><span class="n">apply_transform_2d</span><span class="p">(</span>
             <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">matrix</span><span class="o">.</span><span class="n">transform_point</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">)[:</span><span class="mi">2</span><span class="p">]</span>
         <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span><span class="p">:</span>
             <span class="k">return</span>
 
@@ -696,7 +696,7 @@
             <span class="n">touch</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 
 
-<span class="k">class</span> <span class="nc">TextInputCutCopyPaste</span><span class="p">(</span><span class="n">Bubble</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TextInputCutCopyPaste</span><span class="p">(</span><span class="n">Bubble</span><span class="p">):</span>
     <span class="c1"># Internal class used for showing the little bubble popup when</span>
     <span class="c1"># copy/cut/paste happen.</span>
 
@@ -713,7 +713,7 @@
 
     <span class="n">_check_parent_ev</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;normal&#39;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_parent_ev</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_interval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_check_parent</span><span class="p">,</span> <span class="mf">.5</span><span class="p">)</span>
@@ -727,19 +727,19 @@
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">after</span><span class="p">:</span>
             <span class="n">PopMatrix</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">update_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cb</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cb</span><span class="p">):</span>
         <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">textinput</span><span class="o">.</span><span class="n">get_window_matrix</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix</span> <span class="o">!=</span> <span class="n">m</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">matrix</span> <span class="o">=</span> <span class="n">m</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">identity</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matrix</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">transform_touch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">transform_touch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="n">matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">matrix</span><span class="o">.</span><span class="n">inverse</span><span class="p">()</span>
         <span class="n">touch</span><span class="o">.</span><span class="n">apply_transform_2d</span><span class="p">(</span>
             <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">matrix</span><span class="o">.</span><span class="n">transform_point</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">)[:</span><span class="mi">2</span><span class="p">])</span>
 
-    <span class="k">def</span> <span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">touch</span><span class="o">.</span><span class="n">push</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">transform_touch</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
@@ -749,7 +749,7 @@
         <span class="k">finally</span><span class="p">:</span>
             <span class="n">touch</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">on_touch_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_touch_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">touch</span><span class="o">.</span><span class="n">push</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">transform_touch</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
@@ -761,12 +761,12 @@
         <span class="k">finally</span><span class="p">:</span>
             <span class="n">touch</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">on_textinput</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_textinput</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">global</span> <span class="n">Clipboard</span>
         <span class="k">if</span> <span class="n">value</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">Clipboard</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">_is_desktop</span><span class="p">:</span>
             <span class="n">value</span><span class="o">.</span><span class="n">_ensure_clipboard</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_check_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
         <span class="c1"># this is a prevention to get the Bubble staying on the screen, if the</span>
         <span class="c1"># attached textinput is not on the screen anymore.</span>
         <span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">textinput</span>
@@ -779,7 +779,7 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">textinput</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">textinput</span><span class="o">.</span><span class="n">_hide_cut_copy_paste</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">on_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">textinput</span>
         <span class="n">mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span>
 
@@ -801,7 +801,7 @@
             <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="n">widget_list</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">do</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">do</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">):</span>
         <span class="n">textinput</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">textinput</span>
 
         <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="s1">&#39;cut&#39;</span><span class="p">:</span>
@@ -821,7 +821,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">hide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">hide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">parent</span><span class="p">:</span>
             <span class="k">return</span>
@@ -831,7 +831,7 @@
         <span class="n">anim</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="TextInput"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput">[docs]</a><span class="k">class</span> <span class="nc">TextInput</span><span class="p">(</span><span class="n">FocusBehavior</span><span class="p">,</span> <span class="n">Widget</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">TextInput</span><span class="p">(</span><span class="n">FocusBehavior</span><span class="p">,</span> <span class="n">Widget</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;TextInput class. See module documentation for more information.</span>
 
 <span class="sd">    :Events:</span>
@@ -897,7 +897,7 @@
 
     <span class="n">_resolved_base_dir</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_graphics_ev</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">create_trigger</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_update_graphics</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_focusable</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;is_focusable&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
@@ -979,7 +979,7 @@
         <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;base_direction&#39;</span><span class="p">,</span> <span class="n">refresh_line_options</span><span class="p">)</span>
         <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;text_language&#39;</span><span class="p">,</span> <span class="n">refresh_line_options</span><span class="p">)</span>
 
-        <span class="k">def</span> <span class="nf">handle_readonly</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">handle_readonly</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">value</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">_is_desktop</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">allow_copy</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">is_focusable</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="p">(</span><span class="n">value</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">disabled</span><span class="p">)</span> <span class="ow">or</span> <span class="n">_is_desktop</span> <span class="ow">and</span>
@@ -1022,10 +1022,10 @@
         <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;linux&#39;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_clipboard</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">on_text_validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_text_validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
 
-<div class="viewcode-block" id="TextInput.cursor_index"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.cursor_index">[docs]</a>    <span class="k">def</span> <span class="nf">cursor_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.cursor_index"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.cursor_index">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">cursor_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cursor</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the cursor index in the text/value.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">cursor</span><span class="p">:</span>
@@ -1054,7 +1054,7 @@
         <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">0</span></div>
 
-<div class="viewcode-block" id="TextInput.cursor_offset"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.cursor_offset">[docs]</a>    <span class="k">def</span> <span class="nf">cursor_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.cursor_offset"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.cursor_offset">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">cursor_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Get the cursor x offset on the current line.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1069,7 +1069,7 @@
             <span class="p">)</span>
         <span class="k">return</span> <span class="n">offset</span></div>
 
-<div class="viewcode-block" id="TextInput.get_cursor_from_index"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.get_cursor_from_index">[docs]</a>    <span class="k">def</span> <span class="nf">get_cursor_from_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.get_cursor_from_index"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.get_cursor_from_index">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_cursor_from_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the (col, row) of the cursor from text index.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">index</span> <span class="o">=</span> <span class="n">boundary</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
@@ -1091,7 +1091,7 @@
             <span class="n">i</span> <span class="o">=</span> <span class="n">count</span>
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">index</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">row</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TextInput.select_text"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.select_text">[docs]</a>    <span class="k">def</span> <span class="nf">select_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.select_text"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.select_text">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">select_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39; Select a portion of text displayed in this TextInput.</span>
 
 <span class="sd">        .. versionadded:: 1.4.0</span>
@@ -1112,7 +1112,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_selection</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_graphics_selection</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="TextInput.select_all"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.select_all">[docs]</a>    <span class="k">def</span> <span class="nf">select_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.select_all"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.select_all">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">select_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39; Select all of the text displayed in this TextInput.</span>
 
 <span class="sd">        .. versionadded:: 1.4.0</span>
@@ -1121,7 +1121,7 @@
 
     <span class="n">re_indent</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^(\s*|)&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_auto_indent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">substring</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_auto_indent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">substring</span><span class="p">):</span>
         <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_index</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">index</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span>
@@ -1132,7 +1132,7 @@
                 <span class="n">substring</span> <span class="o">+=</span> <span class="n">indent</span>
         <span class="k">return</span> <span class="n">substring</span>
 
-<div class="viewcode-block" id="TextInput.insert_text"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.insert_text">[docs]</a>    <span class="k">def</span> <span class="nf">insert_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">substring</span><span class="p">,</span> <span class="n">from_undo</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.insert_text"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.insert_text">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">insert_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">substring</span><span class="p">,</span> <span class="n">from_undo</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Insert new text at the current cursor position. Override this</span>
 <span class="sd">        function in order to pre-process text for input validation.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
@@ -1202,7 +1202,7 @@
         <span class="c1"># handle undo and redo</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_unredo_insert</span><span class="p">(</span><span class="n">cindex</span><span class="p">,</span> <span class="n">cindex</span> <span class="o">+</span> <span class="n">len_str</span><span class="p">,</span> <span class="n">substring</span><span class="p">,</span> <span class="n">from_undo</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_get_line_from_cursor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">new_text</span><span class="p">,</span> <span class="n">lines</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_line_from_cursor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">new_text</span><span class="p">,</span> <span class="n">lines</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                               <span class="n">lines_flags</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="c1"># get current paragraph from cursor position</span>
         <span class="k">if</span> <span class="n">lines</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -1228,7 +1228,7 @@
         <span class="n">len_lines</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">start</span><span class="p">,</span> <span class="n">finish</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">lines_flags</span><span class="p">,</span> <span class="n">len_lines</span>
 
-    <span class="k">def</span> <span class="nf">_set_unredo_insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ci</span><span class="p">,</span> <span class="n">sci</span><span class="p">,</span> <span class="n">substring</span><span class="p">,</span> <span class="n">from_undo</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_unredo_insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ci</span><span class="p">,</span> <span class="n">sci</span><span class="p">,</span> <span class="n">substring</span><span class="p">,</span> <span class="n">from_undo</span><span class="p">):</span>
         <span class="c1"># handle undo and redo</span>
         <span class="k">if</span> <span class="n">from_undo</span><span class="p">:</span>
             <span class="k">return</span>
@@ -1239,7 +1239,7 @@
         <span class="c1"># reset redo when undo is appended to</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_redo</span> <span class="o">=</span> <span class="p">[]</span>
 
-<div class="viewcode-block" id="TextInput.reset_undo"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.reset_undo">[docs]</a>    <span class="k">def</span> <span class="nf">reset_undo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.reset_undo"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.reset_undo">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">reset_undo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Reset undo and redo lists from memory.</span>
 
 <span class="sd">        .. versionadded:: 1.3.0</span>
@@ -1247,7 +1247,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_redo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_undo</span> <span class="o">=</span> <span class="p">[]</span></div>
 
-<div class="viewcode-block" id="TextInput.do_redo"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.do_redo">[docs]</a>    <span class="k">def</span> <span class="nf">do_redo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.do_redo"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.do_redo">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">do_redo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Do redo operation.</span>
 
 <span class="sd">        .. versionadded:: 1.3.0</span>
@@ -1284,7 +1284,7 @@
             <span class="c1"># reached at top of undo list</span>
             <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="TextInput.do_undo"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.do_undo">[docs]</a>    <span class="k">def</span> <span class="nf">do_undo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.do_undo"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.do_undo">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">do_undo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Do undo operation.</span>
 
 <span class="sd">        .. versionadded:: 1.3.0</span>
@@ -1324,7 +1324,7 @@
             <span class="c1"># reached at top of undo list</span>
             <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="TextInput.do_backspace"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.do_backspace">[docs]</a>    <span class="k">def</span> <span class="nf">do_backspace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">from_undo</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;bkspc&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.do_backspace"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.do_backspace">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">do_backspace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">from_undo</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;bkspc&#39;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Do backspace operation from the current cursor position.</span>
 <span class="sd">        This action might do several things:</span>
 
@@ -1381,7 +1381,7 @@
             <span class="n">substring</span><span class="p">,</span> <span class="n">from_undo</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_max_scroll_x</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">_set_unredo_bkspc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ol_index</span><span class="p">,</span> <span class="n">new_index</span><span class="p">,</span> <span class="n">substring</span><span class="p">,</span> <span class="n">from_undo</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_unredo_bkspc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ol_index</span><span class="p">,</span> <span class="n">new_index</span><span class="p">,</span> <span class="n">substring</span><span class="p">,</span> <span class="n">from_undo</span><span class="p">,</span>
                           <span class="n">mode</span><span class="p">):</span>
         <span class="c1"># handle undo and redo for backspace</span>
         <span class="k">if</span> <span class="n">from_undo</span><span class="p">:</span>
@@ -1394,7 +1394,7 @@
 
     <span class="n">_re_whitespace</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_move_cursor_word_left</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_move_cursor_word_left</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">pos</span> <span class="o">=</span> <span class="n">index</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_index</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">pos</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span>
@@ -1432,7 +1432,7 @@
             <span class="n">col</span> <span class="o">=</span> <span class="n">mpos</span>
             <span class="k">return</span> <span class="n">col</span><span class="p">,</span> <span class="n">row</span>
 
-    <span class="k">def</span> <span class="nf">_move_cursor_word_right</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_move_cursor_word_right</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">pos</span> <span class="o">=</span> <span class="n">index</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_index</span><span class="p">()</span>
         <span class="n">col</span><span class="p">,</span> <span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_cursor_from_index</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lines</span>
@@ -1471,7 +1471,7 @@
             <span class="n">col</span> <span class="o">=</span> <span class="n">mpos</span>
             <span class="k">return</span> <span class="n">col</span><span class="p">,</span> <span class="n">row</span>
 
-    <span class="k">def</span> <span class="nf">_expand_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ifrom</span><span class="p">,</span> <span class="n">ito</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_expand_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ifrom</span><span class="p">,</span> <span class="n">ito</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">ito</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">ito</span> <span class="o">=</span> <span class="n">ifrom</span>
         <span class="n">rfrom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_cursor_from_index</span><span class="p">(</span><span class="n">ifrom</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
@@ -1481,7 +1481,7 @@
         <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor_index</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="n">rfrom</span><span class="p">)),</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">cursor_index</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="n">rto</span><span class="p">)))</span>
 
-    <span class="k">def</span> <span class="nf">_expand_rows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rfrom</span><span class="p">,</span> <span class="n">rto</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_expand_rows</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rfrom</span><span class="p">,</span> <span class="n">rto</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">rto</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">rto</span> <span class="o">==</span> <span class="n">rfrom</span><span class="p">:</span>
             <span class="n">rto</span> <span class="o">=</span> <span class="n">rfrom</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lines</span>
@@ -1493,7 +1493,7 @@
             <span class="n">rto</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">rfrom</span><span class="p">),</span> <span class="nb">min</span><span class="p">(</span><span class="n">rmax</span><span class="p">,</span> <span class="n">rto</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_shift_lines</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_shift_lines</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">rows</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">old_cursor</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">from_undo</span><span class="o">=</span><span class="kc">False</span>
     <span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_callback</span><span class="p">:</span>
@@ -1587,13 +1587,13 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_redo</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="k">if</span> <span class="n">sel</span><span class="p">:</span>
-            <span class="k">def</span> <span class="nf">cb</span><span class="p">(</span><span class="n">dt</span><span class="p">):</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">cb</span><span class="p">(</span><span class="n">dt</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">select_text</span><span class="p">(</span><span class="o">*</span><span class="n">sel</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_selection_callback</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_selection_callback</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="n">cb</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">pgmove_speed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pgmove_speed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;how much vertical distance hitting pg_up or pg_down will move</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span>
@@ -1601,7 +1601,7 @@
             <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_height</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_spacing</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_move_cursor_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">alt</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_move_cursor_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">alt</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiline</span> <span class="ow">and</span> <span class="n">control</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_height</span><span class="p">)</span>
         <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">readonly</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiline</span> <span class="ow">and</span> <span class="n">alt</span><span class="p">:</span>
@@ -1613,7 +1613,7 @@
 
         <span class="k">return</span> <span class="n">col</span><span class="p">,</span> <span class="n">row</span>
 
-    <span class="k">def</span> <span class="nf">_move_cursor_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">control</span><span class="p">,</span> <span class="n">alt</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_move_cursor_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">control</span><span class="p">,</span> <span class="n">alt</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiline</span> <span class="ow">and</span> <span class="n">control</span><span class="p">:</span>
             <span class="n">maxy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimum_height</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
@@ -1629,7 +1629,7 @@
 
         <span class="k">return</span> <span class="n">col</span><span class="p">,</span> <span class="n">row</span>
 
-<div class="viewcode-block" id="TextInput.do_cursor_movement"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.do_cursor_movement">[docs]</a>    <span class="k">def</span> <span class="nf">do_cursor_movement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">alt</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.do_cursor_movement"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.do_cursor_movement">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">do_cursor_movement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">alt</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Move the cursor relative to its current position.</span>
 <span class="sd">        Action can be one of :</span>
 
@@ -1748,7 +1748,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">=</span> <span class="n">col</span><span class="p">,</span> <span class="n">row</span></div>
 
-<div class="viewcode-block" id="TextInput.get_cursor_from_xy"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.get_cursor_from_xy">[docs]</a>    <span class="k">def</span> <span class="nf">get_cursor_from_xy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.get_cursor_from_xy"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.get_cursor_from_xy">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_cursor_from_xy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the (col, row) of the cursor from an (x, y) position.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">padding_left</span><span class="p">,</span> <span class="n">padding_top</span><span class="p">,</span> <span class="n">padding_right</span><span class="p">,</span> <span class="n">padding_bottom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
@@ -1805,7 +1805,7 @@
 
         <span class="k">return</span> <span class="n">cursor_x</span><span class="p">,</span> <span class="n">cursor_y</span></div>
 
-<div class="viewcode-block" id="TextInput.get_max_scroll_x"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.get_max_scroll_x">[docs]</a>    <span class="k">def</span> <span class="nf">get_max_scroll_x</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.get_max_scroll_x"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.get_max_scroll_x">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_max_scroll_x</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Return how many pixels it needs to scroll to the right</span>
 <span class="sd">        to reveal the remaining content of a text that extends</span>
@@ -1819,7 +1819,7 @@
     <span class="c1">#</span>
     <span class="c1"># Selection control</span>
     <span class="c1">#</span>
-<div class="viewcode-block" id="TextInput.cancel_selection"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.cancel_selection">[docs]</a>    <span class="k">def</span> <span class="nf">cancel_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.cancel_selection"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.cancel_selection">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">cancel_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Cancel current selection (if any).</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_selection_from</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_to</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_index</span><span class="p">()</span>
@@ -1829,7 +1829,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">selection_text</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update_graphics</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="TextInput.delete_selection"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.delete_selection">[docs]</a>    <span class="k">def</span> <span class="nf">delete_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">from_undo</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.delete_selection"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.delete_selection">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">delete_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">from_undo</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Delete the current text selection (if any).</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">readonly</span><span class="p">:</span>
@@ -1869,7 +1869,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">cancel_selection</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_cursor_from_index</span><span class="p">(</span><span class="n">a</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_set_unredo_delsel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">substring</span><span class="p">,</span> <span class="n">from_undo</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_unredo_delsel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">substring</span><span class="p">,</span> <span class="n">from_undo</span><span class="p">):</span>
         <span class="c1"># handle undo and redo for backspace</span>
         <span class="k">if</span> <span class="n">from_undo</span><span class="p">:</span>
             <span class="k">return</span>
@@ -1880,7 +1880,7 @@
         <span class="c1"># reset redo when undo is appended to</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_redo</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="k">def</span> <span class="nf">_update_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">finished</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">finished</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Update selection text and order of from/to if finished is True.</span>
 <span class="sd">        Can be called multiple times until finished is True.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
@@ -1907,20 +1907,20 @@
     <span class="c1">#</span>
     <span class="c1"># Touch control</span>
     <span class="c1">#</span>
-    <span class="k">def</span> <span class="nf">long_touch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">long_touch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_long_touch_ev</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_to</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_from</span><span class="p">:</span>
             <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_local</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_touch_down</span><span class="o">.</span><span class="n">pos</span><span class="p">,</span> <span class="n">relative</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_show_cut_copy_paste</span><span class="p">(</span>
                 <span class="n">pos</span><span class="p">,</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;paste&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">cancel_long_touch_event</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cancel_long_touch_event</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># schedule long touch for paste</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_long_touch_ev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_long_touch_ev</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_long_touch_ev</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">_select_word</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delimiters</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39; .,:;!?</span><span class="se">\&#39;</span><span class="s1">&quot;&lt;&gt;()[]</span><span class="si">{}</span><span class="s1">&#39;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_select_word</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delimiters</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39; .,:;!?</span><span class="se">\&#39;</span><span class="s1">&quot;&lt;&gt;()[]</span><span class="si">{}</span><span class="s1">&#39;</span><span class="p">):</span>
         <span class="n">cindex</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_index</span><span class="p">()</span>
         <span class="n">col</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_col</span>
         <span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lines</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor_row</span><span class="p">]</span>
@@ -1931,7 +1931,7 @@
         <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="k">lambda</span> <span class="n">dt</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">select_text</span><span class="p">(</span><span class="n">cindex</span> <span class="o">-</span> <span class="n">start</span><span class="p">,</span>
                                                         <span class="n">cindex</span> <span class="o">+</span> <span class="n">end</span><span class="p">))</span>
 
-<div class="viewcode-block" id="TextInput.on_double_tap"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.on_double_tap">[docs]</a>    <span class="k">def</span> <span class="nf">on_double_tap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.on_double_tap"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.on_double_tap">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">on_double_tap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;This event is dispatched when a double tap happens</span>
 <span class="sd">        inside TextInput. The default behavior is to select the</span>
 <span class="sd">        word around the current cursor position. Override this to provide</span>
@@ -1940,7 +1940,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_select_word</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="TextInput.on_triple_tap"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.on_triple_tap">[docs]</a>    <span class="k">def</span> <span class="nf">on_triple_tap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.on_triple_tap"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.on_triple_tap">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">on_triple_tap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;This event is dispatched when a triple tap happens</span>
 <span class="sd">        inside TextInput. The default behavior is to select the</span>
 <span class="sd">        line around current cursor position. Override this to provide</span>
@@ -1951,7 +1951,7 @@
         <span class="n">sindex</span><span class="p">,</span> <span class="n">eindex</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expand_range</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span>
         <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="k">lambda</span> <span class="n">dt</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">select_text</span><span class="p">(</span><span class="n">sindex</span><span class="p">,</span> <span class="n">eindex</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="TextInput.on_quad_touch"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.on_quad_touch">[docs]</a>    <span class="k">def</span> <span class="nf">on_quad_touch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.on_quad_touch"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.on_quad_touch">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">on_quad_touch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;This event is dispatched when four fingers are touching</span>
 <span class="sd">        inside TextInput. The default behavior is to select all text.</span>
 <span class="sd">        Override this to provide different behavior. Alternatively,</span>
@@ -1959,7 +1959,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="k">lambda</span> <span class="n">dt</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">select_all</span><span class="p">())</span></div>
 
-<div class="viewcode-block" id="TextInput.on_touch_down"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.on_touch_down">[docs]</a>    <span class="k">def</span> <span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.on_touch_down"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.on_touch_down">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">disabled</span><span class="p">:</span>
             <span class="k">return</span>
 
@@ -2038,14 +2038,14 @@
         <span class="k">return</span> <span class="kc">True</span></div>
 
     <span class="c1"># cancel/update existing selection after a single tap</span>
-    <span class="k">def</span> <span class="nf">_cancel_update_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cancel_update_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_touch</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">cancel_selection</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_selection_touch</span> <span class="o">=</span> <span class="n">touch</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_selection_from</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_to</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_index</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_update_selection</span><span class="p">()</span>
 
-<div class="viewcode-block" id="TextInput.on_touch_move"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.on_touch_move">[docs]</a>    <span class="k">def</span> <span class="nf">on_touch_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.on_touch_move"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.on_touch_move">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">on_touch_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">grab_current</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">focus</span><span class="p">:</span>
@@ -2063,7 +2063,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_update_selection</span><span class="p">()</span>
             <span class="k">return</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="TextInput.on_touch_up"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.on_touch_up">[docs]</a>    <span class="k">def</span> <span class="nf">on_touch_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.on_touch_up"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.on_touch_up">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">on_touch_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">grab_current</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="n">touch</span><span class="o">.</span><span class="n">ungrab</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -2113,7 +2113,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_position_handles</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;middle&#39;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">True</span></div>
 
-    <span class="k">def</span> <span class="nf">scroll_text_from_swipe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">scroll_text_from_swipe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="n">_scroll_timeout</span> <span class="o">=</span> <span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">time_update</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">time_start</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_x</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">dx</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_distance_y</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">dy</span><span class="p">)</span>
@@ -2156,13 +2156,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_position_handles</span><span class="p">()</span>
         <span class="k">return</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">_handle_pressed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_handle_pressed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_hide_cut_copy_paste</span><span class="p">()</span>
         <span class="n">from_</span><span class="p">,</span> <span class="n">to_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_from</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection_to</span>
         <span class="k">if</span> <span class="n">from_</span> <span class="o">&gt;</span> <span class="n">to_</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_selection_from</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_to</span> <span class="o">=</span> <span class="n">to_</span><span class="p">,</span> <span class="n">from_</span>
 
-    <span class="k">def</span> <span class="nf">_handle_released</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_handle_released</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_from</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection_to</span><span class="p">:</span>
             <span class="k">return</span>
 
@@ -2177,7 +2177,7 @@
             <span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span>
         <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_handle_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_handle_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">grab_current</span> <span class="o">!=</span> <span class="n">instance</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="n">get_cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_cursor_from_xy</span>
@@ -2215,7 +2215,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update_graphics</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_position_handles</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_position_handles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_position_handles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="n">mode</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mode&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">)</span>
@@ -2254,7 +2254,7 @@
         <span class="n">handle_right</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">last_rect</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">handle_right</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">handle_right</span><span class="o">.</span><span class="n">height</span>
 
-    <span class="k">def</span> <span class="nf">_hide_handles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_hide_handles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">win</span> <span class="o">=</span> <span class="n">win</span> <span class="ow">or</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span>
         <span class="k">if</span> <span class="n">win</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
@@ -2262,7 +2262,7 @@
         <span class="n">win</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle_left</span><span class="p">)</span>
         <span class="n">win</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle_middle</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_show_handles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_show_handles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_handles</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">:</span>
             <span class="k">return</span>
 
@@ -2305,7 +2305,7 @@
             <span class="n">anim</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle_right</span><span class="p">)</span>
             <span class="n">anim</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_handle_left</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_show_cut_copy_paste</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_show_cut_copy_paste</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">parent_changed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">pos_in_window</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">*</span><span class="n">l</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Show a bubble with cut copy and paste buttons&quot;&quot;&quot;</span>
@@ -2317,7 +2317,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_bubble</span> <span class="o">=</span> <span class="n">bubble</span> <span class="o">=</span> <span class="n">TextInputCutCopyPaste</span><span class="p">(</span><span class="n">textinput</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;parent&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_show_cut_copy_paste</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 
-            <span class="k">def</span> <span class="nf">hide_</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">hide_</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hide_cut_copy_paste</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span>
@@ -2385,7 +2385,7 @@
         <span class="n">win</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">bubble</span><span class="p">,</span> <span class="n">canvas</span><span class="o">=</span><span class="s1">&#39;after&#39;</span><span class="p">)</span>
         <span class="n">Animation</span><span class="p">(</span><span class="n">opacity</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mf">.225</span><span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">bubble</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_hide_cut_copy_paste</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_hide_cut_copy_paste</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">bubble</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bubble</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">bubble</span><span class="p">:</span>
             <span class="k">return</span>
@@ -2397,12 +2397,12 @@
     <span class="c1">#</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_reload_remove_observer</span><span class="p">(</span><span class="n">wr</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_reload_remove_observer</span><span class="p">(</span><span class="n">wr</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;called when the textinput is deleted&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">wr</span> <span class="ow">in</span> <span class="n">_textinput_list</span><span class="p">:</span>
             <span class="n">_textinput_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">wr</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_on_textinput_focused</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_textinput_focused</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
         <span class="n">win</span> <span class="o">=</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cancel_selection</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_hide_cut_copy_paste</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
@@ -2421,12 +2421,12 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_do_blink_cursor_ev</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_hide_handles</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_ensure_clipboard</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_ensure_clipboard</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">global</span> <span class="n">Clipboard</span><span class="p">,</span> <span class="n">CutBuffer</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">Clipboard</span><span class="p">:</span>
-            <span class="kn">from</span> <span class="nn">kivy.core.clipboard</span> <span class="kn">import</span> <span class="n">Clipboard</span><span class="p">,</span> <span class="n">CutBuffer</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.clipboard</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clipboard</span><span class="p">,</span> <span class="n">CutBuffer</span>
 
-<div class="viewcode-block" id="TextInput.cut"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.cut">[docs]</a>    <span class="k">def</span> <span class="nf">cut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.cut"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.cut">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">cut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39; Copy current selection to clipboard then delete it from TextInput.</span>
 
 <span class="sd">        .. versionadded:: 1.8.0</span>
@@ -2434,12 +2434,12 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cut</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selection_text</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_cut</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cut</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_clipboard</span><span class="p">()</span>
         <span class="n">Clipboard</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">delete_selection</span><span class="p">()</span>
 
-<div class="viewcode-block" id="TextInput.copy"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.copy"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.copy">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39; Copy the value provided in argument `data` into current clipboard.</span>
 <span class="sd">        If data is not of type string it will be converted to string.</span>
 <span class="sd">        If no data is provided then current selection if present is copied.</span>
@@ -2453,7 +2453,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection_text</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">Clipboard</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selection_text</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TextInput.paste"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.paste">[docs]</a>    <span class="k">def</span> <span class="nf">paste</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.paste"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.paste">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">paste</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39; Insert text from system :class:`~kivy.core.clipboard.Clipboard`</span>
 <span class="sd">        into the :class:`~kivy.uix.textinput.TextInput` at current cursor</span>
 <span class="sd">        position.</span>
@@ -2468,10 +2468,10 @@
             <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">insert_text</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_update_cutbuffer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_cutbuffer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="n">CutBuffer</span><span class="o">.</span><span class="n">set_cutbuffer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selection_text</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_text_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">tab_width</span><span class="p">,</span> <span class="n">_label_cached</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_text_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">tab_width</span><span class="p">,</span> <span class="n">_label_cached</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the width of a text, according to the current line options&quot;&quot;&quot;</span>
         <span class="n">kw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_line_options</span><span class="p">()</span>
 
@@ -2494,11 +2494,11 @@
         <span class="n">Cache_append</span><span class="p">(</span><span class="s1">&#39;textinput.width&#39;</span><span class="p">,</span> <span class="n">cid</span><span class="p">,</span> <span class="n">width</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">width</span>
 
-<div class="viewcode-block" id="TextInput.on_cursor_blink"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.on_cursor_blink">[docs]</a>    <span class="k">def</span> <span class="nf">on_cursor_blink</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.on_cursor_blink"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.on_cursor_blink">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">on_cursor_blink</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;trigger blink event reset to switch blinking while focused&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_reset_cursor_blink</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">_do_blink_cursor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_do_blink_cursor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_blink</span><span class="p">:</span>
             <span class="c1"># ignore event if not triggered,</span>
             <span class="c1"># stop if cursor_blink value changed right now</span>
@@ -2511,12 +2511,12 @@
         <span class="c1"># Callback for blinking the cursor.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cursor_blink</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cursor_blink</span>
 
-    <span class="k">def</span> <span class="nf">_reset_cursor_blink</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_reset_cursor_blink</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_do_blink_cursor_ev</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cursor_blink</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_do_blink_cursor_ev</span><span class="p">()</span>
 
-<div class="viewcode-block" id="TextInput.on_cursor"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.on_cursor">[docs]</a>    <span class="k">def</span> <span class="nf">on_cursor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.on_cursor"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.on_cursor">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">on_cursor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        When the cursor is moved, reset cursor blinking to keep it showing,</span>
 <span class="sd">        and update all the graphics.</span>
@@ -2525,7 +2525,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_cursor_reset</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update_graphics</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">_delete_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_delete_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Delete current line, and fix cursor position&quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lines</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lines_flags</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
@@ -2533,12 +2533,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_lines</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span>
 
-    <span class="k">def</span> <span class="nf">_set_line_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line_num</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_line_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line_num</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set current line with other text than the default one.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lines_labels</span><span class="p">[</span><span class="n">line_num</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_line_label</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lines</span><span class="p">[</span><span class="n">line_num</span><span class="p">]</span> <span class="o">=</span> <span class="n">text</span>
 
-    <span class="k">def</span> <span class="nf">_trigger_refresh_line_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_trigger_refresh_line_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_line_options_ev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_line_options_ev</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
@@ -2546,14 +2546,14 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_line_options</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_line_options_ev</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_refresh_line_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_refresh_line_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_line_options</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_get_line_options</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_text_from_property</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_hint_text</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_cursor_from_index</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">_trigger_refresh_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_trigger_refresh_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">largs</span><span class="p">)</span> <span class="ow">and</span> <span class="n">largs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="p">:</span>
             <span class="n">largs</span> <span class="o">=</span> <span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_text_from_property_ev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -2561,17 +2561,17 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_text_from_property_ev</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span>
             <span class="k">lambda</span> <span class="n">dt</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_text_from_property</span><span class="p">(</span><span class="o">*</span><span class="n">largs</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">_update_text_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_text_options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
         <span class="n">Cache_remove</span><span class="p">(</span><span class="s1">&#39;textinput.width&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_refresh_text</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_refresh_text_from_trigger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_refresh_text_from_trigger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_text_from_property</span><span class="p">(</span><span class="o">*</span><span class="n">largs</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_refresh_text_from_property</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_refresh_text_from_property</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_text</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_refresh_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_refresh_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Refresh all the lines from a new text.</span>
 <span class="sd">        By using cache in internal functions, this method should be fast.</span>
@@ -2624,7 +2624,7 @@
         <span class="c1"># with the new text don&#39;t forget to update graphics again</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update_graphics</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_insert_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">finish</span><span class="p">,</span> <span class="n">len_lines</span><span class="p">,</span> <span class="n">_lines_flags</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_insert_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">finish</span><span class="p">,</span> <span class="n">len_lines</span><span class="p">,</span> <span class="n">_lines_flags</span><span class="p">,</span>
                       <span class="n">_lines</span><span class="p">,</span> <span class="n">_lines_labels</span><span class="p">,</span> <span class="n">_line_rects</span><span class="p">):</span>
         <span class="n">self_lines_flags</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lines_flags</span>
         <span class="n">_lins_flags</span> <span class="o">=</span> <span class="p">[]</span>
@@ -2660,11 +2660,11 @@
         <span class="n">_lins</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lines</span><span class="p">[</span><span class="n">finish</span><span class="p">:])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_lines</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">_lins</span>
 
-    <span class="k">def</span> <span class="nf">_trigger_update_graphics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_trigger_update_graphics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_graphics_ev</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_graphics_ev</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_update_graphics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_graphics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update all the graphics according to the current internal values.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2744,7 +2744,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_graphics_selection</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_draw_line</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_draw_line</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">value</span><span class="p">,</span>
         <span class="n">line_num</span><span class="p">,</span>
@@ -2844,7 +2844,7 @@
 
         <span class="k">return</span> <span class="n">y</span>
 
-    <span class="k">def</span> <span class="nf">_update_graphics_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_graphics_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection</span><span class="p">:</span>
             <span class="k">return</span>
 
@@ -2906,7 +2906,7 @@
             <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_position_handles</span><span class="p">(</span><span class="s1">&#39;both&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_draw_selection</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_draw_selection</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">pos</span><span class="p">,</span>
         <span class="n">size</span><span class="p">,</span>
@@ -2966,21 +2966,21 @@
             <span class="p">)</span>
         <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">on_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="c1"># if the size change, we might do invalid scrolling / text split</span>
         <span class="c1"># size the text maybe be put after size_hint have been resolved.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_refresh_text</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_hint_text</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="k">def</span> <span class="nf">_get_row_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_row_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
         <span class="c1"># Get the pixel width of the given row.</span>
         <span class="n">_labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lines_labels</span>
         <span class="k">if</span> <span class="n">row</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">_labels</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">_labels</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">width</span>
         <span class="k">return</span> <span class="mi">0</span>
 
-    <span class="k">def</span> <span class="nf">_get_cursor_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_cursor_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># return the current cursor x/y from the row/col</span>
         <span class="n">dy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_height</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_spacing</span>
         <span class="n">padding_left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -3018,7 +3018,7 @@
 
         <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
 
-    <span class="k">def</span> <span class="nf">_get_cursor_visual_height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_cursor_visual_height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Return the height of the cursor&#39;s visible part</span>
         <span class="n">_</span><span class="p">,</span> <span class="n">cy</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span><span class="p">)</span>
         <span class="n">max_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">top</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -3030,13 +3030,13 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">lh</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">cy</span> <span class="o">-</span> <span class="n">min_y</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">_get_cursor_visual_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_cursor_visual_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Return the position of the cursor&#39;s top visible point</span>
         <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_pos</span><span class="p">)</span>
         <span class="n">max_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">top</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">cx</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">max_y</span><span class="p">,</span> <span class="n">cy</span><span class="p">)]</span>
 
-    <span class="k">def</span> <span class="nf">_get_line_options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_line_options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Get or create line options, to be used for Label creation</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_line_options</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_line_options</span> <span class="o">=</span> <span class="n">kw</span> <span class="o">=</span> <span class="p">{</span>
@@ -3055,7 +3055,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_label_cached</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_line_options</span>
 
-    <span class="k">def</span> <span class="nf">_create_line_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">hint</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_line_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">hint</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="c1"># Create a label from a text, using line options</span>
         <span class="n">ntext</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa">u</span><span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab_width</span><span class="p">)</span>
 
@@ -3108,7 +3108,7 @@
 
     <span class="n">_tokenize_delimiters</span> <span class="o">=</span> <span class="sa">u</span><span class="s1">&#39; .,:;!?</span><span class="se">\r\t</span><span class="s1">&#39;</span>
 
-    <span class="k">def</span> <span class="nf">_tokenize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_tokenize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
         <span class="c1"># Tokenize a text string from some delimiters</span>
         <span class="k">if</span> <span class="n">text</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
@@ -3130,7 +3130,7 @@
             <span class="n">prev_char</span> <span class="o">=</span> <span class="n">char</span>
         <span class="k">yield</span> <span class="n">text</span><span class="p">[</span><span class="n">old_index</span><span class="p">:]</span>
 
-    <span class="k">def</span> <span class="nf">_split_smart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_split_smart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Do a &quot;smart&quot; split. If not multiline, or if wrap is set,</span>
 <span class="sd">        we are not doing smart split, just a split on line break.</span>
@@ -3209,7 +3209,7 @@
 
         <span class="k">return</span> <span class="n">lines</span><span class="p">,</span> <span class="n">lines_flags</span>
 
-    <span class="k">def</span> <span class="nf">_key_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_key_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="n">displayed_str</span><span class="p">,</span> <span class="n">internal_str</span><span class="p">,</span> <span class="n">internal_action</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">key</span>
 
         <span class="c1"># handle deletion</span>
@@ -3277,7 +3277,7 @@
         <span class="k">elif</span> <span class="n">internal_action</span> <span class="o">==</span> <span class="s1">&#39;escape&#39;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">focus</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="nf">_key_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_key_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="n">displayed_str</span><span class="p">,</span> <span class="n">internal_str</span><span class="p">,</span> <span class="n">internal_action</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">key</span>
         <span class="k">if</span> <span class="n">internal_action</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;shift&#39;</span><span class="p">,</span> <span class="s1">&#39;shift_L&#39;</span><span class="p">,</span> <span class="s1">&#39;shift_R&#39;</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection</span><span class="p">:</span>
@@ -3291,7 +3291,7 @@
         <span class="k">elif</span> <span class="n">internal_action</span> <span class="o">==</span> <span class="s1">&#39;alt_R&#39;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_alt_r</span> <span class="o">=</span> <span class="kc">False</span>
 
-<div class="viewcode-block" id="TextInput.keyboard_on_key_down"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.keyboard_on_key_down">[docs]</a>    <span class="k">def</span> <span class="nf">keyboard_on_key_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">keycode</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.keyboard_on_key_down"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.keyboard_on_key_down">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">keyboard_on_key_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">keycode</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
         <span class="n">key</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">keycode</span>
         <span class="n">win</span> <span class="o">=</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span>
 
@@ -3366,7 +3366,7 @@
             <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_key_down</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_handle_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_handle_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">):</span>
         <span class="n">from_undo</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="n">command</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">command</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_command</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
@@ -3395,7 +3395,7 @@
         <span class="k">elif</span> <span class="n">command</span> <span class="o">==</span> <span class="s1">&#39;CURCOL&#39;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_row</span>
 
-    <span class="k">def</span> <span class="nf">_handle_shortcut</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_handle_shortcut</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="c1"># actions that can be done in readonly</span>
         <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">):</span>  <span class="c1"># select all</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">select_all</span><span class="p">()</span>
@@ -3415,14 +3415,14 @@
         <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">):</span>  <span class="c1"># redo</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">do_redo</span><span class="p">()</span>
 
-<div class="viewcode-block" id="TextInput.keyboard_on_key_up"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.keyboard_on_key_up">[docs]</a>    <span class="k">def</span> <span class="nf">keyboard_on_key_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">keycode</span><span class="p">):</span>
+<div class="viewcode-block" id="TextInput.keyboard_on_key_up"><a class="viewcode-back" href="../../../api-kivy.uix.textinput.html#kivy.uix.textinput.TextInput.keyboard_on_key_up">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">keyboard_on_key_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">keycode</span><span class="p">):</span>
         <span class="n">key</span> <span class="o">=</span> <span class="n">keycode</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">interesting_keys</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">k</span><span class="p">:</span>
             <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_key_up</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">keyboard_on_textinput</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">keyboard_on_textinput</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">delete_selection</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">insert_text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
@@ -3432,15 +3432,15 @@
     <span class="c1"># cursor position of last IME event</span>
     <span class="n">_ime_cursor</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_bind_keyboard</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_bind_keyboard</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_bind_keyboard</span><span class="p">()</span>
         <span class="n">Window</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_textedit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">window_on_textedit</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_unbind_keyboard</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_unbind_keyboard</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_unbind_keyboard</span><span class="p">()</span>
         <span class="n">Window</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span><span class="n">on_textedit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">window_on_textedit</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">window_on_textedit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">ime_input</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">window_on_textedit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">ime_input</span><span class="p">):</span>
         <span class="n">text_lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lines</span> <span class="ow">or</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ime_composition</span><span class="p">:</span>
             <span class="n">pcc</span><span class="p">,</span> <span class="n">pcr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ime_cursor</span>
@@ -3470,10 +3470,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_ime_composition</span> <span class="o">=</span> <span class="n">ime_input</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ime_cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span>
 
-    <span class="k">def</span> <span class="nf">on__hint_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on__hint_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_hint_text</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_refresh_hint_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_refresh_hint_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">_lines</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hint_text_flags</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_split_smart</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hint_text</span><span class="p">)</span>
         <span class="n">_hint_text_labels</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">_hint_text_rects</span> <span class="o">=</span> <span class="p">[]</span>
@@ -3583,10 +3583,10 @@
 <span class="sd">    defaults to True.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="nf">_get_cursor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_cursor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span>
 
-    <span class="k">def</span> <span class="nf">_set_cursor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_cursor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lines</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_refresh_text</span><span class="p">()</span>
             <span class="k">return</span>
@@ -3606,7 +3606,7 @@
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="nd">@triggered</span><span class="p">(</span><span class="n">timeout</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">_adjust_viewport</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cc</span><span class="p">,</span> <span class="n">cr</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_adjust_viewport</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cc</span><span class="p">,</span> <span class="n">cr</span><span class="p">):</span>
         <span class="n">padding_left</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">padding_right</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
         <span class="n">viewport_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="n">padding_left</span> <span class="o">-</span> <span class="n">padding_right</span>
@@ -3666,7 +3666,7 @@
 <span class="sd">    :attr:`cursor` is an :class:`~kivy.properties.AliasProperty`.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="nf">_get_cursor_col</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_cursor_col</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="n">cursor_col</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_cursor_col</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;cursor&#39;</span><span class="p">,</span> <span class="p">))</span>
@@ -3676,7 +3676,7 @@
 <span class="sd">    cursor[0], read-only.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="nf">_get_cursor_row</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_cursor_row</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cursor</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="n">cursor_row</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_cursor_row</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;cursor&#39;</span><span class="p">,</span> <span class="p">))</span>
@@ -3754,7 +3754,7 @@
 <span class="sd">        Use :attr:`padding` instead.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="nf">on_padding_x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_padding_x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -3770,7 +3770,7 @@
 <span class="sd">        Use :attr:`padding` instead.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="nf">on_padding_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_padding_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -3969,7 +3969,7 @@
 <span class="sd">    milliseconds.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="nf">get_sel_from</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_sel_from</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_from</span>
 
     <span class="n">selection_from</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">get_sel_from</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
@@ -3981,7 +3981,7 @@
 <span class="sd">        and defaults to None, readonly.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="nf">get_sel_to</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_sel_to</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selection_to</span>
 
     <span class="n">selection_to</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">get_sel_to</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
@@ -4000,14 +4000,14 @@
 <span class="sd">    and defaults to &#39;&#39;, readonly.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="nf">on_selection_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_selection_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_handles</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_show_handles</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">CutBuffer</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update_cutbuffer</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_get_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">flags</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lines_flags</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lines</span>
         <span class="n">len_lines</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
@@ -4022,7 +4022,7 @@
             <span class="n">flags</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">text</span>
 
-    <span class="k">def</span> <span class="nf">_set_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
             <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">replace_crlf</span><span class="p">:</span>
@@ -4165,12 +4165,12 @@
 
     <span class="n">_hint_text</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_set_hint_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_hint_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
             <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_hint_text</span> <span class="o">=</span> <span class="n">value</span>
 
-    <span class="k">def</span> <span class="nf">_get_hint_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_hint_text</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hint_text</span>
 
     <span class="n">hint_text</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span>
@@ -4227,7 +4227,7 @@
 <span class="sd">    defaults to True.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="nf">_get_min_height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_min_height</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span>
             <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_lines</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line_height</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_spacing</span><span class="p">)</span>
             <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -4304,7 +4304,7 @@
 <span class="sd">    and defaults to &#39;atlas://data/images/defaulttheme/selector_middle&#39;.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="nf">on_handle_image_middle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_handle_image_middle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_middle</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_handle_middle</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">value</span>
 
@@ -4318,7 +4318,7 @@
 <span class="sd">    defaults to &#39;atlas://data/images/defaulttheme/selector_left&#39;.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="nf">on_handle_image_left</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_handle_image_left</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_left</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_handle_left</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">value</span>
 
@@ -4333,7 +4333,7 @@
 <span class="sd">    &#39;atlas://data/images/defaulttheme/selector_right&#39;.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="nf">on_handle_image_right</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_handle_image_right</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_right</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_handle_right</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">value</span>
 
@@ -4350,10 +4350,10 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">textwrap</span> <span class="kn">import</span> <span class="n">dedent</span>
-    <span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
-    <span class="kn">from</span> <span class="nn">kivy.uix.boxlayout</span> <span class="kn">import</span> <span class="n">BoxLayout</span>
-    <span class="kn">from</span> <span class="nn">kivy.lang</span> <span class="kn">import</span> <span class="n">Builder</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">textwrap</span><span class="w"> </span><span class="kn">import</span> <span class="n">dedent</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.boxlayout</span><span class="w"> </span><span class="kn">import</span> <span class="n">BoxLayout</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.lang</span><span class="w"> </span><span class="kn">import</span> <span class="n">Builder</span>
 
     <span class="n">KV</span> <span class="o">=</span> <span class="n">dedent</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;&#39;&#39;</span>
 <span class="s1">    #:set font_size &#39;20dp&#39;</span>
@@ -4419,14 +4419,14 @@
 <span class="s1">            disabled: app.time % 5 &lt; 2.5</span>
 <span class="s1">    &#39;&#39;&#39;</span><span class="p">)</span>
 
-    <span class="k">class</span> <span class="nc">TextInputApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
+    <span class="k">class</span><span class="w"> </span><span class="nc">TextInputApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
         <span class="n">time</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">()</span>
 
-        <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_interval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_time</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">Builder</span><span class="o">.</span><span class="n">load_string</span><span class="p">(</span><span class="n">KV</span><span class="p">)</span>
 
-        <span class="k">def</span> <span class="nf">update_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">update_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">+=</span> <span class="n">dt</span>
 
     <span class="n">TextInputApp</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
@@ -4468,7 +4468,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Jan 01, 2025.
+      Last updated on Jan 09, 2025.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

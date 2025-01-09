@@ -645,12 +645,12 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;KNSpace&#39;</span><span class="p">,</span> <span class="s1">&#39;KNSpaceBehavior&#39;</span><span class="p">,</span> <span class="s1">&#39;knspace&#39;</span><span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">kivy.event</span> <span class="kn">import</span> <span class="n">EventDispatcher</span>
-<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">StringProperty</span><span class="p">,</span> <span class="n">ObjectProperty</span><span class="p">,</span> <span class="n">AliasProperty</span>
-<span class="kn">from</span> <span class="nn">kivy.context</span> <span class="kn">import</span> <span class="n">register_context</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.event</span><span class="w"> </span><span class="kn">import</span> <span class="n">EventDispatcher</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.properties</span><span class="w"> </span><span class="kn">import</span> <span class="n">StringProperty</span><span class="p">,</span> <span class="n">ObjectProperty</span><span class="p">,</span> <span class="n">AliasProperty</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.context</span><span class="w"> </span><span class="kn">import</span> <span class="n">register_context</span>
 
 
-<div class="viewcode-block" id="KNSpace"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.knspace.html#kivy.uix.behaviors.knspace.KNSpace">[docs]</a><span class="k">class</span> <span class="nc">KNSpace</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
+<div class="viewcode-block" id="KNSpace"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.knspace.html#kivy.uix.behaviors.knspace.KNSpace">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">KNSpace</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Each :class:`KNSpace` instance is a namespace that stores the named Kivy</span>
 <span class="sd">    objects associated with this namespace. Each named object is</span>
 <span class="sd">    stored as the value of a Kivy :class:`~kivy.properties.ObjectProperty` of</span>
@@ -686,13 +686,13 @@
 <span class="sd">    Defaults to False.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keep_ref</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keep_ref</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">keep_ref</span> <span class="o">=</span> <span class="n">keep_ref</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">KNSpace</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__has_applied</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 
-    <span class="k">def</span> <span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="n">prop</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">KNSpace</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">property</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">has_applied</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__has_applied</span>
         <span class="k">if</span> <span class="n">prop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -718,7 +718,7 @@
                 <span class="n">value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s1">&#39;proxy_ref&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
             <span class="nb">super</span><span class="p">(</span><span class="n">KNSpace</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">super</span><span class="p">(</span><span class="n">KNSpace</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="s1">&#39;__dict__&#39;</span><span class="p">):</span>
             <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">KNSpace</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 
@@ -742,7 +742,7 @@
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="KNSpace.property"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.knspace.html#kivy.uix.behaviors.knspace.KNSpace.property">[docs]</a>    <span class="k">def</span> <span class="nf">property</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="KNSpace.property"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.knspace.html#kivy.uix.behaviors.knspace.KNSpace.property">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">property</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="c1"># needs to overwrite EventDispatcher.property so kv lang will work</span>
         <span class="n">prop</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">KNSpace</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">property</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">quiet</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">prop</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -753,7 +753,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__has_applied</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">prop</span></div>
 
-<div class="viewcode-block" id="KNSpace.fork"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.knspace.html#kivy.uix.behaviors.knspace.KNSpace.fork">[docs]</a>    <span class="k">def</span> <span class="nf">fork</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="KNSpace.fork"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.knspace.html#kivy.uix.behaviors.knspace.KNSpace.fork">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">fork</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Returns a new :class:`KNSpace` instance which will have access to</span>
 <span class="sd">        all the named objects in the current namespace but will also have a</span>
 <span class="sd">        namespace of its own that is unique to it.</span>
@@ -773,7 +773,7 @@
         <span class="k">return</span> <span class="n">KNSpace</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="KNSpaceBehavior"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.knspace.html#kivy.uix.behaviors.knspace.KNSpaceBehavior">[docs]</a><span class="k">class</span> <span class="nc">KNSpaceBehavior</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="KNSpaceBehavior"><a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.knspace.html#kivy.uix.behaviors.knspace.KNSpaceBehavior">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">KNSpaceBehavior</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Inheriting from this class allows naming of the inherited objects, which</span>
 <span class="sd">    are then added to the associated namespace :attr:`knspace` and accessible</span>
 <span class="sd">    through it.</span>
@@ -787,11 +787,11 @@
     <span class="n">__last_knspace</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">__callbacks</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">knspace</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">knspace</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">knspace</span> <span class="o">=</span> <span class="n">knspace</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">KNSpaceBehavior</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__knspace_clear_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__knspace_clear_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">obj</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">uid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__callbacks</span><span class="p">:</span>
             <span class="n">obj</span><span class="o">.</span><span class="n">unbind_uid</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">uid</span><span class="p">)</span>
         <span class="n">last</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__last_knspace</span>
@@ -818,7 +818,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Object has name &quot;</span><span class="si">{}</span><span class="s1">&quot;, but no namespace&#39;</span><span class="o">.</span>
                              <span class="nb">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">__set_parent_knspace</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__set_parent_knspace</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">callbacks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__callbacks</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">fbind</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span>
         <span class="n">append</span> <span class="o">=</span> <span class="n">callbacks</span><span class="o">.</span><span class="n">append</span>
@@ -849,7 +849,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__last_knspace</span> <span class="o">=</span> <span class="n">knspace</span>
         <span class="k">return</span> <span class="n">knspace</span>
 
-    <span class="k">def</span> <span class="nf">_get_knspace</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_knspace</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">_knspace</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_knspace</span>
         <span class="k">if</span> <span class="n">_knspace</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">_knspace</span>
@@ -860,7 +860,7 @@
         <span class="c1"># we only get here if we never accessed our knspace</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__set_parent_knspace</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_set_knspace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_knspace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">_knspace</span><span class="p">:</span>
             <span class="k">return</span>
 
@@ -938,10 +938,10 @@
 <span class="sd">    `allownone` is `True`.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="k">def</span> <span class="nf">_get_knsname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_knsname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_knsname</span>
 
-    <span class="k">def</span> <span class="nf">_set_knsname</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_knsname</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="n">old_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_knsname</span>
         <span class="n">knspace</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">knspace</span>
         <span class="k">if</span> <span class="n">old_name</span> <span class="ow">and</span> <span class="n">knspace</span> <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">knspace</span><span class="p">,</span> <span class="n">old_name</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="p">:</span>
@@ -1009,7 +1009,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Jan 01, 2025.
+      Last updated on Jan 09, 2025.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

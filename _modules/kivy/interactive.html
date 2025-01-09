@@ -542,28 +542,28 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;SafeMembrane&#39;</span><span class="p">,</span> <span class="s1">&#39;InteractiveLauncher&#39;</span><span class="p">)</span>
 
-<span class="kn">import</span> <span class="nn">inspect</span>
-<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span><span class="p">,</span> <span class="n">Event</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">threading</span><span class="w"> </span><span class="kn">import</span> <span class="n">Thread</span><span class="p">,</span> <span class="n">Event</span>
 
-<span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
-<span class="kn">from</span> <span class="nn">kivy.base</span> <span class="kn">import</span> <span class="n">EventLoop</span>
-<span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
-<span class="kn">from</span> <span class="nn">kivy.utils</span> <span class="kn">import</span> <span class="n">deprecated</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">EventLoop</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.clock</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clock</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">deprecated</span>
 
 
-<span class="k">def</span> <span class="nf">safeWait</span><span class="p">(</span><span class="n">dt</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">safeWait</span><span class="p">(</span><span class="n">dt</span><span class="p">):</span>
     <span class="n">EventLoop</span><span class="o">.</span><span class="n">confirmed</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
     <span class="n">EventLoop</span><span class="o">.</span><span class="n">safe</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
     <span class="n">EventLoop</span><span class="o">.</span><span class="n">confirmed</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
 
-<span class="k">def</span> <span class="nf">unwrap</span><span class="p">(</span><span class="n">ob</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">unwrap</span><span class="p">(</span><span class="n">ob</span><span class="p">):</span>
     <span class="k">while</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ob</span><span class="p">,</span> <span class="n">SafeMembrane</span><span class="p">):</span>
         <span class="n">ob</span> <span class="o">=</span> <span class="n">ob</span><span class="o">.</span><span class="n">_ref</span>
     <span class="k">return</span> <span class="n">ob</span>
 
 
-<div class="viewcode-block" id="SafeMembrane"><a class="viewcode-back" href="../../api-kivy.interactive.html#kivy.interactive.SafeMembrane">[docs]</a><span class="k">class</span> <span class="nc">SafeMembrane</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="SafeMembrane"><a class="viewcode-back" href="../../api-kivy.interactive.html#kivy.interactive.SafeMembrane">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">SafeMembrane</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    This help is for a proxy object. Did you want help on the proxy&#39;s referent</span>
 <span class="sd">    instead? Try using help(&lt;instance&gt;._ref)</span>
@@ -576,22 +576,22 @@
 
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;_ref&#39;</span><span class="p">,</span> <span class="s1">&#39;safe&#39;</span><span class="p">,</span> <span class="s1">&#39;confirmed&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ob</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ob</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">confirmed</span> <span class="o">=</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">confirmed</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">safe</span> <span class="o">=</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">safe</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ref</span> <span class="o">=</span> <span class="n">ob</span>
 
-<div class="viewcode-block" id="SafeMembrane.safeIn"><a class="viewcode-back" href="../../api-kivy.interactive.html#kivy.interactive.SafeMembrane.safeIn">[docs]</a>    <span class="k">def</span> <span class="nf">safeIn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SafeMembrane.safeIn"><a class="viewcode-back" href="../../api-kivy.interactive.html#kivy.interactive.SafeMembrane.safeIn">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">safeIn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Provides a thread-safe entry point for interactive launching.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">safe</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="n">safeWait</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">confirmed</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="SafeMembrane.safeOut"><a class="viewcode-back" href="../../api-kivy.interactive.html#kivy.interactive.SafeMembrane.safeOut">[docs]</a>    <span class="k">def</span> <span class="nf">safeOut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SafeMembrane.safeOut"><a class="viewcode-back" href="../../api-kivy.interactive.html#kivy.interactive.SafeMembrane.safeOut">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">safeOut</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Provides a thread-safe exit point for interactive launching.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">safe</span><span class="o">.</span><span class="n">set</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">isMethod</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">isMethod</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">inspect</span><span class="o">.</span><span class="n">ismethod</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
 
     <span class="c1"># Everything from this point on is just a series of thread-safing proxy</span>
@@ -599,10 +599,10 @@
     <span class="c1"># written to or if a method will be called. SafeMembrane instances should</span>
     <span class="c1"># be unwrapped whenever passing them into the thread</span>
     <span class="c1"># use type() to determine if an object is a SafeMembrane while debugging</span>
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ref</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">safeIn</span><span class="p">()</span>
         <span class="n">args</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">unwrap</span><span class="p">,</span> <span class="n">args</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">kw</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
@@ -612,7 +612,7 @@
         <span class="k">if</span> <span class="n">r</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">SafeMembrane</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">oga</span><span class="o">=</span><span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">oga</span><span class="o">=</span><span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">attr</span> <span class="o">==</span> <span class="s1">&#39;_ref&#39;</span><span class="p">:</span>
             <span class="n">subject</span> <span class="o">=</span> <span class="n">oga</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_ref&#39;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">attr</span> <span class="o">==</span> <span class="s1">&#39;_ref&#39;</span><span class="p">:</span>
@@ -620,11 +620,11 @@
             <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">oga</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">oga</span><span class="o">=</span><span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">oga</span><span class="o">=</span><span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">):</span>
         <span class="n">r</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">oga</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_ref&#39;</span><span class="p">),</span> <span class="n">attr</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">SafeMembrane</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">osa</span><span class="o">=</span><span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">osa</span><span class="o">=</span><span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">):</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">attr</span> <span class="o">==</span> <span class="s1">&#39;_ref&#39;</span> <span class="ow">or</span>
                 <span class="nb">hasattr</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="n">attr</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">attr</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">)):</span>
             <span class="n">osa</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
@@ -634,52 +634,52 @@
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ref</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">safeOut</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="fm">__delattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">oda</span><span class="o">=</span><span class="nb">object</span><span class="o">.</span><span class="fm">__delattr__</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__delattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">oda</span><span class="o">=</span><span class="nb">object</span><span class="o">.</span><span class="fm">__delattr__</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">safeIn</span><span class="p">()</span>
         <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ref</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">safeOut</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ref</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">SafeMembrane</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ref</span><span class="p">[</span><span class="n">arg</span><span class="p">])</span>
 
-    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">safeIn</span><span class="p">()</span>
         <span class="n">val</span> <span class="o">=</span> <span class="n">unwrap</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ref</span><span class="p">[</span><span class="n">arg</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">safeOut</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">safeIn</span><span class="p">()</span>
         <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ref</span><span class="p">[</span><span class="n">arg</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">safeOut</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">__getslice__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__getslice__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">SafeMembrane</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ref</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">])</span>
 
-    <span class="k">def</span> <span class="nf">__setslice__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__setslice__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">safeIn</span><span class="p">()</span>
         <span class="n">val</span> <span class="o">=</span> <span class="n">unwrap</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ref</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">safeOut</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">__delslice__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__delslice__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">safeIn</span><span class="p">()</span>
         <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ref</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">safeOut</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">safeIn</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ref</span><span class="o">.</span><span class="fm">__enter__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ref</span><span class="o">.</span><span class="fm">__exit__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">safeOut</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="InteractiveLauncher"><a class="viewcode-back" href="../../api-kivy.interactive.html#kivy.interactive.InteractiveLauncher">[docs]</a><span class="k">class</span> <span class="nc">InteractiveLauncher</span><span class="p">(</span><span class="n">SafeMembrane</span><span class="p">):</span>
+<div class="viewcode-block" id="InteractiveLauncher"><a class="viewcode-back" href="../../api-kivy.interactive.html#kivy.interactive.InteractiveLauncher">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">InteractiveLauncher</span><span class="p">(</span><span class="n">SafeMembrane</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Proxy to an application instance that launches it in a thread and</span>
 <span class="sd">    then returns and acts as a proxy to the application in the thread.</span>
@@ -688,7 +688,7 @@
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;_ref&#39;</span><span class="p">,</span> <span class="s1">&#39;safe&#39;</span><span class="p">,</span> <span class="s1">&#39;confirmed&#39;</span><span class="p">,</span> <span class="s1">&#39;thread&#39;</span><span class="p">,</span> <span class="s1">&#39;app&#39;</span><span class="p">)</span>
 
     <span class="nd">@deprecated</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">app</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">app</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
         <span class="n">EventLoop</span><span class="o">.</span><span class="n">safe</span> <span class="o">=</span> <span class="n">Event</span><span class="p">()</span>
@@ -698,23 +698,23 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">confirmed</span> <span class="o">=</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">confirmed</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">app</span> <span class="o">=</span> <span class="n">app</span>
 
-        <span class="k">def</span> <span class="nf">startApp</span><span class="p">(</span><span class="n">app</span><span class="o">=</span><span class="n">app</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">startApp</span><span class="p">(</span><span class="n">app</span><span class="o">=</span><span class="n">app</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">thread</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">startApp</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
         <span class="c1"># Proxy behavior starts after this is set. Before this point, attaching</span>
         <span class="c1"># widgets etc can only be done through the Launcher&#39;s app attribute</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ref</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span>
 
-    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">EventLoop</span><span class="o">.</span><span class="n">quit</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
 
     <span class="c1"># Act like the app instance even before _ref is set</span>
-    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span></div>
 </pre></div>
 
@@ -754,7 +754,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Jan 01, 2025.
+      Last updated on Jan 09, 2025.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

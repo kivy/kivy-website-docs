@@ -558,7 +558,7 @@ Similarly, unless starting with a bytes object, converting to bytes requires a
 full copy, however, when using a buffer instance, no memory is copied, except
 to upload it to the GPU.</p>
 <p>Continuing with the example above:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">array</span> <span class="kn">import</span> <span class="n">array</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">array</span><span class="w"> </span><span class="kn">import</span> <span class="n">array</span>
 
 <span class="n">size</span> <span class="o">=</span> <span class="mi">64</span> <span class="o">*</span> <span class="mi">64</span> <span class="o">*</span> <span class="mi">3</span>
 <span class="n">buf</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="mi">255</span> <span class="o">/</span> <span class="n">size</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="p">)]</span>
@@ -635,7 +635,7 @@ If you want to separate the original texture into many single ones, you don’t
 need to. You can get a region of the original texture. That will return the
 original texture with custom texture coordinates:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># for example, load a 128x128 image that contain 4 64x64 images</span>
-<span class="kn">from</span> <span class="nn">kivy.core.image</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.image</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
 <span class="n">texture</span> <span class="o">=</span> <span class="n">Image</span><span class="p">(</span><span class="s1">&#39;mycombinedimage.png&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">texture</span>
 
 <span class="n">bottomleft</span> <span class="o">=</span> <span class="n">texture</span><span class="o">.</span><span class="n">get_region</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
@@ -681,7 +681,7 @@ a source are automatically reloaded but generated textures must
 be reloaded by the user.</p>
 <p>Use the <a class="reference internal" href="#kivy.graphics.texture.Texture.add_reload_observer" title="kivy.graphics.texture.Texture.add_reload_observer"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Texture.add_reload_observer()</span></code></a> to add a reloading function that
 will be automatically called when needed:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">texture</span> <span class="o">=</span> <span class="n">Texture</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">),</span> <span class="n">colorfmt</span><span class="o">=</span><span class="s1">&#39;RGB&#39;</span><span class="p">,</span>
         <span class="n">bufferfmt</span><span class="o">=</span><span class="s1">&#39;ubyte&#39;</span><span class="p">)</span>
@@ -691,7 +691,7 @@ will be automatically called when needed:</p>
     <span class="bp">self</span><span class="o">.</span><span class="n">cbuffer</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\x00\xf0\xff</span><span class="s1">&#39;</span> <span class="o">*</span> <span class="mi">512</span> <span class="o">*</span> <span class="mi">512</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">populate_texture</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">texture</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">populate_texture</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">texture</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">populate_texture</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">texture</span><span class="p">):</span>
     <span class="n">texture</span><span class="o">.</span><span class="n">blit_buffer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cbuffer</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1095,7 +1095,7 @@ of these values :
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Jan 01, 2025.
+      Last updated on Jan 09, 2025.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
