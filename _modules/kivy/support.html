@@ -610,7 +610,11 @@
             <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Support: Stopping twisted threads&quot;</span><span class="p">)</span>
             <span class="n">reactor</span><span class="o">.</span><span class="n">threadpool</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
         <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Support: Shutting down twisted reactor&quot;</span><span class="p">)</span>
-        <span class="n">reactor</span><span class="o">.</span><span class="n">_mainLoopShutdown</span><span class="p">()</span>
+        <span class="c1"># twisted &lt;= 24.3.0</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">reactor</span><span class="p">,</span> <span class="s1">&#39;_mainLoopShutdown&#39;</span><span class="p">):</span>
+            <span class="n">reactor</span><span class="o">.</span><span class="n">_mainLoopShutdown</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">reactor</span><span class="o">.</span><span class="n">_uninstallHandler</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">reactor</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
         <span class="k">except</span> <span class="n">ReactorNotRunning</span><span class="p">:</span>
