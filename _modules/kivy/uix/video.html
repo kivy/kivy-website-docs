@@ -362,6 +362,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../migration.html">Migrating from Kivy 2.x.x to Kivy 3.x.x</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../migration.html#introduction">Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../migration.html#renamed-modules">Renamed modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../migration.html#removals">Removals</a></li>
 </ul>
 </li>
 </ul>
@@ -463,29 +464,6 @@
 
 <span class="sd">    :attr:`state` is an :class:`~kivy.properties.OptionProperty` and defaults</span>
 <span class="sd">    to &#39;stop&#39;.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-
-    <span class="n">play</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="n">deprecated</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    .. deprecated:: 1.4.0</span>
-<span class="sd">        Use :attr:`state` instead.</span>
-
-<span class="sd">    Boolean, indicates whether the video is playing or not.</span>
-<span class="sd">    You can start/stop the video by setting this property::</span>
-
-<span class="sd">        # start playing the video at creation</span>
-<span class="sd">        video = Video(source=&#39;movie.mkv&#39;, play=True)</span>
-
-<span class="sd">        # create the video, and start later</span>
-<span class="sd">        video = Video(source=&#39;movie.mkv&#39;)</span>
-<span class="sd">        # and later</span>
-<span class="sd">        video.play = True</span>
-
-<span class="sd">    :attr:`play` is a :class:`~kivy.properties.BooleanProperty` and defaults to</span>
-<span class="sd">    False.</span>
-
-<span class="sd">    .. deprecated:: 1.4.0</span>
-<span class="sd">        Use :attr:`state` instead.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="n">eos</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
@@ -605,14 +583,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_video</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_load</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_load</span><span class="p">,</span>
                              <span class="n">on_frame</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_video_frame</span><span class="p">,</span>
                              <span class="n">on_eos</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_eos</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s1">&#39;play&#39;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">play</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s1">&#39;play&#39;</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_video</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">duration</span> <span class="o">=</span> <span class="mf">1.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="mf">0.</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">on_play</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="n">value</span> <span class="o">=</span> <span class="s1">&#39;play&#39;</span> <span class="k">if</span> <span class="n">value</span> <span class="k">else</span> <span class="s1">&#39;stop&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_state</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_video</span><span class="p">:</span>

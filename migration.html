@@ -102,6 +102,7 @@
 <li><a class="reference internal" href="#">Migrating from Kivy 2.x.x to Kivy 3.x.x</a><ul>
 <li><a class="reference internal" href="#introduction">Introduction</a></li>
 <li><a class="reference internal" href="#renamed-modules">Renamed modules</a></li>
+<li><a class="reference internal" href="#removals">Removals</a></li>
 </ul>
 </li>
 </ul>
@@ -370,6 +371,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Migrating from Kivy 2.x.x to Kivy 3.x.x</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#renamed-modules">Renamed modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#removals">Removals</a></li>
 </ul>
 </li>
 </ul>
@@ -391,6 +393,7 @@
 <li><a class="reference internal" href="#">Migrating from Kivy 2.x.x to Kivy 3.x.x</a><ul>
 <li><a class="reference internal" href="#introduction">Introduction</a></li>
 <li><a class="reference internal" href="#renamed-modules">Renamed modules</a></li>
+<li><a class="reference internal" href="#removals">Removals</a></li>
 </ul>
 </li>
 </ul>
@@ -412,6 +415,34 @@
 </div>
 <p>You need to update it to:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.audio_output</span><span class="w"> </span><span class="kn">import</span> <span class="n">SoundLoader</span>
+</pre></div>
+</div>
+</section>
+<section id="removals">
+<h2>Removals<a class="headerlink" href="#removals" title="Permalink to this heading">¶</a></h2>
+<p><em>Removal of `.play` property from `kivy.uix.video.Video` and `kivy.uix.videoplayer.VideoPlayer`</em></p>
+<p>In Kivy 3.x.x, the <cite>.play</cite> property has been removed from the <cite>kivy.uix.video.Video</cite> and <cite>kivy.uix.videoplayer.VideoPlayer</cite> classes.</p>
+<p>To migrate your code, you need to update the references to the <cite>.play</cite> property in your codebase. For example, if you have the following code in your Kivy 2.x.x codebase:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">video</span> <span class="o">=</span> <span class="n">Video</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;video.mp4&#39;</span><span class="p">)</span>
+
+<span class="c1"># Play the video</span>
+<span class="n">video</span><span class="o">.</span><span class="n">play</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1"># Stop the video</span>
+<span class="n">video</span><span class="o">.</span><span class="n">play</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<p>You need to update it to:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">video</span> <span class="o">=</span> <span class="n">Video</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;video.mp4&#39;</span><span class="p">)</span>
+
+<span class="c1"># Play the video</span>
+<span class="n">video</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s1">&#39;play&#39;</span>
+
+<span class="c1"># Stop the video</span>
+<span class="n">video</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s1">&#39;stop&#39;</span>
+
+<span class="c1"># Pause the video</span>
+<span class="n">video</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s1">&#39;pause&#39;</span>
 </pre></div>
 </div>
 </section>
