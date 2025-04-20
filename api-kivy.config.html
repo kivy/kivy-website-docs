@@ -571,6 +571,20 @@ adds a new one after purging.</p>
 <dt><cite>window_icon</cite>: string</dt><dd><p>Path of the window icon. Use this if you want to replace the default
 icon.</p>
 </dd>
+<dt><cite>window_shape</cite>: str (default: ‘’)</dt><dd><p>Specifies the default path to an image file that defines the window shape.
+To change the window shape after initialization, use the
+<a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.shape_image" title="kivy.core.window.WindowBase.shape_image"><code class="xref py py-attr docutils literal notranslate"><span class="pre">shape_image</span></code></a> attribute.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This option takes effect only if the <cite>shaped</cite> setting in the <cite>[graphics]</cite>
+configuration section is set to <cite>1</cite>.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The image file must meet the requirements outlined in
+<a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.shape_image" title="kivy.core.window.WindowBase.shape_image"><code class="xref py py-attr docutils literal notranslate"><span class="pre">shape_image</span></code></a>.</p>
+</div>
+</dd>
 </dl>
 </dd>
 <dt class="field-even">postproc<span class="colon">:</span></dt>
@@ -622,7 +636,7 @@ rezising frame</p>
 <div><p>or ‘minimized’</p>
 </div></blockquote>
 <p>Sets the window state, defaults to ‘visible’. This option is available
-only for the SDL2 window provider and it should be used on desktop
+only for the SDL3 window provider and it should be used on desktop
 OSes.</p>
 </dd>
 <dt><cite>fbo</cite>: string, one of ‘hardware’, ‘software’ or ‘force-hardware’</dt><dd><p>Selects the FBO backend to use.</p>
@@ -670,9 +684,9 @@ resizable.</p>
 <dt><cite>width</cite>: int</dt><dd><p>Width of the <code class="xref py py-class docutils literal notranslate"><span class="pre">Window</span></code>, not used if
 <cite>fullscreen</cite> is set to <cite>auto</cite>.</p>
 </dd>
-<dt><cite>minimum_width</cite>: int</dt><dd><p>Minimum width to restrict the window to. (sdl2 only)</p>
+<dt><cite>minimum_width</cite>: int</dt><dd><p>Minimum width to restrict the window to. (sdl3 only)</p>
 </dd>
-<dt><cite>minimum_height</cite>: int</dt><dd><p>Minimum height to restrict the window to. (sdl2 only)</p>
+<dt><cite>minimum_height</cite>: int</dt><dd><p>Minimum height to restrict the window to. (sdl3 only)</p>
 </dd>
 <dt><cite>min_state_time</cite>: float, defaults to .035</dt><dd><p>Minimum time for widgets to display a given visual state.
 This attrib is currently used by widgets like
@@ -682,18 +696,18 @@ make sure they display their current visual state for the given
 time.</p>
 </dd>
 <dt><cite>always_on_top</cite>: int, one of <code class="docutils literal notranslate"><span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code>, defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code></dt><dd><p>When enabled, the window will be brought to the front and will keep
-the window above the rest. Only works for the sdl2 window provider.
+the window above the rest. Only works for the sdl3 window provider.
 <code class="docutils literal notranslate"><span class="pre">0</span></code> is disabled, <code class="docutils literal notranslate"><span class="pre">1</span></code> is enabled.</p>
 </dd>
 <dt><cite>show_taskbar_icon</cite>: int, one of <code class="docutils literal notranslate"><span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code>, defaults to <code class="docutils literal notranslate"><span class="pre">1</span></code></dt><dd><p>Determines whether the app’s icon will be added to the taskbar. Only
-applicable for the SDL2 window provider.
+applicable for the SDL3 window provider.
 <code class="docutils literal notranslate"><span class="pre">0</span></code> means the icon will not be shown in the taskbar and <code class="docutils literal notranslate"><span class="pre">1</span></code> means
 it will.</p>
 </dd>
 <dt><cite>allow_screensaver</cite>: int, one of 0 or 1, defaults to 1</dt><dd><p>Allow the device to show a screen saver, or to go to sleep
-on mobile devices. Only works for the sdl2 window provider.</p>
+on mobile devices. Only works for the sdl3 window provider.</p>
 </dd>
-<dt><cite>vsync</cite>: <cite>none</cite>, empty value, or integers</dt><dd><p>Whether vsync is enabled, currently only used with sdl2 window.
+<dt><cite>vsync</cite>: <cite>none</cite>, empty value, or integers</dt><dd><p>Whether vsync is enabled, currently only used with sdl3 window.
 Possible values are <cite>none</cite> or empty value – leaves it unchanged,
 <code class="docutils literal notranslate"><span class="pre">0</span></code> – disables vsync, <code class="docutils literal notranslate"><span class="pre">1</span></code> or larger – sets vsync interval,
 <code class="docutils literal notranslate"><span class="pre">-1</span></code> sets adaptive vsync. It falls back to 1 if setting to <code class="docutils literal notranslate"><span class="pre">2+</span></code>
@@ -701,6 +715,16 @@ or <code class="docutils literal notranslate"><span class="pre">-1</span></code>
 </dd>
 <dt><cite>verify_gl_main_thread</cite>: int, 1 or 0, defaults to 1</dt><dd><p>Whether to check if code that changes any gl instructions is
 running outside the main thread and then raise an error.</p>
+</dd>
+<dt><cite>shaped</cite>: int, 0 or 1 (default: 0)</dt><dd><p>If set to <cite>1</cite>, the system will attempt to initialize the window as shapable.
+However, whether the window is actually shapable depends on the
+platform and implementation. To check if shaping is supported, inspect
+the window object’s <cite>shapable</cite> property.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>For shaping to work reliably across platforms, set
+<cite>Window.clearcolor</cite> to <cite>(0, 0, 0, 0)</cite>.</p>
+</div>
 </dd>
 </dl>
 </dd>

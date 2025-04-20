@@ -526,6 +526,18 @@
 <span class="sd">    `window_icon`: string</span>
 <span class="sd">        Path of the window icon. Use this if you want to replace the default</span>
 <span class="sd">        icon.</span>
+<span class="sd">    `window_shape`: str (default: &#39;&#39;)</span>
+<span class="sd">        Specifies the default path to an image file that defines the window shape.</span>
+<span class="sd">        To change the window shape after initialization, use the</span>
+<span class="sd">        :attr:`~kivy.core.window.WindowBase.shape_image` attribute.</span>
+
+<span class="sd">        .. warning::</span>
+<span class="sd">            This option takes effect only if the `shaped` setting in the `[graphics]`</span>
+<span class="sd">            configuration section is set to `1`.</span>
+
+<span class="sd">        .. warning::</span>
+<span class="sd">            The image file must meet the requirements outlined in</span>
+<span class="sd">            :attr:`~kivy.core.window.WindowBase.shape_image`.</span>
 
 <span class="sd">:postproc:</span>
 
@@ -574,7 +586,7 @@
 <span class="sd">                    or &#39;minimized&#39;</span>
 
 <span class="sd">        Sets the window state, defaults to &#39;visible&#39;. This option is available</span>
-<span class="sd">        only for the SDL2 window provider and it should be used on desktop</span>
+<span class="sd">        only for the SDL3 window provider and it should be used on desktop</span>
 <span class="sd">        OSes.</span>
 <span class="sd">    `fbo`: string, one of &#39;hardware&#39;, &#39;software&#39; or &#39;force-hardware&#39;</span>
 <span class="sd">        Selects the FBO backend to use.</span>
@@ -623,9 +635,9 @@
 <span class="sd">        Width of the :class:`~kivy.core.window.Window`, not used if</span>
 <span class="sd">        `fullscreen` is set to `auto`.</span>
 <span class="sd">    `minimum_width`: int</span>
-<span class="sd">        Minimum width to restrict the window to. (sdl2 only)</span>
+<span class="sd">        Minimum width to restrict the window to. (sdl3 only)</span>
 <span class="sd">    `minimum_height`: int</span>
-<span class="sd">        Minimum height to restrict the window to. (sdl2 only)</span>
+<span class="sd">        Minimum height to restrict the window to. (sdl3 only)</span>
 <span class="sd">    `min_state_time`: float, defaults to .035</span>
 <span class="sd">        Minimum time for widgets to display a given visual state.</span>
 <span class="sd">        This attrib is currently used by widgets like</span>
@@ -635,18 +647,18 @@
 <span class="sd">        time.</span>
 <span class="sd">    `always_on_top`: int, one of ``0`` or ``1``, defaults to ``0``</span>
 <span class="sd">        When enabled, the window will be brought to the front and will keep</span>
-<span class="sd">        the window above the rest. Only works for the sdl2 window provider.</span>
+<span class="sd">        the window above the rest. Only works for the sdl3 window provider.</span>
 <span class="sd">        ``0`` is disabled, ``1`` is enabled.</span>
 <span class="sd">    `show_taskbar_icon`: int, one of ``0`` or ``1``, defaults to ``1``</span>
 <span class="sd">        Determines whether the app&#39;s icon will be added to the taskbar. Only</span>
-<span class="sd">        applicable for the SDL2 window provider.</span>
+<span class="sd">        applicable for the SDL3 window provider.</span>
 <span class="sd">        ``0`` means the icon will not be shown in the taskbar and ``1`` means</span>
 <span class="sd">        it will.</span>
 <span class="sd">    `allow_screensaver`: int, one of 0 or 1, defaults to 1</span>
 <span class="sd">        Allow the device to show a screen saver, or to go to sleep</span>
-<span class="sd">        on mobile devices. Only works for the sdl2 window provider.</span>
+<span class="sd">        on mobile devices. Only works for the sdl3 window provider.</span>
 <span class="sd">    `vsync`: `none`, empty value, or integers</span>
-<span class="sd">        Whether vsync is enabled, currently only used with sdl2 window.</span>
+<span class="sd">        Whether vsync is enabled, currently only used with sdl3 window.</span>
 <span class="sd">        Possible values are `none` or empty value -- leaves it unchanged,</span>
 <span class="sd">        ``0`` -- disables vsync, ``1`` or larger -- sets vsync interval,</span>
 <span class="sd">        ``-1`` sets adaptive vsync. It falls back to 1 if setting to ``2+``</span>
@@ -654,6 +666,15 @@
 <span class="sd">    `verify_gl_main_thread`: int, 1 or 0, defaults to 1</span>
 <span class="sd">        Whether to check if code that changes any gl instructions is</span>
 <span class="sd">        running outside the main thread and then raise an error.</span>
+<span class="sd">    `shaped`: int, 0 or 1 (default: 0)</span>
+<span class="sd">        If set to `1`, the system will attempt to initialize the window as shapable.</span>
+<span class="sd">        However, whether the window is actually shapable depends on the</span>
+<span class="sd">        platform and implementation. To check if shaping is supported, inspect</span>
+<span class="sd">        the window object&#39;s `shapable` property.</span>
+
+<span class="sd">        .. warning::</span>
+<span class="sd">            For shaping to work reliably across platforms, set</span>
+<span class="sd">            `Window.clearcolor` to `(0, 0, 0, 0)`.</span>
 
 <span class="sd">:input:</span>
 
@@ -788,7 +809,7 @@
 <span class="n">_is_rpi</span> <span class="o">=</span> <span class="n">exists</span><span class="p">(</span><span class="s1">&#39;/opt/vc/include/bcm_host.h&#39;</span><span class="p">)</span>
 
 <span class="c1"># Version number of current configuration format</span>
-<span class="n">KIVY_CONFIG_VERSION</span> <span class="o">=</span> <span class="mi">27</span>
+<span class="n">KIVY_CONFIG_VERSION</span> <span class="o">=</span> <span class="mi">28</span>
 
 <span class="n">Config</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="sd">&#39;&#39;&#39;The default Kivy configuration object. This is a :class:`ConfigParser`</span>
@@ -1320,6 +1341,10 @@
 
         <span class="k">elif</span> <span class="n">version</span> <span class="o">==</span> <span class="mi">26</span><span class="p">:</span>
             <span class="n">Config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;graphics&quot;</span><span class="p">,</span> <span class="s2">&quot;show_taskbar_icon&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">version</span> <span class="o">==</span> <span class="mi">27</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">Config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;kivy&quot;</span><span class="p">,</span> <span class="s2">&quot;window_shape&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;data/images/defaultshape.png&quot;</span><span class="p">:</span>
+                <span class="n">Config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;kivy&quot;</span><span class="p">,</span> <span class="s2">&quot;window_shape&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
 
         <span class="c1"># WARNING: When adding a new version migration here,</span>
         <span class="c1"># don&#39;t forget to increment KIVY_CONFIG_VERSION !</span>
