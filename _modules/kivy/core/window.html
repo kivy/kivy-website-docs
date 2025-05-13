@@ -2923,7 +2923,55 @@
 <span class="s2">                gl_FragColor = frag_color * vec4(texColor0.rgb, texColor1.a * texColor0.a);</span>
 <span class="s2">            </span><span class="se">}}</span>
 <span class="s2">        &quot;&quot;&quot;</span>  <span class="c1"># noqa</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">render_context</span><span class="o">.</span><span class="n">shader</span><span class="o">.</span><span class="n">fs</span> <span class="o">=</span> <span class="n">fs_shader</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">render_context</span><span class="o">.</span><span class="n">shader</span><span class="o">.</span><span class="n">fs</span> <span class="o">=</span> <span class="n">fs_shader</span>
+
+<div class="viewcode-block" id="WindowBase.get_system_theme"><a class="viewcode-back" href="../../../api-kivy.core.window.html#kivy.core.window.WindowBase.get_system_theme">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_system_theme</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the current system theme as a string.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The current system theme, which can be ``&quot;light&quot;``, ``&quot;dark&quot;`` or ``&quot;unknown&quot;``.</span>
+
+<span class="sd">        The example below demonstrates how to create a Python thread-based theme</span>
+<span class="sd">        monitor that detects system theme changes and updates the interface in a</span>
+<span class="sd">        thread-safe manner. It uses `Clock.schedule_once` to ensure that UI</span>
+<span class="sd">        updates occur on the main application thread:</span>
+
+<span class="sd">        .. code-block:: python</span>
+<span class="sd">            def start_system_theme_monitor(self, interval=1.0):</span>
+<span class="sd">                &#39;&#39;&#39;</span>
+<span class="sd">                Starts a background monitor that checks for system theme changes.</span>
+
+<span class="sd">                Args:</span>
+<span class="sd">                    interval (float): Time interval in seconds between theme checks.</span>
+<span class="sd">                &#39;&#39;&#39;</span>
+<span class="sd">                def monitor():</span>
+<span class="sd">                    last_theme = Window.get_system_theme()</span>
+<span class="sd">                    while True:</span>
+<span class="sd">                        time.sleep(interval)</span>
+<span class="sd">                        current_theme = Window.get_system_theme()</span>
+<span class="sd">                        if current_theme != last_theme:</span>
+<span class="sd">                            last_theme = current_theme</span>
+<span class="sd">                            Clock.schedule_once(lambda dt: self.on_system_theme_change(current_theme))</span>
+
+<span class="sd">                threading.Thread(target=monitor, daemon=True).start()</span>
+
+<span class="sd">            def on_system_theme_change(self, new_theme):</span>
+<span class="sd">                &#39;&#39;&#39;</span>
+<span class="sd">                Callback executed when the system theme changes.</span>
+
+<span class="sd">                Args:</span>
+<span class="sd">                    new_theme (str): The new system theme.</span>
+<span class="sd">                &#39;&#39;&#39;</span>
+<span class="sd">                print(f&quot;Current system theme is: {new_theme}&quot;)</span>
+
+
+<span class="sd">        .. note::</span>
+<span class="sd">            This feature requires the SDL3 window provider.</span>
+
+<span class="sd">        .. versionadded:: 3.0.0</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: E501</span>
+        <span class="k">pass</span></div></div>
 
 
 <span class="c1">#: Instance of a :class:`WindowBase` implementation</span>
@@ -2974,7 +3022,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Apr 29, 2025.
+      Last updated on May 13, 2025.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
