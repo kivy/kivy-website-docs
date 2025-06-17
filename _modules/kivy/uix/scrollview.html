@@ -1182,14 +1182,24 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulate_touch_down</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">in_bar</span><span class="p">:</span>
+            <span class="n">e</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;in_bar_y&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_touch_in_handle</span><span class="p">(</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_handle_y_pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_y_size</span><span class="p">,</span> <span class="n">touch</span><span class="p">)):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">=</span> <span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
+                <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span>
             <span class="k">elif</span> <span class="p">(</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;in_bar_x&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_touch_in_handle</span><span class="p">(</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_handle_x_pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_x_size</span><span class="p">,</span> <span class="n">touch</span><span class="p">)):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">=</span> <span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span>
+                <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_x</span>
+
+            <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span> <span class="k">if</span> <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;in_bar_y&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_x</span>
+            <span class="k">if</span> <span class="n">e</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_update_effect_bounds</span><span class="p">()</span>
+                <span class="n">e</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">e</span><span class="o">.</span><span class="n">overscroll</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">e</span><span class="o">.</span><span class="n">trigger_velocity_update</span><span class="p">()</span>
 
         <span class="c1"># no mouse scrolling, so the user is going to drag the scrollview with</span>
         <span class="c1"># this touch.</span>
@@ -1532,7 +1542,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_bar_color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bar_color</span>
         <span class="n">ev</span><span class="p">()</span></div>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_bind_inactive_bar_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">l</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_bind_inactive_bar_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">funbind</span><span class="p">(</span><span class="s1">&#39;bar_color&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_change_bar_color</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;bar_inactive_color&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_change_bar_color</span><span class="p">)</span>
         <span class="n">Animation</span><span class="p">(</span>
@@ -1702,7 +1712,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Jun 12, 2025.
+      Last updated on Jun 17, 2025.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
