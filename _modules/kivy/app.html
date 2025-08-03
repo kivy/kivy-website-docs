@@ -817,6 +817,10 @@
 <span class="sd">        `on_start`:</span>
 <span class="sd">            Fired when the application is being started (before the</span>
 <span class="sd">            :func:`~kivy.base.runTouchApp` call.</span>
+<span class="sd">        `on_ready`:</span>
+<span class="sd">            Fired once when the application UI becomes visible after the</span>
+<span class="sd">            first frame has been rendered. This occurs after `on_start`</span>
+<span class="sd">            and indicates the UI is ready for user interaction.</span>
 <span class="sd">        `on_stop`:</span>
 <span class="sd">            Fired when the application stops.</span>
 <span class="sd">        `on_pause`:</span>
@@ -941,7 +945,7 @@
     <span class="c1"># Return the current running App instance</span>
     <span class="n">_running_app</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;on_start&#39;</span><span class="p">,</span> <span class="s1">&#39;on_stop&#39;</span><span class="p">,</span> <span class="s1">&#39;on_pause&#39;</span><span class="p">,</span> <span class="s1">&#39;on_resume&#39;</span><span class="p">,</span>
+    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;on_start&#39;</span><span class="p">,</span> <span class="s1">&#39;on_ready&#39;</span><span class="p">,</span> <span class="s1">&#39;on_stop&#39;</span><span class="p">,</span> <span class="s1">&#39;on_pause&#39;</span><span class="p">,</span> <span class="s1">&#39;on_resume&#39;</span><span class="p">,</span>
                   <span class="s1">&#39;on_config_change&#39;</span><span class="p">,</span> <span class="p">)</span>
 
     <span class="c1"># Stored so that we only need to determine this once</span>
@@ -967,6 +971,9 @@
         <span class="c1">#: The *root* widget returned by the :meth:`build` method or by the</span>
         <span class="c1">#: :meth:`load_kv` method if the kv file contains a root widget.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Flag to indicate if the app is ready, i.e., the UI is visible</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ready_fired</span> <span class="o">=</span> <span class="kc">False</span>
 
 <div class="viewcode-block" id="App.build"><a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.build">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Initializes the application; it will be called only once.</span>
@@ -1394,6 +1401,21 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">pass</span></div>
 
+<div class="viewcode-block" id="App.on_ready"><a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.on_ready">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">on_ready</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Event handler for the `on_ready` event which is fired once</span>
+<span class="sd">        when the application UI becomes visible after the first frame</span>
+<span class="sd">        has been rendered.</span>
+
+<span class="sd">        This is the ideal place for:</span>
+<span class="sd">        - UI measurements that require rendered content</span>
+<span class="sd">        - Screenshots of the initial UI state</span>
+<span class="sd">        - Performance benchmarks</span>
+<span class="sd">        - Analytics or logging of app readiness</span>
+
+<span class="sd">        This event will not fire again during the application&#39;s lifetime.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">pass</span></div>
+
 <div class="viewcode-block" id="App.on_stop"><a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.on_stop">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">on_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Event handler for the `on_stop` event which is fired when the</span>
 <span class="sd">        application has finished running (i.e. the window is about to be</span>
@@ -1581,6 +1603,12 @@
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="mi">27</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">close_settings</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_trigger_ready_once</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Internal method called by the window backend after first swap.&#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ready_fired</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_ready_fired</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_ready&#39;</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_title</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app_window</span><span class="p">:</span>
