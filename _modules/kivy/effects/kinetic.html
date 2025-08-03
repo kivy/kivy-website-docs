@@ -579,7 +579,26 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span> <span class="o">-=</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">friction</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">std_dt</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">apply_distance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">velocity</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">trigger_velocity_update</span><span class="p">()</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trigger_velocity_update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="KineticEffect.halt"><a class="viewcode-back" href="../../../api-kivy.effects.kinetic.html#kivy.effects.kinetic.KineticEffect.halt">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">halt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;Stop the movement immediately without momentum.</span>
+<span class="sd">        This method immediately stops any ongoing kinetic scrolling effect by:</span>
+<span class="sd">        - Cancelling any scheduled velocity updates to prevent further movement</span>
+<span class="sd">        - Setting is_manual to False to indicate no manual interaction is in progress</span>
+
+<span class="sd">        Unlike the stop() method which calculates final velocity for momentum</span>
+<span class="sd">        scrolling, this method provides instant cessation of movement without</span>
+<span class="sd">        any residual animation.</span>
+
+<span class="sd">        This is useful when you need to programmatically stop scrolling in</span>
+<span class="sd">        response to user actions or when the scroll position needs to be fixed</span>
+<span class="sd">        immediately.  The halt() method is called by ScrollView.scroll_to to</span>
+<span class="sd">        stop scrolling animation prior to moving to the target widget.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_manual</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trigger_velocity_update</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span></div></div>
 </pre></div>
 
             <div class="footerlinks">
@@ -618,7 +637,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Aug 02, 2025.
+      Last updated on Aug 03, 2025.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
