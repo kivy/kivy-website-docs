@@ -675,6 +675,10 @@
 <span class="sd">        .. warning::</span>
 <span class="sd">            For shaping to work reliably across platforms, set</span>
 <span class="sd">            `Window.clearcolor` to `(0, 0, 0, 0)`.</span>
+<span class="sd">    `alpha_size: int (default: 0 on the Raspberry Pi and 8 on all other platforms)</span>
+<span class="sd">        Specifies the minimum number of bits for the alpha channel of the color buffer.</span>
+<span class="sd">        Set this to 0, so SDL3 works without X11.</span>
+<span class="sd">        Only applicable for the SDL3 window provider.</span>
 
 <span class="sd">:input:</span>
 
@@ -746,6 +750,9 @@
 <span class="sd">    Check the specific module&#39;s documentation for a list of accepted</span>
 <span class="sd">    arguments.</span>
 
+<span class="sd">.. versionadded:: 3.0.0</span>
+<span class="sd">    `alpha_size` have been added to the `graphics` section.</span>
+
 <span class="sd">.. versionadded:: 2.2.0</span>
 <span class="sd">    `always_on_top` have been added to the `graphics` section.</span>
 <span class="sd">    `show_taskbar_icon` have been added to the `graphics` section.</span>
@@ -804,12 +811,12 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy</span><span class="w"> </span><span class="kn">import</span> <span class="n">kivy_config_fn</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">Logger</span><span class="p">,</span> <span class="n">logger_config_update</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">platform</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">pi_version</span><span class="p">,</span> <span class="n">platform</span>
 
 <span class="n">_is_rpi</span> <span class="o">=</span> <span class="n">exists</span><span class="p">(</span><span class="s1">&#39;/opt/vc/include/bcm_host.h&#39;</span><span class="p">)</span>
 
 <span class="c1"># Version number of current configuration format</span>
-<span class="n">KIVY_CONFIG_VERSION</span> <span class="o">=</span> <span class="mi">28</span>
+<span class="n">KIVY_CONFIG_VERSION</span> <span class="o">=</span> <span class="mi">29</span>
 
 <span class="n">Config</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="sd">&#39;&#39;&#39;The default Kivy configuration object. This is a :class:`ConfigParser`</span>
@@ -1346,6 +1353,11 @@
             <span class="k">if</span> <span class="n">Config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;kivy&quot;</span><span class="p">,</span> <span class="s2">&quot;window_shape&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;data/images/defaultshape.png&quot;</span><span class="p">:</span>
                 <span class="n">Config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;kivy&quot;</span><span class="p">,</span> <span class="s2">&quot;window_shape&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
 
+        <span class="k">elif</span> <span class="n">version</span> <span class="o">==</span> <span class="mi">28</span><span class="p">:</span>
+            <span class="n">Config</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span>
+                <span class="s2">&quot;graphics&quot;</span><span class="p">,</span> <span class="s2">&quot;alpha_size&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span> <span class="k">if</span> <span class="n">pi_version</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;0&quot;</span>
+            <span class="p">)</span>
+
         <span class="c1"># WARNING: When adding a new version migration here,</span>
         <span class="c1"># don&#39;t forget to increment KIVY_CONFIG_VERSION !</span>
         <span class="k">else</span><span class="p">:</span>
@@ -1444,7 +1456,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Oct 20, 2025.
+      Last updated on Oct 21, 2025.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
