@@ -102,7 +102,11 @@
 <li><a class="reference internal" href="#">Migrating from Kivy 2.x.x to Kivy 3.x.x</a><ul>
 <li><a class="reference internal" href="#introduction">Introduction</a></li>
 <li><a class="reference internal" href="#renamed-modules">Renamed modules</a></li>
-<li><a class="reference internal" href="#removals">Removals</a></li>
+<li><a class="reference internal" href="#removals">Removals</a><ul>
+<li><a class="reference internal" href="#buttonbehavior">ButtonBehavior</a></li>
+<li><a class="reference internal" href="#togglebuttonbehavior">ToggleButtonBehavior</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -395,7 +399,11 @@
 <li><a class="reference internal" href="#">Migrating from Kivy 2.x.x to Kivy 3.x.x</a><ul>
 <li><a class="reference internal" href="#introduction">Introduction</a></li>
 <li><a class="reference internal" href="#renamed-modules">Renamed modules</a></li>
-<li><a class="reference internal" href="#removals">Removals</a></li>
+<li><a class="reference internal" href="#removals">Removals</a><ul>
+<li><a class="reference internal" href="#buttonbehavior">ButtonBehavior</a></li>
+<li><a class="reference internal" href="#togglebuttonbehavior">ToggleButtonBehavior</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -460,6 +468,617 @@
 <p>In Kivy 3.x.x, the <cite>file_encodings</cite> property has been removed from the <cite>kivy.uix.filechooser.FileChooserController</cite> class.</p>
 <p>The <cite>file_encodings</cite> property was deprecated and it was kept for backward compatibility, however it was just ignored and not used internally.</p>
 <p>To migrate your code, you just need to remove any references to the <cite>file_encodings</cite> property in your codebase.</p>
+<section id="buttonbehavior">
+<h3>ButtonBehavior<a class="headerlink" href="#buttonbehavior" title="Permalink to this heading">¶</a></h3>
+<p><em>Removal of `state`, `min_state_time`, `last_touch` Properties and `trigger_action()` Method</em></p>
+<p>In Kivy 3.x.x, the <cite>ButtonBehavior</cite> class has been significantly simplified and improved.
+The <cite>state</cite> OptionProperty, <cite>min_state_time</cite> NumericProperty, and <cite>last_touch</cite> ObjectProperty
+have been <strong>removed</strong>, along with the <cite>trigger_action()</cite> method. A simpler, read-only <cite>pressed</cite>
+BooleanProperty is now used to indicate the button’s state.</p>
+<p><strong>Migrating from `state` to `pressed`</strong></p>
+<p>The <cite>state</cite> property that could be <cite>‘normal’</cite> or <cite>‘down’</cite> has been replaced with a boolean
+<cite>pressed</cite> property. Note that <cite>pressed</cite> is <strong>read-only</strong> (an AliasProperty), unlike the old
+<cite>state</cite> which could be set directly.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Kivy 2.x.x</span>
+<span class="k">if</span> <span class="n">button</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s1">&#39;down&#39;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Button is pressed&quot;</span><span class="p">)</span>
+
+<span class="n">button</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s1">&#39;down&#39;</span>  <span class="c1"># Could set state directly</span>
+
+<span class="c1"># Kivy 3.x.x</span>
+<span class="k">if</span> <span class="n">button</span><span class="o">.</span><span class="n">pressed</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Button is pressed&quot;</span><span class="p">)</span>
+
+<span class="c1"># button.pressed = True  # NOT ALLOWED - read-only property</span>
+</pre></div>
+</div>
+<p>In KV language:</p>
+<div class="highlight-kv notranslate"><div class="highlight"><pre><span></span><span class="c1"># Kivy 2.x.x</span>
+<span class="nc">Button</span><span class="p">:</span>
+    <span class="na">color</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s1">&#39;down&#39;</span> <span class="k">else</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Kivy 3.x.x</span>
+<span class="nc">Button</span><span class="p">:</span>
+    <span class="na">color</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pressed</span> <span class="k">else</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Binding to State Changes</strong></p>
+<p>Use the <cite>on_pressed</cite> property event instead of <cite>on_state</cite>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Kivy 2.x.x</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">on_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;down&#39;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pressed&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Released&quot;</span><span class="p">)</span>
+
+<span class="c1"># Kivy 3.x.x</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">on_pressed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">is_pressed</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">is_pressed</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pressed&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Released&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Migrating from `min_state_time`</strong></p>
+<p>The <cite>min_state_time</cite> property, which enforced a minimum duration for the ‘down’ state,
+has been removed. If you need similar behavior, you can implement it manually using
+<cite>Clock.create_trigger()</cite>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.clock</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clock</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.behaviors</span><span class="w"> </span><span class="kn">import</span> <span class="n">ButtonBehavior</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.label</span><span class="w"> </span><span class="kn">import</span> <span class="n">Label</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">DelayedButton</span><span class="p">(</span><span class="n">ButtonBehavior</span><span class="p">,</span> <span class="n">Label</span><span class="p">):</span>
+    <span class="n">MIN_STATE_TIME</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># seconds</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_release_trigger</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">create_trigger</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_delayed_action</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">MIN_STATE_TIME</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">pressed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_pressed_changed</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_pressed_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">is_pressed</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">is_pressed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_release_trigger</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_release_trigger</span><span class="p">()</span>  <span class="c1"># schedule delayed action</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_delayed_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+        <span class="c1"># Your delayed logic here</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Action executed after minimum time&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Removal of `trigger_action()` Method</strong></p>
+<p>The <cite>trigger_action()</cite> method has been removed. This method was used to programmatically
+simulate button presses, but it violated the principle of UI event simulation and wasn’t
+properly integrated with the touch system.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Kivy 2.x.x</span>
+<span class="n">button</span><span class="o">.</span><span class="n">trigger_action</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you need to programmatically trigger button actions in Kivy 3.x.x, you have two options:</p>
+<p><strong>Option 1: Dispatch events directly (recommended for simple cases)</strong></p>
+<p>Simply dispatch the <cite>on_press</cite> and <cite>on_release</cite> events without simulating the full touch cycle:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Kivy 3.x.x - Direct event dispatch</span>
+<span class="n">button</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_press&#39;</span><span class="p">)</span>
+<span class="c1"># ... your logic ...</span>
+<span class="n">button</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_release&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that this approach does NOT update the <cite>pressed</cite> property or trigger internal state
+changes, as those are tied to actual touch events.</p>
+<p><strong>Option 2: Simulate touch events (for complete button state simulation)</strong></p>
+<p>If you need the button to fully simulate touch behavior (including updating the <cite>pressed</cite>
+property), you must simulate actual touch events:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.input.motionevent</span><span class="w"> </span><span class="kn">import</span> <span class="n">MotionEvent</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MyButton</span><span class="p">(</span><span class="n">ButtonBehavior</span><span class="p">,</span> <span class="n">Label</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">simulate_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Simulate a complete button press with touch events.&quot;&quot;&quot;</span>
+        <span class="c1"># Create a mock touch event</span>
+        <span class="n">touch</span> <span class="o">=</span> <span class="n">MotionEvent</span><span class="p">(</span><span class="s1">&#39;mock&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">{</span>
+            <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">center_x</span><span class="p">,</span>
+            <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">center_y</span><span class="p">,</span>
+            <span class="s1">&#39;pos&#39;</span><span class="p">:</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">center_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">center_y</span><span class="p">)</span>
+        <span class="p">})</span>
+
+        <span class="c1"># Simulate touch down</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_touch_down</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
+
+        <span class="c1"># Simulate touch up after duration</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">release_touch</span><span class="p">(</span><span class="n">dt</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">on_touch_up</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">duration</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="n">release_touch</span><span class="p">,</span> <span class="n">duration</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">release_touch</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Or create a helper method in your custom button class:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.clock</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clock</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.behaviors</span><span class="w"> </span><span class="kn">import</span> <span class="n">ButtonBehavior</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.label</span><span class="w"> </span><span class="kn">import</span> <span class="n">Label</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MyButton</span><span class="p">(</span><span class="n">ButtonBehavior</span><span class="p">,</span> <span class="n">Label</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">trigger_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Simulate button press/release.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_do_press</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_press&#39;</span><span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">trigger_release</span><span class="p">(</span><span class="n">dt</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_do_release</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_release&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">duration</span><span class="p">:</span>
+            <span class="n">trigger_release</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="n">trigger_release</span><span class="p">,</span> <span class="n">duration</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Removal of `last_touch` Property</strong></p>
+<p>The <cite>last_touch</cite> ObjectProperty has been <strong>removed</strong>. If you need to track touches,
+implement your own tracking:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Kivy 2.x.x</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MyButton</span><span class="p">(</span><span class="n">ButtonBehavior</span><span class="p">,</span> <span class="n">Label</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_press</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Touch at: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">last_touch</span><span class="o">.</span><span class="n">pos</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Kivy 3.x.x</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MyButton</span><span class="p">(</span><span class="n">ButtonBehavior</span><span class="p">,</span> <span class="n">Label</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_touch</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_touch_down</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span> <span class="ow">and</span> <span class="bp">self</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">last_touch</span> <span class="o">=</span> <span class="n">touch</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_press</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_touch</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Touch at: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">last_touch</span><span class="o">.</span><span class="n">pos</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Improved Multi-Touch Behavior</strong></p>
+<p>The <cite>on_release</cite> event behavior has changed for multi-touch scenarios:</p>
+<ul class="simple">
+<li><p><strong>Kivy 2.x.x</strong>: <cite>on_release</cite> fires when <strong>the first touch</strong> is released (even if other touches are still active)</p></li>
+<li><p><strong>Kivy 3.x.x</strong>: <cite>on_release</cite> fires only after <strong>all active touches</strong> are released</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Multi-touch behavior difference</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MyButton</span><span class="p">(</span><span class="n">ButtonBehavior</span><span class="p">,</span> <span class="n">Label</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_release</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Button released&quot;</span><span class="p">)</span>
+
+<span class="c1"># Scenario: User presses button with 3 fingers, then lifts them one by one</span>
+<span class="c1"># Kivy 2.x.x: &quot;Button released&quot; prints when the FIRST finger is lifted</span>
+<span class="c1"># Kivy 3.x.x: &quot;Button released&quot; prints only when ALL 3 fingers are lifted</span>
+</pre></div>
+</div>
+<p>If you need the old behavior (release on first touch up), override <cite>on_touch_up</cite>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">LegacyButton</span><span class="p">(</span><span class="n">ButtonBehavior</span><span class="p">,</span> <span class="n">Label</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_first_touch_released</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_touch_down</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_first_touch_released</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_touch_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">grab_current</span> <span class="ow">is</span> <span class="bp">self</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_first_touch_released</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_first_touch_released</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_do_release</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_release&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_touch_up</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>New `on_cancel` Event</strong></p>
+<p>A new event <cite>on_cancel</cite> is now dispatched when a touch moves outside the button bounds
+during a drag operation. This only occurs when <cite>always_release=False</cite> (the default).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyButton</span><span class="p">(</span><span class="n">ButtonBehavior</span><span class="p">,</span> <span class="n">Label</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_press</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Red when pressed</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_release</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Green on successful release</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Button action executed&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_cancel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># White when cancelled</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Button action cancelled&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This event allows you to provide visual feedback when the user drags their finger/pointer
+outside the button, indicating the action will not be executed.</p>
+<p><strong>Changed `always_release` Behavior</strong></p>
+<p>The behavior when <cite>always_release=False</cite> (default) has been improved:</p>
+<p><strong>Kivy 2.x.x</strong>: When touch moved outside bounds, <cite>on_release</cite> didn’t fire. However, if the
+user moved the touch back inside the button bounds before releasing, <cite>on_release</cite> would
+fire normally. This could cause unexpected side effects.</p>
+<p><strong>Kivy 3.x.x</strong>: When touch moves outside bounds during drag:
+- <cite>on_cancel</cite> event fires immediately (NEW)
+- Touch is marked as cancelled permanently
+- <cite>on_release</cite> will NOT fire, even if touch moves back inside before release
+- Provides explicit feedback about cancellation
+- Now, canceled <cite>on_release</cite> are explicitly canceled <cite>on_release`(`on_cancel</cite>).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Standard button behavior (always_release=False)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">StandardButton</span><span class="p">(</span><span class="n">ButtonBehavior</span><span class="p">,</span> <span class="n">Label</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">always_release</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># Default, but explicit here</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_press</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Action started&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Release here to confirm&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_release</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Action confirmed!&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Confirmed&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_cancel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Action cancelled&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Cancelled - press again&quot;</span>
+</pre></div>
+</div>
+<p>When <cite>always_release=True</cite>, the behavior remains the same - <cite>on_release</cite> always fires
+and <cite>on_cancel</cite> never fires:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Always release (drag-and-drop style)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">DragButton</span><span class="p">(</span><span class="n">ButtonBehavior</span><span class="p">,</span> <span class="n">Label</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">always_release</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># Release fires anywhere</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_release</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Released - on_cancel never fires&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Internal Hooks for Subclassing</strong></p>
+<p>The methods <cite>_do_press()</cite>, <cite>_do_release()</cite>, and <cite>_do_cancel()</cite> are now documented as
+internal hooks for subclasses (like <cite>ToggleButtonBehavior</cite>). These are called before
+the corresponding public events are dispatched.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Avoid using these methods, they are for internal state management in subclasses. Application code
+should use the <cite>on_press</cite>, <cite>on_release</cite>, and <cite>on_cancel</cite> events instead.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">CustomButton</span><span class="p">(</span><span class="n">ButtonBehavior</span><span class="p">,</span> <span class="n">Label</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_do_press</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Internal state changes before event dispatch (for internal use only)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_do_press</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_internal_state</span> <span class="o">=</span> <span class="s2">&quot;pressing&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_press</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Public event handler for application logic</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Button pressed - use this for your logic&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Summary of Breaking Changes</strong></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Removed/Changed</p></th>
+<th class="head"><p>Kivy 2.x.x</p></th>
+<th class="head"><p>Kivy 3.x.x</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>state</cite> property</p></td>
+<td><p><cite>‘normal’</cite> or <cite>‘down’</cite></p></td>
+<td><p>Removed - use <cite>pressed</cite> (read-only)</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>min_state_time</cite></p></td>
+<td><p>NumericProperty (0.035)</p></td>
+<td><p>Removed - implement manually</p></td>
+</tr>
+<tr class="row-even"><td><p><cite>last_touch</cite></p></td>
+<td><p>ObjectProperty</p></td>
+<td><p>Removed - track manually</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>trigger_action()</cite></p></td>
+<td><p>Method available</p></td>
+<td><p>Removed - dispatch events manually</p></td>
+</tr>
+<tr class="row-even"><td><p><cite>on_release</cite> behavior</p></td>
+<td><p>Fires on first touch up</p></td>
+<td><p>Fires after all touches released</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>on_cancel</cite> event</p></td>
+<td><p>Not available</p></td>
+<td><p><strong>New</strong> - fires on drag outside bounds</p></td>
+</tr>
+<tr class="row-even"><td><p><cite>always_release=False</cite></p></td>
+<td><p>Silent non-release</p></td>
+<td><p>Explicit <cite>on_cancel</cite> event</p></td>
+</tr>
+<tr class="row-odd"><td><p>Internal hooks</p></td>
+<td><p>Undocumented</p></td>
+<td><p>Documented <cite>_do_*()</cite> methods</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="togglebuttonbehavior">
+<h3>ToggleButtonBehavior<a class="headerlink" href="#togglebuttonbehavior" title="Permalink to this heading">¶</a></h3>
+<p><em>Replacement of `state` with `active` and Major API Improvements</em></p>
+<p>In Kivy 3.x.x, <cite>ToggleButtonBehavior</cite> has undergone significant improvements and changes.
+The most notable change is replacing the <cite>state</cite> OptionProperty with an <cite>active</cite> boolean property (<cite>AliasProperty</cite>),
+along with new features like scoped groups and the <cite>toggle_on</cite> property.</p>
+<p><strong>Migrating from `state` to `active`</strong></p>
+<p>The <cite>state</cite> property (<cite>‘normal’</cite> or <cite>‘down’</cite>) has been replaced with a boolean <cite>active</cite> property:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Kivy 2.x.x</span>
+<span class="k">if</span> <span class="n">toggle</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s1">&#39;down&#39;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Toggle is active&quot;</span><span class="p">)</span>
+    <span class="n">toggle</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s1">&#39;normal&#39;</span>  <span class="c1"># Deactivate</span>
+
+<span class="c1"># Kivy 3.x.x</span>
+<span class="k">if</span> <span class="n">toggle</span><span class="o">.</span><span class="n">active</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Toggle is active&quot;</span><span class="p">)</span>
+    <span class="n">toggle</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># Deactivate</span>
+</pre></div>
+</div>
+<p>In KV language:</p>
+<div class="highlight-kv notranslate"><div class="highlight"><pre><span></span><span class="c1"># Kivy 2.x.x</span>
+<span class="nc">ToggleButton</span><span class="p">:</span>
+    <span class="na">text</span><span class="p">:</span> <span class="s2">&quot;ON&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s1">&#39;down&#39;</span> <span class="k">else</span> <span class="s2">&quot;OFF&quot;</span>
+    <span class="na">color</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s1">&#39;down&#39;</span> <span class="k">else</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Kivy 3.x.x</span>
+<span class="nc">ToggleButton</span><span class="p">:</span>
+    <span class="na">text</span><span class="p">:</span> <span class="s2">&quot;ON&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span> <span class="k">else</span> <span class="s2">&quot;OFF&quot;</span>
+    <span class="na">color</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span> <span class="k">else</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>New `on_active` Event</strong></p>
+<p>Replace <cite>on_state</cite> bindings with <cite>on_active</cite>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Kivy 2.x.x</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MyToggle</span><span class="p">(</span><span class="n">ToggleButtonBehavior</span><span class="p">,</span> <span class="n">Label</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="s1">&#39;down&#39;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Activated&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">background_color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Deactivated&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">background_color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Kivy 3.x.x</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MyToggle</span><span class="p">(</span><span class="n">ToggleButtonBehavior</span><span class="p">,</span> <span class="n">Label</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_active</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Activated&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Deactivated&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In KV language, bind to property changes:</p>
+<div class="highlight-kv notranslate"><div class="highlight"><pre><span></span><span class="c1"># Kivy 2.x.x</span>
+<span class="nn">&lt;MyToggle@ToggleButton&gt;</span><span class="p">:</span>
+    <span class="na">on_state</span><span class="p">:</span> <span class="n">app</span><span class="o">.</span><span class="n">handle_toggle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+
+<span class="c1"># Kivy 3.x.x</span>
+<span class="nn">&lt;MyToggle@ToggleButton&gt;</span><span class="p">:</span>
+    <span class="na">on_active</span><span class="p">:</span> <span class="n">app</span><span class="o">.</span><span class="n">handle_toggle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>New `toggle_on` Property</strong></p>
+<p>A new <cite>toggle_on</cite> property controls when the toggle state changes - either on press
+or on release (default):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Kivy 3.x.x - Toggle immediately on press</span>
+<span class="n">ToggleButton</span><span class="p">:</span>
+    <span class="n">toggle_on</span><span class="p">:</span> <span class="s1">&#39;press&#39;</span>
+
+<span class="c1"># Kivy 3.x.x - Toggle on release (default)</span>
+<span class="n">ToggleButton</span><span class="p">:</span>
+    <span class="n">toggle_on</span><span class="p">:</span> <span class="s1">&#39;release&#39;</span>
+</pre></div>
+</div>
+<p>This is useful when you want instant visual feedback:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.behaviors</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToggleButtonBehavior</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.label</span><span class="w"> </span><span class="kn">import</span> <span class="n">Label</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">InstantToggle</span><span class="p">(</span><span class="n">ToggleButtonBehavior</span><span class="p">,</span> <span class="n">Label</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toggle_on</span> <span class="o">=</span> <span class="s1">&#39;press&#39;</span>  <span class="c1"># Toggle immediately</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_active</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;ON&quot;</span> <span class="k">if</span> <span class="n">value</span> <span class="k">else</span> <span class="s2">&quot;OFF&quot;</span>
+</pre></div>
+</div>
+<p><strong>Scoped Groups (New Tuple Syntax)</strong></p>
+<p>Groups can now be scoped to specific widget owners using tuple syntax. This prevents
+conflicts when creating reusable components:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Kivy 2.x.x - Only global groups (string)</span>
+<span class="n">ToggleButton</span><span class="p">:</span>
+    <span class="n">group</span><span class="p">:</span> <span class="s1">&#39;options&#39;</span>  <span class="c1"># Global across entire application</span>
+
+<span class="c1"># Kivy 3.x.x - Global groups (still supported)</span>
+<span class="n">ToggleButton</span><span class="p">:</span>
+    <span class="n">group</span><span class="p">:</span> <span class="s1">&#39;options&#39;</span>
+
+<span class="c1"># Kivy 3.x.x - Scoped groups (NEW)</span>
+<span class="n">ToggleButton</span><span class="p">:</span>
+    <span class="n">group</span><span class="p">:</span> <span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;options&#39;</span><span class="p">)</span>  <span class="c1"># Scoped to &#39;root&#39; widget</span>
+</pre></div>
+</div>
+<p><strong>Scoped Group Format</strong>: <code class="docutils literal notranslate"><span class="pre">(owner,</span> <span class="pre">name)</span></code></p>
+<ul class="simple">
+<li><p><strong>owner</strong>: Any object to scope the group to (typically a widget)</p></li>
+<li><p><strong>name</strong>: Hashable identifier (string, int, enum, etc.)</p></li>
+</ul>
+<p>Example of reusable component with scoped groups:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.boxlayout</span><span class="w"> </span><span class="kn">import</span> <span class="n">BoxLayout</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.togglebutton</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToggleButton</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">FilterPanel</span><span class="p">(</span><span class="n">BoxLayout</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Reusable panel with independent toggle groups.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># Each FilterPanel instance has its own &quot;size&quot; group</span>
+        <span class="k">for</span> <span class="n">size</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Small&quot;</span><span class="p">,</span> <span class="s2">&quot;Medium&quot;</span><span class="p">,</span> <span class="s2">&quot;Large&quot;</span><span class="p">]:</span>
+            <span class="n">btn</span> <span class="o">=</span> <span class="n">ToggleButton</span><span class="p">(</span>
+                <span class="n">text</span><span class="o">=</span><span class="n">size</span><span class="p">,</span>
+                <span class="n">group</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;size&quot;</span><span class="p">),</span>  <span class="c1"># Scoped to this FilterPanel instance</span>
+                <span class="n">allow_no_selection</span><span class="o">=</span><span class="kc">False</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">btn</span><span class="p">)</span>
+
+<span class="c1"># Multiple panels won&#39;t interfere with each other</span>
+<span class="n">panel1</span> <span class="o">=</span> <span class="n">FilterPanel</span><span class="p">()</span>  <span class="c1"># Has independent &quot;size&quot; group</span>
+<span class="n">panel2</span> <span class="o">=</span> <span class="n">FilterPanel</span><span class="p">()</span>  <span class="c1"># Has independent &quot;size&quot; group</span>
+</pre></div>
+</div>
+<p>In KV language:</p>
+<div class="highlight-kv notranslate"><div class="highlight"><pre><span></span><span class="nn">&lt;FilterPanel@BoxLayout&gt;</span><span class="p">:</span>
+    <span class="nc">ToggleButton</span><span class="p">:</span>
+        <span class="na">text</span><span class="p">:</span> <span class="s2">&quot;Small&quot;</span>
+        <span class="na">group</span><span class="p">:</span> <span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s2">&quot;size&quot;</span><span class="p">)</span>  <span class="c1"># Scoped to FilterPanel instance</span>
+    <span class="nc">ToggleButton</span><span class="p">:</span>
+        <span class="na">text</span><span class="p">:</span> <span class="s2">&quot;Medium&quot;</span>
+        <span class="na">group</span><span class="p">:</span> <span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s2">&quot;size&quot;</span><span class="p">)</span>
+    <span class="nc">ToggleButton</span><span class="p">:</span>
+        <span class="na">text</span><span class="p">:</span> <span class="s2">&quot;Large&quot;</span>
+        <span class="na">group</span><span class="p">:</span> <span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s2">&quot;size&quot;</span><span class="p">)</span>
+
+<span class="c1"># Each instance has independent groups</span>
+<span class="nc">BoxLayout</span><span class="p">:</span>
+    <span class="na">FilterPanel</span><span class="p">:</span>  <span class="c1"># Independent &quot;size&quot; group</span>
+    <span class="na">FilterPanel</span><span class="p">:</span>  <span class="c1"># Independent &quot;size&quot; group</span>
+</pre></div>
+</div>
+<p><strong>When to Use Scoped vs Global Groups</strong></p>
+<p>Use <strong>global groups</strong> (string) when:
+- You want all toggles across the app to share the same group
+- Building simple single-instance interfaces</p>
+<p>Use <strong>scoped groups</strong> (tuple) when:
+- Creating reusable components with internal toggle groups
+- Multiple instances of the same component shouldn’t interfere
+- Building complex layouts with nested toggle groups</p>
+<p><strong>Method Changes: `get_widgets()` → `get_group()`</strong></p>
+<p>The static method <cite>get_widgets(groupname)</cite> has been replaced with an instance method
+<cite>get_group()</cite>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Kivy 2.x.x - Static method</span>
+<span class="n">widgets</span> <span class="o">=</span> <span class="n">ToggleButtonBehavior</span><span class="o">.</span><span class="n">get_widgets</span><span class="p">(</span><span class="s1">&#39;mygroup&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="n">widgets</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">widget</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+<span class="k">del</span> <span class="n">widgets</span>  <span class="c1"># Always delete to prevent memory leaks</span>
+
+<span class="c1"># Kivy 3.x.x - Instance method</span>
+<span class="n">widgets</span> <span class="o">=</span> <span class="n">my_toggle_button</span><span class="o">.</span><span class="n">get_group</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="n">widgets</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">widget</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+<span class="k">del</span> <span class="n">widgets</span>  <span class="c1"># Still recommended to delete to prevent memory leaks</span>
+</pre></div>
+</div>
+<p>The new <cite>get_group()</cite> method:
+- Returns widgets in the same group as the calling instance
+- Works with both global and scoped groups automatically
+- Includes the calling widget in the returned list</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example usage</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.boxlayout</span><span class="w"> </span><span class="kn">import</span> <span class="n">BoxLayout</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.togglebutton</span><span class="w"> </span><span class="kn">import</span> <span class="n">ToggleButton</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MyApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">BoxLayout</span><span class="p">()</span>
+
+        <span class="n">btn1</span> <span class="o">=</span> <span class="n">ToggleButton</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Option 1&quot;</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s2">&quot;options&quot;</span><span class="p">)</span>
+        <span class="n">btn2</span> <span class="o">=</span> <span class="n">ToggleButton</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Option 2&quot;</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s2">&quot;options&quot;</span><span class="p">)</span>
+        <span class="n">btn3</span> <span class="o">=</span> <span class="n">ToggleButton</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;Option 3&quot;</span><span class="p">,</span> <span class="n">group</span><span class="o">=</span><span class="s2">&quot;options&quot;</span><span class="p">)</span>
+
+        <span class="n">layout</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">btn1</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">btn2</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">btn3</span><span class="p">)</span>
+
+        <span class="c1"># Get all widgets in btn1&#39;s group</span>
+        <span class="n">group_widgets</span> <span class="o">=</span> <span class="n">btn1</span><span class="o">.</span><span class="n">get_group</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Group has </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">group_widgets</span><span class="p">)</span><span class="si">}</span><span class="s2"> widgets&quot;</span><span class="p">)</span>  <span class="c1"># Prints: 3</span>
+        <span class="k">del</span> <span class="n">group_widgets</span>
+
+        <span class="k">return</span> <span class="n">layout</span>
+</pre></div>
+</div>
+<p><strong>Removal of `_clear_groups()` and `_release_group()`</strong></p>
+<p>The static method <cite>_clear_groups()</cite> and instance method <cite>_release_group()</cite> have been
+removed. Group management is now handled automatically through weak references.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Kivy 2.x.x - Manual group management</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MyToggle</span><span class="p">(</span><span class="n">ToggleButtonBehavior</span><span class="p">,</span> <span class="n">Label</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">custom_release</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_release_group</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s1">&#39;normal&#39;</span>
+
+<span class="c1"># Kivy 3.x.x - Automatic group management</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MyToggle</span><span class="p">(</span><span class="n">ToggleButtonBehavior</span><span class="p">,</span> <span class="n">Label</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">custom_release</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># Automatically manages group</span>
+</pre></div>
+</div>
+<p><strong>Improved Group Cleanup</strong></p>
+<p>Group management now uses <cite>WeakSet</cite> for automatic cleanup when widgets are deleted.
+You no longer need to manually clean up groups:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Kivy 2.x.x - Potential memory leaks if not careful</span>
+<span class="n">toggle</span> <span class="o">=</span> <span class="n">ToggleButton</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="s1">&#39;mygroup&#39;</span><span class="p">)</span>
+<span class="k">del</span> <span class="n">toggle</span>  <span class="c1"># Weak reference might linger</span>
+
+<span class="c1"># Kivy 3.x.x - Automatic cleanup</span>
+<span class="n">toggle</span> <span class="o">=</span> <span class="n">ToggleButton</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="s1">&#39;mygroup&#39;</span><span class="p">)</span>
+<span class="k">del</span> <span class="n">toggle</span>  <span class="c1"># Automatically removed from group via WeakSet</span>
+</pre></div>
+</div>
+<p><strong>Summary of Breaking Changes</strong></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Removed/Changed</p></th>
+<th class="head"><p>Kivy 2.x.x</p></th>
+<th class="head"><p>Kivy 3.x.x</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><cite>state</cite> property</p></td>
+<td><p><cite>‘normal’</cite> or <cite>‘down’</cite></p></td>
+<td><p>Replaced with <cite>active</cite> (bool)</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>on_state</cite> event</p></td>
+<td><p>Fired on state change</p></td>
+<td><p>Replaced with <cite>on_active</cite></p></td>
+</tr>
+<tr class="row-even"><td><p><cite>toggle_on</cite> property</p></td>
+<td><p>Not available</p></td>
+<td><p><strong>New</strong> - ‘press’ or ‘release’</p></td>
+</tr>
+<tr class="row-odd"><td><p>Group syntax</p></td>
+<td><p>String only</p></td>
+<td><p>String or (owner, name) tuple</p></td>
+</tr>
+<tr class="row-even"><td><p><cite>get_widgets(group)</cite></p></td>
+<td><p>Static method</p></td>
+<td><p>Replaced with <cite>get_group()</cite> instance</p></td>
+</tr>
+<tr class="row-odd"><td><p><cite>_clear_groups()</cite></p></td>
+<td><p>Static method</p></td>
+<td><p>Removed - automatic cleanup</p></td>
+</tr>
+<tr class="row-even"><td><p><cite>_release_group()</cite></p></td>
+<td><p>Instance method</p></td>
+<td><p>Removed - automatic via <cite>active</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p>Group management</p></td>
+<td><p>Manual weak references</p></td>
+<td><p>Automatic with <cite>WeakSet</cite></p></td>
+</tr>
+</tbody>
+</table>
+<p><a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a></p>
+</section>
 </section>
 </section>
 

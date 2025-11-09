@@ -115,6 +115,7 @@
 <li><a class="reference internal" href="#kivy.uix.tabbedpanel.TabbedPanelContent"><code class="docutils literal notranslate"><span class="pre">TabbedPanelContent</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.tabbedpanel.TabbedPanelException"><code class="docutils literal notranslate"><span class="pre">TabbedPanelException</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.tabbedpanel.TabbedPanelHeader"><code class="docutils literal notranslate"><span class="pre">TabbedPanelHeader</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.uix.tabbedpanel.TabbedPanelHeader.on_release"><code class="docutils literal notranslate"><span class="pre">TabbedPanelHeader.on_release()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.tabbedpanel.TabbedPanelHeader.on_touch_down"><code class="docutils literal notranslate"><span class="pre">TabbedPanelHeader.on_touch_down()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.tabbedpanel.TabbedPanelHeader.on_touch_up"><code class="docutils literal notranslate"><span class="pre">TabbedPanelHeader.on_touch_up()</span></code></a></li>
 </ul>
@@ -429,6 +430,7 @@
 <li><a class="reference internal" href="#kivy.uix.tabbedpanel.TabbedPanelContent"><code class="docutils literal notranslate"><span class="pre">TabbedPanelContent</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.tabbedpanel.TabbedPanelException"><code class="docutils literal notranslate"><span class="pre">TabbedPanelException</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.tabbedpanel.TabbedPanelHeader"><code class="docutils literal notranslate"><span class="pre">TabbedPanelHeader</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.uix.tabbedpanel.TabbedPanelHeader.on_release"><code class="docutils literal notranslate"><span class="pre">TabbedPanelHeader.on_release()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.tabbedpanel.TabbedPanelHeader.on_touch_down"><code class="docutils literal notranslate"><span class="pre">TabbedPanelHeader.on_touch_down()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.tabbedpanel.TabbedPanelHeader.on_touch_up"><code class="docutils literal notranslate"><span class="pre">TabbedPanelHeader.on_touch_up()</span></code></a></li>
 </ul>
@@ -735,23 +737,31 @@ used as a Heading/Tab for a TabbedPanel widget.</p>
 <p>You can use this TabbedPanelHeader widget to add a new tab to a
 TabbedPanel.</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="kivy.uix.tabbedpanel.TabbedPanelHeader.on_release">
+<span class="sig-name descname"><span class="pre">on_release</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">largs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.tabbedpanel.TabbedPanelHeader.on_release" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event handler called when the button is released.</p>
+<p>This event is fired when the last active touch is released, and only if:
+- The touch is released within button bounds, OR
+- The <cite>always_release</cite> property is True</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="kivy.uix.tabbedpanel.TabbedPanelHeader.on_touch_down">
 <span class="sig-name descname"><span class="pre">on_touch_down</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">touch</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.tabbedpanel.TabbedPanelHeader.on_touch_down" title="Permalink to this definition">¶</a></dt>
-<dd><p>Receive a touch down event.</p>
+<dd><p>Handle touch down events.</p>
+<p>Implements core press detection:</p>
+<ol class="arabic simple">
+<li><p>Test collision with widget bounds</p></li>
+<li><p>Grab touch if colliding (marks widget as touch owner)</p></li>
+<li><p>Add to active touches tracking</p></li>
+<li><p>Dispatch <code class="xref py py-meth docutils literal notranslate"><span class="pre">on_press()</span></code> on first touch</p></li>
+</ol>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><dl class="simple">
-<dt><cite>touch</cite>: <a class="reference internal" href="api-kivy.input.motionevent.html#kivy.input.motionevent.MotionEvent" title="kivy.input.motionevent.MotionEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">MotionEvent</span></code></a> class</dt><dd><p>Touch received. The touch is in parent coordinates. See
-<a class="reference internal" href="api-kivy.uix.relativelayout.html#module-kivy.uix.relativelayout" title="kivy.uix.relativelayout"><code class="xref py py-mod docutils literal notranslate"><span class="pre">relativelayout</span></code></a> for a discussion on
-coordinate systems.</p>
-</dd>
-</dl>
+<dd class="field-odd"><p><strong>touch</strong> – <a class="reference internal" href="api-kivy.input.motionevent.html#kivy.input.motionevent.MotionEvent" title="kivy.input.motionevent.MotionEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">MotionEvent</span></code></a> instance</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool
-If True, the dispatching of the touch event will stop.
-If False, the event will continue to be dispatched to the rest
-of the widget tree.</p>
+<dd class="field-even"><p>True if event was handled (collided with widget)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -759,8 +769,25 @@ of the widget tree.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.uix.tabbedpanel.TabbedPanelHeader.on_touch_up">
 <span class="sig-name descname"><span class="pre">on_touch_up</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">touch</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.tabbedpanel.TabbedPanelHeader.on_touch_up" title="Permalink to this definition">¶</a></dt>
-<dd><p>Receive a touch up event. The touch is in parent coordinates.</p>
-<p>See <a class="reference internal" href="#kivy.uix.tabbedpanel.TabbedPanelHeader.on_touch_down" title="kivy.uix.tabbedpanel.TabbedPanelHeader.on_touch_down"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_touch_down()</span></code></a> for more information.</p>
+<dd><p>Handle touch up events.</p>
+<p>Implements release detection:</p>
+<ol class="arabic simple">
+<li><p>Verify we own this touch</p></li>
+<li><p>Ungrab touch to release ownership</p></li>
+<li><p>Remove from active/cancelled tracking</p></li>
+<li><p>Dispatch <a class="reference internal" href="#kivy.uix.tabbedpanel.TabbedPanelHeader.on_release" title="kivy.uix.tabbedpanel.TabbedPanelHeader.on_release"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_release()</span></code></a> if appropriate:
+- Touch wasn’t cancelled, AND
+- (Touch ended within bounds OR <code class="xref py py-attr docutils literal notranslate"><span class="pre">always_release</span></code> is True), AND
+- This was the last active touch</p></li>
+</ol>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>touch</strong> – <a class="reference internal" href="api-kivy.input.motionevent.html#kivy.input.motionevent.MotionEvent" title="kivy.input.motionevent.MotionEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">MotionEvent</span></code></a> instance</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if event was handled</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
