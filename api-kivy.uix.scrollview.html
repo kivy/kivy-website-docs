@@ -106,10 +106,16 @@
 <li><a class="reference internal" href="#limiting-to-the-x-or-y-axis">Limiting to the X or Y Axis</a></li>
 <li><a class="reference internal" href="#managing-the-content-size-and-position">Managing the Content Size and Position</a></li>
 <li><a class="reference internal" href="#overscroll-effects">Overscroll Effects</a></li>
+<li><a class="reference internal" href="#nested-scrollviews">Nested ScrollViews</a></li>
+<li><a class="reference internal" href="#web-style-boundary-delegation">Web-Style Boundary Delegation</a></li>
+<li><a class="reference internal" href="#wheel-behavior-in-nested-scrollviews">Wheel Behavior in Nested ScrollViews</a></li>
 <li><a class="reference internal" href="#kivy.uix.scrollview.ScrollView"><code class="docutils literal notranslate"><span class="pre">ScrollView</span></code></a><ul>
 <li><a class="reference internal" href="#kivy.uix.scrollview.ScrollView.add_widget"><code class="docutils literal notranslate"><span class="pre">ScrollView.add_widget()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.scrollview.ScrollView.convert_distance_to_scroll"><code class="docutils literal notranslate"><span class="pre">ScrollView.convert_distance_to_scroll()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.scrollview.ScrollView.on_motion"><code class="docutils literal notranslate"><span class="pre">ScrollView.on_motion()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.scrollview.ScrollView.on_scroll_move"><code class="docutils literal notranslate"><span class="pre">ScrollView.on_scroll_move()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.scrollview.ScrollView.on_scroll_start"><code class="docutils literal notranslate"><span class="pre">ScrollView.on_scroll_start()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.scrollview.ScrollView.on_scroll_stop"><code class="docutils literal notranslate"><span class="pre">ScrollView.on_scroll_stop()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.scrollview.ScrollView.on_touch_down"><code class="docutils literal notranslate"><span class="pre">ScrollView.on_touch_down()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.scrollview.ScrollView.on_touch_move"><code class="docutils literal notranslate"><span class="pre">ScrollView.on_touch_move()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.scrollview.ScrollView.on_touch_up"><code class="docutils literal notranslate"><span class="pre">ScrollView.on_touch_up()</span></code></a></li>
@@ -415,10 +421,16 @@
 <li><a class="reference internal" href="#limiting-to-the-x-or-y-axis">Limiting to the X or Y Axis</a></li>
 <li><a class="reference internal" href="#managing-the-content-size-and-position">Managing the Content Size and Position</a></li>
 <li><a class="reference internal" href="#overscroll-effects">Overscroll Effects</a></li>
+<li><a class="reference internal" href="#nested-scrollviews">Nested ScrollViews</a></li>
+<li><a class="reference internal" href="#web-style-boundary-delegation">Web-Style Boundary Delegation</a></li>
+<li><a class="reference internal" href="#wheel-behavior-in-nested-scrollviews">Wheel Behavior in Nested ScrollViews</a></li>
 <li><a class="reference internal" href="#kivy.uix.scrollview.ScrollView"><code class="docutils literal notranslate"><span class="pre">ScrollView</span></code></a><ul>
 <li><a class="reference internal" href="#kivy.uix.scrollview.ScrollView.add_widget"><code class="docutils literal notranslate"><span class="pre">ScrollView.add_widget()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.scrollview.ScrollView.convert_distance_to_scroll"><code class="docutils literal notranslate"><span class="pre">ScrollView.convert_distance_to_scroll()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.scrollview.ScrollView.on_motion"><code class="docutils literal notranslate"><span class="pre">ScrollView.on_motion()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.scrollview.ScrollView.on_scroll_move"><code class="docutils literal notranslate"><span class="pre">ScrollView.on_scroll_move()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.scrollview.ScrollView.on_scroll_start"><code class="docutils literal notranslate"><span class="pre">ScrollView.on_scroll_start()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.scrollview.ScrollView.on_scroll_stop"><code class="docutils literal notranslate"><span class="pre">ScrollView.on_scroll_stop()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.scrollview.ScrollView.on_touch_down"><code class="docutils literal notranslate"><span class="pre">ScrollView.on_touch_down()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.scrollview.ScrollView.on_touch_move"><code class="docutils literal notranslate"><span class="pre">ScrollView.on_touch_move()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.scrollview.ScrollView.on_touch_up"><code class="docutils literal notranslate"><span class="pre">ScrollView.on_touch_up()</span></code></a></li>
@@ -568,6 +580,106 @@ use. This will override the default effect set in
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">effect_cls</span></code>.</p>
 <p>All the effects are located in the <a class="reference internal" href="api-kivy.effects.html#module-kivy.effects" title="kivy.effects"><code class="xref py py-mod docutils literal notranslate"><span class="pre">kivy.effects</span></code></a>.</p>
 </section>
+<section id="nested-scrollviews">
+<h2>Nested ScrollViews<a class="headerlink" href="#nested-scrollviews" title="Permalink to this heading">¶</a></h2>
+<p>An application can have multiple levels of nested ScrollViews.  The
+ScrollView class manages the hierarchy of nested ScrollViews.</p>
+<p>It is important to set the <code class="xref py py-attr docutils literal notranslate"><span class="pre">do_scroll_x</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">do_scroll_y</span></code>
+properties to the correct values for the nested ScrollViews.
+The nested scrolling behavior, described below, is only applied if the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">do_scroll_x</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">do_scroll_y</span></code> properties are set to the
+appropriate values.</p>
+<p>To achieve orthogonal scrolling, for example, the outer
+ScrollView should have <code class="xref py py-attr docutils literal notranslate"><span class="pre">do_scroll_x</span></code> set to False and the inner
+ScrollView should have <code class="xref py py-attr docutils literal notranslate"><span class="pre">do_scroll_y</span></code> set to True, or vice versa.</p>
+<p>For Parallel scrolling, both ScrollViews should have the same value for
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">do_scroll_x</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">do_scroll_y</span></code>.  This can allow vertical in
+vertical,  horizontal in horizontal, or XY in XY scrolling.</p>
+<p>For mixed scrolling, the outer ScrollView should have <code class="xref py py-attr docutils literal notranslate"><span class="pre">do_scroll_x</span></code>
+and <code class="xref py py-attr docutils literal notranslate"><span class="pre">do_scroll_y</span></code> set to True, and the inner ScrollView should have
+either <code class="xref py py-attr docutils literal notranslate"><span class="pre">do_scroll_x</span></code> or <code class="xref py py-attr docutils literal notranslate"><span class="pre">do_scroll_y</span></code> set to False.</p>
+<dl class="simple">
+<dt><strong>Orthogonal Scrolling</strong> (outer and inner scroll in different directions):</dt><dd><ul class="simple">
+<li><p>Touch: Each ScrollView scrolls only in its direction</p></li>
+<li><p>Wheel: Innermost ScrollView scrolls if it supports that axis</p></li>
+<li><p>Example: Vertical outer + Horizontal inner</p></li>
+</ul>
+</dd>
+<dt><strong>Parallel Scrolling</strong> (outer and inner scroll in the same direction):</dt><dd><ul class="simple">
+<li><p>Touch: Web-style boundary delegation (see below)</p></li>
+<li><p>Wheel: Innermost ScrollView scrolls, no delegation to outer</p></li>
+<li><p>Scrollbar: Scroll does not affect other ScrollView</p></li>
+<li><p>Example: Vertical outer + Vertical inner</p></li>
+</ul>
+</dd>
+<dt><strong>Mixed Scrolling</strong> (outer scrolls XY, inner one axis, or vice versa):</dt><dd><ul class="simple">
+<li><p>Shared axis: Web-style boundary delegation</p></li>
+<li><p>Exclusive axes: Immediate delegation or inner-only scrolling</p></li>
+<li><p>Wheel: Innermost ScrollView scrolls if it supports the axis</p></li>
+<li><p>Example: XY outer + Horizontal inner</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="web-style-boundary-delegation">
+<h2>Web-Style Boundary Delegation<a class="headerlink" href="#web-style-boundary-delegation" title="Permalink to this heading">¶</a></h2>
+<p>For parallel and shared-axis scrolling, ScrollView uses web-style
+delegation:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>If a touch starts at the inner boundary and moves out, it delegates
+scrolling to the outer ScrollView right away.</p></li>
+<li><p>If a touch starts at the inner boundary and moves in, only the inner
+ScrollView scrolls.</p></li>
+<li><p>If a touch starts not at a boundary, only the inner ScrollView
+scrolls, even if the gesture later reaches a boundary. Delegation to
+the outer never occurs mid-gesture in this case.</p></li>
+<li><p>A new touch starting at the boundary is required to delegate to the
+outer.</p></li>
+</ul>
+</div></blockquote>
+<p>Disable this behavior by setting <code class="xref py py-attr docutils literal notranslate"><span class="pre">parallel_delegation</span></code> to False.</p>
+</section>
+<section id="wheel-behavior-in-nested-scrollviews">
+<h2>Wheel Behavior in Nested ScrollViews<a class="headerlink" href="#wheel-behavior-in-nested-scrollviews" title="Permalink to this heading">¶</a></h2>
+<p>When the mouse scroll wheel or a trackpad is used, ScrollView always
+applies web-style delegation:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Only the innermost ScrollView under the pointer/cursor will handle
+the wheel event.</p></li>
+<li><p>If that ScrollView cannot scroll further along the wheel axis, the
+event is not propagated to outer ScrollViews. This matches standard
+browser and OS behavior.</p></li>
+<li><p>Outer ScrollViews never respond to wheel events unless the pointer is
+over their scrollbars or unless there are no deeper nested
+ScrollViews.</p></li>
+</ul>
+</div></blockquote>
+<p>This prevents “scroll hijacking” and provides an intuitive nested scroll
+experience.</p>
+<dl class="simple">
+<dt><strong>Examples:</strong></dt><dd><ul class="simple">
+<li><p>In a vertical ScrollView containing a horizontal ScrollView, using the
+wheel over the horizontal ScrollView means only the vertical (outer)
+ScrollView scrolls, if its direction matches the wheel.</p></li>
+<li><p>For two nested vertical ScrollViews, the innermost one under the
+pointer will scroll with the wheel until it cannot scroll further;
+wheel events are not delegated to the parent.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Wheel behavior is always active and is NOT affected by the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">parallel_delegation</span></code> or <code class="xref py py-attr docutils literal notranslate"><span class="pre">delegate_to_outer</span></code> properties.
+Those only control touch and touchpad gesture behavior.</p>
+<blockquote>
+<div><div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version VERSION_NEXT.</span></p>
+</div>
+<p>The ScrollView widgetnow supports nesting to arbitrary levels
+and configurations.</p>
+</div></blockquote>
+</section>
 <dl class="py class">
 <dt class="sig sig-object py" id="kivy.uix.scrollview.ScrollView">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.uix.scrollview.</span></span><span class="sig-name descname"><span class="pre">ScrollView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.scrollview.ScrollView" title="Permalink to this definition">¶</a></dt>
@@ -576,15 +688,24 @@ use. This will override the default effect set in
 <dl class="field-list simple">
 <dt class="field-odd">Events<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><cite>on_scroll_start</cite></dt><dd><p>Generic event fired when scrolling starts from touch.</p>
+<dt><cite>on_scroll_start</cite></dt><dd><p>Dispatch when scrolling is detected.</p>
 </dd>
-<dt><cite>on_scroll_move</cite></dt><dd><p>Generic event fired when scrolling move from touch.</p>
+<dt><cite>on_scroll_move</cite></dt><dd><p>Dispatched when scrolling continues.
+Fires continuously during scrolling.</p>
 </dd>
-<dt><cite>on_scroll_stop</cite></dt><dd><p>Generic event fired when scrolling stops from touch.</p>
+<dt><cite>on_scroll_stop</cite></dt><dd><p>Dispatched when scrolling stops. Fires when velocity reaches zero
+and scroll position stabilizes for 3 consecutive frames.</p>
 </dd>
 </dl>
 </dd>
 </dl>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version VERSION_NEXT: </span><cite>on_scroll_start</cite>, <cite>on_scroll_move</cite> and <cite>on_scroll_stop</cite> events are
+now dispatched for nested and non-nested ScrollViews. The behavior
+has been updated.  Previously these events mirrored the behavior of the
+on_touch_* methods.
+Now they fire when scrolling starts, continues and stops.</p>
+</div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 1.9.0: </span><cite>on_scroll_start</cite>, <cite>on_scroll_move</cite> and <cite>on_scroll_stop</cite> events are
 now dispatched when scrolling to handle nested ScrollViews.</p>
@@ -666,6 +787,58 @@ content size and the scrollview size.</p>
 <p class="admonition-title">Warning</p>
 <p>This is an experimental method and it remains so while this warning
 is present.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy.uix.scrollview.ScrollView.on_scroll_move">
+<span class="sig-name descname"><span class="pre">on_scroll_move</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.scrollview.ScrollView.on_scroll_move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event fired when the scroll position changes.</p>
+<p>This event is dispatched whenever the scroll_x or scroll_y properties
+change during an active scroll gesture. It provides a unified way to
+track scrolling regardless of input method.
+(touch, mouse wheel, scrollbar, or programmatic
+scroll_x/scroll_y changes).</p>
+<p>This event fires continuously during scrolling and is useful for
+implementing scroll-based animations, progress indicators, or parallax
+effects.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version NEXT_VERSION: </span>Removed touch parameter. Use on_touch_down/move/up for touch-specific
+handling. Now fires for all scroll_x/scroll_y changes including
+programmatic updates.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy.uix.scrollview.ScrollView.on_scroll_start">
+<span class="sig-name descname"><span class="pre">on_scroll_start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.scrollview.ScrollView.on_scroll_start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event fired when a scroll gesture starts.</p>
+<p>This event is dispatched when scrolling begins, regardless of the input
+method (touch, mouse wheel, or programmatic). It fires once per scroll
+gesture when the ScrollView determines that scrolling should commence.</p>
+<p>For touch/content scrolling, this fires after the touch has moved beyond
+the scroll_distance threshold. For scrollbar interactions, it fires when
+the scrollbar is initially grabbed. For mouse wheel scrolling, it fires
+on the first scroll wheel event.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version NEXT_VERSION: </span>Removed touch parameter. Use on_touch_down/move/up for
+touch-specific handling.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy.uix.scrollview.ScrollView.on_scroll_stop">
+<span class="sig-name descname"><span class="pre">on_scroll_stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.scrollview.ScrollView.on_scroll_stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event fired when scrolling motion stops.</p>
+<p>This event is dispatched when the scrolling motion has completely
+stopped.  Fires when both velocity reaches zero and scroll position
+stabilizes for 3 consecutive frames.</p>
+<p>This event is useful for triggering actions after scrolling completes,
+such as loading more content, snapping to grid positions, or updating
+UI state.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version NEXT_VERSION: </span>Removed touch parameter. Use on_touch_down/move/up for
+touch-specific handling.</p>
 </div>
 </dd></dl>
 
@@ -838,7 +1011,7 @@ if the size of the content changes.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Nov 09, 2025.
+      Last updated on Nov 12, 2025.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
