@@ -102,6 +102,9 @@
           <h3><a href="index.html">Damped scroll effect</a></h3>
           <ul>
 <li><a class="reference internal" href="#">Damped scroll effect</a><ul>
+<li><a class="reference internal" href="#implementation-notes">IMPLEMENTATION NOTES:</a></li>
+<li><a class="reference internal" href="#attribution">ATTRIBUTION:</a></li>
+<li><a class="reference internal" href="#differences-from-the-original-dampedscrolleffect">Differences from the original DampedScrollEffect:</a></li>
 <li><a class="reference internal" href="#kivy.effects.dampedscroll.DampedScrollEffect"><code class="docutils literal notranslate"><span class="pre">DampedScrollEffect</span></code></a><ul>
 <li><a class="reference internal" href="#kivy.effects.dampedscroll.DampedScrollEffect.update_velocity"><code class="docutils literal notranslate"><span class="pre">DampedScrollEffect.update_velocity()</span></code></a></li>
 </ul>
@@ -397,6 +400,9 @@
           <div class="body">
             <div class="toc"><h2>Table Of Contents</h2><ul>
 <li><a class="reference internal" href="#">Damped scroll effect</a><ul>
+<li><a class="reference internal" href="#implementation-notes">IMPLEMENTATION NOTES:</a></li>
+<li><a class="reference internal" href="#attribution">ATTRIBUTION:</a></li>
+<li><a class="reference internal" href="#differences-from-the-original-dampedscrolleffect">Differences from the original DampedScrollEffect:</a></li>
 <li><a class="reference internal" href="#kivy.effects.dampedscroll.DampedScrollEffect"><code class="docutils literal notranslate"><span class="pre">DampedScrollEffect</span></code></a><ul>
 <li><a class="reference internal" href="#kivy.effects.dampedscroll.DampedScrollEffect.update_velocity"><code class="docutils literal notranslate"><span class="pre">DampedScrollEffect.update_velocity()</span></code></a></li>
 </ul>
@@ -409,17 +415,60 @@
   <section id="module-kivy.effects.dampedscroll">
 <span id="damped-scroll-effect"></span><h1>Damped scroll effect<a class="headerlink" href="#module-kivy.effects.dampedscroll" title="Permalink to this heading">¶</a></h1>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 1.7.0.</span></p>
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
 </div>
-<p>This damped scroll effect will use the
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">overscroll</span></code> to calculate the scroll
-value, and slows going back to the upper or lower limit.</p>
+<p>This scroll effect is inspired by Flutter’s BouncingScrollPhysics, which mimics
+iOS-style scrolling behavior. Key features:</p>
+<ol class="arabic simple">
+<li><p>Logarithmic resistance during overscroll drag (rubber band feel)</p></li>
+<li><p>Critically damped spring for bounce-back (no oscillation)</p></li>
+<li><p>Exponential friction for momentum scrolling</p></li>
+<li><p>Mathematically guaranteed stability</p></li>
+</ol>
+<section id="implementation-notes">
+<h2>IMPLEMENTATION NOTES:<a class="headerlink" href="#implementation-notes" title="Permalink to this heading">¶</a></h2>
+<p>This is a clean-room implementation based on understanding the physics and
+algorithms used in Flutter and iOS, not a direct port of their code.</p>
+<p>Key concepts used:
+- Critical damping: Standard physics (ξ = 1.0, c = 2√(km))
+- Rubber band formula: Mathematical transformation inspired by WebKit/iOS
+- Spring physics: Hooke’s Law (F = -kx) + damping (F = -cv)</p>
+</section>
+<section id="attribution">
+<h2>ATTRIBUTION:<a class="headerlink" href="#attribution" title="Permalink to this heading">¶</a></h2>
+<p>Inspired by:
+- Flutter’s BouncingScrollPhysics (BSD 3-Clause License)</p>
+<blockquote>
+<div><p><a class="reference external" href="https://github.com/flutter/flutter">https://github.com/flutter/flutter</a></p>
+</div></blockquote>
+<ul class="simple">
+<li><p>iOS UIScrollView rubber-banding behavior</p></li>
+<li><p>WebKit ScrollController implementation (BSD/LGPL)</p></li>
+</ul>
+<p>The mathematical formulas and physics concepts used are not copyrightable.
+No source code was copied from Flutter, iOS, or WebKit.</p>
+<p>Mathematical formulas, physical laws, and algorithms are not subject to
+copyright. This implementation uses standard physics equations and
+mathematical transformations that are in the public domain.</p>
+</section>
+<section id="differences-from-the-original-dampedscrolleffect">
+<h2>Differences from the original DampedScrollEffect:<a class="headerlink" href="#differences-from-the-original-dampedscrolleffect" title="Permalink to this heading">¶</a></h2>
+<p>This implementation is different from the original DampedScrollEffect
+that was introduced in Kivy 1.7.0.  The original DampedScrollEffect had a
+numerical instability issue. This implementation uses critical damping
+to ensure the effect is stable.  Additionally the properties in the
+effect are different, and allow for more control over the effect.</p>
+</section>
 <dl class="py class">
 <dt class="sig sig-object py" id="kivy.effects.dampedscroll.DampedScrollEffect">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.effects.dampedscroll.</span></span><span class="sig-name descname"><span class="pre">DampedScrollEffect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.effects.dampedscroll.DampedScrollEffect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="api-kivy.effects.scroll.html#kivy.effects.scroll.ScrollEffect" title="kivy.effects.scroll.ScrollEffect"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.effects.scroll.ScrollEffect</span></code></a></p>
-<p>DampedScrollEffect class. See the module documentation for more
-information.</p>
+<p>Flutter-inspired scroll effect with iOS-style rubber banding.</p>
+<p>This implementation uses:
+- Logarithmic resistance for overscroll (increasing resistance as you pull)
+- Critically damped spring for bounce-back (no oscillation)
+- Exponential friction for smooth momentum</p>
+<p>See module documentation for more information.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.effects.dampedscroll.DampedScrollEffect.update_velocity">
 <span class="sig-name descname"><span class="pre">update_velocity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.effects.dampedscroll.DampedScrollEffect.update_velocity" title="Permalink to this definition">¶</a></dt>
@@ -480,7 +529,7 @@ friction.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Nov 12, 2025.
+      Last updated on Nov 22, 2025.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
