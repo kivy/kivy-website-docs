@@ -103,6 +103,12 @@
           <ul>
 <li><a class="reference internal" href="#">Image</a><ul>
 <li><a class="reference internal" href="#in-memory-image-loading">In-memory image loading</a></li>
+<li><a class="reference internal" href="#data-uri-loading">Data URI loading</a><ul>
+<li><a class="reference internal" href="#typical-usage-with-image-widget">Typical usage with Image widget</a></li>
+<li><a class="reference internal" href="#advanced-usage-with-coreimage">Advanced usage with CoreImage</a></li>
+<li><a class="reference internal" href="#converting-a-file-to-a-data-uri">Converting a file to a data URI</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#saving-an-image">Saving an image</a></li>
 <li><a class="reference internal" href="#kivy.core.image.Image"><code class="docutils literal notranslate"><span class="pre">Image</span></code></a><ul>
 <li><a class="reference internal" href="#kivy.core.image.Image.anim_available"><code class="docutils literal notranslate"><span class="pre">Image.anim_available</span></code></a></li>
@@ -426,6 +432,12 @@
             <div class="toc"><h2>Table Of Contents</h2><ul>
 <li><a class="reference internal" href="#">Image</a><ul>
 <li><a class="reference internal" href="#in-memory-image-loading">In-memory image loading</a></li>
+<li><a class="reference internal" href="#data-uri-loading">Data URI loading</a><ul>
+<li><a class="reference internal" href="#typical-usage-with-image-widget">Typical usage with Image widget</a></li>
+<li><a class="reference internal" href="#advanced-usage-with-coreimage">Advanced usage with CoreImage</a></li>
+<li><a class="reference internal" href="#converting-a-file-to-a-data-uri">Converting a file to a data URI</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#saving-an-image">Saving an image</a></li>
 <li><a class="reference internal" href="#kivy.core.image.Image"><code class="docutils literal notranslate"><span class="pre">Image</span></code></a><ul>
 <li><a class="reference internal" href="#kivy.core.image.Image.anim_available"><code class="docutils literal notranslate"><span class="pre">Image.anim_available</span></code></a></li>
@@ -499,6 +511,95 @@ will be used only for caching):</p>
 <span class="n">im</span> <span class="o">=</span> <span class="n">CoreImage</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="s2">&quot;png&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;image.png&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+</section>
+<section id="data-uri-loading">
+<h2>Data URI loading<a class="headerlink" href="#data-uri-loading" title="Permalink to this heading">¶</a></h2>
+<p>Images can be loaded directly from data URIs without needing to save them to disk first.
+This is useful for embedding small images directly in your code or loading images
+from web APIs that return base64-encoded data.</p>
+<p>Data URIs must follow the standard format:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">:</span><span class="n">image</span><span class="o">/&lt;</span><span class="nb">type</span><span class="o">&gt;</span><span class="p">[;</span><span class="o">&lt;</span><span class="n">options</span><span class="o">&gt;</span><span class="p">],</span><span class="o">&lt;</span><span class="n">data</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Where:</dt><dd><ul class="simple">
+<li><p><cite>&lt;type&gt;</cite>: The image format (e.g., ‘png’, ‘jpeg’, ‘gif’, ‘webp’)</p></li>
+<li><dl class="simple">
+<dt><cite>&lt;options&gt;</cite>: Optional parameters, separated by semicolons. Currently, supports:</dt><dd><ul>
+<li><p><cite>base64</cite>: Indicates the data is base64-encoded (recommended)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><cite>&lt;data&gt;</cite>: The image data, either as raw bytes or base64-encoded string</p></li>
+</ul>
+</dd>
+</dl>
+<section id="typical-usage-with-image-widget">
+<h3>Typical usage with Image widget<a class="headerlink" href="#typical-usage-with-image-widget" title="Permalink to this heading">¶</a></h3>
+<p>The most common way to use data URIs is with the <a class="reference internal" href="api-kivy.uix.image.html#kivy.uix.image.Image" title="kivy.uix.image.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> widget,
+which handles positioning, scaling, and other display logic:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.image</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+
+<span class="c1"># Load a base64-encoded PNG image</span>
+<span class="n">data_uri</span> <span class="o">=</span> <span class="s2">&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA...&quot;</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">data_uri</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In KV language:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Image</span><span class="p">:</span>
+    <span class="n">source</span><span class="p">:</span> <span class="s1">&#39;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA...&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="advanced-usage-with-coreimage">
+<h3>Advanced usage with CoreImage<a class="headerlink" href="#advanced-usage-with-coreimage" title="Permalink to this heading">¶</a></h3>
+<p>For custom canvas instructions or more control over texture rendering,
+you can use CoreImage directly:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.image</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span> <span class="k">as</span> <span class="n">CoreImage</span>
+
+<span class="c1"># Load and get the texture</span>
+<span class="n">data_uri</span> <span class="o">=</span> <span class="s2">&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA...&quot;</span>
+<span class="n">core_img</span> <span class="o">=</span> <span class="n">CoreImage</span><span class="p">(</span><span class="n">data_uri</span><span class="p">)</span>
+<span class="n">texture</span> <span class="o">=</span> <span class="n">core_img</span><span class="o">.</span><span class="n">texture</span>
+</pre></div>
+</div>
+<p>In KV language for custom widgets:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">MyWidget</span><span class="o">&gt;</span><span class="p">:</span>
+    <span class="n">canvas</span><span class="p">:</span>
+        <span class="n">Rectangle</span><span class="p">:</span>
+            <span class="n">pos</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span>
+            <span class="n">size</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
+            <span class="n">texture</span><span class="p">:</span> <span class="n">CoreImage</span><span class="p">(</span><span class="s1">&#39;data:image/png;base64,iVBORw0KGg...&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">texture</span>
+</pre></div>
+</div>
+<p><strong>Important notes:</strong></p>
+<ul class="simple">
+<li><p>Images loaded from data URIs are automatically set to <cite>nocache=True</cite> and will not be</p></li>
+</ul>
+<p>cached
+- The image type must be supported by one of Kivy’s image providers
+(png, jpeg, gif, etc.)
+- Base64 encoding is recommended for binary image formats (PNG, JPEG, etc.)
+- For large images, consider using the BytesIO method instead for better memory
+efficiency</p>
+</section>
+<section id="converting-a-file-to-a-data-uri">
+<h3>Converting a file to a data URI<a class="headerlink" href="#converting-a-file-to-a-data-uri" title="Permalink to this heading">¶</a></h3>
+<p>Here’s how to convert an existing image file to a data URI:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">base64</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.image</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+
+<span class="c1"># Read and encode an image file</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;image.png&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">encoded</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+<span class="c1"># Create data URI and load</span>
+<span class="n">data_uri</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;data:image/png;base64,</span><span class="si">{</span><span class="n">encoded</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">data_uri</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="saving-an-image">
 <h2>Saving an image<a class="headerlink" href="#saving-an-image" title="Permalink to this heading">¶</a></h2>
@@ -887,7 +988,7 @@ The container will always have at least the mipmap level 0.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Nov 24, 2025.
+      Last updated on Nov 25, 2025.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
