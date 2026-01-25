@@ -534,7 +534,7 @@ SmoothLine has not implemented these features yet.</p>
 <span class="s1">                text: &#39;Close&#39;</span>
 <span class="s1">            ToggleButton:</span>
 <span class="s1">                text: &#39;Close line&#39;</span>
-<span class="s1">                on_press: root.close = self.state == &#39;down&#39;</span>
+<span class="s1">                on_press: root.close = self.activated</span>
 
 <span class="s1">            Label:</span>
 <span class="s1">                text: &#39;Dashes&#39;</span>
@@ -543,15 +543,15 @@ SmoothLine has not implemented these features yet.</p>
 <span class="s1">                ToggleButton:</span>
 <span class="s1">                    group: &#39;dashes&#39;</span>
 <span class="s1">                    text: &#39;none&#39;</span>
-<span class="s1">                    state: &#39;down&#39;</span>
+<span class="s1">                    activated: True</span>
 <span class="s1">                    allow_no_selection: False</span>
 <span class="s1">                    size_hint_x: None</span>
 <span class="s1">                    width: self.texture_size[0]</span>
 <span class="s1">                    padding_x: &#39;5dp&#39;</span>
-<span class="s1">                    on_state:</span>
-<span class="s1">                        if self.state == &#39;down&#39;: root.dashes = []</span>
-<span class="s1">                        if self.state == &#39;down&#39;: root.dash_length = 1</span>
-<span class="s1">                        if self.state == &#39;down&#39;: root.dash_offset = 0</span>
+<span class="s1">                    on_activated:</span>
+<span class="s1">                        if self.activated: root.dashes = []</span>
+<span class="s1">                        if self.activated: root.dash_length = 1</span>
+<span class="s1">                        if self.activated: root.dash_offset = 0</span>
 <span class="s1">                ToggleButton:</span>
 <span class="s1">                    id: constant</span>
 <span class="s1">                    group: &#39;dashes&#39;</span>
@@ -560,11 +560,11 @@ SmoothLine has not implemented these features yet.</p>
 <span class="s1">                    size_hint_x: None</span>
 <span class="s1">                    width: self.texture_size[0]</span>
 <span class="s1">                    padding_x: &#39;5dp&#39;</span>
-<span class="s1">                    on_state:</span>
-<span class="s1">                        if self.state == &#39;down&#39;: root.dashes = []</span>
-<span class="s1">                        if self.state == &#39;down&#39;: root.dash_length = </span><span class="se">\</span>
+<span class="s1">                    on_activated:</span>
+<span class="s1">                        if self.activated: root.dashes = []</span>
+<span class="s1">                        if self.activated: root.dash_length = </span><span class="se">\</span>
 <span class="s1">                            int(dash_len.text or 1)</span>
-<span class="s1">                        if self.state == &#39;down&#39;: root.dash_offset = </span><span class="se">\</span>
+<span class="s1">                        if self.activated: root.dash_offset = </span><span class="se">\</span>
 <span class="s1">                            int(dash_offset.text or 0)</span>
 <span class="s1">                Label:</span>
 <span class="s1">                    text: &#39;len&#39;</span>
@@ -578,7 +578,7 @@ SmoothLine has not implemented these features yet.</p>
 <span class="s1">                    input_filter: &#39;int&#39;</span>
 <span class="s1">                    multiline: False</span>
 <span class="s1">                    text: &#39;1&#39;</span>
-<span class="s1">                    on_text: if constant.state == &#39;down&#39;: </span><span class="se">\</span>
+<span class="s1">                    on_text: if constant.activated: </span><span class="se">\</span>
 <span class="s1">                        root.dash_length = int(self.text or 1)</span>
 <span class="s1">                Label:</span>
 <span class="s1">                    text: &#39;offset&#39;</span>
@@ -592,7 +592,7 @@ SmoothLine has not implemented these features yet.</p>
 <span class="s1">                    input_filter: &#39;int&#39;</span>
 <span class="s1">                    multiline: False</span>
 <span class="s1">                    text: &#39;0&#39;</span>
-<span class="s1">                    on_text: if constant.state == &#39;down&#39;: </span><span class="se">\</span>
+<span class="s1">                    on_text: if constant.activated: </span><span class="se">\</span>
 <span class="s1">                        root.dash_offset = int(self.text or 0)</span>
 <span class="s1">                ToggleButton:</span>
 <span class="s1">                    id: dash_list</span>
@@ -602,18 +602,18 @@ SmoothLine has not implemented these features yet.</p>
 <span class="s1">                    size_hint_x: None</span>
 <span class="s1">                    width: self.texture_size[0]</span>
 <span class="s1">                    padding_x: &#39;5dp&#39;</span>
-<span class="s1">                    on_state:</span>
-<span class="s1">                        if self.state == &#39;down&#39;: root.dashes = list(map(lambda</span><span class="se">\</span>
+<span class="s1">                    on_activated:</span>
+<span class="s1">                        if self.activated: root.dashes = list(map(lambda</span><span class="se">\</span>
 <span class="s1">                            x: int(x or 0), dash_list_in.text.split(&#39;,&#39;)))</span>
-<span class="s1">                        if self.state == &#39;down&#39;: root.dash_length = 1</span>
-<span class="s1">                        if self.state == &#39;down&#39;: root.dash_offset = 0</span>
+<span class="s1">                        if self.activated: root.dash_length = 1</span>
+<span class="s1">                        if self.activated: root.dash_offset = 0</span>
 <span class="s1">                TextInput:</span>
 <span class="s1">                    id: dash_list_in</span>
 <span class="s1">                    size_hint_x: None</span>
 <span class="s1">                    width: &#39;180dp&#39;</span>
 <span class="s1">                    multiline: False</span>
 <span class="s1">                    text: &#39;4,3,10,15&#39;</span>
-<span class="s1">                    on_text: if dash_list.state == &#39;down&#39;: root.dashes = </span><span class="se">\</span>
+<span class="s1">                    on_text: if dash_list.activated: root.dashes = </span><span class="se">\</span>
 <span class="s1">                        list(map(lambda x: int(x or 0), self.text.split(&#39;,&#39;)))</span>
 
 <span class="s1">        AnchorLayout:</span>
@@ -625,7 +625,7 @@ SmoothLine has not implemented these features yet.</p>
 <span class="s1">                    size_hint: None, None</span>
 <span class="s1">                    size: 100, 44</span>
 <span class="s1">                    text: &#39;Animate&#39;</span>
-<span class="s1">                    on_state: root.animate(self.state == &#39;down&#39;)</span>
+<span class="s1">                    on_activated: root.animate(self.activated)</span>
 <span class="s1">                Button:</span>
 <span class="s1">                    size_hint: None, None</span>
 <span class="s1">                    size: 100, 44</span>
@@ -757,7 +757,7 @@ SmoothLine has not implemented these features yet.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Jan 18, 2026.
+      Last updated on Jan 25, 2026.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

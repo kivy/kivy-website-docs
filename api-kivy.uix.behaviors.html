@@ -143,7 +143,7 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#kivy.uix.behaviors.ToggleButtonBehavior"><code class="docutils literal notranslate"><span class="pre">ToggleButtonBehavior</span></code></a><ul>
-<li><a class="reference internal" href="#kivy.uix.behaviors.ToggleButtonBehavior.on_active"><code class="docutils literal notranslate"><span class="pre">ToggleButtonBehavior.on_active()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.behaviors.ToggleButtonBehavior.on_activated"><code class="docutils literal notranslate"><span class="pre">ToggleButtonBehavior.on_activated()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#kivy.uix.behaviors.TouchRippleBehavior"><code class="docutils literal notranslate"><span class="pre">TouchRippleBehavior</span></code></a><ul>
@@ -482,7 +482,7 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#kivy.uix.behaviors.ToggleButtonBehavior"><code class="docutils literal notranslate"><span class="pre">ToggleButtonBehavior</span></code></a><ul>
-<li><a class="reference internal" href="#kivy.uix.behaviors.ToggleButtonBehavior.on_active"><code class="docutils literal notranslate"><span class="pre">ToggleButtonBehavior.on_active()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.behaviors.ToggleButtonBehavior.on_activated"><code class="docutils literal notranslate"><span class="pre">ToggleButtonBehavior.on_activated()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#kivy.uix.behaviors.TouchRippleBehavior"><code class="docutils literal notranslate"><span class="pre">TouchRippleBehavior</span></code></a><ul>
@@ -620,11 +620,12 @@ interfaces.</p></li>
 <p><span class="versionmodified changed">Changed in version 3.0.0: </span>- Replaced <code class="docutils literal notranslate"><span class="pre">state</span></code> OptionProperty with <code class="docutils literal notranslate"><span class="pre">pressed</span></code> BooleanProperty
 - Made <code class="docutils literal notranslate"><span class="pre">pressed</span></code> read-only via AliasProperty
 - Added <a class="reference internal" href="#kivy.uix.behaviors.ButtonBehavior.on_cancel" title="kivy.uix.behaviors.ButtonBehavior.on_cancel"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_cancel()</span></code></a> event
-- Improved multi-touch handling with explicit touch sets</p>
+- Improved multi-touch handling with explicit touch sets
+- Added touch argument to on_press, on_release, and on_cancel events</p>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.uix.behaviors.ButtonBehavior.on_cancel">
-<span class="sig-name descname"><span class="pre">on_cancel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.behaviors.ButtonBehavior.on_cancel" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_cancel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">touch</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.behaviors.ButtonBehavior.on_cancel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Event handler called when touch leaves button bounds during drag.</p>
 <p>This event is only fired when <cite>always_release</cite> is False and a touch
 moves outside the button’s bounds during a drag operation. It provides
@@ -632,6 +633,19 @@ an opportunity to give visual feedback that the button action has been
 cancelled.</p>
 <p>Use this to restore the button’s original appearance or cancel any
 pending actions that would have occurred on release.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>touch</strong> – The <a class="reference internal" href="api-kivy.input.motionevent.html#kivy.input.motionevent.MotionEvent" title="kivy.input.motionevent.MotionEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">MotionEvent</span></code></a> that
+moved outside the button bounds. Access touch.pos to get
+the position where the touch left the bounds.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_cancel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Action cancelled at position: </span><span class="si">{</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">background_color</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># Reset appearance</span>
+</pre></div>
+</div>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 3.0.0.</span></p>
 </div>
@@ -639,19 +653,46 @@ pending actions that would have occurred on release.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.uix.behaviors.ButtonBehavior.on_press">
-<span class="sig-name descname"><span class="pre">on_press</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.behaviors.ButtonBehavior.on_press" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_press</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">touch</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.behaviors.ButtonBehavior.on_press" title="Permalink to this definition">¶</a></dt>
 <dd><p>Event handler called when the button is pressed.</p>
 <p>This event is fired when the first touch down occurs on the button.
 In multi-touch scenarios, only the first touch triggers this event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>touch</strong> – The <a class="reference internal" href="api-kivy.input.motionevent.html#kivy.input.motionevent.MotionEvent" title="kivy.input.motionevent.MotionEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">MotionEvent</span></code></a> that
+triggered the press. Contains position (touch.x, touch.y),
+timestamp, and other touch attributes.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pressed at position: </span><span class="si">{</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Touch ID: </span><span class="si">{</span><span class="n">touch</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.uix.behaviors.ButtonBehavior.on_release">
-<span class="sig-name descname"><span class="pre">on_release</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.behaviors.ButtonBehavior.on_release" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">on_release</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">touch</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.behaviors.ButtonBehavior.on_release" title="Permalink to this definition">¶</a></dt>
 <dd><p>Event handler called when the button is released.</p>
 <p>This event is fired when the last active touch is released, and only if:
 - The touch is released within button bounds, OR
 - The <cite>always_release</cite> property is True</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>touch</strong> – The <a class="reference internal" href="api-kivy.input.motionevent.html#kivy.input.motionevent.MotionEvent" title="kivy.input.motionevent.MotionEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">MotionEvent</span></code></a> of the
+last touch being released. In multi-touch scenarios, this
+is the touch that completed the release action.</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_release</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Released at position: </span><span class="si">{</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">duration</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">time_end</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">time_start</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Touch duration: </span><span class="si">{</span><span class="n">duration</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -1071,15 +1112,16 @@ grouping multiple toggles together for radio button behavior.</p>
 <section id="state-management">
 <h2>State Management<a class="headerlink" href="#state-management" title="Permalink to this heading">¶</a></h2>
 <p>Unlike the transient <code class="xref py py-attr docutils literal notranslate"><span class="pre">pressed</span></code> property from ButtonBehavior (which
-is True only during active touch), the <code class="xref py py-attr docutils literal notranslate"><span class="pre">active</span></code> property maintains
+is True only during active touch), the <code class="xref py py-attr docutils literal notranslate"><span class="pre">activated</span></code> property maintains
 persistent state:</p>
 <ul class="simple">
-<li><p><strong>active=True</strong>: Button is in “on” state (persists after release)</p></li>
-<li><p><strong>active=False</strong>: Button is in “off” state (default)</p></li>
+<li><p><strong>activated=True</strong>: Button is in “on” state (persists after release)</p></li>
+<li><p><strong>activated=False</strong>: Button is in “off” state (default)</p></li>
 </ul>
-<p>The <code class="xref py py-attr docutils literal notranslate"><span class="pre">active</span></code> property can be set programmatically or toggled by
+<p>The <code class="xref py py-attr docutils literal notranslate"><span class="pre">activated</span></code> property can be set programmatically or toggled by
 user interaction. When <code class="xref py py-attr docutils literal notranslate"><span class="pre">allow_no_selection</span></code> is False, attempts to
-deactivate the last active button in a group will be silently rejected.</p>
+deactivate the last active button in a group are rejected: programmatic
+attempts log a warning, while touch interactions are silently blocked.</p>
 </section>
 <section id="group-behavior">
 <h2>Group Behavior<a class="headerlink" href="#group-behavior" title="Permalink to this heading">¶</a></h2>
@@ -1127,32 +1169,27 @@ components with internal toggle groups.</p>
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_cancel()</span></code>: Touch moved outside bounds</p></li>
 </ul>
 </dd>
-<dt>Additional property events:</dt><dd><ul class="simple">
-<li><p><a class="reference internal" href="#kivy.uix.behaviors.ToggleButtonBehavior.on_active" title="kivy.uix.behaviors.ToggleButtonBehavior.on_active"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_active()</span></code></a>: When active state changes</p></li>
-</ul>
-</dd>
 </dl>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.8.0.</span></p>
 </div>
 <div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 3.0.0: </span>- Replaced <code class="docutils literal notranslate"><span class="pre">state</span></code> OptionProperty with <code class="docutils literal notranslate"><span class="pre">active</span></code> AliasProperty
-- Added backward-compatible <code class="docutils literal notranslate"><span class="pre">state</span></code> alias
+<p><span class="versionmodified changed">Changed in version 3.0.0: </span>- Replaced <code class="docutils literal notranslate"><span class="pre">state</span></code> OptionProperty with <code class="docutils literal notranslate"><span class="pre">activated</span></code> AliasProperty
 - Improved group management with automatic cleanup
 - Added scoped group support via tuple syntax
 - Replaced <code class="docutils literal notranslate"><span class="pre">get_widgets(groupname)</span></code> static method with unified
   <code class="docutils literal notranslate"><span class="pre">get_group()</span></code> descriptor that works as both instance and class method</p>
 </div>
 <dl class="py method">
-<dt class="sig sig-object py" id="kivy.uix.behaviors.ToggleButtonBehavior.on_active">
-<span class="sig-name descname"><span class="pre">on_active</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.behaviors.ToggleButtonBehavior.on_active" title="Permalink to this definition">¶</a></dt>
-<dd><p>Event handler called when active state changes.</p>
+<dt class="sig sig-object py" id="kivy.uix.behaviors.ToggleButtonBehavior.on_activated">
+<span class="sig-name descname"><span class="pre">on_activated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.behaviors.ToggleButtonBehavior.on_activated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event handler called when activated state changes.</p>
 <p>Override this method to respond to state changes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>instance</strong> – This button instance</p></li>
-<li><p><strong>value</strong> – New active state (True/False)</p></li>
+<li><p><strong>value</strong> – New activated state (True/False)</p></li>
 </ul>
 </dd>
 </dl>
@@ -1234,6 +1271,7 @@ pressed the button goes away).</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api-kivy.uix.behaviors.button.html">Button Behavior</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.button.html#quick-overview">Quick overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.button.html#examples">Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.button.html#kivy.uix.behaviors.button.ButtonBehavior"><code class="docutils literal notranslate"><span class="pre">ButtonBehavior</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="api-kivy.uix.behaviors.button.html#kivy.uix.behaviors.button.ButtonBehavior.on_cancel"><code class="docutils literal notranslate"><span class="pre">ButtonBehavior.on_cancel()</span></code></a></li>
@@ -1316,9 +1354,10 @@ pressed the button goes away).</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api-kivy.uix.behaviors.togglebutton.html">ToggleButton Behavior</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.togglebutton.html#quick-overview">Quick Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.togglebutton.html#examples">Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.togglebutton.html#kivy.uix.behaviors.togglebutton.ToggleButtonBehavior"><code class="docutils literal notranslate"><span class="pre">ToggleButtonBehavior</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="api-kivy.uix.behaviors.togglebutton.html#kivy.uix.behaviors.togglebutton.ToggleButtonBehavior.on_active"><code class="docutils literal notranslate"><span class="pre">ToggleButtonBehavior.on_active()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.uix.behaviors.togglebutton.html#kivy.uix.behaviors.togglebutton.ToggleButtonBehavior.on_activated"><code class="docutils literal notranslate"><span class="pre">ToggleButtonBehavior.on_activated()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -1383,7 +1422,7 @@ pressed the button goes away).</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Jan 18, 2026.
+      Last updated on Jan 25, 2026.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

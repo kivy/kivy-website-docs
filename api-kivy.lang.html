@@ -645,7 +645,7 @@ the value can use the values of other properties using reserved keywords.</p>
 <div><dl>
 <dt>self</dt><dd><p>The keyword self references the “current widget instance”:</p>
 <div class="highlight-kv notranslate"><div class="highlight"><pre><span></span><span class="nc">Button</span><span class="p">:</span>
-    <span class="na">text</span><span class="p">:</span> <span class="s1">&#39;My state is </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span>
+    <span class="na">text</span><span class="p">:</span> <span class="s1">&#39;My pressed state is </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">pressed</span>
 </pre></div>
 </div>
 </dd>
@@ -685,7 +685,7 @@ properties that they contain.</p>
     <span class="nc">Button</span><span class="p">:</span>
         <span class="na">id</span><span class="p">:</span> <span class="n">btn1</span>
     <span class="nc">Button</span><span class="p">:</span>
-        <span class="na">text</span><span class="p">:</span> <span class="s1">&#39;The state of the other button is </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">btn1</span><span class="o">.</span><span class="n">state</span>
+        <span class="na">text</span><span class="p">:</span> <span class="s1">&#39;The pressed state of the other button is </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">btn1</span><span class="o">.</span><span class="n">pressed</span>
 </pre></div>
 </div>
 <p>Please note that the <cite>id</cite> will not be available in the widget instance:
@@ -696,10 +696,10 @@ with <cite>&lt;id&gt;.__self__</cite> (<cite>btn1.__self__</cite> in this case).
 added to the root widget’s <cite>ids</cite> dictionary. In other words, following on from
 the example above, the buttons state could also be accessed as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">widget</span> <span class="o">=</span> <span class="n">MyWidget</span><span class="p">()</span>
-<span class="n">state</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">ids</span><span class="p">[</span><span class="s2">&quot;btn1&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">state</span>
+<span class="n">pressed</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">ids</span><span class="p">[</span><span class="s2">&quot;btn1&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">pressed</span>
 
 <span class="c1"># Or, as an alternative syntax,</span>
-<span class="n">state</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">btn1</span><span class="o">.</span><span class="n">state</span>
+<span class="n">pressed</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">btn1</span><span class="o">.</span><span class="n">pressed</span>
 </pre></div>
 </div>
 <p>Note that the outermost widget applies the kv rules to all its inner widgets
@@ -711,21 +711,21 @@ these ids may not be available during the inner widget’s <cite>__init__</cite>
 <p>There are two places that accept python statements in a kv file:
 after a property, which assigns to the property the result of the expression
 (such as the text of a button as shown above) and after a on_property, which
-executes the statement when the property is updated (such as on_state).</p>
+executes the statement when the property is updated (such as on_pressed).</p>
 <p>In the former case, the
 <a class="reference external" href="http://docs.python.org/2/reference/expressions.html">expression</a> can only
 span a single line, cannot be extended to multiple lines using newline
 escaping, and must return a value. An example of a valid expression is
-<code class="docutils literal notranslate"><span class="pre">text:</span> <span class="pre">self.state</span> <span class="pre">and</span> <span class="pre">('up'</span> <span class="pre">if</span> <span class="pre">self.pressed</span> <span class="pre">else</span> <span class="pre">'down')</span></code>.</p>
+<code class="docutils literal notranslate"><span class="pre">text:</span> <span class="pre">self.pressed</span> <span class="pre">and</span> <span class="pre">('up'</span> <span class="pre">if</span> <span class="pre">self.pressed</span> <span class="pre">else</span> <span class="pre">'down')</span></code>.</p>
 <p>In the latter case, multiple single line statements are valid, including
 those that escape their newline, as long as they don’t add an indentation
 level.</p>
 <p>Examples of valid statements are:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">on_press</span><span class="p">:</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s1">&#39;normal&#39;</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;normal&#39;</span><span class="p">)</span>
-<span class="n">on_state</span><span class="p">:</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s1">&#39;normal&#39;</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;normal&#39;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">on_press</span><span class="p">:</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pressed</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;normal&#39;</span><span class="p">)</span>
+<span class="n">on_pressed</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pressed</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;normal&#39;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;down&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s1">&#39;normal&#39;</span><span class="p">:</span> \
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pressed</span><span class="p">:</span> \
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;multiline normal&#39;</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span> <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span>
@@ -733,8 +733,8 @@ level.</p>
 </pre></div>
 </div>
 <p>An example of a invalid statement:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">on_state</span><span class="p">:</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s1">&#39;normal&#39;</span><span class="p">:</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">on_pressed</span><span class="p">:</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pressed</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;normal&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -754,18 +754,18 @@ callbacks to automatically update the property via your expression when changes
 occur.</p>
 <p>Here’s a simple example that demonstrates this behavior:</p>
 <div class="highlight-kv notranslate"><div class="highlight"><pre><span></span><span class="nc">Button</span><span class="p">:</span>
-    <span class="na">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+    <span class="na">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pressed</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>In this example, the parser detects that <cite>self.state</cite> is a dynamic value (a
-property). The <code class="xref py py-attr docutils literal notranslate"><span class="pre">state</span></code> property of the button
+<p>In this example, the parser detects that <cite>self.pressed</cite> is a dynamic value (a
+property). The <code class="xref py py-attr docutils literal notranslate"><span class="pre">pressed</span></code> property of the button
 can change at any moment (when the user touches it).
 We now want this button to display its own state as text, even as the state
 changes. To do this, we use the state property of the Button and use it in the
 value expression for the button’s <cite>text</cite> property, which controls what text is
 displayed on the button (We also convert the state to a string representation).
-Now, whenever the button state changes, the text property will be updated
-automatically.</p>
+Now, whenever the button <cite>pressed</cite> state changes, the text property will be
+updated automatically.</p>
 <p>Remember: The value is a python expression! That means that you can do
 something more interesting like:</p>
 <div class="highlight-kv notranslate"><div class="highlight"><pre><span></span><span class="nc">Button</span><span class="p">:</span>
@@ -1760,7 +1760,7 @@ i.e. a comment line’s first non-whitespace character must be a #.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Jan 18, 2026.
+      Last updated on Jan 25, 2026.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
