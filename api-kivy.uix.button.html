@@ -412,7 +412,7 @@ are used as for the <a class="reference internal" href="api-kivy.uix.label.html#
 </div>
 <p>To attach a callback when the button is pressed (clicked/touched), use
 <code class="xref py py-class docutils literal notranslate"><span class="pre">bind</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">callback</span><span class="p">(</span><span class="n">instance</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">callback</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The button &lt;</span><span class="si">%s</span><span class="s1">&gt; is being pressed&#39;</span> <span class="o">%</span> <span class="n">instance</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
 <span class="n">btn1</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Hello world 1&#39;</span><span class="p">)</span>
@@ -421,21 +421,23 @@ are used as for the <a class="reference internal" href="api-kivy.uix.label.html#
 <span class="n">btn2</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_press</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>If you want to be notified every time the button state changes, you can bind
-to the <code class="xref py py-attr docutils literal notranslate"><span class="pre">Button.state</span></code> property:</p>
+<p>If you want to be notified every time the button pressed state changes, you can bind
+to the <code class="xref py py-attr docutils literal notranslate"><span class="pre">Button.pressed</span></code> property:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">callback</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;My button &lt;</span><span class="si">%s</span><span class="s1">&gt; state is &lt;</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;My button &lt;</span><span class="si">%s</span><span class="s1">&gt; pressed state is &lt;</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
 <span class="n">btn1</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Hello world 1&#39;</span><span class="p">)</span>
-<span class="n">btn1</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span>
+<span class="n">btn1</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">pressed</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Kv Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Button</span><span class="p">:</span>
     <span class="n">text</span><span class="p">:</span> <span class="s1">&#39;press me&#39;</span>
-    <span class="n">on_press</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ouch! More gently please&quot;</span><span class="p">)</span>
-    <span class="n">on_release</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ahhh&quot;</span><span class="p">)</span>
+    <span class="n">on_press</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ouch! More gently please&quot;</span><span class="p">,</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span>
+    <span class="n">on_release</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ahhh&quot;</span><span class="p">,</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span>
     <span class="n">on_pressed</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;my current pressed state is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;my current pressed state is </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pressed</span><span class="p">))</span>
 </pre></div>
 </div>
 <dl class="py class">
@@ -500,7 +502,7 @@ to the <code class="xref py py-attr docutils literal notranslate"><span class="p
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Jan 25, 2026.
+      Last updated on Jan 26, 2026.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
