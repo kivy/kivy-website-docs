@@ -121,6 +121,8 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#interacting-with-kivy-app-from-other-coroutines">Interacting with Kivy app from other coroutines</a></li>
+<li><a class="reference internal" href="#application-storage-directories">Application Storage Directories</a></li>
+<li><a class="reference internal" href="#kivy-desktop-path-id-environment-variable">KIVY_DESKTOP_PATH_ID Environment Variable</a></li>
 <li><a class="reference internal" href="#kivy.app.App"><code class="docutils literal notranslate"><span class="pre">App</span></code></a><ul>
 <li><a class="reference internal" href="#kivy.app.App.async_run"><code class="docutils literal notranslate"><span class="pre">App.async_run()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.app.App.build"><code class="docutils literal notranslate"><span class="pre">App.build()</span></code></a></li>
@@ -149,6 +151,7 @@
 <li><a class="reference internal" href="#kivy.app.App.root_window"><code class="docutils literal notranslate"><span class="pre">App.root_window</span></code></a></li>
 <li><a class="reference internal" href="#kivy.app.App.run"><code class="docutils literal notranslate"><span class="pre">App.run()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.app.App.stop"><code class="docutils literal notranslate"><span class="pre">App.stop()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.app.App.user_cache_dir"><code class="docutils literal notranslate"><span class="pre">App.user_cache_dir</span></code></a></li>
 <li><a class="reference internal" href="#kivy.app.App.user_data_dir"><code class="docutils literal notranslate"><span class="pre">App.user_data_dir</span></code></a></li>
 </ul>
 </li>
@@ -426,6 +429,7 @@
 <li class="toctree-l2"><a class="reference internal" href="migration.html#removals">Removals</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html#application-storage-directories">Application Storage Directories</a></li>
 </ul>
 
           <!--
@@ -463,6 +467,8 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#interacting-with-kivy-app-from-other-coroutines">Interacting with Kivy app from other coroutines</a></li>
+<li><a class="reference internal" href="#application-storage-directories">Application Storage Directories</a></li>
+<li><a class="reference internal" href="#kivy-desktop-path-id-environment-variable">KIVY_DESKTOP_PATH_ID Environment Variable</a></li>
 <li><a class="reference internal" href="#kivy.app.App"><code class="docutils literal notranslate"><span class="pre">App</span></code></a><ul>
 <li><a class="reference internal" href="#kivy.app.App.async_run"><code class="docutils literal notranslate"><span class="pre">App.async_run()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.app.App.build"><code class="docutils literal notranslate"><span class="pre">App.build()</span></code></a></li>
@@ -491,6 +497,7 @@
 <li><a class="reference internal" href="#kivy.app.App.root_window"><code class="docutils literal notranslate"><span class="pre">App.root_window</span></code></a></li>
 <li><a class="reference internal" href="#kivy.app.App.run"><code class="docutils literal notranslate"><span class="pre">App.run()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.app.App.stop"><code class="docutils literal notranslate"><span class="pre">App.stop()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.app.App.user_cache_dir"><code class="docutils literal notranslate"><span class="pre">App.user_cache_dir</span></code></a></li>
 <li><a class="reference internal" href="#kivy.app.App.user_data_dir"><code class="docutils literal notranslate"><span class="pre">App.user_data_dir</span></code></a></li>
 </ul>
 </li>
@@ -923,6 +930,56 @@ coroutines running in the same event loop. Normal single threaded rules apply
 to both case.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2.0.0.</span></p>
+</div>
+</section>
+<section id="application-storage-directories">
+<h2>Application Storage Directories<a class="headerlink" href="#application-storage-directories" title="Permalink to this heading">¶</a></h2>
+<p>Kivy provides the following application storage directories:</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#kivy.app.App.user_data_dir" title="kivy.app.App.user_data_dir"><code class="xref py py-attr docutils literal notranslate"><span class="pre">App.user_data_dir</span></code></a></dt><dd><p>Internal, persistent, private application storage.
+Guaranteed to exist and be writable without additional permissions.</p>
+</dd>
+<dt><a class="reference internal" href="#kivy.app.App.user_cache_dir" title="kivy.app.App.user_cache_dir"><code class="xref py py-attr docutils literal notranslate"><span class="pre">App.user_cache_dir</span></code></a></dt><dd><p>Internal, temporary application storage.
+The system may delete this data at any time.</p>
+</dd>
+</dl>
+<p>On desktop platforms, applications may choose to use the <a class="reference external" href="https://github.com/tox-dev/platformdirs">platformdirs</a> package to access additional
+OS-specific directories such as downloads, music, video, etc. These
+directories are not exposed by Kivy because they are not consistently
+available across mobile and sandboxed platforms.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0: </span>Added <a class="reference internal" href="#kivy.app.App.user_cache_dir" title="kivy.app.App.user_cache_dir"><code class="xref py py-attr docutils literal notranslate"><span class="pre">App.user_cache_dir</span></code></a> property.</p>
+</div>
+</section>
+<section id="kivy-desktop-path-id-environment-variable">
+<h2>KIVY_DESKTOP_PATH_ID Environment Variable<a class="headerlink" href="#kivy-desktop-path-id-environment-variable" title="Permalink to this heading">¶</a></h2>
+<p>Set a user-facing application title for your directories by using the
+<code class="docutils literal notranslate"><span class="pre">KIVY_DESKTOP_PATH_ID</span></code> environment variable before starting your application.
+This makes it easy for end users to identify your app’s directories when browsing
+their filesystem:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;KIVY_DESKTOP_PATH_ID&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;My Photo Editor&#39;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
+<span class="c1"># Creates: %APPDATA%/My_Photo_Editor/ (Windows)</span>
+<span class="c1"># Instead of: %APPDATA%/photoeditorapp/</span>
+</pre></div>
+</div>
+<p>This replaces <code class="docutils literal notranslate"><span class="pre">App.name</span></code> with a human-readable title in KIVY_HOME, user_data_dir,
+and user_cache_dir paths. The value is normalized for filesystem safety.</p>
+<p><strong>Benefits:</strong></p>
+<ul class="simple">
+<li><p>End users see clear, recognizable directory names</p></li>
+<li><p>Easier for users to locate and manage app data</p></li>
+<li><p>Consistent branding across directory names</p></li>
+<li><p>Helps users identify your app when troubleshooting</p></li>
+</ul>
+<p><strong>Note for mobile developers</strong>: If you are developing a mobile app on a desktop
+platform, you can set KIVY_DESKTOP_PATH_ID to any value to suppress the warning.
+The variable will have no effect on your mobile app.</p>
+<p>See <code class="docutils literal notranslate"><span class="pre">examples/desktop_path_id/</span></code> for a complete example.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
 </div>
 </section>
 <dl class="py class">
@@ -1369,6 +1426,29 @@ Except on Android, set Android state to stop, Kivy state then follows.</p>
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="kivy.app.App.user_cache_dir">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">user_cache_dir</span></span><a class="headerlink" href="#kivy.app.App.user_cache_dir" title="Permalink to this definition">¶</a></dt>
+<dd><div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
+<p>Returns the path to the directory in the users file system which the
+application can use to store cached data.</p>
+<p>Different platforms have different conventions with regards to where
+the application can store temporary cache data. This property
+implements these conventions. The &lt;app_name&gt; directory is created
+when the property is called, unless it already exists.</p>
+<p>The cache directory is intended for temporary data that can be
+recreated if needed. The system may delete this data at any time
+(e.g., when storage is low).</p>
+<p>On iOS, <cite>~/Library/Caches/&lt;app_name&gt;</cite> is returned.</p>
+<p>On Windows, <cite>%LOCALAPPDATA%/&lt;app_name&gt;/Cache</cite> is returned.</p>
+<p>On OS X, <cite>~/Library/Caches/&lt;app_name&gt;</cite> is returned.</p>
+<p>On Linux, <cite>$XDG_CACHE_HOME/&lt;app_name&gt;</cite> is returned (defaults to
+<cite>~/.cache/&lt;app_name&gt;</cite>).</p>
+<p>On Android, <cite>Context.getCacheDir()</cite> is returned.</p>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="kivy.app.App.user_data_dir">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">user_data_dir</span></span><a class="headerlink" href="#kivy.app.App.user_data_dir" title="Permalink to this definition">¶</a></dt>
 <dd><div class="versionadded">
@@ -1384,7 +1464,8 @@ is created when the property is called, unless it already exists.</p>
 app’s sandbox).</p>
 <p>On Windows, <cite>%APPDATA%/&lt;app_name&gt;</cite> is returned.</p>
 <p>On OS X, <cite>~/Library/Application Support/&lt;app_name&gt;</cite> is returned.</p>
-<p>On Linux, <cite>$XDG_CONFIG_HOME/&lt;app_name&gt;</cite> is returned.</p>
+<p>On Linux, <cite>$XDG_DATA_HOME/&lt;app_name&gt;</cite> is returned (defaults to
+<cite>~/.local/share/&lt;app_name&gt;</cite>).</p>
 <p>On Android, <a class="reference external" href="https://developer.android.com/reference/android/content/Context.html#getFilesDir()">Context.GetFilesDir</a> is returned.</p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 1.11.0: </span>On Android, this function previously returned

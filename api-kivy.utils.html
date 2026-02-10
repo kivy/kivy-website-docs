@@ -118,6 +118,7 @@
 <li><a class="reference internal" href="#kivy.utils.interpolate"><code class="docutils literal notranslate"><span class="pre">interpolate()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.utils.intersection"><code class="docutils literal notranslate"><span class="pre">intersection()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.utils.is_color_transparent"><code class="docutils literal notranslate"><span class="pre">is_color_transparent()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.utils.normalize_path_id"><code class="docutils literal notranslate"><span class="pre">normalize_path_id()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.utils.reify"><code class="docutils literal notranslate"><span class="pre">reify</span></code></a></li>
 <li><a class="reference internal" href="#kivy.utils.rgba"><code class="docutils literal notranslate"><span class="pre">rgba()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.utils.strtotuple"><code class="docutils literal notranslate"><span class="pre">strtotuple()</span></code></a></li>
@@ -392,6 +393,7 @@
 <li class="toctree-l2"><a class="reference internal" href="migration.html#removals">Removals</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="migration.html#application-storage-directories">Application Storage Directories</a></li>
 </ul>
 
           <!--
@@ -426,6 +428,7 @@
 <li><a class="reference internal" href="#kivy.utils.interpolate"><code class="docutils literal notranslate"><span class="pre">interpolate()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.utils.intersection"><code class="docutils literal notranslate"><span class="pre">intersection()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.utils.is_color_transparent"><code class="docutils literal notranslate"><span class="pre">is_color_transparent()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.utils.normalize_path_id"><code class="docutils literal notranslate"><span class="pre">normalize_path_id()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.utils.reify"><code class="docutils literal notranslate"><span class="pre">reify</span></code></a></li>
 <li><a class="reference internal" href="#kivy.utils.rgba"><code class="docutils literal notranslate"><span class="pre">rgba()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.utils.strtotuple"><code class="docutils literal notranslate"><span class="pre">strtotuple()</span></code></a></li>
@@ -600,6 +603,54 @@ dimensions. No test is done to check the dimensions are the same.</p>
 <dt class="sig sig-object py" id="kivy.utils.is_color_transparent">
 <span class="sig-prename descclassname"><span class="pre">kivy.utils.</span></span><span class="sig-name descname"><span class="pre">is_color_transparent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.utils.is_color_transparent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return True if the alpha channel is 0.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="kivy.utils.normalize_path_id">
+<span class="sig-prename descclassname"><span class="pre">kivy.utils.</span></span><span class="sig-name descname"><span class="pre">normalize_path_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.utils.normalize_path_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalize a path identifier for safe filesystem use.</p>
+<p>Replaces invalid filesystem characters with underscores to create
+a safe directory name. This is used by KIVY_DESKTOP_PATH_ID to ensure
+user-provided application titles can be safely used in directory paths.</p>
+<p>Supports Unicode characters for international app names while removing
+control characters and filesystem-invalid characters. Applies Unicode
+NFC normalization for cross-platform consistency and limits length to
+120 characters.</p>
+<p>The normalization process:</p>
+<ol class="arabic simple">
+<li><p>Applies Unicode NFC normalization for cross-platform consistency</p></li>
+<li><p>Removes control characters (Cc) and format characters (Cf) including
+zero-width and invisible characters</p></li>
+<li><p>Replaces invalid filesystem characters with underscores</p></li>
+<li><p>Replaces spaces and other problematic characters with underscores</p></li>
+<li><p>Collapses consecutive underscores into a single underscore</p></li>
+<li><p>Strips leading/trailing underscores, dots, and spaces</p></li>
+<li><p>Limits length to 120 characters (leaving room for subdirectories)</p></li>
+<li><p>Validates against Windows reserved names</p></li>
+</ol>
+<dl class="simple">
+<dt>Args:</dt><dd><p>path_id (str): The path identifier to normalize</p>
+</dd>
+<dt>Returns:</dt><dd><p>str: Normalized path identifier safe for use in directory names,
+guaranteed to be 120 characters or less</p>
+</dd>
+<dt>Raises:</dt><dd><p>ValueError: If path_id is empty or becomes empty after normalization</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">normalize_path_id</span><span class="p">(</span><span class="s2">&quot;My Photo Editor&quot;</span><span class="p">)</span>
+<span class="go">&#39;My_Photo_Editor&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">normalize_path_id</span><span class="p">(</span><span class="s2">&quot;Company: App Name!&quot;</span><span class="p">)</span>
+<span class="go">&#39;Company_App_Name&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">normalize_path_id</span><span class="p">(</span><span class="s2">&quot;Café Editor&quot;</span><span class="p">)</span>
+<span class="go">&#39;Café_Editor&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">normalize_path_id</span><span class="p">(</span><span class="s2">&quot;A&quot;</span> <span class="o">*</span> <span class="mi">150</span><span class="p">)</span>  <span class="c1"># Length limited</span>
+<span class="go">&#39;AAAAAA...&#39;  # 120 characters</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
 </dd></dl>
 
 <dl class="py class">

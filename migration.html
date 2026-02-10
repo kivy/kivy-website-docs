@@ -109,6 +109,7 @@
 </li>
 </ul>
 </li>
+<li><a class="reference internal" href="#application-storage-directories">Application Storage Directories</a></li>
 </ul>
 
           <h3><a href="index.html">Table Of Contents</a></h3>
@@ -378,6 +379,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#removals">Removals</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="#application-storage-directories">Application Storage Directories</a></li>
 </ul>
 
           <!--
@@ -404,6 +406,7 @@
 </li>
 </ul>
 </li>
+<li><a class="reference internal" href="#application-storage-directories">Application Storage Directories</a></li>
 </ul>
 </div>
             
@@ -1178,9 +1181,117 @@ You no longer need to manually clean up groups:</p>
 </tr>
 </tbody>
 </table>
-<p><a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a></p>
 </section>
 </section>
+</section>
+<section id="application-storage-directories">
+<h1>Application Storage Directories<a class="headerlink" href="#application-storage-directories" title="Permalink to this heading">¶</a></h1>
+<p><em>Linux user_data_dir Path Change (XDG Compliance Fix)</em></p>
+<p>In Kivy 3.x.x, the <code class="docutils literal notranslate"><span class="pre">App.user_data_dir</span></code> path on Linux has been corrected to follow
+the XDG Base Directory specification. Previously, it incorrectly used <code class="docutils literal notranslate"><span class="pre">XDG_CONFIG_HOME</span></code>
+(for configuration files); it now correctly uses <code class="docutils literal notranslate"><span class="pre">XDG_DATA_HOME</span></code> (for application data).</p>
+<p><strong>Path Changes on Linux:</strong></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Property</p></th>
+<th class="head"><p>Kivy 2.x.x</p></th>
+<th class="head"><p>Kivy 3.x.x</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">user_data_dir</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">~/.config/&lt;app_name&gt;</span></code> (incorrect)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">~/.local/share/&lt;app_name&gt;</span></code> (XDG-compliant)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Impact:</strong></p>
+<p>If your Linux application uses <code class="docutils literal notranslate"><span class="pre">App.user_data_dir</span></code> to store user data, the data
+will now be stored in a different location after upgrading to Kivy 3.x.x. This is
+the correct XDG-compliant location, but existing apps may need to migrate their data.</p>
+<p><strong>Migration Options:</strong></p>
+<ol class="arabic">
+<li><p><strong>Manual Migration</strong> (Recommended for production apps)</p>
+<p>Move existing data from the old location to the new location during app startup:</p>
+</li>
+</ol>
+<p><strong>Note:</strong> Windows, macOS, iOS, and Android paths are unchanged.</p>
+<p><em>New App.user_cache_dir Property</em></p>
+<p>Kivy 3.x.x introduces a new <code class="docutils literal notranslate"><span class="pre">App.user_cache_dir</span></code> property for temporary/cache data
+that the system may delete at any time.</p>
+<p>This is <strong>not a breaking change</strong> - it’s a new optional property. Existing apps
+continue to work unchanged.</p>
+<p><strong>Platform Paths:</strong></p>
+<ul class="simple">
+<li><p>Windows: <code class="docutils literal notranslate"><span class="pre">%APPDATA%\&lt;app_name&gt;\Cache</span></code></p></li>
+<li><p>macOS: <code class="docutils literal notranslate"><span class="pre">~/Library/Caches/&lt;app_name&gt;</span></code></p></li>
+<li><p>Linux: <code class="docutils literal notranslate"><span class="pre">~/.cache/&lt;app_name&gt;</span></code> (respects <code class="docutils literal notranslate"><span class="pre">$XDG_CACHE_HOME</span></code>)</p></li>
+<li><p>Android: <code class="docutils literal notranslate"><span class="pre">Context.getCacheDir()</span></code></p></li>
+<li><p>iOS: <code class="docutils literal notranslate"><span class="pre">~/Library/Caches/&lt;app_name&gt;</span></code></p></li>
+</ul>
+<p><em>New KIVY_DESKTOP_PATH_ID Environment Variable</em></p>
+<p>Kivy 3.x.x introduces <code class="docutils literal notranslate"><span class="pre">KIVY_DESKTOP_PATH_ID</span></code> to set user-friendly application
+directory names on desktop platforms.</p>
+<p>This is <strong>not a breaking change</strong> - it’s opt-in. Existing apps continue to work
+unchanged unless you explicitly set this environment variable.</p>
+<p><strong>Key Feature:</strong></p>
+<p>Setting <code class="docutils literal notranslate"><span class="pre">KIVY_DESKTOP_PATH_ID</span></code> creates an <strong>application-specific</strong> location for
+the <code class="docutils literal notranslate"><span class="pre">.kivy</span></code> directory containing the config and log files. Without
+<code class="docutils literal notranslate"><span class="pre">KIVY_DESKTOP_PATH_ID</span></code>, the config and logs are placed in a single global
+<code class="docutils literal notranslate"><span class="pre">.kivy</span></code> directory (<code class="docutils literal notranslate"><span class="pre">~/.kivy</span></code>).</p>
+<p>This means multiple Kivy applications can now have their own isolated configuration
+and log directories, preventing conflicts between different applications.</p>
+<p><strong>When Set:</strong></p>
+<p>The variable provides a human-readable application title for directories, making it
+easier for end users to identify your app’s directories when browsing their filesystem.</p>
+<p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;KIVY_DESKTOP_PATH_ID&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;My Photo Editor&#39;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
+
+<span class="c1"># On Windows, creates: %APPDATA%\My_Photo_Editor\.kivy</span>
+<span class="c1"># Instead of: %APPDATA%\photoeditor\.kivy</span>
+</pre></div>
+</div>
+<p><strong>Priority:</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">KIVY_DESKTOP_PATH_ID</span></code> takes highest priority and affects:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">KIVY_HOME</span></code> directory (overrides <code class="docutils literal notranslate"><span class="pre">KIVY_HOME</span></code> env var and venv detection)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">App.user_data_dir</span></code> directory</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">App.user_cache_dir</span></code> directory</p></li>
+</ul>
+<p><strong>Platform Behavior:</strong></p>
+<ul class="simple">
+<li><p><strong>Desktop platforms</strong> (Windows, macOS, Linux): Uses normalized path_id for directory names</p></li>
+<li><p><strong>Mobile platforms</strong> (iOS, Android): Ignored - uses <code class="docutils literal notranslate"><span class="pre">App.name</span></code> as before</p></li>
+</ul>
+<p><strong>Desktop Path Examples with KIVY_DESKTOP_PATH_ID=’My Photo Editor’:</strong></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Directory</p></th>
+<th class="head"><p>Path</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>KIVY_HOME</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">~/Library/Application</span> <span class="pre">Support/My_Photo_Editor/</span></code>
+<code class="docutils literal notranslate"><span class="pre">.kivy</span></code> (macOS)</p></td>
+</tr>
+<tr class="row-odd"><td><p>user_data_dir</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">%APPDATA%\My_Photo_Editor</span></code> (Windows)</p></td>
+</tr>
+<tr class="row-even"><td><p>user_cache_dir</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">%LOCALAPPDATA%\My_Photo_Editor\Cache</span></code>
+(Windows)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Warning:</strong></p>
+<p>If you set <code class="docutils literal notranslate"><span class="pre">KIVY_DESKTOP_PATH_ID</span></code> in an existing app, your data will move to a new
+location. You may need to migrate existing data (see Linux migration example above).</p>
+<p>For complete documentation, see <a class="reference internal" href="guide/environment.html#environment"><span class="std std-ref">Controlling the environment</span></a> and <code class="docutils literal notranslate"><span class="pre">examples/desktop_path_id/</span></code>.
+<a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a></p>
 </section>
 
 

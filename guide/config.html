@@ -104,6 +104,7 @@
 <li><a class="reference internal" href="#">Configure Kivy</a><ul>
 <li><a class="reference internal" href="#locating-the-configuration-file">Locating the configuration file</a></li>
 <li><a class="reference internal" href="#local-configuration">Local configuration</a></li>
+<li><a class="reference internal" href="#app-specific-configuration">App-Specific Configuration</a></li>
 <li><a class="reference internal" href="#understanding-config-tokens">Understanding config tokens</a></li>
 </ul>
 </li>
@@ -376,6 +377,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../migration.html#removals">Removals</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../migration.html#application-storage-directories">Application Storage Directories</a></li>
 </ul>
 
           <!--
@@ -396,6 +398,7 @@
 <li><a class="reference internal" href="#">Configure Kivy</a><ul>
 <li><a class="reference internal" href="#locating-the-configuration-file">Locating the configuration file</a></li>
 <li><a class="reference internal" href="#local-configuration">Local configuration</a></li>
+<li><a class="reference internal" href="#app-specific-configuration">App-Specific Configuration</a></li>
 <li><a class="reference internal" href="#understanding-config-tokens">Understanding config tokens</a></li>
 </ul>
 </li>
@@ -475,6 +478,23 @@ application to get desired result:</p>
 </ol>
 <p>After the change of <code class="docutils literal notranslate"><span class="pre">KIVY_HOME</span></code>, the folder will behave exactly the same
 as the default <code class="docutils literal notranslate"><span class="pre">.kivy/</span></code> folder mentioned above.</p>
+</section>
+<section id="app-specific-configuration">
+<h2>App-Specific Configuration<a class="headerlink" href="#app-specific-configuration" title="Permalink to this heading">¶</a></h2>
+<p>For desktop applications, use the <code class="docutils literal notranslate"><span class="pre">KIVY_DESKTOP_PATH_ID</span></code> environment variable
+to set a user-facing application title in directory paths. This helps end users
+easily identify your application’s directories when browsing their filesystem.</p>
+<p>Set the variable <strong>before</strong> importing Kivy:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;KIVY_DESKTOP_PATH_ID&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;My Photo Editor&#39;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
+</pre></div>
+</div>
+<p>This creates clear, recognizable directories like <code class="docutils literal notranslate"><span class="pre">%APPDATA%\\My_Photo_Editor</span></code>
+on Windows, making it immediately obvious which app the directory belongs to.</p>
+<p>See <code class="docutils literal notranslate"><span class="pre">examples/desktop_path_id/</span></code> for a complete example, and <a class="reference internal" href="environment.html#environment"><span class="std std-ref">Controlling the environment</span></a>
+for full details on <code class="docutils literal notranslate"><span class="pre">KIVY_DESKTOP_PATH_ID</span></code>.</p>
 </section>
 <section id="understanding-config-tokens">
 <h2>Understanding config tokens<a class="headerlink" href="#understanding-config-tokens" title="Permalink to this heading">¶</a></h2>
