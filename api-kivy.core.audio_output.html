@@ -103,6 +103,12 @@
           <ul>
 <li><a class="reference internal" href="#">Audio Output</a><ul>
 <li><a class="reference internal" href="#event-dispatching-and-state-changes">Event dispatching and state changes</a></li>
+<li><a class="reference internal" href="#provider-selection">Provider selection</a><ul>
+<li><a class="reference internal" href="#querying-available-providers">Querying available providers</a></li>
+<li><a class="reference internal" href="#using-audio-output-provider-parameter">Using <code class="docutils literal notranslate"><span class="pre">audio_output_provider</span></code> parameter</a></li>
+<li><a class="reference internal" href="#strict-mode">Strict mode</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#kivy.core.audio_output.Sound"><code class="docutils literal notranslate"><span class="pre">Sound</span></code></a><ul>
 <li><a class="reference internal" href="#kivy.core.audio_output.Sound.get_pos"><code class="docutils literal notranslate"><span class="pre">Sound.get_pos()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.audio_output.Sound.length"><code class="docutils literal notranslate"><span class="pre">Sound.length</span></code></a></li>
@@ -114,6 +120,7 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#kivy.core.audio_output.SoundLoader"><code class="docutils literal notranslate"><span class="pre">SoundLoader</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.core.audio_output.SoundLoader.available_providers"><code class="docutils literal notranslate"><span class="pre">SoundLoader.available_providers()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.audio_output.SoundLoader.load"><code class="docutils literal notranslate"><span class="pre">SoundLoader.load()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.audio_output.SoundLoader.register"><code class="docutils literal notranslate"><span class="pre">SoundLoader.register()</span></code></a></li>
 </ul>
@@ -385,7 +392,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="migration.html">Migrating from Kivy 2.x.x to Kivy 3.x.x</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="migration.html#introduction">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="migration.html#renamed-modules">Renamed modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="migration.html#renamed-modules-and-environment-variables">Renamed modules and environment variables</a></li>
 <li class="toctree-l2"><a class="reference internal" href="migration.html#removals">Removals</a></li>
 </ul>
 </li>
@@ -409,6 +416,12 @@
             <div class="toc"><h2>Table Of Contents</h2><ul>
 <li><a class="reference internal" href="#">Audio Output</a><ul>
 <li><a class="reference internal" href="#event-dispatching-and-state-changes">Event dispatching and state changes</a></li>
+<li><a class="reference internal" href="#provider-selection">Provider selection</a><ul>
+<li><a class="reference internal" href="#querying-available-providers">Querying available providers</a></li>
+<li><a class="reference internal" href="#using-audio-output-provider-parameter">Using <code class="docutils literal notranslate"><span class="pre">audio_output_provider</span></code> parameter</a></li>
+<li><a class="reference internal" href="#strict-mode">Strict mode</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#kivy.core.audio_output.Sound"><code class="docutils literal notranslate"><span class="pre">Sound</span></code></a><ul>
 <li><a class="reference internal" href="#kivy.core.audio_output.Sound.get_pos"><code class="docutils literal notranslate"><span class="pre">Sound.get_pos()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.audio_output.Sound.length"><code class="docutils literal notranslate"><span class="pre">Sound.length</span></code></a></li>
@@ -420,6 +433,7 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#kivy.core.audio_output.SoundLoader"><code class="docutils literal notranslate"><span class="pre">SoundLoader</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.core.audio_output.SoundLoader.available_providers"><code class="docutils literal notranslate"><span class="pre">SoundLoader.available_providers()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.audio_output.SoundLoader.load"><code class="docutils literal notranslate"><span class="pre">SoundLoader.load()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.audio_output.SoundLoader.register"><code class="docutils literal notranslate"><span class="pre">SoundLoader.register()</span></code></a></li>
 </ul>
@@ -468,6 +482,52 @@ working only for Python 2 + Gstreamer 0.10.</p>
 this functionality, please refer to the
 <a class="reference external" href="https://github.com/kivy/audiostream">audiostream</a> extension.</p>
 </div>
+</section>
+<section id="provider-selection">
+<h2>Provider selection<a class="headerlink" href="#provider-selection" title="Permalink to this heading">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
+<p>By default, Kivy automatically selects an audio provider based on platform
+defaults and file type. You can override this to use a specific provider.</p>
+<section id="querying-available-providers">
+<h3>Querying available providers<a class="headerlink" href="#querying-available-providers" title="Permalink to this heading">¶</a></h3>
+<p>To see which providers are available on your system:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.audio_output</span><span class="w"> </span><span class="kn">import</span> <span class="n">SoundLoader</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">SoundLoader</span><span class="o">.</span><span class="n">available_providers</span><span class="p">())</span>  <span class="c1"># e.g., [&#39;sdl3&#39;, &#39;ffpyplayer&#39;]</span>
+</pre></div>
+</div>
+</section>
+<section id="using-audio-output-provider-parameter">
+<h3>Using <code class="docutils literal notranslate"><span class="pre">audio_output_provider</span></code> parameter<a class="headerlink" href="#using-audio-output-provider-parameter" title="Permalink to this heading">¶</a></h3>
+<p>Specify a provider when loading a sound:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.audio_output</span><span class="w"> </span><span class="kn">import</span> <span class="n">SoundLoader</span>
+
+<span class="c1"># Load with SDL3 provider</span>
+<span class="n">sound</span> <span class="o">=</span> <span class="n">SoundLoader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;music.mp3&#39;</span><span class="p">,</span> <span class="n">audio_output_provider</span><span class="o">=</span><span class="s1">&#39;sdl3&#39;</span><span class="p">)</span>
+
+<span class="c1"># Load with ffpyplayer provider</span>
+<span class="n">sound</span> <span class="o">=</span> <span class="n">SoundLoader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;music.mp3&#39;</span><span class="p">,</span> <span class="n">audio_output_provider</span><span class="o">=</span><span class="s1">&#39;ffpyplayer&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="strict-mode">
+<h3>Strict mode<a class="headerlink" href="#strict-mode" title="Permalink to this heading">¶</a></h3>
+<p>By default, if a requested provider is unavailable or fails, Kivy logs a warning
+and falls back to other providers. Enable strict mode to raise exceptions instead:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;KIVY_PROVIDER_STRICT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">kivy</span>
+</pre></div>
+</div>
+<p>In strict mode:</p>
+<ul class="simple">
+<li><p>Invalid provider names raise <code class="docutils literal notranslate"><span class="pre">ValueError</span></code></p></li>
+<li><p>Provider load failures raise <code class="docutils literal notranslate"><span class="pre">Exception</span></code></p></li>
+<li><p>No fallback to other providers occurs</p></li>
+</ul>
+<p>This is useful during development to catch configuration errors immediately.</p>
+</section>
 </section>
 <dl class="py class">
 <dt class="sig sig-object py" id="kivy.core.audio_output.Sound">
@@ -545,9 +605,45 @@ Play then seek.</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">builtins.object</span></code></p>
 <p>Load a sound, using the best loader for the given file type.</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="kivy.core.audio_output.SoundLoader.available_providers">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">available_providers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#kivy.core.audio_output.SoundLoader.available_providers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of available audio provider names.</p>
+<p>The returned names can be used with the <code class="docutils literal notranslate"><span class="pre">audio_provider</span></code> parameter.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of provider name strings (e.g., [‘sdl3’, ‘ffpyplayer’])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="kivy.core.audio_output.SoundLoader.load">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#kivy.core.audio_output.Sound" title="kivy.core.audio_output.Sound"><span class="pre">Sound</span></a></span></span><a class="headerlink" href="#kivy.core.audio_output.SoundLoader.load" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">audio_output_provider</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#kivy.core.audio_output.Sound" title="kivy.core.audio_output.Sound"><span class="pre">Sound</span></a></span></span><a class="headerlink" href="#kivy.core.audio_output.SoundLoader.load" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load a sound, and return a Sound() instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> – Path to the audio file to load.</p></li>
+<li><p><strong>audio_output_provider</strong> – <p>Optional provider name (e.g., ‘sdl3’,
+‘ffpyplayer’). If specified, only that provider will be used. Use
+<a class="reference internal" href="#kivy.core.audio_output.SoundLoader.available_providers" title="kivy.core.audio_output.SoundLoader.available_providers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">available_providers()</span></code></a> to get a list of available providers.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A Sound instance, or None if no loader could handle the file.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If <code class="docutils literal notranslate"><span class="pre">audio_output_provider</span></code> is specified but not
+found or doesn’t support the file format (when KIVY_PROVIDER_STRICT=1).</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">

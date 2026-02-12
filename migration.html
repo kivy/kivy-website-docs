@@ -101,7 +101,7 @@
           <ul>
 <li><a class="reference internal" href="#">Migrating from Kivy 2.x.x to Kivy 3.x.x</a><ul>
 <li><a class="reference internal" href="#introduction">Introduction</a></li>
-<li><a class="reference internal" href="#renamed-modules">Renamed modules</a></li>
+<li><a class="reference internal" href="#renamed-modules-and-environment-variables">Renamed modules and environment variables</a></li>
 <li><a class="reference internal" href="#removals">Removals</a><ul>
 <li><a class="reference internal" href="#buttonbehavior">ButtonBehavior</a></li>
 <li><a class="reference internal" href="#togglebuttonbehavior">ToggleButtonBehavior</a></li>
@@ -375,7 +375,7 @@
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Migrating from Kivy 2.x.x to Kivy 3.x.x</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#renamed-modules">Renamed modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#renamed-modules-and-environment-variables">Renamed modules and environment variables</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#removals">Removals</a></li>
 </ul>
 </li>
@@ -398,7 +398,7 @@
             <div class="toc"><h2>Table Of Contents</h2><ul>
 <li><a class="reference internal" href="#">Migrating from Kivy 2.x.x to Kivy 3.x.x</a><ul>
 <li><a class="reference internal" href="#introduction">Introduction</a></li>
-<li><a class="reference internal" href="#renamed-modules">Renamed modules</a></li>
+<li><a class="reference internal" href="#renamed-modules-and-environment-variables">Renamed modules and environment variables</a></li>
 <li><a class="reference internal" href="#removals">Removals</a><ul>
 <li><a class="reference internal" href="#buttonbehavior">ButtonBehavior</a></li>
 <li><a class="reference internal" href="#togglebuttonbehavior">ToggleButtonBehavior</a></li>
@@ -416,16 +416,32 @@
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
 <p>Kivy 3.x.x introduces several changes and improvements compared to Kivy 2.x.x. This guide will help you migrate your existing Kivy 2.x.x codebase to Kivy 3.x.x.</p>
 </section>
-<section id="renamed-modules">
-<h2>Renamed modules<a class="headerlink" href="#renamed-modules" title="Permalink to this heading">¶</a></h2>
+<section id="renamed-modules-and-environment-variables">
+<h2>Renamed modules and environment variables<a class="headerlink" href="#renamed-modules-and-environment-variables" title="Permalink to this heading">¶</a></h2>
 <p><em>Migration from kivy.core.audio to kivy.core.audio_output</em></p>
 <p>In Kivy 3.x.x, the <cite>kivy.core.audio</cite> module has been renamed as <cite>kivy.core.audio_output</cite>.</p>
+<p><strong>Import Statement Changes</strong></p>
 <p>To migrate your code, you need to update the import statements in your codebase. For example, if you have the following import statement in your code:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.audio</span><span class="w"> </span><span class="kn">import</span> <span class="n">SoundLoader</span>
 </pre></div>
 </div>
 <p>You need to update it to:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.audio_output</span><span class="w"> </span><span class="kn">import</span> <span class="n">SoundLoader</span>
+</pre></div>
+</div>
+<p><strong>Environment Variable Changes</strong></p>
+<p>The environment variable has also been renamed from <cite>KIVY_AUDIO</cite> to <cite>KIVY_AUDIO_OUTPUT</cite>.</p>
+<p>If you were using the <cite>KIVY_AUDIO</cite> environment variable to specify audio provider preferences, you need to update it to <cite>KIVY_AUDIO_OUTPUT</cite>. For example:</p>
+<p>in Python before importing Kivy:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="c1"># Kivy 2.x.x</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;KIVY_AUDIO&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;sdl3,gstplayer&#39;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">kivy</span>
+
+<span class="c1"># Kivy 3.x.x</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;KIVY_AUDIO_OUTPUT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;sdl3,gstplayer&#39;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">kivy</span>
 </pre></div>
 </div>
 </section>

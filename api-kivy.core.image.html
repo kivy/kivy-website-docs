@@ -110,10 +110,19 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#saving-an-image">Saving an image</a></li>
+<li><a class="reference internal" href="#provider-selection">Provider selection</a><ul>
+<li><a class="reference internal" href="#querying-available-providers">Querying available providers</a></li>
+<li><a class="reference internal" href="#using-image-provider-parameter">Using <code class="docutils literal notranslate"><span class="pre">image_provider</span></code> parameter</a></li>
+<li><a class="reference internal" href="#provider-uri-scheme">Provider URI scheme</a></li>
+<li><a class="reference internal" href="#strict-mode">Strict mode</a></li>
+<li><a class="reference internal" href="#zip-file-image-sequences">Zip file image sequences</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#kivy.core.image.Image"><code class="docutils literal notranslate"><span class="pre">Image</span></code></a><ul>
 <li><a class="reference internal" href="#kivy.core.image.Image.anim_available"><code class="docutils literal notranslate"><span class="pre">Image.anim_available</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.image.Image.anim_index"><code class="docutils literal notranslate"><span class="pre">Image.anim_index</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.image.Image.anim_reset"><code class="docutils literal notranslate"><span class="pre">Image.anim_reset()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.image.Image.available_providers"><code class="docutils literal notranslate"><span class="pre">Image.available_providers()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.image.Image.filename"><code class="docutils literal notranslate"><span class="pre">Image.filename</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.image.Image.height"><code class="docutils literal notranslate"><span class="pre">Image.height</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.image.Image.image"><code class="docutils literal notranslate"><span class="pre">Image.image</span></code></a></li>
@@ -407,7 +416,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="migration.html">Migrating from Kivy 2.x.x to Kivy 3.x.x</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="migration.html#introduction">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="migration.html#renamed-modules">Renamed modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="migration.html#renamed-modules-and-environment-variables">Renamed modules and environment variables</a></li>
 <li class="toctree-l2"><a class="reference internal" href="migration.html#removals">Removals</a></li>
 </ul>
 </li>
@@ -438,10 +447,19 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#saving-an-image">Saving an image</a></li>
+<li><a class="reference internal" href="#provider-selection">Provider selection</a><ul>
+<li><a class="reference internal" href="#querying-available-providers">Querying available providers</a></li>
+<li><a class="reference internal" href="#using-image-provider-parameter">Using <code class="docutils literal notranslate"><span class="pre">image_provider</span></code> parameter</a></li>
+<li><a class="reference internal" href="#provider-uri-scheme">Provider URI scheme</a></li>
+<li><a class="reference internal" href="#strict-mode">Strict mode</a></li>
+<li><a class="reference internal" href="#zip-file-image-sequences">Zip file image sequences</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#kivy.core.image.Image"><code class="docutils literal notranslate"><span class="pre">Image</span></code></a><ul>
 <li><a class="reference internal" href="#kivy.core.image.Image.anim_available"><code class="docutils literal notranslate"><span class="pre">Image.anim_available</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.image.Image.anim_index"><code class="docutils literal notranslate"><span class="pre">Image.anim_index</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.image.Image.anim_reset"><code class="docutils literal notranslate"><span class="pre">Image.anim_reset()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.image.Image.available_providers"><code class="docutils literal notranslate"><span class="pre">Image.available_providers()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.image.Image.filename"><code class="docutils literal notranslate"><span class="pre">Image.filename</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.image.Image.height"><code class="docutils literal notranslate"><span class="pre">Image.height</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.image.Image.image"><code class="docutils literal notranslate"><span class="pre">Image.image</span></code></a></li>
@@ -618,6 +636,95 @@ image.save(data, fmt=”png”)
 png_bytes = data.read()</p>
 </div></blockquote>
 </section>
+<section id="provider-selection">
+<h2>Provider selection<a class="headerlink" href="#provider-selection" title="Permalink to this heading">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
+<p>By default, Kivy automatically selects an image provider based on platform
+defaults and file type. You can override this to use a specific provider.</p>
+<section id="querying-available-providers">
+<h3>Querying available providers<a class="headerlink" href="#querying-available-providers" title="Permalink to this heading">¶</a></h3>
+<p>To see which providers are available on your system:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.image</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span> <span class="k">as</span> <span class="n">CoreImage</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">CoreImage</span><span class="o">.</span><span class="n">available_providers</span><span class="p">())</span>  <span class="c1"># e.g., [&#39;sdl3&#39;, &#39;pil&#39;, &#39;imageio&#39;]</span>
+</pre></div>
+</div>
+</section>
+<section id="using-image-provider-parameter">
+<h3>Using <code class="docutils literal notranslate"><span class="pre">image_provider</span></code> parameter<a class="headerlink" href="#using-image-provider-parameter" title="Permalink to this heading">¶</a></h3>
+<p>Specify a provider when loading an image:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.image</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span> <span class="k">as</span> <span class="n">CoreImage</span>
+
+<span class="c1"># Load with PIL provider</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">CoreImage</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;photo.jpg&#39;</span><span class="p">,</span> <span class="n">image_provider</span><span class="o">=</span><span class="s1">&#39;pil&#39;</span><span class="p">)</span>
+
+<span class="c1"># Or when creating an Image directly</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">CoreImage</span><span class="p">(</span><span class="s1">&#39;photo.jpg&#39;</span><span class="p">,</span> <span class="n">image_provider</span><span class="o">=</span><span class="s1">&#39;sdl3&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="provider-uri-scheme">
+<h3>Provider URI scheme<a class="headerlink" href="#provider-uri-scheme" title="Permalink to this heading">¶</a></h3>
+<p>For graphics instructions (Rectangle, BorderImage, etc.) where you cannot pass
+extra parameters, use the <code class="docutils literal notranslate"><span class="pre">&#64;image_provider:</span></code> URI scheme:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@image_provider</span><span class="p">:</span><span class="n">providername</span><span class="p">(</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">image</span><span class="o">.</span><span class="n">ext</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Example in Python:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.graphics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rectangle</span>
+
+<span class="k">with</span> <span class="n">widget</span><span class="o">.</span><span class="n">canvas</span><span class="p">:</span>
+    <span class="n">Rectangle</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;@image_provider:pil(images/photo.png)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Example in KV language:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">MyWidget</span><span class="o">&gt;</span><span class="p">:</span>
+    <span class="n">canvas</span><span class="p">:</span>
+        <span class="n">Rectangle</span><span class="p">:</span>
+            <span class="n">source</span><span class="p">:</span> <span class="s1">&#39;@image_provider:sdl3(images/background.png)&#39;</span>
+            <span class="n">pos</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span>
+            <span class="n">size</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
+</pre></div>
+</div>
+<p>The path inside the parentheses is resolved using <a class="reference internal" href="api-kivy.resources.html#kivy.resources.resource_find" title="kivy.resources.resource_find"><code class="xref py py-func docutils literal notranslate"><span class="pre">resource_find()</span></code></a>.</p>
+</section>
+<section id="strict-mode">
+<h3>Strict mode<a class="headerlink" href="#strict-mode" title="Permalink to this heading">¶</a></h3>
+<p>By default, if a requested provider is unavailable or fails, Kivy logs a warning
+and falls back to other providers. Enable strict mode to raise exceptions instead:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;KIVY_PROVIDER_STRICT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">kivy</span>
+</pre></div>
+</div>
+<p>In strict mode:</p>
+<ul class="simple">
+<li><p>Invalid provider names raise <code class="docutils literal notranslate"><span class="pre">ValueError</span></code></p></li>
+<li><p>Provider load failures raise <code class="docutils literal notranslate"><span class="pre">Exception</span></code></p></li>
+<li><p>No fallback to other providers occurs</p></li>
+</ul>
+<p>This is useful during development to catch configuration errors immediately.</p>
+</section>
+<section id="zip-file-image-sequences">
+<h3>Zip file image sequences<a class="headerlink" href="#zip-file-image-sequences" title="Permalink to this heading">¶</a></h3>
+<p>Kivy can load multiple images from a zip file as an animated sequence. When you
+load a zip file, all images inside are extracted and combined into a single
+Image object with multiple frames:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.image</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span> <span class="k">as</span> <span class="n">CoreImage</span>
+<span class="n">anim</span> <span class="o">=</span> <span class="n">CoreImage</span><span class="p">(</span><span class="s1">&#39;sprites.zip&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you specify an <code class="docutils literal notranslate"><span class="pre">image_provider</span></code>, it will be applied to <strong>all</strong> images
+within the zip archive:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># All images in the zip will be loaded using PIL</span>
+<span class="n">anim</span> <span class="o">=</span> <span class="n">CoreImage</span><span class="p">(</span><span class="s1">&#39;sprites.zip&#39;</span><span class="p">,</span> <span class="n">image_provider</span><span class="o">=</span><span class="s1">&#39;pil&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that in strict mode, if the specified provider cannot load any image in
+the zip, a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> will be raised immediately.</p>
+</section>
+</section>
 <dl class="py class">
 <dt class="sig sig-object py" id="kivy.core.image.Image">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.core.image.</span></span><span class="sig-name descname"><span class="pre">Image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.core.image.Image" title="Permalink to this definition">¶</a></dt>
@@ -632,9 +739,9 @@ png_bytes = data.read()</p>
 been introduced. New methods for handling sequenced animation have been
 added.</p>
 </div>
-<dl class="field-list simple">
+<dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><dl class="simple">
+<dd class="field-odd"><dl>
 <dt><cite>arg</cite>: can be a string (str), Texture, BytesIO or Image object</dt><dd><p>A string path to the image file or data URI to be loaded; or a
 Texture object, which will be wrapped in an Image object; or a
 BytesIO object containing raw image data; or an already existing
@@ -651,6 +758,13 @@ faster animation.</p>
 <dt><cite>ext</cite>: str, only with BytesIO <cite>arg</cite></dt><dd><p>File extension to use in determining how to load raw image data.</p>
 </dd>
 <dt><cite>filename</cite>: str, only with BytesIO <cite>arg</cite></dt><dd><p>Filename to use in the image cache for raw image data.</p>
+</dd>
+<dt><cite>image_provider</cite>: str, defaults to None</dt><dd><p>Name of the image provider to use for loading (e.g., ‘sdl3’, ‘pil’).
+If None, the default provider selection order is used.
+Use <a class="reference internal" href="#kivy.core.image.Image.available_providers" title="kivy.core.image.Image.available_providers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">available_providers()</span></code></a> to get a list of valid provider names.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
 </dd>
 </dl>
 </dd>
@@ -699,6 +813,27 @@ faster animation.</p>
 <p>You can change the animation speed whilst it is playing:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set to 20 FPS</span>
 <span class="n">image</span><span class="o">.</span><span class="n">anim_delay</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="mf">20.</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy.core.image.Image.available_providers">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">available_providers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#kivy.core.image.Image.available_providers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of available image provider names.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list: A list of strings representing the names of available
+image providers (e.g., [‘sdl3’, ‘pil’]).</p>
+</dd>
+</dl>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.image</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span> <span class="k">as</span> <span class="n">CoreImage</span>
+<span class="n">providers</span> <span class="o">=</span> <span class="n">CoreImage</span><span class="o">.</span><span class="n">available_providers</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">providers</span><span class="p">)</span>  <span class="c1"># e.g., [&#39;sdl3&#39;, &#39;pil&#39;]</span>
 </pre></div>
 </div>
 </dd></dl>

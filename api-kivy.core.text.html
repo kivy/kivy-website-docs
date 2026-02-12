@@ -103,7 +103,15 @@
           <ul>
 <li><a class="reference internal" href="#">Text</a><ul>
 <li><a class="reference internal" href="#font-context-manager">Font Context Manager</a></li>
+<li><a class="reference internal" href="#text-provider-selection">Text Provider Selection</a><ul>
+<li><a class="reference internal" href="#selecting-a-provider-via-widget">Selecting a Provider via Widget</a></li>
+<li><a class="reference internal" href="#querying-available-providers">Querying Available Providers</a></li>
+<li><a class="reference internal" href="#strict-mode">Strict Mode</a></li>
+<li><a class="reference internal" href="#environment-variable-control">Environment Variable Control</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase"><code class="docutils literal notranslate"><span class="pre">LabelBase</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.core.text.LabelBase.available_providers"><code class="docutils literal notranslate"><span class="pre">LabelBase.available_providers()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.content_height"><code class="docutils literal notranslate"><span class="pre">LabelBase.content_height</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.content_size"><code class="docutils literal notranslate"><span class="pre">LabelBase.content_size</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.content_width"><code class="docutils literal notranslate"><span class="pre">LabelBase.content_width</span></code></a></li>
@@ -111,10 +119,12 @@
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.fontid"><code class="docutils literal notranslate"><span class="pre">LabelBase.fontid</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.get_cached_extents"><code class="docutils literal notranslate"><span class="pre">LabelBase.get_cached_extents()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.get_extents"><code class="docutils literal notranslate"><span class="pre">LabelBase.get_extents()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.text.LabelBase.get_provider_class"><code class="docutils literal notranslate"><span class="pre">LabelBase.get_provider_class()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.get_system_fonts_dir"><code class="docutils literal notranslate"><span class="pre">LabelBase.get_system_fonts_dir()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.label"><code class="docutils literal notranslate"><span class="pre">LabelBase.label</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.refresh"><code class="docutils literal notranslate"><span class="pre">LabelBase.refresh()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.register"><code class="docutils literal notranslate"><span class="pre">LabelBase.register()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.text.LabelBase.register_provider"><code class="docutils literal notranslate"><span class="pre">LabelBase.register_provider()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.render"><code class="docutils literal notranslate"><span class="pre">LabelBase.render()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.shorten"><code class="docutils literal notranslate"><span class="pre">LabelBase.shorten()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.text"><code class="docutils literal notranslate"><span class="pre">LabelBase.text</span></code></a></li>
@@ -389,7 +399,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="migration.html">Migrating from Kivy 2.x.x to Kivy 3.x.x</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="migration.html#introduction">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="migration.html#renamed-modules">Renamed modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="migration.html#renamed-modules-and-environment-variables">Renamed modules and environment variables</a></li>
 <li class="toctree-l2"><a class="reference internal" href="migration.html#removals">Removals</a></li>
 </ul>
 </li>
@@ -413,7 +423,15 @@
             <div class="toc"><h2>Table Of Contents</h2><ul>
 <li><a class="reference internal" href="#">Text</a><ul>
 <li><a class="reference internal" href="#font-context-manager">Font Context Manager</a></li>
+<li><a class="reference internal" href="#text-provider-selection">Text Provider Selection</a><ul>
+<li><a class="reference internal" href="#selecting-a-provider-via-widget">Selecting a Provider via Widget</a></li>
+<li><a class="reference internal" href="#querying-available-providers">Querying Available Providers</a></li>
+<li><a class="reference internal" href="#strict-mode">Strict Mode</a></li>
+<li><a class="reference internal" href="#environment-variable-control">Environment Variable Control</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase"><code class="docutils literal notranslate"><span class="pre">LabelBase</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.core.text.LabelBase.available_providers"><code class="docutils literal notranslate"><span class="pre">LabelBase.available_providers()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.content_height"><code class="docutils literal notranslate"><span class="pre">LabelBase.content_height</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.content_size"><code class="docutils literal notranslate"><span class="pre">LabelBase.content_size</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.content_width"><code class="docutils literal notranslate"><span class="pre">LabelBase.content_width</span></code></a></li>
@@ -421,10 +439,12 @@
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.fontid"><code class="docutils literal notranslate"><span class="pre">LabelBase.fontid</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.get_cached_extents"><code class="docutils literal notranslate"><span class="pre">LabelBase.get_cached_extents()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.get_extents"><code class="docutils literal notranslate"><span class="pre">LabelBase.get_extents()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.text.LabelBase.get_provider_class"><code class="docutils literal notranslate"><span class="pre">LabelBase.get_provider_class()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.get_system_fonts_dir"><code class="docutils literal notranslate"><span class="pre">LabelBase.get_system_fonts_dir()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.label"><code class="docutils literal notranslate"><span class="pre">LabelBase.label</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.refresh"><code class="docutils literal notranslate"><span class="pre">LabelBase.refresh()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.register"><code class="docutils literal notranslate"><span class="pre">LabelBase.register()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.text.LabelBase.register_provider"><code class="docutils literal notranslate"><span class="pre">LabelBase.register_provider()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.render"><code class="docutils literal notranslate"><span class="pre">LabelBase.render()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.shorten"><code class="docutils literal notranslate"><span class="pre">LabelBase.shorten()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.text.LabelBase.text"><code class="docutils literal notranslate"><span class="pre">LabelBase.text</span></code></a></li>
@@ -504,6 +524,57 @@ support for fallback).</p>
 <span class="n">lbl3</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">font_context</span><span class="o">=</span><span class="s1">&#39;system://myapp&#39;</span><span class="p">,</span> <span class="n">family_name</span><span class="o">=</span><span class="s1">&#39;Arial&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</section>
+<section id="text-provider-selection">
+<h2>Text Provider Selection<a class="headerlink" href="#text-provider-selection" title="Permalink to this heading">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
+<p>Kivy supports multiple text rendering backends (providers) such as PIL, SDL3,
+and Pango. You can query available providers and select a specific provider
+for text rendering.</p>
+<section id="selecting-a-provider-via-widget">
+<h3>Selecting a Provider via Widget<a class="headerlink" href="#selecting-a-provider-via-widget" title="Permalink to this heading">¶</a></h3>
+<p>The recommended way to select a text provider is through the
+<a class="reference internal" href="api-kivy.uix.label.html#kivy.uix.label.Label" title="kivy.uix.label.Label"><code class="xref py py-class docutils literal notranslate"><span class="pre">Label</span></code></a> widget’s <code class="docutils literal notranslate"><span class="pre">text_provider</span></code> property:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.label</span><span class="w"> </span><span class="kn">import</span> <span class="n">Label</span>
+
+<span class="c1"># Use PIL for this specific label</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Hello World&#39;</span><span class="p">,</span> <span class="n">text_provider</span><span class="o">=</span><span class="s1">&#39;pil&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="querying-available-providers">
+<h3>Querying Available Providers<a class="headerlink" href="#querying-available-providers" title="Permalink to this heading">¶</a></h3>
+<p>Use <a class="reference internal" href="#kivy.core.text.LabelBase.available_providers" title="kivy.core.text.LabelBase.available_providers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LabelBase.available_providers()</span></code></a> to get a list of available text
+providers on the current system:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">Label</span> <span class="k">as</span> <span class="n">CoreLabel</span>
+
+<span class="n">providers</span> <span class="o">=</span> <span class="n">CoreLabel</span><span class="o">.</span><span class="n">available_providers</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">providers</span><span class="p">)</span>  <span class="c1"># e.g., [&#39;sdl3&#39;, &#39;pil&#39;]</span>
+</pre></div>
+</div>
+</section>
+<section id="strict-mode">
+<h3>Strict Mode<a class="headerlink" href="#strict-mode" title="Permalink to this heading">¶</a></h3>
+<p>By default, if a requested provider is not available, <code class="docutils literal notranslate"><span class="pre">get_provider_class()</span></code>
+returns <code class="docutils literal notranslate"><span class="pre">None</span></code>. Enable strict mode to raise a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> for unknown
+providers by setting the <code class="docutils literal notranslate"><span class="pre">KIVY_PROVIDER_STRICT</span></code> environment variable:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;KIVY_PROVIDER_STRICT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="environment-variable-control">
+<h3>Environment Variable Control<a class="headerlink" href="#environment-variable-control" title="Permalink to this heading">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">KIVY_TEXT</span></code> environment variable controls which providers are available
+and their priority order. It must be set before importing Kivy:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;KIVY_TEXT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;pil,sdl3&#39;</span>  <span class="c1"># Try PIL first, then SDL3</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">kivy</span>
+</pre></div>
+</div>
+</section>
 </section>
 <dl class="py class">
 <dt class="sig sig-object py" id="kivy.core.text.LabelBase">
@@ -642,6 +713,28 @@ In the past, the text was padded by the negative of their values.</p>
 so you might have an issue in your application if you have not
 considered this.</p>
 </div>
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy.core.text.LabelBase.available_providers">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">available_providers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#kivy.core.text.LabelBase.available_providers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of available text provider names.</p>
+<p>This reflects which providers are importable on the current system
+AND allowed by the KIVY_TEXT environment variable (if set).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of str: Available provider names (e.g., [‘sdl3’, ‘pil’])</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">Label</span> <span class="k">as</span> <span class="n">CoreLabel</span>
+<span class="n">providers</span> <span class="o">=</span> <span class="n">CoreLabel</span><span class="o">.</span><span class="n">available_providers</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">providers</span><span class="p">)</span>  <span class="c1"># [&#39;sdl3&#39;, &#39;pil&#39;]</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="kivy.core.text.LabelBase.content_height">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">content_height</span></span><a class="headerlink" href="#kivy.core.text.LabelBase.content_height" title="Permalink to this definition">¶</a></dt>
@@ -712,6 +805,32 @@ text</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="kivy.core.text.LabelBase.get_provider_class">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_provider_class</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">provider</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.core.text.LabelBase.get_provider_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a text provider class by name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>provider</cite>: str</dt><dd><p>The provider name (e.g., ‘pil’, ‘sdl3’).</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The provider class, or None if not found (unless strict mode).</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>ValueError: If provider is None or empty, or if provider name</dt><dd><p>is not found and KIVY_PROVIDER_STRICT is enabled.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="kivy.core.text.LabelBase.get_system_fonts_dir">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_system_fonts_dir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#kivy.core.text.LabelBase.get_system_fonts_dir" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the directories used by the system for fonts.</p>
@@ -744,6 +863,25 @@ files and use the alias instead.</p>
 <p>All the fn_regular/fn_italic/fn_bold parameters are resolved with
 <a class="reference internal" href="api-kivy.resources.html#kivy.resources.resource_find" title="kivy.resources.resource_find"><code class="xref py py-func docutils literal notranslate"><span class="pre">kivy.resources.resource_find()</span></code></a>. If fn_italic/fn_bold are None,
 fn_regular will be used instead.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy.core.text.LabelBase.register_provider">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register_provider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.core.text.LabelBase.register_provider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a text provider class.</p>
+<p>This is called by each text provider module (text_pil, text_sdl3, etc.)
+to register itself with the text system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>cls</cite>: class</dt><dd><p>The provider class (subclass of LabelBase) to register.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -826,6 +964,7 @@ and the text. This is in addition to <code class="xref py py-attr docutils liter
 <li class="toctree-l3"><a class="reference internal" href="api-kivy.core.text.markup.html#kivy.core.text.markup.MarkupLabel.shorten_post"><code class="docutils literal notranslate"><span class="pre">MarkupLabel.shorten_post()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.text.markup.html#kivy.core.text.markup.get_markup_label_class"><code class="docutils literal notranslate"><span class="pre">get_markup_label_class()</span></code></a></li>
 </ul>
 </li>
 </ul>

@@ -375,7 +375,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../migration.html">Migrating from Kivy 2.x.x to Kivy 3.x.x</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../migration.html#introduction">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../migration.html#renamed-modules">Renamed modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../migration.html#renamed-modules-and-environment-variables">Renamed modules and environment variables</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../migration.html#removals">Removals</a></li>
 </ul>
 </li>
@@ -575,6 +575,28 @@ If unset, any <cite>KCFG_section_key=value</cite> will be mapped to Config.</p>
 <p><a class="reference internal" href="../api-kivy.core.html#module-kivy.core" title="kivy.core"><code class="xref py py-mod docutils literal notranslate"><span class="pre">kivy.core</span></code></a> try to select the best implementation available for your
 platform. For testing or custom installation, you might want to restrict the
 selector to a specific implementation.</p>
+<p>You can specify multiple providers as a comma-separated list to set the priority
+order. Kivy will try each provider in the order listed, using the first one that
+successfully initializes. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ KIVY_IMAGE=sdl3,pil python main.py
+</pre></div>
+</div>
+<p>Or in Python:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;KIVY_IMAGE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;sdl3,pil&#39;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">kivy</span>
+</pre></div>
+</div>
+<p>This will try the sdl3 image provider first, and fall back to pil if sdl3 is
+unavailable or the file format is not supported by sdl3.</p>
+<p>Some core modules also support selecting providers on a per-instance basis,
+allowing different objects to use different provider implementations within the
+same application. See the following modules for details:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../api-kivy.core.audio_output.html#module-kivy.core.audio_output" title="kivy.core.audio_output"><code class="xref py py-mod docutils literal notranslate"><span class="pre">kivy.core.audio_output</span></code></a> - Per-instance audio provider selection</p></li>
+<li><p><a class="reference internal" href="../api-kivy.core.image.html#module-kivy.core.image" title="kivy.core.image"><code class="xref py py-mod docutils literal notranslate"><span class="pre">kivy.core.image</span></code></a> - Per-instance image provider selection</p></li>
+<li><p><a class="reference internal" href="../api-kivy.core.text.html#module-kivy.core.text" title="kivy.core.text"><code class="xref py py-mod docutils literal notranslate"><span class="pre">kivy.core.text</span></code></a> - Per-instance text provider selection</p></li>
+</ul>
 <dl>
 <dt>KIVY_WINDOW</dt><dd><p>Implementation to use for creating the Window</p>
 <p>Values: sdl3, x11, egl_rpi</p>
@@ -585,7 +607,7 @@ selector to a specific implementation.</p>
 <dt>KIVY_VIDEO</dt><dd><p>Implementation to use for rendering video</p>
 <p>Values: gstplayer, ffpyplayer, ffmpeg, android , null</p>
 </dd>
-<dt>KIVY_AUDIO</dt><dd><p>Implementation to use for playing audio</p>
+<dt>KIVY_AUDIO_OUTPUT</dt><dd><p>Implementation to use for playing audio</p>
 <p>Values: sdl3, gstplayer, ffpyplayer, avplayer</p>
 </dd>
 <dt>KIVY_IMAGE</dt><dd><p>Implementation to use for reading image</p>
