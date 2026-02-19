@@ -953,8 +953,8 @@ along with new features like scoped groups and the <cite>toggle_on</cite> proper
     <span class="na">color</span><span class="p">:</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">activated</span> <span class="k">else</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><strong>New `on_active` Event</strong></p>
-<p>Replace <cite>on_state</cite> bindings with <cite>on_active</cite>:</p>
+<p><strong>New `on_activated` Event</strong></p>
+<p>Replace <cite>on_state</cite> bindings with <cite>on_activated</cite>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Kivy 2.x.x</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">MyToggle</span><span class="p">(</span><span class="n">ToggleButtonBehavior</span><span class="p">,</span> <span class="n">Label</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">on_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
@@ -967,7 +967,7 @@ along with new features like scoped groups and the <cite>toggle_on</cite> proper
 
 <span class="c1"># Kivy 3.x.x</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">MyToggle</span><span class="p">(</span><span class="n">ToggleButtonBehavior</span><span class="p">,</span> <span class="n">Label</span><span class="p">):</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">on_active</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_activated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Activated&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -983,7 +983,7 @@ along with new features like scoped groups and the <cite>toggle_on</cite> proper
 
 <span class="c1"># Kivy 3.x.x</span>
 <span class="nn">&lt;MyToggle@ToggleButton&gt;</span><span class="p">:</span>
-    <span class="na">on_active</span><span class="p">:</span> <span class="n">app</span><span class="o">.</span><span class="n">handle_toggle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">activated</span><span class="p">)</span>
+    <span class="na">on_activated</span><span class="p">:</span> <span class="n">app</span><span class="o">.</span><span class="n">handle_toggle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">activated</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><strong>New `toggle_on` Property</strong></p>
@@ -1007,7 +1007,7 @@ or on release (default):</p>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">toggle_on</span> <span class="o">=</span> <span class="s1">&#39;press&#39;</span>  <span class="c1"># Toggle immediately</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">on_active</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_activated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;ON&quot;</span> <span class="k">if</span> <span class="n">value</span> <span class="k">else</span> <span class="s2">&quot;OFF&quot;</span>
 </pre></div>
 </div>
@@ -1155,48 +1155,6 @@ You no longer need to manually clean up groups:</p>
 </pre></div>
 </div>
 <p><strong>Summary of Breaking Changes</strong></p>
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Removed/Changed</p></th>
-<th class="head"><p>Kivy 2.x.x</p></th>
-<th class="head"><p>Kivy 3.x.x</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><cite>state</cite> property</p></td>
-<td><p><cite>‘normal’</cite> or <cite>‘down’</cite></p></td>
-<td><p>Replaced with <cite>activated</cite> (bool)</p></td>
-</tr>
-<tr class="row-odd"><td><p><cite>on_state</cite> event</p></td>
-<td><p>Fired on state change</p></td>
-<td><p>Replaced with <cite>on_active</cite></p></td>
-</tr>
-<tr class="row-even"><td><p><cite>toggle_on</cite> property</p></td>
-<td><p>Not available</p></td>
-<td><p><strong>New</strong> - ‘press’ or ‘release’</p></td>
-</tr>
-<tr class="row-odd"><td><p>Group syntax</p></td>
-<td><p>String only</p></td>
-<td><p>String or (owner, name) tuple</p></td>
-</tr>
-<tr class="row-even"><td><p><cite>get_widgets(group)</cite></p></td>
-<td><p>Static method</p></td>
-<td><p>Replaced with <cite>get_group()</cite> instance</p></td>
-</tr>
-<tr class="row-odd"><td><p><cite>_clear_groups()</cite></p></td>
-<td><p>Static method</p></td>
-<td><p>Removed - automatic cleanup</p></td>
-</tr>
-<tr class="row-even"><td><p><cite>_release_group()</cite></p></td>
-<td><p>Instance method</p></td>
-<td><p>Removed - automatic via <cite>activated</cite></p></td>
-</tr>
-<tr class="row-odd"><td><p>Group management</p></td>
-<td><p>Manual weak references</p></td>
-<td><p>Automatic with <cite>WeakSet</cite></p></td>
-</tr>
-</tbody>
-</table>
 </section>
 </section>
 </section>
