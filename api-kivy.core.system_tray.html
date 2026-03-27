@@ -9,7 +9,7 @@
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
     <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Programming Guide &mdash; Kivy 3.0.0.dev0 documentation</title>
+    <title>System Tray &mdash; Kivy 3.0.0.dev0 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" /> 
       <link rel="stylesheet" href="_static/fresh.css" type="text/css" />
@@ -37,8 +37,9 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="Kivy 3.0.0.dev0 documentation" href="index.html" />
-    <link rel="next" title="Kivy Basics" href="guide/basic.html" />
-    <link rel="prev" title="Contact Us" href="contact.html" /> 
+    <link rel="up" title="Core Abstraction" href="api-kivy.core.html" />
+    <link rel="next" title="Text" href="api-kivy.core.text.html" />
+    <link rel="prev" title="Spelling" href="api-kivy.core.spelling.html" /> 
   </head>
   <body>
 
@@ -98,9 +99,49 @@
                 <button type="submit">Go</button>
             </form>
           <!--
-          <h3><a href="index.html">Programming Guide</a></h3>
+          <h3><a href="index.html">System Tray</a></h3>
           <ul>
-<li><a class="reference internal" href="#">Programming Guide</a></li>
+<li><a class="reference internal" href="#">System Tray</a><ul>
+<li><a class="reference internal" href="#classes-overview">Classes Overview</a></li>
+<li><a class="reference internal" href="#basic-usage">Basic Usage</a><ul>
+<li><a class="reference internal" href="#creating-a-simple-system-tray">Creating a Simple System Tray</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#advanced-features">Advanced Features</a><ul>
+<li><a class="reference internal" href="#creating-submenus">Creating Submenus</a></li>
+<li><a class="reference internal" href="#menu-separators">Menu Separators</a></li>
+<li><a class="reference internal" href="#inline-menu-creation">Inline Menu Creation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#classes-reference">Classes Reference</a><ul>
+<li><a class="reference internal" href="#trayicon">TrayIcon</a><ul>
+<li><a class="reference internal" href="#kivy.core.system_tray.TrayIcon"><code class="docutils literal notranslate"><span class="pre">TrayIcon</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.core.system_tray.TrayIcon.create"><code class="docutils literal notranslate"><span class="pre">TrayIcon.create()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.system_tray.TrayIcon.menu"><code class="docutils literal notranslate"><span class="pre">TrayIcon.menu</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#traymenu">TrayMenu</a><ul>
+<li><a class="reference internal" href="#kivy.core.system_tray.TrayMenu"><code class="docutils literal notranslate"><span class="pre">TrayMenu</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.core.system_tray.TrayMenu.add_item"><code class="docutils literal notranslate"><span class="pre">TrayMenu.add_item()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#traymenuitem">TrayMenuItem</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dynamic-properties">Dynamic Properties</a></li>
+<li><a class="reference internal" href="#initialization-with-lists">Initialization with Lists</a></li>
+<li><a class="reference internal" href="#best-practices">Best Practices</a></li>
+<li><a class="reference internal" href="#examples">Examples</a><ul>
+<li><a class="reference internal" href="#complete-application-example">Complete Application Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#see-also">See Also</a></li>
+</ul>
+</li>
 </ul>
 
           <h3><a href="index.html">Table Of Contents</a></h3>
@@ -160,7 +201,7 @@
 <li class="toctree-l2"><a class="reference internal" href="contact.html">Contact Us</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Programming Guide</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="guide-index.html">Programming Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="guide/basic.html">Kivy Basics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="guide/environment.html">Controlling the environment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="guide/config.html">Configure Kivy</a></li>
@@ -181,7 +222,7 @@
 <li class="toctree-l2"><a class="reference internal" href="tutorials/crashcourse.html">Crash Course</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api-index.html">API Reference</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="api-index.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.html">Kivy framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy._metrics.html">Low level Metrics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.animation.html">Animation</a></li>
@@ -192,14 +233,14 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.clock.html">Clock object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.config.html">Configuration object</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.context.html">Context</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.html">Core Abstraction</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="api-kivy.core.html">Core Abstraction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.core.audio_output.html">Audio Output</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.core.camera.html">Camera</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.core.clipboard.html">Clipboard</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.core.gl.html">OpenGL</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.core.image.html">Image</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.core.spelling.html">Spelling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy.core.system_tray.html">System Tray</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">System Tray</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.core.text.html">Text</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.core.text.markup.html">Text Markup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.core.text.text_layout.html">Text layout</a></li>
@@ -377,8 +418,8 @@
           <!--
           <h3>Related Topics</h3>
           <ul>
-              <li>Previous: <a href="contact.html" title="previous chapter">Contact Us</a></li>
-              <li>Next: <a href="guide/basic.html" title="next chapter">Kivy Basics</a></li>
+              <li>Previous: <a href="api-kivy.core.spelling.html" title="previous chapter">Spelling</a></li>
+              <li>Next: <a href="api-kivy.core.text.html" title="next chapter">Text</a></li>
           </ul>
           -->
         </div>
@@ -389,126 +430,312 @@
         <div class="bodywrapper">
           <div class="body">
             <div class="toc"><h2>Table Of Contents</h2><ul>
-<li><a class="reference internal" href="#">Programming Guide</a></li>
+<li><a class="reference internal" href="#">System Tray</a><ul>
+<li><a class="reference internal" href="#classes-overview">Classes Overview</a></li>
+<li><a class="reference internal" href="#basic-usage">Basic Usage</a><ul>
+<li><a class="reference internal" href="#creating-a-simple-system-tray">Creating a Simple System Tray</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#advanced-features">Advanced Features</a><ul>
+<li><a class="reference internal" href="#creating-submenus">Creating Submenus</a></li>
+<li><a class="reference internal" href="#menu-separators">Menu Separators</a></li>
+<li><a class="reference internal" href="#inline-menu-creation">Inline Menu Creation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#classes-reference">Classes Reference</a><ul>
+<li><a class="reference internal" href="#trayicon">TrayIcon</a><ul>
+<li><a class="reference internal" href="#kivy.core.system_tray.TrayIcon"><code class="docutils literal notranslate"><span class="pre">TrayIcon</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.core.system_tray.TrayIcon.create"><code class="docutils literal notranslate"><span class="pre">TrayIcon.create()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.system_tray.TrayIcon.menu"><code class="docutils literal notranslate"><span class="pre">TrayIcon.menu</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#traymenu">TrayMenu</a><ul>
+<li><a class="reference internal" href="#kivy.core.system_tray.TrayMenu"><code class="docutils literal notranslate"><span class="pre">TrayMenu</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.core.system_tray.TrayMenu.add_item"><code class="docutils literal notranslate"><span class="pre">TrayMenu.add_item()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#traymenuitem">TrayMenuItem</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dynamic-properties">Dynamic Properties</a></li>
+<li><a class="reference internal" href="#initialization-with-lists">Initialization with Lists</a></li>
+<li><a class="reference internal" href="#best-practices">Best Practices</a></li>
+<li><a class="reference internal" href="#examples">Examples</a><ul>
+<li><a class="reference internal" href="#complete-application-example">Complete Application Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#see-also">See Also</a></li>
+</ul>
+</li>
 </ul>
 </div>
             
-  <section id="programming-guide">
-<span id="guide-index"></span><h1>Programming Guide<a class="headerlink" href="#programming-guide" title="Permalink to this heading">¶</a></h1>
+  <section id="module-kivy.core.system_tray">
+<span id="system-tray"></span><h1>System Tray<a class="headerlink" href="#module-kivy.core.system_tray" title="Permalink to this heading">¶</a></h1>
+<a class="reference internal image-reference" href="images/system_tray.png"><img alt="images/system_tray.png" class="align-center" src="images/system_tray.png" /></a>
+<p>This module provides system tray functionality for Kivy applications using
+the core.system_tray components.</p>
+<section id="classes-overview">
+<h2>Classes Overview<a class="headerlink" href="#classes-overview" title="Permalink to this heading">¶</a></h2>
+<p>The system tray implementation consists of three main classes:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#kivy.core.system_tray.TrayIcon" title="kivy.core.system_tray.TrayIcon"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrayIcon</span></code></a>: Main system tray icon management</p></li>
+<li><p><a class="reference internal" href="#kivy.core.system_tray.TrayMenu" title="kivy.core.system_tray.TrayMenu"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrayMenu</span></code></a>: Container for menu items</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">TrayMenuItem</span></code>: Individual menu entries</p></li>
+</ul>
+</section>
+<section id="basic-usage">
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this heading">¶</a></h2>
+<section id="creating-a-simple-system-tray">
+<h3>Creating a Simple System Tray<a class="headerlink" href="#creating-a-simple-system-tray" title="Permalink to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.system_tray</span><span class="w"> </span><span class="kn">import</span> <span class="n">TrayIcon</span><span class="p">,</span> <span class="n">TrayMenu</span><span class="p">,</span> <span class="n">TrayMenuItem</span>
+
+<span class="c1"># Approach 1: Using internal menu</span>
+<span class="n">system_tray</span> <span class="o">=</span> <span class="n">TrayIcon</span><span class="p">()</span>
+<span class="n">system_tray</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+
+<span class="n">main_menu</span> <span class="o">=</span> <span class="n">system_tray</span><span class="o">.</span><span class="n">menu</span>
+<span class="n">main_menu</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">TrayMenuItem</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;File&quot;</span><span class="p">))</span>
+<span class="n">main_menu</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">TrayMenuItem</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Exit&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Approach 2: External menu creation</span>
+<span class="n">main_menu</span> <span class="o">=</span> <span class="n">TrayMenu</span><span class="p">()</span>
+<span class="n">main_menu</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">TrayMenuItem</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;File&quot;</span><span class="p">))</span>
+<span class="n">main_menu</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">TrayMenuItem</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Exit&quot;</span><span class="p">))</span>
+
+<span class="n">system_tray</span> <span class="o">=</span> <span class="n">TrayIcon</span><span class="p">(</span><span class="n">menu</span><span class="o">=</span><span class="n">main_menu</span><span class="p">)</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="advanced-features">
+<h2>Advanced Features<a class="headerlink" href="#advanced-features" title="Permalink to this heading">¶</a></h2>
+<section id="creating-submenus">
+<h3>Creating Submenus<a class="headerlink" href="#creating-submenus" title="Permalink to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create submenu</span>
+<span class="n">options_submenu</span> <span class="o">=</span> <span class="n">TrayMenu</span><span class="p">()</span>
+<span class="n">options_submenu</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">TrayMenuItem</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;General&quot;</span><span class="p">))</span>
+<span class="n">options_submenu</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">TrayMenuItem</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Security&quot;</span><span class="p">))</span>
+
+<span class="c1"># Add to main menu</span>
+<span class="n">main_menu</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span>
+    <span class="n">TrayMenuItem</span><span class="p">(</span>
+        <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Options&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;submenu&quot;</span><span class="p">,</span>
+        <span class="n">menu</span><span class="o">=</span><span class="n">options_submenu</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="menu-separators">
+<h3>Menu Separators<a class="headerlink" href="#menu-separators" title="Permalink to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">main_menu</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">TrayMenuItem</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">&quot;separator&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="inline-menu-creation">
+<h3>Inline Menu Creation<a class="headerlink" href="#inline-menu-creation" title="Permalink to this heading">¶</a></h3>
+<p>For complex menus, you can use inline creation:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">system_tray</span> <span class="o">=</span> <span class="n">TrayIcon</span><span class="p">(</span>
+    <span class="n">menu</span><span class="o">=</span><span class="n">TrayMenu</span><span class="p">(</span>
+        <span class="n">items</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">TrayMenuItem</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;File&quot;</span><span class="p">),</span>
+            <span class="n">TrayMenuItem</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">&quot;separator&quot;</span><span class="p">),</span>
+            <span class="n">TrayMenuItem</span><span class="p">(</span>
+                <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Options&quot;</span><span class="p">,</span>
+                <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;submenu&quot;</span><span class="p">,</span>
+                <span class="n">menu</span><span class="o">=</span><span class="n">TrayMenu</span><span class="p">(</span>
+                    <span class="n">items</span><span class="o">=</span><span class="p">[</span>
+                        <span class="n">TrayMenuItem</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;General&quot;</span><span class="p">),</span>
+                        <span class="n">TrayMenuItem</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Security&quot;</span><span class="p">),</span>
+                    <span class="p">]</span>
+                <span class="p">)</span>
+            <span class="p">),</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="classes-reference">
+<h2>Classes Reference<a class="headerlink" href="#classes-reference" title="Permalink to this heading">¶</a></h2>
+<section id="trayicon">
+<h3>TrayIcon<a class="headerlink" href="#trayicon" title="Permalink to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="kivy.core.system_tray.TrayIcon">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.core.system_tray.</span></span><span class="sig-name descname"><span class="pre">TrayIcon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">menu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.core.system_tray.TrayIcon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main system tray icon manager.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>menu</strong> (<a class="reference internal" href="#kivy.core.system_tray.TrayMenu" title="kivy.core.system_tray.TrayMenu"><em>TrayMenu</em></a><em> or </em><em>None</em>) – Optional TrayMenu instance</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy.core.system_tray.TrayIcon.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#kivy.core.system_tray.TrayIcon.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize and display the system tray icon.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>TrayIcon instance for method chaining</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#kivy.core.system_tray.TrayIcon" title="kivy.core.system_tray.TrayIcon">TrayIcon</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.core.system_tray.TrayIcon.menu">
+<span class="sig-name descname"><span class="pre">menu</span></span><a class="headerlink" href="#kivy.core.system_tray.TrayIcon.menu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Internal menu reference. Available after create() is called.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#kivy.core.system_tray.TrayMenu" title="kivy.core.system_tray.TrayMenu">TrayMenu</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="traymenu">
+<h3>TrayMenu<a class="headerlink" href="#traymenu" title="Permalink to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="kivy.core.system_tray.TrayMenu">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.core.system_tray.</span></span><span class="sig-name descname"><span class="pre">TrayMenu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.core.system_tray.TrayMenu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Container for menu items.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>items</strong> (<em>list</em><em> or </em><em>None</em>) – List of TrayMenuItem instances</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy.core.system_tray.TrayMenu.add_item">
+<span class="sig-name descname"><span class="pre">add_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.core.system_tray.TrayMenu.add_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a menu item to the menu.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>item</strong> (<em>TrayMenuItem</em>) – Menu item to add</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="traymenuitem">
+<h3>TrayMenuItem<a class="headerlink" href="#traymenuitem" title="Permalink to this heading">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">TrayMenuItem(label=None,</span> <span class="pre">type=&quot;button&quot;,</span> <span class="pre">callback=None,</span> <span class="pre">enabled=True,</span></span></dt>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">checked=False,</span> <span class="pre">menu=None)</span></span></dt>
+<dd><p>Individual menu entry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>label</strong> (<em>str</em><em> or </em><em>None</em>) – Display text for the menu item</p></li>
+<li><p><strong>type</strong> (<em>str</em>) – Item type (“button”, “checkbox”, “separator”, “submenu”)</p></li>
+<li><p><strong>callback</strong> (<em>callable</em><em> or </em><em>None</em>) – Function to call when clicked (only for ‘button’ and ‘checkbox’)</p></li>
+<li><p><strong>enabled</strong> (<em>bool</em>) – Whether the item is clickable/enabled</p></li>
+<li><p><strong>checked</strong> (<em>bool</em>) – Whether the checkbox item is checked (only for ‘checkbox’)</p></li>
+<li><p><strong>menu</strong> (<a class="reference internal" href="#kivy.core.system_tray.TrayMenu" title="kivy.core.system_tray.TrayMenu"><em>TrayMenu</em></a><em> or </em><em>None</em>) – Submenu for submenu items (only for ‘submenu’)</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All properties (<cite>label</cite>, <cite>enabled</cite>, <cite>checked</cite>, <cite>callback</cite>) can be
+changed dynamically after the item is created, and the visual menu will
+update immediately.</p>
+</div>
+</dd></dl>
+
+</section>
+</section>
+<section id="dynamic-properties">
+<h2>Dynamic Properties<a class="headerlink" href="#dynamic-properties" title="Permalink to this heading">¶</a></h2>
+<p>The components are designed to be fully dynamic. You can change properties on the fly
+and the system tray will update instantly:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Change tray icon image and tooltip</span>
+<span class="n">system_tray</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="s2">&quot;new_icon.png&quot;</span>
+<span class="n">system_tray</span><span class="o">.</span><span class="n">tooltip</span> <span class="o">=</span> <span class="s2">&quot;Syncing (45%)&quot;</span>
+
+<span class="c1"># Change a specific menu item</span>
+<span class="n">meu_botao</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Cancel Sync&quot;</span>
+<span class="n">meu_botao</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="c1"># Toggle a checkbox item</span>
+<span class="n">meu_checkbox</span><span class="o">.</span><span class="n">checked</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</section>
+<section id="initialization-with-lists">
+<h2>Initialization with Lists<a class="headerlink" href="#initialization-with-lists" title="Permalink to this heading">¶</a></h2>
+<p>You can directly pass a python <cite>list</cite> of <cite>TrayMenuItem</cite> objects when creating a
+<cite>TrayIcon</cite> or a <cite>TrayMenu</cite>, and they will automatically be parsed:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">system_tray</span> <span class="o">=</span> <span class="n">TrayIcon</span><span class="p">(</span>
+    <span class="n">icon_path</span><span class="o">=</span><span class="s2">&quot;icon.png&quot;</span><span class="p">,</span>
+    <span class="n">menu</span><span class="o">=</span><span class="p">[</span>
+        <span class="n">TrayMenuItem</span><span class="p">(</span><span class="s2">&quot;Enable VPN&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;checkbox&quot;</span><span class="p">,</span> <span class="n">checked</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="n">TrayMenuItem</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">&quot;separator&quot;</span><span class="p">),</span>
+        <span class="n">TrayMenuItem</span><span class="p">(</span><span class="s2">&quot;Exit&quot;</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">exit</span><span class="p">())</span>
+    <span class="p">]</span>
+<span class="p">)</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="best-practices">
+<h2>Best Practices<a class="headerlink" href="#best-practices" title="Permalink to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Menu Structure</strong>: Keep menus simple and intuitive</p></li>
+<li><p><strong>Separators</strong>: Use separators to group related items</p></li>
+<li><p><strong>Method Chaining</strong>: TrayIcon.create() returns self for chaining</p></li>
+<li><p><strong>Memory Management</strong>: Store tray reference to prevent garbage collection</p></li>
+</ol>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">¶</a></h2>
+<section id="complete-application-example">
+<h3>Complete Application Example<a class="headerlink" href="#complete-application-example" title="Permalink to this heading">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.label</span><span class="w"> </span><span class="kn">import</span> <span class="n">Label</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.system_tray</span><span class="w"> </span><span class="kn">import</span> <span class="n">TrayIcon</span><span class="p">,</span> <span class="n">TrayMenu</span><span class="p">,</span> <span class="n">TrayMenuItem</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MyApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Create system tray</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup_tray</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">Label</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;App with System Tray&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup_tray</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">main_menu</span> <span class="o">=</span> <span class="n">TrayMenu</span><span class="p">()</span>
+        <span class="n">main_menu</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">TrayMenuItem</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Show App&quot;</span><span class="p">))</span>
+        <span class="n">main_menu</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">TrayMenuItem</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">&quot;separator&quot;</span><span class="p">))</span>
+        <span class="n">main_menu</span><span class="o">.</span><span class="n">add_item</span><span class="p">(</span><span class="n">TrayMenuItem</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Exit&quot;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">system_tray</span> <span class="o">=</span> <span class="n">TrayIcon</span><span class="p">(</span><span class="n">menu</span><span class="o">=</span><span class="n">main_menu</span><span class="p">)</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+
+<span class="n">MyApp</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="see-also">
+<h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Kivy Documentation: <a class="reference external" href="https://kivy.org/doc/stable/">https://kivy.org/doc/stable/</a></p></li>
+<li><p>System Tray Guidelines: Platform-specific implementation notes</p></li>
+</ul>
+</section>
 <div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="guide/basic.html">Kivy Basics</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="guide/basic.html#installation-of-the-kivy-environment">Installation of the Kivy environment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/basic.html#create-an-application">Create an application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/basic.html#kivy-app-life-cycle">Kivy App Life Cycle</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/basic.html#running-the-application">Running the application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/basic.html#customize-the-application">Customize the application</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="guide/environment.html">Controlling the environment</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="guide/environment.html#path-control">Path control</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/environment.html#configuration">Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/environment.html#restrict-core-to-specific-implementation">Restrict core to specific implementation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/environment.html#metrics">Metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/environment.html#graphics">Graphics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/environment.html#event-loop">Event Loop</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="guide/config.html">Configure Kivy</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="guide/config.html#locating-the-configuration-file">Locating the configuration file</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/config.html#local-configuration">Local configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/config.html#app-specific-configuration">App-Specific Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/config.html#understanding-config-tokens">Understanding config tokens</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="guide/architecture.html">Architectural Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="guide/architecture.html#core-providers-and-input-providers">Core Providers and Input Providers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/architecture.html#graphics">Graphics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/architecture.html#core">Core</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/architecture.html#uix-widgets-layouts">UIX (Widgets &amp; Layouts)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/architecture.html#modules">Modules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/architecture.html#input-events-touches">Input Events (Touches)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/architecture.html#widgets-and-event-dispatching">Widgets and Event Dispatching</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="guide/events.html">Events and Properties</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="guide/events.html#introduction-to-the-event-dispatcher">Introduction to the Event Dispatcher</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/events.html#main-loop">Main loop</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/events.html#widget-events">Widget events</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/events.html#creating-custom-events">Creating custom events</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/events.html#attaching-callbacks">Attaching callbacks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/events.html#introduction-to-properties">Introduction to Properties</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/events.html#declaration-of-a-property">Declaration of a Property</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/events.html#dispatching-a-property-event">Dispatching a Property event</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/events.html#compound-properties">Compound Properties</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="guide/inputs.html">Input management</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="guide/inputs.html#input-architecture">Input architecture</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/inputs.html#motion-event-profiles">Motion event profiles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/inputs.html#touch-events">Touch events</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/inputs.html#joystick-events">Joystick events</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="guide/widgets.html">Widgets</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="guide/widgets.html#introduction-to-widget">Introduction to Widget</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/widgets.html#manipulating-the-widget-tree">Manipulating the Widget tree</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/widgets.html#traversing-the-tree">Traversing the Tree</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/widgets.html#widgets-z-index">Widgets Z Index</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/widgets.html#organize-with-layouts">Organize with Layouts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/widgets.html#adding-a-background-to-a-layout">Adding a Background to a Layout</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/widgets.html#nesting-layouts">Nesting Layouts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/widgets.html#size-and-position-metrics">Size and position metrics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/widgets.html#screen-separation-with-screen-manager">Screen Separation with Screen Manager</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="guide/graphics.html">Graphics</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="guide/graphics.html#introduction-to-canvas">Introduction to Canvas</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/graphics.html#context-instructions">Context instructions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/graphics.html#drawing-instructions">Drawing instructions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/graphics.html#manipulating-instructions">Manipulating instructions</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="guide/lang.html">Kv language</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="guide/lang.html#concept-behind-the-language">Concept behind the language</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/lang.html#how-to-load-kv">How to load KV</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/lang.html#rule-context">Rule context</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/lang.html#special-syntax">Special syntax</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/lang.html#instantiate-children">Instantiate children</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/lang.html#event-bindings">Event Bindings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/lang.html#extend-canvas">Extend canvas</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/lang.html#referencing-widgets">Referencing Widgets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/lang.html#accessing-widgets-defined-inside-kv-lang-in-your-python-code">Accessing Widgets defined inside Kv lang in your Python code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/lang.html#dynamic-classes">Dynamic Classes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/lang.html#re-using-styles-in-multiple-widgets">Re-using styles in multiple widgets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/lang.html#designing-with-the-kivy-language">Designing with the Kivy Language</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/lang.html#more-documentation">More documentation</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="guide/other-frameworks.html">Integrating with other Frameworks</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="guide/other-frameworks.html#using-twisted-inside-kivy">Using Twisted inside Kivy</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="guide/packaging.html">Packaging your application</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="guide/packaging-windows.html">Create a package for Windows</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/packaging-android.html">Create a package for Android</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/android.html">Kivy on Android</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/packaging-osx.html">Creating packages for macOS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/packaging-ios-prerequisites.html">iOS Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/packaging-ios.html">Create a package for iOS</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="guide/licensing.html">Package licensing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="guide/licensing.html#dependencies">Dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/licensing.html#windows-pyinstaller">Windows (PyInstaller)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/licensing.html#linux">Linux</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/licensing.html#android">Android</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/licensing.html#macos">macOS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/licensing.html#ios">iOS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="guide/licensing.html#avoiding-binaries">Avoiding binaries</a></li>
-</ul>
-</li>
-</ul>
 </div>
 </section>
 
@@ -517,10 +744,10 @@
             <table>
                 <tr>
                     <td class="leftlink">
-                  <a href="contact.html" title="previous chapter">&laquo; Contact Us</a></li>
+                  <a href="api-kivy.core.spelling.html" title="previous chapter">&laquo; Spelling</a></li>
                   </td>
                   <td class="rightlink">
-                  <a href="guide/basic.html" title="next chapter">Kivy Basics &raquo;</a>
+                  <a href="api-kivy.core.text.html" title="next chapter">Text &raquo;</a>
                       </td>
                   </tr>
               </table>
