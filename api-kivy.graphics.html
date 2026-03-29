@@ -131,6 +131,8 @@
 <li><a class="reference internal" href="#kivy.graphics.BoxShadow.border_radius"><code class="docutils literal notranslate"><span class="pre">BoxShadow.border_radius</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.BoxShadow.inset"><code class="docutils literal notranslate"><span class="pre">BoxShadow.inset</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.BoxShadow.offset"><code class="docutils literal notranslate"><span class="pre">BoxShadow.offset</span></code></a></li>
+<li><a class="reference internal" href="#kivy.graphics.BoxShadow.optimize"><code class="docutils literal notranslate"><span class="pre">BoxShadow.optimize</span></code></a></li>
+<li><a class="reference internal" href="#kivy.graphics.BoxShadow.optimize_fbo_size"><code class="docutils literal notranslate"><span class="pre">BoxShadow.optimize_fbo_size</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.BoxShadow.pos"><code class="docutils literal notranslate"><span class="pre">BoxShadow.pos</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.BoxShadow.size"><code class="docutils literal notranslate"><span class="pre">BoxShadow.size</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.BoxShadow.spread_radius"><code class="docutils literal notranslate"><span class="pre">BoxShadow.spread_radius</span></code></a></li>
@@ -685,6 +687,8 @@
 <li><a class="reference internal" href="#kivy.graphics.BoxShadow.border_radius"><code class="docutils literal notranslate"><span class="pre">BoxShadow.border_radius</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.BoxShadow.inset"><code class="docutils literal notranslate"><span class="pre">BoxShadow.inset</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.BoxShadow.offset"><code class="docutils literal notranslate"><span class="pre">BoxShadow.offset</span></code></a></li>
+<li><a class="reference internal" href="#kivy.graphics.BoxShadow.optimize"><code class="docutils literal notranslate"><span class="pre">BoxShadow.optimize</span></code></a></li>
+<li><a class="reference internal" href="#kivy.graphics.BoxShadow.optimize_fbo_size"><code class="docutils literal notranslate"><span class="pre">BoxShadow.optimize_fbo_size</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.BoxShadow.pos"><code class="docutils literal notranslate"><span class="pre">BoxShadow.pos</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.BoxShadow.size"><code class="docutils literal notranslate"><span class="pre">BoxShadow.size</span></code></a></li>
 <li><a class="reference internal" href="#kivy.graphics.BoxShadow.spread_radius"><code class="docutils literal notranslate"><span class="pre">BoxShadow.spread_radius</span></code></a></li>
@@ -1224,6 +1228,13 @@ The negative ones indicate that the shadow should move to the left and/or down.<
 <dt><cite>border_radius</cite>: list | tuple, defaults to <code class="docutils literal notranslate"><span class="pre">(0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0,</span> <span class="pre">0.0)</span></code>.</dt><dd><p>Specifies the radii used for the rounded corners clockwise:
 top-left, top-right, bottom-right, bottom-left.</p>
 </dd>
+<dt><cite>optimize</cite>: bool, defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</dt><dd><p>When enabled, uses a fixed size FBO and scales it to the
+target size for better performance. When disabled, rebuilds the FBO
+to match the target size for higher quality.</p>
+</dd>
+<dt><cite>optimize_fbo_size</cite>: list | tuple, defaults to <code class="docutils literal notranslate"><span class="pre">(100.0,</span> <span class="pre">100.0)</span></code>.</dt><dd><p>Defines the fixed FBO size used when <a class="reference internal" href="#kivy.graphics.BoxShadow.optimize" title="kivy.graphics.BoxShadow.optimize"><code class="xref py py-attr docutils literal notranslate"><span class="pre">optimize</span></code></a> is <code class="docutils literal notranslate"><span class="pre">True</span></code>.
+Larger values improve quality but increase memory and startup cost.</p>
+</dd>
 </dl>
 </dd>
 </dl>
@@ -1428,6 +1439,30 @@ shadow, as in the example below:</p>
 </dl>
 </li>
 </ul>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.graphics.BoxShadow.optimize">
+<span class="sig-name descname"><span class="pre">optimize</span></span><a class="headerlink" href="#kivy.graphics.BoxShadow.optimize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable fixed size FBO scaling optimization.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
+<p>Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>. When <code class="docutils literal notranslate"><span class="pre">False</span></code>, the FBO is resized to match the
+shadow size for higher quality at the cost of performance. When
+<code class="docutils literal notranslate"><span class="pre">True</span></code>, the shadow is generated at a fixed resolution and scaled to
+the target size.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="kivy.graphics.BoxShadow.optimize_fbo_size">
+<span class="sig-name descname"><span class="pre">optimize_fbo_size</span></span><a class="headerlink" href="#kivy.graphics.BoxShadow.optimize_fbo_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fixed FBO size used when <a class="reference internal" href="#kivy.graphics.BoxShadow.optimize" title="kivy.graphics.BoxShadow.optimize"><code class="xref py py-attr docutils literal notranslate"><span class="pre">optimize</span></code></a> is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
+<p>Defaults to <code class="docutils literal notranslate"><span class="pre">(100.0,</span> <span class="pre">100.0)</span></code>. Larger values improve quality at the
+cost of memory usage and FBO creation time.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -3441,6 +3476,8 @@ texture.</p>
 <li class="toctree-l3"><a class="reference internal" href="api-kivy.graphics.boxshadow.html#kivy.graphics.boxshadow.BoxShadow.border_radius"><code class="docutils literal notranslate"><span class="pre">BoxShadow.border_radius</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="api-kivy.graphics.boxshadow.html#kivy.graphics.boxshadow.BoxShadow.inset"><code class="docutils literal notranslate"><span class="pre">BoxShadow.inset</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="api-kivy.graphics.boxshadow.html#kivy.graphics.boxshadow.BoxShadow.offset"><code class="docutils literal notranslate"><span class="pre">BoxShadow.offset</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.graphics.boxshadow.html#kivy.graphics.boxshadow.BoxShadow.optimize"><code class="docutils literal notranslate"><span class="pre">BoxShadow.optimize</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.graphics.boxshadow.html#kivy.graphics.boxshadow.BoxShadow.optimize_fbo_size"><code class="docutils literal notranslate"><span class="pre">BoxShadow.optimize_fbo_size</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="api-kivy.graphics.boxshadow.html#kivy.graphics.boxshadow.BoxShadow.pos"><code class="docutils literal notranslate"><span class="pre">BoxShadow.pos</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="api-kivy.graphics.boxshadow.html#kivy.graphics.boxshadow.BoxShadow.size"><code class="docutils literal notranslate"><span class="pre">BoxShadow.size</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="api-kivy.graphics.boxshadow.html#kivy.graphics.boxshadow.BoxShadow.spread_radius"><code class="docutils literal notranslate"><span class="pre">BoxShadow.spread_radius</span></code></a></li>
@@ -4048,7 +4085,7 @@ texture.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Mar 27, 2026.
+      Last updated on Mar 29, 2026.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
