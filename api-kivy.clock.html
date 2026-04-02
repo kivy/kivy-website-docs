@@ -1859,29 +1859,93 @@ returned:</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="kivy.clock.triggered">
-<span class="sig-prename descclassname"><span class="pre">kivy.clock.</span></span><span class="sig-name descname"><span class="pre">triggered</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.clock.triggered" title="Permalink to this definition">¶</a></dt>
-<dd><p>Decorator that will trigger the call of the function at the specified
-timeout, through the method <a class="reference internal" href="#kivy.clock.CyClockBase.create_trigger" title="kivy.clock.CyClockBase.create_trigger"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CyClockBase.create_trigger()</span></code></a>. Subsequent
-calls to the decorated function (while the timeout is active) are ignored.</p>
-<p>It can be helpful when an expensive function (i.e. call to a server) can be
-triggered by different methods. Setting a proper timeout will delay the
-calling and only one of them will be triggered.</p>
-<blockquote>
-<div><p>&#64;triggered(timeout, interval=False)
-def callback(id):</p>
-<blockquote>
-<div><p>print(‘The callback has been called with id=%d’ % id)</p>
-</div></blockquote>
-<p>&gt;&gt; callback(id=1)
-&gt;&gt; callback(id=2)
-The callback has been called with id=2</p>
-</div></blockquote>
-<p>The decorated callback can also be unscheduled using:</p>
-<blockquote>
-<div><p>&gt;&gt; callback.cancel()</p>
-</div></blockquote>
+<span class="sig-prename descclassname"><span class="pre">kivy.clock.</span></span><span class="sig-name descname"><span class="pre">triggered</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debounce</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.clock.triggered" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator that schedules the execution of a function after a specified
+timeout using <a class="reference internal" href="#kivy.clock.CyClockBase.create_trigger" title="kivy.clock.CyClockBase.create_trigger"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CyClockBase.create_trigger()</span></code></a>.</p>
+<p>This decorator provides several key behaviors:</p>
+<ul class="simple">
+<li><p><strong>Throttling</strong> (default): Subsequent calls while a trigger is active are
+ignored. The function fires once after the initial timeout.</p></li>
+<li><p><strong>Debouncing</strong>: If <code class="docutils literal notranslate"><span class="pre">debounce=True</span></code>, subsequent calls cancel any
+pending execution and reschedule it. The function only fires after the
+caller stops calling it for the duration of the <code class="docutils literal notranslate"><span class="pre">timeout</span></code>.</p></li>
+<li><p><strong>Last Arguments Win</strong>: If called multiple times before the trigger
+fires, the arguments from the <strong>latest</strong> call are used.</p></li>
+<li><p><strong>Instance Isolation</strong>: When used as a method decorator, each instance
+gets its own isolated trigger and state.</p></li>
+<li><p><strong>Thread Safety</strong>: Safe to call from external threads.</p></li>
+</ul>
+<p>The decorated function gains a <code class="docutils literal notranslate"><span class="pre">.cancel()</span></code> method to unschedule any
+pending execution, and an <code class="docutils literal notranslate"><span class="pre">.is_triggered</span></code> property to check its status.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>timeout</strong> (<em>float</em><em>, </em><em>defaults to 0</em>) – The delay (in seconds) before the function is called.</p></li>
+<li><p><strong>interval</strong> (<em>bool</em><em>, </em><em>defaults to False</em>) – If True, the trigger will be repeating (standard Clock
+interval behavior).</p></li>
+<li><p><strong>debounce</strong> (<em>bool</em><em>, </em><em>defaults to False</em>) – If True, subsequent calls will cancel and reschedule the
+trigger.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Example of a global function without debouncing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@triggered</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sync_data</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Syncing data for </span><span class="si">{</span><span class="n">user_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">sync_data</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">sync_data</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># Overwrites arguments of the first call</span>
+<span class="c1"># 0.1s later: &quot;Syncing data for 2&quot;</span>
+</pre></div>
+</div>
+<p>Example of a global function with debouncing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@triggered</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">debounce</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sync_data</span><span class="p">(</span><span class="n">user_id</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Syncing data for </span><span class="si">{</span><span class="n">user_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">sync_data</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># 0.05s later</span>
+<span class="n">sync_data</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># Cancels the first call and reschedules for 0.1s from now</span>
+<span class="c1"># 0.1s after the LAST call (&quot;sync_data(2)&quot;): &quot;Syncing data for 2&quot;</span>
+</pre></div>
+</div>
+<p>Example of an instance method:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">DataMapper</span><span class="p">:</span>
+    <span class="nd">@triggered</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="c1"># This will be throttled per-instance</span>
+        <span class="k">pass</span>
+
+<span class="n">dm1</span><span class="p">,</span> <span class="n">dm2</span> <span class="o">=</span> <span class="n">DataMapper</span><span class="p">(),</span> <span class="n">DataMapper</span><span class="p">()</span>
+<span class="n">dm1</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span> <span class="c1"># Scheduled</span>
+<span class="n">dm2</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span> <span class="c1"># Scheduled independently</span>
+</pre></div>
+</div>
+<p>Example with <code class="docutils literal notranslate"><span class="pre">classmethod</span></code> and <code class="docutils literal notranslate"><span class="pre">staticmethod</span></code> (always put
+<code class="docutils literal notranslate"><span class="pre">&#64;triggered</span></code> below them):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Utils</span><span class="p">:</span>
+    <span class="nd">@classmethod</span>
+    <span class="nd">@triggered</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">global_refresh</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="c1"># shared by all instances</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="nd">@triggered</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">debounce</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">log_event</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+<p>To cancel a pending call:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sync_data</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+</pre></div>
+</div>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.10.1.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.0.0: </span>Fixed behavior for instance methods to ensure state isolation between
+different objects. Added <code class="docutils literal notranslate"><span class="pre">debounce</span></code> parameter.</p>
 </div>
 </dd></dl>
 
@@ -1936,7 +2000,7 @@ The callback has been called with id=2</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Mar 29, 2026.
+      Last updated on Apr 02, 2026.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

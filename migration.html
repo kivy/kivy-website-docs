@@ -105,6 +105,7 @@
 <li><a class="reference internal" href="#removals">Removals</a><ul>
 <li><a class="reference internal" href="#buttonbehavior">ButtonBehavior</a></li>
 <li><a class="reference internal" href="#togglebuttonbehavior">ToggleButtonBehavior</a></li>
+<li><a class="reference internal" href="#clock">Clock</a></li>
 </ul>
 </li>
 </ul>
@@ -403,6 +404,7 @@
 <li><a class="reference internal" href="#removals">Removals</a><ul>
 <li><a class="reference internal" href="#buttonbehavior">ButtonBehavior</a></li>
 <li><a class="reference internal" href="#togglebuttonbehavior">ToggleButtonBehavior</a></li>
+<li><a class="reference internal" href="#clock">Clock</a></li>
 </ul>
 </li>
 </ul>
@@ -1157,6 +1159,62 @@ You no longer need to manually clean up groups:</p>
 </div>
 <p><strong>Summary of Breaking Changes</strong></p>
 </section>
+<section id="clock">
+<h3>Clock<a class="headerlink" href="#clock" title="Permalink to this heading">¶</a></h3>
+<p><em>Improved &#64;triggered Decorator Behavior, Instance Isolation and Debouncing</em></p>
+<p>In Kivy 3.x.x, the <a class="reference internal" href="api-kivy.clock.html#kivy.clock.triggered" title="kivy.clock.triggered"><code class="xref py py-func docutils literal notranslate"><span class="pre">triggered()</span></code></a> decorator has been significantly
+improved. Previously, when used as a method decorator, it shared a single trigger
+and state across all instances of a class. This meant that calling the method on
+one instance would throttle calls on all other instances, and arguments from
+different instances could overwrite each other.</p>
+<p><strong>Behavior Changes</strong></p>
+<ul class="simple">
+<li><p>Improved <strong>Instance Isolation</strong>: Each instance now has its own isolated trigger and
+argument storage. Calling a triggered method on <code class="docutils literal notranslate"><span class="pre">widget_a</span></code> no longer affects
+<code class="docutils literal notranslate"><span class="pre">widget_b</span></code>.</p></li>
+<li><p>Improved <strong>Lazy Initialization</strong>: Triggers are now created only when the decorated
+function is first called, improving initialization performance.</p></li>
+<li><p>New <strong>is_triggered Property</strong>: A new <code class="docutils literal notranslate"><span class="pre">is_triggered</span></code> property was added to the decorated
+function/method, allowing you to check if a call is currently pending.</p></li>
+<li><p>New <strong>debounce Parameter</strong>: A new <code class="docutils literal notranslate"><span class="pre">debounce=False</span></code> (default) parameter was
+added.</p>
+<ul>
+<li><p><strong>Throttling</strong> (default): Subsequent calls while a trigger is active
+update the arguments but do <em>not</em> reset the timer. The function fires once
+after the initial timeout.</p></li>
+<li><p><strong>Debouncing</strong> (<code class="docutils literal notranslate"><span class="pre">debounce=True</span></code>): Subsequent calls cancel any pending
+execution and reschedule it. The function only fires after the caller
+stops calling it for the duration of the <code class="docutils literal notranslate"><span class="pre">timeout</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Migration Impact</strong></p>
+<p>This is primarily a <strong>bug fix</strong> and a set of <strong>new features</strong>. It should not
+require code changes for most applications. However, if your codebase
+intentionally relied on the legacy shared throttling behavior across different
+instances, you can restore this behavior by using the <strong>``&#64;classmethod``</strong>
+decorator above <code class="docutils literal notranslate"><span class="pre">&#64;triggered</span></code>.</p>
+<p>This ensures the trigger is bound to the class object rather than individual
+instances, restoring the shared behavior in an idiomatic way.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MyWidget</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+    <span class="c1"># Default in 3.x.x: Isolated per instance</span>
+    <span class="nd">@triggered</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sync_ui</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="c1"># Shared behavior (same as legacy 2.x.x): Shared by all instances</span>
+    <span class="nd">@classmethod</span>
+    <span class="nd">@triggered</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sync_shared_data</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="c1"># Optional: Debouncing (0.1s from the LAST call)</span>
+    <span class="nd">@triggered</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">debounce</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">search_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 <section id="application-storage-directories">
@@ -1315,7 +1373,7 @@ location. You may need to migrate existing data (see Linux migration example abo
     <!--
     <div class="footer">
       &copy; Copyright 2010-2025, Kivy Team and other contributors.
-      Last updated on Mar 29, 2026.
+      Last updated on Apr 02, 2026.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
