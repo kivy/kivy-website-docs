@@ -105,6 +105,10 @@
 <li><a class="reference internal" href="#asynchronous-loading">Asynchronous Loading</a></li>
 <li><a class="reference internal" href="#alignment">Alignment</a></li>
 <li><a class="reference internal" href="#adjustment">Adjustment</a></li>
+<li><a class="reference internal" href="#svg-images">SVG Images</a><ul>
+<li><a class="reference internal" href="#explicit-raster-size-via-uri">Explicit raster size via URI</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#kivy.uix.image.AsyncImage"><code class="docutils literal notranslate"><span class="pre">AsyncImage</span></code></a><ul>
 <li><a class="reference internal" href="#kivy.uix.image.AsyncImage.remove_from_cache"><code class="docutils literal notranslate"><span class="pre">AsyncImage.remove_from_cache()</span></code></a></li>
 </ul>
@@ -408,6 +412,10 @@
 <li><a class="reference internal" href="#asynchronous-loading">Asynchronous Loading</a></li>
 <li><a class="reference internal" href="#alignment">Alignment</a></li>
 <li><a class="reference internal" href="#adjustment">Adjustment</a></li>
+<li><a class="reference internal" href="#svg-images">SVG Images</a><ul>
+<li><a class="reference internal" href="#explicit-raster-size-via-uri">Explicit raster size via URI</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#kivy.uix.image.AsyncImage"><code class="docutils literal notranslate"><span class="pre">AsyncImage</span></code></a><ul>
 <li><a class="reference internal" href="#kivy.uix.image.AsyncImage.remove_from_cache"><code class="docutils literal notranslate"><span class="pre">AsyncImage.remove_from_cache()</span></code></a></li>
 </ul>
@@ -481,6 +489,43 @@ want your image to be greater than the size of your widget, you could do:</p>
             <span class="n">pos</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="mi">10</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="mi">10</span>
 </pre></div>
 </div>
+</section>
+<section id="svg-images">
+<h2>SVG Images<a class="headerlink" href="#svg-images" title="Permalink to this heading">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
+<p>SVG files are supported via the ThorVG image provider (<code class="docutils literal notranslate"><span class="pre">img_thorvg_svg</span></code>),
+which uses Kivy’s internal <code class="xref py py-mod docutils literal notranslate"><span class="pre">kivy.lib.thorvg</span></code> binding.  This binding is
+compiled into Kivy and ships with the official Kivy wheels, so <code class="docutils literal notranslate"><span class="pre">.svg</span></code>
+files are loaded automatically with no extra install step:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Image</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;icons/house.svg&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Because SVG is a vector format with no fixed pixel size, the provider
+rasterizes the file to a bitmap.  The rasterization size is determined by:</p>
+<ol class="arabic simple">
+<li><p>An explicit <code class="docutils literal notranslate"><span class="pre">size</span></code> parameter in the <code class="docutils literal notranslate"><span class="pre">&#64;image_provider:</span></code> URI (see below).</p></li>
+<li><p>The SVG’s own declared width/height, subject to a configured minimum.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">[svg]</span> <span class="pre">default_size</span></code> config key (default <code class="docutils literal notranslate"><span class="pre">512</span></code>), used when the SVG
+has no declared size or when the declared size is smaller.</p></li>
+</ol>
+<p>To change the global minimum raster size:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
+<span class="n">Config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">,</span> <span class="s1">&#39;default_size&#39;</span><span class="p">,</span> <span class="s1">&#39;256&#39;</span><span class="p">)</span>  <span class="c1"># must be set before first load</span>
+</pre></div>
+</div>
+<section id="explicit-raster-size-via-uri">
+<h3>Explicit raster size via URI<a class="headerlink" href="#explicit-raster-size-via-uri" title="Permalink to this heading">¶</a></h3>
+<p>To rasterize an SVG at a specific size (overriding the config default), use
+the <code class="docutils literal notranslate"><span class="pre">&#64;image_provider:</span></code> URI with a <code class="docutils literal notranslate"><span class="pre">size</span></code> parameter:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Rasterize at 128 pixels (aspect ratio preserved)</span>
+<span class="n">Image</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;@image_provider:thorvg_svg[size=128](icons/house.svg)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This is useful when you know the maximum display size and want to avoid
+rasterizing at the full 512-pixel default for small icons.</p>
+</section>
 </section>
 <dl class="py class">
 <dt class="sig sig-object py" id="kivy.uix.image.AsyncImage">

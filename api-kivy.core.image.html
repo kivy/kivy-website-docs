@@ -114,6 +114,7 @@
 <li><a class="reference internal" href="#querying-available-providers">Querying available providers</a></li>
 <li><a class="reference internal" href="#using-image-provider-parameter">Using <code class="docutils literal notranslate"><span class="pre">image_provider</span></code> parameter</a></li>
 <li><a class="reference internal" href="#provider-uri-scheme">Provider URI scheme</a></li>
+<li><a class="reference internal" href="#svg-images-and-mipmap">SVG images and mipmap</a></li>
 <li><a class="reference internal" href="#strict-mode">Strict mode</a></li>
 <li><a class="reference internal" href="#zip-file-image-sequences">Zip file image sequences</a></li>
 </ul>
@@ -452,6 +453,7 @@
 <li><a class="reference internal" href="#querying-available-providers">Querying available providers</a></li>
 <li><a class="reference internal" href="#using-image-provider-parameter">Using <code class="docutils literal notranslate"><span class="pre">image_provider</span></code> parameter</a></li>
 <li><a class="reference internal" href="#provider-uri-scheme">Provider URI scheme</a></li>
+<li><a class="reference internal" href="#svg-images-and-mipmap">SVG images and mipmap</a></li>
 <li><a class="reference internal" href="#strict-mode">Strict mode</a></li>
 <li><a class="reference internal" href="#zip-file-image-sequences">Zip file image sequences</a></li>
 </ul>
@@ -672,11 +674,28 @@ extra parameters, use the <code class="docutils literal notranslate"><span class
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@image_provider</span><span class="p">:</span><span class="n">providername</span><span class="p">(</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">image</span><span class="o">.</span><span class="n">ext</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>An optional parameter block in square brackets can appear between the provider
+name and the path. Parameters are <code class="docutils literal notranslate"><span class="pre">key=value</span></code> pairs separated by commas:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@image_provider</span><span class="p">:</span><span class="n">providername</span><span class="p">[</span><span class="n">key</span><span class="o">=</span><span class="n">value</span><span class="p">,</span><span class="n">key2</span><span class="o">=</span><span class="n">value2</span><span class="p">](</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">image</span><span class="o">.</span><span class="n">ext</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The only parameter currently defined is <code class="docutils literal notranslate"><span class="pre">size</span></code>, which is recognised by the
+ThorVG SVG provider (<code class="docutils literal notranslate"><span class="pre">thorvg_svg</span></code>) and sets the rasterization size in pixels,
+overriding both the SVG’s native size and the <code class="docutils literal notranslate"><span class="pre">[svg]</span> <span class="pre">default_size</span></code> config
+setting:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@image_provider</span><span class="p">:</span><span class="n">thorvg_svg</span><span class="p">[</span><span class="n">size</span><span class="o">=</span><span class="mi">256</span><span class="p">](</span><span class="n">icons</span><span class="o">/</span><span class="n">house</span><span class="o">.</span><span class="n">svg</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>Example in Python:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.graphics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rectangle</span>
 
 <span class="k">with</span> <span class="n">widget</span><span class="o">.</span><span class="n">canvas</span><span class="p">:</span>
     <span class="n">Rectangle</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;@image_provider:pil(images/photo.png)&#39;</span><span class="p">)</span>
+
+<span class="c1"># SVG rasterized with 128 px minimum floor (scales up if native size is</span>
+<span class="c1"># smaller; leaves native size unchanged if it already exceeds 128)</span>
+<span class="k">with</span> <span class="n">widget</span><span class="o">.</span><span class="n">canvas</span><span class="p">:</span>
+    <span class="n">Rectangle</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;@image_provider:thorvg_svg[size=128](icons/house.svg)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Example in KV language:</p>
@@ -689,6 +708,23 @@ extra parameters, use the <code class="docutils literal notranslate"><span class
 </pre></div>
 </div>
 <p>The path inside the parentheses is resolved using <a class="reference internal" href="api-kivy.resources.html#kivy.resources.resource_find" title="kivy.resources.resource_find"><code class="xref py py-func docutils literal notranslate"><span class="pre">resource_find()</span></code></a>.</p>
+</section>
+<section id="svg-images-and-mipmap">
+<h3>SVG images and mipmap<a class="headerlink" href="#svg-images-and-mipmap" title="Permalink to this heading">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">&#64;image_provider:</span></code> URI controls rasterization size but not mipmap
+generation. To create an SVG texture with mipmaps for use in canvas
+instructions, load it explicitly via <a class="reference internal" href="#kivy.core.image.Image" title="kivy.core.image.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.image</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span> <span class="k">as</span> <span class="n">CoreImage</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.graphics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rectangle</span>
+
+<span class="n">tex</span> <span class="o">=</span> <span class="n">CoreImage</span><span class="p">(</span><span class="s1">&#39;icons/house.svg&#39;</span><span class="p">,</span> <span class="n">mipmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">texture</span>
+
+<span class="k">with</span> <span class="n">widget</span><span class="o">.</span><span class="n">canvas</span><span class="p">:</span>
+    <span class="n">Rectangle</span><span class="p">(</span><span class="n">texture</span><span class="o">=</span><span class="n">tex</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The texture is cached (keyed by filename and mipmap flag), so repeated calls
+with the same arguments return the cached result without re-rasterizing.</p>
 </section>
 <section id="strict-mode">
 <h3>Strict mode<a class="headerlink" href="#strict-mode" title="Permalink to this heading">¶</a></h3>
