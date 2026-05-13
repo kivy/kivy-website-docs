@@ -106,6 +106,7 @@
 <li><a class="reference internal" href="#buttonbehavior">ButtonBehavior</a></li>
 <li><a class="reference internal" href="#togglebuttonbehavior">ToggleButtonBehavior</a></li>
 <li><a class="reference internal" href="#clock">Clock</a></li>
+<li><a class="reference internal" href="#svg">SVG</a></li>
 </ul>
 </li>
 </ul>
@@ -241,7 +242,6 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.scissor_instructions.html">Scissor Instructions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.shader.html">Shader</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.stencil_instructions.html">Stencil instructions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.svg.html">SVG</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.tesselator.html">Tesselator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.texture.html">Texture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.graphics.transformation.html">Transformation</a></li>
@@ -407,6 +407,7 @@
 <li><a class="reference internal" href="#buttonbehavior">ButtonBehavior</a></li>
 <li><a class="reference internal" href="#togglebuttonbehavior">ToggleButtonBehavior</a></li>
 <li><a class="reference internal" href="#clock">Clock</a></li>
+<li><a class="reference internal" href="#svg">SVG</a></li>
 </ul>
 </li>
 </ul>
@@ -1217,6 +1218,46 @@ instances, restoring the shared behavior in an idiomatic way.</p>
 </pre></div>
 </div>
 </section>
+<section id="svg">
+<h3>SVG<a class="headerlink" href="#svg" title="Permalink to this heading">¶</a></h3>
+<p><em>Removal of the experimental kivy.graphics.svg module</em></p>
+<p>In Kivy 3.x.x, the experimental <code class="docutils literal notranslate"><span class="pre">Svg</span></code> canvas instruction in
+<code class="docutils literal notranslate"><span class="pre">kivy.graphics.svg</span></code> has been removed, along with its example scripts under
+<code class="docutils literal notranslate"><span class="pre">examples/svg/</span></code> (<code class="docutils literal notranslate"><span class="pre">benchmark.py</span></code>, <code class="docutils literal notranslate"><span class="pre">main.py</span></code>, <code class="docutils literal notranslate"><span class="pre">main-smaa.py</span></code>) and its
+Factory registration. The module had been marked experimental since its
+introduction and is superseded by the new SVG support added in Kivy 3.x.x.</p>
+<p><strong>Replacement: SvgWidget / AsyncSvgWidget</strong></p>
+<p>For most use cases, drop in <a class="reference internal" href="api-kivy.uix.svg.html#kivy.uix.svg.SvgWidget" title="kivy.uix.svg.SvgWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">SvgWidget</span></code></a> (local sources)
+or <a class="reference internal" href="api-kivy.uix.svg.html#kivy.uix.svg.AsyncSvgWidget" title="kivy.uix.svg.AsyncSvgWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncSvgWidget</span></code></a> (network sources):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Kivy 2.x.x</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.graphics.svg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Svg</span>
+
+<span class="k">with</span> <span class="n">widget</span><span class="o">.</span><span class="n">canvas</span><span class="p">:</span>
+    <span class="n">Svg</span><span class="p">(</span><span class="s1">&#39;image.svg&#39;</span><span class="p">)</span>
+
+<span class="c1"># Kivy 3.x.x</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.svg</span><span class="w"> </span><span class="kn">import</span> <span class="n">SvgWidget</span>
+
+<span class="n">widget</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">SvgWidget</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;image.svg&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>In KV language:</p>
+<div class="highlight-kv notranslate"><div class="highlight"><pre><span></span><span class="c1"># Kivy 3.x.x</span>
+<span class="nc">SvgWidget</span><span class="p">:</span>
+    <span class="na">source</span><span class="p">:</span> <span class="s1">&#39;image.svg&#39;</span>
+</pre></div>
+</div>
+<p><strong>Replacement: kivy.core.svg image provider</strong></p>
+<p>For loading SVGs through the standard image pipeline (for example as a
+texture for <a class="reference internal" href="api-kivy.uix.image.html#kivy.uix.image.Image" title="kivy.uix.image.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a>), the new <code class="docutils literal notranslate"><span class="pre">kivy.core.svg</span></code>
+provider is selected automatically when an <code class="docutils literal notranslate"><span class="pre">.svg</span></code> source is loaded; no
+explicit import or Factory registration is required.</p>
+<p><strong>Factory registration</strong></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Svg</span></code> Factory entry that pointed at <code class="docutils literal notranslate"><span class="pre">kivy.graphics.svg</span></code> has been
+removed. <code class="docutils literal notranslate"><span class="pre">SvgWidget</span></code> and <code class="docutils literal notranslate"><span class="pre">AsyncSvgWidget</span></code> are registered in the Factory
+under their own names and can be used directly from KV.</p>
+</section>
+<p></p>
 </section>
 </section>
 <section id="application-storage-directories">
