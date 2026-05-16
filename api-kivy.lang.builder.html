@@ -111,7 +111,6 @@
 <li><a class="reference internal" href="#kivy.lang.builder.BuilderBase.match"><code class="docutils literal notranslate"><span class="pre">BuilderBase.match()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.lang.builder.BuilderBase.match_rule_name"><code class="docutils literal notranslate"><span class="pre">BuilderBase.match_rule_name()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.lang.builder.BuilderBase.sync"><code class="docutils literal notranslate"><span class="pre">BuilderBase.sync()</span></code></a></li>
-<li><a class="reference internal" href="#kivy.lang.builder.BuilderBase.template"><code class="docutils literal notranslate"><span class="pre">BuilderBase.template()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.lang.builder.BuilderBase.unbind_property"><code class="docutils literal notranslate"><span class="pre">BuilderBase.unbind_property()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.lang.builder.BuilderBase.unbind_widget"><code class="docutils literal notranslate"><span class="pre">BuilderBase.unbind_widget()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.lang.builder.BuilderBase.unload_file"><code class="docutils literal notranslate"><span class="pre">BuilderBase.unload_file()</span></code></a></li>
@@ -427,7 +426,6 @@
 <li><a class="reference internal" href="#kivy.lang.builder.BuilderBase.match"><code class="docutils literal notranslate"><span class="pre">BuilderBase.match()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.lang.builder.BuilderBase.match_rule_name"><code class="docutils literal notranslate"><span class="pre">BuilderBase.match_rule_name()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.lang.builder.BuilderBase.sync"><code class="docutils literal notranslate"><span class="pre">BuilderBase.sync()</span></code></a></li>
-<li><a class="reference internal" href="#kivy.lang.builder.BuilderBase.template"><code class="docutils literal notranslate"><span class="pre">BuilderBase.template()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.lang.builder.BuilderBase.unbind_property"><code class="docutils literal notranslate"><span class="pre">BuilderBase.unbind_property()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.lang.builder.BuilderBase.unbind_widget"><code class="docutils literal notranslate"><span class="pre">BuilderBase.unbind_widget()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.lang.builder.BuilderBase.unload_file"><code class="docutils literal notranslate"><span class="pre">BuilderBase.unload_file()</span></code></a></li>
@@ -455,7 +453,8 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.lang.builder.</span></span><span class="sig-name descname"><span class="pre">BuilderBase</span></span><a class="headerlink" href="#kivy.lang.builder.BuilderBase" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">builtins.object</span></code></p>
 <p>The Builder is responsible for creating a <code class="xref py py-class docutils literal notranslate"><span class="pre">Parser</span></code> for parsing a
-kv file, merging the results into its internal rules, templates, etc.</p>
+kv file, merging the results into its internal rules, dynamic classes,
+etc.</p>
 <p>By default, <code class="xref py py-class docutils literal notranslate"><span class="pre">Builder</span></code> is a global Kivy instance used in widgets
 that you can use to load other kv files in addition to the default ones.</p>
 <p>See <a class="reference internal" href="api-kivy.lang.html#module-kivy.lang" title="kivy.lang"><code class="xref py py-mod docutils literal notranslate"><span class="pre">kivy.lang</span></code></a> for details about the rules built here.</p>
@@ -469,9 +468,6 @@ Not necessarily real files on disk; see <a class="reference internal" href="#kiv
 They were created with the <code class="docutils literal notranslate"><span class="pre">&lt;Class&#64;Superclass&gt;:</span></code> syntax,
 rather than in Python.</p>
 </dd>
-<dt><cite>templates</cite>: dict</dt><dd><p>Superseded by <code class="xref py py-attr docutils literal notranslate"><span class="pre">dynamic_classes</span></code> in version 1.0.5.
-Modern Kivy apps should not use templates.</p>
-</dd>
 <dt><cite>rules</cite>: list</dt><dd><p>Rules loaded from Kivy-language code.</p>
 </dd>
 <dt><cite>rulectx</cite>: dict</dt><dd><p>Context used by each rule.
@@ -480,6 +476,11 @@ Mostly, the IDs of widgets.</p>
 </dl>
 </dd>
 </dl>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.0.0: </span>The deprecated Kivy lang templates feature has been removed.
+<code class="docutils literal notranslate"><span class="pre">Builder.template</span></code> and the <code class="docutils literal notranslate"><span class="pre">Builder.templates</span></code> dict no longer
+exist; use dynamic classes (<code class="docutils literal notranslate"><span class="pre">&lt;Name&#64;Base&gt;:</span></code>) instead.</p>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.lang.builder.BuilderBase.apply">
 <span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignored_consts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rule_children</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dispatch_kv_post</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.lang.builder.BuilderBase.apply" title="Permalink to this definition">¶</a></dt>
@@ -643,17 +644,6 @@ expressions related to the canvas.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="kivy.lang.builder.BuilderBase.template">
-<span class="sig-name descname"><span class="pre">template</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">ctx</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.lang.builder.BuilderBase.template" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a specialized template using a specific context.</p>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 1.0.5.</span></p>
-</div>
-<p>With templates, you can construct custom widgets from a kv lang
-definition by giving them a context. Check <a class="reference internal" href="api-kivy.lang.html#template-usage"><span class="std std-ref">Template usage</span></a>.</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="kivy.lang.builder.BuilderBase.unbind_property">
 <span class="sig-name descname"><span class="pre">unbind_property</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.lang.builder.BuilderBase.unbind_property" title="Permalink to this definition">¶</a></dt>
 <dd><p>Unbind the handlers created by all the rules of the widget that set
@@ -733,9 +723,8 @@ For example:</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This will not remove rules or templates already applied/used on
-current widgets. It will only effect the next widgets creation or
-template invocation.</p>
+<p>This will not remove rules already applied/used on current
+widgets. It will only effect the next widgets creation.</p>
 </div>
 </dd></dl>
 

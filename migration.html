@@ -491,6 +491,71 @@
 <p>In Kivy 3.x.x, the <cite>file_encodings</cite> property has been removed from the <cite>kivy.uix.filechooser.FileChooserController</cite> class.</p>
 <p>The <cite>file_encodings</cite> property was deprecated and it was kept for backward compatibility, however it was just ignored and not used internally.</p>
 <p>To migrate your code, you just need to remove any references to the <cite>file_encodings</cite> property in your codebase.</p>
+<p><em>Removal of the Kv-lang Templates feature</em></p>
+<p>In Kivy 3.x.x, the deprecated Kivy language Templates feature (introduced in 1.0.5,
+deprecated in 1.7.0) has been removed. The following are gone:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">[Name&#64;Base]:</span></code> Kv-lang template syntax (any kv file that contains a
+<code class="docutils literal notranslate"><span class="pre">[...]:</span></code> selector will now raise a <code class="docutils literal notranslate"><span class="pre">ParserException</span></code> at load time).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Builder.template(name,</span> <span class="pre">**ctx)</span></code> and the <code class="docutils literal notranslate"><span class="pre">Builder.templates</span></code> dict.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Factory.is_template()</span></code> and the <code class="docutils literal notranslate"><span class="pre">is_template=</span></code> keyword argument of
+<code class="docutils literal notranslate"><span class="pre">Factory.register()</span></code>.</p></li>
+</ul>
+<p>Migrate to <em>dynamic classes</em> (<code class="docutils literal notranslate"><span class="pre">&lt;Name&#64;Base&gt;:</span></code>). Dynamic classes have largely
+superseded templates since Kivy 1.7.0 and support normal Kivy properties,
+binding and inheritance.</p>
+<p><strong>Migrating a template in `.kv`</strong></p>
+<div class="highlight-kv notranslate"><div class="highlight"><pre><span></span><span class="c1"># Kivy 2.x.x</span>
+<span class="p">[</span><span class="nc">IconItem</span><span class="o">@</span><span class="nc">BoxLayout</span><span class="p">]:</span>
+    <span class="nc">Image</span><span class="p">:</span>
+        <span class="na">source</span><span class="p">:</span> <span class="n">ctx</span><span class="o">.</span><span class="n">image</span>
+    <span class="nc">Label</span><span class="p">:</span>
+        <span class="na">text</span><span class="p">:</span> <span class="n">ctx</span><span class="o">.</span><span class="n">title</span>
+
+<span class="c1"># Kivy 3.x.x</span>
+<span class="nn">&lt;IconItem@BoxLayout&gt;</span><span class="p">:</span>
+    <span class="na">image</span><span class="p">:</span> <span class="s1">&#39;&#39;</span>
+    <span class="na">title</span><span class="p">:</span> <span class="s1">&#39;&#39;</span>
+    <span class="nc">Image</span><span class="p">:</span>
+        <span class="na">source</span><span class="p">:</span> <span class="n">root</span><span class="o">.</span><span class="n">image</span>
+    <span class="nc">Label</span><span class="p">:</span>
+        <span class="na">text</span><span class="p">:</span> <span class="n">root</span><span class="o">.</span><span class="n">title</span>
+</pre></div>
+</div>
+<p>Note the two changes: <code class="docutils literal notranslate"><span class="pre">[...]:</span></code> becomes <code class="docutils literal notranslate"><span class="pre">&lt;...&gt;:</span></code>, and <code class="docutils literal notranslate"><span class="pre">ctx.foo</span></code> references
+become <code class="docutils literal notranslate"><span class="pre">root.foo</span></code> references against properties declared on the rule itself.</p>
+<p><strong>Migrating `Builder.template(…)` instantiation</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Kivy 2.x.x</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.lang</span><span class="w"> </span><span class="kn">import</span> <span class="n">Builder</span>
+<span class="n">icon</span> <span class="o">=</span> <span class="n">Builder</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s1">&#39;IconItem&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Hello&#39;</span><span class="p">,</span> <span class="n">image</span><span class="o">=</span><span class="s1">&#39;myimage.png&#39;</span><span class="p">)</span>
+
+<span class="c1"># Kivy 3.x.x</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.factory</span><span class="w"> </span><span class="kn">import</span> <span class="n">Factory</span>
+<span class="n">icon</span> <span class="o">=</span> <span class="n">Factory</span><span class="o">.</span><span class="n">IconItem</span><span class="p">()</span>
+<span class="n">icon</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Hello&#39;</span>
+<span class="n">icon</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="s1">&#39;myimage.png&#39;</span>
+</pre></div>
+</div>
+<p>Because dynamic-class properties are added to the widget by the rule (rather
+than declared on the class), they are not yet present when <code class="docutils literal notranslate"><span class="pre">__init__</span></code>
+processes its kwargs - so pass values via <code class="docutils literal notranslate"><span class="pre">setattr</span></code> (or property assignment)
+after construction rather than as constructor kwargs. If you need
+constructor-kwarg support, define the widget as a regular Python class with
+explicit <a class="reference internal" href="api-kivy.properties.html#kivy.properties.Property" title="kivy.properties.Property"><code class="xref py py-class docutils literal notranslate"><span class="pre">Property</span></code></a> declarations instead.</p>
+<p><em>AccordionItem: `title_template` and `title_args` replaced by `title_class`</em></p>
+<p>The <a class="reference internal" href="api-kivy.uix.accordion.html#kivy.uix.accordion.AccordionItem" title="kivy.uix.accordion.AccordionItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">AccordionItem</span></code></a> widget previously used the Kv-lang
+templates feature to render its title bar via the <code class="docutils literal notranslate"><span class="pre">title_template</span></code> (string)
+and <code class="docutils literal notranslate"><span class="pre">title_args</span></code> (dict) properties. Both properties have been removed.</p>
+<p>The replacement is <code class="xref py py-attr docutils literal notranslate"><span class="pre">title_class</span></code>. It accepts
+either a class object or a Factory-resolvable string. The class is instantiated
+with two keyword arguments: <code class="docutils literal notranslate"><span class="pre">title</span></code> and <code class="docutils literal notranslate"><span class="pre">item</span></code>.</p>
+<p>To customise the appearance of the title widget, subclass
+<a class="reference internal" href="api-kivy.uix.accordion.html#kivy.uix.accordion.AccordionItemTitle" title="kivy.uix.accordion.AccordionItemTitle"><code class="xref py py-class docutils literal notranslate"><span class="pre">AccordionItemTitle</span></code></a> (or write any widget that
+accepts <code class="docutils literal notranslate"><span class="pre">title</span></code> and <code class="docutils literal notranslate"><span class="pre">item</span></code> kwargs) and pass it via <code class="docutils literal notranslate"><span class="pre">title_class</span></code>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">title_class</span></code> documentation.</p>
+</div>
 <section id="buttonbehavior">
 <h3>ButtonBehavior<a class="headerlink" href="#buttonbehavior" title="Permalink to this heading">¶</a></h3>
 <p><em>Removal of `state`, `min_state_time`, `last_touch` Properties and `trigger_action()` Method</em></p>

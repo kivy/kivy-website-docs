@@ -129,6 +129,8 @@
 <li><a class="reference internal" href="#kivy.uix.filechooser.FileChooserProgressBase.on_touch_up"><code class="docutils literal notranslate"><span class="pre">FileChooserProgressBase.on_touch_up()</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#kivy.uix.filechooser.FileIconEntry"><code class="docutils literal notranslate"><span class="pre">FileIconEntry</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.filechooser.FileListEntry"><code class="docutils literal notranslate"><span class="pre">FileListEntry</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.filechooser.FileSystemAbstract"><code class="docutils literal notranslate"><span class="pre">FileSystemAbstract</span></code></a><ul>
 <li><a class="reference internal" href="#kivy.uix.filechooser.FileSystemAbstract.getsize"><code class="docutils literal notranslate"><span class="pre">FileSystemAbstract.getsize()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.filechooser.FileSystemAbstract.is_dir"><code class="docutils literal notranslate"><span class="pre">FileSystemAbstract.is_dir()</span></code></a></li>
@@ -462,6 +464,8 @@
 <li><a class="reference internal" href="#kivy.uix.filechooser.FileChooserProgressBase.on_touch_up"><code class="docutils literal notranslate"><span class="pre">FileChooserProgressBase.on_touch_up()</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#kivy.uix.filechooser.FileIconEntry"><code class="docutils literal notranslate"><span class="pre">FileIconEntry</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.filechooser.FileListEntry"><code class="docutils literal notranslate"><span class="pre">FileListEntry</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.filechooser.FileSystemAbstract"><code class="docutils literal notranslate"><span class="pre">FileSystemAbstract</span></code></a><ul>
 <li><a class="reference internal" href="#kivy.uix.filechooser.FileSystemAbstract.getsize"><code class="docutils literal notranslate"><span class="pre">FileSystemAbstract.getsize()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.filechooser.FileSystemAbstract.is_dir"><code class="docutils literal notranslate"><span class="pre">FileSystemAbstract.is_dir()</span></code></a></li>
@@ -671,9 +675,14 @@ components.</p>
 <p><span class="versionmodified added">New in version 1.0.5.</span></p>
 </div>
 <div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 1.2.0: </span>In the chooser template, the <cite>controller</cite> is no longer a direct reference
-but a weak-reference. If you are upgrading, you should change the notation
-<cite>root.controller.xxx</cite> to <cite>root.controller().xxx</cite>.</p>
+<p><span class="versionmodified changed">Changed in version 1.2.0: </span>In the chooser entry widget, the <cite>controller</cite> is no longer a direct
+reference but a weak-reference. If you are upgrading, you should change
+the notation <code class="docutils literal notranslate"><span class="pre">root.controller.xxx</span></code> to <code class="docutils literal notranslate"><span class="pre">root.controller().xxx</span></code>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.0.0: </span>The entry widgets (<a class="reference internal" href="#kivy.uix.filechooser.FileListEntry" title="kivy.uix.filechooser.FileListEntry"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileListEntry</span></code></a> and <a class="reference internal" href="#kivy.uix.filechooser.FileIconEntry" title="kivy.uix.filechooser.FileIconEntry"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileIconEntry</span></code></a>) are
+now regular Python classes (previously they were deprecated Kivy lang
+templates).</p>
 </div>
 </section>
 <dl class="py class">
@@ -785,8 +794,8 @@ a new directory.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.uix.filechooser.FileChooserController.entry_released">
 <span class="sig-name descname"><span class="pre">entry_released</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">touch</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.filechooser.FileChooserController.entry_released" title="Permalink to this definition">¶</a></dt>
-<dd><p>(internal) This method must be called by the template when an entry
-is touched by the user.</p>
+<dd><p>(internal) This method must be called by the entry widget when an
+entry is touched by the user.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.1.0.</span></p>
 </div>
@@ -795,8 +804,8 @@ is touched by the user.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.uix.filechooser.FileChooserController.entry_touched">
 <span class="sig-name descname"><span class="pre">entry_touched</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">touch</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.filechooser.FileChooserController.entry_touched" title="Permalink to this definition">¶</a></dt>
-<dd><p>(internal) This method must be called by the template when an entry
-is touched by the user.</p>
+<dd><p>(internal) This method must be called by the entry widget when an
+entry is touched by the user.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -928,6 +937,30 @@ of the widget tree.</p>
 <p>See <a class="reference internal" href="#kivy.uix.filechooser.FileChooserProgressBase.on_touch_down" title="kivy.uix.filechooser.FileChooserProgressBase.on_touch_down"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_touch_down()</span></code></a> for more information.</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="kivy.uix.filechooser.FileIconEntry">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.uix.filechooser.</span></span><span class="sig-name descname"><span class="pre">FileIconEntry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.filechooser.FileIconEntry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="api-kivy.uix.widget.html#kivy.uix.widget.Widget" title="kivy.uix.widget.Widget"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.widget.Widget</span></code></a></p>
+<p>Default entry widget used by <a class="reference internal" href="#kivy.uix.filechooser.FileChooserIconView" title="kivy.uix.filechooser.FileChooserIconView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileChooserIconView</span></code></a> to display
+a single file or directory icon.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0: </span>Promoted to a regular Python class. Previously this was a deprecated
+Kivy lang template (<code class="docutils literal notranslate"><span class="pre">[FileIconEntry&#64;Widget]:</span></code>).</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="kivy.uix.filechooser.FileListEntry">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.uix.filechooser.</span></span><span class="sig-name descname"><span class="pre">FileListEntry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.filechooser.FileListEntry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="api-kivy.uix.floatlayout.html#kivy.uix.floatlayout.FloatLayout" title="kivy.uix.floatlayout.FloatLayout"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.floatlayout.FloatLayout</span></code></a>, <a class="reference internal" href="api-kivy.uix.treeview.html#kivy.uix.treeview.TreeViewNode" title="kivy.uix.treeview.TreeViewNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.treeview.TreeViewNode</span></code></a></p>
+<p>Default entry widget used by <a class="reference internal" href="#kivy.uix.filechooser.FileChooserListView" title="kivy.uix.filechooser.FileChooserListView"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileChooserListView</span></code></a> to display
+a single file or directory row.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0: </span>Promoted to a regular Python class. Previously this was a deprecated
+Kivy lang template (<code class="docutils literal notranslate"><span class="pre">[FileListEntry&#64;FloatLayout+TreeViewNode]:</span></code>).</p>
+</div>
 </dd></dl>
 
 <dl class="py class">

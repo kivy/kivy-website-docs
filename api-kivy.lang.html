@@ -112,12 +112,6 @@
 <li><a class="reference internal" href="#relation-between-values-and-properties">Relation Between Values and Properties</a></li>
 <li><a class="reference internal" href="#graphical-instructions">Graphical Instructions</a></li>
 <li><a class="reference internal" href="#dynamic-classes">Dynamic classes</a></li>
-<li><a class="reference internal" href="#templates">Templates</a><ul>
-<li><a class="reference internal" href="#syntax-of-templates">Syntax of templates</a></li>
-<li><a class="reference internal" href="#template-example">Template example</a></li>
-<li><a class="reference internal" href="#template-limitations">Template limitations</a></li>
-</ul>
-</li>
 <li><a class="reference internal" href="#redefining-a-widget-s-style">Redefining a widget’s style</a></li>
 <li><a class="reference internal" href="#redefining-a-widget-s-property-style">Redefining a widget’s property style</a></li>
 <li><a class="reference internal" href="#order-of-kwargs-and-kv-rule-application">Order of kwargs and KV rule application</a></li>
@@ -136,7 +130,6 @@
 <li><a class="reference internal" href="#kivy.lang.BuilderBase.match"><code class="docutils literal notranslate"><span class="pre">BuilderBase.match()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.lang.BuilderBase.match_rule_name"><code class="docutils literal notranslate"><span class="pre">BuilderBase.match_rule_name()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.lang.BuilderBase.sync"><code class="docutils literal notranslate"><span class="pre">BuilderBase.sync()</span></code></a></li>
-<li><a class="reference internal" href="#kivy.lang.BuilderBase.template"><code class="docutils literal notranslate"><span class="pre">BuilderBase.template()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.lang.BuilderBase.unbind_property"><code class="docutils literal notranslate"><span class="pre">BuilderBase.unbind_property()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.lang.BuilderBase.unbind_widget"><code class="docutils literal notranslate"><span class="pre">BuilderBase.unbind_widget()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.lang.BuilderBase.unload_file"><code class="docutils literal notranslate"><span class="pre">BuilderBase.unload_file()</span></code></a></li>
@@ -460,12 +453,6 @@
 <li><a class="reference internal" href="#relation-between-values-and-properties">Relation Between Values and Properties</a></li>
 <li><a class="reference internal" href="#graphical-instructions">Graphical Instructions</a></li>
 <li><a class="reference internal" href="#dynamic-classes">Dynamic classes</a></li>
-<li><a class="reference internal" href="#templates">Templates</a><ul>
-<li><a class="reference internal" href="#syntax-of-templates">Syntax of templates</a></li>
-<li><a class="reference internal" href="#template-example">Template example</a></li>
-<li><a class="reference internal" href="#template-limitations">Template limitations</a></li>
-</ul>
-</li>
 <li><a class="reference internal" href="#redefining-a-widget-s-style">Redefining a widget’s style</a></li>
 <li><a class="reference internal" href="#redefining-a-widget-s-property-style">Redefining a widget’s property style</a></li>
 <li><a class="reference internal" href="#order-of-kwargs-and-kv-rule-application">Order of kwargs and KV rule application</a></li>
@@ -484,7 +471,6 @@
 <li><a class="reference internal" href="#kivy.lang.BuilderBase.match"><code class="docutils literal notranslate"><span class="pre">BuilderBase.match()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.lang.BuilderBase.match_rule_name"><code class="docutils literal notranslate"><span class="pre">BuilderBase.match_rule_name()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.lang.BuilderBase.sync"><code class="docutils literal notranslate"><span class="pre">BuilderBase.sync()</span></code></a></li>
-<li><a class="reference internal" href="#kivy.lang.BuilderBase.template"><code class="docutils literal notranslate"><span class="pre">BuilderBase.template()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.lang.BuilderBase.unbind_property"><code class="docutils literal notranslate"><span class="pre">BuilderBase.unbind_property()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.lang.BuilderBase.unbind_widget"><code class="docutils literal notranslate"><span class="pre">BuilderBase.unbind_widget()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.lang.BuilderBase.unload_file"><code class="docutils literal notranslate"><span class="pre">BuilderBase.unload_file()</span></code></a></li>
@@ -516,7 +502,8 @@
 <p>The Kivy language is a language dedicated to describing user interface and
 interactions. You could compare this language to Qt’s QML
 (<a class="reference external" href="http://qt.nokia.com">http://qt.nokia.com</a>), but we included new concepts such as rule definitions
-(which are somewhat akin to what you may know from CSS), templating and so on.</p>
+(which are somewhat akin to what you may know from CSS), dynamic classes and
+so on.</p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 1.7.0: </span>The Builder doesn’t execute canvas expressions in realtime anymore. It will
 pack all the expressions that need to be executed first and execute them
@@ -548,13 +535,13 @@ A kv file must contain only one root widget at most.</p>
 Dynamic classes let you create new widgets and rules on-the-fly,
 without any Python declaration.</p>
 </dd>
-<dt>Templates (deprecated)</dt><dd><p><em>(introduced in version 1.0.5, deprecated from version 1.7.0)</em>
-Templates were used to populate parts of an application, such as
-styling the content of a list (e.g. icon on the left, text on the
-right). They are now deprecated by dynamic classes.</p>
-</dd>
 </dl>
 </div></blockquote>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.0.0: </span>The deprecated <code class="docutils literal notranslate"><span class="pre">[Name&#64;Base]:</span></code> template syntax (introduced in 1.0.5,
+deprecated in 1.7.0) has been removed. Use dynamic classes
+(<code class="docutils literal notranslate"><span class="pre">&lt;Name&#64;Base&gt;:</span></code>) instead.</p>
+</div>
 </section>
 <section id="syntax-of-a-kv-file">
 <h2>Syntax of a kv File<a class="headerlink" href="#syntax-of-a-kv-file" title="Permalink to this heading">¶</a></h2>
@@ -567,8 +554,8 @@ For now, use 1.0:</p>
 <span class="c1"># content here</span>
 </pre></div>
 </div>
-<p>The <cite>content</cite> can contain rule definitions, a root widget, dynamic class
-definitions and templates:</p>
+<p>The <cite>content</cite> can contain rule definitions, a root widget and dynamic
+class definitions:</p>
 <div class="highlight-kv notranslate"><div class="highlight"><pre><span></span><span class="c1"># Syntax of a rule definition. Note that several Rules can share the same</span>
 <span class="c1"># definition (as in CSS). Note the braces: they are part of the definition.</span>
 <span class="nn">&lt;Rule1,Rule2&gt;</span><span class="p">:</span>
@@ -584,14 +571,10 @@ definitions and templates:</p>
 <span class="c1"># Syntax for creating a dynamic class</span>
 <span class="nn">&lt;NewWidget@BaseClass&gt;</span><span class="p">:</span>
     <span class="c1"># .. definitions ..</span>
-
-<span class="c1"># Syntax for creating a template</span>
-<span class="p">[</span><span class="nc">TemplateName</span><span class="o">@</span><span class="nc">BaseClass1</span><span class="p">,</span><span class="nc">BaseClass2</span><span class="p">]:</span>
-    <span class="c1"># .. definitions ..</span>
 </pre></div>
 </div>
-<p>Regardless of whether it’s a rule, root widget, dynamic class or
-template you’re defining, the definition should look like this:</p>
+<p>Regardless of whether it’s a rule, root widget, or dynamic class you’re
+defining, the definition should look like this:</p>
 <div class="highlight-kv notranslate"><div class="highlight"><pre><span></span><span class="c1"># With the braces it&#39;s a rule. Without them, it&#39;s a root widget.</span>
 <span class="nn">&lt;ClassName&gt;</span><span class="p">:</span>
     <span class="na">prop1</span><span class="p">:</span> <span class="n">value1</span>
@@ -636,8 +619,7 @@ multiple of the number of spaces used on the first indented line.</p>
 <p>Both the <a class="reference internal" href="#kivy.lang.BuilderBase.load_file" title="kivy.lang.BuilderBase.load_file"><code class="xref py py-meth docutils literal notranslate"><span class="pre">load_file()</span></code></a> and the
 <a class="reference internal" href="#kivy.lang.BuilderBase.load_string" title="kivy.lang.BuilderBase.load_string"><code class="xref py py-meth docutils literal notranslate"><span class="pre">load_string()</span></code></a> methods
 return the root widget defined in your kv file/string. They will also add any
-class and template definitions to the <code class="xref py py-class docutils literal notranslate"><span class="pre">Factory</span></code> for later
-usage.</p>
+class definitions to the <code class="xref py py-class docutils literal notranslate"><span class="pre">Factory</span></code> for later usage.</p>
 </section>
 <section id="value-expressions-on-property-expressions-ids-and-reserved-keywords">
 <h2>Value Expressions, on_property Expressions, ids, and Reserved Keywords<a class="headerlink" href="#value-expressions-on-property-expressions-ids-and-reserved-keywords" title="Permalink to this heading">¶</a></h2>
@@ -944,152 +926,6 @@ properties/methods override those of the child. Be careful if you choose
 to do this.</p>
 </div>
 </section>
-<section id="templates">
-<span id="template-usage"></span><h2>Templates<a class="headerlink" href="#templates" title="Permalink to this heading">¶</a></h2>
-<div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 1.7.0: </span>Template usage is now deprecated. Please use Dynamic classes instead.</p>
-</div>
-<section id="syntax-of-templates">
-<h3>Syntax of templates<a class="headerlink" href="#syntax-of-templates" title="Permalink to this heading">¶</a></h3>
-<p>Using a template in Kivy requires 2 things :</p>
-<blockquote>
-<div><ol class="arabic simple">
-<li><p>a context to pass for the context (will be ctx inside template).</p></li>
-<li><p>a kv definition of the template.</p></li>
-</ol>
-</div></blockquote>
-<p>Syntax of a template:</p>
-<div class="highlight-kv notranslate"><div class="highlight"><pre><span></span><span class="c1"># With only one base class</span>
-<span class="p">[</span><span class="nc">ClassName</span><span class="o">@</span><span class="nc">BaseClass</span><span class="p">]:</span>
-    <span class="c1"># .. definitions ..</span>
-
-<span class="c1"># With more than one base class</span>
-<span class="p">[</span><span class="nc">ClassName</span><span class="o">@</span><span class="nc">BaseClass1</span><span class="p">,</span><span class="nc">BaseClass2</span><span class="p">]:</span>
-    <span class="c1"># .. definitions ..</span>
-</pre></div>
-</div>
-<p>For example, for a list, you’ll need to create a entry with a image on
-the left, and a label on the right. You can create a template for making
-that definition easier to use.
-So, we’ll create a template that uses 2 entries in the context: an image
-filename and a title:</p>
-<div class="highlight-kv notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nc">IconItem</span><span class="o">@</span><span class="nc">BoxLayout</span><span class="p">]:</span>
-    <span class="nc">Image</span><span class="p">:</span>
-        <span class="na">source</span><span class="p">:</span> <span class="n">ctx</span><span class="o">.</span><span class="n">image</span>
-    <span class="nc">Label</span><span class="p">:</span>
-        <span class="na">text</span><span class="p">:</span> <span class="n">ctx</span><span class="o">.</span><span class="n">title</span>
-</pre></div>
-</div>
-<p>Then in Python, you can instantiate the template using:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.lang</span><span class="w"> </span><span class="kn">import</span> <span class="n">Builder</span>
-
-<span class="c1"># create a template with hello world + an image</span>
-<span class="c1"># the context values should be passed as kwargs to the Builder.template</span>
-<span class="c1"># function</span>
-<span class="n">icon1</span> <span class="o">=</span> <span class="n">Builder</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s1">&#39;IconItem&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Hello world&#39;</span><span class="p">,</span>
-    <span class="n">image</span><span class="o">=</span><span class="s1">&#39;myimage.png&#39;</span><span class="p">)</span>
-
-<span class="c1"># create a second template with other information</span>
-<span class="n">ctx</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="s1">&#39;Another hello world&#39;</span><span class="p">,</span>
-       <span class="s1">&#39;image&#39;</span><span class="p">:</span> <span class="s1">&#39;myimage2.png&#39;</span><span class="p">}</span>
-<span class="n">icon2</span> <span class="o">=</span> <span class="n">Builder</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s1">&#39;IconItem&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">ctx</span><span class="p">)</span>
-<span class="c1"># and use icon1 and icon2 as other widget.</span>
-</pre></div>
-</div>
-</section>
-<section id="template-example">
-<h3>Template example<a class="headerlink" href="#template-example" title="Permalink to this heading">¶</a></h3>
-<p>Most of time, when you are creating a screen in the kv lang, you use a lot of
-redefinitions. In our example, we’ll create a Toolbar, based on a
-BoxLayout, and put in a few <a class="reference internal" href="api-kivy.uix.image.html#kivy.uix.image.Image" title="kivy.uix.image.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a> widgets that
-will react to the <em>on_touch_down</em> event.</p>
-<div class="highlight-kv notranslate"><div class="highlight"><pre><span></span><span class="nn">&lt;MyToolbar&gt;</span><span class="p">:</span>
-    <span class="nc">BoxLayout</span><span class="p">:</span>
-        <span class="nc">Image</span><span class="p">:</span>
-            <span class="na">source</span><span class="p">:</span> <span class="s1">&#39;data/text.png&#39;</span>
-            <span class="na">size</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">texture_size</span>
-            <span class="na">size_hint</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
-            <span class="na">on_touch_down</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">collide_point</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span> <span class="ow">and</span> <span class="n">root</span><span class="o">.</span><span class="n">create_text</span><span class="p">()</span>
-
-        <span class="nc">Image</span><span class="p">:</span>
-            <span class="na">source</span><span class="p">:</span> <span class="s1">&#39;data/image.png&#39;</span>
-            <span class="na">size</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">texture_size</span>
-            <span class="na">size_hint</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
-            <span class="na">on_touch_down</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">collide_point</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span> <span class="ow">and</span> <span class="n">root</span><span class="o">.</span><span class="n">create_image</span><span class="p">()</span>
-
-        <span class="nc">Image</span><span class="p">:</span>
-            <span class="na">source</span><span class="p">:</span> <span class="s1">&#39;data/video.png&#39;</span>
-            <span class="na">size</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">texture_size</span>
-            <span class="na">size_hint</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
-            <span class="na">on_touch_down</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">collide_point</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span> <span class="ow">and</span> <span class="n">root</span><span class="o">.</span><span class="n">create_video</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>We can see that the size and size_hint attribute are exactly the same.
-More than that, the callback in on_touch_down and the image are changing.
-These can be the variable part of the template that we can put into a context.
-Let’s try to create a template for the Image:</p>
-<div class="highlight-kv notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="nc">ToolbarButton</span><span class="o">@</span><span class="nc">Image</span><span class="p">]:</span>
-
-    <span class="c1"># This is the same as before</span>
-    <span class="na">size</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">texture_size</span>
-    <span class="na">size_hint</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
-
-    <span class="c1"># Now, we are using the ctx for the variable part of the template</span>
-    <span class="na">source</span><span class="p">:</span> <span class="s1">&#39;data/</span><span class="si">%s</span><span class="s1">.png&#39;</span> <span class="o">%</span> <span class="n">ctx</span><span class="o">.</span><span class="n">image</span>
-    <span class="na">on_touch_down</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">collide_point</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span> <span class="ow">and</span> <span class="n">ctx</span><span class="o">.</span><span class="n">callback</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>The template can be used directly in the MyToolbar rule:</p>
-<div class="highlight-kv notranslate"><div class="highlight"><pre><span></span><span class="nn">&lt;MyToolbar&gt;</span><span class="p">:</span>
-    <span class="nc">BoxLayout</span><span class="p">:</span>
-        <span class="nc">ToolbarButton</span><span class="p">:</span>
-            <span class="na">image</span><span class="p">:</span> <span class="s1">&#39;text&#39;</span>
-            <span class="na">callback</span><span class="p">:</span> <span class="n">root</span><span class="o">.</span><span class="n">create_text</span>
-        <span class="nc">ToolbarButton</span><span class="p">:</span>
-            <span class="na">image</span><span class="p">:</span> <span class="s1">&#39;image&#39;</span>
-            <span class="na">callback</span><span class="p">:</span> <span class="n">root</span><span class="o">.</span><span class="n">create_image</span>
-        <span class="nc">ToolbarButton</span><span class="p">:</span>
-            <span class="na">image</span><span class="p">:</span> <span class="s1">&#39;video&#39;</span>
-            <span class="na">callback</span><span class="p">:</span> <span class="n">root</span><span class="o">.</span><span class="n">create_video</span>
-</pre></div>
-</div>
-<p>That’s all :)</p>
-</section>
-<section id="template-limitations">
-<h3>Template limitations<a class="headerlink" href="#template-limitations" title="Permalink to this heading">¶</a></h3>
-<p>When you are creating a context:</p>
-<blockquote>
-<div><ol class="arabic">
-<li><p>you cannot use references other than “root”:</p>
-<blockquote>
-<div><div class="highlight-kv notranslate"><div class="highlight"><pre><span></span><span class="nn">&lt;MyRule&gt;</span><span class="p">:</span>
-    <span class="nc">Widget</span><span class="p">:</span>
-        <span class="na">id</span><span class="p">:</span> <span class="n">mywidget</span>
-        <span class="na">value</span><span class="p">:</span> <span class="s1">&#39;bleh&#39;</span>
-    <span class="nc">Template</span><span class="p">:</span>
-        <span class="na">ctxkey</span><span class="p">:</span> <span class="n">mywidget</span><span class="o">.</span><span class="n">value</span> <span class="c1"># &lt;&lt; fail, this references the id</span>
-        <span class="c1"># mywidget</span>
-</pre></div>
-</div>
-</div></blockquote>
-</li>
-<li><p>not all of the dynamic parts will be understood:</p>
-<blockquote>
-<div><div class="highlight-kv notranslate"><div class="highlight"><pre><span></span><span class="nn">&lt;MyRule&gt;</span><span class="p">:</span>
-    <span class="nc">Template</span><span class="p">:</span>
-        <span class="na">ctxkey</span><span class="p">:</span> <span class="s1">&#39;value 1&#39;</span> <span class="k">if</span> <span class="n">root</span><span class="o">.</span><span class="n">prop1</span> <span class="k">else</span> <span class="s1">&#39;value2&#39;</span> <span class="c1"># &lt;&lt; even if</span>
-        <span class="c1"># root.prop1 is a property, if it changes value, ctxkey</span>
-        <span class="c1"># will not be updated</span>
-</pre></div>
-</div>
-</div></blockquote>
-</li>
-</ol>
-</div></blockquote>
-<p>Template definitions also replace any similarly named definitions in their
-entirety and thus do not support inheritance.</p>
-</section>
-</section>
 <section id="redefining-a-widget-s-style">
 <span id="redefining-style"></span><h2>Redefining a widget’s style<a class="headerlink" href="#redefining-a-widget-s-style" title="Permalink to this heading">¶</a></h2>
 <p>Sometimes we would like to inherit from a widget in order to use its Python
@@ -1288,7 +1124,8 @@ will first be unloaded and then reloaded again. For example:</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.lang.</span></span><span class="sig-name descname"><span class="pre">BuilderBase</span></span><a class="headerlink" href="#kivy.lang.BuilderBase" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">builtins.object</span></code></p>
 <p>The Builder is responsible for creating a <a class="reference internal" href="#kivy.lang.Parser" title="kivy.lang.Parser"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parser</span></code></a> for parsing a
-kv file, merging the results into its internal rules, templates, etc.</p>
+kv file, merging the results into its internal rules, dynamic classes,
+etc.</p>
 <p>By default, <code class="xref py py-class docutils literal notranslate"><span class="pre">Builder</span></code> is a global Kivy instance used in widgets
 that you can use to load other kv files in addition to the default ones.</p>
 <p>See <a class="reference internal" href="#module-kivy.lang" title="kivy.lang"><code class="xref py py-mod docutils literal notranslate"><span class="pre">kivy.lang</span></code></a> for details about the rules built here.</p>
@@ -1302,9 +1139,6 @@ Not necessarily real files on disk; see <a class="reference internal" href="#kiv
 They were created with the <code class="docutils literal notranslate"><span class="pre">&lt;Class&#64;Superclass&gt;:</span></code> syntax,
 rather than in Python.</p>
 </dd>
-<dt><cite>templates</cite>: dict</dt><dd><p>Superseded by <code class="xref py py-attr docutils literal notranslate"><span class="pre">dynamic_classes</span></code> in version 1.0.5.
-Modern Kivy apps should not use templates.</p>
-</dd>
 <dt><cite>rules</cite>: list</dt><dd><p>Rules loaded from Kivy-language code.</p>
 </dd>
 <dt><cite>rulectx</cite>: dict</dt><dd><p>Context used by each rule.
@@ -1313,6 +1147,11 @@ Mostly, the IDs of widgets.</p>
 </dl>
 </dd>
 </dl>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.0.0: </span>The deprecated Kivy lang templates feature has been removed.
+<code class="docutils literal notranslate"><span class="pre">Builder.template</span></code> and the <code class="docutils literal notranslate"><span class="pre">Builder.templates</span></code> dict no longer
+exist; use dynamic classes (<code class="docutils literal notranslate"><span class="pre">&lt;Name&#64;Base&gt;:</span></code>) instead.</p>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.lang.BuilderBase.apply">
 <span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignored_consts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rule_children</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dispatch_kv_post</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.lang.BuilderBase.apply" title="Permalink to this definition">¶</a></dt>
@@ -1476,17 +1315,6 @@ expressions related to the canvas.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="kivy.lang.BuilderBase.template">
-<span class="sig-name descname"><span class="pre">template</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">ctx</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.lang.BuilderBase.template" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a specialized template using a specific context.</p>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 1.0.5.</span></p>
-</div>
-<p>With templates, you can construct custom widgets from a kv lang
-definition by giving them a context. Check <a class="reference internal" href="#template-usage"><span class="std std-ref">Template usage</span></a>.</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="kivy.lang.BuilderBase.unbind_property">
 <span class="sig-name descname"><span class="pre">unbind_property</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">widget</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.lang.BuilderBase.unbind_property" title="Permalink to this definition">¶</a></dt>
 <dd><p>Unbind the handlers created by all the rules of the widget that set
@@ -1566,9 +1394,8 @@ For example:</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This will not remove rules or templates already applied/used on
-current widgets. It will only effect the next widgets creation or
-template invocation.</p>
+<p>This will not remove rules already applied/used on current
+widgets. It will only effect the next widgets creation.</p>
 </div>
 </dd></dl>
 
@@ -1685,7 +1512,6 @@ i.e. a comment line’s first non-whitespace character must be a #.</p>
 <li class="toctree-l3"><a class="reference internal" href="api-kivy.lang.builder.html#kivy.lang.builder.BuilderBase.match"><code class="docutils literal notranslate"><span class="pre">BuilderBase.match()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="api-kivy.lang.builder.html#kivy.lang.builder.BuilderBase.match_rule_name"><code class="docutils literal notranslate"><span class="pre">BuilderBase.match_rule_name()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="api-kivy.lang.builder.html#kivy.lang.builder.BuilderBase.sync"><code class="docutils literal notranslate"><span class="pre">BuilderBase.sync()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="api-kivy.lang.builder.html#kivy.lang.builder.BuilderBase.template"><code class="docutils literal notranslate"><span class="pre">BuilderBase.template()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="api-kivy.lang.builder.html#kivy.lang.builder.BuilderBase.unbind_property"><code class="docutils literal notranslate"><span class="pre">BuilderBase.unbind_property()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="api-kivy.lang.builder.html#kivy.lang.builder.BuilderBase.unbind_widget"><code class="docutils literal notranslate"><span class="pre">BuilderBase.unbind_widget()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="api-kivy.lang.builder.html#kivy.lang.builder.BuilderBase.unload_file"><code class="docutils literal notranslate"><span class="pre">BuilderBase.unload_file()</span></code></a></li>
