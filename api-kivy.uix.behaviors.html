@@ -142,6 +142,12 @@
 <li><a class="reference internal" href="#kivy.uix.behaviors.FocusBehavior.show_keyboard"><code class="docutils literal notranslate"><span class="pre">FocusBehavior.show_keyboard()</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#kivy.uix.behaviors.HoverBehavior"><code class="docutils literal notranslate"><span class="pre">HoverBehavior</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.uix.behaviors.HoverBehavior.on_hover_event"><code class="docutils literal notranslate"><span class="pre">HoverBehavior.on_hover_event()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kivy.uix.behaviors.HoverCollideBehavior"><code class="docutils literal notranslate"><span class="pre">HoverCollideBehavior</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.behaviors.KNSpaceBehavior"><code class="docutils literal notranslate"><span class="pre">KNSpaceBehavior</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.behaviors.ToggleButtonBehavior"><code class="docutils literal notranslate"><span class="pre">ToggleButtonBehavior</span></code></a><ul>
 <li><a class="reference internal" href="#kivy.uix.behaviors.ToggleButtonBehavior.on_activated"><code class="docutils literal notranslate"><span class="pre">ToggleButtonBehavior.on_activated()</span></code></a></li>
 </ul>
@@ -358,6 +364,7 @@
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.drag.html">Drag Behavior</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.emacs.html">Emacs Behavior</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.focus.html">Focus Behavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.hover.html">HoverBehavior</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.knspace.html">Kivy Namespaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.togglebutton.html">ToggleButton Behavior</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.touchripple.html">Touch Ripple</a></li>
@@ -484,6 +491,12 @@
 <li><a class="reference internal" href="#kivy.uix.behaviors.FocusBehavior.show_keyboard"><code class="docutils literal notranslate"><span class="pre">FocusBehavior.show_keyboard()</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#kivy.uix.behaviors.HoverBehavior"><code class="docutils literal notranslate"><span class="pre">HoverBehavior</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.uix.behaviors.HoverBehavior.on_hover_event"><code class="docutils literal notranslate"><span class="pre">HoverBehavior.on_hover_event()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#kivy.uix.behaviors.HoverCollideBehavior"><code class="docutils literal notranslate"><span class="pre">HoverCollideBehavior</span></code></a></li>
+<li><a class="reference internal" href="#kivy.uix.behaviors.KNSpaceBehavior"><code class="docutils literal notranslate"><span class="pre">KNSpaceBehavior</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.behaviors.ToggleButtonBehavior"><code class="docutils literal notranslate"><span class="pre">ToggleButtonBehavior</span></code></a><ul>
 <li><a class="reference internal" href="#kivy.uix.behaviors.ToggleButtonBehavior.on_activated"><code class="docutils literal notranslate"><span class="pre">ToggleButtonBehavior.on_activated()</span></code></a></li>
 </ul>
@@ -1105,6 +1118,79 @@ processed the character (if it does not wish to consume the escape).</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="kivy.uix.behaviors.HoverBehavior">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.uix.behaviors.</span></span><span class="sig-name descname"><span class="pre">HoverBehavior</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.behaviors.HoverBehavior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">builtins.object</span></code></p>
+<p>HoverBehavior <a class="reference external" href="https://en.wikipedia.org/wiki/Mixin">mixin</a> to handle
+hover events.</p>
+<p>Behavior will register widget to receive hover events (events with
+<cite>type_id</cite> set to “hover”) and update attributes <code class="xref py py-attr docutils literal notranslate"><span class="pre">hovered</span></code> and
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">hover_ids</span></code> depending on the received events.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Events<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>on_hover_event</cite>: <cite>(etype, me)</cite></dt><dd><p>Dispatched when this widget receives a hover event.</p>
+</dd>
+<dt><cite>on_hover_enter</cite>: <cite>(me, )</cite></dt><dd><p>Dispatched when a hover event collides with this widget for the
+first time.</p>
+</dd>
+<dt><cite>on_hover_update</cite>: <cite>(me, )</cite></dt><dd><p>Dispatched when a hover event position has changed, but it’s still
+within this widget.</p>
+</dd>
+<dt><cite>on_hover_leave</cite>: <cite>(me, )</cite></dt><dd><p>Dispatched when a hover event is no longer within this widget or
+when an event type “end” is received.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy.uix.behaviors.HoverBehavior.on_hover_event">
+<span class="sig-name descname"><span class="pre">on_hover_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">etype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">me</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.behaviors.HoverBehavior.on_hover_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when a hover event is received.</p>
+<p>This method will test if event collides with this widget using
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">collide_point()</span></code> and dispatch <cite>on_hover_enter</cite>, <cite>on_hover_update</cite>
+or <cite>on_hover_leave</cite> events.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>etype</cite>: <cite>str</cite></dt><dd><p>Event type, one of “begin”, “update” or “end”</p>
+</dd>
+<dt><cite>me</cite>: <a class="reference internal" href="api-kivy.input.motionevent.html#kivy.input.motionevent.MotionEvent" title="kivy.input.motionevent.MotionEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">MotionEvent</span></code></a></dt><dd><p>Hover motion event</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="kivy.uix.behaviors.HoverCollideBehavior">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.uix.behaviors.</span></span><span class="sig-name descname"><span class="pre">HoverCollideBehavior</span></span><a class="headerlink" href="#kivy.uix.behaviors.HoverCollideBehavior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">builtins.object</span></code></p>
+<p>HoverCollideBehavior <a class="reference external" href="https://en.wikipedia.org/wiki/Mixin">mixin</a>
+overrides <a class="reference internal" href="api-kivy.uix.widget.html#kivy.uix.widget.Widget.on_motion" title="kivy.uix.widget.Widget.on_motion"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_motion()</span></code></a> to filter-out hover
+events which do not collide with the widget or hover events which are not
+grabbed events.</p>
+<p>It’s recommended to use this behavior with
+<a class="reference internal" href="api-kivy.uix.stencilview.html#kivy.uix.stencilview.StencilView" title="kivy.uix.stencilview.StencilView"><code class="xref py py-class docutils literal notranslate"><span class="pre">StencilView</span></code></a> or its subclasses
+(<a class="reference internal" href="api-kivy.uix.recycleview.html#kivy.uix.recycleview.RecycleView" title="kivy.uix.recycleview.RecycleView"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecycleView</span></code></a>,
+<a class="reference internal" href="api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView" title="kivy.uix.scrollview.ScrollView"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScrollView</span></code></a>, etc.), so that hover events don’t
+get handled when outside of stencil view.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="kivy.uix.behaviors.KNSpaceBehavior">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.uix.behaviors.</span></span><span class="sig-name descname"><span class="pre">KNSpaceBehavior</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">knspace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.behaviors.KNSpaceBehavior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">builtins.object</span></code></p>
+<p>Inheriting from this class allows naming of the inherited objects, which
+are then added to the associated namespace <a class="reference internal" href="api-kivy.uix.behaviors.knspace.html#module-kivy.uix.behaviors.knspace" title="kivy.uix.behaviors.knspace"><code class="xref py py-attr docutils literal notranslate"><span class="pre">knspace</span></code></a> and accessible
+through it.</p>
+<p>Please see the <a class="reference internal" href="api-kivy.uix.behaviors.knspace.html#module-kivy.uix.behaviors.knspace" title="kivy.uix.behaviors.knspace"><code class="xref py py-mod docutils literal notranslate"><span class="pre">knspace</span> <span class="pre">behaviors</span> <span class="pre">module</span></code></a>
+documentation for more information.</p>
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="kivy.uix.behaviors.ToggleButtonBehavior">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.uix.behaviors.</span></span><span class="sig-name descname"><span class="pre">ToggleButtonBehavior</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.behaviors.ToggleButtonBehavior" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="api-kivy.uix.behaviors.button.html#kivy.uix.behaviors.button.ButtonBehavior" title="kivy.uix.behaviors.button.ButtonBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.behaviors.button.ButtonBehavior</span></code></a></p>
@@ -1163,8 +1249,8 @@ components with internal toggle groups.</p>
 </div>
 </section>
 </section>
-<section id="id4">
-<h2>Events<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h2>
+<section id="id6">
+<h2>Events<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h2>
 <dl class="simple">
 <dt>Inherits all events from ButtonBehavior:</dt><dd><ul class="simple">
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_press()</span></code>: First touch down</p></li>
@@ -1340,6 +1426,15 @@ pressed the button goes away).</p>
 <li class="toctree-l3"><a class="reference internal" href="api-kivy.uix.behaviors.focus.html#kivy.uix.behaviors.focus.FocusBehavior.show_keyboard"><code class="docutils literal notranslate"><span class="pre">FocusBehavior.show_keyboard()</span></code></a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api-kivy.uix.behaviors.hover.html">HoverBehavior</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.hover.html#hovercollidebehavior">HoverCollideBehavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.hover.html#kivy.uix.behaviors.hover.HoverBehavior"><code class="docutils literal notranslate"><span class="pre">HoverBehavior</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api-kivy.uix.behaviors.hover.html#kivy.uix.behaviors.hover.HoverBehavior.on_hover_event"><code class="docutils literal notranslate"><span class="pre">HoverBehavior.on_hover_event()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api-kivy.uix.behaviors.hover.html#kivy.uix.behaviors.hover.HoverCollideBehavior"><code class="docutils literal notranslate"><span class="pre">HoverCollideBehavior</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api-kivy.uix.behaviors.knspace.html">Kivy Namespaces</a><ul>
