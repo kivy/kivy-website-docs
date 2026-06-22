@@ -103,9 +103,13 @@
           <ul>
 <li><a class="reference internal" href="#">Video</a><ul>
 <li><a class="reference internal" href="#kivy.core.video.VideoBase"><code class="docutils literal notranslate"><span class="pre">VideoBase</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.core.video.VideoBase.buffering"><code class="docutils literal notranslate"><span class="pre">VideoBase.buffering</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.video.VideoBase.duration"><code class="docutils literal notranslate"><span class="pre">VideoBase.duration</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.video.VideoBase.filename"><code class="docutils literal notranslate"><span class="pre">VideoBase.filename</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.video.VideoBase.generate_thumbnail"><code class="docutils literal notranslate"><span class="pre">VideoBase.generate_thumbnail()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.video.VideoBase.load"><code class="docutils literal notranslate"><span class="pre">VideoBase.load()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.video.VideoBase.on_buffering"><code class="docutils literal notranslate"><span class="pre">VideoBase.on_buffering()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.video.VideoBase.options"><code class="docutils literal notranslate"><span class="pre">VideoBase.options</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.video.VideoBase.pause"><code class="docutils literal notranslate"><span class="pre">VideoBase.pause()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.video.VideoBase.play"><code class="docutils literal notranslate"><span class="pre">VideoBase.play()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.video.VideoBase.position"><code class="docutils literal notranslate"><span class="pre">VideoBase.position</span></code></a></li>
@@ -411,9 +415,13 @@
             <div class="toc"><h2>Table Of Contents</h2><ul>
 <li><a class="reference internal" href="#">Video</a><ul>
 <li><a class="reference internal" href="#kivy.core.video.VideoBase"><code class="docutils literal notranslate"><span class="pre">VideoBase</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.core.video.VideoBase.buffering"><code class="docutils literal notranslate"><span class="pre">VideoBase.buffering</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.video.VideoBase.duration"><code class="docutils literal notranslate"><span class="pre">VideoBase.duration</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.video.VideoBase.filename"><code class="docutils literal notranslate"><span class="pre">VideoBase.filename</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.video.VideoBase.generate_thumbnail"><code class="docutils literal notranslate"><span class="pre">VideoBase.generate_thumbnail()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.video.VideoBase.load"><code class="docutils literal notranslate"><span class="pre">VideoBase.load()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.video.VideoBase.on_buffering"><code class="docutils literal notranslate"><span class="pre">VideoBase.on_buffering()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.video.VideoBase.options"><code class="docutils literal notranslate"><span class="pre">VideoBase.options</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.video.VideoBase.pause"><code class="docutils literal notranslate"><span class="pre">VideoBase.pause()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.video.VideoBase.play"><code class="docutils literal notranslate"><span class="pre">VideoBase.play()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.video.VideoBase.position"><code class="docutils literal notranslate"><span class="pre">VideoBase.position</span></code></a></li>
@@ -434,6 +442,23 @@
 <span id="video"></span><h1>Video<a class="headerlink" href="#module-kivy.core.video" title="Permalink to this heading">¶</a></h1>
 <p>Core class for reading video files and managing the video
 <a class="reference internal" href="api-kivy.graphics.texture.html#kivy.graphics.texture.Texture" title="kivy.graphics.texture.Texture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Texture</span></code></a>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.0.0: </span>Extended <a class="reference internal" href="#kivy.core.video.VideoBase" title="kivy.core.video.VideoBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">VideoBase</span></code></a> with:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="#kivy.core.video.VideoBase.generate_thumbnail" title="kivy.core.video.VideoBase.generate_thumbnail"><code class="xref py py-meth docutils literal notranslate"><span class="pre">VideoBase.generate_thumbnail()</span></code></a> classmethod for creating a
+<a class="reference internal" href="api-kivy.graphics.texture.html#kivy.graphics.texture.Texture" title="kivy.graphics.texture.Texture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Texture</span></code></a> from a frame at a
+given timestamp without instantiating / playing the video.</p></li>
+<li><p><a class="reference internal" href="#kivy.core.video.VideoBase.buffering" title="kivy.core.video.VideoBase.buffering"><code class="xref py py-attr docutils literal notranslate"><span class="pre">VideoBase.buffering</span></code></a> observable boolean that is True
+while playback is delayed/stalled while trying to satisfy
+<code class="docutils literal notranslate"><span class="pre">state='play'</span></code>, and the <a class="reference internal" href="#kivy.core.video.VideoBase.on_buffering" title="kivy.core.video.VideoBase.on_buffering"><code class="xref py py-attr docutils literal notranslate"><span class="pre">VideoBase.on_buffering</span></code></a>
+event that fires whenever it changes.</p></li>
+<li><p><a class="reference internal" href="#kivy.core.video.VideoBase.options" title="kivy.core.video.VideoBase.options"><code class="xref py py-attr docutils literal notranslate"><span class="pre">VideoBase.options</span></code></a> provider-specific options dict so apps
+can pass opaque configuration through to the backend
+implementation. Each provider documents the keys it honors.</p></li>
+</ul>
+</div></blockquote>
+</div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 1.10.0: </span>The pyglet, pygst and gi providers have been removed.</p>
 </div>
@@ -467,19 +492,45 @@ providers).</p>
 </dd>
 <dt><cite>autoplay</cite>: bool, defaults to False</dt><dd><p>Auto play the video on init.</p>
 </dd>
+<dt><cite>options</cite>: dict, defaults to {}</dt><dd><p>Provider-specific options forwarded opaquely to the underlying
+implementation. The base class consumes the documented kwargs
+above; any other keys are placed in <a class="reference internal" href="#kivy.core.video.VideoBase.options" title="kivy.core.video.VideoBase.options"><code class="xref py py-attr docutils literal notranslate"><span class="pre">options</span></code></a> for the
+selected provider to consume. Each provider documents the keys
+it honors. Keys not recognized by
+the selected provider are typically logged as a warning and
+ignored.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
+</dd>
 </dl>
 </dd>
 <dt class="field-even">Events<span class="colon">:</span></dt>
-<dd class="field-even"><dl class="simple">
+<dd class="field-even"><dl>
 <dt><cite>on_eos</cite></dt><dd><p>Fired when EOS is hit.</p>
 </dd>
 <dt><cite>on_load</cite></dt><dd><p>Fired when the video is loaded and the texture is available.</p>
 </dd>
 <dt><cite>on_frame</cite></dt><dd><p>Fired when a new frame is written to the texture.</p>
 </dd>
+<dt><cite>on_buffering</cite></dt><dd><p>Fired when <a class="reference internal" href="#kivy.core.video.VideoBase.buffering" title="kivy.core.video.VideoBase.buffering"><code class="xref py py-attr docutils literal notranslate"><span class="pre">buffering</span></code></a> changes. Strictly a transition
+event; the boolean is also readable as a property.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
+</dd>
 </dl>
 </dd>
 </dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="kivy.core.video.VideoBase.buffering">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">buffering</span></span><a class="headerlink" href="#kivy.core.video.VideoBase.buffering" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether playback is currently delayed/stalled while trying to satisfy <code class="docutils literal notranslate"><span class="pre">state='play'</span></code>. Always False while <code class="docutils literal notranslate"><span class="pre">state</span></code> is <code class="docutils literal notranslate"><span class="pre">'pause'</span></code> or <code class="docutils literal notranslate"><span class="pre">'stop'</span></code> (the player is doing what was asked; there is no delay relative to intent). <code class="docutils literal notranslate"><span class="pre">True</span></code> covers both the initial pre-playback wait (asset still loading, buffer still filling) and any mid-stream rebuffer. Providers update this from their own authoritative signal; providers that cannot detect stalls leave it <code class="docutils literal notranslate"><span class="pre">False</span></code>. Apps that want a loading overlay can use <code class="docutils literal notranslate"><span class="pre">not</span> <span class="pre">video.loaded</span> <span class="pre">or</span> <span class="pre">video.buffering</span></code> as the gate.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="kivy.core.video.VideoBase.duration">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">duration</span></span><a class="headerlink" href="#kivy.core.video.VideoBase.duration" title="Permalink to this definition">¶</a></dt>
@@ -493,9 +544,60 @@ providers).</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="kivy.core.video.VideoBase.generate_thumbnail">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_thumbnail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.core.video.VideoBase.generate_thumbnail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a thumbnail <a class="reference internal" href="api-kivy.graphics.texture.html#kivy.graphics.texture.Texture" title="kivy.graphics.texture.Texture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Texture</span></code></a>
+from the given video file at the given timestamp, without
+requiring playback.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>filename</cite>: str</dt><dd><p>Path or URI to the video.</p>
+</dd>
+<dt><cite>time</cite>: float</dt><dd><p>Timestamp in seconds at which to grab the thumbnail.</p>
+</dd>
+<dt><cite>size</cite>: tuple of (int, int), optional</dt><dd><p>Target <code class="docutils literal notranslate"><span class="pre">(width,</span> <span class="pre">height)</span></code>. When <code class="docutils literal notranslate"><span class="pre">None</span></code> the source
+video’s native frame size is used.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <a class="reference internal" href="api-kivy.graphics.texture.html#kivy.graphics.texture.Texture" title="kivy.graphics.texture.Texture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Texture</span></code></a> containing the
+decoded frame, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if the provider does not support
+thumbnail generation or could not decode the asset at the
+requested time.</p>
+</dd>
+</dl>
+<p>Providers should override this. The default implementation logs
+an informational message and returns <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="kivy.core.video.VideoBase.load">
 <span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#kivy.core.video.VideoBase.load" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load the video from the current filename</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy.core.video.VideoBase.on_buffering">
+<span class="sig-name descname"><span class="pre">on_buffering</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.core.video.VideoBase.on_buffering" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fired when <a class="reference internal" href="#kivy.core.video.VideoBase.buffering" title="kivy.core.video.VideoBase.buffering"><code class="xref py py-attr docutils literal notranslate"><span class="pre">buffering</span></code></a> transitions.</p>
+<p><cite>value</cite> is the new buffering state (<code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code>).</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="kivy.core.video.VideoBase.options">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">options</span></span><a class="headerlink" href="#kivy.core.video.VideoBase.options" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the provider-specific options dict that was passed to the provider at construction time. Read-only at the base class level; providers may mutate it during their lifetime.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
 </dd></dl>
 
 <dl class="py method">

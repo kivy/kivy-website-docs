@@ -103,6 +103,7 @@
           <ul>
 <li><a class="reference internal" href="#">Video</a><ul>
 <li><a class="reference internal" href="#kivy.uix.video.Video"><code class="docutils literal notranslate"><span class="pre">Video</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.uix.video.Video.generate_thumbnail"><code class="docutils literal notranslate"><span class="pre">Video.generate_thumbnail()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.video.Video.seek"><code class="docutils literal notranslate"><span class="pre">Video.seek()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.video.Video.unload"><code class="docutils literal notranslate"><span class="pre">Video.unload()</span></code></a></li>
 </ul>
@@ -401,6 +402,7 @@
             <div class="toc"><h2>Table Of Contents</h2><ul>
 <li><a class="reference internal" href="#">Video</a><ul>
 <li><a class="reference internal" href="#kivy.uix.video.Video"><code class="docutils literal notranslate"><span class="pre">Video</span></code></a><ul>
+<li><a class="reference internal" href="#kivy.uix.video.Video.generate_thumbnail"><code class="docutils literal notranslate"><span class="pre">Video.generate_thumbnail()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.video.Video.seek"><code class="docutils literal notranslate"><span class="pre">Video.seek()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.video.Video.unload"><code class="docutils literal notranslate"><span class="pre">Video.unload()</span></code></a></li>
 </ul>
@@ -450,11 +452,73 @@ started/loaded by passing <code class="docutils literal notranslate"><span class
 <span class="n">video</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">eos</span><span class="o">=</span><span class="n">on_eos_change</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
+<p>An observable <code class="xref py py-attr docutils literal notranslate"><span class="pre">buffering</span></code> boolean for loading-overlay UX and a
+provider-specific <code class="xref py py-attr docutils literal notranslate"><span class="pre">options</span></code> dict were added in 3.0.0:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">video</span> <span class="o">=</span> <span class="n">Video</span><span class="p">(</span>
+    <span class="n">source</span><span class="o">=</span><span class="s1">&#39;movie.mp4&#39;</span><span class="p">,</span>
+    <span class="n">state</span><span class="o">=</span><span class="s1">&#39;play&#39;</span><span class="p">,</span>
+    <span class="c1"># Provider-specific options forwarded opaquely; each provider</span>
+    <span class="c1"># documents the keys it honors. AVFoundation example:</span>
+    <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;automatically_waits_to_minimize_stalling&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+<span class="p">)</span>
+
+<span class="c1"># Drive a loading overlay from a single rule that covers both the</span>
+<span class="c1"># initial wait and any mid-stream rebuffer:</span>
+<span class="n">video</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span>
+    <span class="n">loaded</span><span class="o">=</span><span class="k">lambda</span> <span class="n">v</span><span class="p">,</span> <span class="n">l</span><span class="p">:</span> <span class="n">overlay</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span>
+        <span class="ow">not</span> <span class="n">l</span> <span class="ow">or</span> <span class="n">v</span><span class="o">.</span><span class="n">buffering</span><span class="p">),</span>
+    <span class="n">buffering</span><span class="o">=</span><span class="k">lambda</span> <span class="n">v</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">overlay</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span>
+        <span class="ow">not</span> <span class="n">v</span><span class="o">.</span><span class="n">loaded</span> <span class="ow">or</span> <span class="n">b</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Static thumbnails can be generated without instantiating a widget via
+<a class="reference internal" href="#kivy.uix.video.Video.generate_thumbnail" title="kivy.uix.video.Video.generate_thumbnail"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Video.generate_thumbnail()</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">texture</span> <span class="o">=</span> <span class="n">Video</span><span class="o">.</span><span class="n">generate_thumbnail</span><span class="p">(</span>
+    <span class="s1">&#39;movie.mp4&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">320</span><span class="p">,</span> <span class="mi">180</span><span class="p">))</span>
+<span class="k">if</span> <span class="n">texture</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">thumbnail_image</span><span class="o">.</span><span class="n">texture</span> <span class="o">=</span> <span class="n">texture</span>
+</pre></div>
+</div>
 <dl class="py class">
 <dt class="sig sig-object py" id="kivy.uix.video.Video">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">kivy.uix.video.</span></span><span class="sig-name descname"><span class="pre">Video</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.video.Video" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="api-kivy.uix.image.html#kivy.uix.image.Image" title="kivy.uix.image.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.image.Image</span></code></a></p>
 <p>Video class. See module documentation for more information.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy.uix.video.Video.generate_thumbnail">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_thumbnail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.video.Video.generate_thumbnail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a thumbnail <a class="reference internal" href="api-kivy.graphics.texture.html#kivy.graphics.texture.Texture" title="kivy.graphics.texture.Texture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Texture</span></code></a>
+from the given video file at the given timestamp, without
+instantiating a <a class="reference internal" href="#kivy.uix.video.Video" title="kivy.uix.video.Video"><code class="xref py py-class docutils literal notranslate"><span class="pre">Video</span></code></a> widget or starting playback.
+Delegates to the currently selected core video provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>filename</cite>: str</dt><dd><p>Path or URI to the video. Resolved through
+<a class="reference internal" href="api-kivy.resources.html#kivy.resources.resource_find" title="kivy.resources.resource_find"><code class="xref py py-func docutils literal notranslate"><span class="pre">resource_find()</span></code></a> when it does not
+look like a URL.</p>
+</dd>
+<dt><cite>time</cite>: float</dt><dd><p>Timestamp in seconds at which to grab the thumbnail.</p>
+</dd>
+<dt><cite>size</cite>: tuple of (int, int), optional</dt><dd><p>Target <code class="docutils literal notranslate"><span class="pre">(width,</span> <span class="pre">height)</span></code>. When <code class="docutils literal notranslate"><span class="pre">None</span></code> the source
+video’s native frame size is used.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A <a class="reference internal" href="api-kivy.graphics.texture.html#kivy.graphics.texture.Texture" title="kivy.graphics.texture.Texture"><code class="xref py py-class docutils literal notranslate"><span class="pre">Texture</span></code></a>, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if no
+provider could generate the thumbnail.</p>
+</dd>
+</dl>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.0.0.</span></p>
+</div>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="kivy.uix.video.Video.seek">
 <span class="sig-name descname"><span class="pre">seek</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">percent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#kivy.uix.video.Video.seek" title="Permalink to this definition">¶</a></dt>
