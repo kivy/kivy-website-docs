@@ -406,7 +406,6 @@
 
 <span class="c1"># late import</span>
 <span class="n">VKeyboard</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="n">android</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="n">Animation</span> <span class="o">=</span> <span class="kc">None</span>
 
 
@@ -1069,32 +1068,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_keyboard_changed</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keyboard_changed</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_animate_content</span><span class="p">()</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_get_ios_kheight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># TODO(kivy.mobile): once kivy.mobile Android is validated, collapse</span>
-        <span class="c1"># _get_ios_kheight and _get_android_kheight into a single</span>
-        <span class="c1"># kivy.mobile call in _get_kheight and remove both helpers.</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.mobile</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_keyboard_height</span>
-        <span class="k">return</span> <span class="n">get_keyboard_height</span><span class="p">()</span>
-
     <span class="k">def</span><span class="w"> </span><span class="nf">_refresh_safe_area</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Update Window.safe_area from kivy.mobile.get_safe_area().&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">platform</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;ios&#39;</span><span class="p">,</span> <span class="s1">&#39;android&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">platform</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;ios&#39;</span><span class="p">,</span> <span class="s1">&#39;android&#39;</span><span class="p">}:</span>
             <span class="k">return</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.mobile</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_safe_area</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">safe_area</span> <span class="o">=</span> <span class="n">get_safe_area</span><span class="p">()</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="k">pass</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_get_android_kheight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># TODO(kivy.mobile): replace with kivy.mobile.get_keyboard_height()</span>
-        <span class="c1"># once kivy/mobile/_platform/android.py is validated on a device.</span>
-        <span class="k">if</span> <span class="n">USE_SDL3</span><span class="p">:</span>  <span class="c1"># Placeholder until the SDL3 bootstrap supports this</span>
-            <span class="k">return</span> <span class="mi">0</span>
-        <span class="k">global</span> <span class="n">android</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">android</span><span class="p">:</span>
-            <span class="kn">import</span><span class="w"> </span><span class="nn">android</span>
-        <span class="k">return</span> <span class="n">android</span><span class="o">.</span><span class="n">get_keyboard_height</span><span class="p">()</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.mobile</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_safe_area</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">safe_area</span> <span class="o">=</span> <span class="n">get_safe_area</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_kivy_vkheight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">mode</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;kivy&#39;</span><span class="p">,</span> <span class="s1">&#39;keyboard_mode&#39;</span><span class="p">)</span>
@@ -1115,24 +1094,23 @@
         <span class="k">return</span> <span class="mi">0</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_kheight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># TODO(kivy.mobile): once _get_android_kheight is replaced, simplify to:</span>
-        <span class="c1">#   if platform in (&#39;android&#39;, &#39;ios&#39;):</span>
-        <span class="c1">#       from kivy.mobile import get_keyboard_height</span>
-        <span class="c1">#       return get_keyboard_height()</span>
-        <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;android&#39;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_android_kheight</span><span class="p">()</span>
-        <span class="k">elif</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;ios&#39;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_ios_kheight</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">platform</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;android&#39;</span><span class="p">,</span> <span class="s1">&#39;ios&#39;</span><span class="p">}:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.mobile</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_keyboard_height</span>
+            <span class="k">return</span> <span class="n">get_keyboard_height</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_kivy_vkheight</span><span class="p">()</span>
 
     <span class="n">keyboard_height</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_kheight</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;_keyboard_changed&#39;</span><span class="p">,))</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns the height of the softkeyboard/IME on mobile platforms.</span>
 <span class="sd">    Will return 0 if not on mobile platform or if IME is not active.</span>
 
-<span class="sd">    .. note:: This property returns 0 with SDL3 on Android, but setting</span>
-<span class="sd">              Window.softinput_mode does work.</span>
+<span class="sd">    On iOS and Android the value is read from :mod:`kivy.mobile`</span>
+<span class="sd">    (``get_keyboard_height``), which reports the live IME inset height.</span>
 
 <span class="sd">    .. versionadded:: 1.9.0</span>
+
+<span class="sd">    .. versionchanged:: 3.0.0</span>
+<span class="sd">        The Android/iOS height is now sourced from :mod:`kivy.mobile` instead of</span>
+<span class="sd">        the legacy ``android`` module.</span>
 
 <span class="sd">    :attr:`keyboard_height` is a read-only</span>
 <span class="sd">    :class:`~kivy.properties.AliasProperty` and defaults to 0.</span>
@@ -1172,8 +1150,9 @@
 <span class="sd">    ``&quot;bottom&quot;``, and ``&quot;right&quot;``.  All values are in the same coordinate</span>
 <span class="sd">    system as Kivy layout (UIKit points on iOS).</span>
 
-<span class="sd">    The property is refreshed automatically on ``on_rotate``.  On desktop</span>
-<span class="sd">    platforms it remains ``{&quot;top&quot;: 0, &quot;left&quot;: 0, &quot;bottom&quot;: 0, &quot;right&quot;: 0}``.</span>
+<span class="sd">    The property is refreshed automatically whenever the window size or</span>
+<span class="sd">    rotation changes.  On desktop platforms it remains</span>
+<span class="sd">    ``{&quot;top&quot;: 0, &quot;left&quot;: 0, &quot;bottom&quot;: 0, &quot;right&quot;: 0}``.</span>
 
 <span class="sd">    Usage example::</span>
 
@@ -1595,16 +1574,26 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">softinput_mode</span><span class="o">=</span><span class="k">lambda</span> <span class="o">*</span><span class="n">dt</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_viewport</span><span class="p">(),</span>
                   <span class="n">keyboard_height</span><span class="o">=</span><span class="k">lambda</span> <span class="o">*</span><span class="n">dt</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_viewport</span><span class="p">())</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_refresh_safe_area</span><span class="p">)</span>
+        <span class="c1"># Refresh on both size and rotation: on Android/SDL the OS orientation</span>
+        <span class="c1"># change arrives as a window resize (size), not a rotation property</span>
+        <span class="c1"># change, so binding rotation alone would leave safe_area stale.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_refresh_safe_area</span><span class="p">,</span>
+                  <span class="n">rotation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_refresh_safe_area</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_safe_area</span><span class="p">()</span>  <span class="c1"># populate on startup</span>
+        <span class="c1"># getRootWindowInsets() can still be null this early; re-read on the</span>
+        <span class="c1"># next frame so the first value isn&#39;t stuck at all-zeros.</span>
+        <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_refresh_safe_area</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;ios&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">platform</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;ios&#39;</span><span class="p">,</span> <span class="s1">&#39;android&#39;</span><span class="p">}:</span>
             <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.mobile</span><span class="w"> </span><span class="kn">import</span> <span class="n">subscribe_keyboard_height</span>
+            <span class="c1"># subscribe_keyboard_height fires on every IME height change; route</span>
+            <span class="c1"># it through trigger_keyboard_height for parity with iOS. That is a</span>
+            <span class="c1"># 0.5s Clock trigger, so keyboard_height lags briefly but always</span>
+            <span class="c1"># re-reads the live value (a shorter/zero-delay trigger is a</span>
+            <span class="c1"># possible future refinement).</span>
             <span class="n">subscribe_keyboard_height</span><span class="p">(</span>
                 <span class="k">lambda</span> <span class="n">h</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">trigger_keyboard_height</span><span class="p">()</span>
             <span class="p">)</span>
-        <span class="c1"># TODO(kivy.mobile): subscribe Android keyboard height here once</span>
-        <span class="c1"># kivy/mobile/_platform/android.py implements subscribe_keyboard_height.</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">show_cursor</span><span class="o">=</span><span class="k">lambda</span> <span class="o">*</span><span class="n">dt</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_cursor_state</span><span class="p">(</span><span class="n">dt</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
 
@@ -3239,7 +3228,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Jul 13, 2026.
+    Last updated on Jul 23, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

@@ -472,7 +472,6 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">platform</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.properties</span><span class="w"> </span><span class="kn">import</span> <span class="n">AliasProperty</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.event</span><span class="w"> </span><span class="kn">import</span> <span class="n">EventDispatcher</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.setupconfig</span><span class="w"> </span><span class="kn">import</span> <span class="n">USE_SDL3</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.context</span><span class="w"> </span><span class="kn">import</span> <span class="n">register_context</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy._metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">dpi2px</span><span class="p">,</span> <span class="n">NUMERIC_FORMATS</span><span class="p">,</span> <span class="n">dispatch_pixel_scale</span><span class="p">,</span> \
     <span class="n">sync_pixel_scale</span>
@@ -580,7 +579,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">force_recompute</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dpi</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dpi</span>
 
-        <span class="k">if</span> <span class="n">platform</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;android&#39;</span><span class="p">,</span> <span class="s1">&#39;ios&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">platform</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;android&#39;</span><span class="p">,</span> <span class="s1">&#39;ios&#39;</span><span class="p">}:</span>
             <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.mobile</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_dpi</span> <span class="k">as</span> <span class="n">_mobile_get_dpi</span>
             <span class="n">value</span> <span class="o">=</span> <span class="n">_mobile_get_dpi</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
@@ -635,10 +634,10 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_density</span>
 
         <span class="n">value</span> <span class="o">=</span> <span class="mf">1.0</span>
-        <span class="k">if</span> <span class="n">platform</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;android&#39;</span><span class="p">,</span> <span class="s1">&#39;ios&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">platform</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;android&#39;</span><span class="p">,</span> <span class="s1">&#39;ios&#39;</span><span class="p">}:</span>
             <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.mobile</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_density</span> <span class="k">as</span> <span class="n">_mobile_get_density</span>
             <span class="n">value</span> <span class="o">=</span> <span class="n">_mobile_get_density</span><span class="p">()</span>
-        <span class="k">elif</span> <span class="n">platform</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;macosx&#39;</span><span class="p">,</span> <span class="s1">&#39;win&#39;</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">platform</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;macosx&#39;</span><span class="p">,</span> <span class="s1">&#39;win&#39;</span><span class="p">}:</span>
             <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dpi</span> <span class="o">/</span> <span class="mf">96.</span>
 
         <span class="n">sync_pixel_scale</span><span class="p">(</span><span class="n">density</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
@@ -666,14 +665,9 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fontscale</span>
 
         <span class="n">value</span> <span class="o">=</span> <span class="mf">1.0</span>
-        <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;android&#39;</span><span class="p">:</span>
-            <span class="kn">from</span><span class="w"> </span><span class="nn">jnius</span><span class="w"> </span><span class="kn">import</span> <span class="n">autoclass</span>
-            <span class="k">if</span> <span class="n">USE_SDL3</span><span class="p">:</span>
-                <span class="n">PythonActivity</span> <span class="o">=</span> <span class="n">autoclass</span><span class="p">(</span><span class="s1">&#39;org.kivy.android.PythonActivity&#39;</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">PythonActivity</span> <span class="o">=</span> <span class="n">autoclass</span><span class="p">(</span><span class="s1">&#39;org.renpy.android.PythonActivity&#39;</span><span class="p">)</span>
-            <span class="n">config</span> <span class="o">=</span> <span class="n">PythonActivity</span><span class="o">.</span><span class="n">mActivity</span><span class="o">.</span><span class="n">getResources</span><span class="p">()</span><span class="o">.</span><span class="n">getConfiguration</span><span class="p">()</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">fontScale</span>
+        <span class="k">if</span> <span class="n">platform</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;android&#39;</span><span class="p">,</span> <span class="s1">&#39;ios&#39;</span><span class="p">}:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.mobile</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_fontscale</span> <span class="k">as</span> <span class="n">_mobile_get_fontscale</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">_mobile_get_fontscale</span><span class="p">()</span>
 
         <span class="n">sync_pixel_scale</span><span class="p">(</span><span class="n">fontscale</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">value</span>
@@ -819,7 +813,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Jul 13, 2026.
+    Last updated on Jul 23, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

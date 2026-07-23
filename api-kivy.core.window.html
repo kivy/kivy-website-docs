@@ -1101,13 +1101,14 @@ desktops.</p>
 <span class="sig-name descname"><span class="pre">keyboard_height</span></span><a class="headerlink" href="#kivy.core.window.WindowBase.keyboard_height" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the height of the softkeyboard/IME on mobile platforms.
 Will return 0 if not on mobile platform or if IME is not active.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This property returns 0 with SDL3 on Android, but setting
-Window.softinput_mode does work.</p>
-</div>
+<p>On iOS and Android the value is read from <code class="xref py py-mod docutils literal notranslate"><span class="pre">kivy.mobile</span></code>
+(<code class="docutils literal notranslate"><span class="pre">get_keyboard_height</span></code>), which reports the live IME inset height.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 1.9.0.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.0.0: </span>The Android/iOS height is now sourced from <code class="xref py py-mod docutils literal notranslate"><span class="pre">kivy.mobile</span></code> instead of
+the legacy <code class="docutils literal notranslate"><span class="pre">android</span></code> module.</p>
 </div>
 <p><a class="reference internal" href="#kivy.core.window.WindowBase.keyboard_height" title="kivy.core.window.WindowBase.keyboard_height"><code class="xref py py-attr docutils literal notranslate"><span class="pre">keyboard_height</span></code></a> is a read-only
 <a class="reference internal" href="api-kivy.properties.html#kivy.properties.AliasProperty" title="kivy.properties.AliasProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">AliasProperty</span></code></a> and defaults to 0.</p>
@@ -1890,8 +1891,9 @@ the notch / rounded-corner overhang (left / right in landscape).</p>
 <p>The dictionary always contains the keys <code class="docutils literal notranslate"><span class="pre">&quot;top&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;left&quot;</span></code>,
 <code class="docutils literal notranslate"><span class="pre">&quot;bottom&quot;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&quot;right&quot;</span></code>.  All values are in the same coordinate
 system as Kivy layout (UIKit points on iOS).</p>
-<p>The property is refreshed automatically on <code class="docutils literal notranslate"><span class="pre">on_rotate</span></code>.  On desktop
-platforms it remains <code class="docutils literal notranslate"><span class="pre">{&quot;top&quot;:</span> <span class="pre">0,</span> <span class="pre">&quot;left&quot;:</span> <span class="pre">0,</span> <span class="pre">&quot;bottom&quot;:</span> <span class="pre">0,</span> <span class="pre">&quot;right&quot;:</span> <span class="pre">0}</span></code>.</p>
+<p>The property is refreshed automatically whenever the window size or
+rotation changes.  On desktop platforms it remains
+<code class="docutils literal notranslate"><span class="pre">{&quot;top&quot;:</span> <span class="pre">0,</span> <span class="pre">&quot;left&quot;:</span> <span class="pre">0,</span> <span class="pre">&quot;bottom&quot;:</span> <span class="pre">0,</span> <span class="pre">&quot;right&quot;:</span> <span class="pre">0}</span></code>.</p>
 <p>Usage example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.window</span><span class="w"> </span><span class="kn">import</span> <span class="n">Window</span>
 
@@ -2380,7 +2382,7 @@ read-only <a class="reference internal" href="api-kivy.properties.html#kivy.prop
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Jul 13, 2026.
+    Last updated on Jul 23, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->
