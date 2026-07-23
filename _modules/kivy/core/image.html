@@ -687,7 +687,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.clock</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clock</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.atlas</span><span class="w"> </span><span class="kn">import</span> <span class="n">Atlas</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.resources</span><span class="w"> </span><span class="kn">import</span> <span class="n">resource_find</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">platform</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">platform</span><span class="p">,</span> <span class="n">path_to_str</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.setupconfig</span><span class="w"> </span><span class="kn">import</span> <span class="n">USE_SDL3</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">zipfile</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">io</span><span class="w"> </span><span class="kn">import</span> <span class="n">BytesIO</span>
@@ -1143,6 +1143,8 @@
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># Coerce os.PathLike -&gt; str before any URI/extension string parsing.</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="c1"># Handle atlas:// URIs</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">ImageLoader</span><span class="o">.</span><span class="n">_load_atlas</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -1259,6 +1261,11 @@
         <span class="c1"># indicator of images having been loded in cache</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_iteration_done</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_image_provider</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;image_provider&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="c1"># Accept os.PathLike (e.g. pathlib.Path) as a filename argument by</span>
+        <span class="c1"># coercing to str; non-path args (Image, Texture, BytesIO, ...) are</span>
+        <span class="c1"># left untouched.</span>
+        <span class="n">arg</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">Image</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">Image</span><span class="o">.</span><span class="n">copy_attributes</span><span class="p">:</span>
@@ -1437,10 +1444,14 @@
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;Load an image</span>
 
 <span class="sd">        :Parameters:</span>
-<span class="sd">            `filename`: str</span>
+<span class="sd">            `filename`: str or os.PathLike</span>
 <span class="sd">                Filename of the image.</span>
 <span class="sd">            `keep_data`: bool, defaults to False</span>
 <span class="sd">                Keep the image data when the texture is created.</span>
+
+<span class="sd">        .. versionchanged:: 3.0.0</span>
+<span class="sd">            `filename` may be a :class:`os.PathLike` (e.g. :class:`pathlib.Path`)</span>
+<span class="sd">            in addition to a ``str``.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;keep_data&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Image</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
@@ -1484,6 +1495,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_set_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="n">value</span>
@@ -1629,7 +1641,13 @@
 <span class="sd">            Parameter `fmt` added to force the output format of the file</span>
 <span class="sd">            Filename can now be a BytesIO object.</span>
 
+<span class="sd">        .. versionchanged:: 3.0.0</span>
+<span class="sd">            `filename` may be a :class:`os.PathLike` (e.g. :class:`pathlib.Path`)</span>
+<span class="sd">            in addition to a ``str`` or a BytesIO-like object.</span>
+
 <span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># Coerce os.PathLike -&gt; str (BytesIO-like objects pass through).</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="n">is_bytesio_like</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;read&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)):</span>
             <span class="c1"># BytesIO like(RawIO, RawIOBase, BytesIO..)</span>

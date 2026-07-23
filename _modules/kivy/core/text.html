@@ -504,7 +504,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">copy</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy</span><span class="w"> </span><span class="kn">import</span> <span class="n">kivy_data_dir</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">platform</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">platform</span><span class="p">,</span> <span class="n">path_to_str</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.graphics.texture</span><span class="w"> </span><span class="kn">import</span> <span class="n">Texture</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">core_register_libs</span><span class="p">,</span> <span class="n">get_provider_modules</span><span class="p">,</span> <span class="n">make_provider_tuple</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.text.text_layout</span><span class="w"> </span><span class="kn">import</span> <span class="n">layout_text</span><span class="p">,</span> <span class="n">LayoutWord</span>
@@ -807,6 +807,10 @@
 <span class="sd">        All the fn_regular/fn_italic/fn_bold parameters are resolved with</span>
 <span class="sd">        :func:`kivy.resources.resource_find`. If fn_italic/fn_bold are None,</span>
 <span class="sd">        fn_regular will be used instead.</span>
+
+<span class="sd">        .. versionchanged:: 3.0.0</span>
+<span class="sd">            The ``fn_*`` font paths may be :class:`os.PathLike` (e.g.</span>
+<span class="sd">            :class:`pathlib.Path`) in addition to ``str``.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
 
         <span class="k">if</span> <span class="n">fn_regular</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -815,6 +819,7 @@
         <span class="n">fonts</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="k">for</span> <span class="n">font_type</span> <span class="ow">in</span> <span class="n">fn_regular</span><span class="p">,</span> <span class="n">fn_italic</span><span class="p">,</span> <span class="n">fn_bold</span><span class="p">,</span> <span class="n">fn_bolditalic</span><span class="p">:</span>
+            <span class="n">font_type</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">font_type</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">font_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">font</span> <span class="o">=</span> <span class="n">resource_find</span><span class="p">(</span><span class="n">font_type</span><span class="p">)</span>
 
@@ -914,7 +919,10 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">resolve_font_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span>
-        <span class="n">fontname</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;font_name&#39;</span><span class="p">]</span>
+        <span class="c1"># Coerce os.PathLike -&gt; str and write back so downstream string ops</span>
+        <span class="c1"># (endswith/format) and the _fonts / _fonts_cache dict keys are</span>
+        <span class="c1"># consistent regardless of whether a Path or str was supplied.</span>
+        <span class="n">fontname</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;font_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;font_name&#39;</span><span class="p">])</span>
         <span class="n">fonts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fonts</span>
         <span class="n">fontscache</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fonts_cache</span>
 

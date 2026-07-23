@@ -817,7 +817,7 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy</span><span class="w"> </span><span class="kn">import</span> <span class="n">kivy_config_fn</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">Logger</span><span class="p">,</span> <span class="n">logger_config_update</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">pi_version</span><span class="p">,</span> <span class="n">platform</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">pi_version</span><span class="p">,</span> <span class="n">platform</span><span class="p">,</span> <span class="n">path_to_str</span>
 
 <span class="n">_is_rpi</span> <span class="o">=</span> <span class="n">exists</span><span class="p">(</span><span class="s1">&#39;/opt/vc/include/bcm_host.h&#39;</span><span class="p">)</span>
 
@@ -914,7 +914,15 @@
 <span class="sd">        .. versionchanged:: 1.9.0</span>
 <span class="sd">            :meth:`read` now calls the callbacks if read changed any values.</span>
 
+<span class="sd">        .. versionchanged:: 3.0.0</span>
+<span class="sd">            `filename` may be a :class:`os.PathLike` (e.g. :class:`pathlib.Path`)</span>
+<span class="sd">            in addition to a ``str``. Passing multiple filenames (a list) is</span>
+<span class="sd">            still rejected.</span>
+
 <span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># Coerce os.PathLike -&gt; str; still reject anything else (e.g. a list of</span>
+        <span class="c1"># filenames) to preserve the &quot;one filename only&quot; contract.</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Only one filename is accepted (str)&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>

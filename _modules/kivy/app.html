@@ -846,7 +846,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.event</span><span class="w"> </span><span class="kn">import</span> <span class="n">EventDispatcher</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.lang</span><span class="w"> </span><span class="kn">import</span> <span class="n">Builder</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.resources</span><span class="w"> </span><span class="kn">import</span> <span class="n">resource_find</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">platform</span><span class="p">,</span> <span class="n">normalize_path_id</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">platform</span><span class="p">,</span> <span class="n">normalize_path_id</span><span class="p">,</span> <span class="n">path_to_str</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.widget</span><span class="w"> </span><span class="kn">import</span> <span class="n">Widget</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.properties</span><span class="w"> </span><span class="kn">import</span> <span class="n">ObjectProperty</span><span class="p">,</span> <span class="n">StringProperty</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.setupconfig</span><span class="w"> </span><span class="kn">import</span> <span class="n">USE_SDL3</span>
@@ -1114,8 +1114,13 @@
 <span class="sd">            :meth:`run` is called (e.g. in `__init__`), won&#39;t have its styling</span>
 <span class="sd">            applied. Note that :meth:`build` is called after :attr:`load_kv`</span>
 <span class="sd">            has been called.</span>
+
+<span class="sd">        .. versionchanged:: 3.0.0</span>
+<span class="sd">            `filename` may be a :class:`os.PathLike` (e.g. :class:`pathlib.Path`)</span>
+<span class="sd">            in addition to a ``str``.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="c1"># Detect filename automatically if it was not specified.</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">filename</span><span class="p">:</span>
             <span class="n">filename</span> <span class="o">=</span> <span class="n">resource_find</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -1211,8 +1216,12 @@
 <span class="sd">            Changed the Android version to make use of the</span>
 <span class="sd">            :attr:`~App.user_data_dir` and added a missing dot to the iOS</span>
 <span class="sd">            config file name.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
 
+<span class="sd">        .. versionchanged:: 3.0.0</span>
+<span class="sd">            `defaultpath` may be a :class:`os.PathLike` (e.g.</span>
+<span class="sd">            :class:`pathlib.Path`) in addition to a ``str``.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">defaultpath</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">defaultpath</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;android&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user_data_dir</span><span class="p">,</span> <span class="s1">&#39;.</span><span class="si">{0}</span><span class="s1">.ini&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
         <span class="k">elif</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;ios&#39;</span><span class="p">:</span>

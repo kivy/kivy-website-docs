@@ -383,6 +383,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">errno</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">os.path</span><span class="w"> </span><span class="kn">import</span> <span class="n">exists</span><span class="p">,</span> <span class="n">abspath</span><span class="p">,</span> <span class="n">dirname</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.storage</span><span class="w"> </span><span class="kn">import</span> <span class="n">AbstractStore</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">path_to_str</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">json</span><span class="w"> </span><span class="kn">import</span> <span class="n">loads</span><span class="p">,</span> <span class="n">dump</span>
 
 
@@ -391,9 +392,13 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">JsonStore</span><span class="p">(</span><span class="n">AbstractStore</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Store implementation using a json file for storing the key-value pairs.</span>
 <span class="sd">    See the :mod:`kivy.storage` module documentation for more information.</span>
+
+<span class="sd">    .. versionchanged:: 3.0.0</span>
+<span class="sd">        `filename` may be a :class:`os.PathLike` (e.g. :class:`pathlib.Path`)</span>
+<span class="sd">        in addition to a ``str``.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">indent</span> <span class="o">=</span> <span class="n">indent</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sort_keys</span> <span class="o">=</span> <span class="n">sort_keys</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="p">{}</span>

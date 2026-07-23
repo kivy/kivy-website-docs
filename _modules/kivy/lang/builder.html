@@ -393,6 +393,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy</span><span class="w"> </span><span class="kn">import</span> <span class="n">kivy_data_dir</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.context</span><span class="w"> </span><span class="kn">import</span> <span class="n">register_context</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.resources</span><span class="w"> </span><span class="kn">import</span> <span class="n">resource_find</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">path_to_str</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy._event</span><span class="w"> </span><span class="kn">import</span> <span class="n">Observable</span><span class="p">,</span> <span class="n">EventDispatcher</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Observable&#39;</span><span class="p">,</span> <span class="s1">&#39;Builder&#39;</span><span class="p">,</span> <span class="s1">&#39;BuilderBase&#39;</span><span class="p">,</span> <span class="s1">&#39;BuilderException&#39;</span><span class="p">)</span>
@@ -689,8 +690,13 @@
 <span class="sd">                widget inside the definition.</span>
 
 <span class="sd">            `encoding`: File character encoding. Defaults to utf-8,</span>
+
+<span class="sd">        .. versionchanged:: 3.0.0</span>
+<span class="sd">            `filename` may be a :class:`os.PathLike` (e.g. :class:`pathlib.Path`)</span>
+<span class="sd">            in addition to a ``str``.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
 
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="n">resource_find</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="ow">or</span> <span class="n">filename</span>
         <span class="k">if</span> <span class="n">__debug__</span><span class="p">:</span>
             <span class="n">trace</span><span class="p">(</span><span class="s1">&#39;Lang: load file </span><span class="si">%s</span><span class="s1">, using </span><span class="si">%s</span><span class="s1"> encoding&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">encoding</span><span class="p">)</span>
@@ -712,8 +718,13 @@
 
 <span class="sd">            This will not remove rules already applied/used on current</span>
 <span class="sd">            widgets. It will only effect the next widgets creation.</span>
+
+<span class="sd">        .. versionchanged:: 3.0.0</span>
+<span class="sd">            `filename` may be a :class:`os.PathLike` (e.g. :class:`pathlib.Path`)</span>
+<span class="sd">            in addition to a ``str``.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="c1"># remove rules associated with this file</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="n">resource_find</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="ow">or</span> <span class="n">filename</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rules</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rules</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">ctx</span><span class="o">.</span><span class="n">filename</span> <span class="o">!=</span> <span class="n">filename</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_clear_matchcache</span><span class="p">()</span>
@@ -755,7 +766,7 @@
 <span class="sd">        &#39;&#39;&#39;</span>
 
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;rulesonly&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_current_filename</span> <span class="o">=</span> <span class="n">fn</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;filename&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_filename</span> <span class="o">=</span> <span class="n">fn</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;filename&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
 
         <span class="c1"># put a warning if a file is loaded multiple times</span>
         <span class="k">if</span> <span class="n">fn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="p">:</span>

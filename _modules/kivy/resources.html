@@ -405,7 +405,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">os.path</span><span class="w"> </span><span class="kn">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">exists</span><span class="p">,</span> <span class="n">abspath</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy</span><span class="w"> </span><span class="kn">import</span> <span class="n">kivy_data_dir</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cache</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">platform</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">platform</span><span class="p">,</span> <span class="n">path_to_str</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">Logger</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
@@ -450,7 +450,15 @@
 
 <span class="sd">    .. versionchanged:: 3.0.0</span>
 <span class="sd">        Added support for @image_provider:providername(path) URI scheme.</span>
+
+<span class="sd">    .. versionchanged:: 3.0.0</span>
+<span class="sd">        `filename` may be a :class:`os.PathLike` (e.g. :class:`pathlib.Path`)</span>
+<span class="sd">        in addition to a ``str``. It is coerced to ``str`` before resolution</span>
+<span class="sd">        so cache keys stay consistent.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># Coerce os.PathLike -&gt; str up front so all downstream string parsing and</span>
+    <span class="c1"># the resource cache keys operate on a single, consistent type.</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">filename</span><span class="p">:</span>
         <span class="k">return</span>
     <span class="n">found_filename</span> <span class="o">=</span> <span class="kc">None</span>
@@ -486,7 +494,12 @@
 <a class="viewcode-back" href="../../api-kivy.resources.html#kivy.resources.resource_add_path">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">resource_add_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Add a custom path to search in.</span>
+
+<span class="sd">    .. versionchanged:: 3.0.0</span>
+<span class="sd">        `path` may be a :class:`os.PathLike` (e.g. :class:`pathlib.Path`) in</span>
+<span class="sd">        addition to a ``str``.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">resource_paths</span><span class="p">:</span>
         <span class="k">return</span>
     <span class="n">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Resource: add &lt;</span><span class="si">%s</span><span class="s1">&gt; in path list&#39;</span> <span class="o">%</span> <span class="n">path</span><span class="p">)</span>
@@ -500,7 +513,12 @@
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Remove a search path.</span>
 
 <span class="sd">    .. versionadded:: 1.0.8</span>
+
+<span class="sd">    .. versionchanged:: 3.0.0</span>
+<span class="sd">        `path` may be a :class:`os.PathLike` (e.g. :class:`pathlib.Path`) in</span>
+<span class="sd">        addition to a ``str``.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">resource_paths</span><span class="p">:</span>
         <span class="k">return</span>
     <span class="n">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Resource: remove &lt;</span><span class="si">%s</span><span class="s1">&gt; from path list&#39;</span> <span class="o">%</span> <span class="n">path</span><span class="p">)</span>

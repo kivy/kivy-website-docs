@@ -386,6 +386,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">errno</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">os.path</span><span class="w"> </span><span class="kn">import</span> <span class="n">exists</span><span class="p">,</span> <span class="n">abspath</span><span class="p">,</span> <span class="n">dirname</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.storage</span><span class="w"> </span><span class="kn">import</span> <span class="n">AbstractStore</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">path_to_str</span>
 
 
 <div class="viewcode-block" id="DictStore">
@@ -393,6 +394,10 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">DictStore</span><span class="p">(</span><span class="n">AbstractStore</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;Store implementation using a pickled `dict`.</span>
 <span class="sd">    See the :mod:`kivy.storage` module documentation for more information.</span>
+
+<span class="sd">    .. versionchanged:: 3.0.0</span>
+<span class="sd">        `filename` may be a :class:`os.PathLike` (e.g. :class:`pathlib.Path`)</span>
+<span class="sd">        in addition to a ``str`` (or the legacy ``dict`` first argument).</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
@@ -400,7 +405,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">filename</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span> <span class="ow">or</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_changed</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">DictStore</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
