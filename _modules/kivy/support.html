@@ -226,7 +226,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.input.postproc.tripletap.html">Triple Tap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.input.provider.html">Motion Event Provider</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.input.providers.html">Providers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api-kivy.input.providers.androidjoystick.html">Android Joystick Input Provider</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.input.providers.hidinput.html">Native support for HID input from the linux kernel</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.input.providers.leapfinger.html">Leap Motion - finger only</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api-kivy.input.providers.linuxwacom.html">Native support of Wacom tablet from linuxwacom driver</a></li>
@@ -378,7 +377,7 @@
 <span class="sd">&#39;&#39;&#39;</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;install_gobject_iteration&#39;</span><span class="p">,</span> <span class="s1">&#39;install_twisted_reactor&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;uninstall_twisted_reactor&#39;</span><span class="p">,</span> <span class="s1">&#39;install_android&#39;</span><span class="p">)</span>
+           <span class="s1">&#39;uninstall_twisted_reactor&#39;</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="install_gobject_iteration">
@@ -414,108 +413,6 @@
             <span class="n">context</span><span class="o">.</span><span class="n">iteration</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
             <span class="n">loop</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_interval</span><span class="p">(</span><span class="n">_gobject_iteration</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
-
-
-
-<span class="c1"># -----------------------------------------------------------------------------</span>
-<span class="c1"># Android support</span>
-<span class="c1"># -----------------------------------------------------------------------------</span>
-
-<span class="n">g_android_redraw_count</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">_redraw_event</span> <span class="o">=</span> <span class="kc">None</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">_android_ask_redraw</span><span class="p">(</span><span class="o">*</span><span class="n">largs</span><span class="p">):</span>
-    <span class="c1"># after wakeup, we need to redraw more than once, otherwise we get a</span>
-    <span class="c1"># black screen</span>
-    <span class="k">global</span> <span class="n">g_android_redraw_count</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.window</span><span class="w"> </span><span class="kn">import</span> <span class="n">Window</span>
-    <span class="n">Window</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">ask_update</span><span class="p">()</span>
-    <span class="n">g_android_redraw_count</span> <span class="o">-=</span> <span class="mi">1</span>
-    <span class="k">if</span> <span class="n">g_android_redraw_count</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">False</span>
-
-
-<div class="viewcode-block" id="install_android">
-<a class="viewcode-back" href="../../api-kivy.support.html#kivy.support.install_android">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">install_android</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Install hooks for the android platform.</span>
-
-<span class="sd">    * Automatically sleep when the device is paused.</span>
-<span class="sd">    * Automatically kill the application when the return key is pressed.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="kn">import</span><span class="w"> </span><span class="nn">android</span>
-    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Android lib is missing, cannot install android hooks&#39;</span><span class="p">)</span>
-        <span class="k">return</span>
-
-    <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.clock</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clock</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">Logger</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">pygame</span>
-
-    <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Support: Android install hooks&#39;</span><span class="p">)</span>
-
-    <span class="c1"># Init the library</span>
-    <span class="n">android</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
-    <span class="n">android</span><span class="o">.</span><span class="n">map_key</span><span class="p">(</span><span class="n">android</span><span class="o">.</span><span class="n">KEYCODE_MENU</span><span class="p">,</span> <span class="n">pygame</span><span class="o">.</span><span class="n">K_MENU</span><span class="p">)</span>
-    <span class="n">android</span><span class="o">.</span><span class="n">map_key</span><span class="p">(</span><span class="n">android</span><span class="o">.</span><span class="n">KEYCODE_BACK</span><span class="p">,</span> <span class="n">pygame</span><span class="o">.</span><span class="n">K_ESCAPE</span><span class="p">)</span>
-
-    <span class="c1"># Check if android should be paused or not.</span>
-    <span class="c1"># If pause is requested, just leave the app.</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">android_check_pause</span><span class="p">(</span><span class="o">*</span><span class="n">largs</span><span class="p">):</span>
-        <span class="c1"># do nothing until android asks for it.</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">android</span><span class="o">.</span><span class="n">check_pause</span><span class="p">():</span>
-            <span class="k">return</span>
-
-        <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">stopTouchApp</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">Logger</span>
-        <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.window</span><span class="w"> </span><span class="kn">import</span> <span class="n">Window</span>
-        <span class="k">global</span> <span class="n">g_android_redraw_count</span><span class="p">,</span> <span class="n">_redraw_event</span>
-
-        <span class="c1"># try to get the current running application</span>
-        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Android: Must go into sleep mode, check the app&#39;</span><span class="p">)</span>
-        <span class="n">app</span> <span class="o">=</span> <span class="n">App</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span>
-
-        <span class="c1"># no running application, stop our loop.</span>
-        <span class="k">if</span> <span class="n">app</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Android: No app running, stop everything.&#39;</span><span class="p">)</span>
-            <span class="n">stopTouchApp</span><span class="p">()</span>
-            <span class="k">return</span>
-
-        <span class="c1"># try to go to pause mode</span>
-        <span class="k">if</span> <span class="n">app</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_pause&#39;</span><span class="p">):</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Android: App paused, now wait for resume.&#39;</span><span class="p">)</span>
-
-            <span class="c1"># app goes in pause mode, wait.</span>
-            <span class="n">android</span><span class="o">.</span><span class="n">wait_for_resume</span><span class="p">()</span>
-
-            <span class="c1"># is it a stop or resume ?</span>
-            <span class="k">if</span> <span class="n">android</span><span class="o">.</span><span class="n">check_stop</span><span class="p">():</span>
-                <span class="c1"># app must stop</span>
-                <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Android: Android wants to close our app.&#39;</span><span class="p">)</span>
-                <span class="n">stopTouchApp</span><span class="p">()</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># app resuming now !</span>
-                <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Android: Android has resumed, resume the app.&#39;</span><span class="p">)</span>
-                <span class="n">app</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_resume&#39;</span><span class="p">)</span>
-                <span class="n">Window</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">ask_update</span><span class="p">()</span>
-                <span class="n">g_android_redraw_count</span> <span class="o">=</span> <span class="mi">25</span>  <span class="c1"># 5 frames/seconds for 5 seconds</span>
-                <span class="k">if</span> <span class="n">_redraw_event</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">_redraw_event</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_interval</span><span class="p">(</span>
-                        <span class="n">_android_ask_redraw</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">5</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">_redraw_event</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
-                    <span class="n">_redraw_event</span><span class="p">()</span>
-                <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Android: App resume completed.&#39;</span><span class="p">)</span>
-
-        <span class="c1"># app doesn&#39;t support pause mode, just stop it.</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Android: App doesn</span><span class="se">\&#39;</span><span class="s1">t support pause mode, stop.&#39;</span><span class="p">)</span>
-            <span class="n">stopTouchApp</span><span class="p">()</span>
-
-    <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_interval</span><span class="p">(</span><span class="n">android_check_pause</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
 
 
 
