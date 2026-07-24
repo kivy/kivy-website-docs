@@ -411,11 +411,11 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.cache</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cache</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.image</span><span class="w"> </span><span class="kn">import</span> <span class="n">ImageLoader</span><span class="p">,</span> <span class="n">Image</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">platform</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">platform</span><span class="p">,</span> <span class="n">path_to_str</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">deque</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">sleep</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">os.path</span><span class="w"> </span><span class="kn">import</span> <span class="n">join</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">os.path</span><span class="w"> </span><span class="kn">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">normcase</span><span class="p">,</span> <span class="n">normpath</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">os</span><span class="w"> </span><span class="kn">import</span> <span class="n">write</span><span class="p">,</span> <span class="n">close</span><span class="p">,</span> <span class="n">unlink</span><span class="p">,</span> <span class="n">environ</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">mimetypes</span>
@@ -423,6 +423,22 @@
 
 <span class="c1"># Register a cache for loader</span>
 <span class="n">Cache</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;kv.loader&#39;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_loader_cache_key</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="c1"># Build a normalized ``kv.loader`` cache/identity key for ``filename``.</span>
+
+    <span class="c1"># Local filesystem paths are normalized (separators, redundant</span>
+    <span class="c1"># ``.``/``..`` segments and case on case-insensitive platforms) so that</span>
+    <span class="c1"># different spellings of the same file share a single loader entry and are</span>
+    <span class="c1"># not fetched twice. URLs and URIs (anything containing ``://`` or starting</span>
+    <span class="c1"># with ``data:``) are returned verbatim, since ``normpath`` would mangle</span>
+    <span class="c1"># their scheme separators.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">filename</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">filename</span>
+    <span class="k">if</span> <span class="s1">&#39;://&#39;</span> <span class="ow">in</span> <span class="n">filename</span> <span class="ow">or</span> <span class="n">filename</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;data:&#39;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">filename</span>
+    <span class="k">return</span> <span class="n">normcase</span><span class="p">(</span><span class="n">normpath</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
 
 
 <div class="viewcode-block" id="ProxyImage">
@@ -662,6 +678,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_wait_for_resume</span><span class="p">()</span>
 
         <span class="n">filename</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">]</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">]</span>
         <span class="n">load_callback</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;load_callback&#39;</span><span class="p">]</span>
         <span class="n">post_callback</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;post_callback&#39;</span><span class="p">]</span>
         <span class="k">try</span><span class="p">:</span>
@@ -672,14 +689,14 @@
         <span class="k">if</span> <span class="n">load_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">load_callback</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">proto</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">,</span> <span class="s1">&#39;https&#39;</span><span class="p">,</span> <span class="s1">&#39;ftp&#39;</span><span class="p">,</span> <span class="s1">&#39;smb&#39;</span><span class="p">):</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_urllib</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;kwargs&#39;</span><span class="p">])</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_urllib</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;kwargs&#39;</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_local</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;kwargs&#39;</span><span class="p">])</span>
 
         <span class="k">if</span> <span class="n">post_callback</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">post_callback</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_q_done</span><span class="o">.</span><span class="n">appendleft</span><span class="p">((</span><span class="n">filename</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_q_done</span><span class="o">.</span><span class="n">appendleft</span><span class="p">((</span><span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_load_local</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
@@ -688,7 +705,7 @@
         <span class="c1"># we might be unable to recreate the texture afterwise.</span>
         <span class="k">return</span> <span class="n">ImageLoader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">keep_data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_load_urllib</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_urllib</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&#39;&#39;&#39;(internal) Loading a network file. First download it, save it to a</span>
 <span class="sd">        temporary file, and pass it to _load_local().&#39;&#39;&#39;</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">urllib.request</span>
@@ -775,13 +792,13 @@
                 <span class="k">pass</span>
 
             <span class="c1"># update client</span>
-            <span class="k">for</span> <span class="n">c_filename</span><span class="p">,</span> <span class="n">client</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="p">[:]:</span>
-                <span class="k">if</span> <span class="n">filename</span> <span class="o">!=</span> <span class="n">c_filename</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">c_key</span><span class="p">,</span> <span class="n">client</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="p">[:]:</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="n">c_key</span><span class="p">:</span>
                     <span class="k">continue</span>
                 <span class="c1"># got one client to update</span>
                 <span class="n">client</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_image</span>
                 <span class="n">client</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_error&#39;</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">ex</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">remove</span><span class="p">((</span><span class="n">c_filename</span><span class="p">,</span> <span class="n">client</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">remove</span><span class="p">((</span><span class="n">c_key</span><span class="p">,</span> <span class="n">client</span><span class="p">))</span>
 
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_image</span>
         <span class="k">finally</span><span class="p">:</span>
@@ -809,24 +826,24 @@
 
         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_upload_per_frame</span><span class="p">):</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">filename</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_q_done</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">key</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_q_done</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
             <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
                 <span class="k">return</span>
 
             <span class="c1"># create the image</span>
             <span class="n">image</span> <span class="o">=</span> <span class="n">data</span>  <span class="c1"># ProxyImage(data)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">image</span><span class="o">.</span><span class="n">nocache</span><span class="p">:</span>
-                <span class="n">Cache</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;kv.loader&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
+                <span class="n">Cache</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;kv.loader&#39;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span>
 
             <span class="c1"># update client</span>
-            <span class="k">for</span> <span class="n">c_filename</span><span class="p">,</span> <span class="n">client</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="p">[:]:</span>
-                <span class="k">if</span> <span class="n">filename</span> <span class="o">!=</span> <span class="n">c_filename</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">c_key</span><span class="p">,</span> <span class="n">client</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="p">[:]:</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="n">c_key</span><span class="p">:</span>
                     <span class="k">continue</span>
                 <span class="c1"># got one client to update</span>
                 <span class="n">client</span><span class="o">.</span><span class="n">image</span> <span class="o">=</span> <span class="n">image</span>
                 <span class="n">client</span><span class="o">.</span><span class="n">loaded</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="n">client</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_load&#39;</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">remove</span><span class="p">((</span><span class="n">c_filename</span><span class="p">,</span> <span class="n">client</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">remove</span><span class="p">((</span><span class="n">c_key</span><span class="p">,</span> <span class="n">client</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update</span><span class="p">()</span>
 
@@ -855,8 +872,19 @@
 <span class="sd">            TestApp().run()</span>
 
 <span class="sd">        In order to cancel all background loading, call *Loader.stop()*.</span>
+
+<span class="sd">        .. versionchanged:: 3.0.0</span>
+<span class="sd">            `filename` may be a :class:`os.PathLike` (e.g. :class:`pathlib.Path`)</span>
+<span class="sd">            in addition to a ``str``. The loader cache is keyed on a normalized</span>
+<span class="sd">            form of `filename`, so different spellings of the same local file</span>
+<span class="sd">            share a single entry and are only fetched once.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">Cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;kv.loader&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="c1"># Coerce os.PathLike -&gt; str, then derive a normalized cache/identity key</span>
+        <span class="c1"># while keeping the raw filename as the source that is actually loaded</span>
+        <span class="c1"># (URLs and case-sensitive paths must not be rewritten).</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">_loader_cache_key</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">Cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;kv.loader&#39;</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">data</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
             <span class="c1"># found image, if data is not here, need to reload.</span>
             <span class="k">return</span> <span class="n">ProxyImage</span><span class="p">(</span><span class="n">data</span><span class="p">,</span>
@@ -865,17 +893,18 @@
 
         <span class="n">client</span> <span class="o">=</span> <span class="n">ProxyImage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loading_image</span><span class="p">,</span>
                             <span class="n">loading_image</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">loading_image</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">filename</span><span class="p">,</span> <span class="n">client</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">key</span><span class="p">,</span> <span class="n">client</span><span class="p">))</span>
 
         <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># if data is None, this is really the first time</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_q_load</span><span class="o">.</span><span class="n">appendleft</span><span class="p">({</span>
                 <span class="s1">&#39;filename&#39;</span><span class="p">:</span> <span class="n">filename</span><span class="p">,</span>
+                <span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="n">key</span><span class="p">,</span>
                 <span class="s1">&#39;load_callback&#39;</span><span class="p">:</span> <span class="n">load_callback</span><span class="p">,</span>
                 <span class="s1">&#39;post_callback&#39;</span><span class="p">:</span> <span class="n">post_callback</span><span class="p">,</span>
                 <span class="s1">&#39;kwargs&#39;</span><span class="p">:</span> <span class="n">kwargs</span><span class="p">})</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;nocache&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
-                <span class="n">Cache</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;kv.loader&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+                <span class="n">Cache</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;kv.loader&#39;</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_start_wanted</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
@@ -886,7 +915,7 @@
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">remove_from_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="n">Cache</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;kv.loader&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span></div>
+        <span class="n">Cache</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;kv.loader&#39;</span><span class="p">,</span> <span class="n">_loader_cache_key</span><span class="p">(</span><span class="n">path_to_str</span><span class="p">(</span><span class="n">filename</span><span class="p">)))</span></div>
 
 
 <span class="c1">#</span>
@@ -981,7 +1010,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Jul 23, 2026.
+    Last updated on Jul 24, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->
