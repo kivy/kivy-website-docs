@@ -370,7 +370,7 @@
             
   <h1>Source code for kivy.base</h1><div class="highlight"><pre>
 <span></span><span class="c1"># pylint: disable=W0611</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 <span class="sd">Kivy Base</span>
 <span class="sd">=========</span>
 
@@ -378,17 +378,17 @@
 <span class="sd">users. Feel free to look through it, but bare in mind that calling any of</span>
 <span class="sd">these methods directly may result in an unpredictable behavior as the calls</span>
 <span class="sd">access directly the event loop of an application.</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="s1">&#39;EventLoop&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;EventLoopBase&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;ExceptionHandler&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;ExceptionManagerBase&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;ExceptionManager&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;runTouchApp&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;async_runTouchApp&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;stopTouchApp&#39;</span><span class="p">,</span>
+    <span class="s1">'EventLoop'</span><span class="p">,</span>
+    <span class="s1">'EventLoopBase'</span><span class="p">,</span>
+    <span class="s1">'ExceptionHandler'</span><span class="p">,</span>
+    <span class="s1">'ExceptionManagerBase'</span><span class="p">,</span>
+    <span class="s1">'ExceptionManager'</span><span class="p">,</span>
+    <span class="s1">'runTouchApp'</span><span class="p">,</span>
+    <span class="s1">'async_runTouchApp'</span><span class="p">,</span>
+    <span class="s1">'stopTouchApp'</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
@@ -408,23 +408,23 @@
 <div class="viewcode-block" id="ExceptionHandler">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.ExceptionHandler">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ExceptionHandler</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Base handler that catches exceptions in :func:`runTouchApp`.</span>
+<span class="w">    </span><span class="sd">'''Base handler that catches exceptions in :func:`runTouchApp`.</span>
 <span class="sd">    You can subclass and extend it as follows::</span>
 
 <span class="sd">        class E(ExceptionHandler):</span>
 <span class="sd">            def handle_exception(self, inst):</span>
-<span class="sd">                Logger.exception(&#39;Exception caught by ExceptionHandler&#39;)</span>
+<span class="sd">                Logger.exception('Exception caught by ExceptionHandler')</span>
 <span class="sd">                return ExceptionManager.PASS</span>
 
 <span class="sd">        ExceptionManager.add_handler(E())</span>
 
 <span class="sd">    Then, all exceptions will be set to PASS, and logged to the console!</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
 <div class="viewcode-block" id="ExceptionHandler.handle_exception">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.ExceptionHandler.handle_exception">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">handle_exception</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exception</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Called by :class:`ExceptionManagerBase` to handle a exception.</span>
+<span class="w">        </span><span class="sd">'''Called by :class:`ExceptionManagerBase` to handle a exception.</span>
 
 <span class="sd">        Defaults to returning :attr:`ExceptionManager.RAISE` that re-raises the</span>
 <span class="sd">        exception. Return :attr:`ExceptionManager.PASS` to indicate that the</span>
@@ -433,7 +433,7 @@
 <span class="sd">        This may be called multiple times with the same exception, if</span>
 <span class="sd">        :attr:`ExceptionManager.RAISE` is returned as the exception bubbles</span>
 <span class="sd">        through multiple kivy exception handling levels.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">return</span> <span class="n">ExceptionManager</span><span class="o">.</span><span class="n">RAISE</span></div>
 </div>
 
@@ -442,14 +442,14 @@
 <div class="viewcode-block" id="ExceptionManagerBase">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.ExceptionManagerBase">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ExceptionManagerBase</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;ExceptionManager manages exceptions handlers.&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''ExceptionManager manages exceptions handlers.'''</span>
 
     <span class="n">RAISE</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The exception should be re-raised.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""The exception should be re-raised.</span>
+<span class="sd">    """</span>
     <span class="n">PASS</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;The exception should be ignored as it was handled by the handler.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""The exception should be ignored as it was handled by the handler.</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">handlers</span> <span class="o">=</span> <span class="p">[]</span>
@@ -458,7 +458,7 @@
 <div class="viewcode-block" id="ExceptionManagerBase.add_handler">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.ExceptionManagerBase.add_handler">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Add a new exception handler to the stack.&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Add a new exception handler to the stack.'''</span>
         <span class="k">if</span> <span class="bp">cls</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">handlers</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span></div>
 
@@ -466,7 +466,7 @@
 <div class="viewcode-block" id="ExceptionManagerBase.remove_handler">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.ExceptionManagerBase.remove_handler">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">remove_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Remove the exception handler from the stack.&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Remove the exception handler from the stack.'''</span>
         <span class="k">if</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">handlers</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span></div>
 
@@ -474,8 +474,8 @@
 <div class="viewcode-block" id="ExceptionManagerBase.handle_exception">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.ExceptionManagerBase.handle_exception">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">handle_exception</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inst</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Called when an exception occurred in the :func:`runTouchApp`</span>
-<span class="sd">        main loop.&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Called when an exception occurred in the :func:`runTouchApp`</span>
+<span class="sd">        main loop.'''</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">policy</span>
         <span class="k">for</span> <span class="n">handler</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">handlers</span><span class="p">:</span>
             <span class="n">r</span> <span class="o">=</span> <span class="n">handler</span><span class="o">.</span><span class="n">handle_exception</span><span class="p">(</span><span class="n">inst</span><span class="p">)</span>
@@ -488,26 +488,26 @@
 
 <span class="c1">#: Instance of a :class:`ExceptionManagerBase` implementation.</span>
 <span class="n">ExceptionManager</span><span class="p">:</span> <span class="n">ExceptionManagerBase</span> <span class="o">=</span> <span class="n">register_context</span><span class="p">(</span>
-    <span class="s1">&#39;ExceptionManager&#39;</span><span class="p">,</span> <span class="n">ExceptionManagerBase</span><span class="p">)</span>
-<span class="sd">&quot;&quot;&quot;The :class:`ExceptionManagerBase` instance that handles kivy exceptions.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+    <span class="s1">'ExceptionManager'</span><span class="p">,</span> <span class="n">ExceptionManagerBase</span><span class="p">)</span>
+<span class="sd">"""The :class:`ExceptionManagerBase` instance that handles kivy exceptions.</span>
+<span class="sd">"""</span>
 
 
 <div class="viewcode-block" id="EventLoopBase">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">EventLoopBase</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Main event loop. This loop handles the updating of input and</span>
+<span class="w">    </span><span class="sd">'''Main event loop. This loop handles the updating of input and</span>
 <span class="sd">    dispatching events.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;on_start&#39;</span><span class="p">,</span> <span class="s1">&#39;on_pause&#39;</span><span class="p">,</span> <span class="s1">&#39;on_stop&#39;</span><span class="p">)</span>
+    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'on_start'</span><span class="p">,</span> <span class="s1">'on_pause'</span><span class="p">,</span> <span class="s1">'on_stop'</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">EventLoopBase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">quit</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">input_events</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">postproc_modules</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;idle&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">'idle'</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stopping</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">input_providers</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">input_providers_autoremove</span> <span class="o">=</span> <span class="p">[]</span>
@@ -517,34 +517,34 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">touches</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the list of all touches currently in down or move states.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Return the list of all touches currently in down or move states.</span>
+<span class="sd">        '''</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">me_list</span>
 
 <div class="viewcode-block" id="EventLoopBase.ensure_window">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase.ensure_window">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">ensure_window</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Ensure that we have a window.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Ensure that we have a window.</span>
+<span class="sd">        '''</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">kivy.core.window</span>  <span class="c1"># NOQA</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">:</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s1">&#39;App: Unable to get a Window, abort.&#39;</span><span class="p">)</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s1">'App: Unable to get a Window, abort.'</span><span class="p">)</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="EventLoopBase.set_window">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase.set_window">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_window</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Set the window used for the event loop.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Set the window used for the event loop.</span>
+<span class="sd">        '''</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">window</span> <span class="o">=</span> <span class="n">window</span></div>
 
 
 <div class="viewcode-block" id="EventLoopBase.add_input_provider">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase.add_input_provider">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_input_provider</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">provider</span><span class="p">,</span> <span class="n">auto_remove</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Add a new input provider to listen for touch events.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Add a new input provider to listen for touch events.</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="n">provider</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_providers</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">input_providers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">provider</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">auto_remove</span><span class="p">:</span>
@@ -554,11 +554,11 @@
 <div class="viewcode-block" id="EventLoopBase.remove_input_provider">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase.remove_input_provider">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">remove_input_provider</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">provider</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Remove an input provider.</span>
+<span class="w">        </span><span class="sd">'''Remove an input provider.</span>
 
 <span class="sd">        .. versionchanged:: 2.1.0</span>
 <span class="sd">            Provider will be also removed if it exist in auto-remove list.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="n">provider</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_providers</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">input_providers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">provider</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">provider</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_providers_autoremove</span><span class="p">:</span>
@@ -568,8 +568,8 @@
 <div class="viewcode-block" id="EventLoopBase.add_event_listener">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase.add_event_listener">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_event_listener</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">listener</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Add a new event listener for getting touch events.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Add a new event listener for getting touch events.</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="n">listener</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_listeners</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">event_listeners</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">listener</span><span class="p">)</span></div>
 
@@ -577,8 +577,8 @@
 <div class="viewcode-block" id="EventLoopBase.remove_event_listener">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase.remove_event_listener">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">remove_event_listener</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">listener</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Remove an event listener from the list.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Remove an event listener from the list.</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="n">listener</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_listeners</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">event_listeners</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">listener</span><span class="p">)</span></div>
 
@@ -586,44 +586,44 @@
 <div class="viewcode-block" id="EventLoopBase.start">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase.start">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Must be called before :meth:`EventLoopBase.run()`. This starts all</span>
+<span class="w">        </span><span class="sd">'''Must be called before :meth:`EventLoopBase.run()`. This starts all</span>
 <span class="sd">        configured input providers.</span>
 
 <span class="sd">        .. versionchanged:: 2.1.0</span>
 <span class="sd">            Method can be called multiple times, but event loop will start only</span>
 <span class="sd">            once.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;started&#39;</span><span class="p">:</span>
+<span class="sd">        '''</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">'started'</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;started&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">'started'</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">quit</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">Clock</span><span class="o">.</span><span class="n">start_clock</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">provider</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_providers</span><span class="p">:</span>
             <span class="n">provider</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_start&#39;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_start'</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="EventLoopBase.close">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase.close">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Exit from the main loop and stop all configured</span>
-<span class="sd">        input providers.&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Exit from the main loop and stop all configured</span>
+<span class="sd">        input providers.'''</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">quit</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;closed&#39;</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">'closed'</span></div>
 
 
 <div class="viewcode-block" id="EventLoopBase.stop">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase.stop">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Stop all input providers and call callbacks registered using</span>
+<span class="w">        </span><span class="sd">'''Stop all input providers and call callbacks registered using</span>
 <span class="sd">        `EventLoop.add_stop_callback()`.</span>
 
 <span class="sd">        .. versionchanged:: 2.1.0</span>
 <span class="sd">            Method can be called multiple times, but event loop will stop only</span>
 <span class="sd">            once.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="s1">&#39;started&#39;</span><span class="p">:</span>
+<span class="sd">        '''</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="s1">'started'</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="c1"># XXX stop in reverse order that we started them!! (like push</span>
         <span class="c1"># pop), very important because e.g. wm_touch and WM_PEN both</span>
@@ -638,15 +638,15 @@
 
         <span class="n">Clock</span><span class="o">.</span><span class="n">stop_clock</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stopping</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;stopped&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_stop&#39;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">'stopped'</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_stop'</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="EventLoopBase.add_postproc_module">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase.add_postproc_module">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_postproc_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mod</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Add a postproc input module (DoubleTap, TripleTap, DeJitter</span>
-<span class="sd">        RetainTouch are defaults).&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Add a postproc input module (DoubleTap, TripleTap, DeJitter</span>
+<span class="sd">        RetainTouch are defaults).'''</span>
         <span class="k">if</span> <span class="n">mod</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">postproc_modules</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">postproc_modules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span></div>
 
@@ -654,7 +654,7 @@
 <div class="viewcode-block" id="EventLoopBase.remove_postproc_module">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase.remove_postproc_module">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">remove_postproc_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mod</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Remove a postproc module.&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Remove a postproc module.'''</span>
         <span class="k">if</span> <span class="n">mod</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">postproc_modules</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">postproc_modules</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span></div>
 
@@ -662,41 +662,41 @@
 <div class="viewcode-block" id="EventLoopBase.remove_android_splash">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase.remove_android_splash">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">remove_android_splash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Let the Android bootstrap dismiss its boot splash, now that the</span>
+<span class="w">        </span><span class="sd">'''Let the Android bootstrap dismiss its boot splash, now that the</span>
 <span class="sd">        first frame has been drawn.</span>
 
 <span class="sd">        A bootstrap with no splash to dismiss is not an error and warns nothing;</span>
 <span class="sd">        the backend treats the absence as the no-op it is.  The ImportError here</span>
 <span class="sd">        covers only the case this method should never have reached — no Android</span>
 <span class="sd">        platform backend at all.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.mobile._platform.android</span><span class="w"> </span><span class="kn">import</span> <span class="n">remove_presplash</span>
             <span class="n">remove_presplash</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
             <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                <span class="s1">&#39;Base: Failed to import the android platform backend. &#39;</span>
-                <span class="s1">&#39;Could not remove android presplash.&#39;</span><span class="p">)</span>
+                <span class="s1">'Base: Failed to import the android platform backend. '</span>
+                <span class="s1">'Could not remove android presplash.'</span><span class="p">)</span>
             <span class="k">return</span></div>
 
 
 <div class="viewcode-block" id="EventLoopBase.post_dispatch_input">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase.post_dispatch_input">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">post_dispatch_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">etype</span><span class="p">,</span> <span class="n">me</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;This function is called by :meth:`EventLoopBase.dispatch_input()`</span>
+<span class="w">        </span><span class="sd">'''This function is called by :meth:`EventLoopBase.dispatch_input()`</span>
 <span class="sd">        when we want to dispatch an input event. The event is dispatched to</span>
-<span class="sd">        all listeners and if grabbed, it&#39;s dispatched to grabbed widgets.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        all listeners and if grabbed, it's dispatched to grabbed widgets.</span>
+<span class="sd">        '''</span>
         <span class="c1"># update available list</span>
-        <span class="k">if</span> <span class="n">etype</span> <span class="o">==</span> <span class="s1">&#39;begin&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">etype</span> <span class="o">==</span> <span class="s1">'begin'</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">me_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">me</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">etype</span> <span class="o">==</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">etype</span> <span class="o">==</span> <span class="s1">'end'</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">me</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">me_list</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">me_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">me</span><span class="p">)</span>
         <span class="c1"># dispatch to listeners</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">me</span><span class="o">.</span><span class="n">grab_exclusive_class</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">listener</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_listeners</span><span class="p">:</span>
-                <span class="n">listener</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_motion&#39;</span><span class="p">,</span> <span class="n">etype</span><span class="p">,</span> <span class="n">me</span><span class="p">)</span>
+                <span class="n">listener</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_motion'</span><span class="p">,</span> <span class="n">etype</span><span class="p">,</span> <span class="n">me</span><span class="p">)</span>
         <span class="c1"># dispatch grabbed touch</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">me</span><span class="o">.</span><span class="n">is_touch</span><span class="p">:</span>
             <span class="c1"># Non-touch event must be handled by the event manager</span>
@@ -719,23 +719,23 @@
                     <span class="k">continue</span>
             <span class="n">me</span><span class="o">.</span><span class="n">grab_current</span> <span class="o">=</span> <span class="n">wid</span>
             <span class="n">wid</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">push</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">etype</span> <span class="o">==</span> <span class="s1">&#39;begin&#39;</span><span class="p">:</span>
-                <span class="c1"># don&#39;t dispatch again touch in on_touch_down</span>
+            <span class="k">if</span> <span class="n">etype</span> <span class="o">==</span> <span class="s1">'begin'</span><span class="p">:</span>
+                <span class="c1"># don't dispatch again touch in on_touch_down</span>
                 <span class="c1"># a down event are nearly uniq here.</span>
-                <span class="c1"># wid.dispatch(&#39;on_touch_down&#39;, touch)</span>
+                <span class="c1"># wid.dispatch('on_touch_down', touch)</span>
                 <span class="k">pass</span>
-            <span class="k">elif</span> <span class="n">etype</span> <span class="o">==</span> <span class="s1">&#39;update&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">etype</span> <span class="o">==</span> <span class="s1">'update'</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">wid</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">sandbox</span><span class="p">:</span>
                     <span class="k">with</span> <span class="n">wid</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">sandbox</span><span class="p">:</span>
-                        <span class="n">wid</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_touch_move&#39;</span><span class="p">,</span> <span class="n">me</span><span class="p">)</span>
+                        <span class="n">wid</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_touch_move'</span><span class="p">,</span> <span class="n">me</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">wid</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_touch_move&#39;</span><span class="p">,</span> <span class="n">me</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">etype</span> <span class="o">==</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span>
+                    <span class="n">wid</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_touch_move'</span><span class="p">,</span> <span class="n">me</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">etype</span> <span class="o">==</span> <span class="s1">'end'</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">wid</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">sandbox</span><span class="p">:</span>
                     <span class="k">with</span> <span class="n">wid</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">sandbox</span><span class="p">:</span>
-                        <span class="n">wid</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_touch_up&#39;</span><span class="p">,</span> <span class="n">me</span><span class="p">)</span>
+                        <span class="n">wid</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_touch_up'</span><span class="p">,</span> <span class="n">me</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">wid</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_touch_up&#39;</span><span class="p">,</span> <span class="n">me</span><span class="p">)</span>
+                    <span class="n">wid</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_touch_up'</span><span class="p">,</span> <span class="n">me</span><span class="p">)</span>
             <span class="n">wid</span><span class="o">.</span><span class="n">_context</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
             <span class="n">me</span><span class="o">.</span><span class="n">grab_current</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">if</span> <span class="n">wid</span> <span class="o">!=</span> <span class="n">root_window</span> <span class="ow">and</span> <span class="n">root_window</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -753,9 +753,9 @@
 <div class="viewcode-block" id="EventLoopBase.dispatch_input">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase.dispatch_input">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">dispatch_input</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Called by :meth:`EventLoopBase.idle()` to read events from input</span>
+<span class="w">        </span><span class="sd">'''Called by :meth:`EventLoopBase.idle()` to read events from input</span>
 <span class="sd">        providers, pass events to postproc, and dispatch final events.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
 
         <span class="c1"># first, acquire input events</span>
         <span class="k">for</span> <span class="n">provider</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_providers</span><span class="p">:</span>
@@ -774,7 +774,7 @@
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">mainloop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">quit</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;started&#39;</span><span class="p">:</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">quit</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">'started'</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">idle</span><span class="p">()</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">:</span>
@@ -789,7 +789,7 @@
                     <span class="k">pass</span>
 
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">async_mainloop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">quit</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;started&#39;</span><span class="p">:</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">quit</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">'started'</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">async_idle</span><span class="p">()</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">:</span>
@@ -803,19 +803,19 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">pass</span>
 
-        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Window: exiting mainloop and closing.&quot;</span><span class="p">)</span>
+        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Window: exiting mainloop and closing."</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 <div class="viewcode-block" id="EventLoopBase.idle">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase.idle">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">idle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;This function is called after every frame. By default:</span>
+<span class="w">        </span><span class="sd">'''This function is called after every frame. By default:</span>
 
-<span class="sd">           * it &quot;ticks&quot; the clock to the next frame.</span>
+<span class="sd">           * it "ticks" the clock to the next frame.</span>
 <span class="sd">           * it reads all input and dispatches events.</span>
 <span class="sd">           * it dispatches `on_update`, `on_draw` and `on_flip` events to the</span>
 <span class="sd">             window.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
 
         <span class="c1"># update dt</span>
         <span class="n">Clock</span><span class="o">.</span><span class="n">tick</span><span class="p">()</span>
@@ -839,13 +839,13 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">quit</span><span class="p">:</span>
             <span class="n">window</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span>
             <span class="k">if</span> <span class="n">window</span> <span class="ow">and</span> <span class="n">window</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">needs_redraw</span><span class="p">:</span>
-                <span class="n">window</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_draw&#39;</span><span class="p">)</span>
-                <span class="n">window</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_flip&#39;</span><span class="p">)</span>
+                <span class="n">window</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_draw'</span><span class="p">)</span>
+                <span class="n">window</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_flip'</span><span class="p">)</span>
 
-        <span class="c1"># don&#39;t loop if we don&#39;t have listeners !</span>
+        <span class="c1"># don't loop if we don't have listeners !</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">event_listeners</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Base: No event listeners have been created&#39;</span><span class="p">)</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Base: Application will leave&#39;</span><span class="p">)</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Base: No event listeners have been created'</span><span class="p">)</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Base: Application will leave'</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
             <span class="k">return</span> <span class="kc">False</span>
 
@@ -855,9 +855,9 @@
 <div class="viewcode-block" id="EventLoopBase.async_idle">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase.async_idle">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">async_idle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Identical to :meth:`idle`, but instead used when running</span>
+<span class="w">        </span><span class="sd">'''Identical to :meth:`idle`, but instead used when running</span>
 <span class="sd">        within an async event loop.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
 
         <span class="c1"># update dt</span>
         <span class="k">await</span> <span class="n">Clock</span><span class="o">.</span><span class="n">async_tick</span><span class="p">()</span>
@@ -881,13 +881,13 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">quit</span><span class="p">:</span>
             <span class="n">window</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span>
             <span class="k">if</span> <span class="n">window</span> <span class="ow">and</span> <span class="n">window</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">needs_redraw</span><span class="p">:</span>
-                <span class="n">window</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_draw&#39;</span><span class="p">)</span>
-                <span class="n">window</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_flip&#39;</span><span class="p">)</span>
+                <span class="n">window</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_draw'</span><span class="p">)</span>
+                <span class="n">window</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_flip'</span><span class="p">)</span>
 
-        <span class="c1"># don&#39;t loop if we don&#39;t have listeners !</span>
+        <span class="c1"># don't loop if we don't have listeners !</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">event_listeners</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Base: No event listeners have been created&#39;</span><span class="p">)</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Base: Application will leave&#39;</span><span class="p">)</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Base: No event listeners have been created'</span><span class="p">)</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Base: Application will leave'</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
             <span class="k">return</span> <span class="kc">False</span>
 
@@ -897,7 +897,7 @@
 <div class="viewcode-block" id="EventLoopBase.run">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase.run">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Main loop&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Main loop'''</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">quit</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">idle</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span></div>
@@ -906,7 +906,7 @@
 <div class="viewcode-block" id="EventLoopBase.exit">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase.exit">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">exit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Close the main loop and close the window.&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Close the main loop and close the window.'''</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
@@ -915,24 +915,24 @@
 <div class="viewcode-block" id="EventLoopBase.on_stop">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase.on_stop">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">on_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Event handler for `on_stop` events which will be fired right</span>
-<span class="sd">        after all input providers have been stopped.&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Event handler for `on_stop` events which will be fired right</span>
+<span class="sd">        after all input providers have been stopped.'''</span>
         <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="EventLoopBase.on_pause">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase.on_pause">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">on_pause</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Event handler for `on_pause` which will be fired when</span>
-<span class="sd">        the event loop is paused.&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Event handler for `on_pause` which will be fired when</span>
+<span class="sd">        the event loop is paused.'''</span>
         <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="EventLoopBase.on_start">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.EventLoopBase.on_start">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">on_start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Event handler for `on_start` which will be fired right</span>
-<span class="sd">        after all input providers have been started.&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Event handler for `on_start` which will be fired right</span>
+<span class="sd">        after all input providers have been started.'''</span>
         <span class="k">pass</span></div>
 </div>
 
@@ -946,22 +946,22 @@
     <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.input</span><span class="w"> </span><span class="kn">import</span> <span class="n">MotionEventFactory</span><span class="p">,</span> <span class="n">kivy_postproc_modules</span>
 
     <span class="c1"># Ok, we got one widget, and we are not in embedded mode</span>
-    <span class="c1"># so, user don&#39;t create the window, let&#39;s create it for him !</span>
+    <span class="c1"># so, user don't create the window, let's create it for him !</span>
     <span class="k">if</span> <span class="n">widget</span><span class="p">:</span>
         <span class="n">EventLoop</span><span class="o">.</span><span class="n">ensure_window</span><span class="p">()</span>
 
     <span class="c1"># Instance all configured input</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">Config</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">):</span>
-        <span class="n">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Base: Create provider from </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">Config</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="s1">'input'</span><span class="p">):</span>
+        <span class="n">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">'Base: Create provider from </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
 
         <span class="c1"># split value</span>
-        <span class="n">args</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">','</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">''</span><span class="p">)</span>
         <span class="n">provider_id</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
         <span class="n">provider</span> <span class="o">=</span> <span class="n">MotionEventFactory</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">provider_id</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">provider</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Base: Unknown &lt;</span><span class="si">%s</span><span class="s1">&gt; provider&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">provider_id</span><span class="p">))</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">'Base: Unknown &lt;</span><span class="si">%s</span><span class="s1">&gt; provider'</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">provider_id</span><span class="p">))</span>
             <span class="k">continue</span>
 
         <span class="c1"># create provider</span>
@@ -979,11 +979,11 @@
             <span class="n">EventLoop</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
 
     <span class="c1"># start event loop</span>
-    <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Base: Start application main loop&#39;</span><span class="p">)</span>
+    <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Base: Start application main loop'</span><span class="p">)</span>
     <span class="n">EventLoop</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
     <span class="c1"># remove presplash on the next frame</span>
-    <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;android&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">'android'</span><span class="p">:</span>
         <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="n">EventLoop</span><span class="o">.</span><span class="n">remove_android_splash</span><span class="p">)</span>
 
     <span class="c1"># in non-embedded mode, there are 2 issues</span>
@@ -1002,7 +1002,7 @@
 <div class="viewcode-block" id="runTouchApp">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.runTouchApp">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">runTouchApp</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">embedded</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Static main function that starts the application loop.</span>
+<span class="w">    </span><span class="sd">'''Static main function that starts the application loop.</span>
 <span class="sd">    You can access some magic via the following arguments:</span>
 
 <span class="sd">    See :mod:`kivy.app` for example usage.</span>
@@ -1027,10 +1027,10 @@
 <span class="sd">            and add the widget to it. Very useful for embedding Kivy</span>
 <span class="sd">            in another toolkit. (like Qt, check kivy-designed)</span>
 
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
     <span class="n">_runTouchApp_prepare</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">widget</span><span class="p">)</span>
 
-    <span class="c1"># we are in embedded mode, don&#39;t do dispatching.</span>
+    <span class="c1"># we are in embedded mode, don't do dispatching.</span>
     <span class="k">if</span> <span class="n">embedded</span><span class="p">:</span>
         <span class="k">return</span>
 
@@ -1044,19 +1044,19 @@
 <div class="viewcode-block" id="async_runTouchApp">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.async_runTouchApp">[docs]</a>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">async_runTouchApp</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">embedded</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">async_lib</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Identical to :func:`runTouchApp` but instead it is a coroutine</span>
+<span class="w">    </span><span class="sd">'''Identical to :func:`runTouchApp` but instead it is a coroutine</span>
 <span class="sd">    that can be run in an existing async event loop.</span>
 
 <span class="sd">    ``async_lib`` is the async library to use. See :mod:`kivy.app` for details</span>
 <span class="sd">    and example usage.</span>
 
 <span class="sd">    .. versionadded:: 2.0.0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
     <span class="k">if</span> <span class="n">async_lib</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">Clock</span><span class="o">.</span><span class="n">init_async_lib</span><span class="p">(</span><span class="n">async_lib</span><span class="p">)</span>
     <span class="n">_runTouchApp_prepare</span><span class="p">(</span><span class="n">widget</span><span class="o">=</span><span class="n">widget</span><span class="p">)</span>
 
-    <span class="c1"># we are in embedded mode, don&#39;t do dispatching.</span>
+    <span class="c1"># we are in embedded mode, don't do dispatching.</span>
     <span class="k">if</span> <span class="n">embedded</span><span class="p">:</span>
         <span class="k">return</span>
 
@@ -1070,20 +1070,20 @@
 <div class="viewcode-block" id="stopTouchApp">
 <a class="viewcode-back" href="../../api-kivy.base.html#kivy.app.stopTouchApp">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">stopTouchApp</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Stop the current application by leaving the main loop.</span>
+<span class="w">    </span><span class="sd">'''Stop the current application by leaving the main loop.</span>
 
 <span class="sd">    See :mod:`kivy.app` for example usage.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
     <span class="k">if</span> <span class="n">EventLoop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span>
-    <span class="k">if</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">status</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;stopped&#39;</span><span class="p">,</span> <span class="s1">&#39;closed&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">status</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'stopped'</span><span class="p">,</span> <span class="s1">'closed'</span><span class="p">):</span>
         <span class="k">return</span>
-    <span class="k">if</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="s1">&#39;started&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="s1">'started'</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">EventLoop</span><span class="o">.</span><span class="n">stopping</span><span class="p">:</span>
             <span class="n">EventLoop</span><span class="o">.</span><span class="n">stopping</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="k">lambda</span> <span class="n">dt</span><span class="p">:</span> <span class="n">stopTouchApp</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
         <span class="k">return</span>
-    <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Base: Leaving application in progress...&#39;</span><span class="p">)</span>
+    <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Base: Leaving application in progress...'</span><span class="p">)</span>
     <span class="n">EventLoop</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
 </pre></div>
@@ -1100,7 +1100,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

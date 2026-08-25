@@ -369,7 +369,7 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.uix.filechooser</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">FileChooser</span>
 <span class="sd">===========</span>
 
@@ -454,13 +454,13 @@
 <span class="sd">    now regular Python classes (previously they were deprecated Kivy lang</span>
 <span class="sd">    templates).</span>
 
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;FileChooserListView&#39;</span><span class="p">,</span> <span class="s1">&#39;FileChooserIconView&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;FileChooserListLayout&#39;</span><span class="p">,</span> <span class="s1">&#39;FileChooserIconLayout&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;FileChooser&#39;</span><span class="p">,</span> <span class="s1">&#39;FileChooserController&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;FileChooserProgressBase&#39;</span><span class="p">,</span> <span class="s1">&#39;FileSystemAbstract&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;FileSystemLocal&#39;</span><span class="p">,</span> <span class="s1">&#39;FileListEntry&#39;</span><span class="p">,</span> <span class="s1">&#39;FileIconEntry&#39;</span><span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'FileChooserListView'</span><span class="p">,</span> <span class="s1">'FileChooserIconView'</span><span class="p">,</span>
+           <span class="s1">'FileChooserListLayout'</span><span class="p">,</span> <span class="s1">'FileChooserIconLayout'</span><span class="p">,</span>
+           <span class="s1">'FileChooser'</span><span class="p">,</span> <span class="s1">'FileChooserController'</span><span class="p">,</span>
+           <span class="s1">'FileChooserProgressBase'</span><span class="p">,</span> <span class="s1">'FileSystemAbstract'</span><span class="p">,</span>
+           <span class="s1">'FileSystemLocal'</span><span class="p">,</span> <span class="s1">'FileListEntry'</span><span class="p">,</span> <span class="s1">'FileIconEntry'</span><span class="p">)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">weakref</span><span class="w"> </span><span class="kn">import</span> <span class="n">ref</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">time</span>
@@ -487,22 +487,22 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">fnmatch</span><span class="w"> </span><span class="kn">import</span> <span class="n">fnmatch</span>
 
 <span class="n">platform</span> <span class="o">=</span> <span class="n">core_platform</span>
-<span class="n">filesize_units</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;KB&#39;</span><span class="p">,</span> <span class="s1">&#39;MB&#39;</span><span class="p">,</span> <span class="s1">&#39;GB&#39;</span><span class="p">,</span> <span class="s1">&#39;TB&#39;</span><span class="p">)</span>
+<span class="n">filesize_units</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'B'</span><span class="p">,</span> <span class="s1">'KB'</span><span class="p">,</span> <span class="s1">'MB'</span><span class="p">,</span> <span class="s1">'GB'</span><span class="p">,</span> <span class="s1">'TB'</span><span class="p">)</span>
 
 <span class="n">_have_win32file</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;win&#39;</span><span class="p">:</span>
-    <span class="c1"># Import that module here as it&#39;s not available on non-windows machines.</span>
+<span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">'win'</span><span class="p">:</span>
+    <span class="c1"># Import that module here as it's not available on non-windows machines.</span>
     <span class="c1"># See http://bit.ly/i9klJE except that the attributes are defined in</span>
     <span class="c1"># win32file not win32com (bug on page).</span>
-    <span class="c1"># Note: For some reason this doesn&#39;t work after a os.chdir(), no matter to</span>
+    <span class="c1"># Note: For some reason this doesn't work after a os.chdir(), no matter to</span>
     <span class="c1">#       what directory you change from where. Windows weirdness.</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">win32file</span><span class="w"> </span><span class="kn">import</span> <span class="n">FILE_ATTRIBUTE_HIDDEN</span><span class="p">,</span> <span class="n">GetFileAttributesExW</span><span class="p">,</span> \
                               <span class="n">error</span>
         <span class="n">_have_win32file</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-        <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;filechooser: win32file module is missing&#39;</span><span class="p">)</span>
-        <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;filechooser: we cannot check if a file is hidden or not&#39;</span><span class="p">)</span>
+        <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'filechooser: win32file module is missing'</span><span class="p">)</span>
+        <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'filechooser: we cannot check if a file is hidden or not'</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">alphanumeric_folders_first</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">filesystem</span><span class="p">):</span>
@@ -513,41 +513,41 @@
 <div class="viewcode-block" id="FileSystemAbstract">
 <a class="viewcode-back" href="../../../api-kivy.uix.filechooser.html#kivy.uix.filechooser.FileSystemAbstract">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FileSystemAbstract</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Class for implementing a File System view that can be used with the</span>
+<span class="w">    </span><span class="sd">'''Class for implementing a File System view that can be used with the</span>
 <span class="sd">    :class:`FileChooser &lt;FileChooser&gt;`.</span>
 
 <span class="sd">    .. versionadded:: 1.8.0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
 <div class="viewcode-block" id="FileSystemAbstract.listdir">
 <a class="viewcode-back" href="../../../api-kivy.uix.filechooser.html#kivy.uix.filechooser.FileSystemAbstract.listdir">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">listdir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the list of files in the directory `fn`</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Return the list of files in the directory `fn`</span>
+<span class="sd">        '''</span>
         <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="FileSystemAbstract.getsize">
 <a class="viewcode-back" href="../../../api-kivy.uix.filechooser.html#kivy.uix.filechooser.FileSystemAbstract.getsize">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">getsize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the size in bytes of a file</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Return the size in bytes of a file</span>
+<span class="sd">        '''</span>
         <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="FileSystemAbstract.is_hidden">
 <a class="viewcode-back" href="../../../api-kivy.uix.filechooser.html#kivy.uix.filechooser.FileSystemAbstract.is_hidden">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_hidden</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return True if the file is hidden</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Return True if the file is hidden</span>
+<span class="sd">        '''</span>
         <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="FileSystemAbstract.is_dir">
 <a class="viewcode-back" href="../../../api-kivy.uix.filechooser.html#kivy.uix.filechooser.FileSystemAbstract.is_dir">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return True if the argument passed to this method is a directory</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Return True if the argument passed to this method is a directory</span>
+<span class="sd">        '''</span>
         <span class="k">pass</span></div>
 </div>
 
@@ -556,10 +556,10 @@
 <div class="viewcode-block" id="FileSystemLocal">
 <a class="viewcode-back" href="../../../api-kivy.uix.filechooser.html#kivy.uix.filechooser.FileSystemLocal">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FileSystemLocal</span><span class="p">(</span><span class="n">FileSystemAbstract</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Implementation of :class:`FileSystemAbstract` for local files.</span>
+<span class="w">    </span><span class="sd">'''Implementation of :class:`FileSystemAbstract` for local files.</span>
 
 <span class="sd">    .. versionadded:: 1.8.0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
 <div class="viewcode-block" id="FileSystemLocal.listdir">
 <a class="viewcode-back" href="../../../api-kivy.uix.filechooser.html#kivy.uix.filechooser.FileSystemLocal.listdir">[docs]</a>
@@ -576,19 +576,19 @@
 <div class="viewcode-block" id="FileSystemLocal.is_hidden">
 <a class="viewcode-back" href="../../../api-kivy.uix.filechooser.html#kivy.uix.filechooser.FileSystemLocal.is_hidden">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_hidden</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;win&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">'win'</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">_have_win32file</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">False</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">GetFileAttributesExW</span><span class="p">(</span><span class="n">fn</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">FILE_ATTRIBUTE_HIDDEN</span>
             <span class="k">except</span> <span class="n">error</span><span class="p">:</span>
                 <span class="c1"># This error can occurred when a file is already accessed by</span>
-                <span class="c1"># someone else. So don&#39;t return to True, because we have lot</span>
+                <span class="c1"># someone else. So don't return to True, because we have lot</span>
                 <span class="c1"># of chances to not being able to do anything with it.</span>
-                <span class="n">Logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;unable to access to &lt;</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="n">fn</span><span class="p">)</span>
+                <span class="n">Logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">'unable to access to &lt;</span><span class="si">%s</span><span class="s1">&gt;'</span> <span class="o">%</span> <span class="n">fn</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">True</span>
 
-        <span class="k">return</span> <span class="n">basename</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">basename</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="FileSystemLocal.is_dir">
@@ -602,29 +602,29 @@
 <div class="viewcode-block" id="FileChooserProgressBase">
 <a class="viewcode-back" href="../../../api-kivy.uix.filechooser.html#kivy.uix.filechooser.FileChooserProgressBase">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FileChooserProgressBase</span><span class="p">(</span><span class="n">FloatLayout</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Base for implementing a progress view. This view is used when too many</span>
+<span class="w">    </span><span class="sd">'''Base for implementing a progress view. This view is used when too many</span>
 <span class="sd">    entries need to be created and are delayed over multiple frames.</span>
 
 <span class="sd">    .. versionadded:: 1.2.0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">path</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Current path of the FileChooser, read-only.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">''</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">'''Current path of the FileChooser, read-only.</span>
+<span class="sd">    '''</span>
 
     <span class="n">index</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Current index of :attr:`total` entries to be loaded.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''Current index of :attr:`total` entries to be loaded.</span>
+<span class="sd">    '''</span>
 
     <span class="n">total</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Total number of entries to load.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''Total number of entries to load.</span>
+<span class="sd">    '''</span>
 
 <div class="viewcode-block" id="FileChooserProgressBase.cancel">
 <a class="viewcode-back" href="../../../api-kivy.uix.filechooser.html#kivy.uix.filechooser.FileChooserProgressBase.cancel">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">cancel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Cancel any action from the FileChooserController.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Cancel any action from the FileChooserController.</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span></div>
 
@@ -660,22 +660,22 @@
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">FileChooserLayout</span><span class="p">(</span><span class="n">FloatLayout</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Base class for file chooser layouts.</span>
+<span class="w">    </span><span class="sd">'''Base class for file chooser layouts.</span>
 
 <span class="sd">    .. versionadded:: 1.9.0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">VIEWNAME</span> <span class="o">=</span> <span class="s1">&#39;undefined&#39;</span>
+    <span class="n">VIEWNAME</span> <span class="o">=</span> <span class="s1">'undefined'</span>
 
-    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;on_entry_added&#39;</span><span class="p">,</span> <span class="s1">&#39;on_entries_cleared&#39;</span><span class="p">,</span>
-                  <span class="s1">&#39;on_subentry_to_entry&#39;</span><span class="p">,</span> <span class="s1">&#39;on_remove_subentry&#39;</span><span class="p">,</span> <span class="s1">&#39;on_submit&#39;</span><span class="p">)</span>
+    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'on_entry_added'</span><span class="p">,</span> <span class="s1">'on_entries_cleared'</span><span class="p">,</span>
+                  <span class="s1">'on_subentry_to_entry'</span><span class="p">,</span> <span class="s1">'on_remove_subentry'</span><span class="p">,</span> <span class="s1">'on_submit'</span><span class="p">)</span>
 
     <span class="n">controller</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''</span>
 <span class="sd">    Reference to the controller handling this layout.</span>
 
 <span class="sd">    :class:`~kivy.properties.ObjectProperty`</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_entry_added</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">pass</span>
@@ -696,16 +696,16 @@
 <div class="viewcode-block" id="FileChooserListLayout">
 <a class="viewcode-back" href="../../../api-kivy.uix.filechooser.html#kivy.uix.filechooser.FileChooserListLayout">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FileChooserListLayout</span><span class="p">(</span><span class="n">FileChooserLayout</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;File chooser layout using a list view.</span>
+<span class="w">    </span><span class="sd">'''File chooser layout using a list view.</span>
 
 <span class="sd">    .. versionadded:: 1.9.0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">VIEWNAME</span> <span class="o">=</span> <span class="s1">&#39;list&#39;</span>
-    <span class="n">_ENTRY_CLASS</span> <span class="o">=</span> <span class="s1">&#39;FileListEntry&#39;</span>
+<span class="sd">    '''</span>
+    <span class="n">VIEWNAME</span> <span class="o">=</span> <span class="s1">'list'</span>
+    <span class="n">_ENTRY_CLASS</span> <span class="o">=</span> <span class="s1">'FileListEntry'</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">FileChooserListLayout</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;on_entries_cleared&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_to_top</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">'on_entries_cleared'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_to_top</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">scroll_to_top</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">scrollview</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">=</span> <span class="mf">1.0</span></div>
@@ -715,17 +715,17 @@
 <div class="viewcode-block" id="FileChooserIconLayout">
 <a class="viewcode-back" href="../../../api-kivy.uix.filechooser.html#kivy.uix.filechooser.FileChooserIconLayout">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FileChooserIconLayout</span><span class="p">(</span><span class="n">FileChooserLayout</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;File chooser layout using an icon view.</span>
+<span class="w">    </span><span class="sd">'''File chooser layout using an icon view.</span>
 
 <span class="sd">    .. versionadded:: 1.9.0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">VIEWNAME</span> <span class="o">=</span> <span class="s1">&#39;icon&#39;</span>
-    <span class="n">_ENTRY_CLASS</span> <span class="o">=</span> <span class="s1">&#39;FileIconEntry&#39;</span>
+    <span class="n">VIEWNAME</span> <span class="o">=</span> <span class="s1">'icon'</span>
+    <span class="n">_ENTRY_CLASS</span> <span class="o">=</span> <span class="s1">'FileIconEntry'</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">FileChooserIconLayout</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;on_entries_cleared&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_to_top</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">'on_entries_cleared'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_to_top</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">scroll_to_top</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">scrollview</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">=</span> <span class="mf">1.0</span></div>
@@ -735,18 +735,18 @@
 <div class="viewcode-block" id="FileListEntry">
 <a class="viewcode-back" href="../../../api-kivy.uix.filechooser.html#kivy.uix.filechooser.FileListEntry">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FileListEntry</span><span class="p">(</span><span class="n">FloatLayout</span><span class="p">,</span> <span class="n">TreeViewNode</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Default entry widget used by :class:`FileChooserListView` to display</span>
+<span class="w">    </span><span class="sd">'''Default entry widget used by :class:`FileChooserListView` to display</span>
 <span class="sd">    a single file or directory row.</span>
 
 <span class="sd">    .. versionadded:: 3.0.0</span>
 <span class="sd">        Promoted to a regular Python class. Previously this was a deprecated</span>
 <span class="sd">        Kivy lang template (``[FileListEntry@FloatLayout+TreeViewNode]:``).</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">locked</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="n">sep</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">''</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">''</span><span class="p">)</span>
+    <span class="n">sep</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)</span>
     <span class="n">isdir</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
     <span class="c1">#: Child entries discovered when this directory entry is expanded. Used</span>
     <span class="c1">#: by :class:`FileChooserController` to cache the sub-tree under a</span>
@@ -762,18 +762,18 @@
 <div class="viewcode-block" id="FileIconEntry">
 <a class="viewcode-back" href="../../../api-kivy.uix.filechooser.html#kivy.uix.filechooser.FileIconEntry">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FileIconEntry</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Default entry widget used by :class:`FileChooserIconView` to display</span>
+<span class="w">    </span><span class="sd">'''Default entry widget used by :class:`FileChooserIconView` to display</span>
 <span class="sd">    a single file or directory icon.</span>
 
 <span class="sd">    .. versionadded:: 3.0.0</span>
 <span class="sd">        Promoted to a regular Python class. Previously this was a deprecated</span>
 <span class="sd">        Kivy lang template (``[FileIconEntry@Widget]:``).</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">locked</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="n">sep</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">''</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">''</span><span class="p">)</span>
+    <span class="n">sep</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)</span>
     <span class="n">isdir</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">selected</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">controller</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -784,7 +784,7 @@
 <div class="viewcode-block" id="FileChooserController">
 <a class="viewcode-back" href="../../../api-kivy.uix.filechooser.html#kivy.uix.filechooser.FileChooserController">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FileChooserController</span><span class="p">(</span><span class="n">RelativeLayout</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Base for implementing a FileChooser. Don&#39;t use this class directly, but</span>
+<span class="w">    </span><span class="sd">'''Base for implementing a FileChooser. Don't use this class directly, but</span>
 <span class="sd">    prefer using an implementation such as the :class:`FileChooser`,</span>
 <span class="sd">    :class:`FileChooserListView` or :class:`FileChooserIconView`.</span>
 
@@ -801,20 +801,20 @@
 <span class="sd">            a node is closed.</span>
 <span class="sd">        `on_submit`: selection, touch</span>
 <span class="sd">            Fired when a file has been selected with a double-tap.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
     <span class="n">_ENTRY_CLASS</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">layout</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="n">baseclass</span><span class="o">=</span><span class="n">FileChooserLayout</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''</span>
 <span class="sd">    Reference to the layout widget instance.</span>
 
 <span class="sd">    layout is an :class:`~kivy.properties.ObjectProperty`.</span>
 
 <span class="sd">    .. versionadded:: 1.9.0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">path</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="sa">u</span><span class="s1">'/'</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">'''</span>
 <span class="sd">    path is a :class:`~kivy.properties.StringProperty` and defaults to the</span>
 <span class="sd">    current working directory as a unicode string. It specifies the path on the</span>
 <span class="sd">    filesystem that this controller should refer to.</span>
@@ -826,13 +826,13 @@
 <span class="sd">        path is specified, only files and paths with ascii names will be</span>
 <span class="sd">        displayed properly: non-ascii filenames will be displayed and listed</span>
 <span class="sd">        with questions marks (?) instead of their unicode characters.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">filters</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([])</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''</span>
 <span class="sd">    filters specifies the filters to be applied to the files in the directory.</span>
 <span class="sd">    filters is a :class:`~kivy.properties.ListProperty` and defaults to [].</span>
-<span class="sd">    This is equivalent to &#39;\\*&#39; i.e. nothing is filtered.</span>
+<span class="sd">    This is equivalent to '\\*' i.e. nothing is filtered.</span>
 
 <span class="sd">    The filters are not reset when the path changes. You need to do that</span>
 <span class="sd">    yourself if desired.</span>
@@ -841,7 +841,7 @@
 
 <span class="sd">    #. Patterns</span>
 
-<span class="sd">        e.g. [&#39;\\*.png&#39;].</span>
+<span class="sd">        e.g. ['\\*.png'].</span>
 <span class="sd">        You can use the following patterns:</span>
 
 <span class="sd">            ========== =================================</span>
@@ -862,17 +862,17 @@
 
 <span class="sd">    .. versionchanged:: 1.4.0</span>
 <span class="sd">        Added the option to specify the filter as a callback.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">filter_dirs</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''</span>
 <span class="sd">    Indicates whether filters should also apply to directories.</span>
 <span class="sd">    filter_dirs is a :class:`~kivy.properties.BooleanProperty` and defaults to</span>
 <span class="sd">    False.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">sort_func</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="n">alphanumeric_folders_first</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''</span>
 <span class="sd">    Provides a function to be called with a list of filenames as the first</span>
 <span class="sd">    argument and the filesystem implementation as the second argument. It</span>
 <span class="sd">    returns a list of filenames sorted for display in the view.</span>
@@ -884,54 +884,54 @@
 
 <span class="sd">        The signature needs now 2 arguments: first the list of files,</span>
 <span class="sd">        second the filesystem class to use.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">files</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([])</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''</span>
 <span class="sd">    The list of files in the directory specified by path after applying the</span>
 <span class="sd">    filters.</span>
 
 <span class="sd">    files is a read-only :class:`~kivy.properties.ListProperty`.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">show_hidden</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''</span>
 <span class="sd">    Determines whether hidden files and folders should be shown.</span>
 
 <span class="sd">    show_hidden is a :class:`~kivy.properties.BooleanProperty` and defaults to</span>
 <span class="sd">    False.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">selection</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([])</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''</span>
 <span class="sd">    Contains the list of files that are currently selected.</span>
 
 <span class="sd">    selection is a read-only :class:`~kivy.properties.ListProperty` and</span>
 <span class="sd">    defaults to [].</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">multiselect</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''</span>
 <span class="sd">    Determines whether the user is able to select multiple files or not.</span>
 
 <span class="sd">    multiselect is a :class:`~kivy.properties.BooleanProperty` and defaults to</span>
 <span class="sd">    False.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">dirselect</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''</span>
 <span class="sd">    Determines whether directories are valid selections or not.</span>
 
 <span class="sd">    dirselect is a :class:`~kivy.properties.BooleanProperty` and defaults to</span>
 <span class="sd">    False.</span>
 
 <span class="sd">    .. versionadded:: 1.1.0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">rootpath</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''</span>
 <span class="sd">    Root path to use instead of the system root path. If set, it will not show</span>
-<span class="sd">    a &quot;..&quot; directory to go up to the root path. For example, if you set</span>
+<span class="sd">    a ".." directory to go up to the root path. For example, if you set</span>
 <span class="sd">    rootpath to /users/foo, the user will be unable to go to /users or to any</span>
 <span class="sd">    other directory not starting with /users/foo.</span>
 
@@ -945,10 +945,10 @@
 <span class="sd">        Similarly to :attr:`path`, whether `rootpath` is specified as</span>
 <span class="sd">        bytes or a unicode string determines the type of the filenames and</span>
 <span class="sd">        paths read.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">progress_cls</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="n">FileChooserProgress</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Class to use for displaying a progress indicator for filechooser</span>
+<span class="w">    </span><span class="sd">'''Class to use for displaying a progress indicator for filechooser</span>
 <span class="sd">    loading.</span>
 
 <span class="sd">    progress_cls is an :class:`~kivy.properties.ObjectProperty` and defaults to</span>
@@ -961,34 +961,34 @@
 <span class="sd">        If set to a string, the :class:`~kivy.factory.Factory` will be used to</span>
 <span class="sd">        resolve the class name.</span>
 
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">file_system</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="n">FileSystemLocal</span><span class="p">(),</span>
                                  <span class="n">baseclass</span><span class="o">=</span><span class="n">FileSystemAbstract</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The file system object used to access the file system. This should be a</span>
+<span class="w">    </span><span class="sd">'''The file system object used to access the file system. This should be a</span>
 <span class="sd">    subclass of :class:`FileSystemAbstract`.</span>
 
 <span class="sd">    file_system is an :class:`~kivy.properties.ObjectProperty` and defaults to</span>
 <span class="sd">    :class:`FileSystemLocal()`</span>
 
 <span class="sd">    .. versionadded:: 1.8.0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">font_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="n">DEFAULT_FONT</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Filename of the font to use in UI components. The path can be</span>
+<span class="w">    </span><span class="sd">'''Filename of the font to use in UI components. The path can be</span>
 <span class="sd">    absolute or relative.  Relative paths are resolved by the</span>
 <span class="sd">    :func:`~kivy.resources.resource_find` function.</span>
 
 <span class="sd">    :attr:`font_name` is a :class:`~kivy.properties.StringProperty` and</span>
-<span class="sd">    defaults to &#39;Roboto&#39;. This value is taken</span>
+<span class="sd">    defaults to 'Roboto'. This value is taken</span>
 <span class="sd">    from :class:`~kivy.config.Config`.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">_update_files_ev</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">_create_files_entries_ev</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;on_entry_added&#39;</span><span class="p">,</span> <span class="s1">&#39;on_entries_cleared&#39;</span><span class="p">,</span>
-                  <span class="s1">&#39;on_subentry_to_entry&#39;</span><span class="p">,</span> <span class="s1">&#39;on_remove_subentry&#39;</span><span class="p">,</span> <span class="s1">&#39;on_submit&#39;</span><span class="p">)</span>
+    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'on_entry_added'</span><span class="p">,</span> <span class="s1">'on_entries_cleared'</span><span class="p">,</span>
+                  <span class="s1">'on_subentry_to_entry'</span><span class="p">,</span> <span class="s1">'on_remove_subentry'</span><span class="p">,</span> <span class="s1">'on_submit'</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_progress</span> <span class="o">=</span> <span class="kc">None</span>
@@ -996,20 +996,20 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_items</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">fbind</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;selection&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_item_selection</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'selection'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_item_selection</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_previous_path</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">]</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_save_previous_path</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'path'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_save_previous_path</span><span class="p">)</span>
         <span class="n">update</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">,</span> <span class="n">update</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;filters&#39;</span><span class="p">,</span> <span class="n">update</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;rootpath&#39;</span><span class="p">,</span> <span class="n">update</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'path'</span><span class="p">,</span> <span class="n">update</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'filters'</span><span class="p">,</span> <span class="n">update</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'rootpath'</span><span class="p">,</span> <span class="n">update</span><span class="p">)</span>
         <span class="n">update</span><span class="p">()</span>
 
 <div class="viewcode-block" id="FileChooserController.on_touch_down">
 <a class="viewcode-back" href="../../../api-kivy.uix.filechooser.html#kivy.uix.filechooser.FileChooserController.on_touch_down">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
-        <span class="c1"># don&#39;t respond to touchs outside self</span>
+        <span class="c1"># don't respond to touchs outside self</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">collide_point</span><span class="p">(</span><span class="o">*</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">):</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">disabled</span><span class="p">:</span>
@@ -1020,7 +1020,7 @@
 <div class="viewcode-block" id="FileChooserController.on_touch_up">
 <a class="viewcode-back" href="../../../api-kivy.uix.filechooser.html#kivy.uix.filechooser.FileChooserController.on_touch_up">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">on_touch_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
-        <span class="c1"># don&#39;t respond to touchs outside self</span>
+        <span class="c1"># don't respond to touchs outside self</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">collide_point</span><span class="p">(</span><span class="o">*</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">):</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">disabled</span><span class="p">:</span>
@@ -1045,33 +1045,33 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_entry_added</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_entry_added&#39;</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_entry_added'</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_entries_cleared</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_entries_cleared&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_entries_cleared'</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_subentry_to_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subentry</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_subentry_to_entry&#39;</span><span class="p">,</span> <span class="n">subentry</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_subentry_to_entry'</span><span class="p">,</span> <span class="n">subentry</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_remove_subentry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subentry</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_remove_subentry&#39;</span><span class="p">,</span> <span class="n">subentry</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_remove_subentry'</span><span class="p">,</span> <span class="n">subentry</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_submit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected</span><span class="p">,</span> <span class="n">touch</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_submit&#39;</span><span class="p">,</span> <span class="n">selected</span><span class="p">,</span> <span class="n">touch</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_submit'</span><span class="p">,</span> <span class="n">selected</span><span class="p">,</span> <span class="n">touch</span><span class="p">)</span>
 
 <div class="viewcode-block" id="FileChooserController.entry_touched">
 <a class="viewcode-back" href="../../../api-kivy.uix.filechooser.html#kivy.uix.filechooser.FileChooserController.entry_touched">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">entry_touched</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;(internal) This method must be called by the entry widget when an</span>
+<span class="w">        </span><span class="sd">'''(internal) This method must be called by the entry widget when an</span>
 <span class="sd">        entry is touched by the user.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="p">(</span>
-            <span class="s1">&#39;button&#39;</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">profile</span> <span class="ow">and</span> <span class="n">touch</span><span class="o">.</span><span class="n">button</span> <span class="ow">in</span> <span class="p">(</span>
-                <span class="s1">&#39;scrollup&#39;</span><span class="p">,</span> <span class="s1">&#39;scrolldown&#39;</span><span class="p">,</span> <span class="s1">&#39;scrollleft&#39;</span><span class="p">,</span> <span class="s1">&#39;scrollright&#39;</span><span class="p">)):</span>
+            <span class="s1">'button'</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">profile</span> <span class="ow">and</span> <span class="n">touch</span><span class="o">.</span><span class="n">button</span> <span class="ow">in</span> <span class="p">(</span>
+                <span class="s1">'scrollup'</span><span class="p">,</span> <span class="s1">'scrolldown'</span><span class="p">,</span> <span class="s1">'scrollleft'</span><span class="p">,</span> <span class="s1">'scrollright'</span><span class="p">)):</span>
             <span class="k">return</span> <span class="kc">False</span>
 
         <span class="n">_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_system</span><span class="o">.</span><span class="n">is_dir</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
@@ -1098,14 +1098,14 @@
 <div class="viewcode-block" id="FileChooserController.entry_released">
 <a class="viewcode-back" href="../../../api-kivy.uix.filechooser.html#kivy.uix.filechooser.FileChooserController.entry_released">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">entry_released</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;(internal) This method must be called by the entry widget when an</span>
+<span class="w">        </span><span class="sd">'''(internal) This method must be called by the entry widget when an</span>
 <span class="sd">        entry is touched by the user.</span>
 
 <span class="sd">        .. versionadded:: 1.1.0</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="p">(</span>
-            <span class="s1">&#39;button&#39;</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">profile</span> <span class="ow">and</span> <span class="n">touch</span><span class="o">.</span><span class="n">button</span> <span class="ow">in</span> <span class="p">(</span>
-                <span class="s1">&#39;scrollup&#39;</span><span class="p">,</span> <span class="s1">&#39;scrolldown&#39;</span><span class="p">,</span> <span class="s1">&#39;scrollleft&#39;</span><span class="p">,</span> <span class="s1">&#39;scrollright&#39;</span><span class="p">)):</span>
+            <span class="s1">'button'</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">profile</span> <span class="ow">and</span> <span class="n">touch</span><span class="o">.</span><span class="n">button</span> <span class="ow">in</span> <span class="p">(</span>
+                <span class="s1">'scrollup'</span><span class="p">,</span> <span class="s1">'scrolldown'</span><span class="p">,</span> <span class="s1">'scrollleft'</span><span class="p">,</span> <span class="s1">'scrollright'</span><span class="p">)):</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiselect</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_system</span><span class="o">.</span><span class="n">is_dir</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">path</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">dirselect</span><span class="p">:</span>
@@ -1114,7 +1114,7 @@
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dirselect</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_system</span><span class="o">.</span><span class="n">is_dir</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">path</span><span class="p">):</span>
                     <span class="k">return</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_submit&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection</span><span class="p">,</span> <span class="n">touch</span><span class="p">)</span></div>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_submit'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection</span><span class="p">,</span> <span class="n">touch</span><span class="p">)</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">open_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
@@ -1149,30 +1149,30 @@
 <div class="viewcode-block" id="FileChooserController.get_nice_size">
 <a class="viewcode-back" href="../../../api-kivy.uix.filechooser.html#kivy.uix.filechooser.FileChooserController.get_nice_size">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_nice_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Pass the filepath. Returns the size in the best human readable</span>
-<span class="sd">        format or &#39;&#39; if it is a directory (Don&#39;t recursively calculate size).</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Pass the filepath. Returns the size in the best human readable</span>
+<span class="sd">        format or '' if it is a directory (Don't recursively calculate size).</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_system</span><span class="o">.</span><span class="n">is_dir</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
-            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+            <span class="k">return</span> <span class="s1">''</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_system</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s1">&#39;--&#39;</span>
+            <span class="k">return</span> <span class="s1">'--'</span>
 
         <span class="k">for</span> <span class="n">unit</span> <span class="ow">in</span> <span class="n">filesize_units</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">size</span> <span class="o">&lt;</span> <span class="mf">1024.0</span><span class="p">:</span>
-                <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%1.0f</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">unit</span><span class="p">)</span>
+                <span class="k">return</span> <span class="s1">'</span><span class="si">%1.0f</span><span class="s1"> </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">unit</span><span class="p">)</span>
             <span class="n">size</span> <span class="o">/=</span> <span class="mf">1024.0</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_update_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="c1"># trigger to start gathering the files in the new directory</span>
-        <span class="c1"># we&#39;ll start a timer that will do the job, 10 times per frames</span>
+        <span class="c1"># we'll start a timer that will do the job, 10 times per frames</span>
         <span class="c1"># (default)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_gitems</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_gitems_parent</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;parent&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_gitems_parent</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'parent'</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_gitems_gen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_file_entries</span><span class="p">(</span>
-            <span class="n">path</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">),</span>
+            <span class="n">path</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'path'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">),</span>
             <span class="n">parent</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_gitems_parent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
 
@@ -1196,7 +1196,7 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_create_files_entries</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="c1"># create maximum entries during 50ms max, or 10 minimum (slow system)</span>
-        <span class="c1"># (on a &quot;fast system&quot; (core i7 2700K), we can create up to 40 entries</span>
+        <span class="c1"># (on a "fast system" (core i7 2700K), we can create up to 40 entries</span>
         <span class="c1"># in 50 ms. So 10 is fine for low system.</span>
         <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
         <span class="n">finished</span> <span class="o">=</span> <span class="kc">False</span>
@@ -1213,7 +1213,7 @@
                 <span class="n">finished</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="k">break</span>
 
-        <span class="c1"># if this wasn&#39;t enough for creating all the entries, show a progress</span>
+        <span class="c1"># if this wasn't enough for creating all the entries, show a progress</span>
         <span class="c1"># bar, and report the activity to the user.</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">finished</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_show_progress</span><span class="p">()</span>
@@ -1225,13 +1225,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_items</span> <span class="o">=</span> <span class="n">items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gitems</span>
         <span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_gitems_parent</span>
         <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_entries_cleared&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_entries_cleared'</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_entry_added&#39;</span><span class="p">,</span> <span class="n">entry</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_entry_added'</span><span class="p">,</span> <span class="n">entry</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">parent</span><span class="o">.</span><span class="n">entries</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">items</span>
             <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_subentry_to_entry&#39;</span><span class="p">,</span> <span class="n">entry</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_subentry_to_entry'</span><span class="p">,</span> <span class="n">entry</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="p">[:]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_file_paths</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
 
         <span class="c1"># stop the progression / creation</span>
@@ -1246,11 +1246,11 @@
 <div class="viewcode-block" id="FileChooserController.cancel">
 <a class="viewcode-back" href="../../../api-kivy.uix.filechooser.html#kivy.uix.filechooser.FileChooserController.cancel">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">cancel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Cancel any background action started by filechooser, such as loading</span>
+<span class="w">        </span><span class="sd">'''Cancel any background action started by filechooser, such as loading</span>
 <span class="sd">        a new directory.</span>
 
 <span class="sd">        .. versionadded:: 1.2.0</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="n">ev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_files_entries_ev</span>
         <span class="k">if</span> <span class="n">ev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">ev</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
@@ -1285,10 +1285,10 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">_generate_file_entries</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="c1"># Generator that will create all the files entries.</span>
         <span class="c1"># the generator is used via _update_files() and _create_files_entries()</span>
-        <span class="c1"># don&#39;t use it directly.</span>
+        <span class="c1"># don't use it directly.</span>
         <span class="n">is_root</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
-        <span class="n">have_parent</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;parent&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'path'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">have_parent</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'parent'</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
 
         <span class="c1"># Add the components that are always needed</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rootpath</span><span class="p">:</span>
@@ -1300,29 +1300,29 @@
             <span class="k">elif</span> <span class="n">path</span> <span class="o">==</span> <span class="n">rootpath</span><span class="p">:</span>
                 <span class="n">is_root</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;win&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">'win'</span><span class="p">:</span>
                 <span class="n">is_root</span> <span class="o">=</span> <span class="n">splitdrive</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="n">sep</span><span class="p">,</span> <span class="n">altsep</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">platform</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;macosx&#39;</span><span class="p">,</span> <span class="s1">&#39;linux&#39;</span><span class="p">,</span> <span class="s1">&#39;android&#39;</span><span class="p">,</span> <span class="s1">&#39;ios&#39;</span><span class="p">):</span>
+            <span class="k">elif</span> <span class="n">platform</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'macosx'</span><span class="p">,</span> <span class="s1">'linux'</span><span class="p">,</span> <span class="s1">'android'</span><span class="p">,</span> <span class="s1">'ios'</span><span class="p">):</span>
                 <span class="n">is_root</span> <span class="o">=</span> <span class="n">normpath</span><span class="p">(</span><span class="n">expanduser</span><span class="p">(</span><span class="n">path</span><span class="p">))</span> <span class="o">==</span> <span class="n">sep</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># Unknown fs, just always add the .. entry but also log</span>
-                <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Filechooser: Unsupported OS: </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">platform</span><span class="p">)</span>
+                <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">'Filechooser: Unsupported OS: </span><span class="si">%r</span><span class="s1">'</span> <span class="o">%</span> <span class="n">platform</span><span class="p">)</span>
         <span class="c1"># generate an entries to go back to previous</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">is_root</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">have_parent</span><span class="p">:</span>
-            <span class="n">back</span> <span class="o">=</span> <span class="s1">&#39;..&#39;</span> <span class="o">+</span> <span class="n">sep</span>
-            <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;win&#39;</span><span class="p">:</span>
+            <span class="n">back</span> <span class="o">=</span> <span class="s1">'..'</span> <span class="o">+</span> <span class="n">sep</span>
+            <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">'win'</span><span class="p">:</span>
                 <span class="n">new_path</span> <span class="o">=</span> <span class="n">path</span><span class="p">[:</span><span class="n">path</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="n">sep</span><span class="p">)]</span>
                 <span class="k">if</span> <span class="n">sep</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">new_path</span><span class="p">:</span>
                     <span class="n">new_path</span> <span class="o">+=</span> <span class="n">sep</span>
                 <span class="n">pardir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_entry_widget</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span>
                     <span class="n">name</span><span class="o">=</span><span class="n">back</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">new_path</span><span class="p">,</span> <span class="n">controller</span><span class="o">=</span><span class="n">ref</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span>
                     <span class="n">isdir</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="n">sep</span><span class="p">,</span>
-                    <span class="n">get_nice_size</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+                    <span class="n">get_nice_size</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="s1">''</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">pardir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_entry_widget</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span>
                     <span class="n">name</span><span class="o">=</span><span class="n">back</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">back</span><span class="p">,</span> <span class="n">controller</span><span class="o">=</span><span class="n">ref</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span>
                     <span class="n">isdir</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="n">sep</span><span class="p">,</span>
-                    <span class="n">get_nice_size</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+                    <span class="n">get_nice_size</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="s1">''</span><span class="p">))</span>
             <span class="k">yield</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">pardir</span>
 
         <span class="c1"># generate all the entries for files</span>
@@ -1330,7 +1330,7 @@
             <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">total</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add_files</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
                 <span class="k">yield</span> <span class="n">index</span><span class="p">,</span> <span class="n">total</span><span class="p">,</span> <span class="n">item</span>
         <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;Unable to open directory &lt;</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">'Unable to open directory &lt;</span><span class="si">%s</span><span class="s1">&gt;'</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">files</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_create_entry_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry_kwargs</span><span class="p">):</span>
@@ -1350,9 +1350,9 @@
                 <span class="c1"># In the following, use fully qualified filenames</span>
                 <span class="n">fappend</span><span class="p">(</span><span class="n">normpath</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">f</span><span class="p">)))</span>
             <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
-                <span class="n">Logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;unable to decode &lt;</span><span class="si">{}</span><span class="s1">&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+                <span class="n">Logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">'unable to decode &lt;</span><span class="si">{}</span><span class="s1">&gt;'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
             <span class="k">except</span> <span class="ne">UnicodeEncodeError</span><span class="p">:</span>
-                <span class="n">Logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;unable to encode &lt;</span><span class="si">{}</span><span class="s1">&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+                <span class="n">Logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">'unable to encode &lt;</span><span class="si">{}</span><span class="s1">&gt;'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
         <span class="c1"># Apply filename filters</span>
         <span class="n">files</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_apply_filters</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
         <span class="c1"># Sort the list of files</span>
@@ -1369,12 +1369,12 @@
                 <span class="c1"># Use a closure for lazy-loading here</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nice_size</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
 
-            <span class="n">entry_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">basename</span><span class="p">(</span><span class="n">fn</span><span class="p">),</span>
-                            <span class="s1">&#39;get_nice_size&#39;</span><span class="p">:</span> <span class="n">get_nice_size</span><span class="p">,</span>
-                            <span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="n">fn</span><span class="p">,</span>
-                            <span class="s1">&#39;controller&#39;</span><span class="p">:</span> <span class="n">wself</span><span class="p">,</span>
-                            <span class="s1">&#39;isdir&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_system</span><span class="o">.</span><span class="n">is_dir</span><span class="p">(</span><span class="n">fn</span><span class="p">),</span>
-                            <span class="s1">&#39;sep&#39;</span><span class="p">:</span> <span class="n">sep</span><span class="p">}</span>
+            <span class="n">entry_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'name'</span><span class="p">:</span> <span class="n">basename</span><span class="p">(</span><span class="n">fn</span><span class="p">),</span>
+                            <span class="s1">'get_nice_size'</span><span class="p">:</span> <span class="n">get_nice_size</span><span class="p">,</span>
+                            <span class="s1">'path'</span><span class="p">:</span> <span class="n">fn</span><span class="p">,</span>
+                            <span class="s1">'controller'</span><span class="p">:</span> <span class="n">wself</span><span class="p">,</span>
+                            <span class="s1">'isdir'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_system</span><span class="o">.</span><span class="n">is_dir</span><span class="p">(</span><span class="n">fn</span><span class="p">),</span>
+                            <span class="s1">'sep'</span><span class="p">:</span> <span class="n">sep</span><span class="p">}</span>
             <span class="n">entry</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_entry_widget</span><span class="p">(</span><span class="n">entry_kwargs</span><span class="p">)</span>
             <span class="k">yield</span> <span class="n">index</span><span class="p">,</span> <span class="n">total</span><span class="p">,</span> <span class="n">entry</span>
 
@@ -1385,36 +1385,36 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">close_subselection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">subentry</span> <span class="ow">in</span> <span class="n">entry</span><span class="o">.</span><span class="n">entries</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_remove_subentry&#39;</span><span class="p">,</span> <span class="n">subentry</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_remove_subentry'</span><span class="p">,</span> <span class="n">subentry</span><span class="p">,</span> <span class="n">entry</span><span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="FileChooserListView">
 <a class="viewcode-back" href="../../../api-kivy.uix.filechooser.html#kivy.uix.filechooser.FileChooserListView">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FileChooserListView</span><span class="p">(</span><span class="n">FileChooserController</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Implementation of a :class:`FileChooserController` using a list view.</span>
+<span class="w">    </span><span class="sd">'''Implementation of a :class:`FileChooserController` using a list view.</span>
 
 <span class="sd">    .. versionadded:: 1.9.0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">_ENTRY_CLASS</span> <span class="o">=</span> <span class="s1">&#39;FileListEntry&#39;</span></div>
+<span class="sd">    '''</span>
+    <span class="n">_ENTRY_CLASS</span> <span class="o">=</span> <span class="s1">'FileListEntry'</span></div>
 
 
 
 <div class="viewcode-block" id="FileChooserIconView">
 <a class="viewcode-back" href="../../../api-kivy.uix.filechooser.html#kivy.uix.filechooser.FileChooserIconView">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FileChooserIconView</span><span class="p">(</span><span class="n">FileChooserController</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Implementation of a :class:`FileChooserController` using an icon view.</span>
+<span class="w">    </span><span class="sd">'''Implementation of a :class:`FileChooserController` using an icon view.</span>
 
 <span class="sd">    .. versionadded:: 1.9.0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">_ENTRY_CLASS</span> <span class="o">=</span> <span class="s1">&#39;FileIconEntry&#39;</span></div>
+<span class="sd">    '''</span>
+    <span class="n">_ENTRY_CLASS</span> <span class="o">=</span> <span class="s1">'FileIconEntry'</span></div>
 
 
 
 <div class="viewcode-block" id="FileChooser">
 <a class="viewcode-back" href="../../../api-kivy.uix.filechooser.html#kivy.uix.filechooser.FileChooser">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FileChooser</span><span class="p">(</span><span class="n">FileChooserController</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Implementation of a :class:`FileChooserController` which supports</span>
+<span class="w">    </span><span class="sd">'''Implementation of a :class:`FileChooserController` which supports</span>
 <span class="sd">    switching between multiple, synced layout views.</span>
 
 <span class="sd">    The FileChooser can be used as follows:</span>
@@ -1422,18 +1422,18 @@
 <span class="sd">    .. code-block:: kv</span>
 
 <span class="sd">        BoxLayout:</span>
-<span class="sd">            orientation: &#39;vertical&#39;</span>
+<span class="sd">            orientation: 'vertical'</span>
 
 <span class="sd">            BoxLayout:</span>
 <span class="sd">                size_hint_y: None</span>
 <span class="sd">                height: sp(52)</span>
 
 <span class="sd">                Button:</span>
-<span class="sd">                    text: &#39;Icon View&#39;</span>
-<span class="sd">                    on_press: fc.view_mode = &#39;icon&#39;</span>
+<span class="sd">                    text: 'Icon View'</span>
+<span class="sd">                    on_press: fc.view_mode = 'icon'</span>
 <span class="sd">                Button:</span>
-<span class="sd">                    text: &#39;List View&#39;</span>
-<span class="sd">                    on_press: fc.view_mode = &#39;list&#39;</span>
+<span class="sd">                    text: 'List View'</span>
+<span class="sd">                    on_press: fc.view_mode = 'list'</span>
 
 <span class="sd">            FileChooser:</span>
 <span class="sd">                id: fc</span>
@@ -1441,27 +1441,27 @@
 <span class="sd">                FileChooserListLayout</span>
 
 <span class="sd">    .. versionadded:: 1.9.0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">manager</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''</span>
 <span class="sd">    Reference to the :class:`~kivy.uix.screenmanager.ScreenManager` instance.</span>
 
 <span class="sd">    manager is an :class:`~kivy.properties.ObjectProperty`.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">_view_list</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">get_view_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_view_list</span>
 
-    <span class="n">view_list</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">get_view_list</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;_view_list&#39;</span><span class="p">,))</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="n">view_list</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">get_view_list</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">'_view_list'</span><span class="p">,))</span>
+<span class="w">    </span><span class="sd">'''</span>
 <span class="sd">    List of views added to this FileChooser.</span>
 
 <span class="sd">    view_list is an :class:`~kivy.properties.AliasProperty` of type</span>
 <span class="sd">    :class:`list`.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">_view_mode</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">()</span>
 
@@ -1470,17 +1470,17 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">set_view_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_view_list</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;unknown view mode </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">mode</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'unknown view mode </span><span class="si">%r</span><span class="s1">'</span> <span class="o">%</span> <span class="n">mode</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_view_mode</span> <span class="o">=</span> <span class="n">mode</span>
 
     <span class="n">view_mode</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span>
-        <span class="n">get_view_mode</span><span class="p">,</span> <span class="n">set_view_mode</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;_view_mode&#39;</span><span class="p">,))</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+        <span class="n">get_view_mode</span><span class="p">,</span> <span class="n">set_view_mode</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">'_view_mode'</span><span class="p">,))</span>
+<span class="w">    </span><span class="sd">'''</span>
 <span class="sd">    Current layout view mode.</span>
 
 <span class="sd">    view_mode is an :class:`~kivy.properties.AliasProperty` of type</span>
 <span class="sd">    :class:`str`.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_views</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1494,15 +1494,15 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">trigger_update_view</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">create_trigger</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_view</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;view_mode&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trigger_update_view</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">'view_mode'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trigger_update_view</span><span class="p">)</span>
 
 <div class="viewcode-block" id="FileChooser.add_widget">
 <a class="viewcode-back" href="../../../api-kivy.uix.filechooser.html#kivy.uix.filechooser.FileChooser.add_widget">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">widget</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">_progress</span><span class="p">:</span>
             <span class="nb">super</span><span class="p">(</span><span class="n">FileChooser</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="s1">&#39;VIEWNAME&#39;</span><span class="p">):</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">VIEWNAME</span> <span class="o">+</span> <span class="s1">&#39;view&#39;</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="s1">'VIEWNAME'</span><span class="p">):</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">VIEWNAME</span> <span class="o">+</span> <span class="s1">'view'</span>
             <span class="n">screen</span> <span class="o">=</span> <span class="n">Screen</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
             <span class="n">widget</span><span class="o">.</span><span class="n">controller</span> <span class="o">=</span> <span class="bp">self</span>
             <span class="n">screen</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
@@ -1511,8 +1511,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">trigger_update_view</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s1">&#39;widget must be a FileChooserLayout,&#39;</span>
-                <span class="s1">&#39; not </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span></div>
+                <span class="s1">'widget must be a FileChooserLayout,'</span>
+                <span class="s1">' not </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">rebuild_views</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1534,10 +1534,10 @@
         <span class="n">viewindex</span> <span class="o">=</span> <span class="n">viewlist</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">view</span><span class="p">)</span> <span class="k">if</span> <span class="n">view</span> <span class="ow">in</span> <span class="n">viewlist</span> <span class="k">else</span> <span class="mi">0</span>
         <span class="n">currentindex</span> <span class="o">=</span> <span class="n">viewlist</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">current</span><span class="p">)</span> <span class="k">if</span> <span class="n">current</span> <span class="ow">in</span> <span class="n">viewlist</span> <span class="k">else</span> <span class="mi">0</span>
 
-        <span class="n">direction</span> <span class="o">=</span> <span class="s1">&#39;left&#39;</span> <span class="k">if</span> <span class="n">currentindex</span> <span class="o">&lt;</span> <span class="n">viewindex</span> <span class="k">else</span> <span class="s1">&#39;right&#39;</span>
+        <span class="n">direction</span> <span class="o">=</span> <span class="s1">'left'</span> <span class="k">if</span> <span class="n">currentindex</span> <span class="o">&lt;</span> <span class="n">viewindex</span> <span class="k">else</span> <span class="s1">'right'</span>
 
         <span class="n">sm</span><span class="o">.</span><span class="n">transition</span><span class="o">.</span><span class="n">direction</span> <span class="o">=</span> <span class="n">direction</span>
-        <span class="n">sm</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="n">view</span> <span class="o">+</span> <span class="s1">&#39;view&#39;</span>
+        <span class="n">sm</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="n">view</span> <span class="o">+</span> <span class="s1">'view'</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_create_entry_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry_kwargs</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">Factory</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">view</span><span class="o">.</span><span class="n">_ENTRY_CLASS</span><span class="p">)(</span><span class="o">**</span><span class="n">entry_kwargs</span><span class="p">)</span>
@@ -1557,57 +1557,57 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">on_entry_added</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">view</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_views</span><span class="p">):</span>
             <span class="n">view</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span>
-                <span class="s1">&#39;on_entry_added&#39;</span><span class="p">,</span>
+                <span class="s1">'on_entry_added'</span><span class="p">,</span>
                 <span class="n">node</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">parent</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="k">if</span> <span class="n">parent</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_entries_cleared</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">view</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_views</span><span class="p">:</span>
-            <span class="n">view</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_entries_cleared&#39;</span><span class="p">)</span>
+            <span class="n">view</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_entries_cleared'</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_subentry_to_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subentry</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">view</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_views</span><span class="p">):</span>
-            <span class="n">view</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_subentry_to_entry&#39;</span><span class="p">,</span> <span class="n">subentry</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">entry</span><span class="p">)</span>
+            <span class="n">view</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_subentry_to_entry'</span><span class="p">,</span> <span class="n">subentry</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">entry</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_remove_subentry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subentry</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">view</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_views</span><span class="p">):</span>
-            <span class="n">view</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_remove_subentry&#39;</span><span class="p">,</span> <span class="n">subentry</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">entry</span><span class="p">)</span>
+            <span class="n">view</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_remove_subentry'</span><span class="p">,</span> <span class="n">subentry</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">entry</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_submit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected</span><span class="p">,</span> <span class="n">touch</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">view_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">view_mode</span>
         <span class="k">for</span> <span class="n">view</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_views</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">view_mode</span> <span class="o">==</span> <span class="n">view</span><span class="o">.</span><span class="n">VIEWNAME</span><span class="p">:</span>
-                <span class="n">view</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_submit&#39;</span><span class="p">,</span> <span class="n">selected</span><span class="p">,</span> <span class="n">touch</span><span class="p">)</span>
+                <span class="n">view</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_submit'</span><span class="p">,</span> <span class="n">selected</span><span class="p">,</span> <span class="n">touch</span><span class="p">)</span>
                 <span class="k">return</span></div>
 
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">pprint</span><span class="w"> </span><span class="kn">import</span> <span class="n">pprint</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">textwrap</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 
-    <span class="n">root</span> <span class="o">=</span> <span class="n">Builder</span><span class="o">.</span><span class="n">load_string</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">dedent</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span><span class="se">\</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">Builder</span><span class="o">.</span><span class="n">load_string</span><span class="p">(</span><span class="n">textwrap</span><span class="o">.</span><span class="n">dedent</span><span class="p">(</span><span class="s1">'''</span><span class="se">\</span>
 <span class="s1">    BoxLayout:</span>
-<span class="s1">        orientation: &#39;vertical&#39;</span>
+<span class="s1">        orientation: 'vertical'</span>
 
 <span class="s1">        BoxLayout:</span>
 <span class="s1">            size_hint_y: None</span>
 <span class="s1">            height: sp(52)</span>
 
 <span class="s1">            Button:</span>
-<span class="s1">                text: &#39;Icon View&#39;</span>
-<span class="s1">                on_press: fc.view_mode = &#39;icon&#39;</span>
+<span class="s1">                text: 'Icon View'</span>
+<span class="s1">                on_press: fc.view_mode = 'icon'</span>
 <span class="s1">            Button:</span>
-<span class="s1">                text: &#39;List View&#39;</span>
-<span class="s1">                on_press: fc.view_mode = &#39;list&#39;</span>
+<span class="s1">                text: 'List View'</span>
+<span class="s1">                on_press: fc.view_mode = 'list'</span>
 
 <span class="s1">        FileChooser:</span>
 <span class="s1">            id: fc</span>
 
 <span class="s1">            FileChooserIconLayout</span>
 <span class="s1">            FileChooserListLayout</span>
-<span class="s1">    &#39;&#39;&#39;</span><span class="p">))</span>
+<span class="s1">    '''</span><span class="p">))</span>
 
     <span class="k">class</span><span class="w"> </span><span class="nc">FileChooserApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
 
@@ -1616,8 +1616,8 @@
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="n">v</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
-            <span class="n">v</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">selection</span><span class="o">=</span><span class="k">lambda</span> <span class="o">*</span><span class="n">x</span><span class="p">:</span> <span class="n">pprint</span><span class="p">(</span><span class="s2">&quot;selection: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
-            <span class="n">v</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="k">lambda</span> <span class="o">*</span><span class="n">x</span><span class="p">:</span> <span class="n">pprint</span><span class="p">(</span><span class="s2">&quot;path: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
+            <span class="n">v</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">selection</span><span class="o">=</span><span class="k">lambda</span> <span class="o">*</span><span class="n">x</span><span class="p">:</span> <span class="n">pprint</span><span class="p">(</span><span class="s2">"selection: </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
+            <span class="n">v</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="k">lambda</span> <span class="o">*</span><span class="n">x</span><span class="p">:</span> <span class="n">pprint</span><span class="p">(</span><span class="s2">"path: </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
 
             <span class="k">return</span> <span class="n">root</span>
 
@@ -1636,7 +1636,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

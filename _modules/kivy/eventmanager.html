@@ -369,7 +369,7 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.eventmanager</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">Event Manager</span>
 <span class="sd">=============</span>
 
@@ -401,7 +401,7 @@
 <span class="sd">  dispatch it to the widgets.</span>
 <span class="sd">- Dispatch one-time generic events, like app pause/resume.</span>
 <span class="sd">- Write an event simulator, like a touch simulator which draws a circle on</span>
-<span class="sd">  window&#39;s canvas for every simulated touch.</span>
+<span class="sd">  window's canvas for every simulated touch.</span>
 
 <span class="sd">Defining and registering an event manager</span>
 <span class="sd">-----------------------------------------</span>
@@ -410,7 +410,7 @@
 <span class="sd">   should receive by declaring event types in</span>
 <span class="sd">   :attr:`EventManagerBase.type_ids` attribute.</span>
 <span class="sd">2. Implement :meth:`EventManagerBase.dispatch` which will be called by window</span>
-<span class="sd">   to pass event type (one of &quot;begin&quot;, &quot;update&quot;, &quot;end&quot;) and an event.</span>
+<span class="sd">   to pass event type (one of "begin", "update", "end") and an event.</span>
 <span class="sd">3. Implement :meth:`EventManagerBase.start` and :meth:`EventManagerBase.stop`</span>
 <span class="sd">   to allocate and release additional resources if needed.</span>
 <span class="sd">4. Register a manager instance to window using method</span>
@@ -427,10 +427,10 @@
 <span class="sd">---------------------------------</span>
 
 <span class="sd">Once registered, window will start the manager and forward all events of types</span>
-<span class="sd">declared in :attr:`EventManagerBase.type_ids` to the manager&#39;s</span>
-<span class="sd">:meth:`EventManagerBase.dispatch` method. It&#39;s up to manager to decide how to</span>
+<span class="sd">declared in :attr:`EventManagerBase.type_ids` to the manager's</span>
+<span class="sd">:meth:`EventManagerBase.dispatch` method. It's up to manager to decide how to</span>
 <span class="sd">dispatch them, either by going through :attr:`EventManagerBase.window.children`</span>
-<span class="sd">list and dispatching `on_motion` event or by using some different logic. It&#39;s</span>
+<span class="sd">list and dispatching `on_motion` event or by using some different logic. It's</span>
 <span class="sd">also up to manager to dispatch grabbed events if grab feature is supported by</span>
 <span class="sd">the event (see :meth:`~kivy.input.motionevent.MotionEvent.grab` and</span>
 <span class="sd">:meth:`~kivy.input.motionevent.MotionEvent.ungrab` methods).</span>
@@ -439,7 +439,7 @@
 <span class="sd">should be dispatched throughout the widget tree by changing the value of the</span>
 <span class="sd">:attr:`~kivy.input.motionevent.MotionEvent.dispatch_mode` attribute. Before</span>
 <span class="sd">changing the mode manager should store/restore the current one, either by using</span>
-<span class="sd">a local variable or by using event&#39;s</span>
+<span class="sd">a local variable or by using event's</span>
 <span class="sd">:meth:`~kivy.input.motionevent.MotionEvent.push` /</span>
 <span class="sd">:meth:`~kivy.input.motionevent.MotionEvent.pop` methods.</span>
 
@@ -447,7 +447,7 @@
 <span class="sd">`on_motion` method in :class:`~kivy.uix.widget.Widget` class:</span>
 
 <span class="sd">1. Default dispatch (requires :const:`MODE_DEFAULT_DISPATCH`) - event will go</span>
-<span class="sd">   through widget&#39;s `children` list, starting with the first widget in the</span>
+<span class="sd">   through widget's `children` list, starting with the first widget in the</span>
 <span class="sd">   list until event gets accepted or last widget registered for that event is</span>
 <span class="sd">   reached. Mode :const:`MODE_DEFAULT_DISPATCH` is assigned by default in</span>
 <span class="sd">   :class:`~kivy.input.motionevent.MotionEvent` class.</span>
@@ -460,111 +460,111 @@
 <span class="sd">not have a list of filtered widgets from its `children` list.</span>
 
 <span class="sd">.. versionchanged:: 3.0.0</span>
-<span class="sd">    Removed &quot;Experimental&quot; warning.</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Removed "Experimental" warning.</span>
+<span class="sd">'''</span>
 
-<span class="n">MODE_DEFAULT_DISPATCH</span> <span class="o">=</span> <span class="s1">&#39;default&#39;</span>
-<span class="sd">&#39;&#39;&#39;Assign this mode to make event dispatch through widget&#39;s `children` list,</span>
+<span class="n">MODE_DEFAULT_DISPATCH</span> <span class="o">=</span> <span class="s1">'default'</span>
+<span class="sd">'''Assign this mode to make event dispatch through widget's `children` list,</span>
 <span class="sd">starting with the first widget in the list until event gets accepted or last</span>
 <span class="sd">widget registered for that event is reached. Widgets after the last registered</span>
 <span class="sd">widget are ignored.</span>
 
 <span class="sd">.. versionadded:: 2.1.0</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
-<span class="n">MODE_FILTERED_DISPATCH</span> <span class="o">=</span> <span class="s1">&#39;filtered&#39;</span>
-<span class="sd">&#39;&#39;&#39;Assign this mode to make event dispatch only to child widgets which were</span>
+<span class="n">MODE_FILTERED_DISPATCH</span> <span class="o">=</span> <span class="s1">'filtered'</span>
+<span class="sd">'''Assign this mode to make event dispatch only to child widgets which were</span>
 <span class="sd">previously registered to receive events of the same</span>
 <span class="sd">:attr:`~kivy.input.motionevent.MotionEvent.type_id` and not to all</span>
 <span class="sd">child widgets.</span>
 
 <span class="sd">.. versionadded:: 2.1.0</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
-<span class="n">MODE_DONT_DISPATCH</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span>
-<span class="sd">&#39;&#39;&#39;Assign this mode to prevent event from dispatching to child widgets.</span>
+<span class="n">MODE_DONT_DISPATCH</span> <span class="o">=</span> <span class="s1">'none'</span>
+<span class="sd">'''Assign this mode to prevent event from dispatching to child widgets.</span>
 
 <span class="sd">.. versionadded:: 2.1.0</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
 
 <div class="viewcode-block" id="EventManagerBase">
 <a class="viewcode-back" href="../../api-kivy.eventmanager.html#kivy.eventmanager.EventManagerBase">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">EventManagerBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Abstract class with methods :meth:`start`, :meth:`stop` and</span>
+<span class="w">    </span><span class="sd">'''Abstract class with methods :meth:`start`, :meth:`stop` and</span>
 <span class="sd">    :meth:`dispatch` for specific class to implement.</span>
 
 <span class="sd">    Example of the manager receiving touch and hover events::</span>
 
 <span class="sd">        class TouchHoverManager(EventManagerBase):</span>
 
-<span class="sd">            type_ids = (&#39;touch&#39;, &#39;hover&#39;)</span>
+<span class="sd">            type_ids = ('touch', 'hover')</span>
 
 <span class="sd">            def start(self):</span>
 <span class="sd">                # Create additional resources, bind callbacks to self.window</span>
 
 <span class="sd">            def dispatch(self, etype, me):</span>
-<span class="sd">                if me.type_id == &#39;touch&#39;:</span>
+<span class="sd">                if me.type_id == 'touch':</span>
 <span class="sd">                    # Handle touch event</span>
-<span class="sd">                elif me.type_id == &#39;hover&#39;</span>
+<span class="sd">                elif me.type_id == 'hover'</span>
 <span class="sd">                    # Handle hover event</span>
 
 <span class="sd">            def stop(self):</span>
 <span class="sd">                # Release resources</span>
 
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">type_ids</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Override this attribute to declare the type ids of the events which</span>
+<span class="w">    </span><span class="sd">'''Override this attribute to declare the type ids of the events which</span>
 <span class="sd">    manager wants to receive. This attribute will be used by</span>
 <span class="sd">    :class:`~kivy.core.window.WindowBase` to know which events to pass to the</span>
 <span class="sd">    :meth:`dispatch` method.</span>
 
 <span class="sd">    .. versionadded:: 2.1.0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">window</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Holds the instance of the :class:`~kivy.core.window.WindowBase`.</span>
+<span class="w">    </span><span class="sd">'''Holds the instance of the :class:`~kivy.core.window.WindowBase`.</span>
 
 <span class="sd">    .. versionadded:: 2.1.0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
 <div class="viewcode-block" id="EventManagerBase.start">
 <a class="viewcode-back" href="../../api-kivy.eventmanager.html#kivy.eventmanager.EventManagerBase.start">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Start the manager, bind callbacks to the objects and create</span>
+<span class="w">        </span><span class="sd">'''Start the manager, bind callbacks to the objects and create</span>
 <span class="sd">        additional resources. Attribute :attr:`window` is assigned when this</span>
 <span class="sd">        method is called.</span>
 
 <span class="sd">        .. versionadded:: 2.1.0</span>
-<span class="sd">        &#39;&#39;&#39;</span></div>
+<span class="sd">        '''</span></div>
 
 
 <div class="viewcode-block" id="EventManagerBase.dispatch">
 <a class="viewcode-back" href="../../api-kivy.eventmanager.html#kivy.eventmanager.EventManagerBase.dispatch">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">dispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">etype</span><span class="p">,</span> <span class="n">me</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Dispatch event `me` to the widgets in the :attr:`window`.</span>
+<span class="w">        </span><span class="sd">'''Dispatch event `me` to the widgets in the :attr:`window`.</span>
 
 <span class="sd">        :Parameters:</span>
 <span class="sd">            `etype`: `str`</span>
-<span class="sd">                One of &quot;begin&quot;, &quot;update&quot; or &quot;end&quot;</span>
+<span class="sd">                One of "begin", "update" or "end"</span>
 <span class="sd">            `me`: :class:`~kivy.input.motionevent.MotionEvent`</span>
 <span class="sd">                The Motion Event currently dispatched.</span>
 <span class="sd">        :Returns: `bool`</span>
 <span class="sd">            `True` to stop event dispatching</span>
 
 <span class="sd">        .. versionadded:: 2.1.0</span>
-<span class="sd">        &#39;&#39;&#39;</span></div>
+<span class="sd">        '''</span></div>
 
 
 <div class="viewcode-block" id="EventManagerBase.stop">
 <a class="viewcode-back" href="../../api-kivy.eventmanager.html#kivy.eventmanager.EventManagerBase.stop">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Stop the manager, unbind from any objects and release any allocated</span>
+<span class="w">        </span><span class="sd">'''Stop the manager, unbind from any objects and release any allocated</span>
 <span class="sd">        resources.</span>
 
 <span class="sd">        .. versionadded:: 2.1.0</span>
-<span class="sd">        &#39;&#39;&#39;</span></div>
+<span class="sd">        '''</span></div>
 </div>
 
 </pre></div>
@@ -581,7 +581,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

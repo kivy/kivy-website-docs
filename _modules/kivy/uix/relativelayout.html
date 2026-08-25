@@ -369,7 +369,7 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.uix.relativelayout</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">Relative Layout</span>
 <span class="sd">===============</span>
 
@@ -394,16 +394,16 @@
 <span class="sd">Window coordinates</span>
 <span class="sd">~~~~~~~~~~~~~~~~~~</span>
 
-<span class="sd">By default, there&#39;s only one coordinate system that defines the position of</span>
+<span class="sd">By default, there's only one coordinate system that defines the position of</span>
 <span class="sd">widgets and touch events dispatched to them: the window coordinate system,</span>
 <span class="sd">which places (0, 0) at the bottom left corner of the window.</span>
 <span class="sd">Although there are other coordinate systems defined, e.g. local</span>
 <span class="sd">and parent coordinates, these coordinate systems are identical to the window</span>
 <span class="sd">coordinate system as long as a relative layout type widget is not in the</span>
-<span class="sd">widget&#39;s parent stack. When widget.pos is read or a touch is received,</span>
+<span class="sd">widget's parent stack. When widget.pos is read or a touch is received,</span>
 <span class="sd">the coordinate values are in parent coordinates. But as mentioned, these are</span>
 <span class="sd">identical to window coordinates, even in complex widget stacks as long as</span>
-<span class="sd">there&#39;s no relative layout type widget in the widget&#39;s parent stack.</span>
+<span class="sd">there's no relative layout type widget in the widget's parent stack.</span>
 
 <span class="sd">For example:</span>
 
@@ -411,15 +411,15 @@
 
 <span class="sd">    BoxLayout:</span>
 <span class="sd">        Label:</span>
-<span class="sd">            text: &#39;Left&#39;</span>
+<span class="sd">            text: 'Left'</span>
 <span class="sd">        Button:</span>
-<span class="sd">            text: &#39;Middle&#39;</span>
-<span class="sd">            on_touch_down: print(&#39;Middle: {}&#39;.format(args[1].pos))</span>
+<span class="sd">            text: 'Middle'</span>
+<span class="sd">            on_touch_down: print('Middle: {}'.format(args[1].pos))</span>
 <span class="sd">        BoxLayout:</span>
-<span class="sd">            on_touch_down: print(&#39;Box: {}&#39;.format(args[1].pos))</span>
+<span class="sd">            on_touch_down: print('Box: {}'.format(args[1].pos))</span>
 <span class="sd">            Button:</span>
-<span class="sd">                text: &#39;Right&#39;</span>
-<span class="sd">                on_touch_down: print(&#39;Right: {}&#39;.format(args[1].pos))</span>
+<span class="sd">                text: 'Right'</span>
+<span class="sd">                on_touch_down: print('Right: {}'.format(args[1].pos))</span>
 
 <span class="sd">When the middle button is clicked and the touch propagates through the</span>
 <span class="sd">different parent coordinate systems, it prints the following::</span>
@@ -455,15 +455,15 @@
 
 <span class="sd">    BoxLayout:</span>
 <span class="sd">        Label:</span>
-<span class="sd">            text: &#39;Left&#39;</span>
+<span class="sd">            text: 'Left'</span>
 <span class="sd">        Button:</span>
-<span class="sd">            text: &#39;Middle&#39;</span>
-<span class="sd">            on_touch_down: print(&#39;Middle: {}&#39;.format(args[1].pos))</span>
+<span class="sd">            text: 'Middle'</span>
+<span class="sd">            on_touch_down: print('Middle: {}'.format(args[1].pos))</span>
 <span class="sd">        RelativeLayout:</span>
-<span class="sd">            on_touch_down: print(&#39;Relative: {}&#39;.format(args[1].pos))</span>
+<span class="sd">            on_touch_down: print('Relative: {}'.format(args[1].pos))</span>
 <span class="sd">            Button:</span>
-<span class="sd">                text: &#39;Right&#39;</span>
-<span class="sd">                on_touch_down: print(&#39;Right: {}&#39;.format(args[1].pos))</span>
+<span class="sd">                text: 'Right'</span>
+<span class="sd">                on_touch_down: print('Right: {}'.format(args[1].pos))</span>
 
 <span class="sd">Clicking on the middle button prints::</span>
 
@@ -473,7 +473,7 @@
 
 <span class="sd">As the touch propagates through the widgets, for each widget, the</span>
 <span class="sd">touch is received in parent coordinates. Because both the relative and middle</span>
-<span class="sd">widgets don&#39;t have these special widgets in their parent stack, the touch is</span>
+<span class="sd">widgets don't have these special widgets in their parent stack, the touch is</span>
 <span class="sd">the same as window coordinates. Only the right widget, which has a</span>
 <span class="sd">RelativeLayout in its parent stack, receives the touch in coordinates relative</span>
 <span class="sd">to that RelativeLayout which is different than window coordinates.</span>
@@ -493,17 +493,17 @@
 
 <span class="sd">    BoxLayout:</span>
 <span class="sd">        Label:</span>
-<span class="sd">            text: &#39;Left&#39;</span>
+<span class="sd">            text: 'Left'</span>
 <span class="sd">        Button:</span>
-<span class="sd">            text: &#39;Middle&#39;</span>
-<span class="sd">            on_touch_down: print(&#39;Middle: {}&#39;.format(\</span>
+<span class="sd">            text: 'Middle'</span>
+<span class="sd">            on_touch_down: print('Middle: {}'.format(\</span>
 <span class="sd">self.to_local(*args[1].pos)))</span>
 <span class="sd">        RelativeLayout:</span>
-<span class="sd">            on_touch_down: print(&#39;Relative: {}&#39;.format(\</span>
+<span class="sd">            on_touch_down: print('Relative: {}'.format(\</span>
 <span class="sd">self.to_local(*args[1].pos)))</span>
 <span class="sd">            Button:</span>
-<span class="sd">                text: &#39;Right&#39;</span>
-<span class="sd">                on_touch_down: print(&#39;Right: {}&#39;.format(\</span>
+<span class="sd">                text: 'Right'</span>
+<span class="sd">                on_touch_down: print('Right: {}'.format(\</span>
 <span class="sd">self.to_local(*args[1].pos)))</span>
 
 <span class="sd">Now, clicking on the middle button prints::</span>
@@ -550,7 +550,7 @@
 
 <span class="sd">As all positions within a :class:`RelativeLayout` are relative to the position</span>
 <span class="sd">of the layout itself, the position of the layout should never be used in</span>
-<span class="sd">determining the position of sub-widgets or the layout&#39;s :attr:`canvas`.</span>
+<span class="sd">determining the position of sub-widgets or the layout's :attr:`canvas`.</span>
 
 <span class="sd">Take the following kv code for example:</span>
 
@@ -599,7 +599,7 @@
 <span class="sd">`pos: 0, 0` or omitting `pos` completely will provide the expected result.</span>
 
 <span class="sd">This also applies to the position of sub-widgets. Instead of positioning a</span>
-<span class="sd">:class:`~kivy.uix.widget.Widget` based on the layout&#39;s own position:</span>
+<span class="sd">:class:`~kivy.uix.widget.Widget` based on the layout's own position:</span>
 
 <span class="sd">.. code-block:: kv</span>
 
@@ -615,24 +615,24 @@
 
 <span class="sd">    RelativeLayout:</span>
 <span class="sd">        Widget:</span>
-<span class="sd">            pos_hint: {&#39;x&#39;: 0, &#39;y&#39;: 0}</span>
+<span class="sd">            pos_hint: {'x': 0, 'y': 0}</span>
 <span class="sd">        Widget:</span>
-<span class="sd">            pos_hint: {&#39;center_x&#39;: 0.5, &#39;center_y&#39;: 0.5}</span>
+<span class="sd">            pos_hint: {'center_x': 0.5, 'center_y': 0.5}</span>
 
 <span class="sd">.. versionchanged:: 1.7.0</span>
 <span class="sd">    Prior to version 1.7.0, the :class:`RelativeLayout` was implemented as a</span>
 <span class="sd">    :class:`~kivy.uix.floatlayout.FloatLayout` inside a</span>
 <span class="sd">    :class:`~kivy.uix.scatter.Scatter`. This behavior/widget has</span>
 <span class="sd">    been renamed to `ScatterLayout`. The :class:`RelativeLayout` now only</span>
-<span class="sd">    supports relative positions (and can&#39;t be rotated, scaled or translated on</span>
+<span class="sd">    supports relative positions (and can't be rotated, scaled or translated on</span>
 <span class="sd">    a multitouch system using two or more fingers). This was done so that the</span>
 <span class="sd">    implementation could be optimized and avoid the heavier calculations of</span>
 <span class="sd">    :class:`Scatter` (e.g. inverse matrix, recalculating multiple properties</span>
 <span class="sd">    etc.)</span>
 
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;RelativeLayout&#39;</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'RelativeLayout'</span><span class="p">,</span> <span class="p">)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.floatlayout</span><span class="w"> </span><span class="kn">import</span> <span class="n">FloatLayout</span>
 
@@ -640,15 +640,15 @@
 <div class="viewcode-block" id="RelativeLayout">
 <a class="viewcode-back" href="../../../api-kivy.uix.relativelayout.html#kivy.uix.relativelayout.RelativeLayout">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">RelativeLayout</span><span class="p">(</span><span class="n">FloatLayout</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;RelativeLayout class, see module documentation for more information.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''RelativeLayout class, see module documentation for more information.</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">RelativeLayout</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
         <span class="n">funbind</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">funbind</span>
         <span class="n">trigger</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_layout</span>
-        <span class="n">funbind</span><span class="p">(</span><span class="s1">&#39;pos&#39;</span><span class="p">,</span> <span class="n">trigger</span><span class="p">)</span>
-        <span class="n">funbind</span><span class="p">(</span><span class="s1">&#39;pos_hint&#39;</span><span class="p">,</span> <span class="n">trigger</span><span class="p">)</span>
+        <span class="n">funbind</span><span class="p">(</span><span class="s1">'pos'</span><span class="p">,</span> <span class="n">trigger</span><span class="p">)</span>
+        <span class="n">funbind</span><span class="p">(</span><span class="s1">'pos_hint'</span><span class="p">,</span> <span class="n">trigger</span><span class="p">)</span>
 
 <div class="viewcode-block" id="RelativeLayout.do_layout">
 <a class="viewcode-back" href="../../../api-kivy.uix.relativelayout.html#kivy.uix.relativelayout.RelativeLayout.do_layout">[docs]</a>
@@ -675,7 +675,7 @@
 <div class="viewcode-block" id="RelativeLayout.on_motion">
 <a class="viewcode-back" href="../../../api-kivy.uix.relativelayout.html#kivy.uix.relativelayout.RelativeLayout.on_motion">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">on_motion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">etype</span><span class="p">,</span> <span class="n">me</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">me</span><span class="o">.</span><span class="n">type_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">motion_filter</span> <span class="ow">and</span> <span class="s1">&#39;pos&#39;</span> <span class="ow">in</span> <span class="n">me</span><span class="o">.</span><span class="n">profile</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">me</span><span class="o">.</span><span class="n">type_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">motion_filter</span> <span class="ow">and</span> <span class="s1">'pos'</span> <span class="ow">in</span> <span class="n">me</span><span class="o">.</span><span class="n">profile</span><span class="p">:</span>
             <span class="n">me</span><span class="o">.</span><span class="n">push</span><span class="p">()</span>
             <span class="n">me</span><span class="o">.</span><span class="n">apply_transform_2d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_local</span><span class="p">)</span>
             <span class="n">ret</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_motion</span><span class="p">(</span><span class="n">etype</span><span class="p">,</span> <span class="n">me</span><span class="p">)</span>
@@ -731,7 +731,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

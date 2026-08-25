@@ -386,30 +386,30 @@ at rendering time.</p>
 <h2>Reducing the context instructions<a class="headerlink" href="#reducing-the-context-instructions" title="Link to this heading">¶</a></h2>
 <p>Imagine that you have a scheme like this:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Color</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">Rectangle</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;button.png&#39;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+<span class="n">Rectangle</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">'button.png'</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
 <span class="n">Color</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">Rectangle</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;button.png&#39;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+<span class="n">Rectangle</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">'button.png'</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
 <span class="n">Color</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">Rectangle</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">&#39;button.png&#39;</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+<span class="n">Rectangle</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">'button.png'</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>The real instructions seen by the graphics canvas would be:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Color: change &#39;color&#39; context to 1, 1, 1
-BindTexture: change &#39;texture0&#39; to `button.png texture`
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Color: change 'color' context to 1, 1, 1
+BindTexture: change 'texture0' to `button.png texture`
 Rectangle: push vertices (x1, y1...) to vbo &amp; draw
-Color: change &#39;color&#39; context to 1, 1, 1
-BindTexture: change &#39;texture0&#39; to `button.png texture`
+Color: change 'color' context to 1, 1, 1
+BindTexture: change 'texture0' to `button.png texture`
 Rectangle: push vertices (x1, y1...) to vbo &amp; draw
-Color: change &#39;color&#39; context to 1, 1, 1
-BindTexture: change &#39;texture0&#39; to `button.png texture`
+Color: change 'color' context to 1, 1, 1
+BindTexture: change 'texture0' to `button.png texture`
 Rectangle: push vertices (x1, y1...) to vbo &amp; draw
 </pre></div>
 </div>
 <p>Only the first <a class="reference internal" href="api-kivy.graphics.context_instructions.html#kivy.graphics.context_instructions.Color" title="kivy.graphics.context_instructions.Color"><code class="xref py py-class docutils literal notranslate"><span class="pre">Color</span></code></a> and
 <a class="reference internal" href="api-kivy.graphics.context_instructions.html#kivy.graphics.context_instructions.BindTexture" title="kivy.graphics.context_instructions.BindTexture"><code class="xref py py-class docutils literal notranslate"><span class="pre">BindTexture</span></code></a> are useful and really
 change the context. We can reduce them to:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Color: change &#39;color&#39; context to 1, 1, 1
-BindTexture: change &#39;texture0&#39; to `button.png texture`
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Color: change 'color' context to 1, 1, 1
+BindTexture: change 'texture0' to `button.png texture`
 Rectangle: push vertices (x1, y1...) to vbo &amp; draw
 Rectangle: push vertices (x1, y1...) to vbo &amp; draw
 Rectangle: push vertices (x1, y1...) to vbo &amp; draw
@@ -456,7 +456,7 @@ because we don’t know whether it might do weird things or not.</p></li>
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

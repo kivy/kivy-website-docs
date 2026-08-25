@@ -369,7 +369,7 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.effects.scroll</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">Scroll effect</span>
 <span class="sd">=============</span>
 
@@ -384,10 +384,10 @@
 <span class="sd">This is very useful for implementing a scrolling list. We actually use this</span>
 <span class="sd">class as a base effect for our :class:`~kivy.uix.scrollview.ScrollView` widget.</span>
 
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;ScrollEffect&#39;</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'ScrollEffect'</span><span class="p">,</span> <span class="p">)</span>
 
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">time</span>
@@ -399,70 +399,70 @@
 <div class="viewcode-block" id="ScrollEffect">
 <a class="viewcode-back" href="../../../api-kivy.effects.scroll.html#kivy.effects.scroll.ScrollEffect">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ScrollEffect</span><span class="p">(</span><span class="n">KineticEffect</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;ScrollEffect class. See the module documentation for more information.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''ScrollEffect class. See the module documentation for more information.</span>
+<span class="sd">    '''</span>
 
-    <span class="n">drag_threshold</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="s1">&#39;20sp&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Minimum distance to travel before the movement is considered as a drag.</span>
+    <span class="n">drag_threshold</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="s1">'20sp'</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">'''Minimum distance to travel before the movement is considered as a drag.</span>
 
 <span class="sd">    :attr:`drag_threshold` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to 20sp.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="nb">min</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Minimum boundary to use for scrolling.</span>
+<span class="w">    </span><span class="sd">'''Minimum boundary to use for scrolling.</span>
 
 <span class="sd">    :attr:`min` is a :class:`~kivy.properties.NumericProperty` and defaults to</span>
 <span class="sd">    0.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="nb">max</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Maximum boundary to use for scrolling.</span>
+<span class="w">    </span><span class="sd">'''Maximum boundary to use for scrolling.</span>
 
 <span class="sd">    :attr:`max` is a :class:`~kivy.properties.NumericProperty` and defaults to</span>
 <span class="sd">    0.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">scroll</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Computed value for scrolling. This value is different from</span>
+<span class="w">    </span><span class="sd">'''Computed value for scrolling. This value is different from</span>
 <span class="sd">    :py:attr:`kivy.effects.kinetic.KineticEffect.value`</span>
 <span class="sd">    in that it will return to one of the min/max bounds.</span>
 
 <span class="sd">    :attr:`scroll` is a :class:`~kivy.properties.NumericProperty` and defaults</span>
 <span class="sd">    to 0.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">overscroll</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Computed value when the user over-scrolls i.e. goes out of the bounds.</span>
+<span class="w">    </span><span class="sd">'''Computed value when the user over-scrolls i.e. goes out of the bounds.</span>
 
 <span class="sd">    :attr:`overscroll` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to 0.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">target_widget</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">baseclass</span><span class="o">=</span><span class="n">Widget</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Widget to attach to this effect. Even if this class doesn&#39;t make changes</span>
+<span class="w">    </span><span class="sd">'''Widget to attach to this effect. Even if this class doesn't make changes</span>
 <span class="sd">    to the `target_widget` by default, subclasses can use it to change the</span>
 <span class="sd">    graphics or apply custom transformations.</span>
 
 <span class="sd">    :attr:`target_widget` is a :class:`~kivy.properties.ObjectProperty` and</span>
 <span class="sd">    defaults to None.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">displacement</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Cumulative distance of the movement during the interaction. This is used</span>
+<span class="w">    </span><span class="sd">'''Cumulative distance of the movement during the interaction. This is used</span>
 <span class="sd">    to determine if the movement is a drag (more than :attr:`drag_threshold`)</span>
 <span class="sd">    or not.</span>
 
 <span class="sd">    :attr:`displacement` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to 0.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
 <div class="viewcode-block" id="ScrollEffect.reset">
 <a class="viewcode-back" href="../../../api-kivy.effects.scroll.html#kivy.effects.scroll.ScrollEffect.reset">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;(internal) Reset the value and the velocity to the `pos`.</span>
+<span class="w">        </span><span class="sd">'''(internal) Reset the value and the velocity to the `pos`.</span>
 <span class="sd">        Mostly used when the bounds are checked.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">pos</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">history</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">):</span>
@@ -525,7 +525,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

@@ -369,13 +369,13 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.effects.dampedscroll</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">Damped scroll effect</span>
 <span class="sd">====================</span>
 
 <span class="sd">.. versionadded:: 3.0.0</span>
 
-<span class="sd">This scroll effect is inspired by Flutter&#39;s BouncingScrollPhysics, which mimics</span>
+<span class="sd">This scroll effect is inspired by Flutter's BouncingScrollPhysics, which mimics</span>
 <span class="sd">iOS-style scrolling behavior. Key features:</span>
 
 <span class="sd">1. Logarithmic resistance during overscroll drag (rubber band feel)</span>
@@ -399,9 +399,9 @@
 <span class="sd">numerical instability issue. This implementation uses critical damping</span>
 <span class="sd">to ensure the effect is stable.  Additionally the properties in the</span>
 <span class="sd">effect are different, and allow for more control over the effect.</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;DampedScrollEffect&#39;</span><span class="p">,)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'DampedScrollEffect'</span><span class="p">,)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">sqrt</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.effects.scroll</span><span class="w"> </span><span class="kn">import</span> <span class="n">ScrollEffect</span>
@@ -411,7 +411,7 @@
 <div class="viewcode-block" id="DampedScrollEffect">
 <a class="viewcode-back" href="../../../api-kivy.effects.dampedscroll.html#kivy.effects.dampedscroll.DampedScrollEffect">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">DampedScrollEffect</span><span class="p">(</span><span class="n">ScrollEffect</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Flutter-inspired scroll effect with iOS-style rubber banding.</span>
+<span class="w">    </span><span class="sd">'''Flutter-inspired scroll effect with iOS-style rubber banding.</span>
 
 <span class="sd">    This implementation uses:</span>
 
@@ -420,38 +420,38 @@
 <span class="sd">    3. Exponential friction for smooth momentum</span>
 
 <span class="sd">    See module documentation for more information.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">rubber_band_coeff</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mf">0.55</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Rubber band resistance coefficient. Higher values = less resistance.</span>
+<span class="w">    </span><span class="sd">'''Rubber band resistance coefficient. Higher values = less resistance.</span>
 
 <span class="sd">    Flutter/iOS typically use ~0.55. Lower values (0.3-0.4) feel stiffer,</span>
 <span class="sd">    higher values (0.6-0.8) feel more elastic.</span>
 
 <span class="sd">    :attr:`rubber_band_coeff` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to 0.55.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">spring_mass</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Mass for spring simulation (affects bounce-back speed).</span>
+<span class="w">    </span><span class="sd">'''Mass for spring simulation (affects bounce-back speed).</span>
 
 <span class="sd">    :attr:`spring_mass` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to 1.0.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">spring_stiffness</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mf">100.0</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Stiffness for spring simulation (affects bounce-back speed).</span>
+<span class="w">    </span><span class="sd">'''Stiffness for spring simulation (affects bounce-back speed).</span>
 
 <span class="sd">    :attr:`spring_stiffness` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to 100.0.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">min_overscroll</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mf">.5</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;An overscroll less than this amount will be normalized to 0.</span>
+<span class="w">    </span><span class="sd">'''An overscroll less than this amount will be normalized to 0.</span>
 
 <span class="sd">    :attr:`min_overscroll` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to .5.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -497,14 +497,14 @@
 <a class="viewcode-back" href="../../../api-kivy.effects.dampedscroll.html#kivy.effects.dampedscroll.DampedScrollEffect.update_velocity">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">update_velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
         <span class="c1"># Update velocity with critically damped spring physics.</span>
-        <span class="c1"># If we&#39;re not moving and not overscrolled, stop</span>
+        <span class="c1"># If we're not moving and not overscrolled, stop</span>
         <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">velocity</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_velocity</span> <span class="ow">and</span> <span class="nb">abs</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">overscroll</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_overscroll</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">overscroll</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">return</span>
 
-        <span class="c1"># Check if we&#39;re in overscroll and should apply spring forces</span>
+        <span class="c1"># Check if we're in overscroll and should apply spring forces</span>
         <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">overscroll</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_overscroll</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_manual</span><span class="p">:</span>
             <span class="c1"># Use critically damped spring simulation</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_apply_spring_force</span><span class="p">(</span><span class="n">dt</span><span class="p">)</span>
@@ -532,7 +532,7 @@
         <span class="c1"># Calculate critical damping (this is the key to stability!)</span>
         <span class="n">critical_damping</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spring_stiffness</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">spring_mass</span><span class="p">)</span>
 
-        <span class="c1"># Spring force (Hooke&#39;s law: F = -kx)</span>
+        <span class="c1"># Spring force (Hooke's law: F = -kx)</span>
         <span class="n">spring_force</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">spring_stiffness</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">overscroll</span>
 
         <span class="c1"># Damping force (F = -cv)</span>
@@ -556,7 +556,7 @@
         <span class="c1"># Apply distance</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">apply_distance</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
 
-        <span class="c1"># Check if we&#39;ve reached the target and should stop</span>
+        <span class="c1"># Check if we've reached the target and should stop</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">overscroll</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="mi">0</span>
@@ -619,7 +619,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

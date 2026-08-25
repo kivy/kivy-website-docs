@@ -369,7 +369,7 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.uix.treeview</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">Tree View</span>
 <span class="sd">=========</span>
 
@@ -403,49 +403,49 @@
 <span class="sd">to root::</span>
 
 <span class="sd">    tv = TreeView()</span>
-<span class="sd">    tv.add_node(TreeViewLabel(text=&#39;My first item&#39;))</span>
-<span class="sd">    tv.add_node(TreeViewLabel(text=&#39;My second item&#39;))</span>
+<span class="sd">    tv.add_node(TreeViewLabel(text='My first item'))</span>
+<span class="sd">    tv.add_node(TreeViewLabel(text='My second item'))</span>
 
 <span class="sd">Or, create two nodes attached to a first::</span>
 
 <span class="sd">    tv = TreeView()</span>
-<span class="sd">    n1 = tv.add_node(TreeViewLabel(text=&#39;Item 1&#39;))</span>
-<span class="sd">    tv.add_node(TreeViewLabel(text=&#39;SubItem 1&#39;), n1)</span>
-<span class="sd">    tv.add_node(TreeViewLabel(text=&#39;SubItem 2&#39;), n1)</span>
+<span class="sd">    n1 = tv.add_node(TreeViewLabel(text='Item 1'))</span>
+<span class="sd">    tv.add_node(TreeViewLabel(text='SubItem 1'), n1)</span>
+<span class="sd">    tv.add_node(TreeViewLabel(text='SubItem 2'), n1)</span>
 
 <span class="sd">If you have a large tree structure, perhaps you would need a utility function</span>
 <span class="sd">to populate the tree view::</span>
 
 <span class="sd">    def populate_tree_view(tree_view, parent, node):</span>
 <span class="sd">        if parent is None:</span>
-<span class="sd">            tree_node = tree_view.add_node(TreeViewLabel(text=node[&#39;node_id&#39;],</span>
+<span class="sd">            tree_node = tree_view.add_node(TreeViewLabel(text=node['node_id'],</span>
 <span class="sd">                                                         is_open=True))</span>
 <span class="sd">        else:</span>
-<span class="sd">            tree_node = tree_view.add_node(TreeViewLabel(text=node[&#39;node_id&#39;],</span>
+<span class="sd">            tree_node = tree_view.add_node(TreeViewLabel(text=node['node_id'],</span>
 <span class="sd">                                                         is_open=True), parent)</span>
 
-<span class="sd">        for child_node in node[&#39;children&#39;]:</span>
+<span class="sd">        for child_node in node['children']:</span>
 <span class="sd">            populate_tree_view(tree_view, tree_node, child_node)</span>
 
 
-<span class="sd">    tree = {&#39;node_id&#39;: &#39;1&#39;,</span>
-<span class="sd">            &#39;children&#39;: [{&#39;node_id&#39;: &#39;1.1&#39;,</span>
-<span class="sd">                          &#39;children&#39;: [{&#39;node_id&#39;: &#39;1.1.1&#39;,</span>
-<span class="sd">                                        &#39;children&#39;: [{&#39;node_id&#39;: &#39;1.1.1.1&#39;,</span>
-<span class="sd">                                                      &#39;children&#39;: []}]},</span>
-<span class="sd">                                       {&#39;node_id&#39;: &#39;1.1.2&#39;,</span>
-<span class="sd">                                        &#39;children&#39;: []},</span>
-<span class="sd">                                       {&#39;node_id&#39;: &#39;1.1.3&#39;,</span>
-<span class="sd">                                        &#39;children&#39;: []}]},</span>
-<span class="sd">                          {&#39;node_id&#39;: &#39;1.2&#39;,</span>
-<span class="sd">                           &#39;children&#39;: []}]}</span>
+<span class="sd">    tree = {'node_id': '1',</span>
+<span class="sd">            'children': [{'node_id': '1.1',</span>
+<span class="sd">                          'children': [{'node_id': '1.1.1',</span>
+<span class="sd">                                        'children': [{'node_id': '1.1.1.1',</span>
+<span class="sd">                                                      'children': []}]},</span>
+<span class="sd">                                       {'node_id': '1.1.2',</span>
+<span class="sd">                                        'children': []},</span>
+<span class="sd">                                       {'node_id': '1.1.3',</span>
+<span class="sd">                                        'children': []}]},</span>
+<span class="sd">                          {'node_id': '1.2',</span>
+<span class="sd">                           'children': []}]}</span>
 
 
 <span class="sd">    class TreeWidget(FloatLayout):</span>
 <span class="sd">        def __init__(self, **kwargs):</span>
 <span class="sd">            super(TreeWidget, self).__init__(**kwargs)</span>
 
-<span class="sd">            tv = TreeView(root_options=dict(text=&#39;Tree One&#39;),</span>
+<span class="sd">            tv = TreeView(root_options=dict(text='Tree One'),</span>
 <span class="sd">                          hide_root=False,</span>
 <span class="sd">                          indent_level=4)</span>
 
@@ -454,11 +454,11 @@
 <span class="sd">            self.add_widget(tv)</span>
 
 <span class="sd">The root widget in the tree view is opened by default and has text set as</span>
-<span class="sd">&#39;Root&#39;. If you want to change that, you can use the</span>
+<span class="sd">'Root'. If you want to change that, you can use the</span>
 <span class="sd">:attr:`TreeView.root_options`</span>
 <span class="sd">property. This will pass options to the root widget::</span>
 
-<span class="sd">    tv = TreeView(root_options=dict(text=&#39;My root label&#39;))</span>
+<span class="sd">    tv = TreeView(root_options=dict(text='My root label'))</span>
 
 
 <span class="sd">Creating Your Own Node Widget</span>
@@ -478,9 +478,9 @@
 
 <span class="sd">    treeview.width - treeview.indent_start - treeview.indent_level * node.level</span>
 
-<span class="sd">You might have some trouble with that. It is the developer&#39;s responsibility to</span>
+<span class="sd">You might have some trouble with that. It is the developer's responsibility to</span>
 <span class="sd">correctly handle adapting the graphical representation nodes, if needed.</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.clock</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clock</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.label</span><span class="w"> </span><span class="kn">import</span> <span class="n">Label</span>
@@ -492,8 +492,8 @@
 <div class="viewcode-block" id="TreeViewException">
 <a class="viewcode-back" href="../../../api-kivy.uix.treeview.html#kivy.uix.treeview.TreeViewException">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">TreeViewException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Exception for errors in the :class:`TreeView`.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''Exception for errors in the :class:`TreeView`.</span>
+<span class="sd">    '''</span>
     <span class="k">pass</span></div>
 
 
@@ -501,24 +501,24 @@
 <div class="viewcode-block" id="TreeViewNode">
 <a class="viewcode-back" href="../../../api-kivy.uix.treeview.html#kivy.uix.treeview.TreeViewNode">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">TreeViewNode</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;TreeViewNode class, used to build a node class for a TreeView object.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''TreeViewNode class, used to build a node class for a TreeView object.</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span> <span class="ow">is</span> <span class="n">TreeViewNode</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">TreeViewException</span><span class="p">(</span><span class="s1">&#39;You cannot use directly TreeViewNode.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">TreeViewException</span><span class="p">(</span><span class="s1">'You cannot use directly TreeViewNode.'</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">TreeViewNode</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="n">is_leaf</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Boolean to indicate whether this node is a leaf or not. Used to adjust</span>
+<span class="w">    </span><span class="sd">'''Boolean to indicate whether this node is a leaf or not. Used to adjust</span>
 <span class="sd">    the graphical representation.</span>
 
 <span class="sd">    :attr:`is_leaf` is a :class:`~kivy.properties.BooleanProperty` and defaults</span>
 <span class="sd">    to True. It is automatically set to False when child is added.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">is_open</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Boolean to indicate whether this node is opened or not, in case there</span>
+<span class="w">    </span><span class="sd">'''Boolean to indicate whether this node is opened or not, in case there</span>
 <span class="sd">    are child nodes. This is used to adjust the graphical representation.</span>
 
 <span class="sd">    .. warning::</span>
@@ -528,18 +528,18 @@
 
 <span class="sd">    :attr:`is_open` is a :class:`~kivy.properties.BooleanProperty` and defaults</span>
 <span class="sd">    to False.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">is_loaded</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Boolean to indicate whether this node is already loaded or not. This</span>
+<span class="w">    </span><span class="sd">'''Boolean to indicate whether this node is already loaded or not. This</span>
 <span class="sd">    property is used only if the :class:`TreeView` uses asynchronous loading.</span>
 
 <span class="sd">    :attr:`is_loaded` is a :class:`~kivy.properties.BooleanProperty` and</span>
 <span class="sd">    defaults to False.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">is_selected</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Boolean to indicate whether this node is selected or not. This is used</span>
+<span class="w">    </span><span class="sd">'''Boolean to indicate whether this node is selected or not. This is used</span>
 <span class="sd">    adjust the graphical representation.</span>
 
 <span class="sd">    .. warning::</span>
@@ -549,18 +549,18 @@
 
 <span class="sd">    :attr:`is_selected` is a :class:`~kivy.properties.BooleanProperty` and</span>
 <span class="sd">    defaults to False.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">no_selection</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Boolean used to indicate whether selection of the node is allowed or</span>
+<span class="w">    </span><span class="sd">'''Boolean used to indicate whether selection of the node is allowed or</span>
 <span class="sd">     not.</span>
 
 <span class="sd">    :attr:`no_selection` is a :class:`~kivy.properties.BooleanProperty` and</span>
 <span class="sd">    defaults to False.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">nodes</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([])</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;List of nodes. The nodes list is different than the children list. A</span>
+<span class="w">    </span><span class="sd">'''List of nodes. The nodes list is different than the children list. A</span>
 <span class="sd">    node in the nodes list represents a node on the tree. An item in the</span>
 <span class="sd">    children list represents the widget associated with the node.</span>
 
@@ -571,27 +571,27 @@
 
 <span class="sd">    :attr:`nodes` is a :class:`~kivy.properties.ListProperty` and defaults to</span>
 <span class="sd">    [].</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">parent_node</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Parent node. This attribute is needed because the :attr:`parent` can be</span>
+<span class="w">    </span><span class="sd">'''Parent node. This attribute is needed because the :attr:`parent` can be</span>
 <span class="sd">    None when the node is not displayed.</span>
 
 <span class="sd">    .. versionadded:: 1.0.7</span>
 
 <span class="sd">    :attr:`parent_node` is an :class:`~kivy.properties.ObjectProperty` and</span>
 <span class="sd">    defaults to None.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">level</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Level of the node.</span>
+<span class="w">    </span><span class="sd">'''Level of the node.</span>
 
 <span class="sd">    :attr:`level` is a :class:`~kivy.properties.NumericProperty` and defaults</span>
 <span class="sd">    to -1.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">color_selected</span> <span class="o">=</span> <span class="n">ColorProperty</span><span class="p">([</span><span class="mf">.3</span><span class="p">,</span> <span class="mf">.3</span><span class="p">,</span> <span class="mf">.3</span><span class="p">,</span> <span class="mf">1.</span><span class="p">])</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Background color of the node when the node is selected.</span>
+<span class="w">    </span><span class="sd">'''Background color of the node when the node is selected.</span>
 
 <span class="sd">    :attr:`color_selected` is a :class:`~kivy.properties.ColorProperty` and</span>
 <span class="sd">    defaults to [.1, .1, .1, 1].</span>
@@ -599,18 +599,18 @@
 <span class="sd">    .. versionchanged:: 2.0.0</span>
 <span class="sd">        Changed from :class:`~kivy.properties.ListProperty` to</span>
 <span class="sd">        :class:`~kivy.properties.ColorProperty`.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">odd</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''</span>
 <span class="sd">    This property is set by the TreeView widget automatically and is read-only.</span>
 
 <span class="sd">    :attr:`odd` is a :class:`~kivy.properties.BooleanProperty` and defaults to</span>
 <span class="sd">    False.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">odd_color</span> <span class="o">=</span> <span class="n">ColorProperty</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">.0</span><span class="p">])</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Background color of odd nodes when the node is not selected.</span>
+<span class="w">    </span><span class="sd">'''Background color of odd nodes when the node is not selected.</span>
 
 <span class="sd">    :attr:`odd_color` is a :class:`~kivy.properties.ColorProperty` and defaults</span>
 <span class="sd">    to [1., 1., 1., 0.].</span>
@@ -618,10 +618,10 @@
 <span class="sd">    .. versionchanged:: 2.0.0</span>
 <span class="sd">        Changed from :class:`~kivy.properties.ListProperty` to</span>
 <span class="sd">        :class:`~kivy.properties.ColorProperty`.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">even_color</span> <span class="o">=</span> <span class="n">ColorProperty</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Background color of even nodes when the node is not selected.</span>
+<span class="w">    </span><span class="sd">'''Background color of even nodes when the node is not selected.</span>
 
 <span class="sd">    :attr:`bg_color` is a :class:`~kivy.properties.ColorProperty` and defaults</span>
 <span class="sd">    to [.5, .5, .5, .1].</span>
@@ -629,56 +629,56 @@
 <span class="sd">    .. versionchanged:: 2.0.0</span>
 <span class="sd">        Changed from :class:`~kivy.properties.ListProperty` to</span>
 <span class="sd">        :class:`~kivy.properties.ColorProperty`.</span>
-<span class="sd">    &#39;&#39;&#39;</span></div>
+<span class="sd">    '''</span></div>
 
 
 
 <div class="viewcode-block" id="TreeViewLabel">
 <a class="viewcode-back" href="../../../api-kivy.uix.treeview.html#kivy.uix.treeview.TreeViewLabel">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">TreeViewLabel</span><span class="p">(</span><span class="n">Label</span><span class="p">,</span> <span class="n">TreeViewNode</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Combines a :class:`~kivy.uix.label.Label` and a :class:`TreeViewNode` to</span>
+<span class="w">    </span><span class="sd">'''Combines a :class:`~kivy.uix.label.Label` and a :class:`TreeViewNode` to</span>
 <span class="sd">    create a :class:`TreeViewLabel` that can be used as a text node in the</span>
 <span class="sd">    tree.</span>
 
 <span class="sd">    See module documentation for more information.</span>
-<span class="sd">    &#39;&#39;&#39;</span></div>
+<span class="sd">    '''</span></div>
 
 
 
 <div class="viewcode-block" id="TreeView">
 <a class="viewcode-back" href="../../../api-kivy.uix.treeview.html#kivy.uix.treeview.TreeView">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">TreeView</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;TreeView class. See module documentation for more information.</span>
+<span class="w">    </span><span class="sd">'''TreeView class. See module documentation for more information.</span>
 
 <span class="sd">    :Events:</span>
 <span class="sd">        `on_node_expand`: (node, )</span>
 <span class="sd">            Fired when a node is being expanded</span>
 <span class="sd">        `on_node_collapse`: (node, )</span>
 <span class="sd">            Fired when a node is being collapsed</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;on_node_expand&#39;</span><span class="p">,</span> <span class="s1">&#39;on_node_collapse&#39;</span><span class="p">)</span>
+    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'on_node_expand'</span><span class="p">,</span> <span class="s1">'on_node_collapse'</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_layout</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">create_trigger</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_do_layout</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">TreeView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="n">tvlabel</span> <span class="o">=</span> <span class="n">TreeViewLabel</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Root&#39;</span><span class="p">,</span> <span class="n">is_open</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">tvlabel</span> <span class="o">=</span> <span class="n">TreeViewLabel</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">'Root'</span><span class="p">,</span> <span class="n">is_open</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="n">tvlabel</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">tvlabel</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
         <span class="n">trigger</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_layout</span>
         <span class="n">fbind</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;pos&#39;</span><span class="p">,</span> <span class="n">trigger</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="n">trigger</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;indent_level&#39;</span><span class="p">,</span> <span class="n">trigger</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;indent_start&#39;</span><span class="p">,</span> <span class="n">trigger</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'pos'</span><span class="p">,</span> <span class="n">trigger</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'size'</span><span class="p">,</span> <span class="n">trigger</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'indent_level'</span><span class="p">,</span> <span class="n">trigger</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'indent_start'</span><span class="p">,</span> <span class="n">trigger</span><span class="p">)</span>
         <span class="n">trigger</span><span class="p">()</span>
 
 <div class="viewcode-block" id="TreeView.add_node">
 <a class="viewcode-back" href="../../../api-kivy.uix.treeview.html#kivy.uix.treeview.TreeView.add_node">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Add a new node to the tree.</span>
+<span class="w">        </span><span class="sd">'''Add a new node to the tree.</span>
 
 <span class="sd">        :Parameters:</span>
 <span class="sd">            `node`: instance of a :class:`TreeViewNode`</span>
@@ -689,11 +689,11 @@
 
 <span class="sd">        :returns:</span>
 <span class="sd">            the node `node`.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="c1"># check if the widget is &quot;ok&quot; for a node</span>
+<span class="sd">        '''</span>
+        <span class="c1"># check if the widget is "ok" for a node</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">TreeViewNode</span><span class="p">):</span>
             <span class="k">raise</span> <span class="n">TreeViewException</span><span class="p">(</span>
-                <span class="s1">&#39;The node must be a subclass of TreeViewNode&#39;</span><span class="p">)</span>
+                <span class="s1">'The node must be a subclass of TreeViewNode'</span><span class="p">)</span>
         <span class="c1"># create node</span>
         <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_root</span><span class="p">:</span>
             <span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_root</span>
@@ -702,7 +702,7 @@
             <span class="n">parent</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
             <span class="n">node</span><span class="o">.</span><span class="n">parent_node</span> <span class="o">=</span> <span class="n">parent</span>
             <span class="n">node</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">level</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="n">node</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_layout</span><span class="p">)</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">'size'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_layout</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_layout</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">node</span></div>
 
@@ -710,7 +710,7 @@
 <div class="viewcode-block" id="TreeView.remove_node">
 <a class="viewcode-back" href="../../../api-kivy.uix.treeview.html#kivy.uix.treeview.TreeView.remove_node">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">remove_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Removes a node from the tree.</span>
+<span class="w">        </span><span class="sd">'''Removes a node from the tree.</span>
 
 <span class="sd">        .. versionadded:: 1.0.7</span>
 
@@ -718,11 +718,11 @@
 <span class="sd">            `node`: instance of a :class:`TreeViewNode`</span>
 <span class="sd">                Node to remove from the tree. If `node` is :attr:`root`, it is</span>
 <span class="sd">                not removed.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="c1"># check if the widget is &quot;ok&quot; for a node</span>
+<span class="sd">        '''</span>
+        <span class="c1"># check if the widget is "ok" for a node</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">TreeViewNode</span><span class="p">):</span>
             <span class="k">raise</span> <span class="n">TreeViewException</span><span class="p">(</span>
-                <span class="s1">&#39;The node must be a subclass of TreeViewNode&#39;</span><span class="p">)</span>
+                <span class="s1">'The node must be a subclass of TreeViewNode'</span><span class="p">)</span>
         <span class="n">parent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent_node</span>
         <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">node</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selected_node</span><span class="p">:</span>
@@ -733,7 +733,7 @@
                 <span class="n">nodes</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
             <span class="n">parent</span><span class="o">.</span><span class="n">is_leaf</span> <span class="o">=</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">))</span>
             <span class="n">node</span><span class="o">.</span><span class="n">parent_node</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="n">node</span><span class="o">.</span><span class="n">funbind</span><span class="p">(</span><span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_layout</span><span class="p">)</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">funbind</span><span class="p">(</span><span class="s1">'size'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_layout</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_layout</span><span class="p">()</span></div>
 
 
@@ -746,8 +746,8 @@
 <div class="viewcode-block" id="TreeView.select_node">
 <a class="viewcode-back" href="../../../api-kivy.uix.treeview.html#kivy.uix.treeview.TreeView.select_node">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">select_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Select a node in the tree.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Select a node in the tree.</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">no_selection</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selected_node</span><span class="p">:</span>
@@ -759,10 +759,10 @@
 <div class="viewcode-block" id="TreeView.deselect_node">
 <a class="viewcode-back" href="../../../api-kivy.uix.treeview.html#kivy.uix.treeview.TreeView.deselect_node">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">deselect_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Deselect any selected node.</span>
+<span class="w">        </span><span class="sd">'''Deselect any selected node.</span>
 
 <span class="sd">        .. versionadded:: 1.10.0</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selected_node</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_selected_node</span><span class="o">.</span><span class="n">is_selected</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_selected_node</span> <span class="o">=</span> <span class="kc">None</span></div>
@@ -771,23 +771,23 @@
 <div class="viewcode-block" id="TreeView.toggle_node">
 <a class="viewcode-back" href="../../../api-kivy.uix.treeview.html#kivy.uix.treeview.TreeView.toggle_node">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">toggle_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Toggle the state of the node (open/collapsed).</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Toggle the state of the node (open/collapsed).</span>
+<span class="sd">        '''</span>
         <span class="n">node</span><span class="o">.</span><span class="n">is_open</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">is_open</span>
         <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_open</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_func</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">node</span><span class="o">.</span><span class="n">is_loaded</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_do_node_load</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_node_expand&#39;</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_node_expand'</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_node_collapse&#39;</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_node_collapse'</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_layout</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="TreeView.get_node_at_pos">
 <a class="viewcode-back" href="../../../api-kivy.uix.treeview.html#kivy.uix.treeview.TreeView.get_node_at_pos">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_node_at_pos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Get the node at the position (x, y).</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Get the node at the position (x, y).</span>
+<span class="sd">        '''</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">pos</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">iterate_open_nodes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="ow">and</span> \
@@ -798,7 +798,7 @@
 <div class="viewcode-block" id="TreeView.iterate_open_nodes">
 <a class="viewcode-back" href="../../../api-kivy.uix.treeview.html#kivy.uix.treeview.TreeView.iterate_open_nodes">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">iterate_open_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Generator to iterate over all the expended nodes starting from</span>
+<span class="w">        </span><span class="sd">'''Generator to iterate over all the expended nodes starting from</span>
 <span class="sd">        `node` and down. If `node` is `None`, the generator start with</span>
 <span class="sd">        :attr:`root`.</span>
 
@@ -809,7 +809,7 @@
 <span class="sd">            for node in treeview.iterate_open_nodes():</span>
 <span class="sd">                print(node)</span>
 
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">node</span><span class="p">:</span>
             <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hide_root</span> <span class="ow">and</span> <span class="n">node</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">:</span>
@@ -827,10 +827,10 @@
 <div class="viewcode-block" id="TreeView.iterate_all_nodes">
 <a class="viewcode-back" href="../../../api-kivy.uix.treeview.html#kivy.uix.treeview.TreeView.iterate_all_nodes">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">iterate_all_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Generator to iterate over all nodes from `node` and down whether</span>
+<span class="w">        </span><span class="sd">'''Generator to iterate over all nodes from `node` and down whether</span>
 <span class="sd">        expanded or not. If `node` is `None`, the generator start with</span>
 <span class="sd">        :attr:`root`.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">node</span><span class="p">:</span>
             <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span>
         <span class="k">yield</span> <span class="n">node</span>
@@ -922,7 +922,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">toggle_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="n">touch</span><span class="o">.</span><span class="n">x</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">select_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
-            <span class="n">node</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_touch_down&#39;</span><span class="p">,</span> <span class="n">touch</span><span class="p">)</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_touch_down'</span><span class="p">,</span> <span class="n">touch</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
 
@@ -938,34 +938,34 @@
     <span class="c1">#</span>
 
     <span class="n">minimum_width</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Minimum width needed to contain all children.</span>
+<span class="w">    </span><span class="sd">'''Minimum width needed to contain all children.</span>
 
 <span class="sd">    .. versionadded:: 1.0.9</span>
 
 <span class="sd">    :attr:`minimum_width` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to 0.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">minimum_height</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Minimum height needed to contain all children.</span>
+<span class="w">    </span><span class="sd">'''Minimum height needed to contain all children.</span>
 
 <span class="sd">    .. versionadded:: 1.0.9</span>
 
 <span class="sd">    :attr:`minimum_height` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to 0.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">minimum_size</span> <span class="o">=</span> <span class="n">ReferenceListProperty</span><span class="p">(</span><span class="n">minimum_width</span><span class="p">,</span> <span class="n">minimum_height</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Minimum size needed to contain all children.</span>
+<span class="w">    </span><span class="sd">'''Minimum size needed to contain all children.</span>
 
 <span class="sd">    .. versionadded:: 1.0.9</span>
 
 <span class="sd">    :attr:`minimum_size` is a :class:`~kivy.properties.ReferenceListProperty`</span>
 <span class="sd">    of (:attr:`minimum_width`, :attr:`minimum_height`) properties.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">indent_level</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="s1">&#39;16dp&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Width used for the indentation of each level except the first level.</span>
+    <span class="n">indent_level</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="s1">'16dp'</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">'''Width used for the indentation of each level except the first level.</span>
 
 <span class="sd">    Computation of indent for each level of the tree is::</span>
 
@@ -973,50 +973,50 @@
 
 <span class="sd">    :attr:`indent_level` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to 16.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">indent_start</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="s1">&#39;24dp&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Indentation width of the level 0 / root node. This is mostly the initial</span>
+    <span class="n">indent_start</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="s1">'24dp'</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">'''Indentation width of the level 0 / root node. This is mostly the initial</span>
 <span class="sd">    size to accommodate a tree icon (collapsed / expanded). See</span>
 <span class="sd">    :attr:`indent_level` for more information about the computation of level</span>
 <span class="sd">    indentation.</span>
 
 <span class="sd">    :attr:`indent_start` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to 24.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">hide_root</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Use this property to show/hide the initial root node. If True, the root</span>
+<span class="w">    </span><span class="sd">'''Use this property to show/hide the initial root node. If True, the root</span>
 <span class="sd">    node will be appear as a closed node.</span>
 
 <span class="sd">    :attr:`hide_root` is a :class:`~kivy.properties.BooleanProperty` and</span>
 <span class="sd">    defaults to False.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">get_selected_node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selected_node</span>
 
     <span class="n">selected_node</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">get_selected_node</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span>
-                                  <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;_selected_node&#39;</span><span class="p">,</span> <span class="p">))</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Node selected by :meth:`TreeView.select_node` or by touch.</span>
+                                  <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">'_selected_node'</span><span class="p">,</span> <span class="p">))</span>
+<span class="w">    </span><span class="sd">'''Node selected by :meth:`TreeView.select_node` or by touch.</span>
 
 <span class="sd">    :attr:`selected_node` is a :class:`~kivy.properties.AliasProperty` and</span>
 <span class="sd">    defaults to None. It is read-only.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">get_root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_root</span>
 
-    <span class="n">root</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">get_root</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;_root&#39;</span><span class="p">,</span> <span class="p">))</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Root node.</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">get_root</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">'_root'</span><span class="p">,</span> <span class="p">))</span>
+<span class="w">    </span><span class="sd">'''Root node.</span>
 
 <span class="sd">    By default, the root node widget is a :class:`TreeViewLabel` with text</span>
-<span class="sd">    &#39;Root&#39;. If you want to change the default options passed to the widget</span>
+<span class="sd">    'Root'. If you want to change the default options passed to the widget</span>
 <span class="sd">    creation, use the :attr:`root_options` property::</span>
 
 <span class="sd">        treeview = TreeView(root_options={</span>
-<span class="sd">            &#39;text&#39;: &#39;Root directory&#39;,</span>
-<span class="sd">            &#39;font_size&#39;: 15})</span>
+<span class="sd">            'text': 'Root directory',</span>
+<span class="sd">            'font_size': 15})</span>
 
 <span class="sd">    :attr:`root_options` will change the properties of the</span>
 <span class="sd">    :class:`TreeViewLabel` instance. However, you cannot change the class used</span>
@@ -1024,34 +1024,34 @@
 
 <span class="sd">    :attr:`root` is an :class:`~kivy.properties.AliasProperty` and defaults to</span>
 <span class="sd">    None. It is read-only. However, the content of the widget can be changed.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">root_options</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">({})</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Default root options to pass for root widget. See :attr:`root` property</span>
+<span class="w">    </span><span class="sd">'''Default root options to pass for root widget. See :attr:`root` property</span>
 <span class="sd">    for more information about the usage of root_options.</span>
 
 <span class="sd">    :attr:`root_options` is an :class:`~kivy.properties.ObjectProperty` and</span>
 <span class="sd">    defaults to {}.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">load_func</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Callback to use for asynchronous loading. If set, asynchronous loading</span>
+<span class="w">    </span><span class="sd">'''Callback to use for asynchronous loading. If set, asynchronous loading</span>
 <span class="sd">    will be automatically done. The callback must act as a Python generator</span>
 <span class="sd">    function, using yield to send data back to the treeview.</span>
 
 <span class="sd">    The callback should be in the format::</span>
 
 <span class="sd">        def callback(treeview, node):</span>
-<span class="sd">            for name in (&#39;Item 1&#39;, &#39;Item 2&#39;):</span>
+<span class="sd">            for name in ('Item 1', 'Item 2'):</span>
 <span class="sd">                yield TreeViewLabel(text=name)</span>
 
 <span class="sd">    :attr:`load_func` is a :class:`~kivy.properties.ObjectProperty` and</span>
 <span class="sd">    defaults to None.</span>
-<span class="sd">    &#39;&#39;&#39;</span></div>
+<span class="sd">    '''</span></div>
 
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
 
     <span class="k">class</span><span class="w"> </span><span class="nc">TestApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
@@ -1059,18 +1059,18 @@
         <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="n">tv</span> <span class="o">=</span> <span class="n">TreeView</span><span class="p">(</span><span class="n">hide_root</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">add</span> <span class="o">=</span> <span class="n">tv</span><span class="o">.</span><span class="n">add_node</span>
-            <span class="n">root</span> <span class="o">=</span> <span class="n">add</span><span class="p">(</span><span class="n">TreeViewLabel</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Level 1, entry 1&#39;</span><span class="p">,</span> <span class="n">is_open</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+            <span class="n">root</span> <span class="o">=</span> <span class="n">add</span><span class="p">(</span><span class="n">TreeViewLabel</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">'Level 1, entry 1'</span><span class="p">,</span> <span class="n">is_open</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
             <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
-                <span class="n">add</span><span class="p">(</span><span class="n">TreeViewLabel</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Element </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">x</span><span class="p">),</span> <span class="n">root</span><span class="p">)</span>
-            <span class="n">root2</span> <span class="o">=</span> <span class="n">add</span><span class="p">(</span><span class="n">TreeViewLabel</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Level 1, entry 2&#39;</span><span class="p">,</span> <span class="n">is_open</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+                <span class="n">add</span><span class="p">(</span><span class="n">TreeViewLabel</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">'Element </span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span> <span class="n">x</span><span class="p">),</span> <span class="n">root</span><span class="p">)</span>
+            <span class="n">root2</span> <span class="o">=</span> <span class="n">add</span><span class="p">(</span><span class="n">TreeViewLabel</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">'Level 1, entry 2'</span><span class="p">,</span> <span class="n">is_open</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
             <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">24</span><span class="p">):</span>
-                <span class="n">add</span><span class="p">(</span><span class="n">TreeViewLabel</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Element </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">x</span><span class="p">),</span> <span class="n">root2</span><span class="p">)</span>
+                <span class="n">add</span><span class="p">(</span><span class="n">TreeViewLabel</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">'Element </span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span> <span class="n">x</span><span class="p">),</span> <span class="n">root2</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
-                <span class="n">add</span><span class="p">(</span><span class="n">TreeViewLabel</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Element </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">x</span><span class="p">),</span> <span class="n">root</span><span class="p">)</span>
-            <span class="n">root2</span> <span class="o">=</span> <span class="n">add</span><span class="p">(</span><span class="n">TreeViewLabel</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Element childs 2&#39;</span><span class="p">,</span> <span class="n">is_open</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+                <span class="n">add</span><span class="p">(</span><span class="n">TreeViewLabel</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">'Element </span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span> <span class="n">x</span><span class="p">),</span> <span class="n">root</span><span class="p">)</span>
+            <span class="n">root2</span> <span class="o">=</span> <span class="n">add</span><span class="p">(</span><span class="n">TreeViewLabel</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">'Element childs 2'</span><span class="p">,</span> <span class="n">is_open</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
                         <span class="n">root</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">24</span><span class="p">):</span>
-                <span class="n">add</span><span class="p">(</span><span class="n">TreeViewLabel</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Element </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">x</span><span class="p">),</span> <span class="n">root2</span><span class="p">)</span>
+                <span class="n">add</span><span class="p">(</span><span class="n">TreeViewLabel</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">'Element </span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span> <span class="n">x</span><span class="p">),</span> <span class="n">root2</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">tv</span>
     <span class="n">TestApp</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
@@ -1087,7 +1087,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

@@ -369,14 +369,14 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.input.postproc.retaintouch</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">Retain Touch</span>
 <span class="sd">============</span>
 
 <span class="sd">Reuse touch to counter lost finger behavior</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;InputPostprocRetainTouch&#39;</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'InputPostprocRetainTouch'</span><span class="p">,</span> <span class="p">)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.vector</span><span class="w"> </span><span class="kn">import</span> <span class="n">Vector</span>
@@ -386,8 +386,8 @@
 <div class="viewcode-block" id="InputPostprocRetainTouch">
 <a class="viewcode-back" href="../../../../api-kivy.input.postproc.retaintouch.html#kivy.input.postproc.retaintouch.InputPostprocRetainTouch">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">InputPostprocRetainTouch</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    InputPostprocRetainTouch is a post-processor to delay the &#39;up&#39; event of a</span>
+<span class="w">    </span><span class="sd">'''</span>
+<span class="sd">    InputPostprocRetainTouch is a post-processor to delay the 'up' event of a</span>
 <span class="sd">    touch, to reuse it under certains conditions. This module is designed to</span>
 <span class="sd">    prevent lost finger touches on some hardware/setups.</span>
 
@@ -398,11 +398,11 @@
 <span class="sd">            retain_distance = 50</span>
 
 <span class="sd">    The distance parameter is in the range 0-1000 and time is in milliseconds.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s1">&#39;postproc&#39;</span><span class="p">,</span> <span class="s1">&#39;retain_time&#39;</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1000.0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">distance</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s1">&#39;postproc&#39;</span><span class="p">,</span> <span class="s1">&#39;retain_distance&#39;</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1000.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s1">'postproc'</span><span class="p">,</span> <span class="s1">'retain_time'</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1000.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">distance</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s1">'postproc'</span><span class="p">,</span> <span class="s1">'retain_distance'</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1000.0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_available</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_links</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -415,7 +415,7 @@
         <span class="k">for</span> <span class="n">etype</span><span class="p">,</span> <span class="n">touch</span> <span class="ow">in</span> <span class="n">events</span><span class="p">[:]:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">touch</span><span class="o">.</span><span class="n">is_touch</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="k">if</span> <span class="n">etype</span> <span class="o">==</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">etype</span> <span class="o">==</span> <span class="s1">'end'</span><span class="p">:</span>
                 <span class="n">events</span><span class="o">.</span><span class="n">remove</span><span class="p">((</span><span class="n">etype</span><span class="p">,</span> <span class="n">touch</span><span class="p">))</span>
                 <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">uid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_links</span><span class="p">:</span>
                     <span class="n">selection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_links</span><span class="p">[</span><span class="n">touch</span><span class="o">.</span><span class="n">uid</span><span class="p">]</span>
@@ -425,7 +425,7 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="o">.</span><span class="n">__pp_retain_time__</span> <span class="o">=</span> <span class="n">d</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_available</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">etype</span> <span class="o">==</span> <span class="s1">&#39;update&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">etype</span> <span class="o">==</span> <span class="s1">'update'</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">uid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_links</span><span class="p">:</span>
                     <span class="n">selection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_links</span><span class="p">[</span><span class="n">touch</span><span class="o">.</span><span class="n">uid</span><span class="p">]</span>
                     <span class="n">selection</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">x</span>
@@ -436,7 +436,7 @@
                     <span class="n">events</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">etype</span><span class="p">,</span> <span class="n">selection</span><span class="p">))</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">pass</span>
-            <span class="k">elif</span> <span class="n">etype</span> <span class="o">==</span> <span class="s1">&#39;begin&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">etype</span> <span class="o">==</span> <span class="s1">'begin'</span><span class="p">:</span>
                 <span class="c1"># new touch, found the nearest one</span>
                 <span class="n">selection</span> <span class="o">=</span> <span class="kc">None</span>
                 <span class="n">selection_distance</span> <span class="o">=</span> <span class="mi">99999</span>
@@ -461,7 +461,7 @@
             <span class="n">t</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="o">.</span><span class="n">__pp_retain_time__</span>
             <span class="k">if</span> <span class="n">d</span> <span class="o">-</span> <span class="n">t</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_available</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
-                <span class="n">events</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;end&#39;</span><span class="p">,</span> <span class="n">touch</span><span class="p">))</span>
+                <span class="n">events</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">'end'</span><span class="p">,</span> <span class="n">touch</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="n">events</span></div>
 
@@ -479,7 +479,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

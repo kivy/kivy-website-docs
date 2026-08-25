@@ -392,19 +392,19 @@ class in the file <a class="reference internal" href="#drendering-objloader-py">
 shader written in GLSL.</p>
 <section id="file-3drendering-main-py">
 <span id="drendering-main-py"></span><h2>File <strong>3Drendering/main.py</strong><a class="headerlink" href="#file-3drendering-main-py" title="Link to this heading">¶</a></h2>
-<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">'''</span>
 <span class="sd">3D Rotating Monkey Head</span>
 <span class="sd">========================</span>
 
 <span class="sd">This example demonstrates using OpenGL to display a rotating monkey head. This</span>
-<span class="sd">includes loading a Blender OBJ file, shaders written in OpenGL&#39;s Shading</span>
+<span class="sd">includes loading a Blender OBJ file, shaders written in OpenGL's Shading</span>
 <span class="sd">Language (GLSL), and using scheduled callbacks.</span>
 
 <span class="sd">The monkey.obj file is an OBJ file output from the Blender free 3D creation</span>
 <span class="sd">software. The file is text, listing vertices and faces and is loaded</span>
 <span class="sd">using a class in the file objloader.py. The file simple.glsl is</span>
 <span class="sd">a simple vertex and fragment shader written in GLSL.</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.clock</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clock</span>
@@ -421,8 +421,8 @@ shader written in GLSL.</p>
 <span class="k">class</span><span class="w"> </span><span class="nc">Renderer</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="n">RenderContext</span><span class="p">(</span><span class="n">compute_normal_mat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">shader</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">resource_find</span><span class="p">(</span><span class="s1">&#39;simple.glsl&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">scene</span> <span class="o">=</span> <span class="n">ObjFile</span><span class="p">(</span><span class="n">resource_find</span><span class="p">(</span><span class="s2">&quot;monkey.obj&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">shader</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">resource_find</span><span class="p">(</span><span class="s1">'simple.glsl'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scene</span> <span class="o">=</span> <span class="n">ObjFile</span><span class="p">(</span><span class="n">resource_find</span><span class="p">(</span><span class="s2">"monkey.obj"</span><span class="p">))</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Renderer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">cb</span> <span class="o">=</span> <span class="n">Callback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">setup_gl_context</span><span class="p">)</span>
@@ -441,9 +441,9 @@ shader written in GLSL.</p>
     <span class="k">def</span><span class="w"> </span><span class="nf">update_glsl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta</span><span class="p">):</span>
         <span class="n">asp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
         <span class="n">proj</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">()</span><span class="o">.</span><span class="n">view_clip</span><span class="p">(</span><span class="o">-</span><span class="n">asp</span><span class="p">,</span> <span class="n">asp</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">[</span><span class="s1">&#39;projection_mat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">proj</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">[</span><span class="s1">&#39;diffuse_light&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">[</span><span class="s1">&#39;ambient_light&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">[</span><span class="s1">'projection_mat'</span><span class="p">]</span> <span class="o">=</span> <span class="n">proj</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">[</span><span class="s1">'diffuse_light'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">[</span><span class="s1">'ambient_light'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rot</span><span class="o">.</span><span class="n">angle</span> <span class="o">+=</span> <span class="n">delta</span> <span class="o">*</span> <span class="mi">100</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">setup_scene</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -457,7 +457,7 @@ shader written in GLSL.</p>
             <span class="n">vertices</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">vertices</span><span class="p">,</span>
             <span class="n">indices</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">indices</span><span class="p">,</span>
             <span class="n">fmt</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">vertex_format</span><span class="p">,</span>
-            <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;triangles&#39;</span><span class="p">,</span>
+            <span class="n">mode</span><span class="o">=</span><span class="s1">'triangles'</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">PopMatrix</span><span class="p">()</span>
 
@@ -467,7 +467,7 @@ shader written in GLSL.</p>
         <span class="k">return</span> <span class="n">Renderer</span><span class="p">()</span>
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
     <span class="n">RendererApp</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -476,11 +476,11 @@ shader written in GLSL.</p>
 <span id="drendering-objloader-py"></span><h2>File <strong>3Drendering/objloader.py</strong><a class="headerlink" href="#file-3drendering-objloader-py" title="Link to this heading">¶</a></h2>
 <div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MeshData</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"name"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vertex_format</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="p">(</span><span class="sa">b</span><span class="s1">&#39;v_pos&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;float&#39;</span><span class="p">),</span>
-            <span class="p">(</span><span class="sa">b</span><span class="s1">&#39;v_normal&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;float&#39;</span><span class="p">),</span>
-            <span class="p">(</span><span class="sa">b</span><span class="s1">&#39;v_tc0&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;float&#39;</span><span class="p">)]</span>
+            <span class="p">(</span><span class="sa">b</span><span class="s1">'v_pos'</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'float'</span><span class="p">),</span>
+            <span class="p">(</span><span class="sa">b</span><span class="s1">'v_normal'</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'float'</span><span class="p">),</span>
+            <span class="p">(</span><span class="sa">b</span><span class="s1">'v_tc0'</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">'float'</span><span class="p">)]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vertices</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">indices</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -549,7 +549,7 @@ shader written in GLSL.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">faces</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">swapyz</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Loads a Wavefront OBJ file. &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Loads a Wavefront OBJ file. """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">objects</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vertices</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">normals</span> <span class="o">=</span> <span class="p">[]</span>
@@ -559,39 +559,39 @@ shader written in GLSL.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">_current_object</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="n">material</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'#'</span><span class="p">):</span>
                 <span class="k">continue</span>
-            <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;s&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'s'</span><span class="p">):</span>
                 <span class="k">continue</span>
             <span class="n">values</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">values</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="k">if</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;o&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'o'</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">finish_object</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_current_object</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="c1"># elif values[0] == &#39;mtllib&#39;:</span>
+            <span class="c1"># elif values[0] == 'mtllib':</span>
             <span class="c1">#    self.mtl = MTL(values[1])</span>
-            <span class="c1"># elif values[0] in (&#39;usemtl&#39;, &#39;usemat&#39;):</span>
+            <span class="c1"># elif values[0] in ('usemtl', 'usemat'):</span>
             <span class="c1">#    material = values[1]</span>
-            <span class="k">if</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;v&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'v'</span><span class="p">:</span>
                 <span class="n">v</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">]))</span>
                 <span class="k">if</span> <span class="n">swapyz</span><span class="p">:</span>
                     <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">vertices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;vn&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'vn'</span><span class="p">:</span>
                 <span class="n">v</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">]))</span>
                 <span class="k">if</span> <span class="n">swapyz</span><span class="p">:</span>
                     <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">normals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;vt&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'vt'</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">texcoords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">])))</span>
-            <span class="k">elif</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;f&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'f'</span><span class="p">:</span>
                 <span class="n">face</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="n">texcoords</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="n">norms</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
-                    <span class="n">w</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+                    <span class="n">w</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)</span>
                     <span class="n">face</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
                     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                         <span class="n">texcoords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
@@ -609,16 +609,16 @@ shader written in GLSL.</p>
     <span class="n">contents</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">mtl</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">return</span>
-    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'#'</span><span class="p">):</span>
             <span class="k">continue</span>
         <span class="n">values</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">values</span><span class="p">:</span>
             <span class="k">continue</span>
-        <span class="k">if</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;newmtl&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'newmtl'</span><span class="p">:</span>
             <span class="n">mtl</span> <span class="o">=</span> <span class="n">contents</span><span class="p">[</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">elif</span> <span class="n">mtl</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;mtl file doesn&#39;t start with newmtl stmt&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"mtl file doesn't start with newmtl stmt"</span><span class="p">)</span>
         <span class="n">mtl</span><span class="p">[</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
     <span class="k">return</span> <span class="n">contents</span>
 </pre></div>
@@ -701,7 +701,7 @@ shader written in GLSL.</p>
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

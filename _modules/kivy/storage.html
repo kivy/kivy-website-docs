@@ -369,7 +369,7 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.storage</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">Storage</span>
 <span class="sd">=======</span>
 
@@ -397,35 +397,35 @@
 <span class="sd">Examples</span>
 <span class="sd">--------</span>
 
-<span class="sd">For example, let&#39;s use a JsonStore::</span>
+<span class="sd">For example, let's use a JsonStore::</span>
 
 <span class="sd">    from kivy.storage.jsonstore import JsonStore</span>
 
-<span class="sd">    store = JsonStore(&#39;hello.json&#39;)</span>
+<span class="sd">    store = JsonStore('hello.json')</span>
 
 <span class="sd">    # put some values</span>
-<span class="sd">    store.put(&#39;tito&#39;, name=&#39;Mathieu&#39;, org=&#39;kivy&#39;)</span>
-<span class="sd">    store.put(&#39;tshirtman&#39;, name=&#39;Gabriel&#39;, age=27)</span>
+<span class="sd">    store.put('tito', name='Mathieu', org='kivy')</span>
+<span class="sd">    store.put('tshirtman', name='Gabriel', age=27)</span>
 
 <span class="sd">    # using the same index key erases all previously added key-value pairs</span>
-<span class="sd">    store.put(&#39;tito&#39;, name=&#39;Mathieu&#39;, age=30)</span>
+<span class="sd">    store.put('tito', name='Mathieu', age=30)</span>
 
 <span class="sd">    # get a value using a index key and key</span>
-<span class="sd">    print(&#39;tito is&#39;, store.get(&#39;tito&#39;)[&#39;age&#39;])</span>
+<span class="sd">    print('tito is', store.get('tito')['age'])</span>
 
 <span class="sd">    # or guess the key/entry for a part of the key</span>
-<span class="sd">    for item in store.find(name=&#39;Gabriel&#39;):</span>
-<span class="sd">        print(&#39;tshirtmans index key is&#39;, item[0])</span>
-<span class="sd">        print(&#39;his key value pairs are&#39;, str(item[1]))</span>
+<span class="sd">    for item in store.find(name='Gabriel'):</span>
+<span class="sd">        print('tshirtmans index key is', item[0])</span>
+<span class="sd">        print('his key value pairs are', str(item[1]))</span>
 
 <span class="sd">Because the data is persistent, you can check later to see if the key exists::</span>
 
 <span class="sd">    from kivy.storage.jsonstore import JsonStore</span>
 
-<span class="sd">    store = JsonStore(&#39;hello.json&#39;)</span>
-<span class="sd">    if store.exists(&#39;tito&#39;):</span>
-<span class="sd">        print(&#39;tite exists:&#39;, store.get(&#39;tito&#39;))</span>
-<span class="sd">        store.delete(&#39;tito&#39;)</span>
+<span class="sd">    store = JsonStore('hello.json')</span>
+<span class="sd">    if store.exists('tito'):</span>
+<span class="sd">        print('tite exists:', store.get('tito'))</span>
+<span class="sd">        store.delete('tito')</span>
 
 
 <span class="sd">Synchronous / Asynchronous API</span>
@@ -444,24 +444,24 @@
 
 <span class="sd">Without callback (Synchronous API)::</span>
 
-<span class="sd">    entry = mystore.get(&#39;tito&#39;)</span>
-<span class="sd">    print(&#39;tito =&#39;, entry)</span>
+<span class="sd">    entry = mystore.get('tito')</span>
+<span class="sd">    print('tito =', entry)</span>
 
 <span class="sd">With callback (Asynchronous API)::</span>
 
 <span class="sd">    def my_callback(store, key, result):</span>
-<span class="sd">        print(&#39;the key&#39;, key, &#39;has a value of&#39;, result)</span>
-<span class="sd">    mystore.get(&#39;plop&#39;, callback=my_callback)</span>
+<span class="sd">        print('the key', key, 'has a value of', result)</span>
+<span class="sd">    mystore.get('plop', callback=my_callback)</span>
 
 
 <span class="sd">The callback signature (for almost all methods) is::</span>
 
 <span class="sd">    def callback(store, key, result):</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 <span class="sd">        store: the `Store` instance currently used.</span>
 <span class="sd">        key: the key sought for.</span>
 <span class="sd">        result: the result of the lookup for the key.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
 
 <span class="sd">Synchronous container type</span>
@@ -469,28 +469,28 @@
 
 <span class="sd">The storage API emulates the container type for the synchronous API::</span>
 
-<span class="sd">    store = JsonStore(&#39;hello.json&#39;)</span>
+<span class="sd">    store = JsonStore('hello.json')</span>
 
-<span class="sd">    # original: store.get(&#39;tito&#39;)</span>
-<span class="sd">    store[&#39;tito&#39;]</span>
+<span class="sd">    # original: store.get('tito')</span>
+<span class="sd">    store['tito']</span>
 
-<span class="sd">    # original: store.put(&#39;tito&#39;, name=&#39;Mathieu&#39;)</span>
-<span class="sd">    store[&#39;tito&#39;] = {&#39;name&#39;: &#39;Mathieu&#39;}</span>
+<span class="sd">    # original: store.put('tito', name='Mathieu')</span>
+<span class="sd">    store['tito'] = {'name': 'Mathieu'}</span>
 
-<span class="sd">    # original: store.delete(&#39;tito&#39;)</span>
-<span class="sd">    del store[&#39;tito&#39;]</span>
+<span class="sd">    # original: store.delete('tito')</span>
+<span class="sd">    del store['tito']</span>
 
 <span class="sd">    # original: store.count()</span>
 <span class="sd">    len(store)</span>
 
-<span class="sd">    # original: store.exists(&#39;tito&#39;)</span>
-<span class="sd">    &#39;tito&#39; in store</span>
+<span class="sd">    # original: store.exists('tito')</span>
+<span class="sd">    'tito' in store</span>
 
 <span class="sd">    # original: for key in store.keys()</span>
 <span class="sd">    for key in store:</span>
 <span class="sd">        pass</span>
 
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.clock</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clock</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.event</span><span class="w"> </span><span class="kn">import</span> <span class="n">EventDispatcher</span>
@@ -499,8 +499,8 @@
 <div class="viewcode-block" id="AbstractStore">
 <a class="viewcode-back" href="../../api-kivy.storage.html#kivy.storage.AbstractStore">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">AbstractStore</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Abstract class used to implement a Store</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''Abstract class used to implement a Store</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">AbstractStore</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -509,15 +509,15 @@
 <div class="viewcode-block" id="AbstractStore.exists">
 <a class="viewcode-back" href="../../api-kivy.storage.html#kivy.storage.AbstractStore.exists">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Check if a key exists in the store.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Check if a key exists in the store.</span>
+<span class="sd">        '''</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">store_exists</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="AbstractStore.async_exists">
 <a class="viewcode-back" href="../../api-kivy.storage.html#kivy.storage.AbstractStore.async_exists">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">async_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Asynchronous version of :meth:`exists`.</span>
+<span class="w">        </span><span class="sd">'''Asynchronous version of :meth:`exists`.</span>
 
 <span class="sd">        :Callback arguments:</span>
 <span class="sd">            `store`: :class:`AbstractStore` instance</span>
@@ -526,7 +526,7 @@
 <span class="sd">                Name of the key to search for</span>
 <span class="sd">            `result`: boo</span>
 <span class="sd">                Result of the query, None if any error</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_schedule</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store_exists_async</span><span class="p">,</span>
                        <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span></div>
 
@@ -534,16 +534,16 @@
 <div class="viewcode-block" id="AbstractStore.get">
 <a class="viewcode-back" href="../../api-kivy.storage.html#kivy.storage.AbstractStore.get">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Get the key-value pairs stored at `key`. If the key is not found, a</span>
+<span class="w">        </span><span class="sd">'''Get the key-value pairs stored at `key`. If the key is not found, a</span>
 <span class="sd">        `KeyError` exception will be thrown.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">store_get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="AbstractStore.async_get">
 <a class="viewcode-back" href="../../api-kivy.storage.html#kivy.storage.AbstractStore.async_get">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">async_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Asynchronous version of :meth:`get`.</span>
+<span class="w">        </span><span class="sd">'''Asynchronous version of :meth:`get`.</span>
 
 <span class="sd">        :Callback arguments:</span>
 <span class="sd">            `store`: :class:`AbstractStore` instance</span>
@@ -552,16 +552,16 @@
 <span class="sd">                Name of the key to search for</span>
 <span class="sd">            `result`: dict</span>
 <span class="sd">                Result of the query, None if any error</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_schedule</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store_get_async</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="AbstractStore.put">
 <a class="viewcode-back" href="../../api-kivy.storage.html#kivy.storage.AbstractStore.put">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="o">**</span><span class="n">values</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Put new key-value pairs (given in *values*) into the storage. Any</span>
+<span class="w">        </span><span class="sd">'''Put new key-value pairs (given in *values*) into the storage. Any</span>
 <span class="sd">        existing key-value pairs will be removed.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="n">need_sync</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store_put</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">need_sync</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">store_sync</span><span class="p">()</span>
@@ -571,7 +571,7 @@
 <div class="viewcode-block" id="AbstractStore.async_put">
 <a class="viewcode-back" href="../../api-kivy.storage.html#kivy.storage.AbstractStore.async_put">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">async_put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="o">**</span><span class="n">values</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Asynchronous version of :meth:`put`.</span>
+<span class="w">        </span><span class="sd">'''Asynchronous version of :meth:`put`.</span>
 
 <span class="sd">        :Callback arguments:</span>
 <span class="sd">            `store`: :class:`AbstractStore` instance</span>
@@ -581,7 +581,7 @@
 <span class="sd">            `result`: bool</span>
 <span class="sd">                Indicate True if the storage has been updated, or False if</span>
 <span class="sd">                nothing has been done (no changes). None if any error.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_schedule</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store_put_async</span><span class="p">,</span>
                        <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">values</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span></div>
 
@@ -589,8 +589,8 @@
 <div class="viewcode-block" id="AbstractStore.delete">
 <a class="viewcode-back" href="../../api-kivy.storage.html#kivy.storage.AbstractStore.delete">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Delete a key from the storage. If the key is not found, a `KeyError`</span>
-<span class="sd">        exception will be thrown.&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Delete a key from the storage. If the key is not found, a `KeyError`</span>
+<span class="sd">        exception will be thrown.'''</span>
         <span class="n">need_sync</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store_delete</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">need_sync</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">store_sync</span><span class="p">()</span>
@@ -600,7 +600,7 @@
 <div class="viewcode-block" id="AbstractStore.async_delete">
 <a class="viewcode-back" href="../../api-kivy.storage.html#kivy.storage.AbstractStore.async_delete">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">async_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Asynchronous version of :meth:`delete`.</span>
+<span class="w">        </span><span class="sd">'''Asynchronous version of :meth:`delete`.</span>
 
 <span class="sd">        :Callback arguments:</span>
 <span class="sd">            `store`: :class:`AbstractStore` instance</span>
@@ -610,7 +610,7 @@
 <span class="sd">            `result`: bool</span>
 <span class="sd">                Indicate True if the storage has been updated, or False if</span>
 <span class="sd">                nothing has been done (no changes). None if any error.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_schedule</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store_delete_async</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span>
                        <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span></div>
 
@@ -618,28 +618,28 @@
 <div class="viewcode-block" id="AbstractStore.find">
 <a class="viewcode-back" href="../../api-kivy.storage.html#kivy.storage.AbstractStore.find">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">filters</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return all the entries matching the filters. The entries are</span>
+<span class="w">        </span><span class="sd">'''Return all the entries matching the filters. The entries are</span>
 <span class="sd">        returned through a generator as a list of (key, entry) pairs</span>
 <span class="sd">        where *entry* is a dict of key-value pairs ::</span>
 
-<span class="sd">            for key, entry in store.find(name=&#39;Mathieu&#39;):</span>
-<span class="sd">                print(&#39;key:&#39;, key, &#39;, entry:&#39;, entry)</span>
+<span class="sd">            for key, entry in store.find(name='Mathieu'):</span>
+<span class="sd">                print('key:', key, ', entry:', entry)</span>
 
-<span class="sd">        Because it&#39;s a generator, you cannot directly use it as a list. You can</span>
+<span class="sd">        Because it's a generator, you cannot directly use it as a list. You can</span>
 <span class="sd">        do::</span>
 
 <span class="sd">            # get all the (key, entry) availables</span>
-<span class="sd">            entries = list(store.find(name=&#39;Mathieu&#39;))</span>
+<span class="sd">            entries = list(store.find(name='Mathieu'))</span>
 <span class="sd">            # get only the entry from (key, entry)</span>
-<span class="sd">            entries = list((x[1] for x in store.find(name=&#39;Mathieu&#39;)))</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">            entries = list((x[1] for x in store.find(name='Mathieu')))</span>
+<span class="sd">        '''</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">store_find</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="AbstractStore.async_find">
 <a class="viewcode-back" href="../../api-kivy.storage.html#kivy.storage.AbstractStore.async_find">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">async_find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="o">**</span><span class="n">filters</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Asynchronous version of :meth:`find`.</span>
+<span class="w">        </span><span class="sd">'''Asynchronous version of :meth:`find`.</span>
 
 <span class="sd">        The callback will be called for each entry in the result.</span>
 
@@ -652,7 +652,7 @@
 <span class="sd">            `result`: bool</span>
 <span class="sd">                Indicate True if the storage has been updated, or False if</span>
 <span class="sd">                nothing has been done (no changes). None if any error.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_schedule</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store_find_async</span><span class="p">,</span>
                        <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="n">filters</span><span class="p">)</span></div>
 
@@ -660,48 +660,48 @@
 <div class="viewcode-block" id="AbstractStore.keys">
 <a class="viewcode-back" href="../../api-kivy.storage.html#kivy.storage.AbstractStore.keys">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return a list of all the keys in the storage.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Return a list of all the keys in the storage.</span>
+<span class="sd">        '''</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">store_keys</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="AbstractStore.async_keys">
 <a class="viewcode-back" href="../../api-kivy.storage.html#kivy.storage.AbstractStore.async_keys">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">async_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Asynchronously return all the keys in the storage.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Asynchronously return all the keys in the storage.</span>
+<span class="sd">        '''</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_schedule</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store_keys_async</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="AbstractStore.count">
 <a class="viewcode-back" href="../../api-kivy.storage.html#kivy.storage.AbstractStore.count">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the number of entries in the storage.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Return the number of entries in the storage.</span>
+<span class="sd">        '''</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">store_count</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="AbstractStore.async_count">
 <a class="viewcode-back" href="../../api-kivy.storage.html#kivy.storage.AbstractStore.async_count">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">async_count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Asynchronously return the number of entries in the storage.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Asynchronously return the number of entries in the storage.</span>
+<span class="sd">        '''</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_schedule</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store_count_async</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="AbstractStore.clear">
 <a class="viewcode-back" href="../../api-kivy.storage.html#kivy.storage.AbstractStore.clear">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Wipe the whole storage.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Wipe the whole storage.</span>
+<span class="sd">        '''</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">store_clear</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="AbstractStore.async_clear">
 <a class="viewcode-back" href="../../api-kivy.storage.html#kivy.storage.AbstractStore.async_clear">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">async_clear</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Asynchronous version of :meth:`clear`.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Asynchronous version of :meth:`clear`.</span>
+<span class="sd">        '''</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_schedule</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store_clear_async</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span></div>
 
 
@@ -711,7 +711,7 @@
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Only dict are accepted for the store[key] = dict&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'Only dict are accepted for the store[key] = dict'</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="o">**</span><span class="n">values</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
@@ -839,7 +839,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

@@ -369,7 +369,7 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.input.postproc.calibration</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">Calibration</span>
 <span class="sd">===========</span>
 
@@ -377,7 +377,7 @@
 
 <span class="sd">Recalibrate input device to a specific range / offset.</span>
 
-<span class="sd">Let&#39;s say you have 3 1080p displays, the 2 firsts are multitouch. By default,</span>
+<span class="sd">Let's say you have 3 1080p displays, the 2 firsts are multitouch. By default,</span>
 <span class="sd">both will have mixed touch, the range will conflict with each others: the 0-1</span>
 <span class="sd">range will goes to 0-5760 px (remember, 3 * 1920 = 5760.)</span>
 
@@ -409,13 +409,13 @@
 <span class="sd">    [postproc:calibration]</span>
 <span class="sd">    (mtdev) = xratio=0.3333,xoffset=0.3333</span>
 
-<span class="sd">Calibrating devices like this means the device&#39;s path doesn&#39;t need to be</span>
+<span class="sd">Calibrating devices like this means the device's path doesn't need to be</span>
 <span class="sd">configured ahead of time. Note that with this method, all mtdev inputs will</span>
 <span class="sd">have the same calibration applied to them. For this reason, matching by</span>
 <span class="sd">provider will typically be useful when expecting only one input device.</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;InputPostprocCalibration&#39;</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'InputPostprocCalibration'</span><span class="p">,</span> <span class="p">)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">Logger</span>
@@ -427,7 +427,7 @@
 <div class="viewcode-block" id="InputPostprocCalibration">
 <a class="viewcode-back" href="../../../../api-kivy.input.postproc.calibration.html#kivy.input.postproc.calibration.InputPostprocCalibration">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">InputPostprocCalibration</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Recalibrate the inputs.</span>
+<span class="w">    </span><span class="sd">'''Recalibrate the inputs.</span>
 
 <span class="sd">    The configuration must go within a section named `postproc:calibration`.</span>
 <span class="sd">    Within the section, you must have a line like::</span>
@@ -460,38 +460,38 @@
 
 <span class="sd">    .. versionchanged:: 1.11.0</span>
 <span class="sd">        Added `auto` parameter</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">InputPostprocCalibration</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">devices</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">provider_map</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_provider_map</span><span class="p">()</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">Config</span><span class="o">.</span><span class="n">has_section</span><span class="p">(</span><span class="s1">&#39;postproc:calibration&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">Config</span><span class="o">.</span><span class="n">has_section</span><span class="p">(</span><span class="s1">'postproc:calibration'</span><span class="p">):</span>
             <span class="k">return</span>
-        <span class="n">default_params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;xoffset&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;yoffset&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;xratio&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;yratio&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
-        <span class="k">for</span> <span class="n">device_key</span><span class="p">,</span> <span class="n">params_str</span> <span class="ow">in</span> <span class="n">Config</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="s1">&#39;postproc:calibration&#39;</span><span class="p">):</span>
+        <span class="n">default_params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'xoffset'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'yoffset'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'xratio'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">'yratio'</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">device_key</span><span class="p">,</span> <span class="n">params_str</span> <span class="ow">in</span> <span class="n">Config</span><span class="o">.</span><span class="n">items</span><span class="p">(</span><span class="s1">'postproc:calibration'</span><span class="p">):</span>
             <span class="n">params</span> <span class="o">=</span> <span class="n">default_params</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">params_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">params_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">','</span><span class="p">):</span>
                 <span class="n">param</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">param</span><span class="p">:</span>
                     <span class="k">continue</span>
-                <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
-                    <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)]</span>
-                    <span class="n">params</span><span class="p">[</span><span class="s1">&#39;auto&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span>
+                <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'='</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">'auto'</span><span class="p">:</span>
+                    <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'x'</span><span class="p">)]</span>
+                    <span class="n">params</span><span class="p">[</span><span class="s1">'auto'</span><span class="p">]</span> <span class="o">=</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span>
                     <span class="k">break</span>
-                <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;xoffset&#39;</span><span class="p">,</span> <span class="s1">&#39;yoffset&#39;</span><span class="p">,</span> <span class="s1">&#39;xratio&#39;</span><span class="p">,</span> <span class="s1">&#39;yratio&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'xoffset'</span><span class="p">,</span> <span class="s1">'yoffset'</span><span class="p">,</span> <span class="s1">'xratio'</span><span class="p">,</span> <span class="s1">'yratio'</span><span class="p">):</span>
                     <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                        <span class="s1">&#39;Calibration: invalid key provided: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+                        <span class="s1">'Calibration: invalid key provided: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
                 <span class="n">params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">[</span><span class="n">device_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_provider_map</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Iterates through all registered input provider names and finds the</span>
+<span class="w">        </span><span class="sd">"""Iterates through all registered input provider names and finds the</span>
 <span class="sd">        respective MotionEvent subclass for each. Returns a dict of MotionEvent</span>
 <span class="sd">        subclasses mapped to their provider name.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">provider_map</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">input_provider</span> <span class="ow">in</span> <span class="n">MotionEventFactory</span><span class="o">.</span><span class="n">list</span><span class="p">():</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">providers</span><span class="p">,</span> <span class="n">input_provider</span><span class="p">):</span>
@@ -506,11 +506,11 @@
         <span class="k">return</span> <span class="n">provider_map</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_provider_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the provider key for the event if the provider is configured</span>
+<span class="w">        </span><span class="sd">"""Returns the provider key for the event if the provider is configured</span>
 <span class="sd">        for calibration.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">input_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">provider_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
-        <span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;(</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">input_type</span><span class="p">)</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="s1">'(</span><span class="si">{}</span><span class="s1">)'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">input_type</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">input_type</span> <span class="ow">and</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">key</span>
 
@@ -523,9 +523,9 @@
         <span class="n">frame</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span>
         <span class="n">to_remove</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">etype</span><span class="p">,</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">events</span><span class="p">:</span>
-            <span class="c1"># frame-based logic below doesn&#39;t account for</span>
+            <span class="c1"># frame-based logic below doesn't account for</span>
             <span class="c1"># end events having been already processed</span>
-            <span class="k">if</span> <span class="n">etype</span> <span class="o">==</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">etype</span> <span class="o">==</span> <span class="s1">'end'</span><span class="p">:</span>
                 <span class="k">continue</span>
 
             <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">device</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">:</span>
@@ -536,21 +536,21 @@
                 <span class="k">continue</span>
 
             <span class="c1"># some providers use the same event to update and end</span>
-            <span class="k">if</span> <span class="s1">&#39;calibration:frame&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">event</span><span class="o">.</span><span class="n">ud</span><span class="p">:</span>
-                <span class="n">event</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;calibration:frame&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">frame</span>
-            <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;calibration:frame&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">frame</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">'calibration:frame'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">event</span><span class="o">.</span><span class="n">ud</span><span class="p">:</span>
+                <span class="n">event</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">'calibration:frame'</span><span class="p">]</span> <span class="o">=</span> <span class="n">frame</span>
+            <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">'calibration:frame'</span><span class="p">]</span> <span class="o">==</span> <span class="n">frame</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="n">event</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;calibration:frame&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">frame</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">'calibration:frame'</span><span class="p">]</span> <span class="o">=</span> <span class="n">frame</span>
 
             <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">[</span><span class="n">dev</span><span class="p">]</span>
-            <span class="k">if</span> <span class="s1">&#39;auto&#39;</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">'auto'</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
                 <span class="n">event</span><span class="o">.</span><span class="n">sx</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">sy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_calibrate</span><span class="p">(</span>
-                    <span class="n">event</span><span class="o">.</span><span class="n">sx</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">sy</span><span class="p">,</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;auto&#39;</span><span class="p">])</span>
+                    <span class="n">event</span><span class="o">.</span><span class="n">sx</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">sy</span><span class="p">,</span> <span class="n">params</span><span class="p">[</span><span class="s1">'auto'</span><span class="p">])</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">event</span><span class="o">.</span><span class="n">sx</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">event</span><span class="o">.</span><span class="n">sy</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">):</span>
                     <span class="n">to_remove</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">etype</span><span class="p">,</span> <span class="n">event</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">event</span><span class="o">.</span><span class="n">sx</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">sx</span> <span class="o">*</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;xratio&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;xoffset&#39;</span><span class="p">]</span>
-                <span class="n">event</span><span class="o">.</span><span class="n">sy</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">sy</span> <span class="o">*</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;yratio&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;yoffset&#39;</span><span class="p">]</span>
+                <span class="n">event</span><span class="o">.</span><span class="n">sx</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">sx</span> <span class="o">*</span> <span class="n">params</span><span class="p">[</span><span class="s1">'xratio'</span><span class="p">]</span> <span class="o">+</span> <span class="n">params</span><span class="p">[</span><span class="s1">'xoffset'</span><span class="p">]</span>
+                <span class="n">event</span><span class="o">.</span><span class="n">sy</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">sy</span> <span class="o">*</span> <span class="n">params</span><span class="p">[</span><span class="s1">'yratio'</span><span class="p">]</span> <span class="o">+</span> <span class="n">params</span><span class="p">[</span><span class="s1">'yoffset'</span><span class="p">]</span>
 
         <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">to_remove</span><span class="p">:</span>
             <span class="n">events</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
@@ -586,7 +586,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

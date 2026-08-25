@@ -369,7 +369,7 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.input.providers.linuxwacom</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">Native support of Wacom tablet from linuxwacom driver</span>
 <span class="sd">=====================================================</span>
 
@@ -394,9 +394,9 @@
 <span class="sd">* max_position_y : Y maximum</span>
 <span class="sd">* min_pressure : pressure minimum</span>
 <span class="sd">* max_pressure : pressure maximum</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;LinuxWacomMotionEventProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;LinuxWacomMotionEvent&#39;</span><span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'LinuxWacomMotionEventProvider'</span><span class="p">,</span> <span class="s1">'LinuxWacomMotionEvent'</span><span class="p">)</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.input.motionevent</span><span class="w"> </span><span class="kn">import</span> <span class="n">MotionEvent</span>
@@ -408,34 +408,34 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">LinuxWacomMotionEvent</span><span class="p">(</span><span class="n">MotionEvent</span><span class="p">):</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;is_touch&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;type_id&#39;</span><span class="p">,</span> <span class="s1">&#39;touch&#39;</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">'is_touch'</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">'type_id'</span><span class="p">,</span> <span class="s1">'touch'</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
 <div class="viewcode-block" id="LinuxWacomMotionEvent.depack">
 <a class="viewcode-back" href="../../../../api-kivy.input.providers.linuxwacom.html#kivy.input.providers.linuxwacom.LinuxWacomMotionEvent.depack">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">depack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sx</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sy</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">profile</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;pos&#39;</span><span class="p">]</span>
-        <span class="k">if</span> <span class="s1">&#39;size_w&#39;</span> <span class="ow">in</span> <span class="n">args</span> <span class="ow">and</span> <span class="s1">&#39;size_h&#39;</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sx</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">'x'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sy</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">'y'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">profile</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'pos'</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">'size_w'</span> <span class="ow">in</span> <span class="n">args</span> <span class="ow">and</span> <span class="s1">'size_h'</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">ShapeRect</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;size_w&#39;</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;size_h&#39;</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;shape&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s1">&#39;pressure&#39;</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">pressure</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;pressure&#39;</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;pressure&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">'size_w'</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">'size_h'</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'shape'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">'pressure'</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pressure</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">'pressure'</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'pressure'</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">depack</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s1">&#39;&lt;LinuxWacomMotionEvent id=</span><span class="si">%d</span><span class="s1"> pos=(</span><span class="si">%f</span><span class="s1">, </span><span class="si">%f</span><span class="s1">) device=</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> \
+        <span class="k">return</span> <span class="s1">'&lt;LinuxWacomMotionEvent id=</span><span class="si">%d</span><span class="s1"> pos=(</span><span class="si">%f</span><span class="s1">, </span><span class="si">%f</span><span class="s1">) device=</span><span class="si">%s</span><span class="s1">&gt;'</span> \
             <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span></div>
 
 
 
-<span class="k">if</span> <span class="s1">&#39;KIVY_DOC&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+<span class="k">if</span> <span class="s1">'KIVY_DOC'</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
     <span class="c1"># documentation hack</span>
     <span class="n">LinuxWacomMotionEventProvider</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -487,7 +487,7 @@
     <span class="n">ABS_X</span> <span class="o">=</span> <span class="mh">0x00</span>
     <span class="n">ABS_Y</span> <span class="o">=</span> <span class="mh">0x01</span>
     <span class="n">ABS_PRESSURE</span> <span class="o">=</span> <span class="mh">0x18</span>
-    <span class="n">ABS_MISC</span> <span class="o">=</span> <span class="mh">0x28</span>  <span class="c1"># if 0, it&#39;s touch up</span>
+    <span class="n">ABS_MISC</span> <span class="o">=</span> <span class="mh">0x28</span>  <span class="c1"># if 0, it's touch up</span>
     <span class="n">ABS_MT_TOUCH_MAJOR</span> <span class="o">=</span> <span class="mh">0x30</span>  <span class="c1"># Major axis of touching ellipse</span>
     <span class="n">ABS_MT_TOUCH_MINOR</span> <span class="o">=</span> <span class="mh">0x31</span>  <span class="c1"># Minor axis (omit if circular)</span>
     <span class="n">ABS_MT_WIDTH_MAJOR</span> <span class="o">=</span> <span class="mh">0x32</span>  <span class="c1"># Major axis of approaching ellipse</span>
@@ -506,69 +506,69 @@
     <span class="n">EVIOCGABS</span> <span class="o">=</span> <span class="mi">2149074240</span>
 
     <span class="c1"># sizeof(struct input_event)</span>
-    <span class="n">struct_input_event_sz</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="s1">&#39;LLHHi&#39;</span><span class="p">)</span>
-    <span class="n">struct_input_absinfo_sz</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="s1">&#39;iiiiii&#39;</span><span class="p">)</span>
-    <span class="n">sz_l</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="s1">&#39;Q&#39;</span><span class="p">)</span>
+    <span class="n">struct_input_event_sz</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="s1">'LLHHi'</span><span class="p">)</span>
+    <span class="n">struct_input_absinfo_sz</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="s1">'iiiiii'</span><span class="p">)</span>
+    <span class="n">sz_l</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="s1">'Q'</span><span class="p">)</span>
 
     <span class="k">class</span><span class="w"> </span><span class="nc">LinuxWacomMotionEventProvider</span><span class="p">(</span><span class="n">MotionEventProvider</span><span class="p">):</span>
 
-        <span class="n">options</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;min_position_x&#39;</span><span class="p">,</span> <span class="s1">&#39;max_position_x&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;min_position_y&#39;</span><span class="p">,</span> <span class="s1">&#39;max_position_y&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;min_pressure&#39;</span><span class="p">,</span> <span class="s1">&#39;max_pressure&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;invert_x&#39;</span><span class="p">,</span> <span class="s1">&#39;invert_y&#39;</span><span class="p">)</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'min_position_x'</span><span class="p">,</span> <span class="s1">'max_position_x'</span><span class="p">,</span>
+                   <span class="s1">'min_position_y'</span><span class="p">,</span> <span class="s1">'max_position_y'</span><span class="p">,</span>
+                   <span class="s1">'min_pressure'</span><span class="p">,</span> <span class="s1">'max_pressure'</span><span class="p">,</span>
+                   <span class="s1">'invert_x'</span><span class="p">,</span> <span class="s1">'invert_y'</span><span class="p">)</span>
 
         <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
             <span class="nb">super</span><span class="p">(</span><span class="n">LinuxWacomMotionEventProvider</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">input_fn</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;touch&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="s1">'touch'</span>
 
             <span class="c1"># split arguments</span>
-            <span class="n">args</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">','</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="p">:</span>
-                <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;LinuxWacom: No filename given in config&#39;</span><span class="p">)</span>
-                <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;LinuxWacom: Use /dev/input/event0 for example&#39;</span><span class="p">)</span>
+                <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'LinuxWacom: No filename given in config'</span><span class="p">)</span>
+                <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'LinuxWacom: Use /dev/input/event0 for example'</span><span class="p">)</span>
                 <span class="k">return</span>
 
             <span class="c1"># read filename</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">input_fn</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;LinuxWacom: Read event from &lt;</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_fn</span><span class="p">)</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'LinuxWacom: Read event from &lt;</span><span class="si">%s</span><span class="s1">&gt;'</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_fn</span><span class="p">)</span>
 
             <span class="c1"># read parameters</span>
             <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
-                <span class="k">if</span> <span class="n">arg</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">arg</span> <span class="o">==</span> <span class="s1">''</span><span class="p">:</span>
                     <span class="k">continue</span>
-                <span class="n">arg</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span>
+                <span class="n">arg</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'='</span><span class="p">)</span>
 
-                <span class="c1"># ensure it&#39;s a key = value</span>
+                <span class="c1"># ensure it's a key = value</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-                    <span class="n">err</span> <span class="o">=</span> <span class="s1">&#39;LinuxWacom: Bad parameter&#39;</span> \
-                        <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">: Not in key=value format.&#39;</span> <span class="o">%</span> <span class="n">arg</span>
+                    <span class="n">err</span> <span class="o">=</span> <span class="s1">'LinuxWacom: Bad parameter'</span> \
+                        <span class="s1">'</span><span class="si">%s</span><span class="s1">: Not in key=value format.'</span> <span class="o">%</span> <span class="n">arg</span>
                     <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
                     <span class="k">continue</span>
 
                 <span class="c1"># ensure the key exist</span>
                 <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">arg</span>
-                <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;mode&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">'mode'</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">value</span>
                     <span class="k">continue</span>
 
                 <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">LinuxWacomMotionEventProvider</span><span class="o">.</span><span class="n">options</span><span class="p">:</span>
-                    <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;LinuxWacom: unknown </span><span class="si">%s</span><span class="s1"> option&#39;</span> <span class="o">%</span> <span class="n">key</span><span class="p">)</span>
+                    <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'LinuxWacom: unknown </span><span class="si">%s</span><span class="s1"> option'</span> <span class="o">%</span> <span class="n">key</span><span class="p">)</span>
                     <span class="k">continue</span>
 
                 <span class="c1"># ensure the value</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                    <span class="n">err</span> <span class="o">=</span> <span class="s1">&#39;LinuxWacom: value </span><span class="si">%s</span><span class="s1"> invalid for </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+                    <span class="n">err</span> <span class="o">=</span> <span class="s1">'LinuxWacom: value </span><span class="si">%s</span><span class="s1"> invalid for </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
                     <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
                     <span class="k">continue</span>
 
                 <span class="c1"># all good!</span>
-                <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;LinuxWacom: Set custom </span><span class="si">%s</span><span class="s1"> to </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s1">'LinuxWacom: Set custom </span><span class="si">%s</span><span class="s1"> to </span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
                 <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;LinuxWacom: mode is &lt;</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'LinuxWacom: mode is &lt;</span><span class="si">%s</span><span class="s1">&gt;'</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_fn</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -586,10 +586,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">_thread_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-            <span class="n">input_fn</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;input_fn&#39;</span><span class="p">)</span>
-            <span class="n">queue</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;queue&#39;</span><span class="p">)</span>
-            <span class="n">device</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;device&#39;</span><span class="p">)</span>
-            <span class="n">drs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;default_ranges&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span>
+            <span class="n">input_fn</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'input_fn'</span><span class="p">)</span>
+            <span class="n">queue</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'queue'</span><span class="p">)</span>
+            <span class="n">device</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'device'</span><span class="p">)</span>
+            <span class="n">drs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'default_ranges'</span><span class="p">)</span><span class="o">.</span><span class="n">get</span>
             <span class="n">touches</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="n">touches_sent</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">l_points</span> <span class="o">=</span> <span class="p">{}</span>
@@ -601,35 +601,35 @@
             <span class="n">range_max_position_y</span> <span class="o">=</span> <span class="mi">2048</span>
             <span class="n">range_min_pressure</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="n">range_max_pressure</span> <span class="o">=</span> <span class="mi">255</span>
-            <span class="n">invert_x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">drs</span><span class="p">(</span><span class="s1">&#39;invert_x&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
-            <span class="n">invert_y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">drs</span><span class="p">(</span><span class="s1">&#39;invert_y&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+            <span class="n">invert_x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">drs</span><span class="p">(</span><span class="s1">'invert_x'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+            <span class="n">invert_y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">drs</span><span class="p">(</span><span class="s1">'invert_y'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
             <span class="n">reset_touch</span> <span class="o">=</span> <span class="kc">False</span>
 
             <span class="k">def</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="n">points</span><span class="p">):</span>
                 <span class="n">actives</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">points</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
                 <span class="k">for</span> <span class="n">args</span> <span class="ow">in</span> <span class="n">points</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-                    <span class="n">tid</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+                    <span class="n">tid</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span>
                     <span class="k">try</span><span class="p">:</span>
                         <span class="n">touch</span> <span class="o">=</span> <span class="n">touches</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span>
                     <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
                         <span class="n">touch</span> <span class="o">=</span> <span class="n">LinuxWacomMotionEvent</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">tid</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
                         <span class="n">touches</span><span class="p">[</span><span class="n">touch</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">touch</span>
-                    <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">sx</span> <span class="o">==</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> \
-                            <span class="ow">and</span> <span class="n">touch</span><span class="o">.</span><span class="n">sy</span> <span class="o">==</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> \
+                    <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">sx</span> <span class="o">==</span> <span class="n">args</span><span class="p">[</span><span class="s1">'x'</span><span class="p">]</span> \
+                            <span class="ow">and</span> <span class="n">touch</span><span class="o">.</span><span class="n">sy</span> <span class="o">==</span> <span class="n">args</span><span class="p">[</span><span class="s1">'y'</span><span class="p">]</span> \
                             <span class="ow">and</span> <span class="n">tid</span> <span class="ow">in</span> <span class="n">touches_sent</span><span class="p">:</span>
                         <span class="k">continue</span>
                     <span class="n">touch</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">tid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">touches_sent</span><span class="p">:</span>
-                        <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;begin&#39;</span><span class="p">,</span> <span class="n">touch</span><span class="p">))</span>
+                        <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">'begin'</span><span class="p">,</span> <span class="n">touch</span><span class="p">))</span>
                         <span class="n">touches_sent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tid</span><span class="p">)</span>
-                    <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="n">touch</span><span class="p">))</span>
+                    <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">'update'</span><span class="p">,</span> <span class="n">touch</span><span class="p">))</span>
 
                 <span class="k">for</span> <span class="n">tid</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">touches</span><span class="o">.</span><span class="n">keys</span><span class="p">())[:]:</span>
                     <span class="k">if</span> <span class="n">tid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">actives</span><span class="p">:</span>
                         <span class="n">touch</span> <span class="o">=</span> <span class="n">touches</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span>
                         <span class="k">if</span> <span class="n">tid</span> <span class="ow">in</span> <span class="n">touches_sent</span><span class="p">:</span>
                             <span class="n">touch</span><span class="o">.</span><span class="n">update_time_end</span><span class="p">()</span>
-                            <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;end&#39;</span><span class="p">,</span> <span class="n">touch</span><span class="p">))</span>
+                            <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">'end'</span><span class="p">,</span> <span class="n">touch</span><span class="p">))</span>
                             <span class="n">touches_sent</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tid</span><span class="p">)</span>
                         <span class="k">del</span> <span class="n">touches</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span>
 
@@ -638,19 +638,19 @@
 
             <span class="c1"># open the input</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">fd</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">input_fn</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+                <span class="n">fd</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">input_fn</span><span class="p">,</span> <span class="s1">'rb'</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
-                <span class="n">Logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;Unable to open </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">input_fn</span><span class="p">)</span>
+                <span class="n">Logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">'Unable to open </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">input_fn</span><span class="p">)</span>
                 <span class="k">return</span>
 
             <span class="c1"># get the controller name (EVIOCGNAME)</span>
             <span class="n">device_name</span> <span class="o">=</span> <span class="n">fcntl</span><span class="o">.</span><span class="n">ioctl</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">EVIOCGNAME</span> <span class="o">+</span> <span class="p">(</span><span class="mi">256</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">),</span>
-                                      <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\x00</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;LinuxWacom: using &lt;</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="n">device_name</span><span class="p">)</span>
+                                      <span class="s2">" "</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'</span><span class="se">\x00</span><span class="s1">'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'LinuxWacom: using &lt;</span><span class="si">%s</span><span class="s1">&gt;'</span> <span class="o">%</span> <span class="n">device_name</span><span class="p">)</span>
 
             <span class="c1"># get abs infos</span>
-            <span class="n">bit</span> <span class="o">=</span> <span class="n">fcntl</span><span class="o">.</span><span class="n">ioctl</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">EVIOCGBIT</span> <span class="o">+</span> <span class="p">(</span><span class="n">EV_MAX</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">),</span> <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="n">sz_l</span><span class="p">)</span>
-            <span class="n">bit</span><span class="p">,</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;Q&#39;</span><span class="p">,</span> <span class="n">bit</span><span class="p">)</span>
+            <span class="n">bit</span> <span class="o">=</span> <span class="n">fcntl</span><span class="o">.</span><span class="n">ioctl</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">EVIOCGBIT</span> <span class="o">+</span> <span class="p">(</span><span class="n">EV_MAX</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">),</span> <span class="s1">' '</span> <span class="o">*</span> <span class="n">sz_l</span><span class="p">)</span>
+            <span class="n">bit</span><span class="p">,</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">'Q'</span><span class="p">,</span> <span class="n">bit</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">EV_MAX</span><span class="p">):</span>
                 <span class="c1"># preserve this, we may want other things than EV_ABS</span>
                 <span class="k">if</span> <span class="n">x</span> <span class="o">!=</span> <span class="n">EV_ABS</span><span class="p">:</span>
@@ -660,33 +660,33 @@
                     <span class="k">continue</span>
                 <span class="c1"># ask abs info keys to the devices</span>
                 <span class="n">sbit</span> <span class="o">=</span> <span class="n">fcntl</span><span class="o">.</span><span class="n">ioctl</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">EVIOCGBIT</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="n">KEY_MAX</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">),</span>
-                                   <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="n">sz_l</span><span class="p">)</span>
-                <span class="n">sbit</span><span class="p">,</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;Q&#39;</span><span class="p">,</span> <span class="n">sbit</span><span class="p">)</span>
+                                   <span class="s1">' '</span> <span class="o">*</span> <span class="n">sz_l</span><span class="p">)</span>
+                <span class="n">sbit</span><span class="p">,</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">'Q'</span><span class="p">,</span> <span class="n">sbit</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">KEY_MAX</span><span class="p">):</span>
                     <span class="k">if</span> <span class="p">(</span><span class="n">sbit</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">y</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                         <span class="k">continue</span>
                     <span class="n">absinfo</span> <span class="o">=</span> <span class="n">fcntl</span><span class="o">.</span><span class="n">ioctl</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">EVIOCGABS</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span>
                                           <span class="p">(</span><span class="n">struct_input_absinfo_sz</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">),</span>
-                                          <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="n">struct_input_absinfo_sz</span><span class="p">)</span>
+                                          <span class="s1">' '</span> <span class="o">*</span> <span class="n">struct_input_absinfo_sz</span><span class="p">)</span>
                     <span class="n">abs_value</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">,</span> <span class="n">abs_fuzz</span><span class="p">,</span> \
-                        <span class="n">abs_flat</span><span class="p">,</span> <span class="n">abs_res</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;iiiiii&#39;</span><span class="p">,</span> <span class="n">absinfo</span><span class="p">)</span>
+                        <span class="n">abs_flat</span><span class="p">,</span> <span class="n">abs_res</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">'iiiiii'</span><span class="p">,</span> <span class="n">absinfo</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">y</span> <span class="o">==</span> <span class="n">ABS_X</span><span class="p">:</span>
-                        <span class="n">range_min_position_x</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;min_position_x&#39;</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">)</span>
-                        <span class="n">range_max_position_x</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;max_position_x&#39;</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">)</span>
-                        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;LinuxWacom: &#39;</span> <span class="o">+</span>
-                                    <span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1">&gt; range position X is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">range_min_position_x</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'min_position_x'</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">)</span>
+                        <span class="n">range_max_position_x</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'max_position_x'</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">)</span>
+                        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'LinuxWacom: '</span> <span class="o">+</span>
+                                    <span class="s1">'&lt;</span><span class="si">%s</span><span class="s1">&gt; range position X is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span>
                                         <span class="n">device_name</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">))</span>
                     <span class="k">elif</span> <span class="n">y</span> <span class="o">==</span> <span class="n">ABS_Y</span><span class="p">:</span>
-                        <span class="n">range_min_position_y</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;min_position_y&#39;</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">)</span>
-                        <span class="n">range_max_position_y</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;max_position_y&#39;</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">)</span>
-                        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;LinuxWacom: &#39;</span> <span class="o">+</span>
-                                    <span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1">&gt; range position Y is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">range_min_position_y</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'min_position_y'</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">)</span>
+                        <span class="n">range_max_position_y</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'max_position_y'</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">)</span>
+                        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'LinuxWacom: '</span> <span class="o">+</span>
+                                    <span class="s1">'&lt;</span><span class="si">%s</span><span class="s1">&gt; range position Y is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span>
                                         <span class="n">device_name</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">))</span>
                     <span class="k">elif</span> <span class="n">y</span> <span class="o">==</span> <span class="n">ABS_PRESSURE</span><span class="p">:</span>
-                        <span class="n">range_min_pressure</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;min_pressure&#39;</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">)</span>
-                        <span class="n">range_max_pressure</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;max_pressure&#39;</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">)</span>
-                        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;LinuxWacom: &#39;</span> <span class="o">+</span>
-                                    <span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1">&gt; range pressure is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">range_min_pressure</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'min_pressure'</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">)</span>
+                        <span class="n">range_max_pressure</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'max_pressure'</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">)</span>
+                        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'LinuxWacom: '</span> <span class="o">+</span>
+                                    <span class="s1">'&lt;</span><span class="si">%s</span><span class="s1">&gt; range pressure is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span>
                                         <span class="n">device_name</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">))</span>
 
             <span class="c1"># read until the end</span>
@@ -707,7 +707,7 @@
 
                     <span class="c1"># extract timeval + event infos</span>
                     <span class="n">tv_sec</span><span class="p">,</span> <span class="n">tv_usec</span><span class="p">,</span> <span class="n">ev_type</span><span class="p">,</span> <span class="n">ev_code</span><span class="p">,</span> <span class="n">ev_value</span> <span class="o">=</span> \
-                        <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;LLHHi&#39;</span><span class="p">,</span> <span class="n">ev</span><span class="p">[:</span><span class="n">struct_input_event_sz</span><span class="p">])</span>
+                        <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">'LLHHi'</span><span class="p">,</span> <span class="n">ev</span><span class="p">[:</span><span class="n">struct_input_event_sz</span><span class="p">])</span>
 
                     <span class="k">if</span> <span class="n">ev_type</span> <span class="o">==</span> <span class="n">EV_SYN</span> <span class="ow">and</span> <span class="n">ev_code</span> <span class="o">==</span> <span class="n">SYN_REPORT</span><span class="p">:</span>
                         <span class="k">if</span> <span class="n">touch_id</span> <span class="ow">in</span> <span class="n">l_points</span><span class="p">:</span>
@@ -715,17 +715,17 @@
                         <span class="k">else</span><span class="p">:</span>
                             <span class="n">p</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
                             <span class="n">l_points</span><span class="p">[</span><span class="n">touch_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span>
-                        <span class="n">p</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">touch_id</span>
+                        <span class="n">p</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span> <span class="o">=</span> <span class="n">touch_id</span>
                         <span class="k">if</span> <span class="ow">not</span> <span class="n">reset_touch</span><span class="p">:</span>
-                            <span class="n">p</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">touch_x</span>
-                            <span class="n">p</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">touch_y</span>
-                            <span class="n">p</span><span class="p">[</span><span class="s1">&#39;pressure&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">touch_pressure</span>
-                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;pen&#39;</span> \
+                            <span class="n">p</span><span class="p">[</span><span class="s1">'x'</span><span class="p">]</span> <span class="o">=</span> <span class="n">touch_x</span>
+                            <span class="n">p</span><span class="p">[</span><span class="s1">'y'</span><span class="p">]</span> <span class="o">=</span> <span class="n">touch_y</span>
+                            <span class="n">p</span><span class="p">[</span><span class="s1">'pressure'</span><span class="p">]</span> <span class="o">=</span> <span class="n">touch_pressure</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s1">'pen'</span> \
                                 <span class="ow">and</span> <span class="n">touch_pressure</span> <span class="o">==</span> <span class="mi">0</span> \
                                 <span class="ow">and</span> <span class="ow">not</span> <span class="n">reset_touch</span><span class="p">:</span>
                             <span class="k">del</span> <span class="n">l_points</span><span class="p">[</span><span class="n">touch_id</span><span class="p">]</span>
                         <span class="k">if</span> <span class="n">changed</span><span class="p">:</span>
-                            <span class="k">if</span> <span class="s1">&#39;x&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">p</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="s1">'x'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">p</span><span class="p">:</span>
                                 <span class="n">reset_touch</span> <span class="o">=</span> <span class="kc">False</span>
                                 <span class="k">continue</span>
                             <span class="n">process</span><span class="p">(</span><span class="n">l_points</span><span class="p">)</span>
@@ -770,7 +770,7 @@
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="k">pass</span>
 
-    <span class="n">MotionEventFactory</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;linuxwacom&#39;</span><span class="p">,</span> <span class="n">LinuxWacomMotionEventProvider</span><span class="p">)</span>
+    <span class="n">MotionEventFactory</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">'linuxwacom'</span><span class="p">,</span> <span class="n">LinuxWacomMotionEventProvider</span><span class="p">)</span>
 </pre></div>
 
             <div class="footerlinks">
@@ -785,7 +785,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

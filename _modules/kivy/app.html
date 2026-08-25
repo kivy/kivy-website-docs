@@ -369,7 +369,7 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.app</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">Application</span>
 <span class="sd">===========</span>
 
@@ -377,7 +377,7 @@
 <span class="sd">Think of it as your main entry point into the Kivy run loop. In most</span>
 <span class="sd">cases, you subclass this class and make your own app. You create an</span>
 <span class="sd">instance of your specific app class and then, when you are ready to</span>
-<span class="sd">start the application&#39;s life cycle, you call your instance&#39;s</span>
+<span class="sd">start the application's life cycle, you call your instance's</span>
 <span class="sd">:meth:`App.run` method.</span>
 
 
@@ -390,7 +390,7 @@
 <span class="sd">To initialize your app with a widget tree, override the :meth:`~App.build`</span>
 <span class="sd">method in your app class and return the widget tree you constructed.</span>
 
-<span class="sd">Here&#39;s an example of a very simple application that just shows a button:</span>
+<span class="sd">Here's an example of a very simple application that just shows a button:</span>
 
 <span class="sd">.. include:: ../../examples/application/app_with_build.py</span>
 <span class="sd">   :literal:</span>
@@ -409,12 +409,12 @@
 <span class="sd">.kv can contain rules and root widget definitions at the same time. Here</span>
 <span class="sd">is the same example as the Button one in a kv file.</span>
 
-<span class="sd">Contents of &#39;test.kv&#39;:</span>
+<span class="sd">Contents of 'test.kv':</span>
 
 <span class="sd">.. include:: ../../examples/application/test.kv</span>
 <span class="sd">   :literal:</span>
 
-<span class="sd">Contents of &#39;main.py&#39;:</span>
+<span class="sd">Contents of 'main.py':</span>
 
 <span class="sd">.. include:: ../../examples/application/app_with_kv.py</span>
 <span class="sd">   :literal:</span>
@@ -433,41 +433,41 @@
 <span class="sd">~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
 
 <span class="sd">Your application might need its own configuration file. The</span>
-<span class="sd">:class:`App` class handles &#39;ini&#39; files automatically if you add</span>
+<span class="sd">:class:`App` class handles 'ini' files automatically if you add</span>
 <span class="sd">the section key-value pair to the :meth:`App.build_config` method using the</span>
 <span class="sd">`config` parameter (an instance of :class:`~kivy.config.ConfigParser`)::</span>
 
 <span class="sd">    class TestApp(App):</span>
 <span class="sd">        def build_config(self, config):</span>
-<span class="sd">            config.setdefaults(&#39;section1&#39;, {</span>
-<span class="sd">                &#39;key1&#39;: &#39;value1&#39;,</span>
-<span class="sd">                &#39;key2&#39;: &#39;42&#39;</span>
+<span class="sd">            config.setdefaults('section1', {</span>
+<span class="sd">                'key1': 'value1',</span>
+<span class="sd">                'key2': '42'</span>
 <span class="sd">            })</span>
 
 <span class="sd">As soon as you add one section to the config, a file is created on the</span>
 <span class="sd">disk (see :attr:`~App.get_application_config` for its location) and</span>
-<span class="sd">named based your class name. &quot;TestApp&quot; will give a config file named</span>
-<span class="sd">&quot;test.ini&quot; with the content::</span>
+<span class="sd">named based your class name. "TestApp" will give a config file named</span>
+<span class="sd">"test.ini" with the content::</span>
 
 <span class="sd">    [section1]</span>
 <span class="sd">    key1 = value1</span>
 <span class="sd">    key2 = 42</span>
 
-<span class="sd">The &quot;test.ini&quot; will be automatically loaded at runtime and you can access the</span>
+<span class="sd">The "test.ini" will be automatically loaded at runtime and you can access the</span>
 <span class="sd">configuration in your :meth:`App.build` method::</span>
 
 <span class="sd">    class TestApp(App):</span>
 <span class="sd">        def build_config(self, config):</span>
-<span class="sd">            config.setdefaults(&#39;section1&#39;, {</span>
-<span class="sd">                &#39;key1&#39;: &#39;value1&#39;,</span>
-<span class="sd">                &#39;key2&#39;: &#39;42&#39;</span>
+<span class="sd">            config.setdefaults('section1', {</span>
+<span class="sd">                'key1': 'value1',</span>
+<span class="sd">                'key2': '42'</span>
 <span class="sd">            })</span>
 
 <span class="sd">        def build(self):</span>
 <span class="sd">            config = self.config</span>
-<span class="sd">            return Label(text=&#39;key1 is %s and key2 is %d&#39; % (</span>
-<span class="sd">                config.get(&#39;section1&#39;, &#39;key1&#39;),</span>
-<span class="sd">                config.getint(&#39;section1&#39;, &#39;key2&#39;)))</span>
+<span class="sd">            return Label(text='key1 is %s and key2 is %d' % (</span>
+<span class="sd">                config.get('section1', 'key1'),</span>
+<span class="sd">                config.getint('section1', 'key2')))</span>
 
 <span class="sd">Create a settings panel</span>
 <span class="sd">~~~~~~~~~~~~~~~~~~~~~~~</span>
@@ -484,25 +484,25 @@
 <span class="sd">Check the :class:`~kivy.uix.settings.Settings` about how to create a panel,</span>
 <span class="sd">because you need a JSON file / data first.</span>
 
-<span class="sd">Let&#39;s take as an example the previous snippet of TestApp with custom</span>
+<span class="sd">Let's take as an example the previous snippet of TestApp with custom</span>
 <span class="sd">config. We could create a JSON like this::</span>
 
 <span class="sd">    [</span>
-<span class="sd">        { &quot;type&quot;: &quot;title&quot;,</span>
-<span class="sd">          &quot;title&quot;: &quot;Test application&quot; },</span>
+<span class="sd">        { "type": "title",</span>
+<span class="sd">          "title": "Test application" },</span>
 
-<span class="sd">        { &quot;type&quot;: &quot;options&quot;,</span>
-<span class="sd">          &quot;title&quot;: &quot;My first key&quot;,</span>
-<span class="sd">          &quot;desc&quot;: &quot;Description of my first key&quot;,</span>
-<span class="sd">          &quot;section&quot;: &quot;section1&quot;,</span>
-<span class="sd">          &quot;key&quot;: &quot;key1&quot;,</span>
-<span class="sd">          &quot;options&quot;: [&quot;value1&quot;, &quot;value2&quot;, &quot;another value&quot;] },</span>
+<span class="sd">        { "type": "options",</span>
+<span class="sd">          "title": "My first key",</span>
+<span class="sd">          "desc": "Description of my first key",</span>
+<span class="sd">          "section": "section1",</span>
+<span class="sd">          "key": "key1",</span>
+<span class="sd">          "options": ["value1", "value2", "another value"] },</span>
 
-<span class="sd">        { &quot;type&quot;: &quot;numeric&quot;,</span>
-<span class="sd">          &quot;title&quot;: &quot;My second key&quot;,</span>
-<span class="sd">          &quot;desc&quot;: &quot;Description of my second key&quot;,</span>
-<span class="sd">          &quot;section&quot;: &quot;section1&quot;,</span>
-<span class="sd">          &quot;key&quot;: &quot;key2&quot; }</span>
+<span class="sd">        { "type": "numeric",</span>
+<span class="sd">          "title": "My second key",</span>
+<span class="sd">          "desc": "Description of my second key",</span>
+<span class="sd">          "section": "section1",</span>
+<span class="sd">          "key": "key2" }</span>
 <span class="sd">    ]</span>
 
 <span class="sd">Then, we can create a panel using this JSON to automatically create all the</span>
@@ -511,19 +511,19 @@
 <span class="sd">    class TestApp(App):</span>
 <span class="sd">        # ...</span>
 <span class="sd">        def build_settings(self, settings):</span>
-<span class="sd">            jsondata = &quot;&quot;&quot;... put the json data here ...&quot;&quot;&quot;</span>
-<span class="sd">            settings.add_json_panel(&#39;Test application&#39;,</span>
+<span class="sd">            jsondata = """... put the json data here ..."""</span>
+<span class="sd">            settings.add_json_panel('Test application',</span>
 <span class="sd">                self.config, data=jsondata)</span>
 
-<span class="sd">That&#39;s all! Now you can press F1 (default keystroke) to toggle the</span>
-<span class="sd">settings panel or press the &quot;settings&quot; key on your android device. You</span>
+<span class="sd">That's all! Now you can press F1 (default keystroke) to toggle the</span>
+<span class="sd">settings panel or press the "settings" key on your android device. You</span>
 <span class="sd">can manually call :meth:`App.open_settings` and</span>
 <span class="sd">:meth:`App.close_settings` if you want to handle this manually. Every</span>
 <span class="sd">change in the panel is automatically saved in the config file.</span>
 
 <span class="sd">You can also use :meth:`App.build_settings` to modify properties of</span>
 <span class="sd">the settings panel. For instance, the default panel has a sidebar for</span>
-<span class="sd">switching between json panels whose width defaults to 200dp. If you&#39;d</span>
+<span class="sd">switching between json panels whose width defaults to 200dp. If you'd</span>
 <span class="sd">prefer this to be narrower, you could add::</span>
 
 <span class="sd">    settings.interface.menu.width = dp(100)</span>
@@ -539,13 +539,13 @@
 <span class="sd">        def on_config_change(self, config, section, key, value):</span>
 <span class="sd">            if config is self.config:</span>
 <span class="sd">                token = (section, key)</span>
-<span class="sd">                if token == (&#39;section1&#39;, &#39;key1&#39;):</span>
-<span class="sd">                    print(&#39;Our key1 has been changed to&#39;, value)</span>
-<span class="sd">                elif token == (&#39;section1&#39;, &#39;key2&#39;):</span>
-<span class="sd">                    print(&#39;Our key2 has been changed to&#39;, value)</span>
+<span class="sd">                if token == ('section1', 'key1'):</span>
+<span class="sd">                    print('Our key1 has been changed to', value)</span>
+<span class="sd">                elif token == ('section1', 'key2'):</span>
+<span class="sd">                    print('Our key2 has been changed to', value)</span>
 
 <span class="sd">The Kivy configuration panel is added by default to the settings</span>
-<span class="sd">instance. If you don&#39;t want this panel, you can declare your Application as</span>
+<span class="sd">instance. If you don't want this panel, you can declare your Application as</span>
 <span class="sd">follows::</span>
 
 <span class="sd">    class TestApp(App):</span>
@@ -569,7 +569,7 @@
 <span class="sd">optimise. The standard library profilers</span>
 <span class="sd">(http://docs.python.org/2/library/profile.html) provides multiple options for</span>
 <span class="sd">profiling code. For profiling the entire program, the natural</span>
-<span class="sd">approaches of using profile as a module or profile&#39;s run method does not work</span>
+<span class="sd">approaches of using profile as a module or profile's run method does not work</span>
 <span class="sd">with Kivy. It is however, possible to use :meth:`App.on_start` and</span>
 <span class="sd">:meth:`App.on_stop` methods::</span>
 
@@ -582,7 +582,7 @@
 
 <span class="sd">        def on_stop(self):</span>
 <span class="sd">            self.profile.disable()</span>
-<span class="sd">            self.profile.dump_stats(&#39;myapp.profile&#39;)</span>
+<span class="sd">            self.profile.dump_stats('myapp.profile')</span>
 
 <span class="sd">This will create a file called `myapp.profile` when you exit your app.</span>
 
@@ -602,7 +602,7 @@
 <span class="sd">displaying the settings panel on the screen. By default, it</span>
 <span class="sd">simply draws the panel on top of the window, but you could modify it</span>
 <span class="sd">to (for instance) show the settings in a</span>
-<span class="sd">:class:`~kivy.uix.popup.Popup` or add it to your app&#39;s</span>
+<span class="sd">:class:`~kivy.uix.popup.Popup` or add it to your app's</span>
 <span class="sd">:class:`~kivy.uix.screenmanager.ScreenManager` if you are using</span>
 <span class="sd">one. If you do so, you should also modify :meth:`App.close_settings`</span>
 <span class="sd">to exit the panel appropriately. For instance, to have the settings</span>
@@ -613,7 +613,7 @@
 <span class="sd">            p = self.settings_popup</span>
 <span class="sd">        except AttributeError:</span>
 <span class="sd">            self.settings_popup = Popup(content=settings,</span>
-<span class="sd">                                        title=&#39;Settings&#39;,</span>
+<span class="sd">                                        title='Settings',</span>
 <span class="sd">                                        size_hint=(0.8, 0.8))</span>
 <span class="sd">            p = self.settings_popup</span>
 <span class="sd">        if p.content is not settings:</span>
@@ -625,7 +625,7 @@
 <span class="sd">            p = self.settings_popup</span>
 <span class="sd">            p.dismiss()</span>
 <span class="sd">        except AttributeError:</span>
-<span class="sd">            pass # Settings popup doesn&#39;t exist</span>
+<span class="sd">            pass # Settings popup doesn't exist</span>
 
 <span class="sd">Finally, if you want to replace the current settings panel widget, you</span>
 <span class="sd">can remove the internal references to it using</span>
@@ -711,7 +711,7 @@
 <span class="sd">:func:`async_runTouchApp` and :meth:`App.async_run` set the async</span>
 <span class="sd">library that Kivy uses internally when the app is run with</span>
 <span class="sd">:func:`async_runTouchApp` and :meth:`App.async_run`. It can be set to one of</span>
-<span class="sd">`&quot;asyncio&quot;` when the standard library `asyncio` is used, or `&quot;trio&quot;` if the</span>
+<span class="sd">`"asyncio"` when the standard library `asyncio` is used, or `"trio"` if the</span>
 <span class="sd">trio library is used. If the environment variable is not set and ``async_lib``</span>
 <span class="sd">is not provided, the stdlib ``asyncio`` is used.</span>
 
@@ -720,10 +720,10 @@
 <span class="sd">app has begun running with :func:`async_runTouchApp` or :meth:`App.async_run`.</span>
 
 <span class="sd">To run the app asynchronously, one schedules :func:`async_runTouchApp`</span>
-<span class="sd">or :meth:`App.async_run` to run within the given library&#39;s async event loop as</span>
+<span class="sd">or :meth:`App.async_run` to run within the given library's async event loop as</span>
 <span class="sd">in the examples shown below. Kivy is then treated as just another coroutine</span>
 <span class="sd">that the given library runs in its event loop. Internally, Kivy will use the</span>
-<span class="sd">specified async library&#39;s API, so ``KIVY_EVENTLOOP`` or ``async_lib`` must</span>
+<span class="sd">specified async library's API, so ``KIVY_EVENTLOOP`` or ``async_lib`` must</span>
 <span class="sd">match the async library that is running Kivy.</span>
 
 
@@ -743,7 +743,7 @@
 
 <span class="sd">    loop = asyncio.get_event_loop()</span>
 <span class="sd">    loop.run_until_complete(</span>
-<span class="sd">        async_runTouchApp(Label(text=&#39;Hello, World!&#39;), async_lib=&#39;asyncio&#39;))</span>
+<span class="sd">        async_runTouchApp(Label(text='Hello, World!'), async_lib='asyncio'))</span>
 <span class="sd">    loop.close()</span>
 
 <span class="sd">Trio example</span>
@@ -759,9 +759,9 @@
 <span class="sd">    from functools import partial</span>
 
 <span class="sd">    # use functools.partial() to pass keyword arguments:</span>
-<span class="sd">    async_runTouchApp_func = partial(async_runTouchApp, async_lib=&#39;trio&#39;)</span>
+<span class="sd">    async_runTouchApp_func = partial(async_runTouchApp, async_lib='trio')</span>
 
-<span class="sd">    trio.run(async_runTouchApp_func, Label(text=&#39;Hello, World!&#39;))</span>
+<span class="sd">    trio.run(async_runTouchApp_func, Label(text='Hello, World!'))</span>
 
 <span class="sd">Interacting with Kivy app from other coroutines</span>
 <span class="sd">-----------------------------------------------</span>
@@ -804,11 +804,11 @@
 
 <span class="sd">Set a user-facing application title for your directories by using the</span>
 <span class="sd">``KIVY_DESKTOP_PATH_ID`` environment variable before starting your application.</span>
-<span class="sd">This makes it easy for end users to identify your app&#39;s directories when browsing</span>
+<span class="sd">This makes it easy for end users to identify your app's directories when browsing</span>
 <span class="sd">their filesystem::</span>
 
 <span class="sd">    import os</span>
-<span class="sd">    os.environ[&#39;KIVY_DESKTOP_PATH_ID&#39;] = &#39;My Photo Editor&#39;</span>
+<span class="sd">    os.environ['KIVY_DESKTOP_PATH_ID'] = 'My Photo Editor'</span>
 
 <span class="sd">    from kivy.app import App</span>
 <span class="sd">    # Creates: %APPDATA%/My_Photo_Editor/ (Windows)</span>
@@ -832,9 +832,9 @@
 
 <span class="sd">.. versionadded:: 3.0.0</span>
 
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;App&#39;</span><span class="p">,</span> <span class="s1">&#39;runTouchApp&#39;</span><span class="p">,</span> <span class="s1">&#39;async_runTouchApp&#39;</span><span class="p">,</span> <span class="s1">&#39;stopTouchApp&#39;</span><span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'App'</span><span class="p">,</span> <span class="s1">'runTouchApp'</span><span class="p">,</span> <span class="s1">'async_runTouchApp'</span><span class="p">,</span> <span class="s1">'stopTouchApp'</span><span class="p">)</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">inspect</span><span class="w"> </span><span class="kn">import</span> <span class="n">getfile</span>
@@ -855,7 +855,7 @@
 <div class="viewcode-block" id="App">
 <a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">App</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39; Application class, see module documentation for more information.</span>
+<span class="w">    </span><span class="sd">''' Application class, see module documentation for more information.</span>
 
 <span class="sd">    :Events:</span>
 <span class="sd">        `on_start`:</span>
@@ -879,20 +879,20 @@
 
 <span class="sd">    .. versionchanged:: 1.8.0</span>
 <span class="sd">        Parameters `kv_file` and `kv_directory` are now properties of App.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">title</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''</span>
 <span class="sd">    Title of your application. You can set this as follows::</span>
 
 <span class="sd">        class MyApp(App):</span>
 <span class="sd">            def build(self):</span>
-<span class="sd">                self.title = &#39;Hello world&#39;</span>
+<span class="sd">                self.title = 'Hello world'</span>
 
 <span class="sd">    .. versionadded:: 1.0.5</span>
 
 <span class="sd">    .. versionchanged:: 1.8.0</span>
-<span class="sd">        `title` is now a :class:`~kivy.properties.StringProperty`. Don&#39;t</span>
+<span class="sd">        `title` is now a :class:`~kivy.properties.StringProperty`. Don't</span>
 <span class="sd">        set the title in the class as previously stated in the documentation.</span>
 
 <span class="sd">    .. note::</span>
@@ -900,28 +900,28 @@
 <span class="sd">        For Kivy &lt; 1.8.0, you can set this as follows::</span>
 
 <span class="sd">            class MyApp(App):</span>
-<span class="sd">                title = &#39;Custom title&#39;</span>
+<span class="sd">                title = 'Custom title'</span>
 
 <span class="sd">        If you want to dynamically change the title, you can do::</span>
 
 <span class="sd">            from kivy.base import EventLoop</span>
-<span class="sd">            EventLoop.window.title = &#39;New title&#39;</span>
+<span class="sd">            EventLoop.window.title = 'New title'</span>
 
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">icon</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Icon of your application.</span>
+<span class="w">    </span><span class="sd">'''Icon of your application.</span>
 <span class="sd">    The icon can be located in the same directory as your main file. You can</span>
 <span class="sd">    set this as follows::</span>
 
 <span class="sd">        class MyApp(App):</span>
 <span class="sd">            def build(self):</span>
-<span class="sd">                self.icon = &#39;myicon.png&#39;</span>
+<span class="sd">                self.icon = 'myicon.png'</span>
 
 <span class="sd">    .. versionadded:: 1.0.5</span>
 
 <span class="sd">    .. versionchanged:: 1.8.0</span>
-<span class="sd">        `icon` is now a :class:`~kivy.properties.StringProperty`. Don&#39;t set the</span>
+<span class="sd">        `icon` is now a :class:`~kivy.properties.StringProperty`. Don't set the</span>
 <span class="sd">        icon in the class as previously stated in the documentation.</span>
 
 <span class="sd">    .. note::</span>
@@ -929,24 +929,24 @@
 <span class="sd">        For Kivy prior to 1.8.0, you need to set this as follows::</span>
 
 <span class="sd">            class MyApp(App):</span>
-<span class="sd">                icon = &#39;customicon.png&#39;</span>
+<span class="sd">                icon = 'customicon.png'</span>
 
 <span class="sd">        Recommended 256x256 or 1024x1024? for GNU/Linux and Mac OSX</span>
 <span class="sd">        32x32 for Windows7 or less. &lt;= 256x256 for windows 8</span>
 <span class="sd">        256x256 does work (on Windows 8 at least), but is scaled</span>
-<span class="sd">        down and doesn&#39;t look as good as a 32x32 icon.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">        down and doesn't look as good as a 32x32 icon.</span>
+<span class="sd">    '''</span>
 
     <span class="n">use_kivy_settings</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;.. versionadded:: 1.0.7</span>
+<span class="w">    </span><span class="sd">'''.. versionadded:: 1.0.7</span>
 
 <span class="sd">    If True, the application settings will also include the Kivy settings. If</span>
-<span class="sd">    you don&#39;t want the user to change any kivy settings from your settings UI,</span>
+<span class="sd">    you don't want the user to change any kivy settings from your settings UI,</span>
 <span class="sd">    change this to False.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">settings_cls</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;.. versionadded:: 1.8.0</span>
+<span class="w">    </span><span class="sd">'''.. versionadded:: 1.8.0</span>
 
 <span class="sd">    The class used to construct the settings panel and</span>
 <span class="sd">    the instance passed to :meth:`build_config`. You should</span>
@@ -965,36 +965,36 @@
 <span class="sd">    a string, the :class:`~kivy.factory.Factory` will be used to resolve the</span>
 <span class="sd">    class.</span>
 
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">kv_directory</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Path of the directory where application kv is stored, defaults to None</span>
+<span class="w">    </span><span class="sd">'''Path of the directory where application kv is stored, defaults to None</span>
 
 <span class="sd">    .. versionadded:: 1.8.0</span>
 
 <span class="sd">    If a kv_directory is set, it will be used to get the initial kv file. By</span>
 <span class="sd">    default, the file is assumed to be in the same directory as the current App</span>
 <span class="sd">    definition file.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">kv_file</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Filename of the Kv file to load, defaults to None.</span>
+<span class="w">    </span><span class="sd">'''Filename of the Kv file to load, defaults to None.</span>
 
 <span class="sd">    .. versionadded:: 1.8.0</span>
 
 <span class="sd">    If a kv_file is set, it will be loaded when the application starts. The</span>
-<span class="sd">    loading of the &quot;default&quot; kv file will be prevented.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    loading of the "default" kv file will be prevented.</span>
+<span class="sd">    '''</span>
 
     <span class="c1"># Return the current running App instance</span>
     <span class="n">_running_app</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;on_start&#39;</span><span class="p">,</span> <span class="s1">&#39;on_ready&#39;</span><span class="p">,</span> <span class="s1">&#39;on_stop&#39;</span><span class="p">,</span> <span class="s1">&#39;on_pause&#39;</span><span class="p">,</span> <span class="s1">&#39;on_resume&#39;</span><span class="p">,</span>
-                  <span class="s1">&#39;on_config_change&#39;</span><span class="p">,</span> <span class="p">)</span>
+    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'on_start'</span><span class="p">,</span> <span class="s1">'on_ready'</span><span class="p">,</span> <span class="s1">'on_stop'</span><span class="p">,</span> <span class="s1">'on_pause'</span><span class="p">,</span> <span class="s1">'on_resume'</span><span class="p">,</span>
+                  <span class="s1">'on_config_change'</span><span class="p">,</span> <span class="p">)</span>
 
     <span class="c1"># Stored so that we only need to determine this once</span>
-    <span class="n">_user_data_dir</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-    <span class="n">_user_cache_dir</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">_user_data_dir</span> <span class="o">=</span> <span class="s2">""</span>
+    <span class="n">_user_cache_dir</span> <span class="o">=</span> <span class="s2">""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">App</span><span class="o">.</span><span class="n">_running_app</span> <span class="o">=</span> <span class="bp">self</span>
@@ -1023,13 +1023,13 @@
 <div class="viewcode-block" id="App.build">
 <a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.build">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Initializes the application; it will be called only once.</span>
+<span class="w">        </span><span class="sd">'''Initializes the application; it will be called only once.</span>
 <span class="sd">        If this method returns a widget (tree), it will be used as the root</span>
 <span class="sd">        widget and added to the window.</span>
 
 <span class="sd">        :return:</span>
 <span class="sd">            None or a root :class:`~kivy.uix.widget.Widget` instance</span>
-<span class="sd">            if no self.root exists.&#39;&#39;&#39;</span>
+<span class="sd">            if no self.root exists.'''</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">Widget</span><span class="p">()</span></div>
@@ -1038,7 +1038,7 @@
 <div class="viewcode-block" id="App.build_config">
 <a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.build_config">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">build_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;.. versionadded:: 1.0.7</span>
+<span class="w">        </span><span class="sd">'''.. versionadded:: 1.0.7</span>
 
 <span class="sd">        This method is called before the application is initialized to</span>
 <span class="sd">        construct your :class:`~kivy.config.ConfigParser` object. This</span>
@@ -1051,13 +1051,13 @@
 <span class="sd">            `config`: :class:`~kivy.config.ConfigParser`</span>
 <span class="sd">                Use this to add default section / key / value items</span>
 
-<span class="sd">        &#39;&#39;&#39;</span></div>
+<span class="sd">        '''</span></div>
 
 
 <div class="viewcode-block" id="App.build_settings">
 <a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.build_settings">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">build_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;.. versionadded:: 1.0.7</span>
+<span class="w">        </span><span class="sd">'''.. versionadded:: 1.0.7</span>
 
 <span class="sd">        This method is called when the user (or you) want to show the</span>
 <span class="sd">        application settings. It is called once when the settings panel</span>
@@ -1073,13 +1073,13 @@
 <span class="sd">            `settings`: :class:`~kivy.uix.settings.Settings`</span>
 <span class="sd">                Settings instance for adding panels</span>
 
-<span class="sd">        &#39;&#39;&#39;</span></div>
+<span class="sd">        '''</span></div>
 
 
 <div class="viewcode-block" id="App.load_kv">
 <a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.load_kv">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">load_kv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;This method is invoked the first time the app is being run if no</span>
+<span class="w">        </span><span class="sd">'''This method is invoked the first time the app is being run if no</span>
 <span class="sd">        widget tree has been constructed before for this app.</span>
 <span class="sd">        This method then looks for a matching kv file in the same directory as</span>
 <span class="sd">        the file that contains the application class.</span>
@@ -1091,7 +1091,7 @@
 
 <span class="sd">        This method will search for a file named `showcase.kv` in</span>
 <span class="sd">        the directory that contains main.py. The name of the kv file has to be</span>
-<span class="sd">        the lowercase name of the class, without the &#39;App&#39; postfix at the end</span>
+<span class="sd">        the lowercase name of the class, without the 'App' postfix at the end</span>
 <span class="sd">        if it exists.</span>
 
 <span class="sd">        You can define rules and a root widget in your kv file::</span>
@@ -1111,14 +1111,14 @@
 
 <span class="sd">            This function is called from :meth:`run`, therefore, any widget</span>
 <span class="sd">            whose styling is defined in this kv file and is created before</span>
-<span class="sd">            :meth:`run` is called (e.g. in `__init__`), won&#39;t have its styling</span>
+<span class="sd">            :meth:`run` is called (e.g. in `__init__`), won't have its styling</span>
 <span class="sd">            applied. Note that :meth:`build` is called after :attr:`load_kv`</span>
 <span class="sd">            has been called.</span>
 
 <span class="sd">        .. versionchanged:: 3.0.0</span>
 <span class="sd">            `filename` may be a :class:`os.PathLike` (e.g. :class:`pathlib.Path`)</span>
 <span class="sd">            in addition to a ``str``.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="c1"># Detect filename automatically if it was not specified.</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">filename</span><span class="p">:</span>
@@ -1126,24 +1126,24 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">default_kv_directory</span> <span class="o">=</span> <span class="n">dirname</span><span class="p">(</span><span class="n">getfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">))</span>
-                <span class="k">if</span> <span class="n">default_kv_directory</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
-                    <span class="n">default_kv_directory</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
+                <span class="k">if</span> <span class="n">default_kv_directory</span> <span class="o">==</span> <span class="s1">''</span><span class="p">:</span>
+                    <span class="n">default_kv_directory</span> <span class="o">=</span> <span class="s1">'.'</span>
             <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-                <span class="c1"># if it&#39;s a builtin module.. use the current dir.</span>
-                <span class="n">default_kv_directory</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
+                <span class="c1"># if it's a builtin module.. use the current dir.</span>
+                <span class="n">default_kv_directory</span> <span class="o">=</span> <span class="s1">'.'</span>
 
             <span class="n">kv_directory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kv_directory</span> <span class="ow">or</span> <span class="n">default_kv_directory</span>
             <span class="n">clsname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">clsname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;app&#39;</span><span class="p">)</span> <span class="ow">and</span>
-                    <span class="ow">not</span> <span class="n">isfile</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">kv_directory</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.kv&#39;</span> <span class="o">%</span> <span class="n">clsname</span><span class="p">))):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">clsname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'app'</span><span class="p">)</span> <span class="ow">and</span>
+                    <span class="ow">not</span> <span class="n">isfile</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">kv_directory</span><span class="p">,</span> <span class="s1">'</span><span class="si">%s</span><span class="s1">.kv'</span> <span class="o">%</span> <span class="n">clsname</span><span class="p">))):</span>
                 <span class="n">clsname</span> <span class="o">=</span> <span class="n">clsname</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
-            <span class="n">filename</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">kv_directory</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">.kv&#39;</span> <span class="o">%</span> <span class="n">clsname</span><span class="p">)</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">kv_directory</span><span class="p">,</span> <span class="s1">'</span><span class="si">%s</span><span class="s1">.kv'</span> <span class="o">%</span> <span class="n">clsname</span><span class="p">)</span>
 
         <span class="c1"># Load KV file</span>
-        <span class="n">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;App: Loading kv &lt;</span><span class="si">{0}</span><span class="s1">&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+        <span class="n">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">'App: Loading kv &lt;</span><span class="si">{0}</span><span class="s1">&gt;'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
         <span class="n">rfilename</span> <span class="o">=</span> <span class="n">resource_find</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">rfilename</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">rfilename</span><span class="p">):</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;App: kv &lt;</span><span class="si">%s</span><span class="s1">&gt; not found&#39;</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">'App: kv &lt;</span><span class="si">%s</span><span class="s1">&gt; not found'</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="n">root</span> <span class="o">=</span> <span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">rfilename</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">root</span><span class="p">:</span>
@@ -1154,12 +1154,12 @@
 <div class="viewcode-block" id="App.get_application_name">
 <a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.get_application_name">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_application_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the name of the application.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Return the name of the application.</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">title</span>
         <span class="n">clsname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
-        <span class="k">if</span> <span class="n">clsname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;App&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">clsname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'App'</span><span class="p">):</span>
             <span class="n">clsname</span> <span class="o">=</span> <span class="n">clsname</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">clsname</span></div>
 
@@ -1167,18 +1167,18 @@
 <div class="viewcode-block" id="App.get_application_icon">
 <a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.get_application_icon">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_application_icon</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the icon of the application.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Return the icon of the application.</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">resource_find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">icon</span><span class="p">):</span>
-            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+            <span class="k">return</span> <span class="s1">''</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">resource_find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">icon</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="App.get_application_config">
 <a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.get_application_config">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_application_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">defaultpath</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(appdir)s</span><span class="s1">/</span><span class="si">%(appname)s</span><span class="s1">.ini&#39;</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_application_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">defaultpath</span><span class="o">=</span><span class="s1">'</span><span class="si">%(appdir)s</span><span class="s1">/</span><span class="si">%(appname)s</span><span class="s1">.ini'</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">'''</span>
 <span class="sd">        Return the filename of your application configuration. Depending</span>
 <span class="sd">        on the platform, the application file will be stored in</span>
 <span class="sd">        different locations:</span>
@@ -1197,11 +1197,11 @@
 <span class="sd">            class TestApp(App):</span>
 <span class="sd">                def get_application_config(self):</span>
 <span class="sd">                    return super(TestApp, self).get_application_config(</span>
-<span class="sd">                        &#39;~/.%(appname)s.ini&#39;)</span>
+<span class="sd">                        '~/.%(appname)s.ini')</span>
 
 <span class="sd">        Some notes:</span>
 
-<span class="sd">        - The tilda &#39;~&#39; will be expanded to the user directory.</span>
+<span class="sd">        - The tilda '~' will be expanded to the user directory.</span>
 <span class="sd">        - %(appdir)s will be replaced with the application :attr:`directory`</span>
 <span class="sd">        - %(appname)s will be replaced with the application :attr:`name`</span>
 
@@ -1209,7 +1209,7 @@
 
 <span class="sd">        .. versionchanged:: 1.4.0</span>
 <span class="sd">            Customized the defaultpath for iOS and Android platforms. Added a</span>
-<span class="sd">            defaultpath parameter for desktop OS&#39;s (not applicable to iOS</span>
+<span class="sd">            defaultpath parameter for desktop OS's (not applicable to iOS</span>
 <span class="sd">            and Android.)</span>
 
 <span class="sd">        .. versionchanged:: 1.11.0</span>
@@ -1220,31 +1220,31 @@
 <span class="sd">        .. versionchanged:: 3.0.0</span>
 <span class="sd">            `defaultpath` may be a :class:`os.PathLike` (e.g.</span>
 <span class="sd">            :class:`pathlib.Path`) in addition to a ``str``.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="n">defaultpath</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">defaultpath</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;android&#39;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user_data_dir</span><span class="p">,</span> <span class="s1">&#39;.</span><span class="si">{0}</span><span class="s1">.ini&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-        <span class="k">elif</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;ios&#39;</span><span class="p">:</span>
-            <span class="n">defaultpath</span> <span class="o">=</span> <span class="s1">&#39;~/Documents/.</span><span class="si">%(appname)s</span><span class="s1">.ini&#39;</span>
-        <span class="k">elif</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;win&#39;</span><span class="p">:</span>
-            <span class="n">defaultpath</span> <span class="o">=</span> <span class="n">defaultpath</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">'android'</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user_data_dir</span><span class="p">,</span> <span class="s1">'.</span><span class="si">{0}</span><span class="s1">.ini'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">'ios'</span><span class="p">:</span>
+            <span class="n">defaultpath</span> <span class="o">=</span> <span class="s1">'~/Documents/.</span><span class="si">%(appname)s</span><span class="s1">.ini'</span>
+        <span class="k">elif</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">'win'</span><span class="p">:</span>
+            <span class="n">defaultpath</span> <span class="o">=</span> <span class="n">defaultpath</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'/'</span><span class="p">,</span> <span class="n">sep</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">expanduser</span><span class="p">(</span><span class="n">defaultpath</span><span class="p">)</span> <span class="o">%</span> <span class="p">{</span>
-            <span class="s1">&#39;appname&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;appdir&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">}</span></div>
+            <span class="s1">'appname'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">'appdir'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">}</span></div>
 
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">root_window</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;.. versionadded:: 1.9.0</span>
+<span class="w">        </span><span class="sd">'''.. versionadded:: 1.9.0</span>
 
 <span class="sd">        Returns the root window instance used by :meth:`run`.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app_window</span>
 
 <div class="viewcode-block" id="App.load_config">
 <a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.load_config">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">load_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;(internal) This function is used for returning a ConfigParser with</span>
-<span class="sd">        the application configuration. It&#39;s doing 3 things:</span>
+<span class="w">        </span><span class="sd">'''(internal) This function is used for returning a ConfigParser with</span>
+<span class="sd">        the application configuration. It's doing 3 things:</span>
 
 <span class="sd">            #. Creating an instance of a ConfigParser</span>
 <span class="sd">            #. Loading the default configuration by calling</span>
@@ -1254,16 +1254,16 @@
 
 <span class="sd">        :return:</span>
 <span class="sd">            :class:`~kivy.config.ConfigParser` instance</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">get_configparser</span><span class="p">(</span><span class="s1">&#39;app&#39;</span><span class="p">)</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">get_configparser</span><span class="p">(</span><span class="s1">'app'</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="n">config</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;app&#39;</span><span class="p">)</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'app'</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">build_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-        <span class="c1"># if no sections are created, that&#39;s mean the user don&#39;t have</span>
+        <span class="c1"># if no sections are created, that's mean the user don't have</span>
         <span class="c1"># configuration.</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">sections</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span>
@@ -1272,24 +1272,24 @@
         <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_application_config</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">config</span>
-        <span class="n">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;App: Loading configuration &lt;</span><span class="si">{0}</span><span class="s1">&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+        <span class="n">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">'App: Loading configuration &lt;</span><span class="si">{0}</span><span class="s1">&gt;'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-                <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;App: Corrupted config file, ignored.&#39;</span><span class="p">)</span>
-                <span class="n">config</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'App: Corrupted config file, ignored.'</span><span class="p">)</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">''</span>
                 <span class="k">try</span><span class="p">:</span>
-                    <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">get_configparser</span><span class="p">(</span><span class="s1">&#39;app&#39;</span><span class="p">)</span>
+                    <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">get_configparser</span><span class="p">(</span><span class="s1">'app'</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
                     <span class="n">config</span> <span class="o">=</span> <span class="kc">None</span>
                 <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;app&#39;</span><span class="p">)</span>
+                    <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'app'</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">build_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
                 <span class="k">pass</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;App: First configuration, create &lt;</span><span class="si">{0}</span><span class="s1">&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">'App: First configuration, create &lt;</span><span class="si">{0}</span><span class="s1">&gt;'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                 <span class="n">filename</span><span class="p">))</span>
             <span class="n">config</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
             <span class="n">config</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
@@ -1298,40 +1298,40 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">directory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;.. versionadded:: 1.0.7</span>
+<span class="w">        </span><span class="sd">'''.. versionadded:: 1.0.7</span>
 
 <span class="sd">        Return the directory where the application lives.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app_directory</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_app_directory</span> <span class="o">=</span> <span class="n">dirname</span><span class="p">(</span><span class="n">getfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">))</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app_directory</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_app_directory</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app_directory</span> <span class="o">==</span> <span class="s1">''</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_app_directory</span> <span class="o">=</span> <span class="s1">'.'</span>
             <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-                <span class="c1"># if it&#39;s a builtin module.. use the current dir.</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_app_directory</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
+                <span class="c1"># if it's a builtin module.. use the current dir.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_app_directory</span> <span class="o">=</span> <span class="s1">'.'</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app_directory</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_user_data_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Determine and return the user_data_dir.</span>
         <span class="c1"># Check for KIVY_DESKTOP_PATH_ID on desktop platforms</span>
-        <span class="n">desktop_path_id</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;KIVY_DESKTOP_PATH_ID&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">platform</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;win&#39;</span><span class="p">,</span> <span class="s1">&#39;macosx&#39;</span><span class="p">,</span> <span class="s1">&#39;linux&#39;</span><span class="p">}</span> <span class="ow">and</span> <span class="n">desktop_path_id</span><span class="p">:</span>
+        <span class="n">desktop_path_id</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'KIVY_DESKTOP_PATH_ID'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">platform</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">'win'</span><span class="p">,</span> <span class="s1">'macosx'</span><span class="p">,</span> <span class="s1">'linux'</span><span class="p">}</span> <span class="ow">and</span> <span class="n">desktop_path_id</span><span class="p">:</span>
             <span class="n">app_id</span> <span class="o">=</span> <span class="n">normalize_path_id</span><span class="p">(</span><span class="n">desktop_path_id</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">app_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
 
-        <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;ios&#39;</span><span class="p">:</span>
-            <span class="n">data_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="s1">&#39;~/Documents&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;android&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">'ios'</span><span class="p">:</span>
+            <span class="n">data_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="s1">'~/Documents'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">'android'</span><span class="p">:</span>
             <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.mobile._platform.android</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_files_dir</span>
             <span class="n">data_dir</span> <span class="o">=</span> <span class="n">get_files_dir</span><span class="p">()</span>
-        <span class="k">elif</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;win&#39;</span><span class="p">:</span>
-            <span class="n">data_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;APPDATA&#39;</span><span class="p">],</span> <span class="n">app_id</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;macosx&#39;</span><span class="p">:</span>
-            <span class="n">data_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;~/Library/Application Support/</span><span class="si">{</span><span class="n">app_id</span><span class="si">}</span><span class="s1">&#39;</span>
-        <span class="k">else</span><span class="p">:</span>  <span class="c1"># _platform == &#39;linux&#39; or anything else...:</span>
-            <span class="n">data_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;XDG_DATA_HOME&#39;</span><span class="p">,</span> <span class="s1">&#39;~/.local/share&#39;</span><span class="p">),</span>
+        <span class="k">elif</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">'win'</span><span class="p">:</span>
+            <span class="n">data_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">'APPDATA'</span><span class="p">],</span> <span class="n">app_id</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">'macosx'</span><span class="p">:</span>
+            <span class="n">data_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'~/Library/Application Support/</span><span class="si">{</span><span class="n">app_id</span><span class="si">}</span><span class="s1">'</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># _platform == 'linux' or anything else...:</span>
+            <span class="n">data_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'XDG_DATA_HOME'</span><span class="p">,</span> <span class="s1">'~/.local/share'</span><span class="p">),</span>
                            <span class="n">app_id</span><span class="p">)</span>
 
         <span class="n">data_dir</span> <span class="o">=</span> <span class="n">expanduser</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
@@ -1341,23 +1341,23 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_user_cache_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Determine and return the user_cache_dir.</span>
         <span class="c1"># Check for KIVY_DESKTOP_PATH_ID on desktop platforms</span>
-        <span class="n">desktop_path_id</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;KIVY_DESKTOP_PATH_ID&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">platform</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;win&#39;</span><span class="p">,</span> <span class="s1">&#39;macosx&#39;</span><span class="p">,</span> <span class="s1">&#39;linux&#39;</span><span class="p">}</span> <span class="ow">and</span> <span class="n">desktop_path_id</span><span class="p">:</span>
+        <span class="n">desktop_path_id</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'KIVY_DESKTOP_PATH_ID'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">platform</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">'win'</span><span class="p">,</span> <span class="s1">'macosx'</span><span class="p">,</span> <span class="s1">'linux'</span><span class="p">}</span> <span class="ow">and</span> <span class="n">desktop_path_id</span><span class="p">:</span>
             <span class="n">app_id</span> <span class="o">=</span> <span class="n">normalize_path_id</span><span class="p">(</span><span class="n">desktop_path_id</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">app_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
 
-        <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;ios&#39;</span><span class="p">:</span>
-            <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="s1">&#39;~/Library/Caches&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;android&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">'ios'</span><span class="p">:</span>
+            <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="s1">'~/Library/Caches'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">'android'</span><span class="p">:</span>
             <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.mobile._platform.android</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_cache_dir</span>
             <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">get_cache_dir</span><span class="p">()</span>
-        <span class="k">elif</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;win&#39;</span><span class="p">:</span>
-            <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;LOCALAPPDATA&#39;</span><span class="p">],</span> <span class="n">app_id</span><span class="p">,</span> <span class="s1">&#39;Cache&#39;</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;macosx&#39;</span><span class="p">:</span>
-            <span class="n">cache_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;~/Library/Caches/</span><span class="si">{</span><span class="n">app_id</span><span class="si">}</span><span class="s1">&#39;</span>
-        <span class="k">else</span><span class="p">:</span>  <span class="c1"># _platform == &#39;linux&#39; or anything else...:</span>
-            <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;XDG_CACHE_HOME&#39;</span><span class="p">,</span> <span class="s1">&#39;~/.cache&#39;</span><span class="p">),</span>
+        <span class="k">elif</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">'win'</span><span class="p">:</span>
+            <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">'LOCALAPPDATA'</span><span class="p">],</span> <span class="n">app_id</span><span class="p">,</span> <span class="s1">'Cache'</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">'macosx'</span><span class="p">:</span>
+            <span class="n">cache_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'~/Library/Caches/</span><span class="si">{</span><span class="n">app_id</span><span class="si">}</span><span class="s1">'</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># _platform == 'linux' or anything else...:</span>
+            <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'XDG_CACHE_HOME'</span><span class="p">,</span> <span class="s1">'~/.cache'</span><span class="p">),</span>
                             <span class="n">app_id</span><span class="p">)</span>
 
         <span class="n">cache_dir</span> <span class="o">=</span> <span class="n">expanduser</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">)</span>
@@ -1366,7 +1366,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">user_data_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''</span>
 <span class="sd">        .. versionadded:: 1.7.0</span>
 
 <span class="sd">        Returns the path to the directory in the users file system which the</span>
@@ -1378,7 +1378,7 @@
 <span class="sd">        is created when the property is called, unless it already exists.</span>
 
 <span class="sd">        On iOS, `~/Documents/&lt;app_name&gt;` is returned (which is inside the</span>
-<span class="sd">        app&#39;s sandbox).</span>
+<span class="sd">        app's sandbox).</span>
 
 <span class="sd">        On Windows, `%APPDATA%/&lt;app_name&gt;` is returned.</span>
 
@@ -1398,14 +1398,14 @@
 <span class="sd">            in Android API 26 and the user_data_dir has therefore been moved</span>
 <span class="sd">            to a writeable location.</span>
 
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_data_dir</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+<span class="sd">        '''</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_data_dir</span> <span class="o">==</span> <span class="s2">""</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_user_data_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_user_data_dir</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_data_dir</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">user_cache_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''</span>
 <span class="sd">        .. versionadded:: 3.0.0</span>
 
 <span class="sd">        Returns the path to the directory in the users file system which the</span>
@@ -1431,20 +1431,20 @@
 
 <span class="sd">        On Android, `Context.getCacheDir()` is returned.</span>
 
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_cache_dir</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+<span class="sd">        '''</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_cache_dir</span> <span class="o">==</span> <span class="s2">""</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_user_cache_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_user_cache_dir</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_user_cache_dir</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;.. versionadded:: 1.0.7</span>
+<span class="w">        </span><span class="sd">'''.. versionadded:: 1.0.7</span>
 
 <span class="sd">        Return the name of the application based on the class name.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">clsname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
-            <span class="k">if</span> <span class="n">clsname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;App&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">clsname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'App'</span><span class="p">):</span>
                 <span class="n">clsname</span> <span class="o">=</span> <span class="n">clsname</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_app_name</span> <span class="o">=</span> <span class="n">clsname</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app_name</span>
@@ -1458,8 +1458,8 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">root</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">,</span> <span class="n">Widget</span><span class="p">):</span>
-                <span class="n">Logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s1">&#39;App.root must be an _instance_ of Widget&#39;</span><span class="p">)</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid instance in App.root&#39;</span><span class="p">)</span>
+                <span class="n">Logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s1">'App.root must be an _instance_ of Widget'</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'Invalid instance in App.root'</span><span class="p">)</span>
             <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core.window</span><span class="w"> </span><span class="kn">import</span> <span class="n">Window</span>
             <span class="n">Window</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
 
@@ -1474,17 +1474,17 @@
                 <span class="n">window</span><span class="o">.</span><span class="n">set_icon</span><span class="p">(</span><span class="n">icon</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_install_settings_keys</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s2">&quot;Application: No window is created.&quot;</span>
-                            <span class="s2">&quot; Terminating application run.&quot;</span><span class="p">)</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="s2">"Application: No window is created."</span>
+                            <span class="s2">" Terminating application run."</span><span class="p">)</span>
             <span class="k">return</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_start&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_start'</span><span class="p">)</span>
 
 <div class="viewcode-block" id="App.run">
 <a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.run">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Launches the app in standalone mode.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Launches the app in standalone mode.</span>
+<span class="sd">        '''</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_run_prepare</span><span class="p">()</span>
         <span class="n">runTouchApp</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_stop</span><span class="p">()</span></div>
@@ -1493,13 +1493,13 @@
 <div class="viewcode-block" id="App.async_run">
 <a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.async_run">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">async_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">async_lib</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Identical to :meth:`run`, but is a coroutine and can be</span>
+<span class="w">        </span><span class="sd">'''Identical to :meth:`run`, but is a coroutine and can be</span>
 <span class="sd">        scheduled in a running async event loop.</span>
 
 <span class="sd">        See :mod:`kivy.app` for example usage.</span>
 
 <span class="sd">        .. versionadded:: 2.0.0</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_run_prepare</span><span class="p">()</span>
         <span class="k">await</span> <span class="n">async_runTouchApp</span><span class="p">(</span><span class="n">async_lib</span><span class="o">=</span><span class="n">async_lib</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_stop</span><span class="p">()</span></div>
@@ -1508,13 +1508,13 @@
 <div class="viewcode-block" id="App.stop">
 <a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.stop">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Stop the application.</span>
+<span class="w">        </span><span class="sd">'''Stop the application.</span>
 
 <span class="sd">        If you use this method, the whole application will stop by issuing</span>
 <span class="sd">        a call to :func:`~kivy.base.stopTouchApp`.</span>
 <span class="sd">        Except on Android, set Android state to stop, Kivy state then follows.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;android&#39;</span><span class="p">:</span>
+<span class="sd">        '''</span>
+        <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">'android'</span><span class="p">:</span>
             <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.mobile._platform.android</span><span class="w"> </span><span class="kn">import</span> <span class="n">finish_and_remove_task</span>
             <span class="n">finish_and_remove_task</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
@@ -1522,7 +1522,7 @@
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_stop&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_stop'</span><span class="p">)</span>
         <span class="n">stopTouchApp</span><span class="p">()</span>
 
         <span class="c1"># Clear the window children</span>
@@ -1534,33 +1534,33 @@
 <div class="viewcode-block" id="App.pause">
 <a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.pause">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">pause</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Pause the application.</span>
+<span class="w">        </span><span class="sd">'''Pause the application.</span>
 
 <span class="sd">        On Android set OS state to pause, Kivy app state follows.</span>
 <span class="sd">        No functionality on other OS.</span>
 <span class="sd">        .. versionadded:: 2.2.0</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;android&#39;</span><span class="p">:</span>
+<span class="sd">        '''</span>
+        <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">'android'</span><span class="p">:</span>
             <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.mobile._platform.android</span><span class="w"> </span><span class="kn">import</span> <span class="n">move_task_to_back</span>
             <span class="n">move_task_to_back</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;App.pause() is not available on this OS.&#39;</span><span class="p">)</span></div>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'App.pause() is not available on this OS.'</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="App.on_start">
 <a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.on_start">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">on_start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Event handler for the `on_start` event which is fired after</span>
+<span class="w">        </span><span class="sd">'''Event handler for the `on_start` event which is fired after</span>
 <span class="sd">        initialization (after build() has been called) but before the</span>
 <span class="sd">        application has started running.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="App.on_ready">
 <a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.on_ready">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">on_ready</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Event handler for the `on_ready` event which is fired once</span>
+<span class="w">        </span><span class="sd">'''Event handler for the `on_ready` event which is fired once</span>
 <span class="sd">        when the application UI becomes visible after the first frame</span>
 <span class="sd">        has been rendered.</span>
 
@@ -1570,30 +1570,30 @@
 <span class="sd">        - Performance benchmarks</span>
 <span class="sd">        - Analytics or logging of app readiness</span>
 
-<span class="sd">        This event will not fire again during the application&#39;s lifetime.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        This event will not fire again during the application's lifetime.</span>
+<span class="sd">        '''</span>
         <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="App.on_stop">
 <a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.on_stop">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">on_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Event handler for the `on_stop` event which is fired when the</span>
+<span class="w">        </span><span class="sd">'''Event handler for the `on_stop` event which is fired when the</span>
 <span class="sd">        application has finished running (i.e. the window is about to be</span>
 <span class="sd">        closed).</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="App.on_pause">
 <a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.on_pause">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">on_pause</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Event handler called when Pause mode is requested. You should</span>
+<span class="w">        </span><span class="sd">'''Event handler called when Pause mode is requested. You should</span>
 <span class="sd">        return True if your app can go into Pause mode, otherwise</span>
 <span class="sd">        return False and your application will be stopped.</span>
 
 <span class="sd">        You cannot control when the application is going to go into this mode.</span>
-<span class="sd">        It&#39;s determined by the Operating System and mostly used for mobile</span>
+<span class="sd">        It's determined by the Operating System and mostly used for mobile</span>
 <span class="sd">        devices (android/ios) and for resizing.</span>
 
 <span class="sd">        The default return value is True.</span>
@@ -1601,14 +1601,14 @@
 <span class="sd">        .. versionadded:: 1.1.0</span>
 <span class="sd">        .. versionchanged:: 1.10.0</span>
 <span class="sd">            The default return value is now True.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
 
 <div class="viewcode-block" id="App.on_resume">
 <a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.on_resume">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">on_resume</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Event handler called when your application is resuming from</span>
+<span class="w">        </span><span class="sd">'''Event handler called when your application is resuming from</span>
 <span class="sd">        the Pause mode.</span>
 
 <span class="sd">        .. versionadded:: 1.1.0</span>
@@ -1618,7 +1618,7 @@
 <span class="sd">            When resuming, the OpenGL Context might have been damaged / freed.</span>
 <span class="sd">            This is where you can reconstruct some of your OpenGL state</span>
 <span class="sd">            e.g. FBO content.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">pass</span></div>
 
 
@@ -1626,29 +1626,29 @@
 <a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.get_running_app">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_running_app</span><span class="p">():</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the currently running application instance.</span>
+<span class="w">        </span><span class="sd">'''Return the currently running application instance.</span>
 
 <span class="sd">        .. versionadded:: 1.1.0</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">return</span> <span class="n">App</span><span class="o">.</span><span class="n">_running_app</span></div>
 
 
 <div class="viewcode-block" id="App.on_config_change">
 <a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.on_config_change">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">on_config_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Event handler fired when a configuration token has been changed by</span>
+<span class="w">        </span><span class="sd">'''Event handler fired when a configuration token has been changed by</span>
 <span class="sd">        the settings page.</span>
 
 <span class="sd">        .. versionchanged:: 1.10.1</span>
 <span class="sd">           Added corresponding ``on_config_change`` event.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="App.open_settings">
 <a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.open_settings">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">open_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Open the application settings panel. It will be created the very</span>
+<span class="w">        </span><span class="sd">'''Open the application settings panel. It will be created the very</span>
 <span class="sd">        first time, or recreated if the previously cached panel has been</span>
 <span class="sd">        removed by :meth:`destroy_settings`. The settings panel will be</span>
 <span class="sd">        displayed with the</span>
@@ -1660,7 +1660,7 @@
 <span class="sd">        :return:</span>
 <span class="sd">            True if the settings has been opened.</span>
 
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app_settings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_app_settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_settings</span><span class="p">()</span>
         <span class="n">displayed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">display_settings</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_app_settings</span><span class="p">)</span>
@@ -1672,7 +1672,7 @@
 <div class="viewcode-block" id="App.display_settings">
 <a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.display_settings">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">display_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;.. versionadded:: 1.8.0</span>
+<span class="w">        </span><span class="sd">'''.. versionadded:: 1.8.0</span>
 
 <span class="sd">        Display the settings panel. By default, the panel is drawn directly</span>
 <span class="sd">        on top of the window. You can define other behavior by overriding</span>
@@ -1685,11 +1685,11 @@
 <span class="sd">                You can modify this object in order to modify the settings</span>
 <span class="sd">                display.</span>
 
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="n">win</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app_window</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">win</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;No windows are set on the application, you cannot&#39;</span>
-                            <span class="s1">&#39; open settings yet.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'No windows are set on the application, you cannot'</span>
+                            <span class="s1">' open settings yet.'</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">settings</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">win</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
             <span class="n">win</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">True</span>
@@ -1699,11 +1699,11 @@
 <div class="viewcode-block" id="App.close_settings">
 <a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.close_settings">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">close_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Close the previously opened settings panel.</span>
+<span class="w">        </span><span class="sd">'''Close the previously opened settings panel.</span>
 
 <span class="sd">        :return:</span>
 <span class="sd">            True if the settings has been closed.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="n">win</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app_window</span>
         <span class="n">settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app_settings</span>
         <span class="k">if</span> <span class="n">win</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">settings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -1717,7 +1717,7 @@
 <div class="viewcode-block" id="App.create_settings">
 <a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.create_settings">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">create_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Create the settings panel. This method will normally</span>
+<span class="w">        </span><span class="sd">'''Create the settings panel. This method will normally</span>
 <span class="sd">        be called only one time per</span>
 <span class="sd">        application life-time and the result is cached internally,</span>
 <span class="sd">        but it may be called again if the cached panel is removed</span>
@@ -1733,7 +1733,7 @@
 <span class="sd">        overload.</span>
 
 <span class="sd">        .. versionadded:: 1.8.0</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">settings_cls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.settings</span><span class="w"> </span><span class="kn">import</span> <span class="n">SettingsWithSpinner</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">settings_cls</span> <span class="o">=</span> <span class="n">SettingsWithSpinner</span>
@@ -1751,11 +1751,11 @@
 <div class="viewcode-block" id="App.destroy_settings">
 <a class="viewcode-back" href="../../api-kivy.app.html#kivy.app.App.destroy_settings">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">destroy_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;.. versionadded:: 1.8.0</span>
+<span class="w">        </span><span class="sd">'''.. versionadded:: 1.8.0</span>
 
 <span class="sd">        Dereferences the current settings panel if one</span>
 <span class="sd">        exists. This means that when :meth:`App.open_settings` is next</span>
-<span class="sd">        run, a new panel will be created and displayed. It doesn&#39;t</span>
+<span class="sd">        run, a new panel will be created and displayed. It doesn't</span>
 <span class="sd">        affect any of the contents of the panel, but lets you (for</span>
 <span class="sd">        instance) refresh the settings panel layout if you have</span>
 <span class="sd">        changed the settings widget in response to a screen size</span>
@@ -1766,7 +1766,7 @@
 <span class="sd">        correctly detect if the previous settings widget has been</span>
 <span class="sd">        destroyed.</span>
 
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app_settings</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_app_settings</span> <span class="o">=</span> <span class="kc">None</span></div>
 
@@ -1776,7 +1776,7 @@
     <span class="c1">#</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_on_config_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_config_change&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_config_change'</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_install_settings_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">):</span>
         <span class="n">window</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_keyboard</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_keyboard_settings</span><span class="p">)</span>
@@ -1794,10 +1794,10 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">close_settings</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_trigger_ready_once</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Internal method called by the window backend after first swap.&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Internal method called by the window backend after first swap.'''</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ready_fired</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_ready_fired</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_ready&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_ready'</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_title</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_app_window</span><span class="p">:</span>
@@ -1821,7 +1821,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

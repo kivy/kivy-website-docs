@@ -370,7 +370,7 @@
             
   <h1>Source code for kivy.input.providers.hidinput</h1><div class="highlight"><pre>
 <span></span><span class="c1"># coding utf-8</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 <span class="sd">Native support for HID input from the linux kernel</span>
 <span class="sd">==================================================</span>
 
@@ -380,7 +380,7 @@
 
 <span class="sd">    [input]</span>
 <span class="sd">    # devicename = hidinput,/dev/input/eventXX</span>
-<span class="sd">    # example with Stantum MTP4.3&quot; screen</span>
+<span class="sd">    # example with Stantum MTP4.3" screen</span>
 <span class="sd">    stantum = hidinput,/dev/input/event2</span>
 
 <span class="sd">.. note::</span>
@@ -416,12 +416,12 @@
 
 <span class="sd">    `rotation` configuration token added.</span>
 
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.input.motionevent</span><span class="w"> </span><span class="kn">import</span> <span class="n">MotionEvent</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.input.shape</span><span class="w"> </span><span class="kn">import</span> <span class="n">ShapeRect</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;HIDInputMotionEventProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;HIDMotionEvent&#39;</span><span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'HIDInputMotionEventProvider'</span><span class="p">,</span> <span class="s1">'HIDMotionEvent'</span><span class="p">)</span>
 
 <span class="c1"># late imports</span>
 <span class="n">Window</span> <span class="o">=</span> <span class="kc">None</span>
@@ -433,37 +433,37 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">HIDMotionEvent</span><span class="p">(</span><span class="n">MotionEvent</span><span class="p">):</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;is_touch&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;type_id&#39;</span><span class="p">,</span> <span class="s1">&#39;touch&#39;</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">'is_touch'</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">'type_id'</span><span class="p">,</span> <span class="s1">'touch'</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
 <div class="viewcode-block" id="HIDMotionEvent.depack">
 <a class="viewcode-back" href="../../../../api-kivy.input.providers.hidinput.html#kivy.input.providers.hidinput.HIDMotionEvent.depack">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">depack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sx</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sy</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">profile</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;pos&#39;</span><span class="p">]</span>
-        <span class="k">if</span> <span class="s1">&#39;size_w&#39;</span> <span class="ow">in</span> <span class="n">args</span> <span class="ow">and</span> <span class="s1">&#39;size_h&#39;</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sx</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">'x'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sy</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">'y'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">profile</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'pos'</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">'size_w'</span> <span class="ow">in</span> <span class="n">args</span> <span class="ow">and</span> <span class="s1">'size_h'</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">ShapeRect</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;size_w&#39;</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;size_h&#39;</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;shape&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s1">&#39;pressure&#39;</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">pressure</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;pressure&#39;</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;pressure&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s1">&#39;button&#39;</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">button</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;button&#39;</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;button&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">'size_w'</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">'size_h'</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'shape'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">'pressure'</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pressure</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">'pressure'</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'pressure'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">'button'</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">button</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">'button'</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'button'</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">depack</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s1">&#39;&lt;HIDMotionEvent id=</span><span class="si">%d</span><span class="s1"> pos=(</span><span class="si">%f</span><span class="s1">, </span><span class="si">%f</span><span class="s1">) device=</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> \
+        <span class="k">return</span> <span class="s1">'&lt;HIDMotionEvent id=</span><span class="si">%d</span><span class="s1"> pos=(</span><span class="si">%f</span><span class="s1">, </span><span class="si">%f</span><span class="s1">) device=</span><span class="si">%s</span><span class="s1">&gt;'</span> \
             <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span></div>
 
 
 
-<span class="k">if</span> <span class="s1">&#39;KIVY_DOC&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+<span class="k">if</span> <span class="s1">'KIVY_DOC'</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
     <span class="c1"># documentation hack</span>
     <span class="n">HIDInputMotionEventProvider</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -533,113 +533,113 @@
     <span class="n">EVIOCGABS</span> <span class="o">=</span> <span class="mi">2149074240</span>
 
     <span class="n">keyboard_keys</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="mh">0x29</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;`&#39;</span><span class="p">,</span> <span class="s1">&#39;~&#39;</span><span class="p">),</span>
-        <span class="mh">0x02</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;!&#39;</span><span class="p">),</span>
-        <span class="mh">0x03</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;@&#39;</span><span class="p">),</span>
-        <span class="mh">0x04</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;#&#39;</span><span class="p">),</span>
-        <span class="mh">0x05</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;$&#39;</span><span class="p">),</span>
-        <span class="mh">0x06</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;%&#39;</span><span class="p">),</span>
-        <span class="mh">0x07</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;^&#39;</span><span class="p">),</span>
-        <span class="mh">0x08</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;7&#39;</span><span class="p">,</span> <span class="s1">&#39;&amp;&#39;</span><span class="p">),</span>
-        <span class="mh">0x09</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;8&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">),</span>
-        <span class="mh">0x0a</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="s1">&#39;(&#39;</span><span class="p">),</span>
-        <span class="mh">0x0b</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="s1">&#39;)&#39;</span><span class="p">),</span>
-        <span class="mh">0x0c</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">),</span>
-        <span class="mh">0x0d</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">),</span>
-        <span class="mh">0x0e</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;backspace&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x0f</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;tab&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x10</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="s1">&#39;Q&#39;</span><span class="p">),</span>
-        <span class="mh">0x11</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="s1">&#39;W&#39;</span><span class="p">),</span>
-        <span class="mh">0x12</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">),</span>
-        <span class="mh">0x13</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">),</span>
-        <span class="mh">0x14</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">),</span>
-        <span class="mh">0x15</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;Y&#39;</span><span class="p">),</span>
-        <span class="mh">0x16</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;U&#39;</span><span class="p">),</span>
-        <span class="mh">0x17</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">),</span>
-        <span class="mh">0x18</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="s1">&#39;O&#39;</span><span class="p">),</span>
-        <span class="mh">0x19</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="s1">&#39;P&#39;</span><span class="p">),</span>
-        <span class="mh">0x1a</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="p">,</span> <span class="s1">&#39;{&#39;</span><span class="p">),</span>
-        <span class="mh">0x1b</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;]&#39;</span><span class="p">,</span> <span class="s1">&#39;}&#39;</span><span class="p">),</span>
-        <span class="mh">0x2b</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;|&#39;</span><span class="p">),</span>
-        <span class="mh">0x3a</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;capslock&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x1e</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">),</span>
-        <span class="mh">0x1f</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">),</span>
-        <span class="mh">0x20</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">),</span>
-        <span class="mh">0x21</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">),</span>
-        <span class="mh">0x22</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">),</span>
-        <span class="mh">0x23</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">),</span>
-        <span class="mh">0x24</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;j&#39;</span><span class="p">,</span> <span class="s1">&#39;J&#39;</span><span class="p">),</span>
-        <span class="mh">0x25</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">),</span>
-        <span class="mh">0x26</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="s1">&#39;L&#39;</span><span class="p">),</span>
-        <span class="mh">0x27</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">),</span>
-        <span class="mh">0x28</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">),</span>
-        <span class="mh">0xff</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;non-US-1&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x1c</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;enter&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x2a</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;shift&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x2c</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;Z&#39;</span><span class="p">),</span>
-        <span class="mh">0x2d</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">),</span>
-        <span class="mh">0x2e</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">),</span>
-        <span class="mh">0x2f</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;V&#39;</span><span class="p">),</span>
-        <span class="mh">0x30</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">),</span>
-        <span class="mh">0x31</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">),</span>
-        <span class="mh">0x32</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">),</span>
-        <span class="mh">0x33</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;&lt;&#39;</span><span class="p">),</span>
-        <span class="mh">0x34</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="s1">&#39;&gt;&#39;</span><span class="p">),</span>
-        <span class="mh">0x35</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;?&#39;</span><span class="p">),</span>
-        <span class="mh">0x36</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;shift&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x56</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;pipe&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x1d</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;lctrl&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x7D</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;super&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x38</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;alt&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x39</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;spacebar&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x64</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;alt-gr&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x7e</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;super&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x7f</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;compose&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x61</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;rctrl&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x45</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;numlock&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x47</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;numpad7&#39;</span><span class="p">,</span> <span class="s1">&#39;home&#39;</span><span class="p">),</span>
-        <span class="mh">0x4b</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;numpad4&#39;</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">),</span>
-        <span class="mh">0x4f</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;numpad1&#39;</span><span class="p">,</span> <span class="s1">&#39;end&#39;</span><span class="p">),</span>
-        <span class="mh">0x48</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;numpad8&#39;</span><span class="p">,</span> <span class="s1">&#39;up&#39;</span><span class="p">),</span>
-        <span class="mh">0x4c</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;numpad5&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x50</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;numpad2&#39;</span><span class="p">,</span> <span class="s1">&#39;down&#39;</span><span class="p">),</span>
-        <span class="mh">0x52</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;numpad0&#39;</span><span class="p">,</span> <span class="s1">&#39;insert&#39;</span><span class="p">),</span>
-        <span class="mh">0x37</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;numpadmul&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x62</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;numpaddivide&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x49</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;numpad9&#39;</span><span class="p">,</span> <span class="s1">&#39;pageup&#39;</span><span class="p">),</span>
-        <span class="mh">0x4d</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;numpad6&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">),</span>
-        <span class="mh">0x51</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;numpad3&#39;</span><span class="p">,</span> <span class="s1">&#39;pagedown&#39;</span><span class="p">),</span>
-        <span class="mh">0x53</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;numpaddecimal&#39;</span><span class="p">,</span> <span class="s1">&#39;delete&#39;</span><span class="p">),</span>
-        <span class="mh">0x4a</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;numpadsubstract&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x4e</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;numpadadd&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x60</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;numpadenter&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x01</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;escape&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x3b</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;f1&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x3c</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;f2&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x3d</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;f3&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x3e</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;f4&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x3f</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;f5&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x40</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;f6&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x41</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;f7&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x42</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;f8&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x43</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;f9&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x44</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;f10&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x57</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;f11&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x58</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;f12&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x54</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;Alt+SysRq&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x46</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;Screenlock&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x67</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;up&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x6c</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;down&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x69</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x6a</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x6e</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;insert&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x6f</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;delete&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x66</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;home&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x6b</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;end&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x68</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;pageup&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x6d</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;pagedown&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x63</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;print&#39;</span><span class="p">,</span> <span class="p">),</span>
-        <span class="mh">0x77</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;pause&#39;</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x29</span><span class="p">:</span> <span class="p">(</span><span class="s1">'`'</span><span class="p">,</span> <span class="s1">'~'</span><span class="p">),</span>
+        <span class="mh">0x02</span><span class="p">:</span> <span class="p">(</span><span class="s1">'1'</span><span class="p">,</span> <span class="s1">'!'</span><span class="p">),</span>
+        <span class="mh">0x03</span><span class="p">:</span> <span class="p">(</span><span class="s1">'2'</span><span class="p">,</span> <span class="s1">'@'</span><span class="p">),</span>
+        <span class="mh">0x04</span><span class="p">:</span> <span class="p">(</span><span class="s1">'3'</span><span class="p">,</span> <span class="s1">'#'</span><span class="p">),</span>
+        <span class="mh">0x05</span><span class="p">:</span> <span class="p">(</span><span class="s1">'4'</span><span class="p">,</span> <span class="s1">'$'</span><span class="p">),</span>
+        <span class="mh">0x06</span><span class="p">:</span> <span class="p">(</span><span class="s1">'5'</span><span class="p">,</span> <span class="s1">'%'</span><span class="p">),</span>
+        <span class="mh">0x07</span><span class="p">:</span> <span class="p">(</span><span class="s1">'6'</span><span class="p">,</span> <span class="s1">'^'</span><span class="p">),</span>
+        <span class="mh">0x08</span><span class="p">:</span> <span class="p">(</span><span class="s1">'7'</span><span class="p">,</span> <span class="s1">'&amp;'</span><span class="p">),</span>
+        <span class="mh">0x09</span><span class="p">:</span> <span class="p">(</span><span class="s1">'8'</span><span class="p">,</span> <span class="s1">'*'</span><span class="p">),</span>
+        <span class="mh">0x0a</span><span class="p">:</span> <span class="p">(</span><span class="s1">'9'</span><span class="p">,</span> <span class="s1">'('</span><span class="p">),</span>
+        <span class="mh">0x0b</span><span class="p">:</span> <span class="p">(</span><span class="s1">'0'</span><span class="p">,</span> <span class="s1">')'</span><span class="p">),</span>
+        <span class="mh">0x0c</span><span class="p">:</span> <span class="p">(</span><span class="s1">'-'</span><span class="p">,</span> <span class="s1">'_'</span><span class="p">),</span>
+        <span class="mh">0x0d</span><span class="p">:</span> <span class="p">(</span><span class="s1">'='</span><span class="p">,</span> <span class="s1">'+'</span><span class="p">),</span>
+        <span class="mh">0x0e</span><span class="p">:</span> <span class="p">(</span><span class="s1">'backspace'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x0f</span><span class="p">:</span> <span class="p">(</span><span class="s1">'tab'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x10</span><span class="p">:</span> <span class="p">(</span><span class="s1">'q'</span><span class="p">,</span> <span class="s1">'Q'</span><span class="p">),</span>
+        <span class="mh">0x11</span><span class="p">:</span> <span class="p">(</span><span class="s1">'w'</span><span class="p">,</span> <span class="s1">'W'</span><span class="p">),</span>
+        <span class="mh">0x12</span><span class="p">:</span> <span class="p">(</span><span class="s1">'e'</span><span class="p">,</span> <span class="s1">'E'</span><span class="p">),</span>
+        <span class="mh">0x13</span><span class="p">:</span> <span class="p">(</span><span class="s1">'r'</span><span class="p">,</span> <span class="s1">'R'</span><span class="p">),</span>
+        <span class="mh">0x14</span><span class="p">:</span> <span class="p">(</span><span class="s1">'t'</span><span class="p">,</span> <span class="s1">'T'</span><span class="p">),</span>
+        <span class="mh">0x15</span><span class="p">:</span> <span class="p">(</span><span class="s1">'y'</span><span class="p">,</span> <span class="s1">'Y'</span><span class="p">),</span>
+        <span class="mh">0x16</span><span class="p">:</span> <span class="p">(</span><span class="s1">'u'</span><span class="p">,</span> <span class="s1">'U'</span><span class="p">),</span>
+        <span class="mh">0x17</span><span class="p">:</span> <span class="p">(</span><span class="s1">'i'</span><span class="p">,</span> <span class="s1">'I'</span><span class="p">),</span>
+        <span class="mh">0x18</span><span class="p">:</span> <span class="p">(</span><span class="s1">'o'</span><span class="p">,</span> <span class="s1">'O'</span><span class="p">),</span>
+        <span class="mh">0x19</span><span class="p">:</span> <span class="p">(</span><span class="s1">'p'</span><span class="p">,</span> <span class="s1">'P'</span><span class="p">),</span>
+        <span class="mh">0x1a</span><span class="p">:</span> <span class="p">(</span><span class="s1">'['</span><span class="p">,</span> <span class="s1">'{'</span><span class="p">),</span>
+        <span class="mh">0x1b</span><span class="p">:</span> <span class="p">(</span><span class="s1">']'</span><span class="p">,</span> <span class="s1">'}'</span><span class="p">),</span>
+        <span class="mh">0x2b</span><span class="p">:</span> <span class="p">(</span><span class="s1">'</span><span class="se">\\</span><span class="s1">'</span><span class="p">,</span> <span class="s1">'|'</span><span class="p">),</span>
+        <span class="mh">0x3a</span><span class="p">:</span> <span class="p">(</span><span class="s1">'capslock'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x1e</span><span class="p">:</span> <span class="p">(</span><span class="s1">'a'</span><span class="p">,</span> <span class="s1">'A'</span><span class="p">),</span>
+        <span class="mh">0x1f</span><span class="p">:</span> <span class="p">(</span><span class="s1">'s'</span><span class="p">,</span> <span class="s1">'S'</span><span class="p">),</span>
+        <span class="mh">0x20</span><span class="p">:</span> <span class="p">(</span><span class="s1">'d'</span><span class="p">,</span> <span class="s1">'D'</span><span class="p">),</span>
+        <span class="mh">0x21</span><span class="p">:</span> <span class="p">(</span><span class="s1">'f'</span><span class="p">,</span> <span class="s1">'F'</span><span class="p">),</span>
+        <span class="mh">0x22</span><span class="p">:</span> <span class="p">(</span><span class="s1">'g'</span><span class="p">,</span> <span class="s1">'G'</span><span class="p">),</span>
+        <span class="mh">0x23</span><span class="p">:</span> <span class="p">(</span><span class="s1">'h'</span><span class="p">,</span> <span class="s1">'H'</span><span class="p">),</span>
+        <span class="mh">0x24</span><span class="p">:</span> <span class="p">(</span><span class="s1">'j'</span><span class="p">,</span> <span class="s1">'J'</span><span class="p">),</span>
+        <span class="mh">0x25</span><span class="p">:</span> <span class="p">(</span><span class="s1">'k'</span><span class="p">,</span> <span class="s1">'K'</span><span class="p">),</span>
+        <span class="mh">0x26</span><span class="p">:</span> <span class="p">(</span><span class="s1">'l'</span><span class="p">,</span> <span class="s1">'L'</span><span class="p">),</span>
+        <span class="mh">0x27</span><span class="p">:</span> <span class="p">(</span><span class="s1">';'</span><span class="p">,</span> <span class="s1">':'</span><span class="p">),</span>
+        <span class="mh">0x28</span><span class="p">:</span> <span class="p">(</span><span class="s2">"'"</span><span class="p">,</span> <span class="s1">'"'</span><span class="p">),</span>
+        <span class="mh">0xff</span><span class="p">:</span> <span class="p">(</span><span class="s1">'non-US-1'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x1c</span><span class="p">:</span> <span class="p">(</span><span class="s1">'enter'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x2a</span><span class="p">:</span> <span class="p">(</span><span class="s1">'shift'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x2c</span><span class="p">:</span> <span class="p">(</span><span class="s1">'z'</span><span class="p">,</span> <span class="s1">'Z'</span><span class="p">),</span>
+        <span class="mh">0x2d</span><span class="p">:</span> <span class="p">(</span><span class="s1">'x'</span><span class="p">,</span> <span class="s1">'X'</span><span class="p">),</span>
+        <span class="mh">0x2e</span><span class="p">:</span> <span class="p">(</span><span class="s1">'c'</span><span class="p">,</span> <span class="s1">'C'</span><span class="p">),</span>
+        <span class="mh">0x2f</span><span class="p">:</span> <span class="p">(</span><span class="s1">'v'</span><span class="p">,</span> <span class="s1">'V'</span><span class="p">),</span>
+        <span class="mh">0x30</span><span class="p">:</span> <span class="p">(</span><span class="s1">'b'</span><span class="p">,</span> <span class="s1">'B'</span><span class="p">),</span>
+        <span class="mh">0x31</span><span class="p">:</span> <span class="p">(</span><span class="s1">'n'</span><span class="p">,</span> <span class="s1">'N'</span><span class="p">),</span>
+        <span class="mh">0x32</span><span class="p">:</span> <span class="p">(</span><span class="s1">'m'</span><span class="p">,</span> <span class="s1">'M'</span><span class="p">),</span>
+        <span class="mh">0x33</span><span class="p">:</span> <span class="p">(</span><span class="s1">','</span><span class="p">,</span> <span class="s1">'&lt;'</span><span class="p">),</span>
+        <span class="mh">0x34</span><span class="p">:</span> <span class="p">(</span><span class="s1">'.'</span><span class="p">,</span> <span class="s1">'&gt;'</span><span class="p">),</span>
+        <span class="mh">0x35</span><span class="p">:</span> <span class="p">(</span><span class="s1">'/'</span><span class="p">,</span> <span class="s1">'?'</span><span class="p">),</span>
+        <span class="mh">0x36</span><span class="p">:</span> <span class="p">(</span><span class="s1">'shift'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x56</span><span class="p">:</span> <span class="p">(</span><span class="s1">'pipe'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x1d</span><span class="p">:</span> <span class="p">(</span><span class="s1">'lctrl'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x7D</span><span class="p">:</span> <span class="p">(</span><span class="s1">'super'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x38</span><span class="p">:</span> <span class="p">(</span><span class="s1">'alt'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x39</span><span class="p">:</span> <span class="p">(</span><span class="s1">'spacebar'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x64</span><span class="p">:</span> <span class="p">(</span><span class="s1">'alt-gr'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x7e</span><span class="p">:</span> <span class="p">(</span><span class="s1">'super'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x7f</span><span class="p">:</span> <span class="p">(</span><span class="s1">'compose'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x61</span><span class="p">:</span> <span class="p">(</span><span class="s1">'rctrl'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x45</span><span class="p">:</span> <span class="p">(</span><span class="s1">'numlock'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x47</span><span class="p">:</span> <span class="p">(</span><span class="s1">'numpad7'</span><span class="p">,</span> <span class="s1">'home'</span><span class="p">),</span>
+        <span class="mh">0x4b</span><span class="p">:</span> <span class="p">(</span><span class="s1">'numpad4'</span><span class="p">,</span> <span class="s1">'left'</span><span class="p">),</span>
+        <span class="mh">0x4f</span><span class="p">:</span> <span class="p">(</span><span class="s1">'numpad1'</span><span class="p">,</span> <span class="s1">'end'</span><span class="p">),</span>
+        <span class="mh">0x48</span><span class="p">:</span> <span class="p">(</span><span class="s1">'numpad8'</span><span class="p">,</span> <span class="s1">'up'</span><span class="p">),</span>
+        <span class="mh">0x4c</span><span class="p">:</span> <span class="p">(</span><span class="s1">'numpad5'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x50</span><span class="p">:</span> <span class="p">(</span><span class="s1">'numpad2'</span><span class="p">,</span> <span class="s1">'down'</span><span class="p">),</span>
+        <span class="mh">0x52</span><span class="p">:</span> <span class="p">(</span><span class="s1">'numpad0'</span><span class="p">,</span> <span class="s1">'insert'</span><span class="p">),</span>
+        <span class="mh">0x37</span><span class="p">:</span> <span class="p">(</span><span class="s1">'numpadmul'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x62</span><span class="p">:</span> <span class="p">(</span><span class="s1">'numpaddivide'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x49</span><span class="p">:</span> <span class="p">(</span><span class="s1">'numpad9'</span><span class="p">,</span> <span class="s1">'pageup'</span><span class="p">),</span>
+        <span class="mh">0x4d</span><span class="p">:</span> <span class="p">(</span><span class="s1">'numpad6'</span><span class="p">,</span> <span class="s1">'right'</span><span class="p">),</span>
+        <span class="mh">0x51</span><span class="p">:</span> <span class="p">(</span><span class="s1">'numpad3'</span><span class="p">,</span> <span class="s1">'pagedown'</span><span class="p">),</span>
+        <span class="mh">0x53</span><span class="p">:</span> <span class="p">(</span><span class="s1">'numpaddecimal'</span><span class="p">,</span> <span class="s1">'delete'</span><span class="p">),</span>
+        <span class="mh">0x4a</span><span class="p">:</span> <span class="p">(</span><span class="s1">'numpadsubstract'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x4e</span><span class="p">:</span> <span class="p">(</span><span class="s1">'numpadadd'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x60</span><span class="p">:</span> <span class="p">(</span><span class="s1">'numpadenter'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x01</span><span class="p">:</span> <span class="p">(</span><span class="s1">'escape'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x3b</span><span class="p">:</span> <span class="p">(</span><span class="s1">'f1'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x3c</span><span class="p">:</span> <span class="p">(</span><span class="s1">'f2'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x3d</span><span class="p">:</span> <span class="p">(</span><span class="s1">'f3'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x3e</span><span class="p">:</span> <span class="p">(</span><span class="s1">'f4'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x3f</span><span class="p">:</span> <span class="p">(</span><span class="s1">'f5'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x40</span><span class="p">:</span> <span class="p">(</span><span class="s1">'f6'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x41</span><span class="p">:</span> <span class="p">(</span><span class="s1">'f7'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x42</span><span class="p">:</span> <span class="p">(</span><span class="s1">'f8'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x43</span><span class="p">:</span> <span class="p">(</span><span class="s1">'f9'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x44</span><span class="p">:</span> <span class="p">(</span><span class="s1">'f10'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x57</span><span class="p">:</span> <span class="p">(</span><span class="s1">'f11'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x58</span><span class="p">:</span> <span class="p">(</span><span class="s1">'f12'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x54</span><span class="p">:</span> <span class="p">(</span><span class="s1">'Alt+SysRq'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x46</span><span class="p">:</span> <span class="p">(</span><span class="s1">'Screenlock'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x67</span><span class="p">:</span> <span class="p">(</span><span class="s1">'up'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x6c</span><span class="p">:</span> <span class="p">(</span><span class="s1">'down'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x69</span><span class="p">:</span> <span class="p">(</span><span class="s1">'left'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x6a</span><span class="p">:</span> <span class="p">(</span><span class="s1">'right'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x6e</span><span class="p">:</span> <span class="p">(</span><span class="s1">'insert'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x6f</span><span class="p">:</span> <span class="p">(</span><span class="s1">'delete'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x66</span><span class="p">:</span> <span class="p">(</span><span class="s1">'home'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x6b</span><span class="p">:</span> <span class="p">(</span><span class="s1">'end'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x68</span><span class="p">:</span> <span class="p">(</span><span class="s1">'pageup'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x6d</span><span class="p">:</span> <span class="p">(</span><span class="s1">'pagedown'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x63</span><span class="p">:</span> <span class="p">(</span><span class="s1">'print'</span><span class="p">,</span> <span class="p">),</span>
+        <span class="mh">0x77</span><span class="p">:</span> <span class="p">(</span><span class="s1">'pause'</span><span class="p">,</span> <span class="p">),</span>
 
 
         <span class="c1"># TODO combinations</span>
@@ -669,42 +669,42 @@
     <span class="p">}</span>
 
     <span class="n">keys_str</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;spacebar&#39;</span><span class="p">:</span> <span class="s1">&#39; &#39;</span><span class="p">,</span>
-        <span class="s1">&#39;tab&#39;</span><span class="p">:</span> <span class="s1">&#39;	&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;shift&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;alt&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;ctrl&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;escape&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;numpad1&#39;</span><span class="p">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;numpad2&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;numpad3&#39;</span><span class="p">:</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;numpad4&#39;</span><span class="p">:</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;numpad5&#39;</span><span class="p">:</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;numpad6&#39;</span><span class="p">:</span> <span class="s1">&#39;6&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;numpad7&#39;</span><span class="p">:</span> <span class="s1">&#39;7&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;numpad8&#39;</span><span class="p">:</span> <span class="s1">&#39;8&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;numpad9&#39;</span><span class="p">:</span> <span class="s1">&#39;9&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;numpad0&#39;</span><span class="p">:</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;numpadmul&#39;</span><span class="p">:</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;numpaddivide&#39;</span><span class="p">:</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;numpadadd&#39;</span><span class="p">:</span> <span class="s1">&#39;+&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;numpaddecimal&#39;</span><span class="p">:</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;numpadsubstract&#39;</span><span class="p">:</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span>
+        <span class="s1">'spacebar'</span><span class="p">:</span> <span class="s1">' '</span><span class="p">,</span>
+        <span class="s1">'tab'</span><span class="p">:</span> <span class="s1">'	'</span><span class="p">,</span>
+        <span class="s1">'shift'</span><span class="p">:</span> <span class="s1">''</span><span class="p">,</span>
+        <span class="s1">'alt'</span><span class="p">:</span> <span class="s1">''</span><span class="p">,</span>
+        <span class="s1">'ctrl'</span><span class="p">:</span> <span class="s1">''</span><span class="p">,</span>
+        <span class="s1">'escape'</span><span class="p">:</span> <span class="s1">''</span><span class="p">,</span>
+        <span class="s1">'numpad1'</span><span class="p">:</span> <span class="s1">'1'</span><span class="p">,</span>
+        <span class="s1">'numpad2'</span><span class="p">:</span> <span class="s1">'2'</span><span class="p">,</span>
+        <span class="s1">'numpad3'</span><span class="p">:</span> <span class="s1">'3'</span><span class="p">,</span>
+        <span class="s1">'numpad4'</span><span class="p">:</span> <span class="s1">'4'</span><span class="p">,</span>
+        <span class="s1">'numpad5'</span><span class="p">:</span> <span class="s1">'5'</span><span class="p">,</span>
+        <span class="s1">'numpad6'</span><span class="p">:</span> <span class="s1">'6'</span><span class="p">,</span>
+        <span class="s1">'numpad7'</span><span class="p">:</span> <span class="s1">'7'</span><span class="p">,</span>
+        <span class="s1">'numpad8'</span><span class="p">:</span> <span class="s1">'8'</span><span class="p">,</span>
+        <span class="s1">'numpad9'</span><span class="p">:</span> <span class="s1">'9'</span><span class="p">,</span>
+        <span class="s1">'numpad0'</span><span class="p">:</span> <span class="s1">'0'</span><span class="p">,</span>
+        <span class="s1">'numpadmul'</span><span class="p">:</span> <span class="s1">'*'</span><span class="p">,</span>
+        <span class="s1">'numpaddivide'</span><span class="p">:</span> <span class="s1">'/'</span><span class="p">,</span>
+        <span class="s1">'numpadadd'</span><span class="p">:</span> <span class="s1">'+'</span><span class="p">,</span>
+        <span class="s1">'numpaddecimal'</span><span class="p">:</span> <span class="s1">'.'</span><span class="p">,</span>
+        <span class="s1">'numpadsubstract'</span><span class="p">:</span> <span class="s1">'-'</span><span class="p">,</span>
     <span class="p">}</span>
 
     <span class="c1"># sizeof(struct input_event)</span>
-    <span class="n">struct_input_event_sz</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="s1">&#39;LLHHi&#39;</span><span class="p">)</span>
-    <span class="n">struct_input_absinfo_sz</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="s1">&#39;iiiiii&#39;</span><span class="p">)</span>
-    <span class="n">sz_l</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="s1">&#39;Q&#39;</span><span class="p">)</span>
+    <span class="n">struct_input_event_sz</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="s1">'LLHHi'</span><span class="p">)</span>
+    <span class="n">struct_input_absinfo_sz</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="s1">'iiiiii'</span><span class="p">)</span>
+    <span class="n">sz_l</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">calcsize</span><span class="p">(</span><span class="s1">'Q'</span><span class="p">)</span>
 
     <span class="k">class</span><span class="w"> </span><span class="nc">HIDInputMotionEventProvider</span><span class="p">(</span><span class="n">MotionEventProvider</span><span class="p">):</span>
 
-        <span class="n">options</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;min_position_x&#39;</span><span class="p">,</span> <span class="s1">&#39;max_position_x&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;min_position_y&#39;</span><span class="p">,</span> <span class="s1">&#39;max_position_y&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;min_pressure&#39;</span><span class="p">,</span> <span class="s1">&#39;max_pressure&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;min_abs_x&#39;</span><span class="p">,</span> <span class="s1">&#39;max_abs_x&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;min_abs_y&#39;</span><span class="p">,</span> <span class="s1">&#39;max_abs_y&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;invert_x&#39;</span><span class="p">,</span> <span class="s1">&#39;invert_y&#39;</span><span class="p">,</span> <span class="s1">&#39;rotation&#39;</span><span class="p">)</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'min_position_x'</span><span class="p">,</span> <span class="s1">'max_position_x'</span><span class="p">,</span>
+                   <span class="s1">'min_position_y'</span><span class="p">,</span> <span class="s1">'max_position_y'</span><span class="p">,</span>
+                   <span class="s1">'min_pressure'</span><span class="p">,</span> <span class="s1">'max_pressure'</span><span class="p">,</span>
+                   <span class="s1">'min_abs_x'</span><span class="p">,</span> <span class="s1">'max_abs_x'</span><span class="p">,</span>
+                   <span class="s1">'min_abs_y'</span><span class="p">,</span> <span class="s1">'max_abs_y'</span><span class="p">,</span>
+                   <span class="s1">'invert_x'</span><span class="p">,</span> <span class="s1">'invert_y'</span><span class="p">,</span> <span class="s1">'rotation'</span><span class="p">)</span>
 
         <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
             <span class="nb">super</span><span class="p">(</span><span class="n">HIDInputMotionEventProvider</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
@@ -719,53 +719,53 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 
             <span class="c1"># split arguments</span>
-            <span class="n">args</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">','</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="p">:</span>
-                <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;HIDInput: Filename missing in configuration&#39;</span><span class="p">)</span>
-                <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;HIDInput: Use /dev/input/event0 for example&#39;</span><span class="p">)</span>
+                <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'HIDInput: Filename missing in configuration'</span><span class="p">)</span>
+                <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'HIDInput: Use /dev/input/event0 for example'</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">None</span>
 
             <span class="c1"># read filename</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">input_fn</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;HIDInput: Read event from &lt;</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_fn</span><span class="p">)</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'HIDInput: Read event from &lt;</span><span class="si">%s</span><span class="s1">&gt;'</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_fn</span><span class="p">)</span>
 
             <span class="c1"># read parameters</span>
             <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
-                <span class="k">if</span> <span class="n">arg</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">arg</span> <span class="o">==</span> <span class="s1">''</span><span class="p">:</span>
                     <span class="k">continue</span>
-                <span class="n">arg</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span>
+                <span class="n">arg</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'='</span><span class="p">)</span>
 
-                <span class="c1"># ensure it&#39;s a key = value</span>
+                <span class="c1"># ensure it's a key = value</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-                    <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;HIDInput: invalid parameter &#39;</span>
-                                 <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">, not in key=value format.&#39;</span> <span class="o">%</span> <span class="n">arg</span><span class="p">)</span>
+                    <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'HIDInput: invalid parameter '</span>
+                                 <span class="s1">'</span><span class="si">%s</span><span class="s1">, not in key=value format.'</span> <span class="o">%</span> <span class="n">arg</span><span class="p">)</span>
                     <span class="k">continue</span>
 
                 <span class="c1"># ensure the key exist</span>
                 <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">arg</span>
                 <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">HIDInputMotionEventProvider</span><span class="o">.</span><span class="n">options</span><span class="p">:</span>
-                    <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;HIDInput: unknown </span><span class="si">%s</span><span class="s1"> option&#39;</span> <span class="o">%</span> <span class="n">key</span><span class="p">)</span>
+                    <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'HIDInput: unknown </span><span class="si">%s</span><span class="s1"> option'</span> <span class="o">%</span> <span class="n">key</span><span class="p">)</span>
                     <span class="k">continue</span>
 
                 <span class="c1"># ensure the value</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                    <span class="n">err</span> <span class="o">=</span> <span class="s1">&#39;HIDInput: invalid value &quot;</span><span class="si">%s</span><span class="s1">&quot; for &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                    <span class="n">err</span> <span class="o">=</span> <span class="s1">'HIDInput: invalid value "</span><span class="si">%s</span><span class="s1">" for "</span><span class="si">%s</span><span class="s1">"'</span> <span class="o">%</span> <span class="p">(</span>
                         <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
                     <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
                     <span class="k">continue</span>
 
                 <span class="c1"># all good!</span>
-                <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;HIDInput: Set custom </span><span class="si">%s</span><span class="s1"> to </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'HIDInput: Set custom </span><span class="si">%s</span><span class="s1"> to </span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span>
                     <span class="n">key</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
 
-            <span class="k">if</span> <span class="s1">&#39;rotation&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span><span class="p">[</span><span class="s1">&#39;rotation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span><span class="p">[</span><span class="s1">&#39;rotation&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">270</span><span class="p">):</span>
-                <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;HIDInput: invalid rotation value (</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span><span class="p">[</span><span class="s1">&#39;rotation&#39;</span><span class="p">]))</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span><span class="p">[</span><span class="s1">&#39;rotation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="s1">'rotation'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span><span class="p">[</span><span class="s1">'rotation'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span><span class="p">[</span><span class="s1">'rotation'</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">270</span><span class="p">):</span>
+                <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'HIDInput: invalid rotation value (</span><span class="si">{}</span><span class="s1">)'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span><span class="p">[</span><span class="s1">'rotation'</span><span class="p">]))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span><span class="p">[</span><span class="s1">'rotation'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_fn</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -785,11 +785,11 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">_thread_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-            <span class="n">input_fn</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;input_fn&#39;</span><span class="p">)</span>
+            <span class="n">input_fn</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'input_fn'</span><span class="p">)</span>
             <span class="n">queue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span>
             <span class="n">dispatch_queue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch_queue</span>
-            <span class="n">device</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;device&#39;</span><span class="p">)</span>
-            <span class="n">drs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;default_ranges&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span>
+            <span class="n">device</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'device'</span><span class="p">)</span>
+            <span class="n">drs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'default_ranges'</span><span class="p">)</span><span class="o">.</span><span class="n">get</span>
             <span class="n">touches</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="n">touches_sent</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">point</span> <span class="o">=</span> <span class="p">{}</span>
@@ -808,9 +808,9 @@
             <span class="n">range_max_abs_y</span> <span class="o">=</span> <span class="mi">255</span>
             <span class="n">range_min_abs_pressure</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="n">range_max_abs_pressure</span> <span class="o">=</span> <span class="mi">255</span>
-            <span class="n">invert_x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">drs</span><span class="p">(</span><span class="s1">&#39;invert_x&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
-            <span class="n">invert_y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">drs</span><span class="p">(</span><span class="s1">&#39;invert_y&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
-            <span class="n">rotation</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;rotation&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">invert_x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">drs</span><span class="p">(</span><span class="s1">'invert_x'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+            <span class="n">invert_y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">drs</span><span class="p">(</span><span class="s1">'invert_y'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+            <span class="n">rotation</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'rotation'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
             <span class="k">def</span><span class="w"> </span><span class="nf">assign_coord</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">invert</span><span class="p">,</span> <span class="n">coords</span><span class="p">):</span>
                 <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span> <span class="o">=</span> <span class="n">coords</span>
@@ -839,15 +839,15 @@
                     <span class="n">point</span><span class="p">[</span><span class="n">cy</span><span class="p">]</span> <span class="o">+=</span> <span class="o">-</span><span class="n">value</span>
 
                 <span class="c1"># limit it to the screen area 0-1</span>
-                <span class="n">point</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">point</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]))</span>
-                <span class="n">point</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">point</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]))</span>
+                <span class="n">point</span><span class="p">[</span><span class="s1">'x'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">point</span><span class="p">[</span><span class="s1">'x'</span><span class="p">]))</span>
+                <span class="n">point</span><span class="p">[</span><span class="s1">'y'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">point</span><span class="p">[</span><span class="s1">'y'</span><span class="p">]))</span>
 
             <span class="k">def</span><span class="w"> </span><span class="nf">process_as_multitouch</span><span class="p">(</span><span class="n">tv_sec</span><span class="p">,</span> <span class="n">tv_usec</span><span class="p">,</span> <span class="n">ev_type</span><span class="p">,</span>
                                       <span class="n">ev_code</span><span class="p">,</span> <span class="n">ev_value</span><span class="p">):</span>
                 <span class="c1"># sync event</span>
                 <span class="k">if</span> <span class="n">ev_type</span> <span class="o">==</span> <span class="n">EV_SYN</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">ev_code</span> <span class="o">==</span> <span class="n">SYN_MT_REPORT</span><span class="p">:</span>
-                        <span class="k">if</span> <span class="s1">&#39;id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">point</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="s1">'id'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">point</span><span class="p">:</span>
                             <span class="k">return</span>
                         <span class="n">l_points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
                     <span class="k">elif</span> <span class="n">ev_code</span> <span class="o">==</span> <span class="n">SYN_REPORT</span><span class="p">:</span>
@@ -861,167 +861,167 @@
                     <span class="c1"># compute multitouch track</span>
                     <span class="k">if</span> <span class="n">ev_code</span> <span class="o">==</span> <span class="n">ABS_MT_TRACKING_ID</span><span class="p">:</span>
                         <span class="n">point</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-                        <span class="n">point</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ev_value</span>
+                        <span class="n">point</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span> <span class="o">=</span> <span class="n">ev_value</span>
                     <span class="k">elif</span> <span class="n">ev_code</span> <span class="o">==</span> <span class="n">ABS_MT_POSITION_X</span><span class="p">:</span>
                         <span class="n">val</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">ev_value</span><span class="p">,</span>
                                         <span class="n">range_min_position_x</span><span class="p">,</span>
                                         <span class="n">range_max_position_x</span><span class="p">)</span>
-                        <span class="n">assign_coord</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">invert_x</span><span class="p">,</span> <span class="s1">&#39;xy&#39;</span><span class="p">)</span>
+                        <span class="n">assign_coord</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">invert_x</span><span class="p">,</span> <span class="s1">'xy'</span><span class="p">)</span>
                     <span class="k">elif</span> <span class="n">ev_code</span> <span class="o">==</span> <span class="n">ABS_MT_POSITION_Y</span><span class="p">:</span>
                         <span class="n">val</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">-</span> <span class="n">normalize</span><span class="p">(</span><span class="n">ev_value</span><span class="p">,</span>
                                              <span class="n">range_min_position_y</span><span class="p">,</span>
                                              <span class="n">range_max_position_y</span><span class="p">)</span>
-                        <span class="n">assign_coord</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">invert_y</span><span class="p">,</span> <span class="s1">&#39;yx&#39;</span><span class="p">)</span>
+                        <span class="n">assign_coord</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">invert_y</span><span class="p">,</span> <span class="s1">'yx'</span><span class="p">)</span>
                     <span class="k">elif</span> <span class="n">ev_code</span> <span class="o">==</span> <span class="n">ABS_MT_ORIENTATION</span><span class="p">:</span>
-                        <span class="n">point</span><span class="p">[</span><span class="s1">&#39;orientation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ev_value</span>
+                        <span class="n">point</span><span class="p">[</span><span class="s1">'orientation'</span><span class="p">]</span> <span class="o">=</span> <span class="n">ev_value</span>
                     <span class="k">elif</span> <span class="n">ev_code</span> <span class="o">==</span> <span class="n">ABS_MT_BLOB_ID</span><span class="p">:</span>
-                        <span class="n">point</span><span class="p">[</span><span class="s1">&#39;blobid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ev_value</span>
+                        <span class="n">point</span><span class="p">[</span><span class="s1">'blobid'</span><span class="p">]</span> <span class="o">=</span> <span class="n">ev_value</span>
                     <span class="k">elif</span> <span class="n">ev_code</span> <span class="o">==</span> <span class="n">ABS_MT_PRESSURE</span><span class="p">:</span>
-                        <span class="n">point</span><span class="p">[</span><span class="s1">&#39;pressure&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">ev_value</span><span class="p">,</span>
+                        <span class="n">point</span><span class="p">[</span><span class="s1">'pressure'</span><span class="p">]</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">ev_value</span><span class="p">,</span>
                                                       <span class="n">range_min_pressure</span><span class="p">,</span>
                                                       <span class="n">range_max_pressure</span><span class="p">)</span>
                     <span class="k">elif</span> <span class="n">ev_code</span> <span class="o">==</span> <span class="n">ABS_MT_TOUCH_MAJOR</span><span class="p">:</span>
-                        <span class="n">point</span><span class="p">[</span><span class="s1">&#39;size_w&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ev_value</span>
+                        <span class="n">point</span><span class="p">[</span><span class="s1">'size_w'</span><span class="p">]</span> <span class="o">=</span> <span class="n">ev_value</span>
                     <span class="k">elif</span> <span class="n">ev_code</span> <span class="o">==</span> <span class="n">ABS_MT_TOUCH_MINOR</span><span class="p">:</span>
-                        <span class="n">point</span><span class="p">[</span><span class="s1">&#39;size_h&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ev_value</span>
+                        <span class="n">point</span><span class="p">[</span><span class="s1">'size_h'</span><span class="p">]</span> <span class="o">=</span> <span class="n">ev_value</span>
 
             <span class="k">def</span><span class="w"> </span><span class="nf">process_as_mouse_or_keyboard</span><span class="p">(</span>
                     <span class="n">tv_sec</span><span class="p">,</span> <span class="n">tv_usec</span><span class="p">,</span> <span class="n">ev_type</span><span class="p">,</span> <span class="n">ev_code</span><span class="p">,</span> <span class="n">ev_value</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">ev_type</span> <span class="o">==</span> <span class="n">EV_SYN</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">ev_code</span> <span class="o">==</span> <span class="n">SYN_REPORT</span><span class="p">:</span>
                         <span class="n">process</span><span class="p">([</span><span class="n">point</span><span class="p">])</span>
-                        <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;button&#39;</span> <span class="ow">in</span> <span class="n">point</span> <span class="ow">and</span>
-                                <span class="n">point</span><span class="p">[</span><span class="s1">&#39;button&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;scroll&#39;</span><span class="p">)):</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="s1">'button'</span> <span class="ow">in</span> <span class="n">point</span> <span class="ow">and</span>
+                                <span class="n">point</span><span class="p">[</span><span class="s1">'button'</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'scroll'</span><span class="p">)):</span>
                             <span class="c1"># for scrolls we need to remove it as there is</span>
                             <span class="c1"># no up key</span>
-                            <span class="k">del</span> <span class="n">point</span><span class="p">[</span><span class="s1">&#39;button&#39;</span><span class="p">]</span>
-                            <span class="n">point</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-                            <span class="n">point</span><span class="p">[</span><span class="s1">&#39;_avoid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="k">del</span> <span class="n">point</span><span class="p">[</span><span class="s1">'button'</span><span class="p">]</span>
+                            <span class="n">point</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                            <span class="n">point</span><span class="p">[</span><span class="s1">'_avoid'</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
                             <span class="n">process</span><span class="p">([</span><span class="n">point</span><span class="p">])</span>
 
                 <span class="k">elif</span> <span class="n">ev_type</span> <span class="o">==</span> <span class="n">EV_REL</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">ev_code</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                         <span class="n">assign_rel_coord</span><span class="p">(</span><span class="n">point</span><span class="p">,</span>
                                          <span class="nb">min</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="n">ev_value</span> <span class="o">/</span> <span class="mf">1000.</span><span class="p">)),</span>
-                                         <span class="n">invert_x</span><span class="p">,</span> <span class="s1">&#39;xy&#39;</span><span class="p">)</span>
+                                         <span class="n">invert_x</span><span class="p">,</span> <span class="s1">'xy'</span><span class="p">)</span>
                     <span class="k">elif</span> <span class="n">ev_code</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                         <span class="n">assign_rel_coord</span><span class="p">(</span><span class="n">point</span><span class="p">,</span>
                                          <span class="nb">min</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="n">ev_value</span> <span class="o">/</span> <span class="mf">1000.</span><span class="p">)),</span>
-                                         <span class="n">invert_y</span><span class="p">,</span> <span class="s1">&#39;yx&#39;</span><span class="p">)</span>
+                                         <span class="n">invert_y</span><span class="p">,</span> <span class="s1">'yx'</span><span class="p">)</span>
                     <span class="k">elif</span> <span class="n">ev_code</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span>  <span class="c1"># Wheel</span>
                         <span class="c1"># translates the wheel move to a button</span>
-                        <span class="n">b</span> <span class="o">=</span> <span class="s2">&quot;scrollup&quot;</span> <span class="k">if</span> <span class="n">ev_value</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;scrolldown&quot;</span>
-                        <span class="k">if</span> <span class="s1">&#39;button&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">point</span><span class="p">:</span>
-                            <span class="n">point</span><span class="p">[</span><span class="s1">&#39;button&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span>
-                            <span class="n">point</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-                            <span class="k">if</span> <span class="s1">&#39;_avoid&#39;</span> <span class="ow">in</span> <span class="n">point</span><span class="p">:</span>
-                                <span class="k">del</span> <span class="n">point</span><span class="p">[</span><span class="s1">&#39;_avoid&#39;</span><span class="p">]</span>
+                        <span class="n">b</span> <span class="o">=</span> <span class="s2">"scrollup"</span> <span class="k">if</span> <span class="n">ev_value</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">"scrolldown"</span>
+                        <span class="k">if</span> <span class="s1">'button'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">point</span><span class="p">:</span>
+                            <span class="n">point</span><span class="p">[</span><span class="s1">'button'</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span>
+                            <span class="n">point</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                            <span class="k">if</span> <span class="s1">'_avoid'</span> <span class="ow">in</span> <span class="n">point</span><span class="p">:</span>
+                                <span class="k">del</span> <span class="n">point</span><span class="p">[</span><span class="s1">'_avoid'</span><span class="p">]</span>
 
                 <span class="k">elif</span> <span class="n">ev_type</span> <span class="o">!=</span> <span class="n">EV_KEY</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">ev_code</span> <span class="o">==</span> <span class="n">ABS_X</span><span class="p">:</span>
                         <span class="n">val</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">ev_value</span><span class="p">,</span>
                                         <span class="n">range_min_abs_x</span><span class="p">,</span>
                                         <span class="n">range_max_abs_x</span><span class="p">)</span>
-                        <span class="n">assign_coord</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">invert_x</span><span class="p">,</span> <span class="s1">&#39;xy&#39;</span><span class="p">)</span>
+                        <span class="n">assign_coord</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">invert_x</span><span class="p">,</span> <span class="s1">'xy'</span><span class="p">)</span>
                     <span class="k">elif</span> <span class="n">ev_code</span> <span class="o">==</span> <span class="n">ABS_Y</span><span class="p">:</span>
                         <span class="n">val</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">-</span> <span class="n">normalize</span><span class="p">(</span><span class="n">ev_value</span><span class="p">,</span>
                                              <span class="n">range_min_abs_y</span><span class="p">,</span>
                                              <span class="n">range_max_abs_y</span><span class="p">)</span>
-                        <span class="n">assign_coord</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">invert_y</span><span class="p">,</span> <span class="s1">&#39;yx&#39;</span><span class="p">)</span>
+                        <span class="n">assign_coord</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">invert_y</span><span class="p">,</span> <span class="s1">'yx'</span><span class="p">)</span>
                     <span class="k">elif</span> <span class="n">ev_code</span> <span class="o">==</span> <span class="n">ABS_PRESSURE</span><span class="p">:</span>
-                        <span class="n">point</span><span class="p">[</span><span class="s1">&#39;pressure&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">ev_value</span><span class="p">,</span>
+                        <span class="n">point</span><span class="p">[</span><span class="s1">'pressure'</span><span class="p">]</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">ev_value</span><span class="p">,</span>
                                                       <span class="n">range_min_abs_pressure</span><span class="p">,</span>
                                                       <span class="n">range_max_abs_pressure</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">buttons</span> <span class="o">=</span> <span class="p">{</span>
-                        <span class="mi">272</span><span class="p">:</span> <span class="s1">&#39;left&#39;</span><span class="p">,</span>
-                        <span class="mi">273</span><span class="p">:</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span>
-                        <span class="mi">274</span><span class="p">:</span> <span class="s1">&#39;middle&#39;</span><span class="p">,</span>
-                        <span class="mi">275</span><span class="p">:</span> <span class="s1">&#39;side&#39;</span><span class="p">,</span>
-                        <span class="mi">276</span><span class="p">:</span> <span class="s1">&#39;extra&#39;</span><span class="p">,</span>
-                        <span class="mi">277</span><span class="p">:</span> <span class="s1">&#39;forward&#39;</span><span class="p">,</span>
-                        <span class="mi">278</span><span class="p">:</span> <span class="s1">&#39;back&#39;</span><span class="p">,</span>
-                        <span class="mi">279</span><span class="p">:</span> <span class="s1">&#39;task&#39;</span><span class="p">,</span>
-                        <span class="mi">330</span><span class="p">:</span> <span class="s1">&#39;touch&#39;</span><span class="p">,</span>
-                        <span class="mi">320</span><span class="p">:</span> <span class="s1">&#39;pen&#39;</span><span class="p">}</span>
+                        <span class="mi">272</span><span class="p">:</span> <span class="s1">'left'</span><span class="p">,</span>
+                        <span class="mi">273</span><span class="p">:</span> <span class="s1">'right'</span><span class="p">,</span>
+                        <span class="mi">274</span><span class="p">:</span> <span class="s1">'middle'</span><span class="p">,</span>
+                        <span class="mi">275</span><span class="p">:</span> <span class="s1">'side'</span><span class="p">,</span>
+                        <span class="mi">276</span><span class="p">:</span> <span class="s1">'extra'</span><span class="p">,</span>
+                        <span class="mi">277</span><span class="p">:</span> <span class="s1">'forward'</span><span class="p">,</span>
+                        <span class="mi">278</span><span class="p">:</span> <span class="s1">'back'</span><span class="p">,</span>
+                        <span class="mi">279</span><span class="p">:</span> <span class="s1">'task'</span><span class="p">,</span>
+                        <span class="mi">330</span><span class="p">:</span> <span class="s1">'touch'</span><span class="p">,</span>
+                        <span class="mi">320</span><span class="p">:</span> <span class="s1">'pen'</span><span class="p">}</span>
 
                     <span class="k">if</span> <span class="n">ev_code</span> <span class="ow">in</span> <span class="n">buttons</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
                         <span class="k">if</span> <span class="n">ev_value</span><span class="p">:</span>
-                            <span class="k">if</span> <span class="s1">&#39;button&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">point</span><span class="p">:</span>
-                                <span class="n">point</span><span class="p">[</span><span class="s1">&#39;button&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">buttons</span><span class="p">[</span><span class="n">ev_code</span><span class="p">]</span>
-                                <span class="n">point</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-                                <span class="k">if</span> <span class="s1">&#39;_avoid&#39;</span> <span class="ow">in</span> <span class="n">point</span><span class="p">:</span>
-                                    <span class="k">del</span> <span class="n">point</span><span class="p">[</span><span class="s1">&#39;_avoid&#39;</span><span class="p">]</span>
-                        <span class="k">elif</span> <span class="s1">&#39;button&#39;</span> <span class="ow">in</span> <span class="n">point</span><span class="p">:</span>
-                            <span class="k">if</span> <span class="n">point</span><span class="p">[</span><span class="s1">&#39;button&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">buttons</span><span class="p">[</span><span class="n">ev_code</span><span class="p">]:</span>
-                                <span class="k">del</span> <span class="n">point</span><span class="p">[</span><span class="s1">&#39;button&#39;</span><span class="p">]</span>
-                                <span class="n">point</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-                                <span class="n">point</span><span class="p">[</span><span class="s1">&#39;_avoid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="k">if</span> <span class="s1">'button'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">point</span><span class="p">:</span>
+                                <span class="n">point</span><span class="p">[</span><span class="s1">'button'</span><span class="p">]</span> <span class="o">=</span> <span class="n">buttons</span><span class="p">[</span><span class="n">ev_code</span><span class="p">]</span>
+                                <span class="n">point</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                                <span class="k">if</span> <span class="s1">'_avoid'</span> <span class="ow">in</span> <span class="n">point</span><span class="p">:</span>
+                                    <span class="k">del</span> <span class="n">point</span><span class="p">[</span><span class="s1">'_avoid'</span><span class="p">]</span>
+                        <span class="k">elif</span> <span class="s1">'button'</span> <span class="ow">in</span> <span class="n">point</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">point</span><span class="p">[</span><span class="s1">'button'</span><span class="p">]</span> <span class="o">==</span> <span class="n">buttons</span><span class="p">[</span><span class="n">ev_code</span><span class="p">]:</span>
+                                <span class="k">del</span> <span class="n">point</span><span class="p">[</span><span class="s1">'button'</span><span class="p">]</span>
+                                <span class="n">point</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                                <span class="n">point</span><span class="p">[</span><span class="s1">'_avoid'</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="k">if</span> <span class="ow">not</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">ev_value</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
                             <span class="k">return</span>
 
                         <span class="k">if</span> <span class="n">ev_code</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">keyboard_keys</span><span class="p">:</span>
-                            <span class="n">Logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;HIDInput: unhandled HID code: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span>
+                            <span class="n">Logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">'HIDInput: unhandled HID code: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span>
                                         <span class="nb">format</span><span class="p">(</span><span class="n">ev_code</span><span class="p">))</span>
                             <span class="k">return</span>
 
-                        <span class="n">z</span> <span class="o">=</span> <span class="n">keyboard_keys</span><span class="p">[</span><span class="n">ev_code</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="s1">&#39;shift&#39;</span> <span class="ow">in</span>
+                        <span class="n">z</span> <span class="o">=</span> <span class="n">keyboard_keys</span><span class="p">[</span><span class="n">ev_code</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="s1">'shift'</span> <span class="ow">in</span>
                                                    <span class="n">Window</span><span class="o">.</span><span class="n">_modifiers</span> <span class="k">else</span> <span class="mi">0</span><span class="p">]</span>
                         <span class="k">if</span> <span class="n">z</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Keyboard</span><span class="o">.</span><span class="n">keycodes</span><span class="p">:</span>
                             <span class="c1"># or if it is not in this LUT</span>
-                            <span class="n">Logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;HIDInput: unhandled character: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span>
+                            <span class="n">Logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">'HIDInput: unhandled character: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span>
                                         <span class="nb">format</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
                             <span class="k">return</span>
 
                         <span class="n">keycode</span> <span class="o">=</span> <span class="n">Keyboard</span><span class="o">.</span><span class="n">keycodes</span><span class="p">[</span><span class="n">z</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span>
 
                         <span class="k">if</span> <span class="n">ev_value</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                            <span class="k">if</span> <span class="n">z</span> <span class="o">==</span> <span class="s1">&#39;shift&#39;</span> <span class="ow">or</span> <span class="n">z</span> <span class="o">==</span> <span class="s1">&#39;alt&#39;</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">z</span> <span class="o">==</span> <span class="s1">'shift'</span> <span class="ow">or</span> <span class="n">z</span> <span class="o">==</span> <span class="s1">'alt'</span><span class="p">:</span>
                                 <span class="n">Window</span><span class="o">.</span><span class="n">_modifiers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
-                            <span class="k">elif</span> <span class="n">z</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;ctrl&#39;</span><span class="p">):</span>
-                                <span class="n">Window</span><span class="o">.</span><span class="n">_modifiers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;ctrl&#39;</span><span class="p">)</span>
+                            <span class="k">elif</span> <span class="n">z</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'ctrl'</span><span class="p">):</span>
+                                <span class="n">Window</span><span class="o">.</span><span class="n">_modifiers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'ctrl'</span><span class="p">)</span>
 
-                            <span class="n">dispatch_queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;key_down&#39;</span><span class="p">,</span> <span class="p">(</span>
+                            <span class="n">dispatch_queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">'key_down'</span><span class="p">,</span> <span class="p">(</span>
                                 <span class="n">keycode</span><span class="p">,</span> <span class="n">ev_code</span><span class="p">,</span>
                                 <span class="n">keys_str</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">z</span><span class="p">),</span> <span class="n">Window</span><span class="o">.</span><span class="n">_modifiers</span><span class="p">)))</span>
                         <span class="k">elif</span> <span class="n">ev_value</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                            <span class="n">dispatch_queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;key_up&#39;</span><span class="p">,</span> <span class="p">(</span>
+                            <span class="n">dispatch_queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">'key_up'</span><span class="p">,</span> <span class="p">(</span>
                                 <span class="n">keycode</span><span class="p">,</span> <span class="n">ev_code</span><span class="p">,</span>
                                 <span class="n">keys_str</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">z</span><span class="p">),</span> <span class="n">Window</span><span class="o">.</span><span class="n">_modifiers</span><span class="p">)))</span>
-                            <span class="k">if</span> <span class="p">((</span><span class="n">z</span> <span class="o">==</span> <span class="s1">&#39;shift&#39;</span> <span class="ow">or</span> <span class="n">z</span> <span class="o">==</span> <span class="s1">&#39;alt&#39;</span><span class="p">)</span> <span class="ow">and</span>
+                            <span class="k">if</span> <span class="p">((</span><span class="n">z</span> <span class="o">==</span> <span class="s1">'shift'</span> <span class="ow">or</span> <span class="n">z</span> <span class="o">==</span> <span class="s1">'alt'</span><span class="p">)</span> <span class="ow">and</span>
                                     <span class="p">(</span><span class="n">z</span> <span class="ow">in</span> <span class="n">Window</span><span class="o">.</span><span class="n">_modifiers</span><span class="p">)):</span>
                                 <span class="n">Window</span><span class="o">.</span><span class="n">_modifiers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
-                            <span class="k">elif</span> <span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;ctrl&#39;</span><span class="p">)</span> <span class="ow">and</span>
-                                  <span class="s1">&#39;ctrl&#39;</span> <span class="ow">in</span> <span class="n">Window</span><span class="o">.</span><span class="n">_modifiers</span><span class="p">):</span>
-                                <span class="n">Window</span><span class="o">.</span><span class="n">_modifiers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;ctrl&#39;</span><span class="p">)</span>
+                            <span class="k">elif</span> <span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'ctrl'</span><span class="p">)</span> <span class="ow">and</span>
+                                  <span class="s1">'ctrl'</span> <span class="ow">in</span> <span class="n">Window</span><span class="o">.</span><span class="n">_modifiers</span><span class="p">):</span>
+                                <span class="n">Window</span><span class="o">.</span><span class="n">_modifiers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">'ctrl'</span><span class="p">)</span>
 
             <span class="k">def</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="n">points</span><span class="p">):</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">is_multitouch</span><span class="p">:</span>
-                    <span class="n">dispatch_queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;mouse_pos&#39;</span><span class="p">,</span> <span class="p">(</span>
-                        <span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">Window</span><span class="o">.</span><span class="n">width</span><span class="p">,</span>
-                        <span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">Window</span><span class="o">.</span><span class="n">height</span><span class="p">)))</span>
+                    <span class="n">dispatch_queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">'mouse_pos'</span><span class="p">,</span> <span class="p">(</span>
+                        <span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">'x'</span><span class="p">]</span> <span class="o">*</span> <span class="n">Window</span><span class="o">.</span><span class="n">width</span><span class="p">,</span>
+                        <span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">'y'</span><span class="p">]</span> <span class="o">*</span> <span class="n">Window</span><span class="o">.</span><span class="n">height</span><span class="p">)))</span>
 
-                <span class="n">actives</span> <span class="o">=</span> <span class="p">[</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+                <span class="n">actives</span> <span class="o">=</span> <span class="p">[</span><span class="n">args</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span>
                            <span class="k">for</span> <span class="n">args</span> <span class="ow">in</span> <span class="n">points</span>
-                           <span class="k">if</span> <span class="s1">&#39;id&#39;</span> <span class="ow">in</span> <span class="n">args</span> <span class="ow">and</span> <span class="s1">&#39;_avoid&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">args</span><span class="p">]</span>
+                           <span class="k">if</span> <span class="s1">'id'</span> <span class="ow">in</span> <span class="n">args</span> <span class="ow">and</span> <span class="s1">'_avoid'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">args</span><span class="p">]</span>
                 <span class="k">for</span> <span class="n">args</span> <span class="ow">in</span> <span class="n">points</span><span class="p">:</span>
-                    <span class="n">tid</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+                    <span class="n">tid</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span>
                     <span class="k">try</span><span class="p">:</span>
                         <span class="n">touch</span> <span class="o">=</span> <span class="n">touches</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span>
-                        <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">sx</span> <span class="o">==</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="n">touch</span><span class="o">.</span><span class="n">sy</span> <span class="o">==</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]:</span>
+                        <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">sx</span> <span class="o">==</span> <span class="n">args</span><span class="p">[</span><span class="s1">'x'</span><span class="p">]</span> <span class="ow">and</span> <span class="n">touch</span><span class="o">.</span><span class="n">sy</span> <span class="o">==</span> <span class="n">args</span><span class="p">[</span><span class="s1">'y'</span><span class="p">]:</span>
                             <span class="k">continue</span>
                         <span class="n">touch</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
                         <span class="k">if</span> <span class="n">tid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">touches_sent</span><span class="p">:</span>
-                            <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;begin&#39;</span><span class="p">,</span> <span class="n">touch</span><span class="p">))</span>
+                            <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">'begin'</span><span class="p">,</span> <span class="n">touch</span><span class="p">))</span>
                             <span class="n">touches_sent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tid</span><span class="p">)</span>
-                        <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;update&#39;</span><span class="p">,</span> <span class="n">touch</span><span class="p">))</span>
+                        <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">'update'</span><span class="p">,</span> <span class="n">touch</span><span class="p">))</span>
                     <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-                        <span class="k">if</span> <span class="s1">&#39;_avoid&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="s1">'_avoid'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
                             <span class="n">touch</span> <span class="o">=</span> <span class="n">HIDMotionEvent</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">tid</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
                             <span class="n">touches</span><span class="p">[</span><span class="n">touch</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">touch</span>
                             <span class="k">if</span> <span class="n">tid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">touches_sent</span><span class="p">:</span>
-                                <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;begin&#39;</span><span class="p">,</span> <span class="n">touch</span><span class="p">))</span>
+                                <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">'begin'</span><span class="p">,</span> <span class="n">touch</span><span class="p">))</span>
                                 <span class="n">touches_sent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tid</span><span class="p">)</span>
 
                 <span class="k">for</span> <span class="n">tid</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">touches</span><span class="o">.</span><span class="n">keys</span><span class="p">())[:]:</span>
@@ -1029,7 +1029,7 @@
                         <span class="n">touch</span> <span class="o">=</span> <span class="n">touches</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span>
                         <span class="k">if</span> <span class="n">tid</span> <span class="ow">in</span> <span class="n">touches_sent</span><span class="p">:</span>
                             <span class="n">touch</span><span class="o">.</span><span class="n">update_time_end</span><span class="p">()</span>
-                            <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;end&#39;</span><span class="p">,</span> <span class="n">touch</span><span class="p">))</span>
+                            <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">'end'</span><span class="p">,</span> <span class="n">touch</span><span class="p">))</span>
                             <span class="n">touches_sent</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tid</span><span class="p">)</span>
                         <span class="k">del</span> <span class="n">touches</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span>
 
@@ -1037,16 +1037,16 @@
                 <span class="k">return</span> <span class="p">(</span><span class="n">value</span> <span class="o">-</span> <span class="n">vmin</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">vmax</span> <span class="o">-</span> <span class="n">vmin</span><span class="p">)</span>
 
             <span class="c1"># open the input</span>
-            <span class="n">fd</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">input_fn</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span>
+            <span class="n">fd</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">input_fn</span><span class="p">,</span> <span class="s1">'rb'</span><span class="p">)</span>
 
             <span class="c1"># get the controller name (EVIOCGNAME)</span>
             <span class="n">device_name</span> <span class="o">=</span> <span class="n">fcntl</span><span class="o">.</span><span class="n">ioctl</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">EVIOCGNAME</span> <span class="o">+</span> <span class="p">(</span><span class="mi">256</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">),</span>
-                                      <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;HIDMotionEvent: using &lt;</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="n">device_name</span><span class="p">)</span>
+                                      <span class="s2">" "</span> <span class="o">*</span> <span class="mi">256</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'HIDMotionEvent: using &lt;</span><span class="si">%s</span><span class="s1">&gt;'</span> <span class="o">%</span> <span class="n">device_name</span><span class="p">)</span>
 
             <span class="c1"># get abs infos</span>
-            <span class="n">bit</span> <span class="o">=</span> <span class="n">fcntl</span><span class="o">.</span><span class="n">ioctl</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">EVIOCGBIT</span> <span class="o">+</span> <span class="p">(</span><span class="n">EV_MAX</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">),</span> <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="n">sz_l</span><span class="p">)</span>
-            <span class="n">bit</span><span class="p">,</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;Q&#39;</span><span class="p">,</span> <span class="n">bit</span><span class="p">)</span>
+            <span class="n">bit</span> <span class="o">=</span> <span class="n">fcntl</span><span class="o">.</span><span class="n">ioctl</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">EVIOCGBIT</span> <span class="o">+</span> <span class="p">(</span><span class="n">EV_MAX</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">),</span> <span class="s1">' '</span> <span class="o">*</span> <span class="n">sz_l</span><span class="p">)</span>
+            <span class="n">bit</span><span class="p">,</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">'Q'</span><span class="p">,</span> <span class="n">bit</span><span class="p">)</span>
             <span class="n">is_multitouch</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">EV_MAX</span><span class="p">):</span>
                 <span class="c1"># preserve this, we may want other things than EV_ABS</span>
@@ -1057,60 +1057,60 @@
                     <span class="k">continue</span>
                 <span class="c1"># ask abs info keys to the devices</span>
                 <span class="n">sbit</span> <span class="o">=</span> <span class="n">fcntl</span><span class="o">.</span><span class="n">ioctl</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">EVIOCGBIT</span> <span class="o">+</span> <span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="n">KEY_MAX</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">),</span>
-                                   <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="n">sz_l</span><span class="p">)</span>
-                <span class="n">sbit</span><span class="p">,</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;Q&#39;</span><span class="p">,</span> <span class="n">sbit</span><span class="p">)</span>
+                                   <span class="s1">' '</span> <span class="o">*</span> <span class="n">sz_l</span><span class="p">)</span>
+                <span class="n">sbit</span><span class="p">,</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">'Q'</span><span class="p">,</span> <span class="n">sbit</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">KEY_MAX</span><span class="p">):</span>
                     <span class="k">if</span> <span class="p">(</span><span class="n">sbit</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">y</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                         <span class="k">continue</span>
                     <span class="n">absinfo</span> <span class="o">=</span> <span class="n">fcntl</span><span class="o">.</span><span class="n">ioctl</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">EVIOCGABS</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span>
                                           <span class="p">(</span><span class="n">struct_input_absinfo_sz</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">),</span>
-                                          <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="n">struct_input_absinfo_sz</span><span class="p">)</span>
+                                          <span class="s1">' '</span> <span class="o">*</span> <span class="n">struct_input_absinfo_sz</span><span class="p">)</span>
                     <span class="n">abs_value</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">,</span> <span class="n">abs_fuzz</span><span class="p">,</span> \
-                        <span class="n">abs_flat</span><span class="p">,</span> <span class="n">abs_res</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;iiiiii&#39;</span><span class="p">,</span> <span class="n">absinfo</span><span class="p">)</span>
+                        <span class="n">abs_flat</span><span class="p">,</span> <span class="n">abs_res</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">'iiiiii'</span><span class="p">,</span> <span class="n">absinfo</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">y</span> <span class="o">==</span> <span class="n">ABS_MT_POSITION_X</span><span class="p">:</span>
                         <span class="n">is_multitouch</span> <span class="o">=</span> <span class="kc">True</span>
-                        <span class="n">range_min_position_x</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;min_position_x&#39;</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">)</span>
-                        <span class="n">range_max_position_x</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;max_position_x&#39;</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">)</span>
-                        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;HIDMotionEvent: &#39;</span> <span class="o">+</span>
-                                    <span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1">&gt; range position X is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">range_min_position_x</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'min_position_x'</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">)</span>
+                        <span class="n">range_max_position_x</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'max_position_x'</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">)</span>
+                        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'HIDMotionEvent: '</span> <span class="o">+</span>
+                                    <span class="s1">'&lt;</span><span class="si">%s</span><span class="s1">&gt; range position X is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span>
                                         <span class="n">device_name</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">))</span>
                     <span class="k">elif</span> <span class="n">y</span> <span class="o">==</span> <span class="n">ABS_MT_POSITION_Y</span><span class="p">:</span>
                         <span class="n">is_multitouch</span> <span class="o">=</span> <span class="kc">True</span>
-                        <span class="n">range_min_position_y</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;min_position_y&#39;</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">)</span>
-                        <span class="n">range_max_position_y</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;max_position_y&#39;</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">)</span>
-                        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;HIDMotionEvent: &#39;</span> <span class="o">+</span>
-                                    <span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1">&gt; range position Y is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">range_min_position_y</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'min_position_y'</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">)</span>
+                        <span class="n">range_max_position_y</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'max_position_y'</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">)</span>
+                        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'HIDMotionEvent: '</span> <span class="o">+</span>
+                                    <span class="s1">'&lt;</span><span class="si">%s</span><span class="s1">&gt; range position Y is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span>
                                         <span class="n">device_name</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">))</span>
                     <span class="k">elif</span> <span class="n">y</span> <span class="o">==</span> <span class="n">ABS_MT_PRESSURE</span><span class="p">:</span>
-                        <span class="n">range_min_pressure</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;min_pressure&#39;</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">)</span>
-                        <span class="n">range_max_pressure</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;max_pressure&#39;</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">)</span>
-                        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;HIDMotionEvent: &#39;</span> <span class="o">+</span>
-                                    <span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1">&gt; range pressure is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">range_min_pressure</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'min_pressure'</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">)</span>
+                        <span class="n">range_max_pressure</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'max_pressure'</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">)</span>
+                        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'HIDMotionEvent: '</span> <span class="o">+</span>
+                                    <span class="s1">'&lt;</span><span class="si">%s</span><span class="s1">&gt; range pressure is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span>
                                         <span class="n">device_name</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">))</span>
                     <span class="k">elif</span> <span class="n">y</span> <span class="o">==</span> <span class="n">ABS_X</span><span class="p">:</span>
-                        <span class="n">range_min_abs_x</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;min_abs_x&#39;</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">)</span>
-                        <span class="n">range_max_abs_x</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;max_abs_x&#39;</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">)</span>
-                        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;HIDMotionEvent: &#39;</span> <span class="o">+</span>
-                                    <span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1">&gt; range ABS X position is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">range_min_abs_x</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'min_abs_x'</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">)</span>
+                        <span class="n">range_max_abs_x</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'max_abs_x'</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">)</span>
+                        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'HIDMotionEvent: '</span> <span class="o">+</span>
+                                    <span class="s1">'&lt;</span><span class="si">%s</span><span class="s1">&gt; range ABS X position is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span>
                                         <span class="n">device_name</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">))</span>
                     <span class="k">elif</span> <span class="n">y</span> <span class="o">==</span> <span class="n">ABS_Y</span><span class="p">:</span>
-                        <span class="n">range_min_abs_y</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;min_abs_y&#39;</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">)</span>
-                        <span class="n">range_max_abs_y</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;max_abs_y&#39;</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">)</span>
-                        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;HIDMotionEvent: &#39;</span> <span class="o">+</span>
-                                    <span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1">&gt; range ABS Y position is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                        <span class="n">range_min_abs_y</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'min_abs_y'</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">)</span>
+                        <span class="n">range_max_abs_y</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'max_abs_y'</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">)</span>
+                        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'HIDMotionEvent: '</span> <span class="o">+</span>
+                                    <span class="s1">'&lt;</span><span class="si">%s</span><span class="s1">&gt; range ABS Y position is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span>
                                         <span class="n">device_name</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">))</span>
                     <span class="k">elif</span> <span class="n">y</span> <span class="o">==</span> <span class="n">ABS_PRESSURE</span><span class="p">:</span>
                         <span class="n">range_min_abs_pressure</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span>
-                            <span class="s1">&#39;min_abs_pressure&#39;</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">)</span>
+                            <span class="s1">'min_abs_pressure'</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">)</span>
                         <span class="n">range_max_abs_pressure</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span>
-                            <span class="s1">&#39;max_abs_pressure&#39;</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">)</span>
-                        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;HIDMotionEvent: &#39;</span> <span class="o">+</span>
-                                    <span class="s1">&#39;&lt;</span><span class="si">%s</span><span class="s1">&gt; range ABS pressure is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                            <span class="s1">'max_abs_pressure'</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">)</span>
+                        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'HIDMotionEvent: '</span> <span class="o">+</span>
+                                    <span class="s1">'&lt;</span><span class="si">%s</span><span class="s1">&gt; range ABS pressure is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span>
                                         <span class="n">device_name</span><span class="p">,</span> <span class="n">abs_min</span><span class="p">,</span> <span class="n">abs_max</span><span class="p">))</span>
 
             <span class="c1"># init the point</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">is_multitouch</span><span class="p">:</span>
-                <span class="n">point</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="mf">.5</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="mf">.5</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;_avoid&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+                <span class="n">point</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'x'</span><span class="p">:</span> <span class="mf">.5</span><span class="p">,</span> <span class="s1">'y'</span><span class="p">:</span> <span class="mf">.5</span><span class="p">,</span> <span class="s1">'id'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'_avoid'</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
 
             <span class="c1"># read until the end</span>
             <span class="k">while</span> <span class="n">fd</span><span class="p">:</span>
@@ -1124,7 +1124,7 @@
                     <span class="n">ev</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span> <span class="o">*</span> <span class="n">struct_input_event_sz</span><span class="p">:]</span>
 
                     <span class="c1"># extract timeval + event infos</span>
-                    <span class="n">infos</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;LLHHi&#39;</span><span class="p">,</span> <span class="n">ev</span><span class="p">[:</span><span class="n">struct_input_event_sz</span><span class="p">])</span>
+                    <span class="n">infos</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">'LLHHi'</span><span class="p">,</span> <span class="n">ev</span><span class="p">[:</span><span class="n">struct_input_event_sz</span><span class="p">])</span>
 
                     <span class="k">if</span> <span class="n">is_multitouch</span><span class="p">:</span>
                         <span class="n">process_as_multitouch</span><span class="p">(</span><span class="o">*</span><span class="n">infos</span><span class="p">)</span>
@@ -1136,13 +1136,13 @@
             <span class="n">dispatch_queue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch_queue</span>
             <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dispatch_queue</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">args</span> <span class="ow">in</span> <span class="n">dispatch_queue</span><span class="p">[:</span><span class="n">n</span><span class="p">]:</span>
-                <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;mouse_pos&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">'mouse_pos'</span><span class="p">:</span>
                     <span class="n">Window</span><span class="o">.</span><span class="n">mouse_pos</span> <span class="o">=</span> <span class="n">args</span>
-                <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;key_down&#39;</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="ow">not</span> <span class="n">Window</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_key_down&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-                        <span class="n">Window</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_keyboard&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;key_up&#39;</span><span class="p">:</span>
-                    <span class="n">Window</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_key_up&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">'key_down'</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">Window</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_key_down'</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+                        <span class="n">Window</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_keyboard'</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s1">'key_up'</span><span class="p">:</span>
+                    <span class="n">Window</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_key_up'</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
             <span class="k">del</span> <span class="n">dispatch_queue</span><span class="p">[:</span><span class="n">n</span><span class="p">]</span>
 
             <span class="k">try</span><span class="p">:</span>
@@ -1152,7 +1152,7 @@
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="k">pass</span>
 
-    <span class="n">MotionEventFactory</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;hidinput&#39;</span><span class="p">,</span> <span class="n">HIDInputMotionEventProvider</span><span class="p">)</span>
+    <span class="n">MotionEventFactory</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">'hidinput'</span><span class="p">,</span> <span class="n">HIDInputMotionEventProvider</span><span class="p">)</span>
 </pre></div>
 
             <div class="footerlinks">
@@ -1167,7 +1167,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

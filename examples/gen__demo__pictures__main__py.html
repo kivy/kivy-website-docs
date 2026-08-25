@@ -399,7 +399,7 @@ application for use with the Kivy Launcher Android application.</p>
 <cite>https://archive.org/details/PublicDomainImages</cite>, and are in the public domain.</p>
 <section id="file-demo-pictures-main-py">
 <span id="demo-pictures-main-py"></span><h2>File <strong>demo/pictures/main.py</strong><a class="headerlink" href="#file-demo-pictures-main-py" title="Link to this heading">¶</a></h2>
-<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">'''</span>
 <span class="sd">Basic Picture Viewer</span>
 <span class="sd">====================</span>
 
@@ -422,10 +422,10 @@ application for use with the Kivy Launcher Android application.</p>
 <span class="sd">`https://archive.org/details/PublicDomainImages`, and are in the public</span>
 <span class="sd">domain.</span>
 
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">kivy</span>
-<span class="n">kivy</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">&#39;1.0.6&#39;</span><span class="p">)</span>
+<span class="n">kivy</span><span class="o">.</span><span class="n">require</span><span class="p">(</span><span class="s1">'1.0.6'</span><span class="p">)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">glob</span><span class="w"> </span><span class="kn">import</span> <span class="n">glob</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">random</span><span class="w"> </span><span class="kn">import</span> <span class="n">randint</span>
@@ -437,13 +437,13 @@ application for use with the Kivy Launcher Android application.</p>
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Picture</span><span class="p">(</span><span class="n">Scatter</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Picture is the class that will show the image with a white border and a</span>
+<span class="w">    </span><span class="sd">'''Picture is the class that will show the image with a white border and a</span>
 <span class="sd">    shadow. They are nothing here because almost everything is inside the</span>
-<span class="sd">    picture.kv. Check the rule named &lt;Picture&gt; inside the file, and you&#39;ll see</span>
+<span class="sd">    picture.kv. Check the rule named &lt;Picture&gt; inside the file, and you'll see</span>
 <span class="sd">    how the Picture() is really constructed and used.</span>
 
 <span class="sd">    The source property will be the filename to show.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">source</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
 
@@ -457,20 +457,20 @@ application for use with the Kivy Launcher Android application.</p>
 
         <span class="c1"># get any files into images directory</span>
         <span class="n">curdir</span> <span class="o">=</span> <span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">glob</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">curdir</span><span class="p">,</span> <span class="s1">&#39;images&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">glob</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">curdir</span><span class="p">,</span> <span class="s1">'images'</span><span class="p">,</span> <span class="s1">'*'</span><span class="p">)):</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="c1"># load the image</span>
                 <span class="n">picture</span> <span class="o">=</span> <span class="n">Picture</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="n">randint</span><span class="p">(</span><span class="o">-</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span>
                 <span class="c1"># add to the main field</span>
                 <span class="n">root</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">picture</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">Logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;Pictures: Unable to load &lt;</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
+                <span class="n">Logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">'Pictures: Unable to load &lt;</span><span class="si">%s</span><span class="s1">&gt;'</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_pause</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">True</span>
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
     <span class="n">PicturesApp</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -486,24 +486,24 @@ application for use with the Kivy Launcher Android application.</p>
 <span class="linenos"> 7</span>        <span class="nc">Color</span><span class="p">:</span>
 <span class="linenos"> 8</span>            <span class="na">rgb</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
 <span class="linenos"> 9</span>        <span class="nc">Rectangle</span><span class="p">:</span>
-<span class="linenos">10</span>            <span class="na">source</span><span class="p">:</span> <span class="s1">&#39;data/images/background.jpg&#39;</span>
+<span class="linenos">10</span>            <span class="na">source</span><span class="p">:</span> <span class="s1">'data/images/background.jpg'</span>
 <span class="linenos">11</span>            <span class="na">size</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
 <span class="linenos">12</span>
 <span class="linenos">13</span>    <span class="nc">BoxLayout</span><span class="p">:</span>
 <span class="linenos">14</span>        <span class="na">padding</span><span class="p">:</span> <span class="mi">10</span>
 <span class="linenos">15</span>        <span class="na">spacing</span><span class="p">:</span> <span class="mi">10</span>
 <span class="linenos">16</span>        <span class="na">size_hint</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="kc">None</span>
-<span class="linenos">17</span>        <span class="na">pos_hint</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;top&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+<span class="linenos">17</span>        <span class="na">pos_hint</span><span class="p">:</span> <span class="p">{</span><span class="s1">'top'</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
 <span class="linenos">18</span>        <span class="na">height</span><span class="p">:</span> <span class="mi">44</span>
 <span class="linenos">19</span>        <span class="nc">Image</span><span class="p">:</span>
 <span class="linenos">20</span>            <span class="na">size_hint</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
 <span class="linenos">21</span>            <span class="na">size</span><span class="p">:</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">24</span>
-<span class="linenos">22</span>            <span class="na">source</span><span class="p">:</span> <span class="s1">&#39;data/logo/kivy-icon-24.png&#39;</span>
+<span class="linenos">22</span>            <span class="na">source</span><span class="p">:</span> <span class="s1">'data/logo/kivy-icon-24.png'</span>
 <span class="linenos">23</span>        <span class="nc">Label</span><span class="p">:</span>
 <span class="linenos">24</span>            <span class="na">height</span><span class="p">:</span> <span class="mi">24</span>
 <span class="linenos">25</span>            <span class="na">text_size</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="kc">None</span>
 <span class="linenos">26</span>            <span class="na">color</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">.8</span><span class="p">)</span>
-<span class="linenos">27</span>            <span class="na">text</span><span class="p">:</span> <span class="s1">&#39;Kivy </span><span class="si">%s</span><span class="s1"> - Pictures&#39;</span> <span class="o">%</span> <span class="n">kivy</span><span class="o">.</span><span class="n">__version__</span>
+<span class="linenos">27</span>            <span class="na">text</span><span class="p">:</span> <span class="s1">'Kivy </span><span class="si">%s</span><span class="s1"> - Pictures'</span> <span class="o">%</span> <span class="n">kivy</span><span class="o">.</span><span class="n">__version__</span>
 <span class="linenos">28</span>
 <span class="linenos">29</span>
 <span class="linenos">30</span>
@@ -527,7 +527,7 @@ application for use with the Kivy Launcher Android application.</p>
 <span class="linenos">48</span>            <span class="nc">Color</span><span class="p">:</span>
 <span class="linenos">49</span>                <span class="na">rgba</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span>
 <span class="linenos">50</span>            <span class="nc">BorderImage</span><span class="p">:</span>
-<span class="linenos">51</span>                <span class="na">source</span><span class="p">:</span> <span class="s1">&#39;shadow32.png&#39;</span>
+<span class="linenos">51</span>                <span class="na">source</span><span class="p">:</span> <span class="s1">'shadow32.png'</span>
 <span class="linenos">52</span>                <span class="na">border</span><span class="p">:</span> <span class="p">(</span><span class="mi">36</span><span class="p">,</span><span class="mi">36</span><span class="p">,</span><span class="mi">36</span><span class="p">,</span><span class="mi">36</span><span class="p">)</span>
 <span class="linenos">53</span>                <span class="na">size</span><span class="p">:(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="o">+</span><span class="mi">72</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="o">+</span><span class="mi">72</span><span class="p">)</span>
 <span class="linenos">54</span>                <span class="na">pos</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mi">36</span><span class="p">,</span><span class="o">-</span><span class="mi">36</span><span class="p">)</span>
@@ -571,7 +571,7 @@ application for use with the Kivy Launcher Android application.</p>
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

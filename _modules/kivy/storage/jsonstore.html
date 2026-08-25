@@ -369,15 +369,15 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.storage.jsonstore</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">JSON store</span>
 <span class="sd">==========</span>
 
 <span class="sd">A :mod:`Storage &lt;kivy.storage&gt;` module used to save/load key-value pairs from</span>
 <span class="sd">a json file.</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;JsonStore&#39;</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'JsonStore'</span><span class="p">,</span> <span class="p">)</span>
 
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">errno</span>
@@ -390,13 +390,13 @@
 <div class="viewcode-block" id="JsonStore">
 <a class="viewcode-back" href="../../../api-kivy.storage.jsonstore.html#kivy.storage.jsonstore.JsonStore">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">JsonStore</span><span class="p">(</span><span class="n">AbstractStore</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Store implementation using a json file for storing the key-value pairs.</span>
+<span class="w">    </span><span class="sd">'''Store implementation using a json file for storing the key-value pairs.</span>
 <span class="sd">    See the :mod:`kivy.storage` module documentation for more information.</span>
 
 <span class="sd">    .. versionchanged:: 3.0.0</span>
 <span class="sd">        `filename` may be a :class:`os.PathLike` (e.g. :class:`pathlib.Path`)</span>
 <span class="sd">        in addition to a ``str``.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">indent</span> <span class="o">=</span> <span class="n">indent</span>
@@ -410,8 +410,8 @@
             <span class="n">folder</span> <span class="o">=</span> <span class="n">abspath</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">))</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
                 <span class="n">not_found</span> <span class="o">=</span> <span class="ne">IOError</span><span class="p">(</span>
-                    <span class="s2">&quot;The folder &#39;</span><span class="si">{}</span><span class="s2">&#39; doesn&#39;t exist!&quot;</span>
-                    <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+                    <span class="s2">"The folder '</span><span class="si">{}</span><span class="s2">' doesn't exist!"</span>
+                    <span class="s2">""</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
                 <span class="p">)</span>
                 <span class="n">not_found</span><span class="o">.</span><span class="n">errno</span> <span class="o">=</span> <span class="n">errno</span><span class="o">.</span><span class="n">ENOENT</span>
                 <span class="k">raise</span> <span class="n">not_found</span>
@@ -425,7 +425,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">store_sync</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_changed</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">fd</span><span class="p">:</span>
             <span class="n">dump</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">,</span> <span class="n">fd</span><span class="p">,</span>
                 <span class="n">indent</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">indent</span><span class="p">,</span>
@@ -482,7 +482,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

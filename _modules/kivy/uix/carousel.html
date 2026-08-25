@@ -369,7 +369,7 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.uix.carousel</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">Carousel</span>
 <span class="sd">========</span>
 
@@ -392,10 +392,10 @@
 
 <span class="sd">    class CarouselApp(App):</span>
 <span class="sd">        def build(self):</span>
-<span class="sd">            carousel = Carousel(direction=&#39;right&#39;)</span>
+<span class="sd">            carousel = Carousel(direction='right')</span>
 <span class="sd">            for i in range(10):</span>
-<span class="sd">                src = &quot;http://placehold.it/480x270.png&amp;text=slide-%d&amp;.png&quot; % i</span>
-<span class="sd">                image = AsyncImage(source=src, fit_mode=&quot;contain&quot;)</span>
+<span class="sd">                src = "http://placehold.it/480x270.png&amp;text=slide-%d&amp;.png" % i</span>
+<span class="sd">                image = AsyncImage(source=src, fit_mode="contain")</span>
 <span class="sd">                carousel.add_widget(image)</span>
 <span class="sd">            return carousel</span>
 
@@ -406,15 +406,15 @@
 <span class="sd">Kv Example::</span>
 
 <span class="sd">    Carousel:</span>
-<span class="sd">        direction: &#39;right&#39;</span>
+<span class="sd">        direction: 'right'</span>
 <span class="sd">        AsyncImage:</span>
-<span class="sd">            source: &#39;http://placehold.it/480x270.png&amp;text=slide-1.png&#39;</span>
+<span class="sd">            source: 'http://placehold.it/480x270.png&amp;text=slide-1.png'</span>
 <span class="sd">        AsyncImage:</span>
-<span class="sd">            source: &#39;http://placehold.it/480x270.png&amp;text=slide-2.png&#39;</span>
+<span class="sd">            source: 'http://placehold.it/480x270.png&amp;text=slide-2.png'</span>
 <span class="sd">        AsyncImage:</span>
-<span class="sd">            source: &#39;http://placehold.it/480x270.png&amp;text=slide-3.png&#39;</span>
+<span class="sd">            source: 'http://placehold.it/480x270.png&amp;text=slide-3.png'</span>
 <span class="sd">        AsyncImage:</span>
-<span class="sd">            source: &#39;http://placehold.it/480x270.png&amp;text=slide-4.png&#39;</span>
+<span class="sd">            source: 'http://placehold.it/480x270.png&amp;text=slide-4.png'</span>
 
 
 <span class="sd">.. versionchanged:: 1.5.0</span>
@@ -428,9 +428,9 @@
 <span class="sd">    :attr:`Carousel.slides`, :attr:`Carousel.current_slide`,</span>
 <span class="sd">    :attr:`Carousel.previous_slide` and :attr:`Carousel.next_slide`.</span>
 
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Carousel&#39;</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'Carousel'</span><span class="p">,</span> <span class="p">)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.clock</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clock</span>
@@ -445,25 +445,25 @@
 <div class="viewcode-block" id="Carousel">
 <a class="viewcode-back" href="../../../api-kivy.uix.carousel.html#kivy.uix.carousel.Carousel">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Carousel</span><span class="p">(</span><span class="n">StencilView</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Carousel class. See module documentation for more information.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''Carousel class. See module documentation for more information.</span>
+<span class="sd">    '''</span>
 
     <span class="n">slides</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([])</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;List of slides inside the Carousel. The slides are the</span>
+<span class="w">    </span><span class="sd">'''List of slides inside the Carousel. The slides are the</span>
 <span class="sd">    widgets added to the Carousel using the :attr:`add_widget` method.</span>
 
 <span class="sd">    :attr:`slides` is a :class:`~kivy.properties.ListProperty` and is</span>
 <span class="sd">    read-only.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_slides_container</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">parent</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">slides</span><span class="p">]</span>
 
-    <span class="n">slides_container</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_slides_container</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;slides&#39;</span><span class="p">,))</span>
+    <span class="n">slides_container</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_slides_container</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">'slides'</span><span class="p">,))</span>
 
-    <span class="n">direction</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">&#39;right&#39;</span><span class="p">,</span>
-                               <span class="n">options</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;bottom&#39;</span><span class="p">))</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Specifies the direction in which the slides are ordered. This</span>
+    <span class="n">direction</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">'right'</span><span class="p">,</span>
+                               <span class="n">options</span><span class="o">=</span><span class="p">(</span><span class="s1">'right'</span><span class="p">,</span> <span class="s1">'left'</span><span class="p">,</span> <span class="s1">'top'</span><span class="p">,</span> <span class="s1">'bottom'</span><span class="p">))</span>
+<span class="w">    </span><span class="sd">'''Specifies the direction in which the slides are ordered. This</span>
 <span class="sd">    corresponds to the direction from which the user swipes to go from one</span>
 <span class="sd">    slide to the next. It</span>
 <span class="sd">    can be `right`, `left`, `top`, or `bottom`. For example, with</span>
@@ -472,44 +472,44 @@
 <span class="sd">    left to get to the second slide.</span>
 
 <span class="sd">    :attr:`direction` is an :class:`~kivy.properties.OptionProperty` and</span>
-<span class="sd">    defaults to &#39;right&#39;.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    defaults to 'right'.</span>
+<span class="sd">    '''</span>
 
     <span class="n">min_move</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Defines the minimum distance to be covered before the touch is</span>
+<span class="w">    </span><span class="sd">'''Defines the minimum distance to be covered before the touch is</span>
 <span class="sd">    considered a swipe gesture and the Carousel content changed.</span>
-<span class="sd">    This is a expressed as a fraction of the Carousel&#39;s width.</span>
-<span class="sd">    If the movement doesn&#39;t reach this minimum value, the movement is</span>
+<span class="sd">    This is a expressed as a fraction of the Carousel's width.</span>
+<span class="sd">    If the movement doesn't reach this minimum value, the movement is</span>
 <span class="sd">    cancelled and the content is restored to its original position.</span>
 
 <span class="sd">    :attr:`min_move` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to 0.2.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">anim_move_duration</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Defines the duration of the Carousel animation between pages.</span>
+<span class="w">    </span><span class="sd">'''Defines the duration of the Carousel animation between pages.</span>
 
 <span class="sd">    :attr:`anim_move_duration` is a :class:`~kivy.properties.NumericProperty`</span>
 <span class="sd">    and defaults to 0.5.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">anim_cancel_duration</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Defines the duration of the animation when a swipe movement is not</span>
+<span class="w">    </span><span class="sd">'''Defines the duration of the animation when a swipe movement is not</span>
 <span class="sd">    accepted. This is generally when the user does not make a large enough</span>
 <span class="sd">    swipe. See :attr:`min_move`.</span>
 
 <span class="sd">    :attr:`anim_cancel_duration` is a :class:`~kivy.properties.NumericProperty`</span>
 <span class="sd">    and defaults to 0.3.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">loop</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Allow the Carousel to loop infinitely. If True, when the user tries to</span>
+<span class="w">    </span><span class="sd">'''Allow the Carousel to loop infinitely. If True, when the user tries to</span>
 <span class="sd">    swipe beyond last page, it will return to the first. If False, it will</span>
 <span class="sd">    remain on the last page.</span>
 
 <span class="sd">    :attr:`loop` is a :class:`~kivy.properties.BooleanProperty` and</span>
 <span class="sd">    defaults to False.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_index</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">slides</span><span class="p">:</span>
@@ -523,13 +523,13 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">index</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_index</span><span class="p">,</span> <span class="n">_set_index</span><span class="p">,</span>
-                          <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;_index&#39;</span><span class="p">,</span> <span class="s1">&#39;slides&#39;</span><span class="p">),</span>
+                          <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">'_index'</span><span class="p">,</span> <span class="s1">'slides'</span><span class="p">),</span>
                           <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Get/Set the current slide based on the index.</span>
+<span class="w">    </span><span class="sd">'''Get/Set the current slide based on the index.</span>
 
 <span class="sd">    :attr:`index` is an :class:`~kivy.properties.AliasProperty` and defaults</span>
 <span class="sd">    to 0 (the first item).</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_prev_slide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">slides</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">slides</span>
@@ -543,9 +543,9 @@
             <span class="k">return</span> <span class="n">slides</span><span class="p">[</span><span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
 
     <span class="n">previous_slide</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_prev_slide</span><span class="p">,</span>
-                                   <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;slides&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="s1">&#39;loop&#39;</span><span class="p">),</span>
+                                   <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">'slides'</span><span class="p">,</span> <span class="s1">'index'</span><span class="p">,</span> <span class="s1">'loop'</span><span class="p">),</span>
                                    <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The previous slide in the Carousel. It is None if the current slide is</span>
+<span class="w">    </span><span class="sd">'''The previous slide in the Carousel. It is None if the current slide is</span>
 <span class="sd">    the first slide in the Carousel. This ordering reflects the order in which</span>
 <span class="sd">    the slides are added: their presentation varies according to the</span>
 <span class="sd">    :attr:`direction` property.</span>
@@ -555,23 +555,23 @@
 <span class="sd">    .. versionchanged:: 1.5.0</span>
 <span class="sd">        This property no longer exposes the slides container. It returns</span>
 <span class="sd">        the widget you have added.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_curr_slide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slides</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">slides</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">]</span>
 
     <span class="n">current_slide</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_curr_slide</span><span class="p">,</span>
-                                  <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;slides&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">),</span>
+                                  <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">'slides'</span><span class="p">,</span> <span class="s1">'index'</span><span class="p">),</span>
                                   <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The currently shown slide.</span>
+<span class="w">    </span><span class="sd">'''The currently shown slide.</span>
 
 <span class="sd">    :attr:`current_slide` is an :class:`~kivy.properties.AliasProperty`.</span>
 
 <span class="sd">    .. versionchanged:: 1.5.0</span>
 <span class="sd">        The property no longer exposes the slides container. It returns</span>
 <span class="sd">        the widget you have added.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_next_slide</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slides</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># None, or 1 slide</span>
@@ -582,9 +582,9 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">slides</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
 
     <span class="n">next_slide</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_next_slide</span><span class="p">,</span>
-                               <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;slides&#39;</span><span class="p">,</span> <span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="s1">&#39;loop&#39;</span><span class="p">),</span>
+                               <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">'slides'</span><span class="p">,</span> <span class="s1">'index'</span><span class="p">,</span> <span class="s1">'loop'</span><span class="p">),</span>
                                <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The next slide in the Carousel. It is None if the current slide is</span>
+<span class="w">    </span><span class="sd">'''The next slide in the Carousel. It is None if the current slide is</span>
 <span class="sd">    the last slide in the Carousel. This ordering reflects the order in which</span>
 <span class="sd">    the slides are added: their presentation varies according to the</span>
 <span class="sd">    :attr:`direction` property.</span>
@@ -594,10 +594,10 @@
 <span class="sd">    .. versionchanged:: 1.5.0</span>
 <span class="sd">        The property no longer exposes the slides container.</span>
 <span class="sd">        It returns the widget you have added.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">scroll_timeout</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Timeout allowed to trigger the :attr:`scroll_distance`, in milliseconds.</span>
+<span class="w">    </span><span class="sd">'''Timeout allowed to trigger the :attr:`scroll_distance`, in milliseconds.</span>
 <span class="sd">    If the user has not moved :attr:`scroll_distance` within the timeout,</span>
 <span class="sd">    no scrolling will occur and the touch event will go to the children.</span>
 
@@ -605,40 +605,40 @@
 <span class="sd">    defaults to 200 (milliseconds)</span>
 
 <span class="sd">    .. versionadded:: 1.5.0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">scroll_distance</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="s1">&#39;20dp&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Distance to move before scrolling the :class:`Carousel` in pixels. As</span>
+    <span class="n">scroll_distance</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="s1">'20dp'</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">'''Distance to move before scrolling the :class:`Carousel` in pixels. As</span>
 <span class="sd">    soon as the distance has been traveled, the :class:`Carousel` will start</span>
 <span class="sd">    to scroll, and no touch event will go to children.</span>
-<span class="sd">    It is advisable that you base this value on the dpi of your target device&#39;s</span>
+<span class="sd">    It is advisable that you base this value on the dpi of your target device's</span>
 <span class="sd">    screen.</span>
 
 <span class="sd">    :attr:`scroll_distance` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to 20dp.</span>
 
 <span class="sd">    .. versionadded:: 1.5.0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">anim_type</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">&#39;out_quad&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Type of animation to use while animating to the next/previous slide.</span>
+    <span class="n">anim_type</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">'out_quad'</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">'''Type of animation to use while animating to the next/previous slide.</span>
 <span class="sd">    This should be the name of an</span>
 <span class="sd">    :class:`~kivy.animation.AnimationTransition` function.</span>
 
 <span class="sd">    :attr:`anim_type` is a :class:`~kivy.properties.StringProperty` and</span>
-<span class="sd">    defaults to &#39;out_quad&#39;.</span>
+<span class="sd">    defaults to 'out_quad'.</span>
 
 <span class="sd">    .. versionadded:: 1.8.0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">ignore_perpendicular_swipes</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Ignore swipes on axis perpendicular to direction.</span>
+<span class="w">    </span><span class="sd">'''Ignore swipes on axis perpendicular to direction.</span>
 
 <span class="sd">    :attr:`ignore_perpendicular_swipes` is a</span>
 <span class="sd">    :class:`~kivy.properties.BooleanProperty` and defaults to False.</span>
 
 <span class="sd">    .. versionadded:: 1.10.0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="c1"># private properties, for internal use only ###</span>
     <span class="n">_index</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -657,15 +657,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_skip_slide</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">touch_mode_change</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_prioritize_next</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;loop&#39;</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_insert_visible_slides</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">'loop'</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_insert_visible_slides</span><span class="p">())</span>
 
 <div class="viewcode-block" id="Carousel.load_slide">
 <a class="viewcode-back" href="../../../api-kivy.uix.carousel.html#kivy.uix.carousel.Carousel.load_slide">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">load_slide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slide</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Animate to the slide that is passed as the argument.</span>
+<span class="w">        </span><span class="sd">'''Animate to the slide that is passed as the argument.</span>
 
 <span class="sd">        .. versionchanged:: 1.8.0</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="n">slides</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">slides</span>
         <span class="n">start</span><span class="p">,</span> <span class="n">stop</span> <span class="o">=</span> <span class="n">slides</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_slide</span><span class="p">),</span> <span class="n">slides</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">slide</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">start</span> <span class="o">==</span> <span class="n">stop</span><span class="p">:</span>
@@ -685,29 +685,29 @@
 <div class="viewcode-block" id="Carousel.load_previous">
 <a class="viewcode-back" href="../../../api-kivy.uix.carousel.html#kivy.uix.carousel.Carousel.load_previous">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">load_previous</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Animate to the previous slide.</span>
+<span class="w">        </span><span class="sd">'''Animate to the previous slide.</span>
 
 <span class="sd">        .. versionadded:: 1.7.0</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">load_next</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;prev&#39;</span><span class="p">)</span></div>
+<span class="sd">        '''</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_next</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">'prev'</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Carousel.load_next">
 <a class="viewcode-back" href="../../../api-kivy.uix.carousel.html#kivy.uix.carousel.Carousel.load_next">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">load_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;next&#39;</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Animate to the next slide.</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'next'</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">'''Animate to the next slide.</span>
 
 <span class="sd">        .. versionadded:: 1.7.0</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
             <span class="n">_direction</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s1">&#39;top&#39;</span><span class="p">:</span> <span class="o">-</span><span class="n">h</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
-                <span class="s1">&#39;bottom&#39;</span><span class="p">:</span> <span class="n">h</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
-                <span class="s1">&#39;left&#39;</span><span class="p">:</span> <span class="n">w</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
-                <span class="s1">&#39;right&#39;</span><span class="p">:</span> <span class="o">-</span><span class="n">w</span> <span class="o">/</span> <span class="mi">2</span><span class="p">}</span>
+                <span class="s1">'top'</span><span class="p">:</span> <span class="o">-</span><span class="n">h</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s1">'bottom'</span><span class="p">:</span> <span class="n">h</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s1">'left'</span><span class="p">:</span> <span class="n">w</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s1">'right'</span><span class="p">:</span> <span class="o">-</span><span class="n">w</span> <span class="o">/</span> <span class="mi">2</span><span class="p">}</span>
             <span class="n">_offset</span> <span class="o">=</span> <span class="n">_direction</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">direction</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;prev&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">'prev'</span><span class="p">:</span>
                 <span class="n">_offset</span> <span class="o">=</span> <span class="o">-</span><span class="n">_offset</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_start_animation</span><span class="p">(</span><span class="n">min_move</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">_offset</span><span class="p">)</span></div>
@@ -742,7 +742,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_next</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prev_equals_next</span><span class="p">:</span>
-            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_prev&#39;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prioritize_next</span> <span class="k">else</span> <span class="s1">&#39;_next&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">'_prev'</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prioritize_next</span> <span class="k">else</span> <span class="s1">'_next'</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
         <span class="n">super_remove</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Carousel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">remove_widget</span>
         <span class="k">for</span> <span class="n">container</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">slides_container</span><span class="p">:</span>
@@ -769,17 +769,17 @@
         <span class="n">skip_next</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">_loop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loop</span>
 
-        <span class="k">if</span> <span class="n">direction</span> <span class="ow">in</span> <span class="s1">&#39;rl&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">direction</span> <span class="ow">in</span> <span class="s1">'rl'</span><span class="p">:</span>
             <span class="n">xoff</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">_offset</span>
-            <span class="n">x_prev</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;l&#39;</span><span class="p">:</span> <span class="n">xoff</span> <span class="o">+</span> <span class="n">width</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span> <span class="n">xoff</span> <span class="o">-</span> <span class="n">width</span><span class="p">}</span>
-            <span class="n">x_next</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;l&#39;</span><span class="p">:</span> <span class="n">xoff</span> <span class="o">-</span> <span class="n">width</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span> <span class="n">xoff</span> <span class="o">+</span> <span class="n">width</span><span class="p">}</span>
+            <span class="n">x_prev</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'l'</span><span class="p">:</span> <span class="n">xoff</span> <span class="o">+</span> <span class="n">width</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">:</span> <span class="n">xoff</span> <span class="o">-</span> <span class="n">width</span><span class="p">}</span>
+            <span class="n">x_next</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'l'</span><span class="p">:</span> <span class="n">xoff</span> <span class="o">-</span> <span class="n">width</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">:</span> <span class="n">xoff</span> <span class="o">+</span> <span class="n">width</span><span class="p">}</span>
             <span class="k">if</span> <span class="n">_prev</span><span class="p">:</span>
                 <span class="n">_prev</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_prev</span><span class="p">[</span><span class="n">direction</span><span class="p">],</span> <span class="n">y</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">_loop</span> <span class="ow">and</span> <span class="n">_next</span> <span class="ow">and</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="c1"># if first slide is moving to right with direction set to right</span>
                 <span class="c1"># or toward left with direction set to left</span>
-                <span class="k">if</span> <span class="p">((</span><span class="n">_offset</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="ow">or</span>
-                        <span class="p">(</span><span class="n">_offset</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;l&#39;</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="p">((</span><span class="n">_offset</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">'r'</span><span class="p">)</span> <span class="ow">or</span>
+                        <span class="p">(</span><span class="n">_offset</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">'l'</span><span class="p">)):</span>
                     <span class="c1"># put last_slide before first slide</span>
                     <span class="n">last_slide</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_prev</span><span class="p">[</span><span class="n">direction</span><span class="p">],</span> <span class="n">y</span><span class="p">)</span>
                     <span class="n">skip_next</span> <span class="o">=</span> <span class="kc">True</span>
@@ -790,18 +790,18 @@
             <span class="k">if</span> <span class="n">_next</span><span class="p">:</span>
                 <span class="n">_next</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_next</span><span class="p">[</span><span class="n">direction</span><span class="p">],</span> <span class="n">y</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">_loop</span> <span class="ow">and</span> <span class="n">_prev</span> <span class="ow">and</span> <span class="n">index</span> <span class="o">==</span> <span class="n">no_of_slides</span><span class="p">:</span>
-                <span class="k">if</span> <span class="p">((</span><span class="n">_offset</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="ow">or</span>
-                        <span class="p">(</span><span class="n">_offset</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;l&#39;</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="p">((</span><span class="n">_offset</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">'r'</span><span class="p">)</span> <span class="ow">or</span>
+                        <span class="p">(</span><span class="n">_offset</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">'l'</span><span class="p">)):</span>
                     <span class="n">first_slide</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_next</span><span class="p">[</span><span class="n">direction</span><span class="p">],</span> <span class="n">y</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">direction</span> <span class="ow">in</span> <span class="s1">&#39;tb&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">direction</span> <span class="ow">in</span> <span class="s1">'tb'</span><span class="p">:</span>
             <span class="n">yoff</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">_offset</span>
-            <span class="n">y_prev</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;t&#39;</span><span class="p">:</span> <span class="n">yoff</span> <span class="o">-</span> <span class="n">height</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="n">yoff</span> <span class="o">+</span> <span class="n">height</span><span class="p">}</span>
-            <span class="n">y_next</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;t&#39;</span><span class="p">:</span> <span class="n">yoff</span> <span class="o">+</span> <span class="n">height</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="n">yoff</span> <span class="o">-</span> <span class="n">height</span><span class="p">}</span>
+            <span class="n">y_prev</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'t'</span><span class="p">:</span> <span class="n">yoff</span> <span class="o">-</span> <span class="n">height</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">:</span> <span class="n">yoff</span> <span class="o">+</span> <span class="n">height</span><span class="p">}</span>
+            <span class="n">y_next</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'t'</span><span class="p">:</span> <span class="n">yoff</span> <span class="o">+</span> <span class="n">height</span><span class="p">,</span> <span class="s1">'b'</span><span class="p">:</span> <span class="n">yoff</span> <span class="o">-</span> <span class="n">height</span><span class="p">}</span>
             <span class="k">if</span> <span class="n">_prev</span><span class="p">:</span>
                 <span class="n">_prev</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_prev</span><span class="p">[</span><span class="n">direction</span><span class="p">])</span>
             <span class="k">elif</span> <span class="n">_loop</span> <span class="ow">and</span> <span class="n">_next</span> <span class="ow">and</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">if</span> <span class="p">((</span><span class="n">_offset</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span> <span class="ow">or</span>
-                        <span class="p">(</span><span class="n">_offset</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;b&#39;</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="p">((</span><span class="n">_offset</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">'t'</span><span class="p">)</span> <span class="ow">or</span>
+                        <span class="p">(</span><span class="n">_offset</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">'b'</span><span class="p">)):</span>
                     <span class="n">last_slide</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_prev</span><span class="p">[</span><span class="n">direction</span><span class="p">])</span>
                     <span class="n">skip_next</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">if</span> <span class="n">_current</span><span class="p">:</span>
@@ -811,8 +811,8 @@
             <span class="k">if</span> <span class="n">_next</span><span class="p">:</span>
                 <span class="n">_next</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_next</span><span class="p">[</span><span class="n">direction</span><span class="p">])</span>
             <span class="k">elif</span> <span class="n">_loop</span> <span class="ow">and</span> <span class="n">_prev</span> <span class="ow">and</span> <span class="n">index</span> <span class="o">==</span> <span class="n">no_of_slides</span><span class="p">:</span>
-                <span class="k">if</span> <span class="p">((</span><span class="n">_offset</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;t&#39;</span><span class="p">)</span> <span class="ow">or</span>
-                        <span class="p">(</span><span class="n">_offset</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;b&#39;</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="p">((</span><span class="n">_offset</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">'t'</span><span class="p">)</span> <span class="ow">or</span>
+                        <span class="p">(</span><span class="n">_offset</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">'b'</span><span class="p">)):</span>
                     <span class="n">first_slide</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_next</span><span class="p">[</span><span class="n">direction</span><span class="p">])</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
@@ -847,23 +847,23 @@
             <span class="k">return</span>
 
         <span class="c1"># Move to next slide?</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;r&#39;</span> <span class="ow">and</span> <span class="n">_offset</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="n">width</span><span class="p">)</span> <span class="ow">or</span> \
-                <span class="p">(</span><span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;l&#39;</span> <span class="ow">and</span> <span class="n">_offset</span> <span class="o">&gt;=</span> <span class="n">width</span><span class="p">)</span> <span class="ow">or</span> \
-                <span class="p">(</span><span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;t&#39;</span> <span class="ow">and</span> <span class="n">_offset</span> <span class="o">&lt;=</span> <span class="o">-</span> <span class="n">height</span><span class="p">)</span> <span class="ow">or</span> \
-                <span class="p">(</span><span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;b&#39;</span> <span class="ow">and</span> <span class="n">_offset</span> <span class="o">&gt;=</span> <span class="n">height</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">direction</span> <span class="o">==</span> <span class="s1">'r'</span> <span class="ow">and</span> <span class="n">_offset</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="n">width</span><span class="p">)</span> <span class="ow">or</span> \
+                <span class="p">(</span><span class="n">direction</span> <span class="o">==</span> <span class="s1">'l'</span> <span class="ow">and</span> <span class="n">_offset</span> <span class="o">&gt;=</span> <span class="n">width</span><span class="p">)</span> <span class="ow">or</span> \
+                <span class="p">(</span><span class="n">direction</span> <span class="o">==</span> <span class="s1">'t'</span> <span class="ow">and</span> <span class="n">_offset</span> <span class="o">&lt;=</span> <span class="o">-</span> <span class="n">height</span><span class="p">)</span> <span class="ow">or</span> \
+                <span class="p">(</span><span class="n">direction</span> <span class="o">==</span> <span class="s1">'b'</span> <span class="ow">and</span> <span class="n">_offset</span> <span class="o">&gt;=</span> <span class="n">height</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_slide</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
 
         <span class="c1"># Move to previous slide?</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;r&#39;</span> <span class="ow">and</span> <span class="n">_offset</span> <span class="o">&gt;=</span> <span class="n">width</span><span class="p">)</span> <span class="ow">or</span> \
-                <span class="p">(</span><span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;l&#39;</span> <span class="ow">and</span> <span class="n">_offset</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="n">width</span><span class="p">)</span> <span class="ow">or</span> \
-                <span class="p">(</span><span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;t&#39;</span> <span class="ow">and</span> <span class="n">_offset</span> <span class="o">&gt;=</span> <span class="n">height</span><span class="p">)</span> <span class="ow">or</span> \
-                <span class="p">(</span><span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;b&#39;</span> <span class="ow">and</span> <span class="n">_offset</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="n">height</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">direction</span> <span class="o">==</span> <span class="s1">'r'</span> <span class="ow">and</span> <span class="n">_offset</span> <span class="o">&gt;=</span> <span class="n">width</span><span class="p">)</span> <span class="ow">or</span> \
+                <span class="p">(</span><span class="n">direction</span> <span class="o">==</span> <span class="s1">'l'</span> <span class="ow">and</span> <span class="n">_offset</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="n">width</span><span class="p">)</span> <span class="ow">or</span> \
+                <span class="p">(</span><span class="n">direction</span> <span class="o">==</span> <span class="s1">'t'</span> <span class="ow">and</span> <span class="n">_offset</span> <span class="o">&gt;=</span> <span class="n">height</span><span class="p">)</span> <span class="ow">or</span> \
+                <span class="p">(</span><span class="n">direction</span> <span class="o">==</span> <span class="s1">'b'</span> <span class="ow">and</span> <span class="n">_offset</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="n">height</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">previous_slide</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">-=</span> <span class="mi">1</span>
 
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prev_equals_next</span><span class="p">:</span>
-            <span class="n">new_value</span> <span class="o">=</span> <span class="p">(</span><span class="n">_offset</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">is</span> <span class="p">(</span><span class="n">direction</span> <span class="ow">in</span> <span class="s1">&#39;rt&#39;</span><span class="p">)</span>
+            <span class="n">new_value</span> <span class="o">=</span> <span class="p">(</span><span class="n">_offset</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">is</span> <span class="p">(</span><span class="n">direction</span> <span class="ow">in</span> <span class="s1">'rt'</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prioritize_next</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">new_value</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_prioritize_next</span> <span class="o">=</span> <span class="n">new_value</span>
                 <span class="k">if</span> <span class="n">new_value</span> <span class="ow">is</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_next</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
@@ -872,18 +872,18 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">_start_animation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="c1"># compute target offset for ease back, next or prev</span>
         <span class="n">new_offset</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">direction</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;direction&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">is_horizontal</span> <span class="o">=</span> <span class="n">direction</span> <span class="ow">in</span> <span class="s1">&#39;rl&#39;</span>
+        <span class="n">direction</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'direction'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">is_horizontal</span> <span class="o">=</span> <span class="n">direction</span> <span class="ow">in</span> <span class="s1">'rl'</span>
         <span class="n">extent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="k">if</span> <span class="n">is_horizontal</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
-        <span class="n">min_move</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;min_move&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_move</span><span class="p">)</span>
-        <span class="n">_offset</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;offset&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_offset</span><span class="p">)</span>
+        <span class="n">min_move</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'min_move'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_move</span><span class="p">)</span>
+        <span class="n">_offset</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'offset'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_offset</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">_offset</span> <span class="o">&lt;</span> <span class="n">min_move</span> <span class="o">*</span> <span class="o">-</span><span class="n">extent</span><span class="p">:</span>
             <span class="n">new_offset</span> <span class="o">=</span> <span class="o">-</span><span class="n">extent</span>
         <span class="k">elif</span> <span class="n">_offset</span> <span class="o">&gt;</span> <span class="n">min_move</span> <span class="o">*</span> <span class="n">extent</span><span class="p">:</span>
             <span class="n">new_offset</span> <span class="o">=</span> <span class="n">extent</span>
 
-        <span class="c1"># if new_offset is 0, it wasn&#39;t enough to go next/prev</span>
+        <span class="c1"># if new_offset is 0, it wasn't enough to go next/prev</span>
         <span class="n">dur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">anim_move_duration</span>
         <span class="k">if</span> <span class="n">new_offset</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">dur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">anim_cancel_duration</span>
@@ -894,7 +894,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">loop</span> <span class="ow">or</span> <span class="n">len_slides</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">is_first</span> <span class="o">=</span> <span class="p">(</span><span class="n">index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
             <span class="n">is_last</span> <span class="o">=</span> <span class="p">(</span><span class="n">index</span> <span class="o">==</span> <span class="n">len_slides</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">direction</span> <span class="ow">in</span> <span class="s1">&#39;rt&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">direction</span> <span class="ow">in</span> <span class="s1">'rt'</span><span class="p">:</span>
                 <span class="n">towards_prev</span> <span class="o">=</span> <span class="p">(</span><span class="n">new_offset</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
                 <span class="n">towards_next</span> <span class="o">=</span> <span class="p">(</span><span class="n">new_offset</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
@@ -914,14 +914,14 @@
         <span class="n">anim</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_complete</span><span class="o">=</span><span class="n">_cmp</span><span class="p">)</span>
         <span class="n">anim</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_get_uid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;sv&#39;</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">.</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_uid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">'sv'</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">'</span><span class="si">{0}</span><span class="s1">.</span><span class="si">{1}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Carousel.on_touch_down">
 <a class="viewcode-back" href="../../../api-kivy.uix.carousel.html#kivy.uix.carousel.Carousel.on_touch_down">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">collide_point</span><span class="p">(</span><span class="o">*</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">):</span>
-            <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">(</span><span class="s1">&#39;cavoid&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">(</span><span class="s1">'cavoid'</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">disabled</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
@@ -932,8 +932,8 @@
         <span class="n">uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">()</span>
         <span class="n">touch</span><span class="o">.</span><span class="n">grab</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="n">uid</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;mode&#39;</span><span class="p">:</span> <span class="s1">&#39;unknown&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="n">touch</span><span class="o">.</span><span class="n">time_start</span><span class="p">}</span>
+            <span class="s1">'mode'</span><span class="p">:</span> <span class="s1">'unknown'</span><span class="p">,</span>
+            <span class="s1">'time'</span><span class="p">:</span> <span class="n">touch</span><span class="o">.</span><span class="n">time_start</span><span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_change_touch_mode_ev</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_change_touch_mode</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_timeout</span> <span class="o">/</span> <span class="mf">1000.</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">touch_mode_change</span> <span class="o">=</span> <span class="kc">False</span>
@@ -945,19 +945,19 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">on_touch_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">touch_mode_change</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_perpendicular_swipes</span> <span class="ow">and</span> \
-                    <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;bottom&#39;</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'top'</span><span class="p">,</span> <span class="s1">'bottom'</span><span class="p">):</span>
                 <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">oy</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_distance</span><span class="p">:</span>
                     <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">ox</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_distance</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_change_touch_mode</span><span class="p">()</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">touch_mode_change</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">ignore_perpendicular_swipes</span> <span class="ow">and</span> \
-                    <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'right'</span><span class="p">,</span> <span class="s1">'left'</span><span class="p">):</span>
                 <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">ox</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_distance</span><span class="p">:</span>
                     <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">oy</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_distance</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_change_touch_mode</span><span class="p">()</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">touch_mode_change</span> <span class="o">=</span> <span class="kc">True</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">(</span><span class="s1">&#39;cavoid&#39;</span><span class="p">)</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">(</span><span class="s1">'cavoid'</span><span class="p">)</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_touch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">touch</span><span class="p">:</span>
             <span class="nb">super</span><span class="p">(</span><span class="n">Carousel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_touch_move</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
@@ -966,8 +966,8 @@
             <span class="k">return</span> <span class="kc">True</span>
         <span class="n">ud</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">()]</span>
         <span class="n">direction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;unknown&#39;</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">direction</span> <span class="ow">in</span> <span class="s1">&#39;rl&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ud</span><span class="p">[</span><span class="s1">'mode'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'unknown'</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">direction</span> <span class="ow">in</span> <span class="s1">'rl'</span><span class="p">:</span>
                 <span class="n">distance</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">ox</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">distance</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">oy</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
@@ -975,11 +975,11 @@
                 <span class="n">ev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_change_touch_mode_ev</span>
                 <span class="k">if</span> <span class="n">ev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">ev</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
-                <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;scroll&#39;</span>
+                <span class="n">ud</span><span class="p">[</span><span class="s1">'mode'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'scroll'</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">direction</span> <span class="ow">in</span> <span class="s1">&#39;rl&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">direction</span> <span class="ow">in</span> <span class="s1">'rl'</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_offset</span> <span class="o">+=</span> <span class="n">touch</span><span class="o">.</span><span class="n">dx</span>
-            <span class="k">if</span> <span class="n">direction</span> <span class="ow">in</span> <span class="s1">&#39;tb&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">direction</span> <span class="ow">in</span> <span class="s1">'tb'</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_offset</span> <span class="o">+=</span> <span class="n">touch</span><span class="o">.</span><span class="n">dy</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
@@ -987,13 +987,13 @@
 <div class="viewcode-block" id="Carousel.on_touch_up">
 <a class="viewcode-back" href="../../../api-kivy.uix.carousel.html#kivy.uix.carousel.Carousel.on_touch_up">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">on_touch_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">(</span><span class="s1">&#39;cavoid&#39;</span><span class="p">)</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">(</span><span class="s1">'cavoid'</span><span class="p">)</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="bp">self</span> <span class="ow">in</span> <span class="p">[</span><span class="n">x</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">grab_list</span><span class="p">]:</span>
             <span class="n">touch</span><span class="o">.</span><span class="n">ungrab</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_touch</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="n">ud</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">()]</span>
-            <span class="k">if</span> <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;unknown&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ud</span><span class="p">[</span><span class="s1">'mode'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'unknown'</span><span class="p">:</span>
                 <span class="n">ev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_change_touch_mode_ev</span>
                 <span class="k">if</span> <span class="n">ev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">ev</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
@@ -1010,7 +1010,7 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_do_touch_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Carousel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_touch_up</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
-        <span class="c1"># don&#39;t forget about grab event!</span>
+        <span class="c1"># don't forget about grab event!</span>
         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">grab_list</span><span class="p">[:]:</span>
             <span class="n">touch</span><span class="o">.</span><span class="n">grab_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">()</span>
@@ -1027,7 +1027,7 @@
         <span class="n">uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">()</span>
         <span class="n">touch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_touch</span>
         <span class="n">ud</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="n">uid</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;unknown&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ud</span><span class="p">[</span><span class="s1">'mode'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'unknown'</span><span class="p">:</span>
             <span class="n">touch</span><span class="o">.</span><span class="n">ungrab</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_touch</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="nb">super</span><span class="p">(</span><span class="n">Carousel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_touch_down</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
@@ -1079,17 +1079,17 @@
 
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
 
     <span class="k">class</span><span class="w"> </span><span class="nc">Example1</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="n">carousel</span> <span class="o">=</span> <span class="n">Carousel</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span>
+            <span class="n">carousel</span> <span class="o">=</span> <span class="n">Carousel</span><span class="p">(</span><span class="n">direction</span><span class="o">=</span><span class="s1">'left'</span><span class="p">,</span>
                                 <span class="n">loop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
-                <span class="n">src</span> <span class="o">=</span> <span class="s2">&quot;http://placehold.it/480x270.png&amp;text=slide-</span><span class="si">%d</span><span class="s2">&amp;.png&quot;</span> <span class="o">%</span> <span class="n">i</span>
-                <span class="n">image</span> <span class="o">=</span> <span class="n">Factory</span><span class="o">.</span><span class="n">AsyncImage</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">src</span><span class="p">,</span> <span class="n">fit_mode</span><span class="o">=</span><span class="s2">&quot;contain&quot;</span><span class="p">)</span>
+                <span class="n">src</span> <span class="o">=</span> <span class="s2">"http://placehold.it/480x270.png&amp;text=slide-</span><span class="si">%d</span><span class="s2">&amp;.png"</span> <span class="o">%</span> <span class="n">i</span>
+                <span class="n">image</span> <span class="o">=</span> <span class="n">Factory</span><span class="o">.</span><span class="n">AsyncImage</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">src</span><span class="p">,</span> <span class="n">fit_mode</span><span class="o">=</span><span class="s2">"contain"</span><span class="p">)</span>
                 <span class="n">carousel</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">carousel</span>
 
@@ -1108,7 +1108,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

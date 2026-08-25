@@ -369,7 +369,7 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.uix.behaviors.focus</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">Focus Behavior</span>
 <span class="sd">==============</span>
 
@@ -423,7 +423,7 @@
 
 <span class="sd">Widgets needs to be visible before they can receive the focus. This means that</span>
 <span class="sd">setting their *focus* property to True before they are visible will have no</span>
-<span class="sd">effect. To initialize focus, you can use the &#39;on_parent&#39; event::</span>
+<span class="sd">effect. To initialize focus, you can use the 'on_parent' event::</span>
 
 <span class="sd">    from kivy.app import App</span>
 <span class="sd">    from kivy.uix.textinput import TextInput</span>
@@ -438,7 +438,7 @@
 
 <span class="sd">    SampleApp().run()</span>
 
-<span class="sd">If you are using a :class:`~kivy.uix.popup`, you can use the &#39;on_open&#39; event.</span>
+<span class="sd">If you are using a :class:`~kivy.uix.popup`, you can use the 'on_open' event.</span>
 
 <span class="sd">For an overview of behaviors, please refer to the :mod:`~kivy.uix.behaviors`</span>
 <span class="sd">documentation.</span>
@@ -447,27 +447,27 @@
 
 <span class="sd">    This code is still experimental, and its API is subject to change in a</span>
 <span class="sd">    future version.</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;FocusBehavior&#39;</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'FocusBehavior'</span><span class="p">,</span> <span class="p">)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.properties</span><span class="w"> </span><span class="kn">import</span> <span class="n">OptionProperty</span><span class="p">,</span> <span class="n">ObjectProperty</span><span class="p">,</span> <span class="n">BooleanProperty</span><span class="p">,</span> \
     <span class="n">AliasProperty</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">EventLoop</span>
 
-<span class="c1"># When we are generating documentation, Config doesn&#39;t exist</span>
+<span class="c1"># When we are generating documentation, Config doesn't exist</span>
 <span class="n">_is_desktop</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="n">_keyboard_mode</span> <span class="o">=</span> <span class="s1">&#39;system&#39;</span>
+<span class="n">_keyboard_mode</span> <span class="o">=</span> <span class="s1">'system'</span>
 <span class="k">if</span> <span class="n">Config</span><span class="p">:</span>
-    <span class="n">_is_desktop</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s1">&#39;kivy&#39;</span><span class="p">,</span> <span class="s1">&#39;desktop&#39;</span><span class="p">)</span>
-    <span class="n">_keyboard_mode</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;kivy&#39;</span><span class="p">,</span> <span class="s1">&#39;keyboard_mode&#39;</span><span class="p">)</span>
+    <span class="n">_is_desktop</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s1">'kivy'</span><span class="p">,</span> <span class="s1">'desktop'</span><span class="p">)</span>
+    <span class="n">_keyboard_mode</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'kivy'</span><span class="p">,</span> <span class="s1">'keyboard_mode'</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="FocusBehavior">
 <a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.focus.html#kivy.uix.behaviors.FocusBehavior">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FocusBehavior</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Provides keyboard focus behavior. When combined with other</span>
+<span class="w">    </span><span class="sd">'''Provides keyboard focus behavior. When combined with other</span>
 <span class="sd">    FocusBehavior widgets it allows one to cycle focus among them by pressing</span>
 <span class="sd">    tab. Please see the</span>
 <span class="sd">    :mod:`focus behavior module documentation &lt;kivy.uix.behaviors.focus&gt;`</span>
@@ -475,14 +475,14 @@
 
 <span class="sd">    .. versionadded:: 1.9.0</span>
 
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">_requested_keyboard</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">_keyboard</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">_keyboards</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="n">ignored_touch</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;A list of touches that should not be used to defocus. After on_touch_up,</span>
+<span class="w">    </span><span class="sd">'''A list of touches that should not be used to defocus. After on_touch_up,</span>
 <span class="sd">    every touch that is not in :attr:`ignored_touch` will defocus all the</span>
 <span class="sd">    focused widgets if the config keyboard mode is not multi. Touches on</span>
 <span class="sd">    focusable widgets that were used to focus are automatically added here.</span>
@@ -496,14 +496,14 @@
 <span class="sd">                    FocusBehavior.ignored_touch.append(touch)</span>
 
 <span class="sd">    Notice that you need to access this as a class, not an instance variable.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_set_keyboard</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="n">focus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">focus</span>
         <span class="n">keyboard</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keyboard</span>
         <span class="n">keyboards</span> <span class="o">=</span> <span class="n">FocusBehavior</span><span class="o">.</span><span class="n">_keyboards</span>
         <span class="k">if</span> <span class="n">keyboard</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">focus</span> <span class="o">=</span> <span class="kc">False</span>    <span class="c1"># this&#39;ll unbind</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">focus</span> <span class="o">=</span> <span class="kc">False</span>    <span class="c1"># this'll unbind</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keyboard</span><span class="p">:</span>  <span class="c1"># remove assigned keyboard from dict</span>
                 <span class="k">del</span> <span class="n">keyboards</span><span class="p">[</span><span class="n">keyboard</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">value</span> <span class="ow">and</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">keyboards</span><span class="p">:</span>
@@ -514,12 +514,12 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_keyboard</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keyboard</span>
     <span class="n">keyboard</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_keyboard</span><span class="p">,</span> <span class="n">_set_keyboard</span><span class="p">,</span>
-                             <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;_keyboard&#39;</span><span class="p">,</span> <span class="p">))</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The keyboard to bind to (or bound to the widget) when focused.</span>
+                             <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">'_keyboard'</span><span class="p">,</span> <span class="p">))</span>
+<span class="w">    </span><span class="sd">'''The keyboard to bind to (or bound to the widget) when focused.</span>
 
 <span class="sd">    When None, a keyboard is requested and released whenever the widget comes</span>
 <span class="sd">    into and out of focus. If not None, it must be a keyboard, which gets</span>
-<span class="sd">    bound and unbound from the widget whenever it&#39;s in or out of focus. It is</span>
+<span class="sd">    bound and unbound from the widget whenever it's in or out of focus. It is</span>
 <span class="sd">    useful only when more than one keyboard is available, so it is recommended</span>
 <span class="sd">    to be set to None when only one keyboard is available.</span>
 
@@ -538,7 +538,7 @@
 <span class="sd">    When using the keyboard, there are some important default behaviors you</span>
 <span class="sd">    should keep in mind.</span>
 
-<span class="sd">    * When Config&#39;s `keyboard_mode` is multi, each new touch is considered</span>
+<span class="sd">    * When Config's `keyboard_mode` is multi, each new touch is considered</span>
 <span class="sd">      a touch by a different user and will set the focus (if clicked on a</span>
 <span class="sd">      focusable) with a new keyboard. Already focused elements will not lose</span>
 <span class="sd">      their focus (even if an unfocusable widget is touched).</span>
@@ -547,7 +547,7 @@
 <span class="sd">      instance gets focused. If widgets with different keyboards are linked</span>
 <span class="sd">      through :attr:`focus_next` and :attr:`focus_previous`, then as they are</span>
 <span class="sd">      tabbed through, different keyboards will become active. Therefore,</span>
-<span class="sd">      typically it&#39;s undesirable to link instances which are assigned</span>
+<span class="sd">      typically it's undesirable to link instances which are assigned</span>
 <span class="sd">      different keyboards.</span>
 
 <span class="sd">    * When a widget has focus, setting its keyboard to None will remove its</span>
@@ -569,21 +569,21 @@
 <span class="sd">        it is still assigned to an instance. Similarly, the keyboard created</span>
 <span class="sd">        by the instance on focus and assigned to :attr:`keyboard` if None,</span>
 <span class="sd">        will be released by the instance when the instance loses focus.</span>
-<span class="sd">        Therefore, it is not safe to assign this keyboard to another instance&#39;s</span>
+<span class="sd">        Therefore, it is not safe to assign this keyboard to another instance's</span>
 <span class="sd">        :attr:`keyboard`.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">is_focusable</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="n">_is_desktop</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Whether the instance can become focused. If focused, it&#39;ll lose focus</span>
+<span class="w">    </span><span class="sd">'''Whether the instance can become focused. If focused, it'll lose focus</span>
 <span class="sd">    when set to False.</span>
 
 <span class="sd">    :attr:`is_focusable` is a :class:`~kivy.properties.BooleanProperty` and</span>
 <span class="sd">    defaults to True on a desktop (i.e. `desktop` is True in</span>
 <span class="sd">    :mod:`~kivy.config`), False otherwise.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">focus</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Whether the instance currently has focus.</span>
+<span class="w">    </span><span class="sd">'''Whether the instance currently has focus.</span>
 
 <span class="sd">    Setting it to True will bind to and/or request the keyboard, and input</span>
 <span class="sd">    will be forwarded to the instance. Setting it to False will unbind</span>
@@ -597,10 +597,10 @@
 
 <span class="sd">    :attr:`focus` is a :class:`~kivy.properties.BooleanProperty` and defaults</span>
 <span class="sd">    to False.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">focused</span> <span class="o">=</span> <span class="n">focus</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;An alias of :attr:`focus`.</span>
+<span class="w">    </span><span class="sd">'''An alias of :attr:`focus`.</span>
 
 <span class="sd">    :attr:`focused` is a :class:`~kivy.properties.BooleanProperty` and defaults</span>
 <span class="sd">    to False.</span>
@@ -608,10 +608,10 @@
 <span class="sd">    .. warning::</span>
 <span class="sd">        :attr:`focused` is an alias of :attr:`focus` and will be removed in</span>
 <span class="sd">        2.0.0.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">keyboard_suggestions</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;If True provides auto suggestions on top of keyboard.</span>
+<span class="w">    </span><span class="sd">'''If True provides auto suggestions on top of keyboard.</span>
 <span class="sd">    This will only work if :attr:`input_type` is set to `text`, `url`, `mail` or</span>
 <span class="sd">    `address`.</span>
 
@@ -620,22 +620,22 @@
 <span class="sd">        `InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS` to work, but some keyboards</span>
 <span class="sd">        just ignore this flag. If you want to disable suggestions at all on</span>
 <span class="sd">        Android, you can set `input_type` to `null`, which will request the</span>
-<span class="sd">        input method to run in a limited &quot;generate key events&quot; mode.</span>
+<span class="sd">        input method to run in a limited "generate key events" mode.</span>
 
 <span class="sd">    .. versionadded:: 2.1.0</span>
 
 <span class="sd">    :attr:`keyboard_suggestions` is a :class:`~kivy.properties.BooleanProperty`</span>
 <span class="sd">    and defaults to True</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_set_on_focus_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;If changing focus, ensure your code does not create an infinite loop.</span>
+<span class="w">        </span><span class="sd">'''If changing focus, ensure your code does not create an infinite loop.</span>
 <span class="sd">        eg:</span>
 <span class="sd">        ```python</span>
 <span class="sd">        widget.focus_next = widget</span>
 <span class="sd">        widget.focus_previous = widget</span>
 <span class="sd">        ```</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="n">next_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_old_focus_next</span>
         <span class="k">if</span> <span class="n">next_</span> <span class="ow">is</span> <span class="n">value</span><span class="p">:</span>   <span class="c1"># prevent infinite loop</span>
             <span class="k">return</span>
@@ -646,12 +646,12 @@
         <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">value</span> <span class="ow">is</span> <span class="ne">StopIteration</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">FocusBehavior</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;focus_next accepts only objects based on&#39;</span>
-                             <span class="s1">&#39; FocusBehavior, or the `StopIteration` class.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'focus_next accepts only objects based on'</span>
+                             <span class="s1">' FocusBehavior, or the `StopIteration` class.'</span><span class="p">)</span>
         <span class="n">value</span><span class="o">.</span><span class="n">focus_previous</span> <span class="o">=</span> <span class="bp">self</span>
 
     <span class="n">focus_next</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The :class:`FocusBehavior` instance to acquire focus when</span>
+<span class="w">    </span><span class="sd">'''The :class:`FocusBehavior` instance to acquire focus when</span>
 <span class="sd">    tab is pressed and this instance has focus, if not `None` or</span>
 <span class="sd">    `StopIteration`.</span>
 
@@ -659,13 +659,13 @@
 <span class="sd">    widgets that are linked through :attr:`focus_next` and are focusable. If</span>
 <span class="sd">    :attr:`focus_next` is `None`, it instead walks the children lists to find</span>
 <span class="sd">    the next focusable widget. Finally, if :attr:`focus_next` is</span>
-<span class="sd">    the `StopIteration` class, focus won&#39;t move forward, but end here.</span>
+<span class="sd">    the `StopIteration` class, focus won't move forward, but end here.</span>
 
 <span class="sd">    .. note:</span>
 
 <span class="sd">        Setting :attr:`focus_next` automatically sets :attr:`focus_previous`</span>
 <span class="sd">        of the other instance to point to this instance, if not None or</span>
-<span class="sd">        `StopIteration`. Similarly, if it wasn&#39;t None or `StopIteration`, it</span>
+<span class="sd">        `StopIteration`. Similarly, if it wasn't None or `StopIteration`, it</span>
 <span class="sd">        also sets the :attr:`focus_previous` property of the instance</span>
 <span class="sd">        previously in :attr:`focus_next` to `None`. Therefore, it is only</span>
 <span class="sd">        required to set one of the :attr:`focus_previous` or</span>
@@ -674,7 +674,7 @@
 
 <span class="sd">    :attr:`focus_next` is an :class:`~kivy.properties.ObjectProperty` and</span>
 <span class="sd">    defaults to `None`.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_set_on_focus_previous</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="n">prev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_old_focus_previous</span>
@@ -687,12 +687,12 @@
         <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">value</span> <span class="ow">is</span> <span class="ne">StopIteration</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">FocusBehavior</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;focus_previous accepts only objects based&#39;</span>
-                             <span class="s1">&#39;on FocusBehavior, or the `StopIteration` class.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'focus_previous accepts only objects based'</span>
+                             <span class="s1">'on FocusBehavior, or the `StopIteration` class.'</span><span class="p">)</span>
         <span class="n">value</span><span class="o">.</span><span class="n">focus_next</span> <span class="o">=</span> <span class="bp">self</span>
 
     <span class="n">focus_previous</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The :class:`FocusBehavior` instance to acquire focus when</span>
+<span class="w">    </span><span class="sd">'''The :class:`FocusBehavior` instance to acquire focus when</span>
 <span class="sd">    shift+tab is pressed on this instance, if not None or `StopIteration`.</span>
 
 <span class="sd">    When shift+tab is pressed, focus cycles through all the</span>
@@ -700,13 +700,13 @@
 <span class="sd">    :attr:`focus_previous` and are focusable. If :attr:`focus_previous` is</span>
 <span class="sd">    `None`, it instead walks the children tree to find the</span>
 <span class="sd">    previous focusable widget. Finally, if :attr:`focus_previous` is the</span>
-<span class="sd">    `StopIteration` class, focus won&#39;t move backward, but end here.</span>
+<span class="sd">    `StopIteration` class, focus won't move backward, but end here.</span>
 
 <span class="sd">    .. note:</span>
 
 <span class="sd">        Setting :attr:`focus_previous` automatically sets :attr:`focus_next`</span>
 <span class="sd">        of the other instance to point to this instance, if not None or</span>
-<span class="sd">        `StopIteration`. Similarly, if it wasn&#39;t None or `StopIteration`, it</span>
+<span class="sd">        `StopIteration`. Similarly, if it wasn't None or `StopIteration`, it</span>
 <span class="sd">        also sets the :attr:`focus_next` property of the instance previously in</span>
 <span class="sd">        :attr:`focus_previous` to `None`. Therefore, it is only required</span>
 <span class="sd">        to set one of the :attr:`focus_previous` or :attr:`focus_next`</span>
@@ -714,22 +714,22 @@
 
 <span class="sd">    :attr:`focus_previous` is an :class:`~kivy.properties.ObjectProperty` and</span>
 <span class="sd">    defaults to `None`.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">keyboard_mode</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="s1">&#39;managed&#39;</span><span class="p">))</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Determines how the keyboard visibility should be managed. &#39;auto&#39; will</span>
-<span class="sd">    result in the standard behavior of showing/hiding on focus. &#39;managed&#39;</span>
+    <span class="n">keyboard_mode</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">'auto'</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">(</span><span class="s1">'auto'</span><span class="p">,</span> <span class="s1">'managed'</span><span class="p">))</span>
+<span class="w">    </span><span class="sd">'''Determines how the keyboard visibility should be managed. 'auto' will</span>
+<span class="sd">    result in the standard behavior of showing/hiding on focus. 'managed'</span>
 <span class="sd">    requires setting the keyboard visibility manually, or calling the helper</span>
 <span class="sd">    functions :meth:`show_keyboard` and :meth:`hide_keyboard`.</span>
 
 <span class="sd">    :attr:`keyboard_mode` is an :class:`~kivy.properties.OptionsProperty` and</span>
-<span class="sd">    defaults to &#39;auto&#39;. Can be one of &#39;auto&#39; or &#39;managed&#39;.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    defaults to 'auto'. Can be one of 'auto' or 'managed'.</span>
+<span class="sd">    '''</span>
 
-    <span class="n">input_type</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">&#39;null&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;null&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">,</span>
-                                                 <span class="s1">&#39;url&#39;</span><span class="p">,</span> <span class="s1">&#39;mail&#39;</span><span class="p">,</span> <span class="s1">&#39;datetime&#39;</span><span class="p">,</span>
-                                                 <span class="s1">&#39;tel&#39;</span><span class="p">,</span> <span class="s1">&#39;address&#39;</span><span class="p">))</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The kind of input keyboard to request.</span>
+    <span class="n">input_type</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">'null'</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">(</span><span class="s1">'null'</span><span class="p">,</span> <span class="s1">'text'</span><span class="p">,</span> <span class="s1">'number'</span><span class="p">,</span>
+                                                 <span class="s1">'url'</span><span class="p">,</span> <span class="s1">'mail'</span><span class="p">,</span> <span class="s1">'datetime'</span><span class="p">,</span>
+                                                 <span class="s1">'tel'</span><span class="p">,</span> <span class="s1">'address'</span><span class="p">))</span>
+<span class="w">    </span><span class="sd">'''The kind of input keyboard to request.</span>
 
 <span class="sd">    .. versionadded:: 1.8.0</span>
 
@@ -741,13 +741,13 @@
 <span class="sd">            `input_type` in your code.</span>
 
 <span class="sd">    :attr:`input_type` is an :class:`~kivy.properties.OptionsProperty` and</span>
-<span class="sd">    defaults to &#39;null&#39;. Can be one of &#39;null&#39;, &#39;text&#39;, &#39;number&#39;, &#39;url&#39;, &#39;mail&#39;,</span>
-<span class="sd">    &#39;datetime&#39;, &#39;tel&#39; or &#39;address&#39;.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    defaults to 'null'. Can be one of 'null', 'text', 'number', 'url', 'mail',</span>
+<span class="sd">    'datetime', 'tel' or 'address'.</span>
+<span class="sd">    '''</span>
 
     <span class="n">unfocus_on_touch</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="n">_keyboard_mode</span> <span class="ow">not</span> <span class="ow">in</span>
-                                       <span class="p">(</span><span class="s1">&#39;multi&#39;</span><span class="p">,</span> <span class="s1">&#39;systemandmulti&#39;</span><span class="p">))</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Whether a instance should lose focus when clicked outside the instance.</span>
+                                       <span class="p">(</span><span class="s1">'multi'</span><span class="p">,</span> <span class="s1">'systemandmulti'</span><span class="p">))</span>
+<span class="w">    </span><span class="sd">'''Whether a instance should lose focus when clicked outside the instance.</span>
 
 <span class="sd">    When a user clicks on a widget that is focus aware and shares the same</span>
 <span class="sd">    keyboard as this widget (which in the case with only one keyboard),</span>
@@ -757,8 +757,8 @@
 
 <span class="sd">    :attr:`unfocus_on_touch` is a :class:`~kivy.properties.BooleanProperty` and</span>
 <span class="sd">    defaults to `False` if the `keyboard_mode` in :attr:`~kivy.config.Config`</span>
-<span class="sd">    is `&#39;multi&#39;` or `&#39;systemandmulti&#39;`, otherwise it defaults to `True`.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    is `'multi'` or `'systemandmulti'`, otherwise it defaults to `True`.</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_old_focus_next</span> <span class="o">=</span> <span class="kc">None</span>
@@ -767,18 +767,18 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_keyboard_mode</span> <span class="o">=</span> <span class="n">_keyboard_mode</span>
         <span class="n">fbind</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;focus&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_focus</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;disabled&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_focusable</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;is_focusable&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_focusable</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;focus_next&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_on_focus_next</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;focus_previous&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_on_focus_previous</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'focus'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_focus</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'disabled'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_focusable</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'is_focusable'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_focusable</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'focus_next'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_on_focus_next</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'focus_previous'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_on_focus_previous</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_on_focusable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">disabled</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_focusable</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">focus</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_on_focus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyboard_mode</span> <span class="o">==</span> <span class="s1">&#39;auto&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyboard_mode</span> <span class="o">==</span> <span class="s1">'auto'</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_bind_keyboard</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
@@ -808,7 +808,7 @@
         <span class="n">old_focus</span> <span class="o">=</span> <span class="n">keyboards</span><span class="p">[</span><span class="n">keyboard</span><span class="p">]</span>  <span class="c1"># keyboard should be in dict</span>
         <span class="k">if</span> <span class="n">old_focus</span><span class="p">:</span>
             <span class="n">old_focus</span><span class="o">.</span><span class="n">focus</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="c1"># keyboard shouldn&#39;t have been released here, see keyboard warning</span>
+            <span class="c1"># keyboard shouldn't have been released here, see keyboard warning</span>
         <span class="n">keyboards</span><span class="p">[</span><span class="n">keyboard</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span>
         <span class="n">keyboard</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_key_down</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">keyboard_on_key_down</span><span class="p">,</span>
                       <span class="n">on_key_up</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">keyboard_on_key_up</span><span class="p">,</span>
@@ -838,22 +838,22 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">collide_point</span><span class="p">(</span><span class="o">*</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">):</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">disabled</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_focusable</span> <span class="ow">and</span>
-            <span class="p">(</span><span class="s1">&#39;button&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">profile</span> <span class="ow">or</span>
-             <span class="ow">not</span> <span class="n">touch</span><span class="o">.</span><span class="n">button</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;scroll&#39;</span><span class="p">))):</span>
+            <span class="p">(</span><span class="s1">'button'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">profile</span> <span class="ow">or</span>
+             <span class="ow">not</span> <span class="n">touch</span><span class="o">.</span><span class="n">button</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'scroll'</span><span class="p">))):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">focus</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="n">FocusBehavior</span><span class="o">.</span><span class="n">ignored_touch</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">FocusBehavior</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_touch_down</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_handle_post_on_touch_up</span><span class="p">(</span><span class="n">touch</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39; Called by window after each touch has finished.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">''' Called by window after each touch has finished.</span>
+<span class="sd">        '''</span>
         <span class="n">touches</span> <span class="o">=</span> <span class="n">FocusBehavior</span><span class="o">.</span><span class="n">ignored_touch</span>
         <span class="k">if</span> <span class="n">touch</span> <span class="ow">in</span> <span class="n">touches</span><span class="p">:</span>
             <span class="n">touches</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
             <span class="k">return</span>
-        <span class="k">if</span> <span class="s1">&#39;button&#39;</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">profile</span> <span class="ow">and</span> <span class="n">touch</span><span class="o">.</span><span class="n">button</span> <span class="ow">in</span>\
-                <span class="p">(</span><span class="s1">&#39;scrollup&#39;</span><span class="p">,</span> <span class="s1">&#39;scrolldown&#39;</span><span class="p">,</span> <span class="s1">&#39;scrollleft&#39;</span><span class="p">,</span> <span class="s1">&#39;scrollright&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">'button'</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">profile</span> <span class="ow">and</span> <span class="n">touch</span><span class="o">.</span><span class="n">button</span> <span class="ow">in</span>\
+                <span class="p">(</span><span class="s1">'scrollup'</span><span class="p">,</span> <span class="s1">'scrolldown'</span><span class="p">,</span> <span class="s1">'scrollleft'</span><span class="p">,</span> <span class="s1">'scrollright'</span><span class="p">):</span>
             <span class="k">return</span>
         <span class="k">for</span> <span class="n">focusable</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">FocusBehavior</span><span class="o">.</span><span class="n">_keyboards</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
             <span class="k">if</span> <span class="n">focusable</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">focusable</span><span class="o">.</span><span class="n">unfocus_on_touch</span><span class="p">:</span>
@@ -862,20 +862,20 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_focus_next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">focus_dir</span><span class="p">):</span>
         <span class="n">current</span> <span class="o">=</span> <span class="bp">self</span>
-        <span class="n">walk_tree</span> <span class="o">=</span> <span class="s1">&#39;walk&#39;</span> <span class="k">if</span> <span class="n">focus_dir</span> <span class="o">==</span> <span class="s1">&#39;focus_next&#39;</span> <span class="k">else</span> <span class="s1">&#39;walk_reverse&#39;</span>
+        <span class="n">walk_tree</span> <span class="o">=</span> <span class="s1">'walk'</span> <span class="k">if</span> <span class="n">focus_dir</span> <span class="o">==</span> <span class="s1">'focus_next'</span> <span class="k">else</span> <span class="s1">'walk_reverse'</span>
 
         <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
             <span class="c1"># if we hit a focusable, walk through focus_xxx</span>
             <span class="k">while</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">focus_dir</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">current</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">focus_dir</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">current</span> <span class="ow">is</span> <span class="bp">self</span> <span class="ow">or</span> <span class="n">current</span> <span class="ow">is</span> <span class="ne">StopIteration</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># make sure we don&#39;t loop forever</span>
+                    <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># make sure we don't loop forever</span>
                 <span class="k">if</span> <span class="n">current</span><span class="o">.</span><span class="n">is_focusable</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">current</span><span class="o">.</span><span class="n">disabled</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">current</span>
 
             <span class="c1"># hit unfocusable, walk widget tree</span>
             <span class="n">itr</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">walk_tree</span><span class="p">)(</span><span class="n">loopback</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">focus_dir</span> <span class="o">==</span> <span class="s1">&#39;focus_next&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">focus_dir</span> <span class="o">==</span> <span class="s1">'focus_next'</span><span class="p">:</span>
                 <span class="nb">next</span><span class="p">(</span><span class="n">itr</span><span class="p">)</span>  <span class="c1"># current is returned first  when walking forward</span>
             <span class="k">for</span> <span class="n">current</span> <span class="ow">in</span> <span class="n">itr</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">FocusBehavior</span><span class="p">):</span>
@@ -892,27 +892,27 @@
 <div class="viewcode-block" id="FocusBehavior.get_focus_next">
 <a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.focus.html#kivy.uix.behaviors.FocusBehavior.get_focus_next">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_focus_next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Returns the next focusable widget using either :attr:`focus_next`</span>
+<span class="w">        </span><span class="sd">'''Returns the next focusable widget using either :attr:`focus_next`</span>
 <span class="sd">           or the :attr:`children` similar to the order when tabbing forwards</span>
 <span class="sd">           with the ``tab`` key.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_focus_next</span><span class="p">(</span><span class="s1">&#39;focus_next&#39;</span><span class="p">)</span></div>
+<span class="sd">        '''</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_focus_next</span><span class="p">(</span><span class="s1">'focus_next'</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="FocusBehavior.get_focus_previous">
 <a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.focus.html#kivy.uix.behaviors.FocusBehavior.get_focus_previous">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_focus_previous</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Returns the previous focusable widget using either</span>
+<span class="w">        </span><span class="sd">'''Returns the previous focusable widget using either</span>
 <span class="sd">           :attr:`focus_previous` or the :attr:`children` similar to the</span>
 <span class="sd">           order when the ``tab`` + ``shift`` keys are triggered together.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_focus_next</span><span class="p">(</span><span class="s1">&#39;focus_previous&#39;</span><span class="p">)</span></div>
+<span class="sd">        '''</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_focus_next</span><span class="p">(</span><span class="s1">'focus_previous'</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="FocusBehavior.keyboard_on_key_down">
 <a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.focus.html#kivy.uix.behaviors.FocusBehavior.keyboard_on_key_down">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">keyboard_on_key_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">keycode</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;The method bound to the keyboard when the instance has focus.</span>
+<span class="w">        </span><span class="sd">'''The method bound to the keyboard when the instance has focus.</span>
 
 <span class="sd">        When the instance becomes focused, this method is bound to the</span>
 <span class="sd">        keyboard and will be called for every input press. The parameters are</span>
@@ -925,12 +925,12 @@
 
 <span class="sd">        Similar to other keyboard functions, it should return True if the</span>
 <span class="sd">        key was consumed.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="n">keycode</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;tab&#39;</span><span class="p">:</span>  <span class="c1"># deal with cycle</span>
+<span class="sd">        '''</span>
+        <span class="k">if</span> <span class="n">keycode</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'tab'</span><span class="p">:</span>  <span class="c1"># deal with cycle</span>
             <span class="n">modifiers</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">modifiers</span><span class="p">)</span>
-            <span class="k">if</span> <span class="p">{</span><span class="s1">&#39;ctrl&#39;</span><span class="p">,</span> <span class="s1">&#39;alt&#39;</span><span class="p">,</span> <span class="s1">&#39;meta&#39;</span><span class="p">,</span> <span class="s1">&#39;super&#39;</span><span class="p">,</span> <span class="s1">&#39;compose&#39;</span><span class="p">}</span> <span class="o">&amp;</span> <span class="n">modifiers</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">{</span><span class="s1">'ctrl'</span><span class="p">,</span> <span class="s1">'alt'</span><span class="p">,</span> <span class="s1">'meta'</span><span class="p">,</span> <span class="s1">'super'</span><span class="p">,</span> <span class="s1">'compose'</span><span class="p">}</span> <span class="o">&amp;</span> <span class="n">modifiers</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">False</span>
-            <span class="k">if</span> <span class="s1">&#39;shift&#39;</span> <span class="ow">in</span> <span class="n">modifiers</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">'shift'</span> <span class="ow">in</span> <span class="n">modifiers</span><span class="p">:</span>
                 <span class="nb">next</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_focus_previous</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="nb">next</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_focus_next</span><span class="p">()</span>
@@ -946,7 +946,7 @@
 <div class="viewcode-block" id="FocusBehavior.keyboard_on_key_up">
 <a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.focus.html#kivy.uix.behaviors.FocusBehavior.keyboard_on_key_up">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">keyboard_on_key_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">keycode</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;The method bound to the keyboard when the instance has focus.</span>
+<span class="w">        </span><span class="sd">'''The method bound to the keyboard when the instance has focus.</span>
 
 <span class="sd">        When the instance becomes focused, this method is bound to the</span>
 <span class="sd">        keyboard and will be called for every input release. The parameters are</span>
@@ -958,8 +958,8 @@
 <span class="sd">        processed the character (if it does not wish to consume the escape).</span>
 
 <span class="sd">        See :meth:`keyboard_on_key_down`</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="n">keycode</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;escape&#39;</span><span class="p">:</span>
+<span class="sd">        '''</span>
+        <span class="k">if</span> <span class="n">keycode</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'escape'</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">focus</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span></div>
@@ -968,20 +968,20 @@
 <div class="viewcode-block" id="FocusBehavior.show_keyboard">
 <a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.focus.html#kivy.uix.behaviors.FocusBehavior.show_keyboard">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">show_keyboard</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''</span>
 <span class="sd">        Convenience function to show the keyboard in managed mode.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyboard_mode</span> <span class="o">==</span> <span class="s1">&#39;managed&#39;</span><span class="p">:</span>
+<span class="sd">        '''</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyboard_mode</span> <span class="o">==</span> <span class="s1">'managed'</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_bind_keyboard</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="FocusBehavior.hide_keyboard">
 <a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.focus.html#kivy.uix.behaviors.FocusBehavior.hide_keyboard">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">hide_keyboard</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''</span>
 <span class="sd">        Convenience function to hide the keyboard in managed mode.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyboard_mode</span> <span class="o">==</span> <span class="s1">&#39;managed&#39;</span><span class="p">:</span>
+<span class="sd">        '''</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyboard_mode</span> <span class="o">==</span> <span class="s1">'managed'</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_unbind_keyboard</span><span class="p">()</span></div>
 </div>
 
@@ -999,7 +999,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

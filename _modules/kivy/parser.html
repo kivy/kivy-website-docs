@@ -369,16 +369,16 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.parser</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">Parser utilities</span>
 <span class="sd">================</span>
 
 <span class="sd">Helper functions used for CSS parsing.</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;parse_color&#39;</span><span class="p">,</span> <span class="s1">&#39;parse_int&#39;</span><span class="p">,</span> <span class="s1">&#39;parse_float&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;parse_string&#39;</span><span class="p">,</span> <span class="s1">&#39;parse_bool&#39;</span><span class="p">,</span> <span class="s1">&#39;parse_int2&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;parse_float4&#39;</span><span class="p">,</span> <span class="s1">&#39;parse_filename&#39;</span><span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'parse_color'</span><span class="p">,</span> <span class="s1">'parse_int'</span><span class="p">,</span> <span class="s1">'parse_float'</span><span class="p">,</span>
+           <span class="s1">'parse_string'</span><span class="p">,</span> <span class="s1">'parse_bool'</span><span class="p">,</span> <span class="s1">'parse_int2'</span><span class="p">,</span>
+           <span class="s1">'parse_float4'</span><span class="p">,</span> <span class="s1">'parse_filename'</span><span class="p">)</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">Logger</span>
@@ -392,13 +392,13 @@
 <div class="viewcode-block" id="parse_filename">
 <a class="viewcode-back" href="../../api-kivy.parser.html#kivy.parser.parse_filename">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">parse_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Parse a filename and search for it using `resource_find()`.</span>
+<span class="w">    </span><span class="sd">'''Parse a filename and search for it using `resource_find()`.</span>
 <span class="sd">    If found, the resource path is returned, otherwise return the unmodified</span>
-<span class="sd">    filename (as specified by the caller).&#39;&#39;&#39;</span>
+<span class="sd">    filename (as specified by the caller).'''</span>
     <span class="n">filename</span> <span class="o">=</span> <span class="n">parse_string</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">resource_find</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Resource: unable to find &lt;</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Resource: unable to find &lt;</span><span class="si">%s</span><span class="s1">&gt;'</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">result</span> <span class="ow">or</span> <span class="n">filename</span></div>
 
 
@@ -412,7 +412,7 @@
 <div class="viewcode-block" id="parse_color">
 <a class="viewcode-back" href="../../api-kivy.parser.html#kivy.parser.parse_color">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">parse_color</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Parse a string to a kivy color. Supported formats:</span>
+<span class="w">    </span><span class="sd">'''Parse a string to a kivy color. Supported formats:</span>
 
 <span class="sd">        * rgb(r, g, b)</span>
 <span class="sd">        * rgba(r, g, b, a)</span>
@@ -427,42 +427,42 @@
 <span class="sd">        * #rgba</span>
 <span class="sd">        * #rrggbb</span>
 <span class="sd">        * #rrggbbaa</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
     <span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;rgb&#39;</span><span class="p">):</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;rgba?\((.*)\)&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'rgb'</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">'rgba?\((.*)\)'</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">res</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="c1"># default r/g/b values to 1 if greater than 255 else x/255</span>
                 <span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">255.</span> <span class="k">else</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.</span><span class="p">)</span>
-                         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;, ?&#39;</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">0</span><span class="p">])]</span>
+                         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">', ?'</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">0</span><span class="p">])]</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
                     <span class="c1"># in case of invalid input like rgb()/rgb(r)/rgb(r, g)</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span>
             <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">color_error</span><span class="p">(</span><span class="s1">&#39;ColorParser: Invalid color for </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">color_error</span><span class="p">(</span><span class="s1">'ColorParser: Invalid color for </span><span class="si">%r</span><span class="s1">'</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">color_error</span><span class="p">(</span><span class="s1">&#39;ColorParser: Invalid color for </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">color_error</span><span class="p">(</span><span class="s1">'ColorParser: Invalid color for </span><span class="si">%r</span><span class="s1">'</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">color_error</span><span class="p">(</span><span class="s1">&#39;ColorParser: Invalid color for </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">color_error</span><span class="p">(</span><span class="s1">'ColorParser: Invalid color for </span><span class="si">%r</span><span class="s1">'</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
             <span class="n">value</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">1.</span><span class="p">)</span>
     <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
         <span class="n">res</span> <span class="o">=</span> <span class="n">text</span>
-        <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;#&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'#'</span><span class="p">:</span>
             <span class="n">res</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
         <span class="n">lres</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">lres</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">or</span> <span class="n">lres</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
-            <span class="n">res</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">x</span> <span class="o">+</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">res</span><span class="p">])</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">x</span> <span class="o">+</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">res</span><span class="p">])</span>
         <span class="k">elif</span> <span class="n">lres</span> <span class="o">!=</span> <span class="mi">6</span> <span class="ow">and</span> <span class="n">lres</span> <span class="o">!=</span> <span class="mi">8</span><span class="p">:</span>
-            <span class="c1"># raise ColorException(&#39;Invalid color format for %r&#39; % text)</span>
+            <span class="c1"># raise ColorException('Invalid color format for %r' % text)</span>
             <span class="k">return</span> <span class="n">color_error</span><span class="p">(</span>
-                <span class="s1">&#39;ColorParser: Invalid color format for </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
+                <span class="s1">'ColorParser: Invalid color format for </span><span class="si">%r</span><span class="s1">'</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.</span>
                      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">),</span> <span class="mi">2</span><span class="p">)]</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">color_error</span><span class="p">(</span><span class="s1">&#39;ColorParser: Invalid color for </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">color_error</span><span class="p">(</span><span class="s1">'ColorParser: Invalid color for </span><span class="si">%r</span><span class="s1">'</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">lres</span> <span class="o">==</span> <span class="mi">6</span> <span class="ow">or</span> <span class="n">lres</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
             <span class="n">value</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">1.</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">value</span></div>
@@ -472,21 +472,21 @@
 <div class="viewcode-block" id="parse_bool">
 <a class="viewcode-back" href="../../api-kivy.parser.html#kivy.parser.parse_bool">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">parse_bool</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Parse a string to a boolean, ignoring case. &quot;true&quot;/&quot;1&quot; is True,</span>
-<span class="sd">    &quot;false&quot;/&quot;0&quot; is False. Anything else throws an exception.&#39;&#39;&#39;</span>
-    <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">'''Parse a string to a boolean, ignoring case. "true"/"1" is True,</span>
+<span class="sd">    "false"/"0" is False. Anything else throws an exception.'''</span>
+    <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'true'</span><span class="p">,</span> <span class="s1">'1'</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">True</span>
-    <span class="k">elif</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;false&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">):</span>
+    <span class="k">elif</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'false'</span><span class="p">,</span> <span class="s1">'0'</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid boolean: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span></div>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'Invalid boolean: </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="parse_string">
 <a class="viewcode-back" href="../../api-kivy.parser.html#kivy.parser.parse_string">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">parse_string</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Parse a string to a string (removing single and double quotes).&#39;&#39;&#39;</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s2">&quot;&#39;&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">text</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s2">&quot;&#39;&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">'''Parse a string to a string (removing single and double quotes).'''</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">text</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'"'</span><span class="p">,</span> <span class="s2">"'"</span><span class="p">)</span> <span class="ow">and</span> <span class="n">text</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'"'</span><span class="p">,</span> <span class="s2">"'"</span><span class="p">):</span>
         <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
 
@@ -495,20 +495,20 @@
 <div class="viewcode-block" id="parse_int2">
 <a class="viewcode-back" href="../../api-kivy.parser.html#kivy.parser.parse_int2">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">parse_int2</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Parse a string to a list of exactly 2 integers.</span>
+<span class="w">    </span><span class="sd">'''Parse a string to a list of exactly 2 integers.</span>
 
-<span class="sd">        &gt;&gt;&gt; print(parse_int2(&quot;12 54&quot;))</span>
+<span class="sd">        &gt;&gt;&gt; print(parse_int2("12 54"))</span>
 <span class="sd">        12, 54</span>
 
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">texts</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">]</span>
+<span class="sd">    '''</span>
+    <span class="n">texts</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">''</span><span class="p">]</span>
     <span class="n">value</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">parse_int</span><span class="p">,</span> <span class="n">texts</span><span class="p">))</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid int2 format: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'Invalid int2 format: </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
     <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
     <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Too many values in </span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'Too many values in </span><span class="si">%s</span><span class="s1">: </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
     <span class="k">return</span> <span class="n">value</span></div>
 
 
@@ -516,16 +516,16 @@
 <div class="viewcode-block" id="parse_float4">
 <a class="viewcode-back" href="../../api-kivy.parser.html#kivy.parser.parse_float4">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">parse_float4</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Parse a string to a list of exactly 4 floats.</span>
+<span class="w">    </span><span class="sd">'''Parse a string to a list of exactly 4 floats.</span>
 
-<span class="sd">        &gt;&gt;&gt; parse_float4(&#39;54 87. 35 0&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; parse_float4('54 87. 35 0')</span>
 <span class="sd">        54, 87., 35, 0</span>
 
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">texts</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">]</span>
+<span class="sd">    '''</span>
+    <span class="n">texts</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">''</span><span class="p">]</span>
     <span class="n">value</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">parse_float</span><span class="p">,</span> <span class="n">texts</span><span class="p">))</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Invalid float4 format: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'Invalid float4 format: </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
     <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
     <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
@@ -534,7 +534,7 @@
         <span class="c1"># ambiguous case!</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">value</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
     <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Too many values in </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'Too many values in </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">text</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">value</span></div>
 
 
@@ -555,7 +555,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

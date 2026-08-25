@@ -369,7 +369,7 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.uix.svg</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">SvgWidget</span>
 <span class="sd">=========</span>
 
@@ -394,7 +394,7 @@
 <span class="sd">.. rubric:: Difference from the SVG image provider</span>
 
 <span class="sd">The SVG image provider (``kivy.core.image``) lets you use</span>
-<span class="sd">``Image(source=&quot;file.svg&quot;)`` and renders once at a fixed size.</span>
+<span class="sd">``Image(source="file.svg")`` and renders once at a fixed size.</span>
 <span class="sd">``SvgWidget`` differs in:</span>
 
 <span class="sd">- **Adaptive re-rasterization** - re-renders when scaling up beyond threshold</span>
@@ -410,24 +410,24 @@
 
 <span class="sd">    from kivy.uix.svg import SvgWidget</span>
 
-<span class="sd">    svg = SvgWidget(source=&#39;diagram.svg&#39;, size_hint=(None, None), size=(64, 64))</span>
+<span class="sd">    svg = SvgWidget(source='diagram.svg', size_hint=(None, None), size=(64, 64))</span>
 
 <span class="sd">KV::</span>
 
 <span class="sd">    SvgWidget:</span>
-<span class="sd">        source: &#39;diagram.svg&#39;</span>
+<span class="sd">        source: 'diagram.svg'</span>
 <span class="sd">        current_color: 1, 0, 0   # red currentColor</span>
-<span class="sd">        on_load: print(&#39;SVG ready&#39;)</span>
+<span class="sd">        on_load: print('SVG ready')</span>
 
 <span class="sd">    AsyncSvgWidget:</span>
-<span class="sd">        source: &#39;https://example.com/diagram.svg&#39;</span>
+<span class="sd">        source: 'https://example.com/diagram.svg'</span>
 
 <span class="sd">.. rubric:: SVG icon button</span>
 
 <span class="sd">Combine :class:`~kivy.uix.behaviors.ToggleButtonBehavior` with</span>
 <span class="sd">:class:`SvgWidget` to create a tappable icon that changes colour on toggle.</span>
-<span class="sd">This pattern works with any SVG that uses ``stroke=&quot;currentColor&quot;`` or</span>
-<span class="sd">``fill=&quot;currentColor&quot;``.  Most popular svg icon libraries use ``currentColor`` by</span>
+<span class="sd">This pattern works with any SVG that uses ``stroke="currentColor"`` or</span>
+<span class="sd">``fill="currentColor"``.  Most popular svg icon libraries use ``currentColor`` by</span>
 <span class="sd">default, including `Lucide &lt;https://lucide.dev&gt;`_, `Heroicons</span>
 <span class="sd">&lt;https://heroicons.com&gt;`_, and `Tabler Icons &lt;https://tabler.io/icons&gt;`_.</span>
 
@@ -442,15 +442,15 @@
 
 <span class="sd">    # KV</span>
 <span class="sd">    &lt;StarIconToggleButton&gt;:</span>
-<span class="sd">        source: &#39;star.svg&#39;</span>
+<span class="sd">        source: 'star.svg'</span>
 <span class="sd">        size_hint: None, None</span>
-<span class="sd">        size: &#39;64dp&#39;, &#39;64dp&#39;</span>
-<span class="sd">        fit_mode: &#39;contain&#39;</span>
+<span class="sd">        size: '64dp', '64dp'</span>
+<span class="sd">        fit_mode: 'contain'</span>
 <span class="sd">        mipmap: False</span>
-<span class="sd">        current_color: &#39;gold&#39; if self.activated else &#39;grey&#39;</span>
+<span class="sd">        current_color: 'gold' if self.activated else 'grey'</span>
 
 <span class="sd">.. versionadded:: 3.0.0</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.clock</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clock</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.graphics.texture</span><span class="w"> </span><span class="kn">import</span> <span class="n">Texture</span>
@@ -469,13 +469,13 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.image</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.widget</span><span class="w"> </span><span class="kn">import</span> <span class="n">Widget</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;SvgWidget&#39;</span><span class="p">,</span> <span class="s1">&#39;AsyncSvgWidget&#39;</span><span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'SvgWidget'</span><span class="p">,</span> <span class="s1">'AsyncSvgWidget'</span><span class="p">)</span>
 
 <span class="n">_SvgLoader</span> <span class="o">=</span> <span class="kc">None</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_next_power_of_2</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Return the smallest power of 2 that is &gt;= n (minimum 1).&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''Return the smallest power of 2 that is &gt;= n (minimum 1).'''</span>
     <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">return</span> <span class="mi">1</span>
@@ -493,7 +493,7 @@
 <div class="viewcode-block" id="SvgWidget">
 <a class="viewcode-back" href="../../../api-kivy.uix.svg.html#kivy.uix.svg.SvgWidget">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SvgWidget</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Widget that displays an SVG document using adaptive rasterization.</span>
+<span class="w">    </span><span class="sd">'''Widget that displays an SVG document using adaptive rasterization.</span>
 
 <span class="sd">    The SVG is rasterized to a :class:`~kivy.graphics.texture.Texture` via</span>
 <span class="sd">    the :mod:`kivy.core.svg` provider.  The texture is re-created when the</span>
@@ -503,14 +503,14 @@
 
 <span class="sd">    Downscaling is handled efficiently by OpenGL mipmaps</span>
 <span class="sd">    (:attr:`mipmap` defaults to ``True``).</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="c1"># ------------------------------------------------------------------</span>
     <span class="c1"># Properties</span>
     <span class="c1"># ------------------------------------------------------------------</span>
 
     <span class="n">source</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;SVG source - a file path, raw bytes, or (for :class:`AsyncSvgWidget`)</span>
+<span class="w">    </span><span class="sd">'''SVG source - a file path, raw bytes, or (for :class:`AsyncSvgWidget`)</span>
 <span class="sd">    an HTTP/HTTPS URL.</span>
 
 <span class="sd">    The type determines how the SVG is loaded:</span>
@@ -522,29 +522,29 @@
 
 <span class="sd">    When passing ``bytes``, Kivy forwards them to the SVG renderer unchanged.</span>
 <span class="sd">    No encoding conversion is performed, so the byte sequence must already</span>
-<span class="sd">    match the encoding declared in the SVG (e.g. ``encoding=&quot;utf-8&quot;`` or</span>
-<span class="sd">    ``encoding=&quot;gb2312&quot;``).  Use ``open(path, &#39;rb&#39;)`` or an explicit</span>
+<span class="sd">    match the encoding declared in the SVG (e.g. ``encoding="utf-8"`` or</span>
+<span class="sd">    ``encoding="gb2312"``).  Use ``open(path, 'rb')`` or an explicit</span>
 <span class="sd">    ``str.encode(encoding)`` call to produce correctly encoded bytes; the</span>
-<span class="sd">    proper encoding is the caller&#39;s responsibility.</span>
+<span class="sd">    proper encoding is the caller's responsibility.</span>
 
 <span class="sd">    Setting this property automatically triggers a load and rasterize.</span>
 
 <span class="sd">    :attr:`source` is an :class:`~kivy.properties.ObjectProperty` and</span>
 <span class="sd">    defaults to ``None``.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">texture</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Current rasterized :class:`~kivy.graphics.texture.Texture`.</span>
+<span class="w">    </span><span class="sd">'''Current rasterized :class:`~kivy.graphics.texture.Texture`.</span>
 
 <span class="sd">    Updated after every successful rasterization (including re-renders on</span>
 <span class="sd">    scale-up).</span>
 
 <span class="sd">    :attr:`texture` is an :class:`~kivy.properties.ObjectProperty` and</span>
 <span class="sd">    defaults to ``None``.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">texture_size</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Pixel dimensions of the current :attr:`texture`.</span>
+<span class="w">    </span><span class="sd">'''Pixel dimensions of the current :attr:`texture`.</span>
 
 <span class="sd">    Updated whenever :attr:`texture` changes.  Reflects the size at which the</span>
 <span class="sd">    SVG was last rasterized, which equals the widget size at render time.</span>
@@ -562,36 +562,36 @@
 
 <span class="sd">    :attr:`texture_size` is a :class:`~kivy.properties.ListProperty` and</span>
 <span class="sd">    defaults to ``[0, 0]``.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">fit_mode</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span>
-        <span class="s1">&#39;scale-down&#39;</span><span class="p">,</span>
-        <span class="n">options</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;scale-down&#39;</span><span class="p">,</span> <span class="s1">&#39;fill&#39;</span><span class="p">,</span> <span class="s1">&#39;contain&#39;</span><span class="p">,</span> <span class="s1">&#39;cover&#39;</span><span class="p">),</span>
+        <span class="s1">'scale-down'</span><span class="p">,</span>
+        <span class="n">options</span><span class="o">=</span><span class="p">(</span><span class="s1">'scale-down'</span><span class="p">,</span> <span class="s1">'fill'</span><span class="p">,</span> <span class="s1">'contain'</span><span class="p">,</span> <span class="s1">'cover'</span><span class="p">),</span>
     <span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Scaling mode for display within the widget bounds.</span>
+<span class="w">    </span><span class="sd">'''Scaling mode for display within the widget bounds.</span>
 
 <span class="sd">    Identical in meaning to :attr:`~kivy.uix.image.Image.fit_mode`.</span>
 
 <span class="sd">    Available options:</span>
 
-<span class="sd">    - ``&quot;scale-down&quot;`` - never upscales; preserves aspect ratio.</span>
-<span class="sd">    - ``&quot;fill&quot;`` - stretches to fill the widget; ignores aspect ratio.</span>
-<span class="sd">    - ``&quot;contain&quot;`` - fits inside widget; may upscale; preserves ratio.</span>
-<span class="sd">    - ``&quot;cover&quot;`` - fills widget; may crop; preserves ratio.</span>
+<span class="sd">    - ``"scale-down"`` - never upscales; preserves aspect ratio.</span>
+<span class="sd">    - ``"fill"`` - stretches to fill the widget; ignores aspect ratio.</span>
+<span class="sd">    - ``"contain"`` - fits inside widget; may upscale; preserves ratio.</span>
+<span class="sd">    - ``"cover"`` - fills widget; may crop; preserves ratio.</span>
 
 <span class="sd">    :attr:`fit_mode` is an :class:`~kivy.properties.OptionProperty` and</span>
-<span class="sd">    defaults to ``&#39;scale-down&#39;``.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    defaults to ``'scale-down'``.</span>
+<span class="sd">    '''</span>
 
     <span class="n">color</span> <span class="o">=</span> <span class="n">ColorProperty</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Tint colour applied via the canvas ``Color`` instruction.</span>
+<span class="w">    </span><span class="sd">'''Tint colour applied via the canvas ``Color`` instruction.</span>
 
 <span class="sd">    :attr:`color` is a :class:`~kivy.properties.ColorProperty` and</span>
 <span class="sd">    defaults to ``[1, 1, 1, 1]`` (opaque white - no tint).</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">mipmap</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Enable mipmap generation on the rasterized texture.</span>
+<span class="w">    </span><span class="sd">'''Enable mipmap generation on the rasterized texture.</span>
 
 <span class="sd">    Mipmaps allow efficient GPU downscaling without aliasing artefacts.</span>
 <span class="sd">    Defaults to ``True`` (unlike :class:`~kivy.uix.image.Image`).</span>
@@ -600,10 +600,10 @@
 
 <span class="sd">    :attr:`mipmap` is a :class:`~kivy.properties.BooleanProperty` and</span>
 <span class="sd">    defaults to ``True``.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">current_color</span> <span class="o">=</span> <span class="n">ColorProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;RGB colour injected for the CSS ``currentColor`` keyword at render time.</span>
+<span class="w">    </span><span class="sd">'''RGB colour injected for the CSS ``currentColor`` keyword at render time.</span>
 
 <span class="sd">    Every ``currentColor`` token in the SVG source is replaced with this</span>
 <span class="sd">    colour before rasterization.  Changing this property triggers a</span>
@@ -616,15 +616,15 @@
 
 <span class="sd">    :attr:`current_color` is a :class:`~kivy.properties.ColorProperty` and</span>
 <span class="sd">    defaults to ``[0, 0, 0, 1]`` (black).</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">element_overrides</span> <span class="o">=</span> <span class="n">DictProperty</span><span class="p">({})</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Per-element render overrides keyed by SVG element ``id``.</span>
+<span class="w">    </span><span class="sd">'''Per-element render overrides keyed by SVG element ``id``.</span>
 
 <span class="sd">    Each value is a dict with optional keys:</span>
 
-<span class="sd">    - ``&#39;visible&#39;`` (bool) - ``False`` forces opacity to 0.</span>
-<span class="sd">    - ``&#39;opacity&#39;`` (float 0.0-1.0) - overrides the SVG native opacity when</span>
+<span class="sd">    - ``'visible'`` (bool) - ``False`` forces opacity to 0.</span>
+<span class="sd">    - ``'opacity'`` (float 0.0-1.0) - overrides the SVG native opacity when</span>
 <span class="sd">      the element is visible.</span>
 
 <span class="sd">    Absent keys fall back to SVG defaults.  Changing this property triggers</span>
@@ -633,21 +633,21 @@
 <span class="sd">    Example::</span>
 
 <span class="sd">        svg.element_overrides = {</span>
-<span class="sd">            &#39;badge&#39;:     {&#39;visible&#39;: False},</span>
-<span class="sd">            &#39;highlight&#39;: {&#39;opacity&#39;: 0.5},</span>
+<span class="sd">            'badge':     {'visible': False},</span>
+<span class="sd">            'highlight': {'opacity': 0.5},</span>
 <span class="sd">        }</span>
 
 <span class="sd">    :attr:`element_overrides` is a :class:`~kivy.properties.DictProperty`</span>
 <span class="sd">    and defaults to ``{}``.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">viewbox_size</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Intrinsic SVG dimensions from the ``viewBox`` or ``width``/``height``</span>
+<span class="w">    </span><span class="sd">'''Intrinsic SVG dimensions from the ``viewBox`` or ``width``/``height``</span>
 <span class="sd">    attributes.  Set at load time, before rasterization; ``[0, 0]`` before</span>
 <span class="sd">    any source is loaded.</span>
 
 <span class="sd">    This is the correct property to use when you want the widget to display</span>
-<span class="sd">    at the SVG&#39;s natural pixel size.  Because ``viewbox_size`` is populated</span>
+<span class="sd">    at the SVG's natural pixel size.  Because ``viewbox_size`` is populated</span>
 <span class="sd">    before the deferred rasterize fires, a KV binding like::</span>
 
 <span class="sd">        SvgWidget:</span>
@@ -664,27 +664,27 @@
 
 <span class="sd">    :attr:`viewbox_size` is a :class:`~kivy.properties.ListProperty` and</span>
 <span class="sd">    defaults to ``[0, 0]``.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">loaded</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;``True`` once the SVG has been successfully loaded and the first</span>
+<span class="w">    </span><span class="sd">'''``True`` once the SVG has been successfully loaded and the first</span>
 <span class="sd">    texture is ready.  Resets to ``False`` when :attr:`source` changes or</span>
 <span class="sd">    :meth:`reload` is called.</span>
 
 <span class="sd">    Use this as a guard before calling element manipulation methods::</span>
 
 <span class="sd">        if svg.loaded:</span>
-<span class="sd">            svg.hide_element(&#39;badge&#39;)</span>
+<span class="sd">            svg.hide_element('badge')</span>
 
 <span class="sd">    :attr:`loaded` is a :class:`~kivy.properties.BooleanProperty` and</span>
 <span class="sd">    defaults to ``False``.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">status</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span>
-        <span class="s1">&#39;empty&#39;</span><span class="p">,</span>
-        <span class="n">options</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;empty&#39;</span><span class="p">,</span> <span class="s1">&#39;loading&#39;</span><span class="p">,</span> <span class="s1">&#39;ready&#39;</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">),</span>
+        <span class="s1">'empty'</span><span class="p">,</span>
+        <span class="n">options</span><span class="o">=</span><span class="p">(</span><span class="s1">'empty'</span><span class="p">,</span> <span class="s1">'loading'</span><span class="p">,</span> <span class="s1">'ready'</span><span class="p">,</span> <span class="s1">'error'</span><span class="p">),</span>
     <span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Current load state.</span>
+<span class="w">    </span><span class="sd">'''Current load state.</span>
 
 <span class="sd">    +------------+-------------------------------------+</span>
 <span class="sd">    | Value      | Meaning                             |</span>
@@ -698,20 +698,20 @@
 <span class="sd">    | ``error``  | Load or render failed               |</span>
 <span class="sd">    +------------+-------------------------------------+</span>
 
-<span class="sd">    ``loaded`` is always equivalent to ``status == &#39;ready&#39;``.  Use whichever</span>
+<span class="sd">    ``loaded`` is always equivalent to ``status == 'ready'``.  Use whichever</span>
 <span class="sd">    reads more clearly: ``status`` when you need to distinguish between states</span>
-<span class="sd">    (e.g. show a spinner while ``&#39;loading&#39;``, an error icon on ``&#39;error&#39;``),</span>
+<span class="sd">    (e.g. show a spinner while ``'loading'``, an error icon on ``'error'``),</span>
 <span class="sd">    or ``loaded`` for a simple boolean guard (``if self.loaded:``).</span>
 
 <span class="sd">    :attr:`status` is an :class:`~kivy.properties.OptionProperty` and</span>
-<span class="sd">    defaults to ``&#39;empty&#39;``.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    defaults to ``'empty'``.</span>
+<span class="sd">    '''</span>
 
     <span class="c1"># ------------------------------------------------------------------</span>
     <span class="c1"># Events</span>
     <span class="c1"># ------------------------------------------------------------------</span>
 
-    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;on_load&#39;</span><span class="p">,</span> <span class="s1">&#39;on_error&#39;</span><span class="p">)</span>
+    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'on_load'</span><span class="p">,</span> <span class="s1">'on_error'</span><span class="p">)</span>
 
     <span class="c1"># ------------------------------------------------------------------</span>
     <span class="c1"># Private state</span>
@@ -728,17 +728,17 @@
 
     <span class="n">image_ratio</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span>
         <span class="n">_get_image_ratio</span><span class="p">,</span>
-        <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;texture&#39;</span><span class="p">,</span> <span class="s1">&#39;viewbox_size&#39;</span><span class="p">),</span>
+        <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">'texture'</span><span class="p">,</span> <span class="s1">'viewbox_size'</span><span class="p">),</span>
         <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
 <div class="viewcode-block" id="SvgWidget.get_norm_image_size">
 <a class="viewcode-back" href="../../../api-kivy.uix.svg.html#kivy.uix.svg.SvgWidget.get_norm_image_size">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_norm_image_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the display size of the SVG after applying :attr:`fit_mode`.</span>
+<span class="w">        </span><span class="sd">'''Return the display size of the SVG after applying :attr:`fit_mode`.</span>
 
 <span class="sd">        Mirrors :meth:`~kivy.uix.image.Image.get_norm_image_size` exactly.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">texture</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
 
@@ -746,22 +746,22 @@
         <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
         <span class="n">tw</span><span class="p">,</span> <span class="n">th</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">texture</span><span class="o">.</span><span class="n">size</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_mode</span> <span class="o">==</span> <span class="s1">&#39;cover&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_mode</span> <span class="o">==</span> <span class="s1">'cover'</span><span class="p">:</span>
             <span class="n">widget_ratio</span> <span class="o">=</span> <span class="n">w</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">widget_ratio</span> <span class="o">&gt;</span> <span class="n">ratio</span><span class="p">:</span>
                 <span class="k">return</span> <span class="p">[</span><span class="n">w</span><span class="p">,</span> <span class="p">(</span><span class="n">w</span> <span class="o">*</span> <span class="n">th</span><span class="p">)</span> <span class="o">/</span> <span class="n">tw</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span> <span class="p">[(</span><span class="n">h</span> <span class="o">*</span> <span class="n">tw</span><span class="p">)</span> <span class="o">/</span> <span class="n">th</span><span class="p">,</span> <span class="n">h</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_mode</span> <span class="o">==</span> <span class="s1">&#39;fill&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_mode</span> <span class="o">==</span> <span class="s1">'fill'</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_mode</span> <span class="o">==</span> <span class="s1">&#39;contain&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_mode</span> <span class="o">==</span> <span class="s1">'contain'</span><span class="p">:</span>
             <span class="n">iw</span> <span class="o">=</span> <span class="n">w</span>
         <span class="k">else</span><span class="p">:</span>  <span class="c1"># scale-down</span>
             <span class="n">iw</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">tw</span><span class="p">)</span>
 
         <span class="n">ih</span> <span class="o">=</span> <span class="n">iw</span> <span class="o">/</span> <span class="n">ratio</span>
         <span class="k">if</span> <span class="n">ih</span> <span class="o">&gt;</span> <span class="n">h</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_mode</span> <span class="o">==</span> <span class="s1">&#39;contain&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_mode</span> <span class="o">==</span> <span class="s1">'contain'</span><span class="p">:</span>
                 <span class="n">ih</span> <span class="o">=</span> <span class="n">h</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">ih</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">th</span><span class="p">)</span>
@@ -771,13 +771,13 @@
 
     <span class="n">norm_image_size</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span>
         <span class="n">get_norm_image_size</span><span class="p">,</span>
-        <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;texture&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="s1">&#39;image_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;fit_mode&#39;</span><span class="p">),</span>
+        <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">'texture'</span><span class="p">,</span> <span class="s1">'size'</span><span class="p">,</span> <span class="s1">'image_ratio'</span><span class="p">,</span> <span class="s1">'fit_mode'</span><span class="p">),</span>
         <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The portion of the widget area actually occupied by the rendered image</span>
+<span class="w">    </span><span class="sd">'''The portion of the widget area actually occupied by the rendered image</span>
 <span class="sd">    after :attr:`fit_mode` geometry is applied.</span>
 
-<span class="sd">    For example, with ``fit_mode=&#39;contain&#39;`` on a 400x400 widget displaying a</span>
+<span class="sd">    For example, with ``fit_mode='contain'`` on a 400x400 widget displaying a</span>
 <span class="sd">    400x250 SVG, ``norm_image_size`` returns ``[400, 250]`` — the image fills</span>
 <span class="sd">    the full width but only part of the height.</span>
 
@@ -794,7 +794,7 @@
 
 <span class="sd">    :attr:`norm_image_size` is an :class:`~kivy.properties.AliasProperty`</span>
 <span class="sd">    and is read-only.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="c1"># ------------------------------------------------------------------</span>
     <span class="c1"># Lifecycle</span>
@@ -805,11 +805,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_raster_size</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_deferred_rasterize</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">fbind</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;source&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">texture_update</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;mipmap&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_mipmap</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;current_color&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_render_param</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;element_overrides&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_render_param</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_rerender</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'source'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">texture_update</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'mipmap'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_mipmap</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'current_color'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_render_param</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'element_overrides'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_on_render_param</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'size'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_rerender</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="c1"># ------------------------------------------------------------------</span>
@@ -819,38 +819,38 @@
 <div class="viewcode-block" id="SvgWidget.texture_update">
 <a class="viewcode-back" href="../../../api-kivy.uix.svg.html#kivy.uix.svg.SvgWidget.texture_update">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">texture_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Load (or reload) the SVG from :attr:`source` and rasterize.</span>
+<span class="w">        </span><span class="sd">'''Load (or reload) the SVG from :attr:`source` and rasterize.</span>
 
 <span class="sd">        Called automatically when :attr:`source` changes.  Can also be</span>
 <span class="sd">        called manually to force a reload.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">source</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_clear_svg</span><span class="p">()</span>
             <span class="k">return</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">loaded</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;loading&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">'loading'</span>
 
         <span class="n">loader</span> <span class="o">=</span> <span class="n">_get_svg_loader</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="p">(</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">)):</span>
             <span class="n">provider</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">provider</span><span class="p">:</span>
-                <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;SvgWidget: failed to load SVG from in-memory bytes&#39;</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s1">'SvgWidget: failed to load SVG from in-memory bytes'</span>
                 <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_set_error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
                 <span class="k">return</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">path</span> <span class="o">=</span> <span class="n">resource_find</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">source</span><span class="p">))</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
-                <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;SvgWidget: source not found: </span><span class="si">{</span><span class="n">source</span><span class="si">!r}</span><span class="s1">&#39;</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'SvgWidget: source not found: </span><span class="si">{</span><span class="n">source</span><span class="si">!r}</span><span class="s1">'</span>
                 <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_set_error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
                 <span class="k">return</span>
             <span class="n">provider</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">provider</span><span class="p">:</span>
-                <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;SvgWidget: no SVG provider could load </span><span class="si">{</span><span class="n">path</span><span class="si">!r}</span><span class="s1">&#39;</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'SvgWidget: no SVG provider could load </span><span class="si">{</span><span class="n">path</span><span class="si">!r}</span><span class="s1">'</span>
                 <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_set_error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
                 <span class="k">return</span>
@@ -872,15 +872,15 @@
 <div class="viewcode-block" id="SvgWidget.reload">
 <a class="viewcode-back" href="../../../api-kivy.uix.svg.html#kivy.uix.svg.SvgWidget.reload">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">reload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Discard the current SVG document and reload from :attr:`source`.</span>
+<span class="w">        </span><span class="sd">'''Discard the current SVG document and reload from :attr:`source`.</span>
 
 <span class="sd">        Resets :attr:`loaded` and :attr:`status` immediately; the new texture</span>
 <span class="sd">        is available after the next successful rasterization.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_svg_provider</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_raster_size</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">loaded</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;loading&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">'loading'</span>
         <span class="n">old_source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">old_source</span></div>
@@ -889,16 +889,16 @@
 <div class="viewcode-block" id="SvgWidget.get_element_ids">
 <a class="viewcode-back" href="../../../api-kivy.uix.svg.html#kivy.uix.svg.SvgWidget.get_element_ids">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_element_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return a list of all SVG element ``id`` values in the document.</span>
+<span class="w">        </span><span class="sd">'''Return a list of all SVG element ``id`` values in the document.</span>
 
 <span class="sd">        The list is built once at load time.  Returns an empty list if the</span>
 <span class="sd">        SVG has not been loaded yet, and logs a warning.</span>
 
 <span class="sd">        :rtype: list[str]</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">loaded</span><span class="p">:</span>
             <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                <span class="s1">&#39;SvgWidget: get_element_ids() called before SVG is loaded&#39;</span>
+                <span class="s1">'SvgWidget: get_element_ids() called before SVG is loaded'</span>
             <span class="p">)</span>
             <span class="k">return</span> <span class="p">[]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_svg_provider</span><span class="o">.</span><span class="n">get_element_ids</span><span class="p">()</span></div>
@@ -907,31 +907,31 @@
 <div class="viewcode-block" id="SvgWidget.hide_element">
 <a class="viewcode-back" href="../../../api-kivy.uix.svg.html#kivy.uix.svg.SvgWidget.hide_element">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">hide_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_id</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Hide the SVG element with the given ``id``.</span>
+<span class="w">        </span><span class="sd">'''Hide the SVG element with the given ``id``.</span>
 
 <span class="sd">        Convenience wrapper for ``set_element_visible(element_id, False)``.</span>
 
 <span class="sd">        :param str element_id: The SVG element ``id`` attribute value.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_element_visible</span><span class="p">(</span><span class="n">element_id</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SvgWidget.show_element">
 <a class="viewcode-back" href="../../../api-kivy.uix.svg.html#kivy.uix.svg.SvgWidget.show_element">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">show_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_id</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Show the SVG element with the given ``id``.</span>
+<span class="w">        </span><span class="sd">'''Show the SVG element with the given ``id``.</span>
 
 <span class="sd">        Convenience wrapper for ``set_element_visible(element_id, True)``.</span>
 
 <span class="sd">        :param str element_id: The SVG element ``id`` attribute value.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_element_visible</span><span class="p">(</span><span class="n">element_id</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SvgWidget.set_element_visible">
 <a class="viewcode-back" href="../../../api-kivy.uix.svg.html#kivy.uix.svg.SvgWidget.set_element_visible">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_element_visible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_id</span><span class="p">,</span> <span class="n">visible</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Set the visibility of an SVG element by its ``id``.</span>
+<span class="w">        </span><span class="sd">'''Set the visibility of an SVG element by its ``id``.</span>
 
 <span class="sd">        Stores the override in :attr:`element_overrides` and triggers a</span>
 <span class="sd">        re-render.  If the SVG is not yet loaded, the override is still</span>
@@ -942,37 +942,37 @@
 
 <span class="sd">        :param str element_id: The SVG element ``id``.</span>
 <span class="sd">        :param bool visible: ``True`` to show, ``False`` to hide.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">loaded</span><span class="p">:</span>
             <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                <span class="s1">&#39;SvgWidget: set_element_visible() called before SVG is &#39;</span>
-                <span class="s1">&#39;loaded; override will be applied on load.&#39;</span>
+                <span class="s1">'SvgWidget: set_element_visible() called before SVG is '</span>
+                <span class="s1">'loaded; override will be applied on load.'</span>
             <span class="p">)</span>
         <span class="k">elif</span> <span class="n">element_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_svg_provider</span><span class="o">.</span><span class="n">get_element_ids</span><span class="p">():</span>
             <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s1">&#39;SvgWidget: element id </span><span class="si">{</span><span class="n">element_id</span><span class="si">!r}</span><span class="s1"> not found in SVG&#39;</span>
-                <span class="s1">&#39; document&#39;</span>
+                <span class="sa">f</span><span class="s1">'SvgWidget: element id </span><span class="si">{</span><span class="n">element_id</span><span class="si">!r}</span><span class="s1"> not found in SVG'</span>
+                <span class="s1">' document'</span>
             <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_set_element_override</span><span class="p">(</span><span class="n">element_id</span><span class="p">,</span> <span class="s1">&#39;visible&#39;</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_element_override</span><span class="p">(</span><span class="n">element_id</span><span class="p">,</span> <span class="s1">'visible'</span><span class="p">,</span> <span class="n">visible</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SvgWidget.is_element_visible">
 <a class="viewcode-back" href="../../../api-kivy.uix.svg.html#kivy.uix.svg.SvgWidget.is_element_visible">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_element_visible</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_id</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return whether the element with *element_id* is currently visible.</span>
+<span class="w">        </span><span class="sd">'''Return whether the element with *element_id* is currently visible.</span>
 
 <span class="sd">        Returns ``True`` for elements with no override (SVG default).</span>
 
 <span class="sd">        :param str element_id: The SVG element ``id``.</span>
 <span class="sd">        :rtype: bool</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">element_overrides</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">element_id</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;visible&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div>
+<span class="sd">        '''</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">element_overrides</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">element_id</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'visible'</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SvgWidget.set_element_opacity">
 <a class="viewcode-back" href="../../../api-kivy.uix.svg.html#kivy.uix.svg.SvgWidget.set_element_opacity">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_element_opacity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_id</span><span class="p">,</span> <span class="n">opacity</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Set the opacity override for an SVG element by its ``id``.</span>
+<span class="w">        </span><span class="sd">'''Set the opacity override for an SVG element by its ``id``.</span>
 
 <span class="sd">        Stores the override in :attr:`element_overrides` and triggers a</span>
 <span class="sd">        re-render.  If the SVG is not yet loaded, the override is still</span>
@@ -982,40 +982,40 @@
 
 <span class="sd">        :param str element_id: The SVG element ``id``.</span>
 <span class="sd">        :param float opacity: Opacity value 0.0 (transparent) - 1.0 (opaque).</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">loaded</span><span class="p">:</span>
             <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                <span class="s1">&#39;SvgWidget: set_element_opacity() called before SVG is &#39;</span>
-                <span class="s1">&#39;loaded; override will be applied on load.&#39;</span>
+                <span class="s1">'SvgWidget: set_element_opacity() called before SVG is '</span>
+                <span class="s1">'loaded; override will be applied on load.'</span>
             <span class="p">)</span>
         <span class="k">elif</span> <span class="n">element_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_svg_provider</span><span class="o">.</span><span class="n">get_element_ids</span><span class="p">():</span>
             <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s1">&#39;SvgWidget: element id </span><span class="si">{</span><span class="n">element_id</span><span class="si">!r}</span><span class="s1"> not found in SVG&#39;</span>
-                <span class="s1">&#39; document&#39;</span>
+                <span class="sa">f</span><span class="s1">'SvgWidget: element id </span><span class="si">{</span><span class="n">element_id</span><span class="si">!r}</span><span class="s1"> not found in SVG'</span>
+                <span class="s1">' document'</span>
             <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_set_element_override</span><span class="p">(</span><span class="n">element_id</span><span class="p">,</span> <span class="s1">&#39;opacity&#39;</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">opacity</span><span class="p">))</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_element_override</span><span class="p">(</span><span class="n">element_id</span><span class="p">,</span> <span class="s1">'opacity'</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">opacity</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="SvgWidget.get_element_opacity">
 <a class="viewcode-back" href="../../../api-kivy.uix.svg.html#kivy.uix.svg.SvgWidget.get_element_opacity">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_element_opacity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_id</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the current opacity override for *element_id*.</span>
+<span class="w">        </span><span class="sd">'''Return the current opacity override for *element_id*.</span>
 
 <span class="sd">        Returns ``1.0`` for elements with no opacity override.</span>
 
 <span class="sd">        :param str element_id: The SVG element ``id``.</span>
 <span class="sd">        :rtype: float</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">element_overrides</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">element_id</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;opacity&#39;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span></div>
+<span class="sd">        '''</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">element_overrides</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">element_id</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'opacity'</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="SvgWidget.reset_element_overrides">
 <a class="viewcode-back" href="../../../api-kivy.uix.svg.html#kivy.uix.svg.SvgWidget.reset_element_overrides">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">reset_element_overrides</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Clear all element visibility and opacity overrides.</span>
+<span class="w">        </span><span class="sd">'''Clear all element visibility and opacity overrides.</span>
 
 <span class="sd">        Triggers a re-render that restores all elements to their SVG defaults.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">element_overrides</span> <span class="o">=</span> <span class="p">{}</span></div>
 
 
@@ -1037,11 +1037,11 @@
     <span class="c1"># ------------------------------------------------------------------</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_set_element_override</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_id</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Update a single key in :attr:`element_overrides` for *element_id*.</span>
+<span class="w">        </span><span class="sd">'''Update a single key in :attr:`element_overrides` for *element_id*.</span>
 
 <span class="sd">        Creates the entry if absent.  Triggers a re-render via the</span>
 <span class="sd">        ``element_overrides`` property binding.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="n">overrides</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">element_overrides</span><span class="p">)</span>
         <span class="n">entry</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">overrides</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">element_id</span><span class="p">,</span> <span class="p">{}))</span>
         <span class="n">entry</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
@@ -1049,28 +1049,28 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">element_overrides</span> <span class="o">=</span> <span class="n">overrides</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_on_mipmap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Re-rasterize when the mipmap setting changes.&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Re-rasterize when the mipmap setting changes.'''</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_svg_provider</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_raster_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_rasterize</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_raster_size</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_on_render_param</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Re-render at the current widget size when current_color or</span>
-<span class="sd">        element_overrides change.&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Re-render at the current widget size when current_color or</span>
+<span class="sd">        element_overrides change.'''</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_svg_provider</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_raster_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
             <span class="k">if</span> <span class="n">w</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">h</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_rasterize</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">h</span><span class="p">))</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_check_rerender</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Called on every size change.  Re-rasterizes when the widget size</span>
+<span class="w">        </span><span class="sd">'''Called on every size change.  Re-rasterizes when the widget size</span>
 <span class="sd">        crosses into a larger power-of-2 bucket than the current raster size,</span>
 <span class="sd">        aligning re-renders with mipmap level boundaries.</span>
 
 <span class="sd">        Widget size (not ``norm_image_size``) is used as the threshold so that</span>
-<span class="sd">        ``fit_mode=&#39;scale-down&#39;`` does not suppress re-renders: even when the</span>
+<span class="sd">        ``fit_mode='scale-down'`` does not suppress re-renders: even when the</span>
 <span class="sd">        texture is smaller than the widget, we still want to produce a texture</span>
-<span class="sd">        at the widget&#39;s full resolution.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        at the widget's full resolution.</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_svg_provider</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
@@ -1108,13 +1108,13 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_rasterize</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">h</span><span class="p">))</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_rasterize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget_w</span><span class="p">,</span> <span class="n">widget_h</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Rasterize the SVG at a pixel size derived from (widget_w, widget_h).</span>
+<span class="w">        </span><span class="sd">'''Rasterize the SVG at a pixel size derived from (widget_w, widget_h).</span>
 
-<span class="sd">        The render dimensions maintain the SVG&#39;s natural aspect ratio while</span>
+<span class="sd">        The render dimensions maintain the SVG's natural aspect ratio while</span>
 <span class="sd">        fitting within widget_w and widget_h, producing a texture with the</span>
-<span class="sd">        correct ratio.  Kivy&#39;s ``norm_image_size`` then handles display</span>
+<span class="sd">        correct ratio.  Kivy's ``norm_image_size`` then handles display</span>
 <span class="sd">        scaling within the widget bounds.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_svg_provider</span><span class="p">:</span>
             <span class="k">return</span>
 
@@ -1151,8 +1151,8 @@
 
         <span class="k">if</span> <span class="n">rgba</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="sa">f</span><span class="s1">&#39;SvgWidget: render failed for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="si">!r}</span><span class="s1">&#39;</span>
-                <span class="sa">f</span><span class="s1">&#39; at </span><span class="si">{</span><span class="n">bucket_w</span><span class="si">}</span><span class="s1">x</span><span class="si">{</span><span class="n">bucket_h</span><span class="si">}</span><span class="s1">&#39;</span>
+                <span class="sa">f</span><span class="s1">'SvgWidget: render failed for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="si">!r}</span><span class="s1">'</span>
+                <span class="sa">f</span><span class="s1">' at </span><span class="si">{</span><span class="n">bucket_w</span><span class="si">}</span><span class="s1">x</span><span class="si">{</span><span class="n">bucket_h</span><span class="si">}</span><span class="s1">'</span>
             <span class="p">)</span>
             <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_set_error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
@@ -1160,12 +1160,12 @@
 
         <span class="n">tex</span> <span class="o">=</span> <span class="n">Texture</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
             <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">bucket_w</span><span class="p">,</span> <span class="n">bucket_h</span><span class="p">),</span>
-            <span class="n">colorfmt</span><span class="o">=</span><span class="s1">&#39;rgba&#39;</span><span class="p">,</span>
+            <span class="n">colorfmt</span><span class="o">=</span><span class="s1">'rgba'</span><span class="p">,</span>
             <span class="n">mipmap</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mipmap</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="c1"># ``rgba`` is whatever the SVG provider&#39;s ``render()`` returned: for</span>
+        <span class="c1"># ``rgba`` is whatever the SVG provider's ``render()`` returned: for</span>
         <span class="c1"># the default ThorVG backend that is a :class:`kivy.lib.thorvg.SwCanvas`</span>
-        <span class="c1"># buffer-protocol object wrapping ThorVG&#39;s own render target, not a</span>
+        <span class="c1"># buffer-protocol object wrapping ThorVG's own render target, not a</span>
         <span class="c1"># :class:`bytes` copy. ``blit_buffer`` accepts any buffer-protocol</span>
         <span class="c1"># object and uploads its pixels straight to the GPU, so we avoid the</span>
         <span class="c1"># ``~width * height * 4``-byte copy that ``bytes(canvas.buffer_arr)``</span>
@@ -1173,10 +1173,10 @@
         <span class="c1">#</span>
         <span class="c1"># Future optimisation: move the render() call itself off the main</span>
         <span class="c1"># thread (e.g. via ThreadPoolExecutor) so that rasterising a large or</span>
-        <span class="c1"># complex SVG does not block Kivy&#39;s event loop. The SwCanvas</span>
+        <span class="c1"># complex SVG does not block Kivy's event loop. The SwCanvas</span>
         <span class="c1"># lifetime stays trivially safe as long as the reference returned</span>
         <span class="c1"># from render() is held until after blit_buffer has completed.</span>
-        <span class="n">tex</span><span class="o">.</span><span class="n">blit_buffer</span><span class="p">(</span><span class="n">rgba</span><span class="p">,</span> <span class="n">colorfmt</span><span class="o">=</span><span class="s1">&#39;rgba&#39;</span><span class="p">,</span> <span class="n">bufferfmt</span><span class="o">=</span><span class="s1">&#39;ubyte&#39;</span><span class="p">)</span>
+        <span class="n">tex</span><span class="o">.</span><span class="n">blit_buffer</span><span class="p">(</span><span class="n">rgba</span><span class="p">,</span> <span class="n">colorfmt</span><span class="o">=</span><span class="s1">'rgba'</span><span class="p">,</span> <span class="n">bufferfmt</span><span class="o">=</span><span class="s1">'ubyte'</span><span class="p">)</span>
         <span class="n">tex</span><span class="o">.</span><span class="n">flip_vertical</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_raster_size</span> <span class="o">=</span> <span class="p">[</span><span class="n">bucket_w</span><span class="p">,</span> <span class="n">bucket_h</span><span class="p">]</span>
@@ -1184,8 +1184,8 @@
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">loaded</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">loaded</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;ready&#39;</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_load&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">'ready'</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_load'</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_clear_svg</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_svg_provider</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1193,19 +1193,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">texture</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">viewbox_size</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">loaded</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;empty&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">'empty'</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_set_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">loaded</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;error&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_error&#39;</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">'error'</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_error'</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="AsyncSvgWidget">
 <a class="viewcode-back" href="../../../api-kivy.uix.svg.html#kivy.uix.svg.AsyncSvgWidget">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">AsyncSvgWidget</span><span class="p">(</span><span class="n">SvgWidget</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Asynchronous variant of :class:`SvgWidget` that downloads SVG files</span>
+<span class="w">    </span><span class="sd">'''Asynchronous variant of :class:`SvgWidget` that downloads SVG files</span>
 <span class="sd">    from HTTP/HTTPS URLs in a background thread.</span>
 
 <span class="sd">    Local file paths are loaded synchronously (same behaviour as</span>
@@ -1215,26 +1215,26 @@
 
 <span class="sd">    .. note::</span>
 
-<span class="sd">        The loading image and error image are taken from Kivy&#39;s global</span>
+<span class="sd">        The loading image and error image are taken from Kivy's global</span>
 <span class="sd">        ``Loader.loading_image`` and ``Loader.error_image``, matching</span>
 <span class="sd">        :class:`~kivy.uix.image.AsyncImage`.  To use a custom image, set</span>
 <span class="sd">        these before creating any ``AsyncSvgWidget``::  The loading image</span>
 <span class="sd">        supports GIF animation.</span>
 
 <span class="sd">            from kivy.loader import Loader</span>
-<span class="sd">            Loader.loading_image = &#39;my_spinner.gif&#39;</span>
-<span class="sd">            Loader.error_image   = &#39;my_error.png&#39;</span>
+<span class="sd">            Loader.loading_image = 'my_spinner.gif'</span>
+<span class="sd">            Loader.error_image   = 'my_error.png'</span>
 
 <span class="sd">    Example KV usage::</span>
 
 <span class="sd">        AsyncSvgWidget:</span>
-<span class="sd">            source: &#39;https://example.com/icon.svg&#39;</span>
-<span class="sd">            on_load: print(&#39;downloaded and ready&#39;)</span>
-<span class="sd">            on_error: print(&#39;failed:&#39;, args[1])</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">            source: 'https://example.com/icon.svg'</span>
+<span class="sd">            on_load: print('downloaded and ready')</span>
+<span class="sd">            on_error: print('failed:', args[1])</span>
+<span class="sd">    '''</span>
 
     <span class="n">loading_texture</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Initial texture shown the moment a load starts, before the first GIF</span>
+<span class="w">    </span><span class="sd">'''Initial texture shown the moment a load starts, before the first GIF</span>
 <span class="sd">    frame callback fires.</span>
 
 <span class="sd">    Initialised to ``Loader.loading_image.texture`` in ``__init__``.  While</span>
@@ -1245,23 +1245,23 @@
 
 <span class="sd">    :attr:`loading_texture` is an :class:`~kivy.properties.ObjectProperty`</span>
 <span class="sd">    and defaults to ``None``.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">error_texture</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Texture shown when loading or rendering fails.</span>
+<span class="w">    </span><span class="sd">'''Texture shown when loading or rendering fails.</span>
 
 <span class="sd">    Initialised to ``Loader.error_image.texture`` in ``__init__``.</span>
 
 <span class="sd">    :attr:`error_texture` is an :class:`~kivy.properties.ObjectProperty`</span>
 <span class="sd">    and defaults to ``None``.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pending_source</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pending_request</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_loader_image</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="c1"># Initialise placeholder textures from Kivy&#39;s global Loader images,</span>
+        <span class="c1"># Initialise placeholder textures from Kivy's global Loader images,</span>
         <span class="c1"># matching how AsyncImage works.</span>
         <span class="c1">#</span>
         <span class="c1"># Loader.loading_image returns a raw ImageLoader (e.g. ImageLoaderSDL3)</span>
@@ -1273,9 +1273,9 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_loader_image</span> <span class="o">=</span> <span class="n">Image</span><span class="p">(</span>
                 <span class="n">source</span><span class="o">=</span><span class="n">Loader</span><span class="o">.</span><span class="n">loading_image</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
-                <span class="n">fit_mode</span><span class="o">=</span><span class="s1">&#39;scale-down&#39;</span><span class="p">,</span>
+                <span class="n">fit_mode</span><span class="o">=</span><span class="s1">'scale-down'</span><span class="p">,</span>
                 <span class="n">anim_delay</span><span class="o">=</span><span class="n">Loader</span><span class="o">.</span><span class="n">loading_image</span><span class="o">.</span><span class="n">anim_delay</span>
-                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">Loader</span><span class="o">.</span><span class="n">loading_image</span><span class="p">,</span> <span class="s1">&#39;anim_delay&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="mf">0.25</span><span class="p">,</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">Loader</span><span class="o">.</span><span class="n">loading_image</span><span class="p">,</span> <span class="s1">'anim_delay'</span><span class="p">)</span> <span class="k">else</span> <span class="mf">0.25</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">loading_texture</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loader_image</span><span class="o">.</span><span class="n">texture</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
@@ -1287,7 +1287,7 @@
 
         <span class="c1"># Re-bind source to our async loader instead of the sync one.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">texture_update</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;source&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_source</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">'source'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_source</span><span class="p">)</span>
         <span class="c1"># Trigger load if source was already set via kwargs.</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_load_source</span><span class="p">()</span>
@@ -1299,21 +1299,21 @@
 <div class="viewcode-block" id="AsyncSvgWidget.texture_update">
 <a class="viewcode-back" href="../../../api-kivy.uix.svg.html#kivy.uix.svg.AsyncSvgWidget.texture_update">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">texture_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;No-op - prevents the inherited synchronous load path.&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''No-op - prevents the inherited synchronous load path.'''</span>
         <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="AsyncSvgWidget.get_norm_image_size">
 <a class="viewcode-back" href="../../../api-kivy.uix.svg.html#kivy.uix.svg.AsyncSvgWidget.get_norm_image_size">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_norm_image_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the display size after applying :attr:`fit_mode`.</span>
+<span class="w">        </span><span class="sd">'''Return the display size after applying :attr:`fit_mode`.</span>
 
 <span class="sd">        While loading or showing an error placeholder the texture is drawn</span>
 <span class="sd">        at its natural size (``scale-down`` behaviour) regardless of</span>
 <span class="sd">        :attr:`fit_mode`, so a small spinner GIF is never stretched to fill</span>
 <span class="sd">        the widget.  Once the SVG is ready the base class logic applies.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;loading&#39;</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loader_image</span><span class="p">:</span>
+<span class="sd">        '''</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'loading'</span><span class="p">,</span> <span class="s1">'error'</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loader_image</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_loader_image</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
             <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_loader_image</span><span class="o">.</span><span class="n">norm_image_size</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_norm_image_size</span><span class="p">()</span></div>
@@ -1321,21 +1321,21 @@
 
     <span class="n">norm_image_size</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span>
         <span class="n">get_norm_image_size</span><span class="p">,</span>
-        <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;texture&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="s1">&#39;image_ratio&#39;</span><span class="p">,</span> <span class="s1">&#39;fit_mode&#39;</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span><span class="p">),</span>
+        <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">'texture'</span><span class="p">,</span> <span class="s1">'size'</span><span class="p">,</span> <span class="s1">'image_ratio'</span><span class="p">,</span> <span class="s1">'fit_mode'</span><span class="p">,</span> <span class="s1">'status'</span><span class="p">),</span>
         <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Extends the base :attr:`~SvgWidget.norm_image_size` to also</span>
-<span class="sd">    recompute when :attr:`~SvgWidget.status` changes.&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''Extends the base :attr:`~SvgWidget.norm_image_size` to also</span>
+<span class="sd">    recompute when :attr:`~SvgWidget.status` changes.'''</span>
 
     <span class="c1"># ------------------------------------------------------------------</span>
     <span class="c1"># Async load</span>
     <span class="c1"># ------------------------------------------------------------------</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_load_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Triggered on :attr:`source` change.  Cancels any in-flight request,</span>
+<span class="w">        </span><span class="sd">'''Triggered on :attr:`source` change.  Cancels any in-flight request,</span>
 <span class="sd">        shows the loading placeholder, then dispatches to sync (local) or</span>
 <span class="sd">        async (URI) loading.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_stop_loading_animation</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pending_request</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -1348,7 +1348,7 @@
             <span class="k">return</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">loaded</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">&#39;loading&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s1">'loading'</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_start_loading_animation</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pending_source</span> <span class="o">=</span> <span class="n">source</span>
 
@@ -1356,7 +1356,7 @@
             <span class="n">loader</span> <span class="o">=</span> <span class="n">_get_svg_loader</span><span class="p">()</span>
             <span class="n">provider</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">provider</span><span class="p">:</span>
-                <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;AsyncSvgWidget: failed to load SVG from in-memory bytes&#39;</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s1">'AsyncSvgWidget: failed to load SVG from in-memory bytes'</span>
                 <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_async_error</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
                 <span class="k">return</span>
@@ -1368,34 +1368,34 @@
                 <span class="n">on_failure</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_download_failure</span><span class="p">,</span>
                 <span class="n">on_error</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_download_error</span><span class="p">,</span>
                 <span class="n">req_headers</span><span class="o">=</span><span class="p">{</span>
-                    <span class="s1">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="s1">&#39;KivySvgWidget/3.0 (kivy svg widget; &#39;</span>
-                                  <span class="s1">&#39;https://github.com/kivy/kivy)&#39;</span>
+                    <span class="s1">'User-Agent'</span><span class="p">:</span> <span class="s1">'KivySvgWidget/3.0 (kivy svg widget; '</span>
+                                  <span class="s1">'https://github.com/kivy/kivy)'</span>
                 <span class="p">},</span>
                 <span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">path</span> <span class="o">=</span> <span class="n">resource_find</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">source</span><span class="p">))</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">:</span>
-                <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;AsyncSvgWidget: source not found: </span><span class="si">{</span><span class="n">source</span><span class="si">!r}</span><span class="s1">&#39;</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'AsyncSvgWidget: source not found: </span><span class="si">{</span><span class="n">source</span><span class="si">!r}</span><span class="s1">'</span>
                 <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_async_error</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
                 <span class="k">return</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_do_sync_load</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_do_sync_load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Load a local file synchronously (same as SvgWidget but via the</span>
-<span class="sd">        async-widget flow, preserving status transitions).&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Load a local file synchronously (same as SvgWidget but via the</span>
+<span class="sd">        async-widget flow, preserving status transitions).'''</span>
         <span class="n">loader</span> <span class="o">=</span> <span class="n">_get_svg_loader</span><span class="p">()</span>
         <span class="n">provider</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">provider</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;AsyncSvgWidget: no provider could load </span><span class="si">{</span><span class="n">path</span><span class="si">!r}</span><span class="s1">&#39;</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'AsyncSvgWidget: no provider could load </span><span class="si">{</span><span class="n">path</span><span class="si">!r}</span><span class="s1">'</span>
             <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_async_error</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_install_provider</span><span class="p">(</span><span class="n">provider</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_on_download_success</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;UrlRequest success callback - already on the main thread.&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''UrlRequest success callback - already on the main thread.'''</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pending_request</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">url</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pending_source</span><span class="p">:</span>
             <span class="k">return</span>  <span class="c1"># Source changed while download was in flight; discard.</span>
@@ -1403,12 +1403,12 @@
         <span class="c1"># UrlRequest may decode text/* responses to str even when decode=False.</span>
         <span class="c1"># svg_thorvg requires bytes throughout, so normalise here.</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">'utf-8'</span><span class="p">)</span>
 
         <span class="n">loader</span> <span class="o">=</span> <span class="n">_get_svg_loader</span><span class="p">()</span>
         <span class="n">provider</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">provider</span><span class="p">:</span>
-            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;AsyncSvgWidget: failed to load SVG data from </span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">url</span><span class="si">!r}</span><span class="s1">&#39;</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'AsyncSvgWidget: failed to load SVG data from </span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">url</span><span class="si">!r}</span><span class="s1">'</span>
             <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_async_error</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
             <span class="k">return</span>
@@ -1416,25 +1416,25 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_install_provider</span><span class="p">(</span><span class="n">provider</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_on_download_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;UrlRequest failure callback - non-2xx HTTP status.&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''UrlRequest failure callback - non-2xx HTTP status.'''</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pending_request</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">url</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pending_source</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;AsyncSvgWidget: HTTP </span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">resp_status</span><span class="si">}</span><span class="s1"> downloading </span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">url</span><span class="si">!r}</span><span class="s1">&#39;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'AsyncSvgWidget: HTTP </span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">resp_status</span><span class="si">}</span><span class="s1"> downloading </span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">url</span><span class="si">!r}</span><span class="s1">'</span>
         <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_async_error</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_on_download_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;UrlRequest error callback - network or timeout error.&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''UrlRequest error callback - network or timeout error.'''</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pending_request</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">url</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pending_source</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;AsyncSvgWidget: error downloading </span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">url</span><span class="si">!r}</span><span class="s1">: </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'AsyncSvgWidget: error downloading </span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">url</span><span class="si">!r}</span><span class="s1">: </span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s1">'</span>
         <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_async_error</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_async_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Main-thread error handler.&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Main-thread error handler.'''</span>
         <span class="k">if</span> <span class="n">source</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pending_source</span><span class="p">:</span>
             <span class="k">return</span>  <span class="c1"># Stale; ignore.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_stop_loading_animation</span><span class="p">()</span>
@@ -1446,12 +1446,12 @@
     <span class="c1"># ------------------------------------------------------------------</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_start_loading_animation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Show the loading placeholder and bind to its texture so GIF</span>
+<span class="w">        </span><span class="sd">'''Show the loading placeholder and bind to its texture so GIF</span>
 <span class="sd">        animation frames update :attr:`~SvgWidget.texture` automatically.</span>
 
 <span class="sd">        Safe to call when no loader image is available - does nothing in</span>
 <span class="sd">        that case.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loader_image</span>
         <span class="k">if</span> <span class="n">img</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
@@ -1459,30 +1459,30 @@
         <span class="n">img</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">texture</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_loading_texture</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_on_loading_texture</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_instance</span><span class="p">,</span> <span class="n">texture</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Called each time the loading GIF advances a frame.</span>
+<span class="w">        </span><span class="sd">'''Called each time the loading GIF advances a frame.</span>
 
 <span class="sd">        Ignored once the SVG has finished loading so a late-arriving frame</span>
 <span class="sd">        cannot overwrite the rasterized texture.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">&#39;loading&#39;</span><span class="p">:</span>
+<span class="sd">        '''</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s1">'loading'</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">texture</span> <span class="o">=</span> <span class="n">texture</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_stop_loading_animation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Detach from the loading image so GIF frame callbacks stop.</span>
+<span class="w">        </span><span class="sd">'''Detach from the loading image so GIF frame callbacks stop.</span>
 
 <span class="sd">        Safe to call multiple times or before :meth:`_start_loading_animation`.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loader_image</span>
         <span class="k">if</span> <span class="n">img</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">img</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span><span class="n">texture</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_loading_texture</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_install_provider</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">provider</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Store *provider* and trigger the first rasterize.</span>
+<span class="w">        </span><span class="sd">'''Store *provider* and trigger the first rasterize.</span>
 
 <span class="sd">        Rasterizes immediately if the widget already has a non-zero size,</span>
 <span class="sd">        otherwise defers one clock tick (same pattern as</span>
 <span class="sd">        :meth:`SvgWidget.texture_update`).</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_stop_loading_animation</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_svg_provider</span> <span class="o">=</span> <span class="n">provider</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">viewbox_size</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">provider</span><span class="o">.</span><span class="n">get_document_size</span><span class="p">())</span>
@@ -1504,18 +1504,18 @@
 <a class="viewcode-back" href="../../../api-kivy.uix.svg.html#kivy.uix.svg.AsyncSvgWidget.is_uri">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_uri</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return ``True`` if *filename* is an HTTP or HTTPS URL.</span>
+<span class="w">        </span><span class="sd">'''Return ``True`` if *filename* is an HTTP or HTTPS URL.</span>
 
 <span class="sd">        Non-string values (e.g. ``bytes``, :class:`pathlib.Path`) always</span>
 <span class="sd">        return ``False``.</span>
 
 <span class="sd">        :param filename: Source value to test.</span>
 <span class="sd">        :rtype: bool</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">False</span>
-        <span class="n">proto</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;://&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">proto</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">,</span> <span class="s1">&#39;https&#39;</span><span class="p">)</span></div>
+        <span class="n">proto</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'://'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">proto</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'http'</span><span class="p">,</span> <span class="s1">'https'</span><span class="p">)</span></div>
 </div>
 
 </pre></div>
@@ -1532,7 +1532,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

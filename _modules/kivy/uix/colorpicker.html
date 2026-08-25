@@ -369,7 +369,7 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.uix.colorpicker</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">Color Picker</span>
 <span class="sd">============</span>
 
@@ -384,7 +384,7 @@
 <span class="sd">    :align: right</span>
 
 <span class="sd">The ColorPicker widget allows a user to select a color from a chromatic</span>
-<span class="sd">wheel where pinch and zoom can be used to change the wheel&#39;s saturation.</span>
+<span class="sd">wheel where pinch and zoom can be used to change the wheel's saturation.</span>
 <span class="sd">Sliders and TextInputs are also provided for entering the RGBA/HSV/HEX values</span>
 <span class="sd">directly.</span>
 
@@ -395,16 +395,16 @@
 
 <span class="sd">    # To monitor changes, we can bind to color property changes</span>
 <span class="sd">    def on_color(instance, value):</span>
-<span class="sd">        print(&quot;RGBA = &quot;, str(value))  #  or instance.color</span>
-<span class="sd">        print(&quot;HSV = &quot;, str(instance.hsv))</span>
-<span class="sd">        print(&quot;HEX = &quot;, str(instance.hex_color))</span>
+<span class="sd">        print("RGBA = ", str(value))  #  or instance.color</span>
+<span class="sd">        print("HSV = ", str(instance.hsv))</span>
+<span class="sd">        print("HEX = ", str(instance.hex_color))</span>
 
 <span class="sd">    clr_picker.bind(color=on_color)</span>
 
 
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;ColorPicker&#39;</span><span class="p">,</span> <span class="s1">&#39;ColorWheel&#39;</span><span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'ColorPicker'</span><span class="p">,</span> <span class="s1">'ColorWheel'</span><span class="p">)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">atan</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">colorsys</span><span class="w"> </span><span class="kn">import</span> <span class="n">rgb_to_hsv</span><span class="p">,</span> <span class="n">hsv_to_rgb</span>
@@ -425,33 +425,33 @@
 
 <span class="k">class</span><span class="w"> </span><span class="nc">ColorHexInput</span><span class="p">(</span><span class="n">TextInput</span><span class="p">):</span>
     <span class="c1"># TextInput specialized for hex color codes (#RRGGBBAA).</span>
-    <span class="c1"># Automatically prepends &#39;#&#39; and limits input to 8 hexadecimal characters.</span>
+    <span class="c1"># Automatically prepends '#' and limits input to 8 hexadecimal characters.</span>
 
     <span class="n">color_picker</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>  <span class="c1"># Reference to parent ColorPicker</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_filter_hex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">substring</span><span class="p">,</span> <span class="n">undo</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Filter input to allow only &#39;#&#39; + up to 8 hex digits.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Filter input to allow only '#' + up to 8 hex digits."""</span>
         <span class="c1"># Allow undo operations to proceed without filtering</span>
         <span class="k">if</span> <span class="n">undo</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">substring</span>
 
         <span class="n">current_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span>
-        <span class="c1"># Already at max length (9 = &#39;#&#39; + 8 hex chars)</span>
+        <span class="c1"># Already at max length (9 = '#' + 8 hex chars)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">current_text</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">9</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+            <span class="k">return</span> <span class="s1">''</span>
 
-        <span class="n">result</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="s1">''</span>
         <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">substring</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">char</span> <span class="o">==</span> <span class="s1">&#39;#&#39;</span><span class="p">:</span>
-                <span class="c1"># Only allow &#39;#&#39; at the beginning</span>
+            <span class="k">if</span> <span class="n">char</span> <span class="o">==</span> <span class="s1">'#'</span><span class="p">:</span>
+                <span class="c1"># Only allow '#' at the beginning</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">current_text</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
                     <span class="n">result</span> <span class="o">=</span> <span class="n">char</span>
             <span class="k">elif</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">hexdigits</span><span class="p">:</span>
-                <span class="c1"># Auto-add &#39;#&#39; if first character is a hex digit</span>
+                <span class="c1"># Auto-add '#' if first character is a hex digit</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">current_text</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
-                    <span class="n">result</span> <span class="o">=</span> <span class="s1">&#39;#&#39;</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="s1">'#'</span>
                 <span class="n">result</span> <span class="o">+=</span> <span class="n">char</span>
-                <span class="c1"># Stop if we&#39;ve reached max length</span>
+                <span class="c1"># Stop if we've reached max length</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">current_text</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">9</span><span class="p">:</span>
                     <span class="k">break</span>
             <span class="k">else</span><span class="p">:</span>
@@ -465,7 +465,7 @@
             <span class="c1"># Restore text to valid hex color from ColorPicker</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_picker</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_picker</span><span class="o">.</span><span class="n">hex_color</span>
-                <span class="c1"># Trigger color update in ColorPicker (in case text didn&#39;t change)</span>
+                <span class="c1"># Trigger color update in ColorPicker (in case text didn't change)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">color_picker</span><span class="o">.</span><span class="n">_trigger_update_hex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_picker</span><span class="o">.</span><span class="n">hex_color</span><span class="p">)</span>
 
 
@@ -476,40 +476,40 @@
     <span class="c1"># Leading zeros are rejected.</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_filter_numeric</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">substring</span><span class="p">,</span> <span class="n">undo</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Filter input to allow only integers 0-255.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Filter input to allow only integers 0-255."""</span>
         <span class="c1"># Allow undo operations to proceed without filtering</span>
         <span class="k">if</span> <span class="n">undo</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">substring</span>
 
         <span class="n">current_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">substring</span> <span class="k">if</span> <span class="n">substring</span><span class="o">.</span><span class="n">isdecimal</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">substring</span> <span class="k">if</span> <span class="n">substring</span><span class="o">.</span><span class="n">isdecimal</span><span class="p">()</span> <span class="k">else</span> <span class="s1">''</span>
 
         <span class="c1"># 1) Check for leading zeros in the pasted content</span>
-        <span class="c1"># &#39;01&#39;, &#39;001&#39;, etc. should be rejected</span>
-        <span class="c1"># 2) Check if current text is &#39;0&#39; and we&#39;re trying to add more digits</span>
-        <span class="c1"># This would create a leading zero: &#39;0&#39; + &#39;5&#39; = &#39;05&#39;</span>
-        <span class="c1"># 3) Check if we&#39;re trying to insert a zero at the start of text</span>
-        <span class="c1"># 4) Check if there&#39;s no text to add</span>
-        <span class="k">if</span> <span class="nb">any</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="c1">#1 ) no pasted leading zeros</span>
-               <span class="n">current_text</span> <span class="o">==</span> <span class="s1">&#39;0&#39;</span> <span class="ow">and</span> <span class="n">result</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">,</span> <span class="c1"># 2)</span>
-               <span class="n">result</span> <span class="o">==</span> <span class="s1">&#39;0&#39;</span> <span class="ow">and</span> <span class="n">current_text</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_col</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="c1"># 3)</span>
+        <span class="c1"># '01', '001', etc. should be rejected</span>
+        <span class="c1"># 2) Check if current text is '0' and we're trying to add more digits</span>
+        <span class="c1"># This would create a leading zero: '0' + '5' = '05'</span>
+        <span class="c1"># 3) Check if we're trying to insert a zero at the start of text</span>
+        <span class="c1"># 4) Check if there's no text to add</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'0'</span><span class="p">,</span> <span class="c1">#1 ) no pasted leading zeros</span>
+               <span class="n">current_text</span> <span class="o">==</span> <span class="s1">'0'</span> <span class="ow">and</span> <span class="n">result</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_col</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">,</span> <span class="c1"># 2)</span>
+               <span class="n">result</span> <span class="o">==</span> <span class="s1">'0'</span> <span class="ow">and</span> <span class="n">current_text</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_col</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="c1"># 3)</span>
                <span class="ow">not</span> <span class="n">result</span><span class="p">)):</span> <span class="c1"># 4) nothing to add</span>
-            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+            <span class="k">return</span> <span class="s1">''</span>
 
         <span class="c1"># Validate the individual value</span>
         <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+            <span class="k">return</span> <span class="s1">''</span>
 
         <span class="c1"># Calculate what the final text will be after inserting at cursor position</span>
         <span class="n">final_text</span> <span class="o">=</span> <span class="p">(</span><span class="n">current_text</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor_col</span><span class="p">]</span> <span class="o">+</span>
                       <span class="n">result</span> <span class="o">+</span>
                       <span class="n">current_text</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cursor_col</span><span class="p">:])</span>
 
-        <span class="c1"># Validate the final value wouldn&#39;t exceed 255</span>
+        <span class="c1"># Validate the final value wouldn't exceed 255</span>
         <span class="k">if</span> <span class="n">final_text</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">final_text</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">:</span>
-                <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+                <span class="k">return</span> <span class="s1">''</span>
         <span class="k">return</span> <span class="n">result</span>
 
 
@@ -542,49 +542,49 @@
 <div class="viewcode-block" id="ColorWheel">
 <a class="viewcode-back" href="../../../api-kivy.uix.colorpicker.html#kivy.uix.colorpicker.ColorWheel">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ColorWheel</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Chromatic wheel for the ColorPicker.</span>
+<span class="w">    </span><span class="sd">'''Chromatic wheel for the ColorPicker.</span>
 
 <span class="sd">    .. versionchanged:: 1.7.1</span>
 <span class="sd">        `font_size`, `font_name` and `foreground_color` have been removed. The</span>
-<span class="sd">        sizing is now the same as others widget, based on &#39;sp&#39;. Orientation is</span>
+<span class="sd">        sizing is now the same as others widget, based on 'sp'. Orientation is</span>
 <span class="sd">        also automatically determined according to the width/height ratio.</span>
 
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">r</span> <span class="o">=</span> <span class="n">BoundedNumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The Red value of the color currently selected.</span>
+<span class="w">    </span><span class="sd">'''The Red value of the color currently selected.</span>
 
 <span class="sd">    :attr:`r` is a :class:`~kivy.properties.BoundedNumericProperty` and</span>
 <span class="sd">    can be a value from 0 to 1. It defaults to 0.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">g</span> <span class="o">=</span> <span class="n">BoundedNumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The Green value of the color currently selected.</span>
+<span class="w">    </span><span class="sd">'''The Green value of the color currently selected.</span>
 
 <span class="sd">    :attr:`g` is a :class:`~kivy.properties.BoundedNumericProperty`</span>
 <span class="sd">    and can be a value from 0 to 1. It defaults to 0.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">b</span> <span class="o">=</span> <span class="n">BoundedNumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The Blue value of the color currently selected.</span>
+<span class="w">    </span><span class="sd">'''The Blue value of the color currently selected.</span>
 
 <span class="sd">    :attr:`b` is a :class:`~kivy.properties.BoundedNumericProperty` and</span>
 <span class="sd">    can be a value from 0 to 1. It defaults to 0.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">a</span> <span class="o">=</span> <span class="n">BoundedNumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The Alpha value of the color currently selected.</span>
+<span class="w">    </span><span class="sd">'''The Alpha value of the color currently selected.</span>
 
 <span class="sd">    :attr:`a` is a :class:`~kivy.properties.BoundedNumericProperty` and</span>
 <span class="sd">    can be a value from 0 to 1. It defaults to 0.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">color</span> <span class="o">=</span> <span class="n">ReferenceListProperty</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The holds the color currently selected.</span>
+<span class="w">    </span><span class="sd">'''The holds the color currently selected.</span>
 
 <span class="sd">    :attr:`color` is a :class:`~kivy.properties.ReferenceListProperty` and</span>
 <span class="sd">    contains a list of `r`, `g`, `b`, `a` values. It defaults to `[0, 0, 0, 0]`.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">_origin</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">((</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
     <span class="n">_radius</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
@@ -689,9 +689,9 @@
 
         <span class="n">touch</span><span class="o">.</span><span class="n">grab</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_num_touches</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;anchor_r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span>
-        <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;orig_sv_idx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sv_idx</span>
-        <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;orig_time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span></div>
+        <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">'anchor_r'</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span>
+        <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">'orig_sv_idx'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sv_idx</span>
+        <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">'orig_time'</span><span class="p">]</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="ColorWheel.on_touch_move">
@@ -700,8 +700,8 @@
         <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">grab_current</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_touch_r</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span>
-        <span class="n">goal_sv_idx</span> <span class="o">=</span> <span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;orig_sv_idx&#39;</span><span class="p">]</span> <span class="o">-</span>
-                       <span class="nb">int</span><span class="p">((</span><span class="n">r</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;anchor_r&#39;</span><span class="p">])</span> <span class="o">/</span>
+        <span class="n">goal_sv_idx</span> <span class="o">=</span> <span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">'orig_sv_idx'</span><span class="p">]</span> <span class="o">-</span>
+                       <span class="nb">int</span><span class="p">((</span><span class="n">r</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">'anchor_r'</span><span class="p">])</span> <span class="o">/</span>
                             <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_radius</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_piece_divisions</span><span class="p">)))</span>
 
         <span class="k">if</span> <span class="p">(</span>
@@ -725,31 +725,31 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num_touches</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="c1"># user was pinching, and now both fingers are up. Return</span>
                 <span class="c1"># to normal</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sv_idx</span> <span class="o">&gt;</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;orig_sv_idx&#39;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sv_idx</span> <span class="o">&gt;</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">'orig_sv_idx'</span><span class="p">]:</span>
                     <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">inertial_incr_sv_idx</span><span class="p">,</span>
-                        <span class="p">(</span><span class="n">Clock</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;orig_time&#39;</span><span class="p">])</span> <span class="o">/</span>
-                        <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sv_idx</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;orig_sv_idx&#39;</span><span class="p">]))</span>
+                        <span class="p">(</span><span class="n">Clock</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">'orig_time'</span><span class="p">])</span> <span class="o">/</span>
+                        <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sv_idx</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">'orig_sv_idx'</span><span class="p">]))</span>
 
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sv_idx</span> <span class="o">&lt;</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;orig_sv_idx&#39;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sv_idx</span> <span class="o">&lt;</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">'orig_sv_idx'</span><span class="p">]:</span>
                     <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">inertial_decr_sv_idx</span><span class="p">,</span>
-                        <span class="p">(</span><span class="n">Clock</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;orig_time&#39;</span><span class="p">])</span> <span class="o">/</span>
-                        <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sv_idx</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;orig_sv_idx&#39;</span><span class="p">]))</span>
+                        <span class="p">(</span><span class="n">Clock</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">'orig_time'</span><span class="p">])</span> <span class="o">/</span>
+                        <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sv_idx</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">'orig_sv_idx'</span><span class="p">]))</span>
 
                 <span class="bp">self</span><span class="o">.</span><span class="n">_pinch_flag</span> <span class="o">=</span> <span class="kc">False</span>
                 <span class="k">return</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># user was pinching, and at least one finger remains. We</span>
-                <span class="c1"># don&#39;t want to treat the remaining fingers as touches</span>
+                <span class="c1"># don't want to treat the remaining fingers as touches</span>
                 <span class="k">return</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">r</span><span class="p">,</span> <span class="n">theta</span> <span class="o">=</span> <span class="n">rect_to_polar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_origin</span><span class="p">,</span> <span class="o">*</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span>
             <span class="c1"># if touch up is outside the wheel, ignore</span>
             <span class="k">if</span> <span class="n">r</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_radius</span><span class="p">:</span>
                 <span class="k">return</span>
-            <span class="c1"># compute which ColorArc is being touched (they aren&#39;t</span>
-            <span class="c1"># widgets so we don&#39;t get collide_point) and set</span>
+            <span class="c1"># compute which ColorArc is being touched (they aren't</span>
+            <span class="c1"># widgets so we don't get collide_point) and set</span>
             <span class="c1"># _hsv based on the selected ColorArc</span>
             <span class="n">piece</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">theta</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span><span class="p">))</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pieces_of_pie</span><span class="p">)</span>
             <span class="n">division</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">r</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_radius</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_piece_divisions</span><span class="p">)</span>
@@ -773,13 +773,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">theta_min</span> <span class="o">=</span> <span class="n">theta_min</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">theta_max</span> <span class="o">=</span> <span class="n">theta_max</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">color</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">color_instr</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="o">*</span><span class="n">color</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;hsv&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_instr</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="o">*</span><span class="n">color</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'hsv'</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_instr</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mesh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_mesh</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mesh</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;r_min: </span><span class="si">%s</span><span class="s2"> r_max: </span><span class="si">%s</span><span class="s2"> theta_min: </span><span class="si">%s</span><span class="s2"> theta_max: </span><span class="si">%s</span><span class="s2"> color: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+        <span class="k">return</span> <span class="s2">"r_min: </span><span class="si">%s</span><span class="s2"> r_max: </span><span class="si">%s</span><span class="s2"> theta_min: </span><span class="si">%s</span><span class="s2"> theta_max: </span><span class="si">%s</span><span class="s2"> color: </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">r_min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">theta_min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">theta_max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">color</span>
         <span class="p">)</span>
 
@@ -816,7 +816,7 @@
                                     <span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">Mesh</span><span class="p">(</span><span class="n">vertices</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)),</span>
-                    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;triangle_strip&#39;</span><span class="p">)</span>
+                    <span class="n">mode</span><span class="o">=</span><span class="s1">'triangle_strip'</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">change_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color_delta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sv</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_instr</span><span class="p">)</span>
@@ -828,30 +828,30 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sv</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
         <span class="k">elif</span> <span class="n">a</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">a</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">color_instr</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;hsv&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_instr</span> <span class="o">=</span> <span class="n">Color</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'hsv'</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_instr</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="ColorPicker">
 <a class="viewcode-back" href="../../../api-kivy.uix.colorpicker.html#kivy.uix.colorpicker.ColorPicker">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ColorPicker</span><span class="p">(</span><span class="n">RelativeLayout</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''</span>
 <span class="sd">    See module documentation.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">font_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">&#39;data/fonts/RobotoMono-Regular.ttf&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Specifies the font used on the ColorPicker.</span>
+    <span class="n">font_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">'data/fonts/RobotoMono-Regular.ttf'</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">'''Specifies the font used on the ColorPicker.</span>
 
 <span class="sd">    :attr:`font_name` is a :class:`~kivy.properties.StringProperty` and</span>
-<span class="sd">    defaults to &#39;data/fonts/RobotoMono-Regular.ttf&#39;.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    defaults to 'data/fonts/RobotoMono-Regular.ttf'.</span>
+<span class="sd">    '''</span>
 
     <span class="n">color</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The :attr:`color` holds the color currently selected in rgba format.</span>
+<span class="w">    </span><span class="sd">'''The :attr:`color` holds the color currently selected in rgba format.</span>
 
 <span class="sd">    :attr:`color` is a :class:`~kivy.properties.ListProperty` and defaults to</span>
 <span class="sd">    (1, 1, 1, 1).</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_hsv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">rgb_to_hsv</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
@@ -861,12 +861,12 @@
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
-    <span class="n">hsv</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_hsv</span><span class="p">,</span> <span class="n">_set_hsv</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="p">))</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The :attr:`hsv` holds the color currently selected in hsv format.</span>
+    <span class="n">hsv</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_hsv</span><span class="p">,</span> <span class="n">_set_hsv</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">'color'</span><span class="p">,</span> <span class="p">))</span>
+<span class="w">    </span><span class="sd">'''The :attr:`hsv` holds the color currently selected in hsv format.</span>
 
 <span class="sd">    :attr:`hsv` is a :class:`~kivy.properties.ListProperty` and defaults to</span>
 <span class="sd">    (1, 1, 1).</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_hex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">get_hex_from_color</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">)</span>
 
@@ -875,19 +875,19 @@
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="n">get_color_from_hex</span><span class="p">(</span><span class="n">value</span><span class="p">)[:</span><span class="mi">4</span><span class="p">])</span>
 
-    <span class="n">hex_color</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_hex</span><span class="p">,</span> <span class="n">_set_hex</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">,),</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The :attr:`hex_color` holds the currently selected color in hex.</span>
+    <span class="n">hex_color</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_hex</span><span class="p">,</span> <span class="n">_set_hex</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">'color'</span><span class="p">,),</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">'''The :attr:`hex_color` holds the currently selected color in hex.</span>
 
 <span class="sd">    :attr:`hex_color` is an :class:`~kivy.properties.AliasProperty` and</span>
 <span class="sd">    defaults to `#ffffffff`.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">wheel</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The :attr:`wheel` holds the color wheel.</span>
+<span class="w">    </span><span class="sd">'''The :attr:`wheel` holds the color wheel.</span>
 
 <span class="sd">    :attr:`wheel` is an :class:`~kivy.properties.ObjectProperty` and</span>
 <span class="sd">    defaults to None.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">_update_clr_ev</span> <span class="o">=</span> <span class="n">_update_hex_ev</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -919,7 +919,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">text</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mf">255.0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">text</span><span class="p">)))</span>
 
-            <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;rgb&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">'rgb'</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">[</span><span class="n">clr_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">text</span> <span class="o">/</span> <span class="mi">255</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">hsv</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hsv</span><span class="p">[:])</span>
@@ -927,7 +927,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">hsv_to_rgb</span><span class="p">(</span><span class="o">*</span><span class="n">hsv</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
             <span class="c1"># Invalid value - default to 0</span>
-            <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;rgb&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">'rgb'</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">[</span><span class="n">clr_idx</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">hsv</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hsv</span><span class="p">[:])</span>
@@ -973,12 +973,12 @@
 
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;__android__&#39;</span><span class="p">,</span> <span class="s1">&#39;__main__&#39;</span><span class="p">):</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'__android__'</span><span class="p">,</span> <span class="s1">'__main__'</span><span class="p">):</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
 
     <span class="k">class</span><span class="w"> </span><span class="nc">ColorPickerApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
         <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="n">cp</span> <span class="o">=</span> <span class="n">ColorPicker</span><span class="p">(</span><span class="n">pos_hint</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;center_x&#39;</span><span class="p">:</span> <span class="mf">.5</span><span class="p">,</span> <span class="s1">&#39;center_y&#39;</span><span class="p">:</span> <span class="mf">.5</span><span class="p">},</span>
+            <span class="n">cp</span> <span class="o">=</span> <span class="n">ColorPicker</span><span class="p">(</span><span class="n">pos_hint</span><span class="o">=</span><span class="p">{</span><span class="s1">'center_x'</span><span class="p">:</span> <span class="mf">.5</span><span class="p">,</span> <span class="s1">'center_y'</span><span class="p">:</span> <span class="mf">.5</span><span class="p">},</span>
                              <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
             <span class="k">return</span> <span class="n">cp</span>
     <span class="n">ColorPickerApp</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
@@ -996,7 +996,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

@@ -369,7 +369,7 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.uix.screenmanager</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;Screen Manager</span>
+<span></span><span class="sd">'''Screen Manager</span>
 <span class="sd">==============</span>
 
 <span class="sd">.. image:: images/screenmanager.gif</span>
@@ -388,7 +388,7 @@
 <span class="sd">Basic Usage</span>
 <span class="sd">-----------</span>
 
-<span class="sd">Let&#39;s construct a Screen Manager with 4 named screens. When you are creating</span>
+<span class="sd">Let's construct a Screen Manager with 4 named screens. When you are creating</span>
 <span class="sd">a screen, **you absolutely need to give a name to it**::</span>
 
 <span class="sd">    from kivy.uix.screenmanager import ScreenManager, Screen</span>
@@ -398,21 +398,21 @@
 
 <span class="sd">    # Add few screens</span>
 <span class="sd">    for i in range(4):</span>
-<span class="sd">        screen = Screen(name=&#39;Title %d&#39; % i)</span>
+<span class="sd">        screen = Screen(name='Title %d' % i)</span>
 <span class="sd">        sm.add_widget(screen)</span>
 
 <span class="sd">    # By default, the first screen added into the ScreenManager will be</span>
 <span class="sd">    # displayed. You can then change to another screen.</span>
 
-<span class="sd">    # Let&#39;s display the screen named &#39;Title 2&#39;</span>
+<span class="sd">    # Let's display the screen named 'Title 2'</span>
 <span class="sd">    # A transition will automatically be used.</span>
-<span class="sd">    sm.current = &#39;Title 2&#39;</span>
+<span class="sd">    sm.current = 'Title 2'</span>
 
 <span class="sd">The default :attr:`ScreenManager.transition` is a :class:`SlideTransition` with</span>
 <span class="sd">options :attr:`~SlideTransition.direction` and</span>
 <span class="sd">:attr:`~TransitionBase.duration`.</span>
 
-<span class="sd">Please note that by default, a :class:`Screen` displays nothing: it&#39;s just a</span>
+<span class="sd">Please note that by default, a :class:`Screen` displays nothing: it's just a</span>
 <span class="sd">:class:`~kivy.uix.relativelayout.RelativeLayout`. You need to use that class as</span>
 <span class="sd">a root widget for your own screen, the best way being to subclass.</span>
 
@@ -421,7 +421,7 @@
 <span class="sd">    it is important to understand the</span>
 <span class="sd">    :ref:`kivy-uix-relativelayout-common-pitfalls`.</span>
 
-<span class="sd">Here is an example with a &#39;Menu Screen&#39; and a &#39;Settings Screen&#39;::</span>
+<span class="sd">Here is an example with a 'Menu Screen' and a 'Settings Screen'::</span>
 
 <span class="sd">    from kivy.app import App</span>
 <span class="sd">    from kivy.lang import Builder</span>
@@ -430,23 +430,23 @@
 <span class="sd">    # Create both screens. Please note the root.manager.current: this is how</span>
 <span class="sd">    # you can control the ScreenManager from kv. Each screen has by default a</span>
 <span class="sd">    # property manager that gives you the instance of the ScreenManager used.</span>
-<span class="sd">    Builder.load_string(&quot;&quot;&quot;</span>
+<span class="sd">    Builder.load_string("""</span>
 <span class="sd">    &lt;MenuScreen&gt;:</span>
 <span class="sd">        BoxLayout:</span>
 <span class="sd">            Button:</span>
-<span class="sd">                text: &#39;Goto settings&#39;</span>
-<span class="sd">                on_press: root.manager.current = &#39;settings&#39;</span>
+<span class="sd">                text: 'Goto settings'</span>
+<span class="sd">                on_press: root.manager.current = 'settings'</span>
 <span class="sd">            Button:</span>
-<span class="sd">                text: &#39;Quit&#39;</span>
+<span class="sd">                text: 'Quit'</span>
 
 <span class="sd">    &lt;SettingsScreen&gt;:</span>
 <span class="sd">        BoxLayout:</span>
 <span class="sd">            Button:</span>
-<span class="sd">                text: &#39;My settings button&#39;</span>
+<span class="sd">                text: 'My settings button'</span>
 <span class="sd">            Button:</span>
-<span class="sd">                text: &#39;Back to menu&#39;</span>
-<span class="sd">                on_press: root.manager.current = &#39;menu&#39;</span>
-<span class="sd">    &quot;&quot;&quot;)</span>
+<span class="sd">                text: 'Back to menu'</span>
+<span class="sd">                on_press: root.manager.current = 'menu'</span>
+<span class="sd">    """)</span>
 
 <span class="sd">    # Declare both screens</span>
 <span class="sd">    class MenuScreen(Screen):</span>
@@ -460,12 +460,12 @@
 <span class="sd">        def build(self):</span>
 <span class="sd">            # Create the screen manager</span>
 <span class="sd">            sm = ScreenManager()</span>
-<span class="sd">            sm.add_widget(MenuScreen(name=&#39;menu&#39;))</span>
-<span class="sd">            sm.add_widget(SettingsScreen(name=&#39;settings&#39;))</span>
+<span class="sd">            sm.add_widget(MenuScreen(name='menu'))</span>
+<span class="sd">            sm.add_widget(SettingsScreen(name='settings'))</span>
 
 <span class="sd">            return sm</span>
 
-<span class="sd">    if __name__ == &#39;__main__&#39;:</span>
+<span class="sd">    if __name__ == '__main__':</span>
 <span class="sd">        TestApp().run()</span>
 
 
@@ -477,27 +477,27 @@
 <span class="sd">and slides left to the previous screen. Building on the previous</span>
 <span class="sd">example, this can be accomplished like so::</span>
 
-<span class="sd">    Builder.load_string(&quot;&quot;&quot;</span>
+<span class="sd">    Builder.load_string("""</span>
 <span class="sd">    &lt;MenuScreen&gt;:</span>
 <span class="sd">        BoxLayout:</span>
 <span class="sd">            Button:</span>
-<span class="sd">                text: &#39;Goto settings&#39;</span>
+<span class="sd">                text: 'Goto settings'</span>
 <span class="sd">                on_press:</span>
-<span class="sd">                    root.manager.transition.direction = &#39;left&#39;</span>
-<span class="sd">                    root.manager.current = &#39;settings&#39;</span>
+<span class="sd">                    root.manager.transition.direction = 'left'</span>
+<span class="sd">                    root.manager.current = 'settings'</span>
 <span class="sd">            Button:</span>
-<span class="sd">                text: &#39;Quit&#39;</span>
+<span class="sd">                text: 'Quit'</span>
 
 <span class="sd">    &lt;SettingsScreen&gt;:</span>
 <span class="sd">        BoxLayout:</span>
 <span class="sd">            Button:</span>
-<span class="sd">                text: &#39;My settings button&#39;</span>
+<span class="sd">                text: 'My settings button'</span>
 <span class="sd">            Button:</span>
-<span class="sd">                text: &#39;Back to menu&#39;</span>
+<span class="sd">                text: 'Back to menu'</span>
 <span class="sd">                on_press:</span>
-<span class="sd">                    root.manager.transition.direction = &#39;right&#39;</span>
-<span class="sd">                    root.manager.current = &#39;menu&#39;</span>
-<span class="sd">    &quot;&quot;&quot;)</span>
+<span class="sd">                    root.manager.transition.direction = 'right'</span>
+<span class="sd">                    root.manager.current = 'menu'</span>
+<span class="sd">    """)</span>
 
 
 <span class="sd">Advanced Usage</span>
@@ -508,11 +508,11 @@
 <span class="sd">:meth:`~ScreenManager.switch_to`::</span>
 
 <span class="sd">    sm = ScreenManager()</span>
-<span class="sd">    screens = [Screen(name=&#39;Title {}&#39;.format(i)) for i in range(4)]</span>
+<span class="sd">    screens = [Screen(name='Title {}'.format(i)) for i in range(4)]</span>
 
 <span class="sd">    sm.switch_to(screens[0])</span>
 <span class="sd">    # later</span>
-<span class="sd">    sm.switch_to(screens[1], direction=&#39;right&#39;)</span>
+<span class="sd">    sm.switch_to(screens[1], direction='right')</span>
 
 <span class="sd">Note that this method adds the screen to the :class:`ScreenManager` instance</span>
 <span class="sd">and should not be used if your screens have already been added to this</span>
@@ -532,7 +532,7 @@
 <span class="sd">- :class:`SwapTransition` - implementation of the iOS swap transition</span>
 <span class="sd">- :class:`FadeTransition` - shader to fade the screen in/out</span>
 <span class="sd">- :class:`WipeTransition` - shader to wipe the screens from right to left</span>
-<span class="sd">- :class:`FallOutTransition` - shader where the old screen &#39;falls&#39; and</span>
+<span class="sd">- :class:`FallOutTransition` - shader where the old screen 'falls' and</span>
 <span class="sd">  becomes transparent, revealing the new one behind it.</span>
 <span class="sd">- :class:`RiseInTransition` - shader where the new screen rises from the</span>
 <span class="sd">  screen centre while fading from transparent to opaque.</span>
@@ -545,21 +545,21 @@
 <span class="sd">.. note::</span>
 
 <span class="sd">    Currently, none of Shader based Transitions use</span>
-<span class="sd">    anti-aliasing. This is because they use the FBO which doesn&#39;t have</span>
+<span class="sd">    anti-aliasing. This is because they use the FBO which doesn't have</span>
 <span class="sd">    any logic to handle supersampling. This is a known issue and we</span>
 <span class="sd">    are working on a transparent implementation that will give the</span>
 <span class="sd">    same results as if it had been rendered on screen.</span>
 
-<span class="sd">    To be more concrete, if you see sharp edged text during the animation, it&#39;s</span>
+<span class="sd">    To be more concrete, if you see sharp edged text during the animation, it's</span>
 <span class="sd">    normal.</span>
 
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Screen&#39;</span><span class="p">,</span> <span class="s1">&#39;ScreenManager&#39;</span><span class="p">,</span> <span class="s1">&#39;ScreenManagerException&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;TransitionBase&#39;</span><span class="p">,</span> <span class="s1">&#39;ShaderTransition&#39;</span><span class="p">,</span> <span class="s1">&#39;SlideTransition&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;SwapTransition&#39;</span><span class="p">,</span> <span class="s1">&#39;FadeTransition&#39;</span><span class="p">,</span> <span class="s1">&#39;WipeTransition&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;FallOutTransition&#39;</span><span class="p">,</span> <span class="s1">&#39;RiseInTransition&#39;</span><span class="p">,</span> <span class="s1">&#39;NoTransition&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;CardTransition&#39;</span><span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'Screen'</span><span class="p">,</span> <span class="s1">'ScreenManager'</span><span class="p">,</span> <span class="s1">'ScreenManagerException'</span><span class="p">,</span>
+           <span class="s1">'TransitionBase'</span><span class="p">,</span> <span class="s1">'ShaderTransition'</span><span class="p">,</span> <span class="s1">'SlideTransition'</span><span class="p">,</span>
+           <span class="s1">'SwapTransition'</span><span class="p">,</span> <span class="s1">'FadeTransition'</span><span class="p">,</span> <span class="s1">'WipeTransition'</span><span class="p">,</span>
+           <span class="s1">'FallOutTransition'</span><span class="p">,</span> <span class="s1">'RiseInTransition'</span><span class="p">,</span> <span class="s1">'NoTransition'</span><span class="p">,</span>
+           <span class="s1">'CardTransition'</span><span class="p">)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">Logger</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.event</span><span class="w"> </span><span class="kn">import</span> <span class="n">EventDispatcher</span>
@@ -579,8 +579,8 @@
 <div class="viewcode-block" id="ScreenManagerException">
 <a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.ScreenManagerException">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ScreenManagerException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Exception for the :class:`ScreenManager`.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''Exception for the :class:`ScreenManager`.</span>
+<span class="sd">    '''</span>
     <span class="k">pass</span></div>
 
 
@@ -588,7 +588,7 @@
 <div class="viewcode-block" id="Screen">
 <a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.Screen">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Screen</span><span class="p">(</span><span class="n">RelativeLayout</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Screen is an element intended to be used with a :class:`ScreenManager`.</span>
+<span class="w">    </span><span class="sd">'''Screen is an element intended to be used with a :class:`ScreenManager`.</span>
 <span class="sd">    Check module documentation for more information.</span>
 
 <span class="sd">    :Events:</span>
@@ -608,52 +608,52 @@
 <span class="sd">    .. versionchanged:: 1.6.0</span>
 <span class="sd">        Events `on_pre_enter`, `on_enter`, `on_pre_leave` and `on_leave` were</span>
 <span class="sd">        added.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">''</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">'''</span>
 <span class="sd">    Name of the screen which must be unique within a :class:`ScreenManager`.</span>
 <span class="sd">    This is the name used for :attr:`ScreenManager.current`.</span>
 
 <span class="sd">    :attr:`name` is a :class:`~kivy.properties.StringProperty` and defaults to</span>
-<span class="sd">    &#39;&#39;.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    ''.</span>
+<span class="sd">    '''</span>
 
     <span class="n">manager</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;:class:`ScreenManager` object, set when the screen is added to a</span>
+<span class="w">    </span><span class="sd">''':class:`ScreenManager` object, set when the screen is added to a</span>
 <span class="sd">    manager.</span>
 
 <span class="sd">    :attr:`manager` is an :class:`~kivy.properties.ObjectProperty` and</span>
 <span class="sd">    defaults to None, read-only.</span>
 
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">transition_progress</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Value that represents the completion of the current transition, if any</span>
+<span class="w">    </span><span class="sd">'''Value that represents the completion of the current transition, if any</span>
 <span class="sd">    is occurring.</span>
 
 <span class="sd">    If a transition is in progress, whatever the mode, the value will change</span>
-<span class="sd">    from 0 to 1. If you want to know if it&#39;s an entering or leaving animation,</span>
+<span class="sd">    from 0 to 1. If you want to know if it's an entering or leaving animation,</span>
 <span class="sd">    check the :attr:`transition_state`.</span>
 
 <span class="sd">    :attr:`transition_progress` is a :class:`~kivy.properties.NumericProperty`</span>
 <span class="sd">    and defaults to 0.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">transition_state</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">&#39;out&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;in&#39;</span><span class="p">,</span> <span class="s1">&#39;out&#39;</span><span class="p">))</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Value that represents the state of the transition:</span>
+    <span class="n">transition_state</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">'out'</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">(</span><span class="s1">'in'</span><span class="p">,</span> <span class="s1">'out'</span><span class="p">))</span>
+<span class="w">    </span><span class="sd">'''Value that represents the state of the transition:</span>
 
-<span class="sd">    - &#39;in&#39; if the transition is going to show your screen</span>
-<span class="sd">    - &#39;out&#39; if the transition is going to hide your screen</span>
+<span class="sd">    - 'in' if the transition is going to show your screen</span>
+<span class="sd">    - 'out' if the transition is going to hide your screen</span>
 
 <span class="sd">    After the transition is complete, the state will retain its last value (in</span>
 <span class="sd">    or out).</span>
 
 <span class="sd">    :attr:`transition_state` is an :class:`~kivy.properties.OptionProperty` and</span>
-<span class="sd">    defaults to &#39;out&#39;.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    defaults to 'out'.</span>
+<span class="sd">    '''</span>
 
-    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;on_pre_enter&#39;</span><span class="p">,</span> <span class="s1">&#39;on_enter&#39;</span><span class="p">,</span> <span class="s1">&#39;on_pre_leave&#39;</span><span class="p">,</span> <span class="s1">&#39;on_leave&#39;</span><span class="p">)</span>
+    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'on_pre_enter'</span><span class="p">,</span> <span class="s1">'on_enter'</span><span class="p">,</span> <span class="s1">'on_pre_leave'</span><span class="p">,</span> <span class="s1">'on_leave'</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_pre_enter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="k">pass</span>
@@ -668,14 +668,14 @@
         <span class="k">pass</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s1">&#39;&lt;Screen name=</span><span class="si">%r</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span></div>
+        <span class="k">return</span> <span class="s1">'&lt;Screen name=</span><span class="si">%r</span><span class="s1">&gt;'</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span></div>
 
 
 
 <div class="viewcode-block" id="TransitionBase">
 <a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.TransitionBase">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">TransitionBase</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;TransitionBase is used to animate 2 screens within the</span>
+<span class="w">    </span><span class="sd">'''TransitionBase is used to animate 2 screens within the</span>
 <span class="sd">    :class:`ScreenManager`. This class acts as a base for other</span>
 <span class="sd">    implementations like the :class:`SlideTransition` and</span>
 <span class="sd">    :class:`SwapTransition`.</span>
@@ -685,26 +685,26 @@
 <span class="sd">            Fired during the animation of the transition.</span>
 <span class="sd">        `on_complete`: Transition object</span>
 <span class="sd">            Fired when the transition is finished.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">screen_out</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Property that contains the screen to hide.</span>
+<span class="w">    </span><span class="sd">'''Property that contains the screen to hide.</span>
 <span class="sd">    Automatically set by the :class:`ScreenManager`.</span>
 
 <span class="sd">    :class:`screen_out` is an :class:`~kivy.properties.ObjectProperty` and</span>
 <span class="sd">    defaults to None.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">screen_in</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Property that contains the screen to show.</span>
+<span class="w">    </span><span class="sd">'''Property that contains the screen to show.</span>
 <span class="sd">    Automatically set by the :class:`ScreenManager`.</span>
 
 <span class="sd">    :class:`screen_in` is an :class:`~kivy.properties.ObjectProperty` and</span>
 <span class="sd">    defaults to None.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">duration</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mf">.4</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Duration in seconds of the transition.</span>
+<span class="w">    </span><span class="sd">'''Duration in seconds of the transition.</span>
 
 <span class="sd">    :class:`duration` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to .4 (= 400ms).</span>
@@ -712,38 +712,38 @@
 <span class="sd">    .. versionchanged:: 1.8.0</span>
 
 <span class="sd">        Default duration has been changed from 700ms to 400ms.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">manager</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;:class:`ScreenManager` object, set when the screen is added to a</span>
+<span class="w">    </span><span class="sd">''':class:`ScreenManager` object, set when the screen is added to a</span>
 <span class="sd">    manager.</span>
 
 <span class="sd">    :attr:`manager` is an :class:`~kivy.properties.ObjectProperty` and</span>
 <span class="sd">    defaults to None, read-only.</span>
 
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">is_active</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Indicate whether the transition is currently active or not.</span>
+<span class="w">    </span><span class="sd">'''Indicate whether the transition is currently active or not.</span>
 
 <span class="sd">    :attr:`is_active` is a :class:`~kivy.properties.BooleanProperty` and</span>
 <span class="sd">    defaults to False, read-only.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="c1"># privates</span>
 
     <span class="n">_anim</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;on_progress&#39;</span><span class="p">,</span> <span class="s1">&#39;on_complete&#39;</span><span class="p">)</span>
+    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'on_progress'</span><span class="p">,</span> <span class="s1">'on_complete'</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TransitionBase.start">
 <a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.TransitionBase.start">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manager</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;(internal) Starts the transition. This is automatically</span>
+<span class="w">        </span><span class="sd">'''(internal) Starts the transition. This is automatically</span>
 <span class="sd">        called by the :class:`ScreenManager`.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_active</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ScreenManagerException</span><span class="p">(</span><span class="s1">&#39;start() is called twice!&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ScreenManagerException</span><span class="p">(</span><span class="s1">'start() is called twice!'</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">manager</span> <span class="o">=</span> <span class="n">manager</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_anim</span> <span class="o">=</span> <span class="n">Animation</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_anim</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_progress</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_progress</span><span class="p">,</span>
@@ -751,26 +751,26 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">add_screen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">screen_in</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">screen_in</span><span class="o">.</span><span class="n">transition_progress</span> <span class="o">=</span> <span class="mf">0.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">screen_in</span><span class="o">.</span><span class="n">transition_state</span> <span class="o">=</span> <span class="s1">&#39;in&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">screen_in</span><span class="o">.</span><span class="n">transition_state</span> <span class="o">=</span> <span class="s1">'in'</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">screen_out</span><span class="o">.</span><span class="n">transition_progress</span> <span class="o">=</span> <span class="mf">0.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">screen_out</span><span class="o">.</span><span class="n">transition_state</span> <span class="o">=</span> <span class="s1">&#39;out&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">screen_in</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_pre_enter&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">screen_out</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_pre_leave&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">screen_out</span><span class="o">.</span><span class="n">transition_state</span> <span class="o">=</span> <span class="s1">'out'</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">screen_in</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_pre_enter'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">screen_out</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_pre_leave'</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">is_active</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_anim</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_progress&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_progress'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TransitionBase.stop">
 <a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.TransitionBase.stop">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;(internal) Stops the transition. This is automatically called by the</span>
+<span class="w">        </span><span class="sd">'''(internal) Stops the transition. This is automatically called by the</span>
 <span class="sd">        :class:`ScreenManager`.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_anim</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_anim</span><span class="o">.</span><span class="n">cancel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_complete&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_complete'</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_anim</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_active</span> <span class="o">=</span> <span class="kc">False</span></div>
 
@@ -778,16 +778,16 @@
 <div class="viewcode-block" id="TransitionBase.add_screen">
 <a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.TransitionBase.add_screen">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;(internal) Used to add a screen to the :class:`ScreenManager`.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''(internal) Used to add a screen to the :class:`ScreenManager`.</span>
+<span class="sd">        '''</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">real_add_widget</span><span class="p">(</span><span class="n">screen</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TransitionBase.remove_screen">
 <a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.TransitionBase.remove_screen">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">remove_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;(internal) Used to remove a screen from the :class:`ScreenManager`.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''(internal) Used to remove a screen from the :class:`ScreenManager`.</span>
+<span class="sd">        '''</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">real_remove_widget</span><span class="p">(</span><span class="n">screen</span><span class="p">)</span></div>
 
 
@@ -801,13 +801,13 @@
         <span class="n">progress</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">screen_in</span><span class="o">.</span><span class="n">transition_progress</span> <span class="o">=</span> <span class="n">progress</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">screen_out</span><span class="o">.</span><span class="n">transition_progress</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">-</span> <span class="n">progress</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_progress&#39;</span><span class="p">,</span> <span class="n">progress</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_progress'</span><span class="p">,</span> <span class="n">progress</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_on_complete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">l</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_active</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_complete&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">screen_in</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_enter&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">screen_out</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_leave&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_complete'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">screen_in</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_enter'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">screen_out</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_leave'</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_anim</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
@@ -815,15 +815,15 @@
 <div class="viewcode-block" id="ShaderTransition">
 <a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.ShaderTransition">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ShaderTransition</span><span class="p">(</span><span class="n">TransitionBase</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Transition class that uses a Shader for animating the transition between</span>
-<span class="sd">    2 screens. By default, this class doesn&#39;t assign any fragment/vertex</span>
+<span class="w">    </span><span class="sd">'''Transition class that uses a Shader for animating the transition between</span>
+<span class="sd">    2 screens. By default, this class doesn't assign any fragment/vertex</span>
 <span class="sd">    shader. If you want to create your own fragment shader for the transition,</span>
-<span class="sd">    you need to declare the header yourself and include the &quot;t&quot;, &quot;tex_in&quot; and</span>
-<span class="sd">    &quot;tex_out&quot; uniform::</span>
+<span class="sd">    you need to declare the header yourself and include the "t", "tex_in" and</span>
+<span class="sd">    "tex_out" uniform::</span>
 
-<span class="sd">        # Create your own transition. This shader implements a &quot;fading&quot;</span>
+<span class="sd">        # Create your own transition. This shader implements a "fading"</span>
 <span class="sd">        # transition.</span>
-<span class="sd">        fs = &quot;&quot;&quot;$HEADER</span>
+<span class="sd">        fs = """$HEADER</span>
 <span class="sd">            uniform float t;</span>
 <span class="sd">            uniform sampler2D tex_in;</span>
 <span class="sd">            uniform sampler2D tex_out;</span>
@@ -833,28 +833,28 @@
 <span class="sd">                vec4 cout = texture2D(tex_out, tex_coord0);</span>
 <span class="sd">                gl_FragColor = mix(cout, cin, t);</span>
 <span class="sd">            }</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
 <span class="sd">        # And create your transition</span>
 <span class="sd">        tr = ShaderTransition(fs=fs)</span>
 <span class="sd">        sm = ScreenManager(transition=tr)</span>
 
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">fs</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Fragment shader to use.</span>
+<span class="w">    </span><span class="sd">'''Fragment shader to use.</span>
 
 <span class="sd">    :attr:`fs` is a :class:`~kivy.properties.StringProperty` and defaults to</span>
-<span class="sd">    None.&#39;&#39;&#39;</span>
+<span class="sd">    None.'''</span>
 
     <span class="n">vs</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Vertex shader to use.</span>
+<span class="w">    </span><span class="sd">'''Vertex shader to use.</span>
 
 <span class="sd">    :attr:`vs` is a :class:`~kivy.properties.StringProperty` and defaults to</span>
-<span class="sd">    None.&#39;&#39;&#39;</span>
+<span class="sd">    None.'''</span>
 
     <span class="n">clearcolor</span> <span class="o">=</span> <span class="n">ColorProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Sets the color of Fbo ClearColor.</span>
+<span class="w">    </span><span class="sd">'''Sets the color of Fbo ClearColor.</span>
 
 <span class="sd">    .. versionadded:: 1.9.0</span>
 
@@ -864,7 +864,7 @@
 <span class="sd">    .. versionchanged:: 2.0.0</span>
 <span class="sd">        Changed from :class:`~kivy.properties.ListProperty` to</span>
 <span class="sd">        :class:`~kivy.properties.ColorProperty`.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">make_screen_fbo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">):</span>
         <span class="n">fbo</span> <span class="o">=</span> <span class="n">Fbo</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">screen</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">with_stencilbuffer</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -880,10 +880,10 @@
         <span class="k">return</span> <span class="n">fbo</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">progress</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">render_ctx</span><span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">progress</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">render_ctx</span><span class="p">[</span><span class="s1">'t'</span><span class="p">]</span> <span class="o">=</span> <span class="n">progress</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_complete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">render_ctx</span><span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">render_ctx</span><span class="p">[</span><span class="s1">'t'</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ShaderTransition</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_complete</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_remove_out_canvas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
@@ -920,8 +920,8 @@
             <span class="n">Rectangle</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">),</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span>
                       <span class="n">tex_coords</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fbo_in</span><span class="o">.</span><span class="n">texture</span><span class="o">.</span><span class="n">tex_coords</span><span class="p">)</span>
             <span class="n">Callback</span><span class="p">(</span><span class="n">remove_screen_out</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">render_ctx</span><span class="p">[</span><span class="s1">&#39;tex_out&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">render_ctx</span><span class="p">[</span><span class="s1">&#39;tex_in&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">render_ctx</span><span class="p">[</span><span class="s1">'tex_out'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">render_ctx</span><span class="p">[</span><span class="s1">'tex_in'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">render_ctx</span><span class="p">)</span></div>
 
 
@@ -947,11 +947,11 @@
 <div class="viewcode-block" id="NoTransition">
 <a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.NoTransition">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">NoTransition</span><span class="p">(</span><span class="n">TransitionBase</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;No transition, instantly switches to the next screen with no delay or</span>
+<span class="w">    </span><span class="sd">'''No transition, instantly switches to the next screen with no delay or</span>
 <span class="sd">    animation.</span>
 
 <span class="sd">    .. versionadded:: 1.8.0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">duration</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
 
@@ -965,16 +965,16 @@
 <div class="viewcode-block" id="SlideTransition">
 <a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.SlideTransition">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SlideTransition</span><span class="p">(</span><span class="n">TransitionBase</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Slide Transition, can be used to show a new screen from any direction:</span>
+<span class="w">    </span><span class="sd">'''Slide Transition, can be used to show a new screen from any direction:</span>
 <span class="sd">    left, right, up or down.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">direction</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;up&#39;</span><span class="p">,</span> <span class="s1">&#39;down&#39;</span><span class="p">))</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Direction of the transition.</span>
+    <span class="n">direction</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">'left'</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">(</span><span class="s1">'left'</span><span class="p">,</span> <span class="s1">'right'</span><span class="p">,</span> <span class="s1">'up'</span><span class="p">,</span> <span class="s1">'down'</span><span class="p">))</span>
+<span class="w">    </span><span class="sd">'''Direction of the transition.</span>
 
 <span class="sd">    :attr:`direction` is an :class:`~kivy.properties.OptionProperty` and</span>
-<span class="sd">    defaults to &#39;left&#39;. Can be one of &#39;left&#39;, &#39;right&#39;, &#39;up&#39; or &#39;down&#39;.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    defaults to 'left'. Can be one of 'left', 'right', 'up' or 'down'.</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">progression</span><span class="p">):</span>
         <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">screen_in</span>
@@ -985,19 +985,19 @@
         <span class="n">direction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span>
         <span class="n">al</span> <span class="o">=</span> <span class="n">AnimationTransition</span><span class="o">.</span><span class="n">out_quad</span>
         <span class="n">progression</span> <span class="o">=</span> <span class="n">al</span><span class="p">(</span><span class="n">progression</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;left&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">'left'</span><span class="p">:</span>
             <span class="n">a</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
             <span class="n">a</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">width</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">progression</span><span class="p">)</span>
             <span class="n">b</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="n">progression</span>
-        <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;right&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">'right'</span><span class="p">:</span>
             <span class="n">a</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
             <span class="n">b</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">width</span> <span class="o">*</span> <span class="n">progression</span>
             <span class="n">a</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">progression</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;down&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">'down'</span><span class="p">:</span>
             <span class="n">a</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
             <span class="n">a</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">height</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">progression</span><span class="p">)</span>
             <span class="n">b</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="n">progression</span>
-        <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;up&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">'up'</span><span class="p">:</span>
             <span class="n">a</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
             <span class="n">b</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">height</span> <span class="o">*</span> <span class="n">progression</span>
             <span class="n">a</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">progression</span><span class="p">)</span>
@@ -1012,7 +1012,7 @@
 <div class="viewcode-block" id="CardTransition">
 <a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.CardTransition">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">CardTransition</span><span class="p">(</span><span class="n">SlideTransition</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Card transition that looks similar to Android 4.x application drawer</span>
+<span class="w">    </span><span class="sd">'''Card transition that looks similar to Android 4.x application drawer</span>
 <span class="sd">    interface animation.</span>
 
 <span class="sd">    It supports 4 directions like SlideTransition: left, right, up and down,</span>
@@ -1022,34 +1022,34 @@
 <span class="sd">    screen is already on the position of the ScreenManager.</span>
 
 <span class="sd">    .. versionadded:: 1.10</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">mode</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">&#39;push&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pop&#39;</span><span class="p">,</span> <span class="s1">&#39;push&#39;</span><span class="p">])</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Indicates if the transition should push or pop</span>
+    <span class="n">mode</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">'push'</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">'pop'</span><span class="p">,</span> <span class="s1">'push'</span><span class="p">])</span>
+<span class="w">    </span><span class="sd">'''Indicates if the transition should push or pop</span>
 <span class="sd">    the screen on/off the ScreenManager.</span>
 
-<span class="sd">    - &#39;push&#39; means the screen slides in in the given direction</span>
-<span class="sd">    - &#39;pop&#39; means the screen slides out in the given direction</span>
+<span class="sd">    - 'push' means the screen slides in in the given direction</span>
+<span class="sd">    - 'pop' means the screen slides out in the given direction</span>
 
 <span class="sd">    :attr:`mode` is an :class:`~kivy.properties.OptionProperty` and</span>
-<span class="sd">    defaults to &#39;push&#39;.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    defaults to 'push'.</span>
+<span class="sd">    '''</span>
 
 <div class="viewcode-block" id="CardTransition.start">
 <a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.CardTransition.start">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manager</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;(internal) Starts the transition. This is automatically</span>
+<span class="w">        </span><span class="sd">'''(internal) Starts the transition. This is automatically</span>
 <span class="sd">        called by the :class:`ScreenManager`.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">CardTransition</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">manager</span><span class="p">)</span>
         <span class="n">mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span>
         <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">screen_in</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">screen_out</span>
-        <span class="c1"># ensure that the correct widget is &quot;on top&quot;</span>
-        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;push&#39;</span><span class="p">:</span>
+        <span class="c1"># ensure that the correct widget is "on top"</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">'push'</span><span class="p">:</span>
             <span class="n">manager</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">canvas</span><span class="p">)</span>
             <span class="n">manager</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">canvas</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;pop&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">'pop'</span><span class="p">:</span>
             <span class="n">manager</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">canvas</span><span class="p">)</span>
             <span class="n">manager</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">canvas</span><span class="p">)</span></div>
 
@@ -1064,25 +1064,25 @@
         <span class="n">mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span>
         <span class="n">al</span> <span class="o">=</span> <span class="n">AnimationTransition</span><span class="o">.</span><span class="n">out_quad</span>
         <span class="n">progression</span> <span class="o">=</span> <span class="n">al</span><span class="p">(</span><span class="n">progression</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;push&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">'push'</span><span class="p">:</span>
             <span class="n">b</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
-            <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;left&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">'left'</span><span class="p">:</span>
                 <span class="n">a</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">width</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">progression</span><span class="p">),</span> <span class="n">y</span>
-            <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;right&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">'right'</span><span class="p">:</span>
                 <span class="n">a</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">progression</span><span class="p">),</span> <span class="n">y</span>
-            <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;down&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">'down'</span><span class="p">:</span>
                 <span class="n">a</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">height</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">progression</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;up&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">'up'</span><span class="p">:</span>
                 <span class="n">a</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">progression</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;pop&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">'pop'</span><span class="p">:</span>
             <span class="n">a</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
-            <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;left&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">'left'</span><span class="p">:</span>
                 <span class="n">b</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="n">progression</span><span class="p">,</span> <span class="n">y</span>
-            <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;right&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">'right'</span><span class="p">:</span>
                 <span class="n">b</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">width</span> <span class="o">*</span> <span class="n">progression</span><span class="p">,</span> <span class="n">y</span>
-            <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;down&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">'down'</span><span class="p">:</span>
                 <span class="n">b</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="n">progression</span>
-            <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;up&#39;</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s1">'up'</span><span class="p">:</span>
                 <span class="n">b</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">height</span> <span class="o">*</span> <span class="n">progression</span></div>
 
 
@@ -1090,9 +1090,9 @@
 <div class="viewcode-block" id="SwapTransition">
 <a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.SwapTransition">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SwapTransition</span><span class="p">(</span><span class="n">TransitionBase</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Swap transition that looks like iOS transition when a new window</span>
+<span class="w">    </span><span class="sd">'''Swap transition that looks like iOS transition when a new window</span>
 <span class="sd">    appears on the screen.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">SwapTransition</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scales</span> <span class="o">=</span> <span class="p">{}</span>
@@ -1102,10 +1102,10 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manager</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">screen</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">screen_in</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">screen_out</span><span class="p">:</span>
             <span class="k">with</span> <span class="n">screen</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">before</span><span class="p">:</span>
-                <span class="n">PushMatrix</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="s1">&#39;swaptransition_scale&#39;</span><span class="p">)</span>
-                <span class="n">scale</span> <span class="o">=</span> <span class="n">Scale</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="s1">&#39;swaptransition_scale&#39;</span><span class="p">)</span>
+                <span class="n">PushMatrix</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="s1">'swaptransition_scale'</span><span class="p">)</span>
+                <span class="n">scale</span> <span class="o">=</span> <span class="n">Scale</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="s1">'swaptransition_scale'</span><span class="p">)</span>
             <span class="k">with</span> <span class="n">screen</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">after</span><span class="p">:</span>
-                <span class="n">PopMatrix</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="s1">&#39;swaptransition_scale&#39;</span><span class="p">)</span>
+                <span class="n">PopMatrix</span><span class="p">(</span><span class="n">group</span><span class="o">=</span><span class="s1">'swaptransition_scale'</span><span class="p">)</span>
 
             <span class="n">screen</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">update_scale</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">scales</span><span class="p">[</span><span class="n">screen</span><span class="p">]</span> <span class="o">=</span> <span class="n">scale</span>
@@ -1126,7 +1126,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">screen_out</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">manager</span><span class="o">.</span><span class="n">pos</span>
         <span class="k">for</span> <span class="n">screen</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">screen_in</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">screen_out</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">canvas</span> <span class="ow">in</span> <span class="n">screen</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">before</span><span class="p">,</span> <span class="n">screen</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">after</span><span class="p">:</span>
-                <span class="n">canvas</span><span class="o">.</span><span class="n">remove_group</span><span class="p">(</span><span class="s1">&#39;swaptransition_scale&#39;</span><span class="p">)</span>
+                <span class="n">canvas</span><span class="o">.</span><span class="n">remove_group</span><span class="p">(</span><span class="s1">'swaptransition_scale'</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">SwapTransition</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_complete</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">progression</span><span class="p">):</span>
@@ -1134,8 +1134,8 @@
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">screen_out</span>
         <span class="n">manager</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">manager</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">scales</span><span class="p">[</span><span class="n">b</span><span class="p">]</span><span class="o">.</span><span class="n">xyz</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.</span> <span class="o">-</span> <span class="n">progression</span> <span class="o">*</span> <span class="mf">0.7</span> <span class="k">for</span> <span class="n">xyz</span> <span class="ow">in</span> <span class="s1">&#39;xyz&#39;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">scales</span><span class="p">[</span><span class="n">a</span><span class="p">]</span><span class="o">.</span><span class="n">xyz</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span> <span class="o">+</span> <span class="n">progression</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="k">for</span> <span class="n">xyz</span> <span class="ow">in</span> <span class="s1">&#39;xyz&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scales</span><span class="p">[</span><span class="n">b</span><span class="p">]</span><span class="o">.</span><span class="n">xyz</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.</span> <span class="o">-</span> <span class="n">progression</span> <span class="o">*</span> <span class="mf">0.7</span> <span class="k">for</span> <span class="n">xyz</span> <span class="ow">in</span> <span class="s1">'xyz'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scales</span><span class="p">[</span><span class="n">a</span><span class="p">]</span><span class="o">.</span><span class="n">xyz</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span> <span class="o">+</span> <span class="n">progression</span> <span class="o">*</span> <span class="mf">0.5</span> <span class="k">for</span> <span class="n">xyz</span> <span class="ow">in</span> <span class="s1">'xyz'</span><span class="p">]</span>
         <span class="n">a</span><span class="o">.</span><span class="n">center_y</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">center_y</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">center_y</span>
 
         <span class="n">al</span> <span class="o">=</span> <span class="n">AnimationTransition</span><span class="o">.</span><span class="n">in_out_sine</span>
@@ -1161,10 +1161,10 @@
 <div class="viewcode-block" id="WipeTransition">
 <a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.WipeTransition">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">WipeTransition</span><span class="p">(</span><span class="n">ShaderTransition</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Wipe transition, based on a fragment Shader.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''Wipe transition, based on a fragment Shader.</span>
+<span class="sd">    '''</span>
 
-    <span class="n">WIPE_TRANSITION_FS</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;$HEADER$</span>
+    <span class="n">WIPE_TRANSITION_FS</span> <span class="o">=</span> <span class="s1">'''$HEADER$</span>
 <span class="s1">    uniform float t;</span>
 <span class="s1">    uniform sampler2D tex_in;</span>
 <span class="s1">    uniform sampler2D tex_out;</span>
@@ -1175,7 +1175,7 @@
 <span class="s1">        gl_FragColor = mix(cout, cin, clamp((-1.5 + 1.5*tex_coord0.x + 2.5*t),</span>
 <span class="s1">            0.0, 1.0));</span>
 <span class="s1">    }</span>
-<span class="s1">    &#39;&#39;&#39;</span>
+<span class="s1">    '''</span>
     <span class="n">fs</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="n">WIPE_TRANSITION_FS</span><span class="p">)</span></div>
 
 
@@ -1183,10 +1183,10 @@
 <div class="viewcode-block" id="FadeTransition">
 <a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.FadeTransition">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FadeTransition</span><span class="p">(</span><span class="n">ShaderTransition</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Fade transition, based on a fragment Shader.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''Fade transition, based on a fragment Shader.</span>
+<span class="sd">    '''</span>
 
-    <span class="n">FADE_TRANSITION_FS</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;$HEADER$</span>
+    <span class="n">FADE_TRANSITION_FS</span> <span class="o">=</span> <span class="s1">'''$HEADER$</span>
 <span class="s1">    uniform float t;</span>
 <span class="s1">    uniform sampler2D tex_in;</span>
 <span class="s1">    uniform sampler2D tex_out;</span>
@@ -1197,7 +1197,7 @@
 <span class="s1">        vec4 frag_col = vec4(t * cin) + vec4((1.0 - t) * cout);</span>
 <span class="s1">        gl_FragColor = frag_col;</span>
 <span class="s1">    }</span>
-<span class="s1">    &#39;&#39;&#39;</span>
+<span class="s1">    '''</span>
     <span class="n">fs</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="n">FADE_TRANSITION_FS</span><span class="p">)</span></div>
 
 
@@ -1205,31 +1205,31 @@
 <div class="viewcode-block" id="FallOutTransition">
 <a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.FallOutTransition">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FallOutTransition</span><span class="p">(</span><span class="n">ShaderTransition</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Transition where the new screen &#39;falls&#39; from the screen centre,</span>
+<span class="w">    </span><span class="sd">'''Transition where the new screen 'falls' from the screen centre,</span>
 <span class="sd">    becoming smaller and more transparent until it disappears, and</span>
 <span class="sd">    revealing the new screen behind it. Mimics the popular/standard</span>
 <span class="sd">    Android transition.</span>
 
 <span class="sd">    .. versionadded:: 1.8.0</span>
 
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">duration</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mf">0.15</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Duration in seconds of the transition, replacing the default of</span>
+<span class="w">    </span><span class="sd">'''Duration in seconds of the transition, replacing the default of</span>
 <span class="sd">    :class:`TransitionBase`.</span>
 
 <span class="sd">    :class:`duration` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to .15 (= 150ms).</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">FALLOUT_TRANSITION_FS</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;$HEADER$</span>
+    <span class="n">FALLOUT_TRANSITION_FS</span> <span class="o">=</span> <span class="s1">'''$HEADER$</span>
 <span class="s1">    uniform float t;</span>
 <span class="s1">    uniform sampler2D tex_in;</span>
 <span class="s1">    uniform sampler2D tex_out;</span>
 
 <span class="s1">    void main(void) {</span>
 <span class="s1">        /* quantities for position and opacity calculation */</span>
-<span class="s1">        float tr = 0.5*sin(t);  /* &#39;real&#39; time */</span>
+<span class="s1">        float tr = 0.5*sin(t);  /* 'real' time */</span>
 <span class="s1">        vec2 diff = (tex_coord0.st - 0.5) * (1.0/(1.0-tr));</span>
 <span class="s1">        vec2 dist = diff + 0.5;</span>
 <span class="s1">        float max_dist = 1.0 - tr;</span>
@@ -1256,7 +1256,7 @@
 
 <span class="s1">        gl_FragColor = frag_col;</span>
 <span class="s1">    }</span>
-<span class="s1">    &#39;&#39;&#39;</span>
+<span class="s1">    '''</span>
 
     <span class="n">fs</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="n">FALLOUT_TRANSITION_FS</span><span class="p">)</span></div>
 
@@ -1265,29 +1265,29 @@
 <div class="viewcode-block" id="RiseInTransition">
 <a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.RiseInTransition">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">RiseInTransition</span><span class="p">(</span><span class="n">ShaderTransition</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Transition where the new screen rises from the screen centre,</span>
+<span class="w">    </span><span class="sd">'''Transition where the new screen rises from the screen centre,</span>
 <span class="sd">    becoming larger and changing from transparent to opaque until it</span>
 <span class="sd">    fills the screen. Mimics the popular/standard Android transition.</span>
 
 <span class="sd">    .. versionadded:: 1.8.0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">duration</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Duration in seconds of the transition, replacing the default of</span>
+<span class="w">    </span><span class="sd">'''Duration in seconds of the transition, replacing the default of</span>
 <span class="sd">    :class:`TransitionBase`.</span>
 
 <span class="sd">    :class:`duration` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to .2 (= 200ms).</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">RISEIN_TRANSITION_FS</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;$HEADER$</span>
+    <span class="n">RISEIN_TRANSITION_FS</span> <span class="o">=</span> <span class="s1">'''$HEADER$</span>
 <span class="s1">    uniform float t;</span>
 <span class="s1">    uniform sampler2D tex_in;</span>
 <span class="s1">    uniform sampler2D tex_out;</span>
 
 <span class="s1">    void main(void) {</span>
 <span class="s1">        /* quantities for position and opacity calculation */</span>
-<span class="s1">        float tr = 0.5 - 0.5*sqrt(sin(t));  /* &#39;real&#39; time */</span>
+<span class="s1">        float tr = 0.5 - 0.5*sqrt(sin(t));  /* 'real' time */</span>
 <span class="s1">        vec2 diff = (tex_coord0.st - 0.5) * (1.0/(1.0-tr));</span>
 <span class="s1">        vec2 dist = diff + 0.5;</span>
 <span class="s1">        float max_dist = 1.0 - tr;</span>
@@ -1314,7 +1314,7 @@
 
 <span class="s1">        gl_FragColor = frag_col;</span>
 <span class="s1">    }</span>
-<span class="s1">    &#39;&#39;&#39;</span>
+<span class="s1">    '''</span>
 
     <span class="n">fs</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="n">RISEIN_TRANSITION_FS</span><span class="p">)</span></div>
 
@@ -1323,14 +1323,14 @@
 <div class="viewcode-block" id="ScreenManager">
 <a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.ScreenManager">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ScreenManager</span><span class="p">(</span><span class="n">FloatLayout</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Screen manager. This is the main class that will control your</span>
+<span class="w">    </span><span class="sd">'''Screen manager. This is the main class that will control your</span>
 <span class="sd">    :class:`Screen` stack and memory.</span>
 
 <span class="sd">    By default, the manager will show only one screen at a time.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">current</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''</span>
 <span class="sd">    Name of the screen currently shown, or the screen to show.</span>
 
 <span class="sd">    ::</span>
@@ -1338,19 +1338,19 @@
 <span class="sd">        from kivy.uix.screenmanager import ScreenManager, Screen</span>
 
 <span class="sd">        sm = ScreenManager()</span>
-<span class="sd">        sm.add_widget(Screen(name=&#39;first&#39;))</span>
-<span class="sd">        sm.add_widget(Screen(name=&#39;second&#39;))</span>
+<span class="sd">        sm.add_widget(Screen(name='first'))</span>
+<span class="sd">        sm.add_widget(Screen(name='second'))</span>
 
 <span class="sd">        # By default, the first added screen will be shown. If you want to</span>
-<span class="sd">        # show another one, just set the &#39;current&#39; property.</span>
-<span class="sd">        sm.current = &#39;second&#39;</span>
+<span class="sd">        # show another one, just set the 'current' property.</span>
+<span class="sd">        sm.current = 'second'</span>
 
 <span class="sd">    :attr:`current` is a :class:`~kivy.properties.StringProperty` and defaults</span>
 <span class="sd">    to None.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">transition</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="n">baseclass</span><span class="o">=</span><span class="n">TransitionBase</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Transition object to use for animating the transition from the current</span>
+<span class="w">    </span><span class="sd">'''Transition object to use for animating the transition from the current</span>
 <span class="sd">    screen to the next one being shown.</span>
 
 <span class="sd">    For example, if you want to use a :class:`WipeTransition` between</span>
@@ -1360,12 +1360,12 @@
 <span class="sd">        WipeTransition</span>
 
 <span class="sd">        sm = ScreenManager(transition=WipeTransition())</span>
-<span class="sd">        sm.add_widget(Screen(name=&#39;first&#39;))</span>
-<span class="sd">        sm.add_widget(Screen(name=&#39;second&#39;))</span>
+<span class="sd">        sm.add_widget(Screen(name='first'))</span>
+<span class="sd">        sm.add_widget(Screen(name='second'))</span>
 
 <span class="sd">        # by default, the first added screen will be shown. If you want to</span>
-<span class="sd">        # show another one, just set the &#39;current&#39; property.</span>
-<span class="sd">        sm.current = &#39;second&#39;</span>
+<span class="sd">        # show another one, just set the 'current' property.</span>
+<span class="sd">        sm.current = 'second'</span>
 
 <span class="sd">    :attr:`transition` is an :class:`~kivy.properties.ObjectProperty` and</span>
 <span class="sd">    defaults to a :class:`SlideTransition`.</span>
@@ -1374,66 +1374,66 @@
 
 <span class="sd">        Default transition has been changed from :class:`SwapTransition` to</span>
 <span class="sd">        :class:`SlideTransition`.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">screens</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">()</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;List of all the :class:`Screen` widgets added. You should not change</span>
+<span class="w">    </span><span class="sd">'''List of all the :class:`Screen` widgets added. You should not change</span>
 <span class="sd">    this list manually. Use the</span>
 <span class="sd">    :meth:`add_widget &lt;kivy.uix.widget.Widget.add_widget&gt;` method instead.</span>
 
 <span class="sd">    :attr:`screens` is a :class:`~kivy.properties.ListProperty` and defaults to</span>
 <span class="sd">    [], read-only.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">current_screen</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Contains the currently displayed screen. You must not change this</span>
+<span class="w">    </span><span class="sd">'''Contains the currently displayed screen. You must not change this</span>
 <span class="sd">    property manually, use :attr:`current` instead.</span>
 
 <span class="sd">    :attr:`current_screen` is an :class:`~kivy.properties.ObjectProperty` and</span>
 <span class="sd">    defaults to None, read-only.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_screen_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">screens</span><span class="p">]</span>
 
-    <span class="n">screen_names</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_screen_names</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;screens&#39;</span><span class="p">,))</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;List of the names of all the :class:`Screen` widgets added. The list</span>
+    <span class="n">screen_names</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_screen_names</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">'screens'</span><span class="p">,))</span>
+<span class="w">    </span><span class="sd">'''List of the names of all the :class:`Screen` widgets added. The list</span>
 <span class="sd">    is read only.</span>
 
 <span class="sd">    :attr:`screens_names` is an :class:`~kivy.properties.AliasProperty` and</span>
 <span class="sd">    is read-only. It is updated if the screen list changes or the name</span>
 <span class="sd">    of a screen changes.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">if</span> <span class="s1">&#39;transition&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">'transition'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">transition</span> <span class="o">=</span> <span class="n">SlideTransition</span><span class="p">()</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ScreenManager</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;pos&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_pos</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">'pos'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_pos</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_screen_name_changed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">property</span><span class="p">(</span><span class="s1">&#39;screen_names&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">property</span><span class="p">(</span><span class="s1">'screen_names'</span><span class="p">)</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">screen</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_screen</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="n">name</span>
 
 <div class="viewcode-block" id="ScreenManager.add_widget">
 <a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.ScreenManager.add_widget">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''</span>
 <span class="sd">        .. versionchanged:: 2.1.0</span>
 <span class="sd">            Renamed argument `screen` to `widget`.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">Screen</span><span class="p">):</span>
             <span class="k">raise</span> <span class="n">ScreenManagerException</span><span class="p">(</span>
-                <span class="s1">&#39;ScreenManager accepts only Screen widget.&#39;</span><span class="p">)</span>
+                <span class="s1">'ScreenManager accepts only Screen widget.'</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">widget</span><span class="o">.</span><span class="n">manager</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">widget</span><span class="o">.</span><span class="n">manager</span> <span class="ow">is</span> <span class="bp">self</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">ScreenManagerException</span><span class="p">(</span>
-                    <span class="s1">&#39;Screen already managed by this ScreenManager (are you &#39;</span>
-                    <span class="s1">&#39;calling `switch_to` when you should be setting &#39;</span>
-                    <span class="s1">&#39;`current`?)&#39;</span><span class="p">)</span>
+                    <span class="s1">'Screen already managed by this ScreenManager (are you '</span>
+                    <span class="s1">'calling `switch_to` when you should be setting '</span>
+                    <span class="s1">'`current`?)'</span><span class="p">)</span>
             <span class="k">raise</span> <span class="n">ScreenManagerException</span><span class="p">(</span>
-                <span class="s1">&#39;Screen already managed by another ScreenManager.&#39;</span><span class="p">)</span>
+                <span class="s1">'Screen already managed by another ScreenManager.'</span><span class="p">)</span>
         <span class="n">widget</span><span class="o">.</span><span class="n">manager</span> <span class="o">=</span> <span class="bp">self</span>
         <span class="n">widget</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_screen_name_changed</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">screens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
@@ -1446,7 +1446,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">remove_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">Screen</span><span class="p">):</span>
             <span class="k">raise</span> <span class="n">ScreenManagerException</span><span class="p">(</span>
-                <span class="s1">&#39;ScreenManager uses remove_widget only for removing Screens.&#39;</span><span class="p">)</span>
+                <span class="s1">'ScreenManager uses remove_widget only for removing Screens.'</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">widget</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">screens</span><span class="p">:</span>
             <span class="k">return</span>
@@ -1467,10 +1467,10 @@
 <div class="viewcode-block" id="ScreenManager.clear_widgets">
 <a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.ScreenManager.clear_widgets">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">clear_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">children</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''</span>
 <span class="sd">        .. versionchanged:: 2.1.0</span>
 <span class="sd">            Renamed argument `screens` to `children`.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="n">children</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># iterate over a copy of screens, as self.remove_widget</span>
             <span class="c1"># modifies self.screens in place</span>
@@ -1512,36 +1512,36 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">real_add_widget</span><span class="p">(</span><span class="n">screen</span><span class="p">)</span>
             <span class="n">screen</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">do_layout</span><span class="p">()</span>
-            <span class="n">screen</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_pre_enter&#39;</span><span class="p">)</span>
-            <span class="n">screen</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_enter&#39;</span><span class="p">)</span>
+            <span class="n">screen</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_pre_enter'</span><span class="p">)</span>
+            <span class="n">screen</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_enter'</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ScreenManager.get_screen">
 <a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.ScreenManager.get_screen">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the screen widget associated with the name or raise a</span>
+<span class="w">        </span><span class="sd">'''Return the screen widget associated with the name or raise a</span>
 <span class="sd">        :class:`ScreenManagerException` if not found.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="n">matches</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">screens</span> <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">]</span>
         <span class="n">num_matches</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">num_matches</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ScreenManagerException</span><span class="p">(</span><span class="s1">&#39;No Screen with name &quot;</span><span class="si">%s</span><span class="s1">&quot;.&#39;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ScreenManagerException</span><span class="p">(</span><span class="s1">'No Screen with name "</span><span class="si">%s</span><span class="s1">".'</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">num_matches</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;Multiple screens named &quot;</span><span class="si">%s</span><span class="s1">&quot;: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">matches</span><span class="p">))</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">'Multiple screens named "</span><span class="si">%s</span><span class="s1">": </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">matches</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">matches</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="ScreenManager.has_screen">
 <a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.ScreenManager.has_screen">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">has_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return True if a screen with the `name` has been found.</span>
+<span class="w">        </span><span class="sd">'''Return True if a screen with the `name` has been found.</span>
 
 <span class="sd">        .. versionadded:: 1.6.0</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">return</span> <span class="nb">bool</span><span class="p">([</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">screens</span> <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">])</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__next__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the name of the next screen from the screen list.&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Return the name of the next screen from the screen list.'''</span>
         <span class="n">screens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">screens</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">screens</span><span class="p">:</span>
             <span class="k">return</span>
@@ -1555,8 +1555,8 @@
 <div class="viewcode-block" id="ScreenManager.previous">
 <a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.ScreenManager.previous">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">previous</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return the name of the previous screen from the screen list.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''Return the name of the previous screen from the screen list.</span>
+<span class="sd">        '''</span>
         <span class="n">screens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">screens</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">screens</span><span class="p">:</span>
             <span class="k">return</span>
@@ -1571,8 +1571,8 @@
 <div class="viewcode-block" id="ScreenManager.switch_to">
 <a class="viewcode-back" href="../../../api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.ScreenManager.switch_to">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">switch_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Add a new or existing screen to the ScreenManager and switch to it.</span>
-<span class="sd">        The previous screen will be &quot;switched away&quot; from. `options` are the</span>
+<span class="w">        </span><span class="sd">'''Add a new or existing screen to the ScreenManager and switch to it.</span>
+<span class="sd">        The previous screen will be "switched away" from. `options` are the</span>
 <span class="sd">        :attr:`transition` options that will be changed before the animation</span>
 <span class="sd">        happens.</span>
 
@@ -1582,9 +1582,9 @@
 <span class="sd">            sm = ScreenManager()</span>
 <span class="sd">            sm.switch_to(screen1)</span>
 <span class="sd">            # later</span>
-<span class="sd">            sm.switch_to(screen2, direction=&#39;left&#39;)</span>
+<span class="sd">            sm.switch_to(screen2, direction='left')</span>
 <span class="sd">            # later</span>
-<span class="sd">            sm.switch_to(screen3, direction=&#39;right&#39;, duration=1.)</span>
+<span class="sd">            sm.switch_to(screen3, direction='right', duration=1.)</span>
 
 <span class="sd">        If any animation is in progress, it will be stopped and replaced by</span>
 <span class="sd">        this one: you should avoid this because the animation will just look</span>
@@ -1594,12 +1594,12 @@
 <span class="sd">        current screen.</span>
 
 <span class="sd">        .. versionadded: 1.8.0</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">assert</span> <span class="n">screen</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">screen</span><span class="p">,</span> <span class="n">Screen</span><span class="p">):</span>
             <span class="k">raise</span> <span class="n">ScreenManagerException</span><span class="p">(</span>
-                <span class="s1">&#39;ScreenManager accepts only Screen widget.&#39;</span><span class="p">)</span>
+                <span class="s1">'ScreenManager accepts only Screen widget.'</span><span class="p">)</span>
 
         <span class="c1"># stop any transition that might be happening already</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transition</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
@@ -1611,7 +1611,7 @@
 
         <span class="c1"># change the transition if given explicitly</span>
         <span class="n">old_transition</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transition</span>
-        <span class="n">specified_transition</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;transition&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">specified_transition</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">"transition"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">specified_transition</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">transition</span> <span class="o">=</span> <span class="n">specified_transition</span>
 
@@ -1640,7 +1640,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">_generate_screen_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;_screen</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s1">'_screen</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_screen</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">name</span>
             <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
@@ -1687,10 +1687,10 @@
 
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.button</span><span class="w"> </span><span class="kn">import</span> <span class="n">Button</span>
-    <span class="n">Builder</span><span class="o">.</span><span class="n">load_string</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+    <span class="n">Builder</span><span class="o">.</span><span class="n">load_string</span><span class="p">(</span><span class="s1">'''</span>
 <span class="s1">&lt;Screen&gt;:</span>
 <span class="s1">    canvas:</span>
 <span class="s1">        Color:</span>
@@ -1701,32 +1701,32 @@
 <span class="s1">    GridLayout:</span>
 <span class="s1">        cols: 2</span>
 <span class="s1">        Button:</span>
-<span class="s1">            text: &#39;Hello world&#39;</span>
+<span class="s1">            text: 'Hello world'</span>
 <span class="s1">        Button:</span>
-<span class="s1">            text: &#39;Hello world&#39;</span>
+<span class="s1">            text: 'Hello world'</span>
 <span class="s1">        Button:</span>
-<span class="s1">            text: &#39;Hello world&#39;</span>
+<span class="s1">            text: 'Hello world'</span>
 <span class="s1">        Button:</span>
-<span class="s1">            text: &#39;Hello world&#39;</span>
-<span class="s1">&#39;&#39;&#39;</span><span class="p">)</span>
+<span class="s1">            text: 'Hello world'</span>
+<span class="s1">'''</span><span class="p">)</span>
 
     <span class="k">class</span><span class="w"> </span><span class="nc">TestApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">change_view</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">l</span><span class="p">):</span>
-            <span class="c1"># d = (&#39;left&#39;, &#39;up&#39;, &#39;down&#39;, &#39;right&#39;)</span>
+            <span class="c1"># d = ('left', 'up', 'down', 'right')</span>
             <span class="c1"># di = d.index(self.sm.transition.direction)</span>
             <span class="c1"># self.sm.transition.direction = d[(di + 1) % len(d)]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="p">)</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">remove_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">l</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">get_screen</span><span class="p">(</span><span class="s1">&#39;test1&#39;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sm</span><span class="o">.</span><span class="n">get_screen</span><span class="p">(</span><span class="s1">'test1'</span><span class="p">))</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="n">root</span> <span class="o">=</span> <span class="n">FloatLayout</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sm</span> <span class="o">=</span> <span class="n">sm</span> <span class="o">=</span> <span class="n">ScreenManager</span><span class="p">(</span><span class="n">transition</span><span class="o">=</span><span class="n">SwapTransition</span><span class="p">())</span>
 
-            <span class="n">sm</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">Screen</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;test1&#39;</span><span class="p">))</span>
-            <span class="n">sm</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">Screen</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;test2&#39;</span><span class="p">))</span>
+            <span class="n">sm</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">Screen</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'test1'</span><span class="p">))</span>
+            <span class="n">sm</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">Screen</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'test2'</span><span class="p">))</span>
 
             <span class="n">btn</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
             <span class="n">btn</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_release</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">change_view</span><span class="p">)</span>
@@ -1754,7 +1754,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

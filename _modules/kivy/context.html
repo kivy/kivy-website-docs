@@ -369,7 +369,7 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.context</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">Context</span>
 <span class="sd">=======</span>
 
@@ -380,15 +380,15 @@
 <span class="sd">    This is experimental and subject to change as long as this warning notice</span>
 <span class="sd">    is present.</span>
 
-<span class="sd">Kivy has a few &quot;global&quot; instances that are used directly by many pieces of the</span>
+<span class="sd">Kivy has a few "global" instances that are used directly by many pieces of the</span>
 <span class="sd">framework: `Cache`, `Builder`, `Clock`.</span>
 
 <span class="sd">TODO: document this module.</span>
 
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Context&#39;</span><span class="p">,</span> <span class="s1">&#39;ProxyContext&#39;</span><span class="p">,</span> <span class="s1">&#39;register_context&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;get_current_context&#39;</span><span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'Context'</span><span class="p">,</span> <span class="s1">'ProxyContext'</span><span class="p">,</span> <span class="s1">'register_context'</span><span class="p">,</span>
+           <span class="s1">'get_current_context'</span><span class="p">)</span>
 
 <span class="n">_contexts</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="n">_default_context</span> <span class="o">=</span> <span class="kc">None</span>
@@ -397,29 +397,29 @@
 
 <span class="k">class</span><span class="w"> </span><span class="nc">ProxyContext</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
-    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;_obj&#39;</span><span class="p">]</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'_obj'</span><span class="p">]</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
         <span class="nb">object</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_obj&#39;</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+        <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">'_obj'</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_obj&#39;</span><span class="p">),</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">'_obj'</span><span class="p">),</span> <span class="n">name</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__delattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-        <span class="nb">delattr</span><span class="p">(</span><span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_obj&#39;</span><span class="p">),</span> <span class="n">name</span><span class="p">)</span>
+        <span class="nb">delattr</span><span class="p">(</span><span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">'_obj'</span><span class="p">),</span> <span class="n">name</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="nb">setattr</span><span class="p">(</span><span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_obj&#39;</span><span class="p">),</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">'_obj'</span><span class="p">),</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_obj&#39;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">'_obj'</span><span class="p">))</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_obj&#39;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">'_obj'</span><span class="p">))</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_obj&#39;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="nb">object</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">'_obj'</span><span class="p">))</span>
 
 
 <div class="viewcode-block" id="Context">
@@ -433,21 +433,21 @@
             <span class="k">return</span>
 
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">context</span> <span class="ow">in</span> <span class="n">_contexts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">context</span><span class="p">[</span><span class="s1">&#39;cls&#39;</span><span class="p">](</span><span class="o">*</span><span class="n">context</span><span class="p">[</span><span class="s1">&#39;args&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">context</span><span class="p">[</span><span class="s1">&#39;kwargs&#39;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">context</span><span class="p">[</span><span class="s1">'cls'</span><span class="p">](</span><span class="o">*</span><span class="n">context</span><span class="p">[</span><span class="s1">'args'</span><span class="p">],</span> <span class="o">**</span><span class="n">context</span><span class="p">[</span><span class="s1">'kwargs'</span><span class="p">])</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">_context_stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">instance</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">_contexts</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;proxy&#39;</span><span class="p">],</span> <span class="s1">&#39;_obj&#39;</span><span class="p">,</span> <span class="n">instance</span><span class="p">)</span>
+            <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">_contexts</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">'proxy'</span><span class="p">],</span> <span class="s1">'_obj'</span><span class="p">,</span> <span class="n">instance</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Context.pop">
 <a class="viewcode-back" href="../../api-kivy.context.html#kivy.context.Context.pop">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># After popping context from stack. Update proxy&#39;s _obj with</span>
+        <span class="c1"># After popping context from stack. Update proxy's _obj with</span>
         <span class="c1"># instances in current context</span>
         <span class="n">_context_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">instance</span> <span class="ow">in</span> <span class="n">get_current_context</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">_contexts</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;proxy&#39;</span><span class="p">],</span> <span class="s1">&#39;_obj&#39;</span><span class="p">,</span> <span class="n">instance</span><span class="p">)</span></div>
+            <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">_contexts</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s1">'proxy'</span><span class="p">],</span> <span class="s1">'_obj'</span><span class="p">,</span> <span class="n">instance</span><span class="p">)</span></div>
 </div>
 
 
@@ -455,15 +455,15 @@
 <div class="viewcode-block" id="register_context">
 <a class="viewcode-back" href="../../api-kivy.context.html#kivy.context.register_context">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">register_context</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Register a new context.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''Register a new context.</span>
+<span class="sd">    '''</span>
     <span class="n">instance</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="n">proxy</span> <span class="o">=</span> <span class="n">ProxyContext</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
     <span class="n">_contexts</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;cls&#39;</span><span class="p">:</span> <span class="bp">cls</span><span class="p">,</span>
-        <span class="s1">&#39;args&#39;</span><span class="p">:</span> <span class="n">args</span><span class="p">,</span>
-        <span class="s1">&#39;kwargs&#39;</span><span class="p">:</span> <span class="n">kwargs</span><span class="p">,</span>
-        <span class="s1">&#39;proxy&#39;</span><span class="p">:</span> <span class="n">proxy</span><span class="p">}</span>
+        <span class="s1">'cls'</span><span class="p">:</span> <span class="bp">cls</span><span class="p">,</span>
+        <span class="s1">'args'</span><span class="p">:</span> <span class="n">args</span><span class="p">,</span>
+        <span class="s1">'kwargs'</span><span class="p">:</span> <span class="n">kwargs</span><span class="p">,</span>
+        <span class="s1">'proxy'</span><span class="p">:</span> <span class="n">proxy</span><span class="p">}</span>
     <span class="n">_default_context</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">instance</span>
     <span class="k">return</span> <span class="n">proxy</span></div>
 
@@ -472,8 +472,8 @@
 <div class="viewcode-block" id="get_current_context">
 <a class="viewcode-back" href="../../api-kivy.context.html#kivy.context.get_current_context">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_current_context</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Return the current context.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''Return the current context.</span>
+<span class="sd">    '''</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">_context_stack</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">_default_context</span>
     <span class="k">return</span> <span class="n">_context_stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
@@ -495,7 +495,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

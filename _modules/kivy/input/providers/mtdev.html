@@ -369,14 +369,14 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.input.providers.mtdev</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">Native support for Multitouch devices on Linux, using libmtdev.</span>
 <span class="sd">===============================================================</span>
 
 <span class="sd">The Mtdev project is a part of the Ubuntu Maverick multitouch architecture.</span>
 <span class="sd">You can read more on http://wiki.ubuntu.com/Multitouch</span>
 
-<span class="sd">To configure MTDev, it&#39;s preferable to use probesysfs providers.</span>
+<span class="sd">To configure MTDev, it's preferable to use probesysfs providers.</span>
 <span class="sd">Check :py:class:`~kivy.input.providers.probesysfs` for more information.</span>
 
 <span class="sd">Otherwise, add this to your configuration::</span>
@@ -411,9 +411,9 @@
 <span class="sd">    [input]</span>
 <span class="sd">    # example for inverting touch events</span>
 <span class="sd">    display = mtdev,/dev/input/event0,invert_x=1,invert_y=1</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;MTDMotionEventProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;MTDMotionEvent&#39;</span><span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'MTDMotionEventProvider'</span><span class="p">,</span> <span class="s1">'MTDMotionEvent'</span><span class="p">)</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os.path</span>
@@ -427,40 +427,40 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">MTDMotionEvent</span><span class="p">(</span><span class="n">MotionEvent</span><span class="p">):</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;is_touch&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;type_id&#39;</span><span class="p">,</span> <span class="s1">&#39;touch&#39;</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">'is_touch'</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">'type_id'</span><span class="p">,</span> <span class="s1">'touch'</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
 <div class="viewcode-block" id="MTDMotionEvent.depack">
 <a class="viewcode-back" href="../../../../api-kivy.input.providers.mtdev.html#kivy.input.providers.mtdev.MTDMotionEvent.depack">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">depack</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
-        <span class="k">if</span> <span class="s1">&#39;x&#39;</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">sx</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">'x'</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sx</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">'x'</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sx</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="k">if</span> <span class="s1">&#39;y&#39;</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">sy</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">'y'</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sy</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">'y'</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sy</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">profile</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;pos&#39;</span><span class="p">]</span>
-        <span class="k">if</span> <span class="s1">&#39;size_w&#39;</span> <span class="ow">in</span> <span class="n">args</span> <span class="ow">and</span> <span class="s1">&#39;size_h&#39;</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">profile</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'pos'</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">'size_w'</span> <span class="ow">in</span> <span class="n">args</span> <span class="ow">and</span> <span class="s1">'size_h'</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">ShapeRect</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;size_w&#39;</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;size_h&#39;</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;shape&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s1">&#39;pressure&#39;</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">pressure</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;pressure&#39;</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;pressure&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">'size_w'</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">'size_h'</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'shape'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">'pressure'</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pressure</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">'pressure'</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'pressure'</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">depack</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div>
 
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">i</span><span class="p">,</span> <span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
-        <span class="k">return</span> <span class="s1">&#39;&lt;MTDMotionEvent id=</span><span class="si">%d</span><span class="s1"> pos=(</span><span class="si">%f</span><span class="s1">, </span><span class="si">%f</span><span class="s1">) device=</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="s1">'&lt;MTDMotionEvent id=</span><span class="si">%d</span><span class="s1"> pos=(</span><span class="si">%f</span><span class="s1">, </span><span class="si">%f</span><span class="s1">) device=</span><span class="si">%s</span><span class="s1">&gt;'</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span></div>
 
 
 
-<span class="k">if</span> <span class="s1">&#39;KIVY_DOC&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+<span class="k">if</span> <span class="s1">'KIVY_DOC'</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
 
     <span class="c1"># documentation hack</span>
     <span class="n">MTDMotionEventProvider</span> <span class="o">=</span> <span class="kc">None</span>
@@ -481,13 +481,13 @@
 
     <span class="k">class</span><span class="w"> </span><span class="nc">MTDMotionEventProvider</span><span class="p">(</span><span class="n">MotionEventProvider</span><span class="p">):</span>
 
-        <span class="n">options</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;min_position_x&#39;</span><span class="p">,</span> <span class="s1">&#39;max_position_x&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;min_position_y&#39;</span><span class="p">,</span> <span class="s1">&#39;max_position_y&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;min_pressure&#39;</span><span class="p">,</span> <span class="s1">&#39;max_pressure&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;min_touch_major&#39;</span><span class="p">,</span> <span class="s1">&#39;max_touch_major&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;min_touch_minor&#39;</span><span class="p">,</span> <span class="s1">&#39;max_touch_minor&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;invert_x&#39;</span><span class="p">,</span> <span class="s1">&#39;invert_y&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;rotation&#39;</span><span class="p">)</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'min_position_x'</span><span class="p">,</span> <span class="s1">'max_position_x'</span><span class="p">,</span>
+                   <span class="s1">'min_position_y'</span><span class="p">,</span> <span class="s1">'max_position_y'</span><span class="p">,</span>
+                   <span class="s1">'min_pressure'</span><span class="p">,</span> <span class="s1">'max_pressure'</span><span class="p">,</span>
+                   <span class="s1">'min_touch_major'</span><span class="p">,</span> <span class="s1">'max_touch_major'</span><span class="p">,</span>
+                   <span class="s1">'min_touch_minor'</span><span class="p">,</span> <span class="s1">'max_touch_minor'</span><span class="p">,</span>
+                   <span class="s1">'invert_x'</span><span class="p">,</span> <span class="s1">'invert_y'</span><span class="p">,</span>
+                   <span class="s1">'rotation'</span><span class="p">)</span>
 
         <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
             <span class="nb">super</span><span class="p">(</span><span class="n">MTDMotionEventProvider</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
@@ -496,25 +496,25 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 
             <span class="c1"># split arguments</span>
-            <span class="n">args</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">','</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="p">:</span>
-                <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;MTD: No filename pass to MTD configuration&#39;</span><span class="p">)</span>
-                <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;MTD: Use /dev/input/event0 for example&#39;</span><span class="p">)</span>
+                <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'MTD: No filename pass to MTD configuration'</span><span class="p">)</span>
+                <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'MTD: Use /dev/input/event0 for example'</span><span class="p">)</span>
                 <span class="k">return</span>
 
             <span class="c1"># read filename</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">input_fn</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;MTD: Read event from &lt;</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_fn</span><span class="p">)</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'MTD: Read event from &lt;</span><span class="si">%s</span><span class="s1">&gt;'</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_fn</span><span class="p">)</span>
 
             <span class="c1"># read parameters</span>
             <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
-                <span class="k">if</span> <span class="n">arg</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">arg</span> <span class="o">==</span> <span class="s1">''</span><span class="p">:</span>
                     <span class="k">continue</span>
-                <span class="n">arg</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span>
+                <span class="n">arg</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'='</span><span class="p">)</span>
 
-                <span class="c1"># ensure it&#39;s a key = value</span>
+                <span class="c1"># ensure it's a key = value</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-                    <span class="n">err</span> <span class="o">=</span> <span class="s1">&#39;MTD: Bad parameter </span><span class="si">%s</span><span class="s1">: Not in key=value format&#39;</span> <span class="o">%</span>\
+                    <span class="n">err</span> <span class="o">=</span> <span class="s1">'MTD: Bad parameter </span><span class="si">%s</span><span class="s1">: Not in key=value format'</span> <span class="o">%</span>\
                         <span class="n">arg</span>
                     <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
                     <span class="k">continue</span>
@@ -522,26 +522,26 @@
                 <span class="c1"># ensure the key exist</span>
                 <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">arg</span>
                 <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">MTDMotionEventProvider</span><span class="o">.</span><span class="n">options</span><span class="p">:</span>
-                    <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;MTD: unknown </span><span class="si">%s</span><span class="s1"> option&#39;</span> <span class="o">%</span> <span class="n">key</span><span class="p">)</span>
+                    <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'MTD: unknown </span><span class="si">%s</span><span class="s1"> option'</span> <span class="o">%</span> <span class="n">key</span><span class="p">)</span>
                     <span class="k">continue</span>
 
                 <span class="c1"># ensure the value</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                    <span class="n">err</span> <span class="o">=</span> <span class="s1">&#39;MTD: invalid value </span><span class="si">%s</span><span class="s1"> for option </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+                    <span class="n">err</span> <span class="o">=</span> <span class="s1">'MTD: invalid value </span><span class="si">%s</span><span class="s1"> for option </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
                     <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
                     <span class="k">continue</span>
 
                 <span class="c1"># all good!</span>
-                <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;MTD: Set custom </span><span class="si">%s</span><span class="s1"> to </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
+                <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'MTD: Set custom </span><span class="si">%s</span><span class="s1"> to </span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
 
-            <span class="k">if</span> <span class="s1">&#39;rotation&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span><span class="p">[</span><span class="s1">&#39;rotation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span><span class="p">[</span><span class="s1">&#39;rotation&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">270</span><span class="p">):</span>
-                <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;HIDInput: invalid rotation value (</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span><span class="p">[</span><span class="s1">&#39;rotation&#39;</span><span class="p">]))</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span><span class="p">[</span><span class="s1">&#39;rotation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="s1">'rotation'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span><span class="p">[</span><span class="s1">'rotation'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span><span class="p">[</span><span class="s1">'rotation'</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">270</span><span class="p">):</span>
+                <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'HIDInput: invalid rotation value (</span><span class="si">{}</span><span class="s1">)'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span><span class="p">[</span><span class="s1">'rotation'</span><span class="p">]))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">default_ranges</span><span class="p">[</span><span class="s1">'rotation'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_fn</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -560,10 +560,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">_thread_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-            <span class="n">input_fn</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;input_fn&#39;</span><span class="p">)</span>
-            <span class="n">queue</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;queue&#39;</span><span class="p">)</span>
-            <span class="n">device</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;device&#39;</span><span class="p">)</span>
-            <span class="n">drs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;default_ranges&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span>
+            <span class="n">input_fn</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'input_fn'</span><span class="p">)</span>
+            <span class="n">queue</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'queue'</span><span class="p">)</span>
+            <span class="n">device</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'device'</span><span class="p">)</span>
+            <span class="n">drs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'default_ranges'</span><span class="p">)</span><span class="o">.</span><span class="n">get</span>
             <span class="n">touches</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="n">touches_sent</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">point</span> <span class="o">=</span> <span class="p">{}</span>
@@ -588,22 +588,22 @@
                 <span class="k">for</span> <span class="n">args</span> <span class="ow">in</span> <span class="n">points</span><span class="p">:</span>
                     <span class="c1"># this can happen if we have a touch going on already at</span>
                     <span class="c1"># the start of the app</span>
-                    <span class="k">if</span> <span class="s1">&#39;id&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="s1">'id'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
                         <span class="k">continue</span>
-                    <span class="n">tid</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+                    <span class="n">tid</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span>
                     <span class="k">try</span><span class="p">:</span>
                         <span class="n">touch</span> <span class="o">=</span> <span class="n">touches</span><span class="p">[</span><span class="n">tid</span><span class="p">]</span>
                     <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
                         <span class="n">touch</span> <span class="o">=</span> <span class="n">MTDMotionEvent</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">tid</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
                         <span class="n">touches</span><span class="p">[</span><span class="n">touch</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">touch</span>
                     <span class="n">touch</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
-                    <span class="n">action</span> <span class="o">=</span> <span class="s1">&#39;update&#39;</span>
+                    <span class="n">action</span> <span class="o">=</span> <span class="s1">'update'</span>
                     <span class="k">if</span> <span class="n">tid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">touches_sent</span><span class="p">:</span>
-                        <span class="n">action</span> <span class="o">=</span> <span class="s1">&#39;begin&#39;</span>
+                        <span class="n">action</span> <span class="o">=</span> <span class="s1">'begin'</span>
                         <span class="n">touches_sent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tid</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="s1">&#39;delete&#39;</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
-                        <span class="n">action</span> <span class="o">=</span> <span class="s1">&#39;end&#39;</span>
-                        <span class="k">del</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;delete&#39;</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="s1">'delete'</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+                        <span class="n">action</span> <span class="o">=</span> <span class="s1">'end'</span>
+                        <span class="k">del</span> <span class="n">args</span><span class="p">[</span><span class="s1">'delete'</span><span class="p">]</span>
                         <span class="k">del</span> <span class="n">touches</span><span class="p">[</span><span class="n">touch</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
                         <span class="n">touches_sent</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tid</span><span class="p">)</span>
                         <span class="n">touch</span><span class="o">.</span><span class="n">update_time_end</span><span class="p">()</span>
@@ -612,7 +612,7 @@
             <span class="k">def</span><span class="w"> </span><span class="nf">normalize</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">):</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="k">return</span> <span class="p">(</span><span class="n">value</span> <span class="o">-</span> <span class="n">vmin</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">vmax</span> <span class="o">-</span> <span class="n">vmin</span><span class="p">)</span>
-                <span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>  <span class="c1"># it&#39;s both in py2 and py3</span>
+                <span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>  <span class="c1"># it's both in py2 and py3</span>
                     <span class="k">return</span> <span class="p">(</span><span class="n">value</span> <span class="o">-</span> <span class="n">vmin</span><span class="p">)</span>
 
             <span class="c1"># open mtdev device</span>
@@ -623,61 +623,61 @@
             <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">errno</span> <span class="o">==</span> <span class="mi">13</span><span class="p">:</span>  <span class="c1"># Permission denied</span>
                     <span class="n">Logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-                        <span class="s1">&#39;MTD: Unable to open device &quot;</span><span class="si">{0}</span><span class="s1">&quot;. Please ensure you&#39;</span>
-                        <span class="s1">&#39; have the appropriate permissions.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">_fn</span><span class="p">))</span>
+                        <span class="s1">'MTD: Unable to open device "</span><span class="si">{0}</span><span class="s1">". Please ensure you'</span>
+                        <span class="s1">' have the appropriate permissions.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">_fn</span><span class="p">))</span>
                     <span class="k">return</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">raise</span>
 
             <span class="c1"># prepare some vars to get limit of some component</span>
             <span class="n">ab</span> <span class="o">=</span> <span class="n">_device</span><span class="o">.</span><span class="n">get_abs</span><span class="p">(</span><span class="n">MTDEV_ABS_POSITION_X</span><span class="p">)</span>
-            <span class="n">range_min_position_x</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;min_position_x&#39;</span><span class="p">,</span> <span class="n">ab</span><span class="o">.</span><span class="n">minimum</span><span class="p">)</span>
-            <span class="n">range_max_position_x</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;max_position_x&#39;</span><span class="p">,</span> <span class="n">ab</span><span class="o">.</span><span class="n">maximum</span><span class="p">)</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;MTD: &lt;</span><span class="si">%s</span><span class="s1">&gt; range position X is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span>
+            <span class="n">range_min_position_x</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'min_position_x'</span><span class="p">,</span> <span class="n">ab</span><span class="o">.</span><span class="n">minimum</span><span class="p">)</span>
+            <span class="n">range_max_position_x</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'max_position_x'</span><span class="p">,</span> <span class="n">ab</span><span class="o">.</span><span class="n">maximum</span><span class="p">)</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'MTD: &lt;</span><span class="si">%s</span><span class="s1">&gt; range position X is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span>
                         <span class="p">(</span><span class="n">_fn</span><span class="p">,</span> <span class="n">range_min_position_x</span><span class="p">,</span> <span class="n">range_max_position_x</span><span class="p">))</span>
 
             <span class="n">ab</span> <span class="o">=</span> <span class="n">_device</span><span class="o">.</span><span class="n">get_abs</span><span class="p">(</span><span class="n">MTDEV_ABS_POSITION_Y</span><span class="p">)</span>
-            <span class="n">range_min_position_y</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;min_position_y&#39;</span><span class="p">,</span> <span class="n">ab</span><span class="o">.</span><span class="n">minimum</span><span class="p">)</span>
-            <span class="n">range_max_position_y</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;max_position_y&#39;</span><span class="p">,</span> <span class="n">ab</span><span class="o">.</span><span class="n">maximum</span><span class="p">)</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;MTD: &lt;</span><span class="si">%s</span><span class="s1">&gt; range position Y is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span>
+            <span class="n">range_min_position_y</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'min_position_y'</span><span class="p">,</span> <span class="n">ab</span><span class="o">.</span><span class="n">minimum</span><span class="p">)</span>
+            <span class="n">range_max_position_y</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'max_position_y'</span><span class="p">,</span> <span class="n">ab</span><span class="o">.</span><span class="n">maximum</span><span class="p">)</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'MTD: &lt;</span><span class="si">%s</span><span class="s1">&gt; range position Y is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span>
                         <span class="p">(</span><span class="n">_fn</span><span class="p">,</span> <span class="n">range_min_position_y</span><span class="p">,</span> <span class="n">range_max_position_y</span><span class="p">))</span>
 
             <span class="n">ab</span> <span class="o">=</span> <span class="n">_device</span><span class="o">.</span><span class="n">get_abs</span><span class="p">(</span><span class="n">MTDEV_ABS_TOUCH_MAJOR</span><span class="p">)</span>
-            <span class="n">range_min_major</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;min_touch_major&#39;</span><span class="p">,</span> <span class="n">ab</span><span class="o">.</span><span class="n">minimum</span><span class="p">)</span>
-            <span class="n">range_max_major</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;max_touch_major&#39;</span><span class="p">,</span> <span class="n">ab</span><span class="o">.</span><span class="n">maximum</span><span class="p">)</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;MTD: &lt;</span><span class="si">%s</span><span class="s1">&gt; range touch major is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span>
+            <span class="n">range_min_major</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'min_touch_major'</span><span class="p">,</span> <span class="n">ab</span><span class="o">.</span><span class="n">minimum</span><span class="p">)</span>
+            <span class="n">range_max_major</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'max_touch_major'</span><span class="p">,</span> <span class="n">ab</span><span class="o">.</span><span class="n">maximum</span><span class="p">)</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'MTD: &lt;</span><span class="si">%s</span><span class="s1">&gt; range touch major is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span>
                         <span class="p">(</span><span class="n">_fn</span><span class="p">,</span> <span class="n">range_min_major</span><span class="p">,</span> <span class="n">range_max_major</span><span class="p">))</span>
 
             <span class="n">ab</span> <span class="o">=</span> <span class="n">_device</span><span class="o">.</span><span class="n">get_abs</span><span class="p">(</span><span class="n">MTDEV_ABS_TOUCH_MINOR</span><span class="p">)</span>
-            <span class="n">range_min_minor</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;min_touch_minor&#39;</span><span class="p">,</span> <span class="n">ab</span><span class="o">.</span><span class="n">minimum</span><span class="p">)</span>
-            <span class="n">range_max_minor</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;max_touch_minor&#39;</span><span class="p">,</span> <span class="n">ab</span><span class="o">.</span><span class="n">maximum</span><span class="p">)</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;MTD: &lt;</span><span class="si">%s</span><span class="s1">&gt; range touch minor is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span>
+            <span class="n">range_min_minor</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'min_touch_minor'</span><span class="p">,</span> <span class="n">ab</span><span class="o">.</span><span class="n">minimum</span><span class="p">)</span>
+            <span class="n">range_max_minor</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'max_touch_minor'</span><span class="p">,</span> <span class="n">ab</span><span class="o">.</span><span class="n">maximum</span><span class="p">)</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'MTD: &lt;</span><span class="si">%s</span><span class="s1">&gt; range touch minor is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span>
                         <span class="p">(</span><span class="n">_fn</span><span class="p">,</span> <span class="n">range_min_minor</span><span class="p">,</span> <span class="n">range_max_minor</span><span class="p">))</span>
 
-            <span class="n">range_min_pressure</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;min_pressure&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-            <span class="n">range_max_pressure</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;max_pressure&#39;</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;MTD: &lt;</span><span class="si">%s</span><span class="s1">&gt; range pressure is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span>
+            <span class="n">range_min_pressure</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'min_pressure'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">range_max_pressure</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'max_pressure'</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'MTD: &lt;</span><span class="si">%s</span><span class="s1">&gt; range pressure is </span><span class="si">%d</span><span class="s1"> - </span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span>
                         <span class="p">(</span><span class="n">_fn</span><span class="p">,</span> <span class="n">range_min_pressure</span><span class="p">,</span> <span class="n">range_max_pressure</span><span class="p">))</span>
 
-            <span class="n">invert_x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">drs</span><span class="p">(</span><span class="s1">&#39;invert_x&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
-            <span class="n">invert_y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">drs</span><span class="p">(</span><span class="s1">&#39;invert_y&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;MTD: &lt;</span><span class="si">%s</span><span class="s1">&gt; axes inversion: X is </span><span class="si">%d</span><span class="s1">, Y is </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span>
+            <span class="n">invert_x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">drs</span><span class="p">(</span><span class="s1">'invert_x'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+            <span class="n">invert_y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">drs</span><span class="p">(</span><span class="s1">'invert_y'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'MTD: &lt;</span><span class="si">%s</span><span class="s1">&gt; axes inversion: X is </span><span class="si">%d</span><span class="s1">, Y is </span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span>
                         <span class="p">(</span><span class="n">_fn</span><span class="p">,</span> <span class="n">invert_x</span><span class="p">,</span> <span class="n">invert_y</span><span class="p">))</span>
 
-            <span class="n">rotation</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">&#39;rotation&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;MTD: &lt;</span><span class="si">%s</span><span class="s1">&gt; rotation set to </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span>
+            <span class="n">rotation</span> <span class="o">=</span> <span class="n">drs</span><span class="p">(</span><span class="s1">'rotation'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'MTD: &lt;</span><span class="si">%s</span><span class="s1">&gt; rotation set to </span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span>
                         <span class="p">(</span><span class="n">_fn</span><span class="p">,</span> <span class="n">rotation</span><span class="p">))</span>
             <span class="n">failures</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">while</span> <span class="n">_device</span><span class="p">:</span>
                 <span class="c1"># if device have disconnected lets try to connect</span>
                 <span class="k">if</span> <span class="n">failures</span> <span class="o">&gt;</span> <span class="mi">1000</span><span class="p">:</span>
-                    <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;MTD: &lt;</span><span class="si">%s</span><span class="s1">&gt; input device disconnected&#39;</span> <span class="o">%</span> <span class="n">_fn</span><span class="p">)</span>
+                    <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'MTD: &lt;</span><span class="si">%s</span><span class="s1">&gt; input device disconnected'</span> <span class="o">%</span> <span class="n">_fn</span><span class="p">)</span>
                     <span class="k">while</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">_fn</span><span class="p">):</span>
                         <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
-                    <span class="c1"># input device is back online let&#39;s recreate device</span>
+                    <span class="c1"># input device is back online let's recreate device</span>
                     <span class="n">_device</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
                     <span class="n">_device</span> <span class="o">=</span> <span class="n">Device</span><span class="p">(</span><span class="n">_fn</span><span class="p">)</span>
-                    <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;MTD: &lt;</span><span class="si">%s</span><span class="s1">&gt; input device reconnected&#39;</span> <span class="o">%</span> <span class="n">_fn</span><span class="p">)</span>
+                    <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'MTD: &lt;</span><span class="si">%s</span><span class="s1">&gt; input device reconnected'</span> <span class="o">%</span> <span class="n">_fn</span><span class="p">)</span>
                     <span class="n">failures</span> <span class="o">=</span> <span class="mi">0</span>
                     <span class="k">continue</span>
 
@@ -708,29 +708,29 @@
                     <span class="n">ev_code</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">code</span>
                     <span class="k">if</span> <span class="n">ev_code</span> <span class="o">==</span> <span class="n">MTDEV_CODE_TRACKING_ID</span><span class="p">:</span>
                         <span class="k">if</span> <span class="n">ev_value</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-                            <span class="n">point</span><span class="p">[</span><span class="s1">&#39;delete&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                            <span class="n">point</span><span class="p">[</span><span class="s1">'delete'</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
                         <span class="k">else</span><span class="p">:</span>
-                            <span class="n">point</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ev_value</span>
+                            <span class="n">point</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span> <span class="o">=</span> <span class="n">ev_value</span>
                     <span class="k">elif</span> <span class="n">ev_code</span> <span class="o">==</span> <span class="n">MTDEV_CODE_POSITION_X</span><span class="p">:</span>
                         <span class="n">val</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">ev_value</span><span class="p">,</span>
                                         <span class="n">range_min_position_x</span><span class="p">,</span>
                                         <span class="n">range_max_position_x</span><span class="p">)</span>
-                        <span class="n">assign_coord</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">invert_x</span><span class="p">,</span> <span class="s1">&#39;xy&#39;</span><span class="p">)</span>
+                        <span class="n">assign_coord</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">invert_x</span><span class="p">,</span> <span class="s1">'xy'</span><span class="p">)</span>
                     <span class="k">elif</span> <span class="n">ev_code</span> <span class="o">==</span> <span class="n">MTDEV_CODE_POSITION_Y</span><span class="p">:</span>
                         <span class="n">val</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">-</span> <span class="n">normalize</span><span class="p">(</span><span class="n">ev_value</span><span class="p">,</span>
                                              <span class="n">range_min_position_y</span><span class="p">,</span>
                                              <span class="n">range_max_position_y</span><span class="p">)</span>
-                        <span class="n">assign_coord</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">invert_y</span><span class="p">,</span> <span class="s1">&#39;yx&#39;</span><span class="p">)</span>
+                        <span class="n">assign_coord</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">invert_y</span><span class="p">,</span> <span class="s1">'yx'</span><span class="p">)</span>
                     <span class="k">elif</span> <span class="n">ev_code</span> <span class="o">==</span> <span class="n">MTDEV_CODE_PRESSURE</span><span class="p">:</span>
-                        <span class="n">point</span><span class="p">[</span><span class="s1">&#39;pressure&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">ev_value</span><span class="p">,</span>
+                        <span class="n">point</span><span class="p">[</span><span class="s1">'pressure'</span><span class="p">]</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">ev_value</span><span class="p">,</span>
                                                       <span class="n">range_min_pressure</span><span class="p">,</span>
                                                       <span class="n">range_max_pressure</span><span class="p">)</span>
                     <span class="k">elif</span> <span class="n">ev_code</span> <span class="o">==</span> <span class="n">MTDEV_CODE_TOUCH_MAJOR</span><span class="p">:</span>
-                        <span class="n">point</span><span class="p">[</span><span class="s1">&#39;size_w&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">ev_value</span><span class="p">,</span>
+                        <span class="n">point</span><span class="p">[</span><span class="s1">'size_w'</span><span class="p">]</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">ev_value</span><span class="p">,</span>
                                                     <span class="n">range_min_major</span><span class="p">,</span>
                                                     <span class="n">range_max_major</span><span class="p">)</span>
                     <span class="k">elif</span> <span class="n">ev_code</span> <span class="o">==</span> <span class="n">MTDEV_CODE_TOUCH_MINOR</span><span class="p">:</span>
-                        <span class="n">point</span><span class="p">[</span><span class="s1">&#39;size_h&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">ev_value</span><span class="p">,</span>
+                        <span class="n">point</span><span class="p">[</span><span class="s1">'size_h'</span><span class="p">]</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">ev_value</span><span class="p">,</span>
                                                     <span class="n">range_min_minor</span><span class="p">,</span>
                                                     <span class="n">range_max_minor</span><span class="p">)</span>
                     <span class="k">elif</span> <span class="n">ev_code</span> <span class="o">==</span> <span class="n">MTDEV_TYPE_EV_SYN</span> <span class="ow">and</span> <span class="n">changes</span><span class="p">:</span>
@@ -754,7 +754,7 @@
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="k">pass</span>
 
-    <span class="n">MotionEventFactory</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;mtdev&#39;</span><span class="p">,</span> <span class="n">MTDMotionEventProvider</span><span class="p">)</span>
+    <span class="n">MotionEventFactory</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">'mtdev'</span><span class="p">,</span> <span class="n">MTDMotionEventProvider</span><span class="p">)</span>
 </pre></div>
 
             <div class="footerlinks">
@@ -769,7 +769,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

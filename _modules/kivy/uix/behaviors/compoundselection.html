@@ -369,7 +369,7 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.uix.behaviors.compoundselection</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">Compound Selection Behavior</span>
 <span class="sd">===========================</span>
 
@@ -398,7 +398,7 @@
 
 <span class="sd">When the controller needs to select a node, it calls :meth:`select_node` and</span>
 <span class="sd">:meth:`deselect_node`. Therefore, they must be overwritten in order alter</span>
-<span class="sd">node selection. By default, the class doesn&#39;t listen for keyboard or</span>
+<span class="sd">node selection. By default, the class doesn't listen for keyboard or</span>
 <span class="sd">touch events, so the derived widget must call</span>
 <span class="sd">:meth:`select_with_touch`, :meth:`select_with_key_down`, and</span>
 <span class="sd">:meth:`select_with_key_up` on events that it wants to pass on for selection</span>
@@ -423,9 +423,9 @@
 <span class="sd">    class SelectableGrid(FocusBehavior, CompoundSelectionBehavior, GridLayout):</span>
 
 <span class="sd">        def keyboard_on_key_down(self, window, keycode, text, modifiers):</span>
-<span class="sd">            &quot;&quot;&quot;Based on FocusBehavior that provides automatic keyboard</span>
+<span class="sd">            """Based on FocusBehavior that provides automatic keyboard</span>
 <span class="sd">            access, key presses will be used to select children.</span>
-<span class="sd">            &quot;&quot;&quot;</span>
+<span class="sd">            """</span>
 <span class="sd">            if super(SelectableGrid, self).keyboard_on_key_down(</span>
 <span class="sd">                window, keycode, text, modifiers):</span>
 <span class="sd">                return True</span>
@@ -434,9 +434,9 @@
 <span class="sd">            return False</span>
 
 <span class="sd">        def keyboard_on_key_up(self, window, keycode):</span>
-<span class="sd">            &quot;&quot;&quot;Based on FocusBehavior that provides automatic keyboard</span>
+<span class="sd">            """Based on FocusBehavior that provides automatic keyboard</span>
 <span class="sd">            access, key release will be used to select children.</span>
-<span class="sd">            &quot;&quot;&quot;</span>
+<span class="sd">            """</span>
 <span class="sd">            if super(SelectableGrid, self).keyboard_on_key_up(window, keycode):</span>
 <span class="sd">                return True</span>
 <span class="sd">            if self.select_with_key_up(window, keycode):</span>
@@ -444,22 +444,22 @@
 <span class="sd">            return False</span>
 
 <span class="sd">        def add_widget(self, widget, *args, **kwargs):</span>
-<span class="sd">            &quot;&quot;&quot; Override the adding of widgets so we can bind and catch their</span>
-<span class="sd">            *on_touch_down* events. &quot;&quot;&quot;</span>
+<span class="sd">            """ Override the adding of widgets so we can bind and catch their</span>
+<span class="sd">            *on_touch_down* events. """</span>
 <span class="sd">            widget.bind(on_touch_down=self.button_touch_down,</span>
 <span class="sd">                        on_touch_up=self.button_touch_up)</span>
 <span class="sd">            return super(SelectableGrid, self)\</span>
 <span class="sd">                .add_widget(widget, *args, **kwargs)</span>
 
 <span class="sd">        def button_touch_down(self, button, touch):</span>
-<span class="sd">            &quot;&quot;&quot; Use collision detection to select buttons when the touch occurs</span>
-<span class="sd">            within their area. &quot;&quot;&quot;</span>
+<span class="sd">            """ Use collision detection to select buttons when the touch occurs</span>
+<span class="sd">            within their area. """</span>
 <span class="sd">            if button.collide_point(*touch.pos):</span>
 <span class="sd">                self.select_with_touch(button, touch)</span>
 
 <span class="sd">        def button_touch_up(self, button, touch):</span>
-<span class="sd">            &quot;&quot;&quot; Use collision detection to de-select buttons when the touch</span>
-<span class="sd">            occurs outside their area and *touch_multiselect* is not True. &quot;&quot;&quot;</span>
+<span class="sd">            """ Use collision detection to de-select buttons when the touch</span>
+<span class="sd">            occurs outside their area and *touch_multiselect* is not True. """</span>
 <span class="sd">            if not (button.collide_point(*touch.pos) or</span>
 <span class="sd">                    self.touch_multiselect):</span>
 <span class="sd">                self.deselect_node(button)</span>
@@ -473,7 +473,7 @@
 <span class="sd">            super(SelectableGrid, self).deselect_node(node)</span>
 
 <span class="sd">        def on_selected_nodes(self, grid, nodes):</span>
-<span class="sd">            print(&quot;Selected nodes = {0}&quot;.format(nodes))</span>
+<span class="sd">            print("Selected nodes = {0}".format(nodes))</span>
 
 
 <span class="sd">    class TestApp(App):</span>
@@ -481,7 +481,7 @@
 <span class="sd">            grid = SelectableGrid(cols=3, rows=2, touch_multiselect=True,</span>
 <span class="sd">                                  multiselect=True)</span>
 <span class="sd">            for i in range(0, 6):</span>
-<span class="sd">                grid.add_widget(Button(text=&quot;Button {0}&quot;.format(i)))</span>
+<span class="sd">                grid.add_widget(Button(text="Button {0}".format(i)))</span>
 <span class="sd">            return grid</span>
 
 
@@ -493,9 +493,9 @@
 <span class="sd">    This code is still experimental, and its API is subject to change in a</span>
 <span class="sd">    future version.</span>
 
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;CompoundSelectionBehavior&#39;</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'CompoundSelectionBehavior'</span><span class="p">,</span> <span class="p">)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">time</span><span class="w"> </span><span class="kn">import</span> <span class="n">time</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">os</span><span class="w"> </span><span class="kn">import</span> <span class="n">environ</span>
@@ -503,9 +503,9 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.properties</span><span class="w"> </span><span class="kn">import</span> <span class="n">NumericProperty</span><span class="p">,</span> <span class="n">BooleanProperty</span><span class="p">,</span> <span class="n">ListProperty</span>
 
 
-<span class="k">if</span> <span class="s1">&#39;KIVY_DOC&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">environ</span><span class="p">:</span>
+<span class="k">if</span> <span class="s1">'KIVY_DOC'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">environ</span><span class="p">:</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
-    <span class="n">_is_desktop</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s1">&#39;kivy&#39;</span><span class="p">,</span> <span class="s1">&#39;desktop&#39;</span><span class="p">)</span>
+    <span class="n">_is_desktop</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="s1">'kivy'</span><span class="p">,</span> <span class="s1">'desktop'</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="n">_is_desktop</span> <span class="o">=</span> <span class="kc">False</span>
 
@@ -513,7 +513,7 @@
 <div class="viewcode-block" id="CompoundSelectionBehavior">
 <a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">CompoundSelectionBehavior</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The Selection behavior `mixin &lt;https://en.wikipedia.org/wiki/Mixin&gt;`_</span>
+<span class="w">    </span><span class="sd">'''The Selection behavior `mixin &lt;https://en.wikipedia.org/wiki/Mixin&gt;`_</span>
 <span class="sd">    implements the logic behind keyboard and touch</span>
 <span class="sd">    selection of selectable widgets managed by the derived widget. Please see</span>
 <span class="sd">    the :mod:`compound selection behaviors module</span>
@@ -521,10 +521,10 @@
 <span class="sd">    for more information.</span>
 
 <span class="sd">    .. versionadded:: 1.9.0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">selected_nodes</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([])</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The list of selected nodes.</span>
+<span class="w">    </span><span class="sd">'''The list of selected nodes.</span>
 
 <span class="sd">    .. note::</span>
 
@@ -534,10 +534,10 @@
 
 <span class="sd">    :attr:`selected_nodes` is a :class:`~kivy.properties.ListProperty` and</span>
 <span class="sd">    defaults to the empty list, []. It is read-only and should not be modified.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">touch_multiselect</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;A special touch mode which determines whether touch events, as</span>
+<span class="w">    </span><span class="sd">'''A special touch mode which determines whether touch events, as</span>
 <span class="sd">    processed by :meth:`select_with_touch`, will add the currently touched</span>
 <span class="sd">    node to the selection, or if it will clear the selection before adding the</span>
 <span class="sd">    node. This allows the selection of multiple nodes by simply touching them.</span>
@@ -554,97 +554,97 @@
 
 <span class="sd">    :attr:`touch_multiselect` is a :class:`~kivy.properties.BooleanProperty`</span>
 <span class="sd">    and defaults to False.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">multiselect</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Determines whether multiple nodes can be selected. If enabled, keyboard</span>
+<span class="w">    </span><span class="sd">'''Determines whether multiple nodes can be selected. If enabled, keyboard</span>
 <span class="sd">    shift and ctrl selection, optionally combined with touch, for example, will</span>
 <span class="sd">    be able to select multiple widgets in the normally expected manner.</span>
 <span class="sd">    This dominates :attr:`touch_multiselect` when False.</span>
 
 <span class="sd">    :attr:`multiselect` is a :class:`~kivy.properties.BooleanProperty` and</span>
 <span class="sd">    defaults to False.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">touch_deselect_last</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="ow">not</span> <span class="n">_is_desktop</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Determines whether the last selected node can be deselected when</span>
+<span class="w">    </span><span class="sd">'''Determines whether the last selected node can be deselected when</span>
 <span class="sd">    :attr:`multiselect` or :attr:`touch_multiselect` is False.</span>
 
 <span class="sd">    .. versionadded:: 1.10.0</span>
 
 <span class="sd">    :attr:`touch_deselect_last` is a :class:`~kivy.properties.BooleanProperty`</span>
 <span class="sd">    and defaults to True on mobile, False on desktop platforms.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">keyboard_select</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Determines whether the keyboard can be used for selection. If False,</span>
+<span class="w">    </span><span class="sd">'''Determines whether the keyboard can be used for selection. If False,</span>
 <span class="sd">    keyboard inputs will be ignored.</span>
 
 <span class="sd">    :attr:`keyboard_select` is a :class:`~kivy.properties.BooleanProperty`</span>
 <span class="sd">    and defaults to True.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">page_count</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Determines by how much the selected node is moved up or down, relative</span>
+<span class="w">    </span><span class="sd">'''Determines by how much the selected node is moved up or down, relative</span>
 <span class="sd">    to the position of the last selected node, when pageup (or pagedown) is</span>
 <span class="sd">    pressed.</span>
 
 <span class="sd">    :attr:`page_count` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to 10.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">up_count</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Determines by how much the selected node is moved up or down, relative</span>
+<span class="w">    </span><span class="sd">'''Determines by how much the selected node is moved up or down, relative</span>
 <span class="sd">    to the position of the last selected node, when the up (or down) arrow on</span>
 <span class="sd">    the keyboard is pressed.</span>
 
 <span class="sd">    :attr:`up_count` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to 1.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">right_count</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Determines by how much the selected node is moved up or down, relative</span>
+<span class="w">    </span><span class="sd">'''Determines by how much the selected node is moved up or down, relative</span>
 <span class="sd">    to the position of the last selected node, when the right (or left) arrow</span>
 <span class="sd">    on the keyboard is pressed.</span>
 
 <span class="sd">    :attr:`right_count` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to 1.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">scroll_count</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Determines by how much the selected node is moved up or down, relative</span>
+<span class="w">    </span><span class="sd">'''Determines by how much the selected node is moved up or down, relative</span>
 <span class="sd">    to the position of the last selected node, when the mouse scroll wheel is</span>
 <span class="sd">    scrolled.</span>
 
 <span class="sd">    :attr:`right_count` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to 0.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">nodes_order_reversed</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39; (Internal) Indicates whether the order of the nodes as displayed top-</span>
+<span class="w">    </span><span class="sd">''' (Internal) Indicates whether the order of the nodes as displayed top-</span>
 <span class="sd">    down is reversed compared to their order in :meth:`get_selectable_nodes`</span>
 <span class="sd">    (e.g. how the children property is reversed compared to how</span>
-<span class="sd">    it&#39;s displayed).</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    it's displayed).</span>
+<span class="sd">    '''</span>
 
     <span class="n">text_entry_timeout</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mf">1.</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;When typing characters in rapid succession (i.e. the time difference</span>
+<span class="w">    </span><span class="sd">'''When typing characters in rapid succession (i.e. the time difference</span>
 <span class="sd">    since the last character is less than :attr:`text_entry_timeout`), the</span>
 <span class="sd">    keys get concatenated and the combined text is passed as the key argument</span>
 <span class="sd">    of :meth:`goto_node`.</span>
 
 <span class="sd">    .. versionadded:: 1.10.0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">_anchor</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># the last anchor node selected (e.g. shift relative node)</span>
     <span class="c1"># the idx may be out of sync</span>
-    <span class="n">_anchor_idx</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># cache indexes in case list hasn&#39;t changed</span>
+    <span class="n">_anchor_idx</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># cache indexes in case list hasn't changed</span>
     <span class="n">_last_selected_node</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># the absolute last node selected</span>
     <span class="n">_last_node_idx</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">_ctrl_down</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># if it&#39;s pressed - for e.g. shift selection</span>
+    <span class="n">_ctrl_down</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># if it's pressed - for e.g. shift selection</span>
     <span class="n">_shift_down</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="c1"># holds str used to find node, e.g. if word is typed. passed to goto_node</span>
-    <span class="n">_word_filter</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">_word_filter</span> <span class="o">=</span> <span class="s1">''</span>
     <span class="n">_last_key_time</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># time since last press, for finding whole strs in node</span>
     <span class="n">_key_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># keys that are already pressed, to not press continuously</span>
     <span class="n">_offset_counts</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># cache of counts for faster access</span>
@@ -659,16 +659,16 @@
         <span class="n">update_counts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_counts</span>
         <span class="n">update_counts</span><span class="p">()</span>
         <span class="n">fbind</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;multiselect&#39;</span><span class="p">,</span> <span class="n">ensure_single_select</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;page_count&#39;</span><span class="p">,</span> <span class="n">update_counts</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;up_count&#39;</span><span class="p">,</span> <span class="n">update_counts</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;right_count&#39;</span><span class="p">,</span> <span class="n">update_counts</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;scroll_count&#39;</span><span class="p">,</span> <span class="n">update_counts</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'multiselect'</span><span class="p">,</span> <span class="n">ensure_single_select</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'page_count'</span><span class="p">,</span> <span class="n">update_counts</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'up_count'</span><span class="p">,</span> <span class="n">update_counts</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'right_count'</span><span class="p">,</span> <span class="n">update_counts</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'scroll_count'</span><span class="p">,</span> <span class="n">update_counts</span><span class="p">)</span>
 
 <div class="viewcode-block" id="CompoundSelectionBehavior.select_with_touch">
 <a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.select_with_touch">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">select_with_touch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">touch</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;(internal) Processes a touch on the node. This should be called by</span>
+<span class="w">        </span><span class="sd">'''(internal) Processes a touch on the node. This should be called by</span>
 <span class="sd">        the derived widget when a node is touched and is to be used for</span>
 <span class="sd">        selection. Depending on the keyboard keys pressed and the</span>
 <span class="sd">        configuration, it could select or deslect this and other nodes in the</span>
@@ -683,13 +683,13 @@
 
 <span class="sd">        :Returns:</span>
 <span class="sd">            bool, True if the touch was used, False otherwise.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="n">multi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiselect</span>
         <span class="n">multiselect</span> <span class="o">=</span> <span class="n">multi</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ctrl_down</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">touch_multiselect</span><span class="p">)</span>
         <span class="n">range_select</span> <span class="o">=</span> <span class="n">multi</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shift_down</span>
 
-        <span class="k">if</span> <span class="n">touch</span> <span class="ow">and</span> <span class="s1">&#39;button&#39;</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">profile</span> <span class="ow">and</span> <span class="n">touch</span><span class="o">.</span><span class="n">button</span> <span class="ow">in</span>\
-            <span class="p">(</span><span class="s1">&#39;scrollup&#39;</span><span class="p">,</span> <span class="s1">&#39;scrolldown&#39;</span><span class="p">,</span> <span class="s1">&#39;scrollleft&#39;</span><span class="p">,</span> <span class="s1">&#39;scrollright&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">touch</span> <span class="ow">and</span> <span class="s1">'button'</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">profile</span> <span class="ow">and</span> <span class="n">touch</span><span class="o">.</span><span class="n">button</span> <span class="ow">in</span>\
+            <span class="p">(</span><span class="s1">'scrollup'</span><span class="p">,</span> <span class="s1">'scrolldown'</span><span class="p">,</span> <span class="s1">'scrollleft'</span><span class="p">,</span> <span class="s1">'scrollright'</span><span class="p">):</span>
             <span class="n">node_src</span><span class="p">,</span> <span class="n">idx_src</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolve_last_node</span><span class="p">()</span>
             <span class="n">node</span><span class="p">,</span> <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">goto_node</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">button</span><span class="p">,</span> <span class="n">node_src</span><span class="p">,</span> <span class="n">idx_src</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">node</span> <span class="o">==</span> <span class="n">node_src</span><span class="p">:</span>
@@ -715,7 +715,7 @@
         <span class="k">elif</span> <span class="n">range_select</span><span class="p">:</span>
             <span class="c1"># keep anchor only if not multiselect (ctrl-type selection)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_select_range</span><span class="p">(</span><span class="n">multiselect</span><span class="p">,</span> <span class="ow">not</span> <span class="n">multiselect</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>   <span class="c1"># it&#39;s not selected at this point</span>
+        <span class="k">else</span><span class="p">:</span>   <span class="c1"># it's not selected at this point</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">multiselect</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">clear_selection</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">select_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
@@ -726,7 +726,7 @@
 <a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.select_with_key_down">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">select_with_key_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keyboard</span><span class="p">,</span> <span class="n">scancode</span><span class="p">,</span> <span class="n">codepoint</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">,</span>
                              <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Processes a key press. This is called when a key press is to be used</span>
+<span class="w">        </span><span class="sd">'''Processes a key press. This is called when a key press is to be used</span>
 <span class="sd">        for selection. Depending on the keyboard keys pressed and the</span>
 <span class="sd">        configuration, it could select or deselect nodes or node ranges</span>
 <span class="sd">        from the selectable nodes list, :meth:`get_selectable_nodes`.</span>
@@ -737,7 +737,7 @@
 
 <span class="sd">        :Returns:</span>
 <span class="sd">            bool, True if the keypress was used, False otherwise.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyboard_select</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="n">keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_key_list</span>
@@ -745,11 +745,11 @@
         <span class="n">node_src</span><span class="p">,</span> <span class="n">idx_src</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolve_last_node</span><span class="p">()</span>
         <span class="n">text</span> <span class="o">=</span> <span class="n">scancode</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
-        <span class="k">if</span> <span class="n">text</span> <span class="o">==</span> <span class="s1">&#39;shift&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">text</span> <span class="o">==</span> <span class="s1">'shift'</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_shift_down</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">elif</span> <span class="n">text</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;ctrl&#39;</span><span class="p">,</span> <span class="s1">&#39;lctrl&#39;</span><span class="p">,</span> <span class="s1">&#39;rctrl&#39;</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">text</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'ctrl'</span><span class="p">,</span> <span class="s1">'lctrl'</span><span class="p">,</span> <span class="s1">'rctrl'</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_ctrl_down</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">elif</span> <span class="p">(</span><span class="n">multi</span> <span class="ow">and</span> <span class="s1">&#39;ctrl&#39;</span> <span class="ow">in</span> <span class="n">modifiers</span> <span class="ow">and</span> <span class="n">text</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">)</span> <span class="ow">and</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">multi</span> <span class="ow">and</span> <span class="s1">'ctrl'</span> <span class="ow">in</span> <span class="n">modifiers</span> <span class="ow">and</span> <span class="n">text</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'a'</span><span class="p">,</span> <span class="s1">'A'</span><span class="p">)</span> <span class="ow">and</span>
               <span class="n">text</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">):</span>
             <span class="n">sister_nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_selectable_nodes</span><span class="p">()</span>
             <span class="n">select</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">select_node</span>
@@ -759,9 +759,9 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">s</span> <span class="o">=</span> <span class="n">text</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;divide&#39;</span><span class="p">:</span> <span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="s1">&#39;mul&#39;</span><span class="p">:</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;substract&#39;</span><span class="p">:</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;add&#39;</span><span class="p">:</span> <span class="s1">&#39;+&#39;</span><span class="p">,</span>
-                     <span class="s1">&#39;decimal&#39;</span><span class="p">:</span> <span class="s1">&#39;.&#39;</span><span class="p">}</span>
-                <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;numpad&#39;</span><span class="p">):</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'divide'</span><span class="p">:</span> <span class="s1">'/'</span><span class="p">,</span> <span class="s1">'mul'</span><span class="p">:</span> <span class="s1">'*'</span><span class="p">,</span> <span class="s1">'substract'</span><span class="p">:</span> <span class="s1">'-'</span><span class="p">,</span> <span class="s1">'add'</span><span class="p">:</span> <span class="s1">'+'</span><span class="p">,</span>
+                     <span class="s1">'decimal'</span><span class="p">:</span> <span class="s1">'.'</span><span class="p">}</span>
+                <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'numpad'</span><span class="p">):</span>
                     <span class="n">s</span> <span class="o">=</span> <span class="n">text</span><span class="p">[</span><span class="mi">6</span><span class="p">:]</span>
                     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                         <span class="k">if</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
@@ -772,7 +772,7 @@
                     <span class="n">s</span> <span class="o">=</span> <span class="kc">None</span>
 
             <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">s</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>  <span class="c1"># don&#39;t keep adding while holding down</span>
+                <span class="k">if</span> <span class="n">s</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>  <span class="c1"># don't keep adding while holding down</span>
                     <span class="k">if</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_key_time</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_entry_timeout</span><span class="p">:</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_word_filter</span> <span class="o">+=</span> <span class="n">s</span>
                     <span class="k">else</span><span class="p">:</span>
@@ -783,28 +783,28 @@
                 <span class="n">node</span><span class="p">,</span> <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">goto_node</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_word_filter</span><span class="p">,</span> <span class="n">node_src</span><span class="p">,</span>
                                            <span class="n">idx_src</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_word_filter</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_word_filter</span> <span class="o">=</span> <span class="s1">''</span>
                 <span class="n">node</span><span class="p">,</span> <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">goto_node</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">node_src</span><span class="p">,</span> <span class="n">idx_src</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">node</span> <span class="o">==</span> <span class="n">node_src</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">False</span>
 
-            <span class="n">multiselect</span> <span class="o">=</span> <span class="n">multi</span> <span class="ow">and</span> <span class="s1">&#39;ctrl&#39;</span> <span class="ow">in</span> <span class="n">modifiers</span>
-            <span class="k">if</span> <span class="n">multi</span> <span class="ow">and</span> <span class="s1">&#39;shift&#39;</span> <span class="ow">in</span> <span class="n">modifiers</span><span class="p">:</span>
+            <span class="n">multiselect</span> <span class="o">=</span> <span class="n">multi</span> <span class="ow">and</span> <span class="s1">'ctrl'</span> <span class="ow">in</span> <span class="n">modifiers</span>
+            <span class="k">if</span> <span class="n">multi</span> <span class="ow">and</span> <span class="s1">'shift'</span> <span class="ow">in</span> <span class="n">modifiers</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_select_range</span><span class="p">(</span><span class="n">multiselect</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">multiselect</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">clear_selection</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">select_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">True</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_word_filter</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_word_filter</span> <span class="o">=</span> <span class="s1">''</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
 
 <div class="viewcode-block" id="CompoundSelectionBehavior.select_with_key_up">
 <a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.select_with_key_up">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">select_with_key_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keyboard</span><span class="p">,</span> <span class="n">scancode</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;(internal) Processes a key release. This must be called by the</span>
+<span class="w">        </span><span class="sd">'''(internal) Processes a key release. This must be called by the</span>
 <span class="sd">        derived widget when a key that :meth:`select_with_key_down` returned</span>
 <span class="sd">        True is released.</span>
 
@@ -813,10 +813,10 @@
 
 <span class="sd">        :Returns:</span>
 <span class="sd">            bool, True if the key release was used, False otherwise.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="n">scancode</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;shift&#39;</span><span class="p">:</span>
+<span class="sd">        '''</span>
+        <span class="k">if</span> <span class="n">scancode</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'shift'</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_shift_down</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="k">elif</span> <span class="n">scancode</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;ctrl&#39;</span><span class="p">,</span> <span class="s1">&#39;lctrl&#39;</span><span class="p">,</span> <span class="s1">&#39;rctrl&#39;</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">scancode</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'ctrl'</span><span class="p">,</span> <span class="s1">'lctrl'</span><span class="p">,</span> <span class="s1">'rctrl'</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_ctrl_down</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
@@ -828,14 +828,14 @@
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_update_counts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
-        <span class="c1"># doesn&#39;t invert indices here</span>
+        <span class="c1"># doesn't invert indices here</span>
         <span class="n">pc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">page_count</span>
         <span class="n">uc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">up_count</span>
         <span class="n">rc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_count</span>
         <span class="n">sc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_count</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_offset_counts</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;pageup&#39;</span><span class="p">:</span> <span class="o">-</span><span class="n">pc</span><span class="p">,</span> <span class="s1">&#39;pagedown&#39;</span><span class="p">:</span> <span class="n">pc</span><span class="p">,</span> <span class="s1">&#39;up&#39;</span><span class="p">:</span> <span class="o">-</span><span class="n">uc</span><span class="p">,</span>
-        <span class="s1">&#39;down&#39;</span><span class="p">:</span> <span class="n">uc</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">:</span> <span class="n">rc</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">:</span> <span class="o">-</span><span class="n">rc</span><span class="p">,</span> <span class="s1">&#39;scrollup&#39;</span><span class="p">:</span> <span class="n">sc</span><span class="p">,</span>
-        <span class="s1">&#39;scrolldown&#39;</span><span class="p">:</span> <span class="o">-</span><span class="n">sc</span><span class="p">,</span> <span class="s1">&#39;scrollright&#39;</span><span class="p">:</span> <span class="o">-</span><span class="n">sc</span><span class="p">,</span> <span class="s1">&#39;scrollleft&#39;</span><span class="p">:</span> <span class="n">sc</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_offset_counts</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'pageup'</span><span class="p">:</span> <span class="o">-</span><span class="n">pc</span><span class="p">,</span> <span class="s1">'pagedown'</span><span class="p">:</span> <span class="n">pc</span><span class="p">,</span> <span class="s1">'up'</span><span class="p">:</span> <span class="o">-</span><span class="n">uc</span><span class="p">,</span>
+        <span class="s1">'down'</span><span class="p">:</span> <span class="n">uc</span><span class="p">,</span> <span class="s1">'right'</span><span class="p">:</span> <span class="n">rc</span><span class="p">,</span> <span class="s1">'left'</span><span class="p">:</span> <span class="o">-</span><span class="n">rc</span><span class="p">,</span> <span class="s1">'scrollup'</span><span class="p">:</span> <span class="n">sc</span><span class="p">,</span>
+        <span class="s1">'scrolldown'</span><span class="p">:</span> <span class="o">-</span><span class="n">sc</span><span class="p">,</span> <span class="s1">'scrollright'</span><span class="p">:</span> <span class="o">-</span><span class="n">sc</span><span class="p">,</span> <span class="s1">'scrollleft'</span><span class="p">:</span> <span class="n">sc</span><span class="p">}</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_resolve_last_node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># for offset selection, we have a anchor, and we select everything</span>
@@ -861,13 +861,13 @@
         <span class="k">return</span> <span class="n">last_node</span><span class="p">,</span> <span class="n">last_idx</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_select_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">multiselect</span><span class="p">,</span> <span class="n">keep_anchor</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Selects a range between self._anchor and node or idx.</span>
+<span class="w">        </span><span class="sd">'''Selects a range between self._anchor and node or idx.</span>
 <span class="sd">        If multiselect is True, it will be added to the selection, otherwise</span>
 <span class="sd">        it will unselect everything before selecting the range. This is only</span>
 <span class="sd">        called if self.multiselect is True.</span>
 <span class="sd">        If keep anchor is False, the anchor is moved to node. This should</span>
 <span class="sd">        always be True for keyboard selection.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="n">select</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">select_node</span>
         <span class="n">sister_nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_selectable_nodes</span><span class="p">()</span>
         <span class="n">end</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sister_nodes</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
@@ -909,8 +909,8 @@
 <div class="viewcode-block" id="CompoundSelectionBehavior.clear_selection">
 <a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.clear_selection">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">clear_selection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39; Deselects all the currently selected nodes.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">''' Deselects all the currently selected nodes.</span>
+<span class="sd">        '''</span>
         <span class="c1"># keep the anchor and last selected node</span>
         <span class="n">deselect</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">deselect_node</span>
         <span class="n">nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_nodes</span>
@@ -922,7 +922,7 @@
 <div class="viewcode-block" id="CompoundSelectionBehavior.get_selectable_nodes">
 <a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.get_selectable_nodes">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_selectable_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;(internal) Returns a list of the nodes that can be selected. It can</span>
+<span class="w">        </span><span class="sd">'''(internal) Returns a list of the nodes that can be selected. It can</span>
 <span class="sd">        be overwritten by the derived widget to return the correct list.</span>
 
 <span class="sd">        This list is used to determine which nodes to select with group</span>
@@ -953,26 +953,26 @@
 <span class="sd">            not desired, a reversed list should be returned instead.</span>
 
 <span class="sd">        Defaults to returning :attr:`~kivy.uix.widget.Widget.children`.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span></div>
 
 
 <div class="viewcode-block" id="CompoundSelectionBehavior.get_index_of_node">
 <a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.get_index_of_node">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_index_of_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">selectable_nodes</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;(internal) Returns the index of the `node` within the</span>
+<span class="w">        </span><span class="sd">'''(internal) Returns the index of the `node` within the</span>
 <span class="sd">        `selectable_nodes` returned by :meth:`get_selectable_nodes`.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">return</span> <span class="n">selectable_nodes</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">node</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="CompoundSelectionBehavior.goto_node">
 <a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.goto_node">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">goto_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">last_node</span><span class="p">,</span> <span class="n">last_node_idx</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;(internal) Used by the controller to get the node at the position</span>
+<span class="w">        </span><span class="sd">'''(internal) Used by the controller to get the node at the position</span>
 <span class="sd">        indicated by key. The key can be keyboard inputs, e.g. pageup,</span>
 <span class="sd">        or scroll inputs from the mouse scroll wheel, e.g. scrollup.</span>
-<span class="sd">        &#39;last_node&#39; is the last node selected and is used to find the resulting</span>
+<span class="sd">        'last_node' is the last node selected and is used to find the resulting</span>
 <span class="sd">        node. For example, if the key is up, the returned node is one node</span>
 <span class="sd">        up from the last node.</span>
 
@@ -984,21 +984,21 @@
 <span class="sd">                of the keyboard keys, as well as the mouse scrollup,</span>
 <span class="sd">                scrolldown, scrollright, and scrollleft strings. If letters</span>
 <span class="sd">                are typed in quick succession, the letters will be combined</span>
-<span class="sd">                before it&#39;s passed in as key and can be used to find nodes that</span>
+<span class="sd">                before it's passed in as key and can be used to find nodes that</span>
 <span class="sd">                have an associated string that starts with those letters.</span>
 <span class="sd">            `last_node`</span>
 <span class="sd">                The last node that was selected.</span>
 <span class="sd">            `last_node_idx`</span>
 <span class="sd">                The cached index of the last node selected in the</span>
-<span class="sd">                :meth:`get_selectable_nodes` list. If the list hasn&#39;t changed</span>
+<span class="sd">                :meth:`get_selectable_nodes` list. If the list hasn't changed</span>
 <span class="sd">                it saves having to look up the index of `last_node` in that</span>
 <span class="sd">                list.</span>
 
 <span class="sd">        :Returns:</span>
 <span class="sd">            tuple, the node targeted by key and its index in the</span>
 <span class="sd">            :meth:`get_selectable_nodes` list. Returning</span>
-<span class="sd">            `(last_node, last_node_idx)` indicates a node wasn&#39;t found.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">            `(last_node, last_node_idx)` indicates a node wasn't found.</span>
+<span class="sd">        '''</span>
         <span class="n">sister_nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_selectable_nodes</span><span class="p">()</span>
         <span class="n">end</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sister_nodes</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="n">counts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_offset_counts</span>
@@ -1015,11 +1015,11 @@
             <span class="n">count</span> <span class="o">=</span> <span class="o">-</span><span class="n">counts</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">if</span> <span class="n">is_reversed</span> <span class="k">else</span> <span class="n">counts</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
             <span class="n">idx</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">count</span> <span class="o">+</span> <span class="n">last_node_idx</span><span class="p">,</span> <span class="n">end</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">sister_nodes</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">idx</span>
-        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;home&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">'home'</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">is_reversed</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">sister_nodes</span><span class="p">[</span><span class="n">end</span><span class="p">],</span> <span class="n">end</span>
             <span class="k">return</span> <span class="n">sister_nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span>
-        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;end&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">'end'</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">is_reversed</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">sister_nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span>
             <span class="k">return</span> <span class="n">sister_nodes</span><span class="p">[</span><span class="n">end</span><span class="p">],</span> <span class="n">end</span>
@@ -1030,7 +1030,7 @@
 <div class="viewcode-block" id="CompoundSelectionBehavior.select_node">
 <a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.select_node">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">select_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39; Selects a node.</span>
+<span class="w">        </span><span class="sd">''' Selects a node.</span>
 
 <span class="sd">        It is called by the controller when it selects a node and can be</span>
 <span class="sd">        called from the outside to select a node directly. The derived widget</span>
@@ -1048,7 +1048,7 @@
 
 <span class="sd">            This method must be called by the derived widget using super if it</span>
 <span class="sd">            is overwritten.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="n">nodes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_nodes</span>
         <span class="k">if</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
@@ -1065,7 +1065,7 @@
 <div class="viewcode-block" id="CompoundSelectionBehavior.deselect_node">
 <a class="viewcode-back" href="../../../../api-kivy.uix.behaviors.compoundselection.html#kivy.uix.behaviors.CompoundSelectionBehavior.deselect_node">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">deselect_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39; Deselects a possibly selected node.</span>
+<span class="w">        </span><span class="sd">''' Deselects a possibly selected node.</span>
 
 <span class="sd">        It is called by the controller when it deselects a node and can also</span>
 <span class="sd">        be called from the outside to deselect a node directly. The derived</span>
@@ -1080,7 +1080,7 @@
 
 <span class="sd">            This method must be called by the derived widget using super if it</span>
 <span class="sd">            is overwritten.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected_nodes</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">selected_nodes</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">True</span>
@@ -1101,7 +1101,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

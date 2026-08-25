@@ -369,7 +369,7 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.modules.joycursor</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">JoyCursor</span>
 <span class="sd">=========</span>
 
@@ -424,19 +424,19 @@
 
 <span class="sd">    from kivy.lang import Builder</span>
 <span class="sd">    from kivy.base import runTouchApp</span>
-<span class="sd">    runTouchApp(Builder.load_string(&quot;&quot;&quot;</span>
+<span class="sd">    runTouchApp(Builder.load_string("""</span>
 <span class="sd">    #:import jc kivy.modules.joycursor</span>
 <span class="sd">    BoxLayout:</span>
 <span class="sd">        Button:</span>
-<span class="sd">            text: &#39;Press &amp; activate with Ctrl+E or Button 7&#39;</span>
+<span class="sd">            text: 'Press &amp; activate with Ctrl+E or Button 7'</span>
 <span class="sd">            on_release: jc.create_joycursor(root.parent, root)</span>
 <span class="sd">        Button:</span>
-<span class="sd">            text: &#39;Disable&#39;</span>
+<span class="sd">            text: 'Disable'</span>
 <span class="sd">            on_release: jc.stop(root.parent, root)</span>
-<span class="sd">    &quot;&quot;&quot;))</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    """))</span>
+<span class="sd">'''</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;start&#39;</span><span class="p">,</span> <span class="s1">&#39;stop&#39;</span><span class="p">,</span> <span class="s1">&#39;create_joycursor&#39;</span><span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'start'</span><span class="p">,</span> <span class="s1">'stop'</span><span class="p">,</span> <span class="s1">'create_joycursor'</span><span class="p">)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.clock</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clock</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">Logger</span>
@@ -499,29 +499,29 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">avoid_bring_to_top</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_activated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">activated</span><span class="p">):</span>
-        <span class="c1"># bind/unbind when JoyCursor&#39;s state is changed</span>
+        <span class="c1"># bind/unbind when JoyCursor's state is changed</span>
         <span class="k">if</span> <span class="n">activated</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">move</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_interval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">move_cursor</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;on_joy_axis&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_cursor</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;on_joy_button_down&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_intensity</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;on_joy_button_down&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_dispatch</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;mouse_pos&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_cursor</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">'on_joy_axis'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_cursor</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">'on_joy_button_down'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_intensity</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">'on_joy_button_down'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_dispatch</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">'mouse_pos'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_cursor</span><span class="p">)</span>
             <span class="n">mouse_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">mouse_pos</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="n">mouse_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span>
                 <span class="n">mouse_pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="mf">2.0</span>
             <span class="p">)</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;JoyCursor: joycursor activated&#39;</span><span class="p">)</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'JoyCursor: joycursor activated'</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">]</span>
             <span class="n">Clock</span><span class="o">.</span><span class="n">unschedule</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">move</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">funbind</span><span class="p">(</span><span class="s1">&#39;on_joy_axis&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_cursor</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">funbind</span><span class="p">(</span><span class="s1">&#39;on_joy_button_down&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_intensity</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">funbind</span><span class="p">(</span><span class="s1">&#39;on_joy_button_down&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_dispatch</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">funbind</span><span class="p">(</span><span class="s1">&#39;mouse_pos&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_cursor</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">funbind</span><span class="p">(</span><span class="s1">'on_joy_axis'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_cursor</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">funbind</span><span class="p">(</span><span class="s1">'on_joy_button_down'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_intensity</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">funbind</span><span class="p">(</span><span class="s1">'on_joy_button_down'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_dispatch</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">funbind</span><span class="p">(</span><span class="s1">'mouse_pos'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_cursor</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;JoyCursor: joycursor deactivated&#39;</span><span class="p">)</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'JoyCursor: joycursor deactivated'</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">set_cursor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="c1"># create cursor points</span>
@@ -576,17 +576,17 @@
         <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">system_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">y</span>
         <span class="n">modifiers</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">actions</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;left&#39;</span><span class="p">,</span>
-            <span class="mi">3</span><span class="p">:</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span>
-            <span class="mi">4</span><span class="p">:</span> <span class="s1">&#39;scrollup&#39;</span><span class="p">,</span>
-            <span class="mi">5</span><span class="p">:</span> <span class="s1">&#39;scrolldown&#39;</span><span class="p">,</span>
-            <span class="mi">6</span><span class="p">:</span> <span class="s1">&#39;left&#39;</span>
+            <span class="mi">2</span><span class="p">:</span> <span class="s1">'left'</span><span class="p">,</span>
+            <span class="mi">3</span><span class="p">:</span> <span class="s1">'right'</span><span class="p">,</span>
+            <span class="mi">4</span><span class="p">:</span> <span class="s1">'scrollup'</span><span class="p">,</span>
+            <span class="mi">5</span><span class="p">:</span> <span class="s1">'scrolldown'</span><span class="p">,</span>
+            <span class="mi">6</span><span class="p">:</span> <span class="s1">'left'</span>
         <span class="p">}</span>
         <span class="n">button</span> <span class="o">=</span> <span class="n">actions</span><span class="p">[</span><span class="n">buttonid</span><span class="p">]</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_mouse_down&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_mouse_down'</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_hold</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_mouse_up&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_mouse_up'</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">move_cursor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="c1"># move joycursor as a mouse</span>
@@ -595,7 +595,7 @@
         <span class="n">modifiers</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_hold</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span>
-                <span class="s1">&#39;on_mouse_move&#39;</span><span class="p">,</span>
+                <span class="s1">'on_mouse_move'</span><span class="p">,</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">system_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
                 <span class="n">modifiers</span>
@@ -619,7 +619,7 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">keyboard_shortcuts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">scancode</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="n">modifiers</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">scancode</span> <span class="o">==</span> <span class="mi">101</span> <span class="ow">and</span> <span class="n">modifiers</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;ctrl&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">scancode</span> <span class="o">==</span> <span class="mi">101</span> <span class="ow">and</span> <span class="n">modifiers</span> <span class="o">==</span> <span class="p">[</span><span class="s1">'ctrl'</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">activated</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">activated</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">elif</span> <span class="n">scancode</span> <span class="o">==</span> <span class="mi">27</span><span class="p">:</span>
@@ -637,8 +637,8 @@
 <div class="viewcode-block" id="create_joycursor">
 <a class="viewcode-back" href="../../../api-kivy.modules.joycursor.html#kivy.modules.joycursor.create_joycursor">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">create_joycursor</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">ctx</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Create a JoyCursor instance attached to the *ctx* and bound to the</span>
-<span class="sd">    Window&#39;s :meth:`~kivy.core.window.WindowBase.on_keyboard` event for</span>
+<span class="w">    </span><span class="sd">'''Create a JoyCursor instance attached to the *ctx* and bound to the</span>
+<span class="sd">    Window's :meth:`~kivy.core.window.WindowBase.on_keyboard` event for</span>
 <span class="sd">    capturing the keyboard shortcuts.</span>
 
 <span class="sd">        :Parameters:</span>
@@ -647,13 +647,13 @@
 <span class="sd">            `ctx`: A :class:`~kivy.uix.widget.Widget` or subclass</span>
 <span class="sd">                The Widget for JoyCursor to attach to.</span>
 
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
     <span class="n">ctx</span><span class="o">.</span><span class="n">joycursor</span> <span class="o">=</span> <span class="n">JoyCursor</span><span class="p">(</span><span class="n">win</span><span class="o">=</span><span class="n">win</span><span class="p">)</span>
     <span class="n">win</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">joycursor</span><span class="o">.</span><span class="n">on_window_children</span><span class="p">,</span>
              <span class="n">on_keyboard</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">joycursor</span><span class="o">.</span><span class="n">keyboard_shortcuts</span><span class="p">)</span>
     <span class="c1"># always listen for joystick input to open the module</span>
     <span class="c1"># (like a keyboard listener)</span>
-    <span class="n">win</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;on_joy_button_down&#39;</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">joycursor</span><span class="o">.</span><span class="n">joystick_shortcuts</span><span class="p">)</span></div>
+    <span class="n">win</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">'on_joy_button_down'</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">joycursor</span><span class="o">.</span><span class="n">joystick_shortcuts</span><span class="p">)</span></div>
 
 
 
@@ -664,13 +664,13 @@
 <div class="viewcode-block" id="stop">
 <a class="viewcode-back" href="../../../api-kivy.modules.joycursor.html#kivy.modules.joycursor.stop">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">stop</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Stop and unload any active JoyCursors for the given *ctx*.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s1">&#39;joycursor&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">'''Stop and unload any active JoyCursors for the given *ctx*.</span>
+<span class="sd">    '''</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s1">'joycursor'</span><span class="p">):</span>
         <span class="n">ctx</span><span class="o">.</span><span class="n">joycursor</span><span class="o">.</span><span class="n">activated</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">win</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">joycursor</span><span class="o">.</span><span class="n">on_window_children</span><span class="p">,</span>
                    <span class="n">on_keyboard</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">joycursor</span><span class="o">.</span><span class="n">keyboard_shortcuts</span><span class="p">)</span>
-        <span class="n">win</span><span class="o">.</span><span class="n">funbind</span><span class="p">(</span><span class="s1">&#39;on_joy_button_down&#39;</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">joycursor</span><span class="o">.</span><span class="n">joystick_shortcuts</span><span class="p">)</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">funbind</span><span class="p">(</span><span class="s1">'on_joy_button_down'</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">joycursor</span><span class="o">.</span><span class="n">joystick_shortcuts</span><span class="p">)</span>
         <span class="n">win</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">joycursor</span><span class="p">)</span>
         <span class="k">del</span> <span class="n">ctx</span><span class="o">.</span><span class="n">joycursor</span></div>
 
@@ -688,7 +688,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

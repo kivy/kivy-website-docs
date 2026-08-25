@@ -369,7 +369,7 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.resources</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">Resources management</span>
 <span class="sd">====================</span>
 
@@ -397,9 +397,9 @@
 <span class="sd">you can use this approach to add fonts and keyboard layouts and to replace</span>
 <span class="sd">images and icons.</span>
 
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;resource_find&#39;</span><span class="p">,</span> <span class="s1">&#39;resource_add_path&#39;</span><span class="p">,</span> <span class="s1">&#39;resource_remove_path&#39;</span><span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'resource_find'</span><span class="p">,</span> <span class="s1">'resource_add_path'</span><span class="p">,</span> <span class="s1">'resource_remove_path'</span><span class="p">)</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">os.path</span><span class="w"> </span><span class="kn">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">exists</span><span class="p">,</span> <span class="n">abspath</span>
@@ -412,14 +412,14 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">kivy</span>
 
 <span class="c1"># Regex for @image_provider:providername(path) URI scheme</span>
-<span class="n">_provider_uri_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^@image_provider:(\w+)\((.+)\)$&#39;</span><span class="p">)</span>
+<span class="n">_provider_uri_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">'^@image_provider:(\w+)\((.+)\)$'</span><span class="p">)</span>
 
-<span class="n">resource_paths</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">dirname</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
-<span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;ios&#39;</span><span class="p">:</span>
-    <span class="n">resource_paths</span> <span class="o">+=</span> <span class="p">[</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="s1">&#39;YourApp&#39;</span><span class="p">)]</span>
-<span class="n">resource_paths</span> <span class="o">+=</span> <span class="p">[</span><span class="n">dirname</span><span class="p">(</span><span class="n">kivy</span><span class="o">.</span><span class="vm">__file__</span><span class="p">),</span> <span class="n">join</span><span class="p">(</span><span class="n">kivy_data_dir</span><span class="p">,</span> <span class="s1">&#39;..&#39;</span><span class="p">)]</span>
+<span class="n">resource_paths</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'.'</span><span class="p">,</span> <span class="n">dirname</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+<span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">'ios'</span><span class="p">:</span>
+    <span class="n">resource_paths</span> <span class="o">+=</span> <span class="p">[</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="s1">'YourApp'</span><span class="p">)]</span>
+<span class="n">resource_paths</span> <span class="o">+=</span> <span class="p">[</span><span class="n">dirname</span><span class="p">(</span><span class="n">kivy</span><span class="o">.</span><span class="vm">__file__</span><span class="p">),</span> <span class="n">join</span><span class="p">(</span><span class="n">kivy_data_dir</span><span class="p">,</span> <span class="s1">'..'</span><span class="p">)]</span>
 
-<span class="n">Cache</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;kv.resourcefind&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+<span class="n">Cache</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">'kv.resourcefind'</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_cache_key</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
@@ -428,14 +428,14 @@
     <span class="c1"># Filesystem paths are normalized with :func:`os.path.normpath` (collapses</span>
     <span class="c1"># ``.``/``..`` and unifies separators) and :func:`os.path.normcase` (lowers</span>
     <span class="c1"># case on case-insensitive platforms such as Windows), so that different</span>
-    <span class="c1"># spellings of the same file -- ``&#39;a/b.png&#39;``, ``&#39;a\\b.png&#39;`` and</span>
-    <span class="c1"># ``pathlib.Path(&#39;a/b.png&#39;)`` -- share a single cache entry.</span>
+    <span class="c1"># spellings of the same file -- ``'a/b.png'``, ``'a\\b.png'`` and</span>
+    <span class="c1"># ``pathlib.Path('a/b.png')`` -- share a single cache entry.</span>
 
     <span class="c1"># URIs (``atlas://``, ``data:`` and the ``@image_provider:...`` scheme) are</span>
     <span class="c1"># returned verbatim, because ``normpath`` would collapse their ``//`` and</span>
     <span class="c1"># mangle the scheme separators.</span>
-    <span class="k">if</span> <span class="n">_provider_uri_re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="ow">or</span> <span class="n">filename</span><span class="p">[:</span><span class="mi">8</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;atlas://&#39;</span> \
-            <span class="ow">or</span> <span class="n">filename</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;data:&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">_provider_uri_re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="ow">or</span> <span class="n">filename</span><span class="p">[:</span><span class="mi">8</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'atlas://'</span> \
+            <span class="ow">or</span> <span class="n">filename</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'data:'</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">filename</span>
     <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normcase</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">normpath</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
 
@@ -457,8 +457,8 @@
 
 <div class="viewcode-block" id="resource_find">
 <a class="viewcode-back" href="../../api-kivy.resources.html#kivy.resources.resource_find">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">resource_find</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">use_cache</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;KIVY_DOC_INCLUDE&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">)):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Search for a resource in the list of paths.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">resource_find</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">use_cache</span><span class="o">=</span><span class="p">(</span><span class="s2">"KIVY_DOC_INCLUDE"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">)):</span>
+<span class="w">    </span><span class="sd">'''Search for a resource in the list of paths.</span>
 <span class="sd">    Use resource_add_path to add a custom path to the search.</span>
 <span class="sd">    By default, results are cached for 60 seconds.</span>
 <span class="sd">    This can be disabled using use_cache=False.</span>
@@ -476,11 +476,11 @@
 
 <span class="sd">    .. versionchanged:: 3.0.0</span>
 <span class="sd">        The result cache is keyed on a normalized form of `filename`, so</span>
-<span class="sd">        different spellings of the same path (``&#39;a/b.png&#39;`` vs ``&#39;a\\b.png&#39;``,</span>
+<span class="sd">        different spellings of the same path (``'a/b.png'`` vs ``'a\\b.png'``,</span>
 <span class="sd">        redundant ``.``/``..`` segments, case differences on case-insensitive</span>
 <span class="sd">        platforms, and :class:`pathlib.Path` inputs) now share a single cache</span>
 <span class="sd">        entry. URIs are keyed verbatim.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
     <span class="c1"># Coerce os.PathLike -&gt; str up front so all downstream string parsing and</span>
     <span class="c1"># the resource cache keys operate on a single, consistent type.</span>
     <span class="n">filename</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
@@ -489,7 +489,7 @@
     <span class="n">cache_key</span> <span class="o">=</span> <span class="n">_cache_key</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
     <span class="n">found_filename</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="n">use_cache</span><span class="p">:</span>
-        <span class="n">found_filename</span> <span class="o">=</span> <span class="n">Cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;kv.resourcefind&#39;</span><span class="p">,</span> <span class="n">cache_key</span><span class="p">)</span>
+        <span class="n">found_filename</span> <span class="o">=</span> <span class="n">Cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'kv.resourcefind'</span><span class="p">,</span> <span class="n">cache_key</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">found_filename</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">found_filename</span>
 
@@ -500,18 +500,18 @@
         <span class="n">inner_path</span> <span class="o">=</span> <span class="n">provider_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">resolved_path</span> <span class="o">=</span> <span class="n">_resolve_path</span><span class="p">(</span><span class="n">inner_path</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">resolved_path</span><span class="p">:</span>
-            <span class="n">found_filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;@image_provider:</span><span class="si">{</span><span class="n">provider_name</span><span class="si">}</span><span class="s1">(</span><span class="si">{</span><span class="n">resolved_path</span><span class="si">}</span><span class="s1">)&#39;</span>
+            <span class="n">found_filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'@image_provider:</span><span class="si">{</span><span class="n">provider_name</span><span class="si">}</span><span class="s1">(</span><span class="si">{</span><span class="n">resolved_path</span><span class="si">}</span><span class="s1">)'</span>
 
-    <span class="k">elif</span> <span class="n">filename</span><span class="p">[:</span><span class="mi">8</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;atlas://&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">filename</span><span class="p">[:</span><span class="mi">8</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'atlas://'</span><span class="p">:</span>
         <span class="n">found_filename</span> <span class="o">=</span> <span class="n">filename</span>
 
     <span class="k">else</span><span class="p">:</span>
         <span class="n">found_filename</span> <span class="o">=</span> <span class="n">_resolve_path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">found_filename</span> <span class="ow">and</span> <span class="n">filename</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;data:&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">found_filename</span> <span class="ow">and</span> <span class="n">filename</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"data:"</span><span class="p">):</span>
             <span class="n">found_filename</span> <span class="o">=</span> <span class="n">filename</span>
 
     <span class="k">if</span> <span class="n">use_cache</span> <span class="ow">and</span> <span class="n">found_filename</span><span class="p">:</span>
-        <span class="n">Cache</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;kv.resourcefind&#39;</span><span class="p">,</span> <span class="n">cache_key</span><span class="p">,</span> <span class="n">found_filename</span><span class="p">)</span>
+        <span class="n">Cache</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'kv.resourcefind'</span><span class="p">,</span> <span class="n">cache_key</span><span class="p">,</span> <span class="n">found_filename</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">found_filename</span></div>
 
 
@@ -519,16 +519,16 @@
 <div class="viewcode-block" id="resource_add_path">
 <a class="viewcode-back" href="../../api-kivy.resources.html#kivy.resources.resource_add_path">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">resource_add_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Add a custom path to search in.</span>
+<span class="w">    </span><span class="sd">'''Add a custom path to search in.</span>
 
 <span class="sd">    .. versionchanged:: 3.0.0</span>
 <span class="sd">        `path` may be a :class:`os.PathLike` (e.g. :class:`pathlib.Path`) in</span>
 <span class="sd">        addition to a ``str``.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
     <span class="n">path</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">resource_paths</span><span class="p">:</span>
         <span class="k">return</span>
-    <span class="n">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Resource: add &lt;</span><span class="si">%s</span><span class="s1">&gt; in path list&#39;</span> <span class="o">%</span> <span class="n">path</span><span class="p">)</span>
+    <span class="n">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">'Resource: add &lt;</span><span class="si">%s</span><span class="s1">&gt; in path list'</span> <span class="o">%</span> <span class="n">path</span><span class="p">)</span>
     <span class="n">resource_paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
 
 
@@ -536,18 +536,18 @@
 <div class="viewcode-block" id="resource_remove_path">
 <a class="viewcode-back" href="../../api-kivy.resources.html#kivy.resources.resource_remove_path">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">resource_remove_path</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Remove a search path.</span>
+<span class="w">    </span><span class="sd">'''Remove a search path.</span>
 
 <span class="sd">    .. versionadded:: 1.0.8</span>
 
 <span class="sd">    .. versionchanged:: 3.0.0</span>
 <span class="sd">        `path` may be a :class:`os.PathLike` (e.g. :class:`pathlib.Path`) in</span>
 <span class="sd">        addition to a ``str``.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
     <span class="n">path</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">resource_paths</span><span class="p">:</span>
         <span class="k">return</span>
-    <span class="n">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Resource: remove &lt;</span><span class="si">%s</span><span class="s1">&gt; from path list&#39;</span> <span class="o">%</span> <span class="n">path</span><span class="p">)</span>
+    <span class="n">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">'Resource: remove &lt;</span><span class="si">%s</span><span class="s1">&gt; from path list'</span> <span class="o">%</span> <span class="n">path</span><span class="p">)</span>
     <span class="n">resource_paths</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
 
 </pre></div>
@@ -564,7 +564,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

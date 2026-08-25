@@ -369,7 +369,7 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.uix.recycleview</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""</span>
 <span class="sd">RecycleView</span>
 <span class="sd">===========</span>
 
@@ -382,7 +382,7 @@
 <span class="sd">.. warning::</span>
 
 <span class="sd">    Because :class:`RecycleView` reuses widgets, any state change to a single</span>
-<span class="sd">    widget will stay with that widget as it&#39;s reused, even if the</span>
+<span class="sd">    widget will stay with that widget as it's reused, even if the</span>
 <span class="sd">    :attr:`~RecycleView.data` assigned to it by the :class:`RecycleView`</span>
 <span class="sd">    changes, unless the complete state is tracked in :attr:`~RecycleView.data`</span>
 <span class="sd">    (see below).</span>
@@ -414,7 +414,7 @@
 <span class="sd">A layout manager is automatically created as a</span>
 <span class="sd">:attr:`~RecycleViewBehavior.layout_manager` when added as the child of the</span>
 <span class="sd">RecycleView. Similarly when removed. A requirement is that the layout manager</span>
-<span class="sd">must be contained as a child somewhere within the RecycleView&#39;s widget tree so</span>
+<span class="sd">must be contained as a child somewhere within the RecycleView's widget tree so</span>
 <span class="sd">the view port can be found.</span>
 
 <span class="sd">A minimal example might look something like this::</span>
@@ -424,28 +424,28 @@
 <span class="sd">    from kivy.uix.recycleview import RecycleView</span>
 
 
-<span class="sd">    Builder.load_string(&#39;&#39;&#39;</span>
+<span class="sd">    Builder.load_string('''</span>
 <span class="sd">    &lt;RV&gt;:</span>
-<span class="sd">        viewclass: &#39;Label&#39;</span>
+<span class="sd">        viewclass: 'Label'</span>
 <span class="sd">        RecycleBoxLayout:</span>
 <span class="sd">            default_size: None, dp(56)</span>
 <span class="sd">            default_size_hint: 1, None</span>
 <span class="sd">            size_hint_y: None</span>
 <span class="sd">            height: self.minimum_height</span>
-<span class="sd">            orientation: &#39;vertical&#39;</span>
-<span class="sd">    &#39;&#39;&#39;)</span>
+<span class="sd">            orientation: 'vertical'</span>
+<span class="sd">    ''')</span>
 
 <span class="sd">    class RV(RecycleView):</span>
 <span class="sd">        def __init__(self, **kwargs):</span>
 <span class="sd">            super(RV, self).__init__(**kwargs)</span>
-<span class="sd">            self.data = [{&#39;text&#39;: str(x)} for x in range(100)]</span>
+<span class="sd">            self.data = [{'text': str(x)} for x in range(100)]</span>
 
 
 <span class="sd">    class TestApp(App):</span>
 <span class="sd">        def build(self):</span>
 <span class="sd">            return RV()</span>
 
-<span class="sd">    if __name__ == &#39;__main__&#39;:</span>
+<span class="sd">    if __name__ == '__main__':</span>
 <span class="sd">        TestApp().run()</span>
 
 <span class="sd">In order to support selection in the view, you can add the required behaviors</span>
@@ -461,7 +461,7 @@
 <span class="sd">    from kivy.uix.behaviors import FocusBehavior</span>
 <span class="sd">    from kivy.uix.recycleview.layout import LayoutSelectionBehavior</span>
 
-<span class="sd">    Builder.load_string(&#39;&#39;&#39;</span>
+<span class="sd">    Builder.load_string('''</span>
 <span class="sd">    &lt;SelectableLabel&gt;:</span>
 <span class="sd">        # Draw a background to indicate selection</span>
 <span class="sd">        canvas.before:</span>
@@ -471,62 +471,62 @@
 <span class="sd">                pos: self.pos</span>
 <span class="sd">                size: self.size</span>
 <span class="sd">    &lt;RV&gt;:</span>
-<span class="sd">        viewclass: &#39;SelectableLabel&#39;</span>
+<span class="sd">        viewclass: 'SelectableLabel'</span>
 <span class="sd">        SelectableRecycleBoxLayout:</span>
 <span class="sd">            default_size: None, dp(56)</span>
 <span class="sd">            default_size_hint: 1, None</span>
 <span class="sd">            size_hint_y: None</span>
 <span class="sd">            height: self.minimum_height</span>
-<span class="sd">            orientation: &#39;vertical&#39;</span>
+<span class="sd">            orientation: 'vertical'</span>
 <span class="sd">            multiselect: True</span>
 <span class="sd">            touch_multiselect: True</span>
-<span class="sd">    &#39;&#39;&#39;)</span>
+<span class="sd">    ''')</span>
 
 
 <span class="sd">    class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,</span>
 <span class="sd">                                     RecycleBoxLayout):</span>
-<span class="sd">        &#39;&#39;&#39; Adds selection and focus behavior to the view. &#39;&#39;&#39;</span>
+<span class="sd">        ''' Adds selection and focus behavior to the view. '''</span>
 
 
 <span class="sd">    class SelectableLabel(RecycleDataViewBehavior, Label):</span>
-<span class="sd">        &#39;&#39;&#39; Add selection support to the Label &#39;&#39;&#39;</span>
+<span class="sd">        ''' Add selection support to the Label '''</span>
 <span class="sd">        index = None</span>
 <span class="sd">        selected = BooleanProperty(False)</span>
 <span class="sd">        selectable = BooleanProperty(True)</span>
 
 <span class="sd">        def refresh_view_attrs(self, rv, index, data):</span>
-<span class="sd">            &#39;&#39;&#39; Catch and handle the view changes &#39;&#39;&#39;</span>
+<span class="sd">            ''' Catch and handle the view changes '''</span>
 <span class="sd">            self.index = index</span>
 <span class="sd">            return super(SelectableLabel, self).refresh_view_attrs(</span>
 <span class="sd">                rv, index, data)</span>
 
 <span class="sd">        def on_touch_down(self, touch):</span>
-<span class="sd">            &#39;&#39;&#39; Add selection on touch down &#39;&#39;&#39;</span>
+<span class="sd">            ''' Add selection on touch down '''</span>
 <span class="sd">            if super(SelectableLabel, self).on_touch_down(touch):</span>
 <span class="sd">                return True</span>
 <span class="sd">            if self.collide_point(*touch.pos) and self.selectable:</span>
 <span class="sd">                return self.parent.select_with_touch(self.index, touch)</span>
 
 <span class="sd">        def apply_selection(self, rv, index, is_selected):</span>
-<span class="sd">            &#39;&#39;&#39; Respond to the selection of items in the view. &#39;&#39;&#39;</span>
+<span class="sd">            ''' Respond to the selection of items in the view. '''</span>
 <span class="sd">            self.selected = is_selected</span>
 <span class="sd">            if is_selected:</span>
-<span class="sd">                print(&quot;selection changed to {0}&quot;.format(rv.data[index]))</span>
+<span class="sd">                print("selection changed to {0}".format(rv.data[index]))</span>
 <span class="sd">            else:</span>
-<span class="sd">                print(&quot;selection removed for {0}&quot;.format(rv.data[index]))</span>
+<span class="sd">                print("selection removed for {0}".format(rv.data[index]))</span>
 
 
 <span class="sd">    class RV(RecycleView):</span>
 <span class="sd">        def __init__(self, **kwargs):</span>
 <span class="sd">            super(RV, self).__init__(**kwargs)</span>
-<span class="sd">            self.data = [{&#39;text&#39;: str(x)} for x in range(100)]</span>
+<span class="sd">            self.data = [{'text': str(x)} for x in range(100)]</span>
 
 
 <span class="sd">    class TestApp(App):</span>
 <span class="sd">        def build(self):</span>
 <span class="sd">            return RV()</span>
 
-<span class="sd">    if __name__ == &#39;__main__&#39;:</span>
+<span class="sd">    if __name__ == '__main__':</span>
 <span class="sd">        TestApp().run()</span>
 
 
@@ -559,7 +559,7 @@
 <span class="sd">    from kivy.uix.recycleview.views import RecycleDataViewBehavior</span>
 <span class="sd">    from kivy.properties import BooleanProperty, StringProperty</span>
 
-<span class="sd">    Builder.load_string(&#39;&#39;&#39;</span>
+<span class="sd">    Builder.load_string('''</span>
 <span class="sd">    &lt;StatefulLabel&gt;:</span>
 <span class="sd">        active: stored_state.active</span>
 <span class="sd">        CheckBox:</span>
@@ -573,12 +573,12 @@
 <span class="sd">            text: root.generated_state_text</span>
 
 <span class="sd">    &lt;RV&gt;:</span>
-<span class="sd">        viewclass: &#39;StatefulLabel&#39;</span>
+<span class="sd">        viewclass: 'StatefulLabel'</span>
 <span class="sd">        RecycleBoxLayout:</span>
 <span class="sd">            size_hint_y: None</span>
 <span class="sd">            height: self.minimum_height</span>
-<span class="sd">            orientation: &#39;vertical&#39;</span>
-<span class="sd">    &#39;&#39;&#39;)</span>
+<span class="sd">            orientation: 'vertical'</span>
+<span class="sd">    ''')</span>
 
 <span class="sd">    class StatefulLabel(RecycleDataViewBehavior, BoxLayout):</span>
 <span class="sd">        text = StringProperty()</span>
@@ -586,39 +586,39 @@
 <span class="sd">        active = BooleanProperty()</span>
 <span class="sd">        index = 0</span>
 
-<span class="sd">        &#39;&#39;&#39;</span>
-<span class="sd">        To change a viewclass&#39; state as the data assigned to it changes,</span>
+<span class="sd">        '''</span>
+<span class="sd">        To change a viewclass' state as the data assigned to it changes,</span>
 <span class="sd">        overload the refresh_view_attrs function (inherited from</span>
 <span class="sd">        RecycleDataViewBehavior)</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
 <span class="sd">        def refresh_view_attrs(self, rv, index, data):</span>
 <span class="sd">            self.index = index</span>
-<span class="sd">            if data[&#39;text&#39;] == &#39;0&#39;:</span>
-<span class="sd">                self.generated_state_text = &quot;is zero&quot;</span>
-<span class="sd">            elif int(data[&#39;text&#39;]) % 2 == 1:</span>
-<span class="sd">                self.generated_state_text = &quot;is odd&quot;</span>
+<span class="sd">            if data['text'] == '0':</span>
+<span class="sd">                self.generated_state_text = "is zero"</span>
+<span class="sd">            elif int(data['text']) % 2 == 1:</span>
+<span class="sd">                self.generated_state_text = "is odd"</span>
 <span class="sd">            else:</span>
-<span class="sd">                self.generated_state_text = &quot;is even&quot;</span>
+<span class="sd">                self.generated_state_text = "is even"</span>
 <span class="sd">            super(StatefulLabel, self).refresh_view_attrs(rv, index, data)</span>
 
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
 <span class="sd">        To keep state changes in the viewclass with associated data,</span>
-<span class="sd">        they can be explicitly stored in the RecycleView&#39;s data object</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        they can be explicitly stored in the RecycleView's data object</span>
+<span class="sd">        '''</span>
 <span class="sd">        def store_checkbox_state(self):</span>
 <span class="sd">            rv = App.get_running_app().rv</span>
-<span class="sd">            rv.data[self.index][&#39;active&#39;] = self.active</span>
+<span class="sd">            rv.data[self.index]['active'] = self.active</span>
 
 <span class="sd">    class RV(RecycleView, App):</span>
 <span class="sd">        def __init__(self, **kwargs):</span>
 <span class="sd">            super(RV, self).__init__(**kwargs)</span>
-<span class="sd">            self.data = [{&#39;text&#39;: str(x), &#39;active&#39;: False} for x in range(10)]</span>
+<span class="sd">            self.data = [{'text': str(x), 'active': False} for x in range(10)]</span>
 <span class="sd">            App.get_running_app().rv = self</span>
 
 <span class="sd">        def build(self):</span>
 <span class="sd">            return self</span>
 
-<span class="sd">    if __name__ == &#39;__main__&#39;:</span>
+<span class="sd">    if __name__ == '__main__':</span>
 <span class="sd">        RV().run()</span>
 
 <span class="sd">TODO:</span>
@@ -628,9 +628,9 @@
 
 <span class="sd">.. warning::</span>
 <span class="sd">    When views are re-used they may not trigger if the data remains the same.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;RecycleViewBehavior&#39;</span><span class="p">,</span> <span class="s1">&#39;RecycleView&#39;</span><span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'RecycleViewBehavior'</span><span class="p">,</span> <span class="s1">'RecycleView'</span><span class="p">)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
 
@@ -648,19 +648,19 @@
 <div class="viewcode-block" id="RecycleViewBehavior">
 <a class="viewcode-back" href="../../../api-kivy.uix.recycleview.html#kivy.uix.recycleview.RecycleViewBehavior">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">RecycleViewBehavior</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;RecycleViewBehavior provides a behavioral model upon which the</span>
+<span class="w">    </span><span class="sd">"""RecycleViewBehavior provides a behavioral model upon which the</span>
 <span class="sd">    :class:`RecycleView` is built. Together, they offer an extensible and</span>
 <span class="sd">    flexible way to produce views with limited windows over large data sets.</span>
 
 <span class="sd">    See the module documentation for more information.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="c1"># internals</span>
     <span class="n">_view_adapter</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">_data_model</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">_layout_manager</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="n">_refresh_flags</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;layout&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;viewport&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+    <span class="n">_refresh_flags</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'data'</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">'layout'</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">'viewport'</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
     <span class="n">_refresh_trigger</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -684,42 +684,42 @@
             <span class="k">return</span>
 
         <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="n">flags</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">flags</span><span class="p">[</span><span class="s1">'data'</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">f</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">save_viewport</span><span class="p">()</span>
             <span class="c1"># lm.clear_layout()</span>
-            <span class="n">flags</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="n">flags</span><span class="p">[</span><span class="s1">&#39;layout&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[{}]</span>
+            <span class="n">flags</span><span class="p">[</span><span class="s1">'data'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">flags</span><span class="p">[</span><span class="s1">'layout'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[{}]</span>
             <span class="n">lm</span><span class="o">.</span><span class="n">compute_sizes_from_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
 
-        <span class="k">while</span> <span class="n">flags</span><span class="p">[</span><span class="s1">&#39;layout&#39;</span><span class="p">]:</span>
+        <span class="k">while</span> <span class="n">flags</span><span class="p">[</span><span class="s1">'layout'</span><span class="p">]:</span>
             <span class="c1"># if `data` we were re-triggered so finish in the next call.</span>
             <span class="c1"># Otherwise go until fully laid out.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">save_viewport</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">flags</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">flags</span><span class="p">[</span><span class="s1">'data'</span><span class="p">]:</span>
                 <span class="k">return</span>
-            <span class="n">flags</span><span class="p">[</span><span class="s1">&#39;viewport&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="n">f</span> <span class="o">=</span> <span class="n">flags</span><span class="p">[</span><span class="s1">&#39;layout&#39;</span><span class="p">]</span>
-            <span class="n">flags</span><span class="p">[</span><span class="s1">&#39;layout&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">flags</span><span class="p">[</span><span class="s1">'viewport'</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">flags</span><span class="p">[</span><span class="s1">'layout'</span><span class="p">]</span>
+            <span class="n">flags</span><span class="p">[</span><span class="s1">'layout'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">lm</span><span class="o">.</span><span class="n">compute_layout</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
             <span class="k">except</span> <span class="n">LayoutChangeException</span><span class="p">:</span>
-                <span class="n">flags</span><span class="p">[</span><span class="s1">&#39;layout&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">({})</span>
+                <span class="n">flags</span><span class="p">[</span><span class="s1">'layout'</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">({})</span>
                 <span class="k">continue</span>
 
-        <span class="k">if</span> <span class="n">flags</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]:</span>  <span class="c1"># in case that happened meanwhile</span>
+        <span class="k">if</span> <span class="n">flags</span><span class="p">[</span><span class="s1">'data'</span><span class="p">]:</span>  <span class="c1"># in case that happened meanwhile</span>
             <span class="k">return</span>
 
-        <span class="c1"># make sure if we were re-triggered in the loop that we won&#39;t be</span>
+        <span class="c1"># make sure if we were re-triggered in the loop that we won't be</span>
         <span class="c1"># called needlessly later.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_trigger</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">restore_viewport</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="n">flags</span><span class="p">[</span><span class="s1">&#39;viewport&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">flags</span><span class="p">[</span><span class="s1">'viewport'</span><span class="p">]:</span>
             <span class="c1"># TODO: make this also listen to LayoutChangeException</span>
-            <span class="n">flags</span><span class="p">[</span><span class="s1">&#39;viewport&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">flags</span><span class="p">[</span><span class="s1">'viewport'</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="n">viewport</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_viewport</span><span class="p">()</span>
             <span class="n">indices</span> <span class="o">=</span> <span class="n">lm</span><span class="o">.</span><span class="n">compute_visible_views</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">viewport</span><span class="p">)</span>
             <span class="n">lm</span><span class="o">.</span><span class="n">set_visible_views</span><span class="p">(</span><span class="n">indices</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">viewport</span><span class="p">)</span>
@@ -727,7 +727,7 @@
 <div class="viewcode-block" id="RecycleViewBehavior.refresh_from_data">
 <a class="viewcode-back" href="../../../api-kivy.uix.recycleview.html#kivy.uix.recycleview.RecycleViewBehavior.refresh_from_data">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">refresh_from_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        This should be called when data changes. Data changes typically</span>
 <span class="sd">        indicate that everything should be recomputed since the source data</span>
 <span class="sd">        changed.</span>
@@ -738,31 +738,31 @@
 <span class="sd">        therefore responds to and accepts the keyword arguments of that event.</span>
 
 <span class="sd">        It can be called manually to trigger an update.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_flags</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_flags</span><span class="p">[</span><span class="s1">'data'</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_trigger</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="RecycleViewBehavior.refresh_from_layout">
 <a class="viewcode-back" href="../../../api-kivy.uix.recycleview.html#kivy.uix.recycleview.RecycleViewBehavior.refresh_from_layout">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">refresh_from_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        This should be called when the layout changes or needs to change. It is</span>
 <span class="sd">        typically called when a layout parameter has changed and therefore the</span>
 <span class="sd">        layout needs to be recomputed.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_flags</span><span class="p">[</span><span class="s1">&#39;layout&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_flags</span><span class="p">[</span><span class="s1">'layout'</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_trigger</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="RecycleViewBehavior.refresh_from_viewport">
 <a class="viewcode-back" href="../../../api-kivy.uix.recycleview.html#kivy.uix.recycleview.RecycleViewBehavior.refresh_from_viewport">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">refresh_from_viewport</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        This should be called when the viewport changes and the displayed data</span>
 <span class="sd">        must be updated. Neither the data nor the layout will be recomputed.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_flags</span><span class="p">[</span><span class="s1">&#39;viewport&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_flags</span><span class="p">[</span><span class="s1">'viewport'</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_trigger</span><span class="p">()</span></div>
 
 
@@ -787,7 +787,7 @@
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">RecycleDataModelBehavior</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s1">&#39;Expected object based on RecycleDataModelBehavior, got </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span>
+                <span class="s1">'Expected object based on RecycleDataModelBehavior, got </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span>
                 <span class="nb">format</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="vm">__class__</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_data_model</span> <span class="o">=</span> <span class="n">value</span>
@@ -796,12 +796,12 @@
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="n">data_model</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_data_model</span><span class="p">,</span> <span class="n">_set_data_model</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    The Data model responsible for maintaining the data set.</span>
 
 <span class="sd">    data_model is an :class:`~kivy.properties.AliasProperty` that gets and sets</span>
 <span class="sd">    the current data model.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_view_adapter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_view_adapter</span>
@@ -819,7 +819,7 @@
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">RecycleDataAdapter</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s1">&#39;Expected object based on RecycleAdapter, got </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span>
+                <span class="s1">'Expected object based on RecycleAdapter, got </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span>
                 <span class="nb">format</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="vm">__class__</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_view_adapter</span> <span class="o">=</span> <span class="n">value</span>
@@ -828,13 +828,13 @@
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="n">view_adapter</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_view_adapter</span><span class="p">,</span> <span class="n">_set_view_adapter</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    The adapter responsible for providing views that represent items in a data</span>
 <span class="sd">    set.</span>
 
 <span class="sd">    view_adapter is an :class:`~kivy.properties.AliasProperty` that gets and</span>
 <span class="sd">    sets the current view adapter.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_layout_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_layout_manager</span>
@@ -853,8 +853,8 @@
 
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">RecycleLayoutManagerBehavior</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s1">&#39;Expected object based on RecycleLayoutManagerBehavior, &#39;</span>
-                <span class="s1">&#39;got </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="vm">__class__</span><span class="p">))</span>
+                <span class="s1">'Expected object based on RecycleLayoutManagerBehavior, '</span>
+                <span class="s1">'got </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="vm">__class__</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_layout_manager</span> <span class="o">=</span> <span class="n">value</span>
         <span class="n">value</span><span class="o">.</span><span class="n">attach_recycleview</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -862,36 +862,36 @@
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="n">layout_manager</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_layout_manager</span><span class="p">,</span> <span class="n">_set_layout_manager</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    The Layout manager responsible for positioning views within the</span>
 <span class="sd">    :class:`RecycleView`.</span>
 
 <span class="sd">    layout_manager is an :class:`~kivy.properties.AliasProperty` that gets</span>
 <span class="sd">    and sets the layout_manger.</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
+<span class="sd">    """</span></div>
 
 
 
 <div class="viewcode-block" id="RecycleView">
 <a class="viewcode-back" href="../../../api-kivy.uix.recycleview.html#kivy.uix.recycleview.RecycleView">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">RecycleView</span><span class="p">(</span><span class="n">RecycleViewBehavior</span><span class="p">,</span> <span class="n">ScrollView</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    RecycleView is a flexible view for providing a limited window</span>
 <span class="sd">    into a large data set.</span>
 
 <span class="sd">    See the module documentation for more information.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;data_model&#39;</span><span class="p">,</span> <span class="n">RecycleDataModel</span><span class="p">())</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">'data_model'</span><span class="p">,</span> <span class="n">RecycleDataModel</span><span class="p">())</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">view_adapter</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;view_adapter&#39;</span><span class="p">,</span> <span class="n">RecycleDataAdapter</span><span class="p">())</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">'view_adapter'</span><span class="p">,</span> <span class="n">RecycleDataAdapter</span><span class="p">())</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">RecycleView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="n">fbind</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;scroll_x&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">refresh_from_viewport</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;scroll_y&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">refresh_from_viewport</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">refresh_from_viewport</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'scroll_x'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">refresh_from_viewport</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'scroll_y'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">refresh_from_viewport</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'size'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">refresh_from_viewport</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">refresh_from_data</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_convert_sv_to_lm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
@@ -904,8 +904,8 @@
 
         <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="s1">&#39;The layout manager must be a sub child of the recycleview. &#39;</span>
-                <span class="s1">&#39;Could not find </span><span class="si">{}</span><span class="s1"> in the parent tree of </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lm</span><span class="p">))</span>
+                <span class="s1">'The layout manager must be a sub child of the recycleview. '</span>
+                <span class="s1">'Could not find </span><span class="si">{}</span><span class="s1"> in the parent tree of </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lm</span><span class="p">))</span>
 
         <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">tree</span><span class="p">):</span>
             <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">to_local</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
@@ -931,7 +931,7 @@
         <span class="n">height</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">lm_h</span><span class="p">)</span>
 
         <span class="c1"># now convert the sv coordinates into the coordinates of the lm. In</span>
-        <span class="c1"># case there&#39;s a relative layout type widget in the parent tree</span>
+        <span class="c1"># case there's a relative layout type widget in the parent tree</span>
         <span class="c1"># between the sv and the lm.</span>
         <span class="n">left</span><span class="p">,</span> <span class="n">bottom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_sv_to_lm</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">bottom</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">left</span><span class="p">,</span> <span class="n">bottom</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span>
@@ -969,15 +969,15 @@
         <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">d</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">value</span>
 
-    <span class="n">data</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_data</span><span class="p">,</span> <span class="n">_set_data</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;data_model&quot;</span><span class="p">])</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_data</span><span class="p">,</span> <span class="n">_set_data</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">[</span><span class="s2">"data_model"</span><span class="p">])</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    The data used by the current view adapter. This is a list of dicts whose</span>
 <span class="sd">    keys map to the corresponding property names of the</span>
 <span class="sd">    :attr:`~RecycleView.viewclass`.</span>
 
 <span class="sd">    data is an :class:`~kivy.properties.AliasProperty` that gets and sets the</span>
 <span class="sd">    data used to generate the views.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_viewclass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout_manager</span>
@@ -989,13 +989,13 @@
             <span class="n">a</span><span class="o">.</span><span class="n">viewclass</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="n">viewclass</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_viewclass</span><span class="p">,</span> <span class="n">_set_viewclass</span><span class="p">,</span>
-                              <span class="n">bind</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;layout_manager&quot;</span><span class="p">])</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+                              <span class="n">bind</span><span class="o">=</span><span class="p">[</span><span class="s2">"layout_manager"</span><span class="p">])</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    The viewclass used by the current layout_manager.</span>
 
 <span class="sd">    viewclass is an :class:`~kivy.properties.AliasProperty` that gets and sets</span>
 <span class="sd">    the class used to generate the individual items presented in the view.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_key_viewclass</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layout_manager</span>
@@ -1007,12 +1007,12 @@
             <span class="n">a</span><span class="o">.</span><span class="n">key_viewclass</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="n">key_viewclass</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_key_viewclass</span><span class="p">,</span> <span class="n">_set_key_viewclass</span><span class="p">,</span>
-                                  <span class="n">bind</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;layout_manager&quot;</span><span class="p">])</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+                                  <span class="n">bind</span><span class="o">=</span><span class="p">[</span><span class="s2">"layout_manager"</span><span class="p">])</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    key_viewclass is an :class:`~kivy.properties.AliasProperty` that gets and</span>
 <span class="sd">    sets the key viewclass for the current</span>
 <span class="sd">    :attr:`~kivy.uix.recycleview.layout_manager`.</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
+<span class="sd">    """</span></div>
 
 </pre></div>
 
@@ -1028,7 +1028,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

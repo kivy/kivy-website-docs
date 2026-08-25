@@ -369,7 +369,7 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.uix.dropdown</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">Drop-Down List</span>
 <span class="sd">==============</span>
 
@@ -405,10 +405,10 @@
 <span class="sd">        # (disabling the size_hint_y) so the dropdown can calculate</span>
 <span class="sd">        # the area it needs.</span>
 
-<span class="sd">        btn = Button(text=&#39;Value %d&#39; % index, size_hint_y=None, height=44)</span>
+<span class="sd">        btn = Button(text='Value %d' % index, size_hint_y=None, height=44)</span>
 
 <span class="sd">        # for each button, attach a callback that will call the select() method</span>
-<span class="sd">        # on the dropdown. We&#39;ll pass the text of the button as the data of the</span>
+<span class="sd">        # on the dropdown. We'll pass the text of the button as the data of the</span>
 <span class="sd">        # selection.</span>
 <span class="sd">        btn.bind(on_release=lambda btn: dropdown.select(btn.text))</span>
 
@@ -416,7 +416,7 @@
 <span class="sd">        dropdown.add_widget(btn)</span>
 
 <span class="sd">    # create a big main button</span>
-<span class="sd">    mainbutton = Button(text=&#39;Hello&#39;, size_hint=(None, None))</span>
+<span class="sd">    mainbutton = Button(text='Hello', size_hint=(None, None))</span>
 
 <span class="sd">    # show the dropdown menu when the main button is released</span>
 <span class="sd">    # note: all the bind() calls pass the instance of the caller (here, the</span>
@@ -426,7 +426,7 @@
 
 <span class="sd">    # one last thing, listen for the selection in the dropdown list and</span>
 <span class="sd">    # assign the data to the button text.</span>
-<span class="sd">    dropdown.bind(on_select=lambda instance, x: setattr(mainbutton, &#39;text&#39;, x))</span>
+<span class="sd">    dropdown.bind(on_select=lambda instance, x: setattr(mainbutton, 'text', x))</span>
 
 <span class="sd">    runTouchApp(mainbutton)</span>
 
@@ -438,19 +438,19 @@
 <span class="sd">    #:kivy 1.4.0</span>
 <span class="sd">    &lt;CustomDropDown&gt;:</span>
 <span class="sd">        Button:</span>
-<span class="sd">            text: &#39;My first Item&#39;</span>
+<span class="sd">            text: 'My first Item'</span>
 <span class="sd">            size_hint_y: None</span>
 <span class="sd">            height: 44</span>
-<span class="sd">            on_release: root.select(&#39;item1&#39;)</span>
+<span class="sd">            on_release: root.select('item1')</span>
 <span class="sd">        Label:</span>
-<span class="sd">            text: &#39;Unselectable item&#39;</span>
+<span class="sd">            text: 'Unselectable item'</span>
 <span class="sd">            size_hint_y: None</span>
 <span class="sd">            height: 44</span>
 <span class="sd">        Button:</span>
-<span class="sd">            text: &#39;My second Item&#39;</span>
+<span class="sd">            text: 'My second Item'</span>
 <span class="sd">            size_hint_y: None</span>
 <span class="sd">            height: 44</span>
-<span class="sd">            on_release: root.select(&#39;item2&#39;)</span>
+<span class="sd">            on_release: root.select('item2')</span>
 
 <span class="sd">And then, create the associated python class and use it::</span>
 
@@ -458,12 +458,12 @@
 <span class="sd">        pass</span>
 
 <span class="sd">    dropdown = CustomDropDown()</span>
-<span class="sd">    mainbutton = Button(text=&#39;Hello&#39;, size_hint=(None, None))</span>
+<span class="sd">    mainbutton = Button(text='Hello', size_hint=(None, None))</span>
 <span class="sd">    mainbutton.bind(on_release=dropdown.open)</span>
-<span class="sd">    dropdown.bind(on_select=lambda instance, x: setattr(mainbutton, &#39;text&#39;, x))</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    dropdown.bind(on_select=lambda instance, x: setattr(mainbutton, 'text', x))</span>
+<span class="sd">'''</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;DropDown&#39;</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'DropDown'</span><span class="p">,</span> <span class="p">)</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.scrollview</span><span class="w"> </span><span class="kn">import</span> <span class="n">ScrollView</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.properties</span><span class="w"> </span><span class="kn">import</span> <span class="n">ObjectProperty</span><span class="p">,</span> <span class="n">NumericProperty</span><span class="p">,</span> <span class="n">BooleanProperty</span>
@@ -472,24 +472,24 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.clock</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clock</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
 
-<span class="n">_grid_kv</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="n">_grid_kv</span> <span class="o">=</span> <span class="s1">'''</span>
 <span class="s1">GridLayout:</span>
 <span class="s1">    size_hint_y: None</span>
 <span class="s1">    height: self.minimum_size[1]</span>
 <span class="s1">    cols: 1</span>
-<span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">'''</span>
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">DropDownException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;DropDownException class.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''DropDownException class.</span>
+<span class="sd">    '''</span>
     <span class="k">pass</span>
 
 
 <div class="viewcode-block" id="DropDown">
 <a class="viewcode-back" href="../../../api-kivy.uix.dropdown.html#kivy.uix.dropdown.DropDown">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">DropDown</span><span class="p">(</span><span class="n">ScrollView</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;DropDown class. See module documentation for more information.</span>
+<span class="w">    </span><span class="sd">'''DropDown class. See module documentation for more information.</span>
 
 <span class="sd">    :Events:</span>
 <span class="sd">        `on_select`: data</span>
@@ -501,35 +501,35 @@
 
 <span class="sd">            Fired when the DropDown is dismissed, either on selection or on</span>
 <span class="sd">            touching outside the widget.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">auto_width</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;By default, the width of the dropdown will be the same as the width of</span>
+<span class="w">    </span><span class="sd">'''By default, the width of the dropdown will be the same as the width of</span>
 <span class="sd">    the attached widget. Set to False if you want to provide your own width.</span>
 
 <span class="sd">    :attr:`auto_width` is a :class:`~kivy.properties.BooleanProperty`</span>
 <span class="sd">    and defaults to True.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">max_height</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Indicate the maximum height that the dropdown can take. If None, it will</span>
+<span class="w">    </span><span class="sd">'''Indicate the maximum height that the dropdown can take. If None, it will</span>
 <span class="sd">    take the maximum height available until the top or bottom of the screen</span>
 <span class="sd">    is reached.</span>
 
 <span class="sd">    :attr:`max_height` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to None.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">dismiss_on_select</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;By default, the dropdown will be automatically dismissed when a</span>
+<span class="w">    </span><span class="sd">'''By default, the dropdown will be automatically dismissed when a</span>
 <span class="sd">    selection has been done. Set to False to prevent the dismiss.</span>
 
 <span class="sd">    :attr:`dismiss_on_select` is a :class:`~kivy.properties.BooleanProperty`</span>
 <span class="sd">    and defaults to True.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">auto_dismiss</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;By default, the dropdown will be automatically dismissed when a</span>
+<span class="w">    </span><span class="sd">'''By default, the dropdown will be automatically dismissed when a</span>
 <span class="sd">    touch happens outside of it, this option allows to disable this</span>
 <span class="sd">    feature</span>
 
@@ -537,10 +537,10 @@
 <span class="sd">    and defaults to True.</span>
 
 <span class="sd">    .. versionadded:: 1.8.0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">min_state_time</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Minimum time before the :class:`~kivy.uix.DropDown` is dismissed.</span>
+<span class="w">    </span><span class="sd">'''Minimum time before the :class:`~kivy.uix.DropDown` is dismissed.</span>
 <span class="sd">    This is used to allow for the widget inside the dropdown to display</span>
 <span class="sd">    a down state or for the :class:`~kivy.uix.DropDown` itself to</span>
 <span class="sd">    display a animation for closing.</span>
@@ -549,40 +549,40 @@
 <span class="sd">    and defaults to the `Config` value `min_state_time`.</span>
 
 <span class="sd">    .. versionadded:: 1.10.0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">attach_to</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;(internal) Property that will be set to the widget to which the</span>
+<span class="w">    </span><span class="sd">'''(internal) Property that will be set to the widget to which the</span>
 <span class="sd">    drop down list is attached.</span>
 
 <span class="sd">    The :meth:`open` method will automatically set this property whilst</span>
 <span class="sd">    :meth:`dismiss` will set it back to None.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">container</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;(internal) Property that will be set to the container of the dropdown</span>
+<span class="w">    </span><span class="sd">'''(internal) Property that will be set to the container of the dropdown</span>
 <span class="sd">    list. It is a :class:`~kivy.uix.gridlayout.GridLayout` by default.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">_touch_started_inside</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;on_select&#39;</span><span class="p">,</span> <span class="s1">&#39;on_dismiss&#39;</span><span class="p">)</span>
+    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'on_select'</span><span class="p">,</span> <span class="s1">'on_dismiss'</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_win</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="s1">&#39;min_state_time&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">'min_state_time'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">min_state_time</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
-                <span class="n">Config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;graphics&#39;</span><span class="p">,</span> <span class="s1">&#39;min_state_time&#39;</span><span class="p">))</span>
-        <span class="k">if</span> <span class="s1">&#39;container&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+                <span class="n">Config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'graphics'</span><span class="p">,</span> <span class="s1">'min_state_time'</span><span class="p">))</span>
+        <span class="k">if</span> <span class="s1">'container'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
             <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="n">Builder</span><span class="o">.</span><span class="n">load_string</span><span class="p">(</span><span class="n">_grid_kv</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">c</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="s1">&#39;do_scroll_x&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">'do_scroll_x'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_x</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="k">if</span> <span class="s1">&#39;size_hint&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-            <span class="k">if</span> <span class="s1">&#39;size_hint_x&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">'size_hint'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">'size_hint_x'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">size_hint_x</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">if</span> <span class="s1">&#39;size_hint_y&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">'size_hint_y'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">size_hint_y</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">DropDown</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">c</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -591,7 +591,7 @@
         <span class="n">Window</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span>
             <span class="n">on_key_down</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_key_down</span><span class="p">,</span>
             <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_reposition</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reposition</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">'size'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reposition</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_key_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">scancode</span><span class="p">,</span> <span class="n">codepoint</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="mi">27</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_parent_window</span><span class="p">():</span>
@@ -605,11 +605,11 @@
 <div class="viewcode-block" id="DropDown.open">
 <a class="viewcode-back" href="../../../api-kivy.uix.dropdown.html#kivy.uix.dropdown.DropDown.open">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Open the dropdown list and attach it to a specific widget.</span>
+<span class="w">        </span><span class="sd">'''Open the dropdown list and attach it to a specific widget.</span>
 <span class="sd">        Depending on the position of the widget within the window and</span>
 <span class="sd">        the height of the dropdown, the dropdown might be above or below</span>
 <span class="sd">        that widget.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="c1"># ensure we are not already attached</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">attach_to</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dismiss</span><span class="p">()</span>
@@ -619,7 +619,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_win</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">get_parent_window</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_win</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">DropDownException</span><span class="p">(</span>
-                <span class="s1">&#39;Cannot open a dropdown list on a hidden widget&#39;</span><span class="p">)</span>
+                <span class="s1">'Cannot open a dropdown list on a hidden widget'</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">attach_to</span> <span class="o">=</span> <span class="n">widget</span>
         <span class="n">widget</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">pos</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_reposition</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_reposition</span><span class="p">)</span>
@@ -632,9 +632,9 @@
 <div class="viewcode-block" id="DropDown.dismiss">
 <a class="viewcode-back" href="../../../api-kivy.uix.dropdown.html#kivy.uix.dropdown.DropDown.dismiss">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">dismiss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Remove the dropdown widget from the window and detach it from</span>
+<span class="w">        </span><span class="sd">'''Remove the dropdown widget from the window and detach it from</span>
 <span class="sd">        the attached widget.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_real_dismiss</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_state_time</span><span class="p">)</span></div>
 
 
@@ -644,7 +644,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">attach_to</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">attach_to</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span><span class="n">pos</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_reposition</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_reposition</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">attach_to</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_dismiss&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_dismiss'</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_dismiss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
@@ -652,10 +652,10 @@
 <div class="viewcode-block" id="DropDown.select">
 <a class="viewcode-back" href="../../../api-kivy.uix.dropdown.html#kivy.uix.dropdown.DropDown.select">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Call this method to trigger the `on_select` event with the `data`</span>
+<span class="w">        </span><span class="sd">'''Call this method to trigger the `on_select` event with the `data`</span>
 <span class="sd">        selection. The `data` can be anything you want.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_select&#39;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<span class="sd">        '''</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_select'</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dismiss_on_select</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dismiss</span><span class="p">()</span></div>
 
@@ -738,7 +738,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_width</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">wright</span> <span class="o">-</span> <span class="n">wx</span>
 
-        <span class="c1"># ensure the dropdown list doesn&#39;t get out on the X axis, with a</span>
+        <span class="c1"># ensure the dropdown list doesn't get out on the X axis, with a</span>
         <span class="c1"># preference to 0 in case the list is too wide.</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">wx</span>
         <span class="k">if</span> <span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">&gt;</span> <span class="n">win</span><span class="o">.</span><span class="n">width</span><span class="p">:</span>
@@ -773,15 +773,15 @@
 
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.button</span><span class="w"> </span><span class="kn">import</span> <span class="n">Button</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">runTouchApp</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">show_dropdown</span><span class="p">(</span><span class="n">button</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
         <span class="n">dp</span> <span class="o">=</span> <span class="n">DropDown</span><span class="p">()</span>
-        <span class="n">dp</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_select</span><span class="o">=</span><span class="k">lambda</span> <span class="n">instance</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">setattr</span><span class="p">(</span><span class="n">button</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+        <span class="n">dp</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_select</span><span class="o">=</span><span class="k">lambda</span> <span class="n">instance</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">setattr</span><span class="p">(</span><span class="n">button</span><span class="p">,</span> <span class="s1">'text'</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-            <span class="n">item</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;hello </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">,</span> <span class="n">size_hint_y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">44</span><span class="p">)</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">'hello </span><span class="si">%d</span><span class="s1">'</span> <span class="o">%</span> <span class="n">i</span><span class="p">,</span> <span class="n">size_hint_y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">44</span><span class="p">)</span>
             <span class="n">item</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_release</span><span class="o">=</span><span class="k">lambda</span> <span class="n">btn</span><span class="p">,</span> <span class="n">touch</span><span class="p">:</span> <span class="n">dp</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">btn</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
             <span class="n">dp</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
         <span class="n">dp</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">button</span><span class="p">)</span>
@@ -789,7 +789,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">touch_move</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="n">instance</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">pos</span>
 
-    <span class="n">btn</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;SHOW&#39;</span><span class="p">,</span> <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">200</span><span class="p">))</span>
+    <span class="n">btn</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">'SHOW'</span><span class="p">,</span> <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">pos</span><span class="o">=</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">200</span><span class="p">))</span>
     <span class="n">btn</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_release</span><span class="o">=</span><span class="n">show_dropdown</span><span class="p">,</span> <span class="n">on_touch_move</span><span class="o">=</span><span class="n">touch_move</span><span class="p">)</span>
 
     <span class="n">runTouchApp</span><span class="p">(</span><span class="n">btn</span><span class="p">)</span>
@@ -807,7 +807,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

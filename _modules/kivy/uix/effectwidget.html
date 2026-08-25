@@ -369,7 +369,7 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.uix.effectwidget</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">EffectWidget</span>
 <span class="sd">============</span>
 
@@ -390,7 +390,7 @@
 <span class="sd">The basic usage is as follows::</span>
 
 <span class="sd">    w = EffectWidget()</span>
-<span class="sd">    w.add_widget(Button(text=&#39;Hello!&#39;)</span>
+<span class="sd">    w.add_widget(Button(text='Hello!')</span>
 <span class="sd">    w.effects = [InvertEffect(), HorizontalBlurEffect(size=2.0)]</span>
 
 <span class="sd">The equivalent in kv would be::</span>
@@ -399,7 +399,7 @@
 <span class="sd">    EffectWidget:</span>
 <span class="sd">        effects: ew.InvertEffect(), ew.HorizontalBlurEffect(size=2.0)</span>
 <span class="sd">        Button:</span>
-<span class="sd">            text: &#39;Hello!&#39;</span>
+<span class="sd">            text: 'Hello!'</span>
 
 <span class="sd">The effects can be a list of effects of any length, and they will be</span>
 <span class="sd">applied sequentially.</span>
@@ -469,7 +469,7 @@
 
 <span class="sd">- **color**: The normal color of the current pixel (i.e. texture</span>
 <span class="sd">  sampled at tex_coords).</span>
-<span class="sd">- **texture**: The texture containing the widget&#39;s normal background.</span>
+<span class="sd">- **texture**: The texture containing the widget's normal background.</span>
 <span class="sd">- **tex_coords**: The normal texture_coords used to access texture.</span>
 <span class="sd">- **coords**: The pixel indices of the current pixel.</span>
 
@@ -489,7 +489,7 @@
 <span class="sd">You can also set the glsl by automatically loading the string from a</span>
 <span class="sd">file, simply set the :attr:`EffectBase.source` property of an effect.</span>
 
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.clock</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clock</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.relativelayout</span><span class="w"> </span><span class="kn">import</span> <span class="n">RelativeLayout</span>
@@ -503,13 +503,13 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.resources</span><span class="w"> </span><span class="kn">import</span> <span class="n">resource_find</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">Logger</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;EffectWidget&#39;</span><span class="p">,</span> <span class="s1">&#39;EffectBase&#39;</span><span class="p">,</span> <span class="s1">&#39;AdvancedEffectBase&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;MonochromeEffect&#39;</span><span class="p">,</span> <span class="s1">&#39;InvertEffect&#39;</span><span class="p">,</span> <span class="s1">&#39;ChannelMixEffect&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;ScanlinesEffect&#39;</span><span class="p">,</span> <span class="s1">&#39;PixelateEffect&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;HorizontalBlurEffect&#39;</span><span class="p">,</span> <span class="s1">&#39;VerticalBlurEffect&#39;</span><span class="p">,</span>
-           <span class="s1">&#39;FXAAEffect&#39;</span><span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'EffectWidget'</span><span class="p">,</span> <span class="s1">'EffectBase'</span><span class="p">,</span> <span class="s1">'AdvancedEffectBase'</span><span class="p">,</span>
+           <span class="s1">'MonochromeEffect'</span><span class="p">,</span> <span class="s1">'InvertEffect'</span><span class="p">,</span> <span class="s1">'ChannelMixEffect'</span><span class="p">,</span>
+           <span class="s1">'ScanlinesEffect'</span><span class="p">,</span> <span class="s1">'PixelateEffect'</span><span class="p">,</span>
+           <span class="s1">'HorizontalBlurEffect'</span><span class="p">,</span> <span class="s1">'VerticalBlurEffect'</span><span class="p">,</span>
+           <span class="s1">'FXAAEffect'</span><span class="p">)</span>
 
-<span class="n">shader_header</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="n">shader_header</span> <span class="o">=</span> <span class="s1">'''</span>
 <span class="s1">#ifdef GL_ES</span>
 <span class="s1">precision highp float;</span>
 <span class="s1">#endif</span>
@@ -520,59 +520,59 @@
 
 <span class="s1">/* uniform texture samplers */</span>
 <span class="s1">uniform sampler2D texture0;</span>
-<span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">'''</span>
 
-<span class="n">shader_uniforms</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="n">shader_uniforms</span> <span class="o">=</span> <span class="s1">'''</span>
 <span class="s1">uniform vec2 resolution;</span>
 <span class="s1">uniform float time;</span>
-<span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">'''</span>
 
-<span class="n">shader_footer_trivial</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="n">shader_footer_trivial</span> <span class="o">=</span> <span class="s1">'''</span>
 <span class="s1">void main (void){</span>
 <span class="s1">     gl_FragColor = frag_color * texture2D(texture0, tex_coord0);</span>
 <span class="s1">}</span>
-<span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">'''</span>
 
-<span class="n">shader_footer_effect</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="n">shader_footer_effect</span> <span class="o">=</span> <span class="s1">'''</span>
 <span class="s1">void main (void){</span>
 <span class="s1">    vec4 normal_color = frag_color * texture2D(texture0, tex_coord0);</span>
 <span class="s1">    vec4 effect_color = effect(normal_color, texture0, tex_coord0,</span>
 <span class="s1">                               gl_FragCoord.xy);</span>
 <span class="s1">    gl_FragColor = effect_color;</span>
 <span class="s1">}</span>
-<span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">'''</span>
 
 
-<span class="n">effect_trivial</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="n">effect_trivial</span> <span class="o">=</span> <span class="s1">'''</span>
 <span class="s1">vec4 effect(vec4 color, sampler2D texture, vec2 tex_coords, vec2 coords)</span>
 <span class="s1">{</span>
 <span class="s1">    return color;</span>
 <span class="s1">}</span>
-<span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">'''</span>
 
-<span class="n">effect_monochrome</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="n">effect_monochrome</span> <span class="o">=</span> <span class="s1">'''</span>
 <span class="s1">vec4 effect(vec4 color, sampler2D texture, vec2 tex_coords, vec2 coords)</span>
 <span class="s1">{</span>
 <span class="s1">    float mag = 1.0/3.0 * (color.x + color.y + color.z);</span>
 <span class="s1">    return vec4(mag, mag, mag, color.w);</span>
 <span class="s1">}</span>
-<span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">'''</span>
 
-<span class="n">effect_invert</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="n">effect_invert</span> <span class="o">=</span> <span class="s1">'''</span>
 <span class="s1">vec4 effect(vec4 color, sampler2D texture, vec2 tex_coords, vec2 coords)</span>
 <span class="s1">{</span>
 <span class="s1">    return vec4(1.0 - color.xyz, color.w);</span>
 <span class="s1">}</span>
-<span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">'''</span>
 
-<span class="n">effect_mix</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="n">effect_mix</span> <span class="o">=</span> <span class="s1">'''</span>
 <span class="s1">vec4 effect(vec4 color, sampler2D texture, vec2 tex_coords, vec2 coords)</span>
 <span class="s1">{{</span>
 <span class="s1">    return vec4(color.</span><span class="si">{}</span><span class="s1">, color.</span><span class="si">{}</span><span class="s1">, color.</span><span class="si">{}</span><span class="s1">, color.w);</span>
 <span class="s1">}}</span>
-<span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">'''</span>
 
-<span class="n">effect_blur_h</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="n">effect_blur_h</span> <span class="o">=</span> <span class="s1">'''</span>
 <span class="s1">vec4 effect(vec4 color, sampler2D texture, vec2 tex_coords, vec2 coords)</span>
 <span class="s1">{{</span>
 <span class="s1">    float dt = (</span><span class="si">{}</span><span class="s1"> / 4.0) * 1.0 / resolution.x;</span>
@@ -597,9 +597,9 @@
 <span class="s1">                     * 0.05;</span>
 <span class="s1">    return vec4(sum.xyz, color.w);</span>
 <span class="s1">}}</span>
-<span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">'''</span>
 
-<span class="n">effect_blur_v</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="n">effect_blur_v</span> <span class="o">=</span> <span class="s1">'''</span>
 <span class="s1">vec4 effect(vec4 color, sampler2D texture, vec2 tex_coords, vec2 coords)</span>
 <span class="s1">{{</span>
 <span class="s1">    float dt = (</span><span class="si">{}</span><span class="s1"> / 4.0)</span>
@@ -625,9 +625,9 @@
 <span class="s1">                     * 0.05;</span>
 <span class="s1">    return vec4(sum.xyz, color.w);</span>
 <span class="s1">}}</span>
-<span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">'''</span>
 
-<span class="n">effect_postprocessing</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="n">effect_postprocessing</span> <span class="o">=</span> <span class="s1">'''</span>
 <span class="s1">vec4 effect(vec4 color, sampler2D texture, vec2 tex_coords, vec2 coords)</span>
 <span class="s1">{</span>
 <span class="s1">    vec2 q = tex_coords * vec2(1, -1);</span>
@@ -655,9 +655,9 @@
 
 <span class="s1">    return vec4(col, color.w);</span>
 <span class="s1">}</span>
-<span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">'''</span>
 
-<span class="n">effect_pixelate</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="n">effect_pixelate</span> <span class="o">=</span> <span class="s1">'''</span>
 <span class="s1">vec4 effect(vec4 vcolor, sampler2D texture, vec2 texcoord, vec2 pixel_coords)</span>
 <span class="s1">{{</span>
 <span class="s1">    vec2 pixelSize = </span><span class="si">{}</span><span class="s1"> / resolution;</span>
@@ -666,9 +666,9 @@
 
 <span class="s1">    return texture2D(texture, xy);</span>
 <span class="s1">}}</span>
-<span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">'''</span>
 
-<span class="n">effect_fxaa</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="n">effect_fxaa</span> <span class="o">=</span> <span class="s1">'''</span>
 <span class="s1">vec4 effect( vec4 color, sampler2D buf0, vec2 texCoords, vec2 coords)</span>
 <span class="s1">{</span>
 
@@ -725,60 +725,60 @@
 
 <span class="s1">    return return_color;</span>
 <span class="s1">}</span>
-<span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">'''</span>
 
 
 <div class="viewcode-block" id="EffectBase">
 <a class="viewcode-back" href="../../../api-kivy.uix.effectwidget.html#kivy.uix.effectwidget.EffectBase">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">EffectBase</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The base class for GLSL effects. It simply returns its input.</span>
+<span class="w">    </span><span class="sd">'''The base class for GLSL effects. It simply returns its input.</span>
 
 <span class="sd">    See the module documentation for more details.</span>
 
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">glsl</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="n">effect_trivial</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The glsl string defining your effect function. See the</span>
+<span class="w">    </span><span class="sd">'''The glsl string defining your effect function. See the</span>
 <span class="sd">    module documentation for more details.</span>
 
 <span class="sd">    :attr:`glsl` is a :class:`~kivy.properties.StringProperty` and</span>
 <span class="sd">    defaults to</span>
 <span class="sd">    a trivial effect that returns its input.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">source</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The (optional) filename from which to load the :attr:`glsl`</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">''</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">'''The (optional) filename from which to load the :attr:`glsl`</span>
 <span class="sd">    string.</span>
 
 <span class="sd">    :attr:`source` is a :class:`~kivy.properties.StringProperty` and</span>
-<span class="sd">    defaults to &#39;&#39;.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    defaults to ''.</span>
+<span class="sd">    '''</span>
 
     <span class="n">fbo</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The fbo currently using this effect. The :class:`EffectBase`</span>
+<span class="w">    </span><span class="sd">'''The fbo currently using this effect. The :class:`EffectBase`</span>
 <span class="sd">    automatically handles this.</span>
 
 <span class="sd">    :attr:`fbo` is an :class:`~kivy.properties.ObjectProperty` and</span>
 <span class="sd">    defaults to None.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">EffectBase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">fbind</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span>
         <span class="n">fbo_shader</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_fbo_shader</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;fbo&#39;</span><span class="p">,</span> <span class="n">fbo_shader</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;glsl&#39;</span><span class="p">,</span> <span class="n">fbo_shader</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;source&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_from_source</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'fbo'</span><span class="p">,</span> <span class="n">fbo_shader</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'glsl'</span><span class="p">,</span> <span class="n">fbo_shader</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'source'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_from_source</span><span class="p">)</span>
 
 <div class="viewcode-block" id="EffectBase.set_fbo_shader">
 <a class="viewcode-back" href="../../../api-kivy.uix.effectwidget.html#kivy.uix.effectwidget.EffectBase.set_fbo_shader">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_fbo_shader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Sets the :class:`~kivy.graphics.Fbo`&#39;s shader by splicing</span>
+<span class="w">        </span><span class="sd">'''Sets the :class:`~kivy.graphics.Fbo`'s shader by splicing</span>
 <span class="sd">        the :attr:`glsl` string into a full fragment shader.</span>
 
 <span class="sd">        The full shader is made up of :code:`shader_header +</span>
 <span class="sd">        shader_uniforms + self.glsl + shader_footer_effect`.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fbo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fbo</span><span class="o">.</span><span class="n">set_fs</span><span class="p">(</span><span class="n">shader_header</span> <span class="o">+</span> <span class="n">shader_uniforms</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">glsl</span> <span class="o">+</span>
@@ -786,13 +786,13 @@
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_load_from_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;(internal) Loads the glsl string from a source file.&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">'''(internal) Loads the glsl string from a source file.'''</span>
         <span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">source</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="n">resource_find</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Error reading file </span><span class="si">{filename}</span><span class="s1">&#39;</span><span class="o">.</span>
+            <span class="k">return</span> <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'Error reading file </span><span class="si">{filename}</span><span class="s1">'</span><span class="o">.</span>
                                 <span class="nb">format</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">source</span><span class="p">))</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">fileh</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">glsl</span> <span class="o">=</span> <span class="n">fileh</span><span class="o">.</span><span class="n">read</span><span class="p">()</span></div>
@@ -802,7 +802,7 @@
 <div class="viewcode-block" id="AdvancedEffectBase">
 <a class="viewcode-back" href="../../../api-kivy.uix.effectwidget.html#kivy.uix.effectwidget.AdvancedEffectBase">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">AdvancedEffectBase</span><span class="p">(</span><span class="n">EffectBase</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;An :class:`EffectBase` with additional behavior to easily</span>
+<span class="w">    </span><span class="sd">'''An :class:`EffectBase` with additional behavior to easily</span>
 <span class="sd">    set and update uniform variables in your shader.</span>
 
 <span class="sd">    This class is provided for convenience when implementing your own</span>
@@ -816,19 +816,19 @@
 
 <span class="sd">    You must still manually declare your uniform variables at the top</span>
 <span class="sd">    of your glsl string.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">uniforms</span> <span class="o">=</span> <span class="n">DictProperty</span><span class="p">({})</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;A dictionary of uniform variable names and their values. These</span>
+<span class="w">    </span><span class="sd">'''A dictionary of uniform variable names and their values. These</span>
 <span class="sd">    are automatically uploaded to the :attr:`fbo` shader if appropriate.</span>
 
 <span class="sd">    uniforms is a :class:`~kivy.properties.DictProperty` and</span>
 <span class="sd">    defaults to {}.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">AdvancedEffectBase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;uniforms&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_uniforms</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">'uniforms'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_uniforms</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_update_uniforms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fbo</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -848,7 +848,7 @@
 <div class="viewcode-block" id="MonochromeEffect">
 <a class="viewcode-back" href="../../../api-kivy.uix.effectwidget.html#kivy.uix.effectwidget.MonochromeEffect">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">MonochromeEffect</span><span class="p">(</span><span class="n">EffectBase</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns its input colors in monochrome.&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''Returns its input colors in monochrome.'''</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">MonochromeEffect</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">glsl</span> <span class="o">=</span> <span class="n">effect_monochrome</span></div>
@@ -858,7 +858,7 @@
 <div class="viewcode-block" id="InvertEffect">
 <a class="viewcode-back" href="../../../api-kivy.uix.effectwidget.html#kivy.uix.effectwidget.InvertEffect">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">InvertEffect</span><span class="p">(</span><span class="n">EffectBase</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Inverts the colors in the input.&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''Inverts the colors in the input.'''</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">InvertEffect</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">glsl</span> <span class="o">=</span> <span class="n">effect_invert</span></div>
@@ -868,7 +868,7 @@
 <div class="viewcode-block" id="ScanlinesEffect">
 <a class="viewcode-back" href="../../../api-kivy.uix.effectwidget.html#kivy.uix.effectwidget.ScanlinesEffect">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ScanlinesEffect</span><span class="p">(</span><span class="n">EffectBase</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Adds scanlines to the input.&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''Adds scanlines to the input.'''</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ScanlinesEffect</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">glsl</span> <span class="o">=</span> <span class="n">effect_postprocessing</span></div>
@@ -878,15 +878,15 @@
 <div class="viewcode-block" id="ChannelMixEffect">
 <a class="viewcode-back" href="../../../api-kivy.uix.effectwidget.html#kivy.uix.effectwidget.ChannelMixEffect">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">ChannelMixEffect</span><span class="p">(</span><span class="n">EffectBase</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Mixes the color channels of the input according to the order</span>
-<span class="sd">    property. Channels may be arbitrarily rearranged or repeated.&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''Mixes the color channels of the input according to the order</span>
+<span class="sd">    property. Channels may be arbitrarily rearranged or repeated.'''</span>
 
     <span class="n">order</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The new sorted order of the rgb channels.</span>
+<span class="w">    </span><span class="sd">'''The new sorted order of the rgb channels.</span>
 
 <span class="sd">    order is a :class:`~kivy.properties.ListProperty` and defaults to</span>
 <span class="sd">    [1, 2, 0], corresponding to (g, b, r).</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ChannelMixEffect</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -896,7 +896,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">do_glsl</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">do_glsl</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">letters</span> <span class="o">=</span> <span class="p">[{</span><span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;z&#39;</span><span class="p">}[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">order</span><span class="p">]</span>
+        <span class="n">letters</span> <span class="o">=</span> <span class="p">[{</span><span class="mi">0</span><span class="p">:</span> <span class="s1">'x'</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s1">'y'</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s1">'z'</span><span class="p">}[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">order</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">glsl</span> <span class="o">=</span> <span class="n">effect_mix</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">letters</span><span class="p">)</span></div>
 
 
@@ -904,17 +904,17 @@
 <div class="viewcode-block" id="PixelateEffect">
 <a class="viewcode-back" href="../../../api-kivy.uix.effectwidget.html#kivy.uix.effectwidget.PixelateEffect">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">PixelateEffect</span><span class="p">(</span><span class="n">EffectBase</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Pixelates the input according to its</span>
-<span class="sd">    :attr:`~PixelateEffect.pixel_size`&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''Pixelates the input according to its</span>
+<span class="sd">    :attr:`~PixelateEffect.pixel_size`'''</span>
 
     <span class="n">pixel_size</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    Sets the size of a new &#39;pixel&#39; in the effect, in terms of number of</span>
-<span class="sd">    &#39;real&#39; pixels.</span>
+<span class="w">    </span><span class="sd">'''</span>
+<span class="sd">    Sets the size of a new 'pixel' in the effect, in terms of number of</span>
+<span class="sd">    'real' pixels.</span>
 
 <span class="sd">    pixel_size is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to 10.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">PixelateEffect</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -931,15 +931,15 @@
 <div class="viewcode-block" id="HorizontalBlurEffect">
 <a class="viewcode-back" href="../../../api-kivy.uix.effectwidget.html#kivy.uix.effectwidget.HorizontalBlurEffect">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">HorizontalBlurEffect</span><span class="p">(</span><span class="n">EffectBase</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Blurs the input horizontally, with the width given by</span>
-<span class="sd">    :attr:`~HorizontalBlurEffect.size`.&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''Blurs the input horizontally, with the width given by</span>
+<span class="sd">    :attr:`~HorizontalBlurEffect.size`.'''</span>
 
     <span class="n">size</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mf">4.0</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The blur width in pixels.</span>
+<span class="w">    </span><span class="sd">'''The blur width in pixels.</span>
 
 <span class="sd">    size is a :class:`~kivy.properties.NumericProperty` and defaults to</span>
 <span class="sd">    4.0.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">HorizontalBlurEffect</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -956,15 +956,15 @@
 <div class="viewcode-block" id="VerticalBlurEffect">
 <a class="viewcode-back" href="../../../api-kivy.uix.effectwidget.html#kivy.uix.effectwidget.VerticalBlurEffect">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">VerticalBlurEffect</span><span class="p">(</span><span class="n">EffectBase</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Blurs the input vertically, with the width given by</span>
-<span class="sd">    :attr:`~VerticalBlurEffect.size`.&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''Blurs the input vertically, with the width given by</span>
+<span class="sd">    :attr:`~VerticalBlurEffect.size`.'''</span>
 
     <span class="n">size</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mf">4.0</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The blur width in pixels.</span>
+<span class="w">    </span><span class="sd">'''The blur width in pixels.</span>
 
 <span class="sd">    size is a :class:`~kivy.properties.NumericProperty` and defaults to</span>
 <span class="sd">    4.0.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">VerticalBlurEffect</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -981,7 +981,7 @@
 <div class="viewcode-block" id="FXAAEffect">
 <a class="viewcode-back" href="../../../api-kivy.uix.effectwidget.html#kivy.uix.effectwidget.FXAAEffect">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">FXAAEffect</span><span class="p">(</span><span class="n">EffectBase</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Applies very simple anti-aliasing via fxaa.&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''Applies very simple anti-aliasing via fxaa.'''</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">FXAAEffect</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">glsl</span> <span class="o">=</span> <span class="n">effect_fxaa</span></div>
@@ -989,73 +989,73 @@
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">EffectFbo</span><span class="p">(</span><span class="n">Fbo</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;An :class:`~kivy.graphics.Fbo` with extra functionality that allows</span>
+<span class="w">    </span><span class="sd">'''An :class:`~kivy.graphics.Fbo` with extra functionality that allows</span>
 <span class="sd">    attempts to set a new shader. See :meth:`set_fs`.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;with_stencilbuffer&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">"with_stencilbuffer"</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">EffectFbo</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">texture_rectangle</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">set_fs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Attempt to set the fragment shader to the given value.</span>
+<span class="w">        </span><span class="sd">'''Attempt to set the fragment shader to the given value.</span>
 <span class="sd">        If setting the shader fails, the existing one is preserved and an</span>
 <span class="sd">        exception is raised.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="n">shader</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shader</span>
         <span class="n">old_value</span> <span class="o">=</span> <span class="n">shader</span><span class="o">.</span><span class="n">fs</span>
         <span class="n">shader</span><span class="o">.</span><span class="n">fs</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">shader</span><span class="o">.</span><span class="n">success</span><span class="p">:</span>
             <span class="n">shader</span><span class="o">.</span><span class="n">fs</span> <span class="o">=</span> <span class="n">old_value</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Setting new shader failed.&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'Setting new shader failed.'</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="EffectWidget">
 <a class="viewcode-back" href="../../../api-kivy.uix.effectwidget.html#kivy.uix.effectwidget.EffectWidget">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">EffectWidget</span><span class="p">(</span><span class="n">RelativeLayout</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="w">    </span><span class="sd">'''</span>
 <span class="sd">    Widget with the ability to apply a series of graphical effects to</span>
 <span class="sd">    its children. See the module documentation for more information on</span>
 <span class="sd">    setting effects and creating your own.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">background_color</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;This defines the background color to be used for the fbo in the</span>
+<span class="w">    </span><span class="sd">'''This defines the background color to be used for the fbo in the</span>
 <span class="sd">    EffectWidget.</span>
 
 <span class="sd">    :attr:`background_color` is a :class:`ListProperty` defaults to</span>
 <span class="sd">    (0, 0, 0, 0)</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">texture</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;The output texture of the final :class:`~kivy.graphics.Fbo` after</span>
+<span class="w">    </span><span class="sd">'''The output texture of the final :class:`~kivy.graphics.Fbo` after</span>
 <span class="sd">    all effects have been applied.</span>
 
 <span class="sd">    texture is an :class:`~kivy.properties.ObjectProperty` and defaults</span>
 <span class="sd">    to None.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">effects</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([])</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;List of all the effects to be applied. These should all be</span>
+<span class="w">    </span><span class="sd">'''List of all the effects to be applied. These should all be</span>
 <span class="sd">    instances or subclasses of :class:`EffectBase`.</span>
 
 <span class="sd">    effects is a :class:`ListProperty` and defaults to [].</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">fbo_list</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([])</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;(internal) List of all the fbos that are being used to apply</span>
+<span class="w">    </span><span class="sd">'''(internal) List of all the fbos that are being used to apply</span>
 <span class="sd">    the effects.</span>
 
 <span class="sd">    fbo_list is a :class:`ListProperty` and defaults to [].</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">_bound_effects</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([])</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;(internal) List of effect classes that have been given an fbo to</span>
+<span class="w">    </span><span class="sd">'''(internal) List of effect classes that have been given an fbo to</span>
 <span class="sd">    manage. This is necessary so that the fbo can be removed if the</span>
 <span class="sd">    effect is no longer in use.</span>
 
 <span class="sd">    _bound_effects is a :class:`ListProperty` and defaults to [].</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="c1"># Make sure opengl context exists</span>
@@ -1083,9 +1083,9 @@
 
         <span class="n">fbind</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span>
         <span class="n">fbo_setup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">refresh_fbo_setup</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="n">fbo_setup</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;effects&#39;</span><span class="p">,</span> <span class="n">fbo_setup</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;background_color&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_background_color</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'size'</span><span class="p">,</span> <span class="n">fbo_setup</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'effects'</span><span class="p">,</span> <span class="n">fbo_setup</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'background_color'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_background_color</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">refresh_fbo_setup</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_refresh_background_color</span><span class="p">()</span>  <span class="c1"># In case this was changed in kwargs</span>
@@ -1094,24 +1094,24 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_background_color</span><span class="o">.</span><span class="n">rgba</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">background_color</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_update_glsl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;(internal) Passes new time and resolution uniform</span>
+<span class="w">        </span><span class="sd">'''(internal) Passes new time and resolution uniform</span>
 <span class="sd">        variables to the shader.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="n">time</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">get_boottime</span><span class="p">()</span>
         <span class="n">resolution</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="k">for</span> <span class="n">size</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">[</span><span class="s1">&#39;resolution&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">resolution</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">[</span><span class="s1">'time'</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">[</span><span class="s1">'resolution'</span><span class="p">]</span> <span class="o">=</span> <span class="n">resolution</span>
         <span class="k">for</span> <span class="n">fbo</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fbo_list</span><span class="p">:</span>
-            <span class="n">fbo</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span>
-            <span class="n">fbo</span><span class="p">[</span><span class="s1">&#39;resolution&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">resolution</span>
+            <span class="n">fbo</span><span class="p">[</span><span class="s1">'time'</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span>
+            <span class="n">fbo</span><span class="p">[</span><span class="s1">'resolution'</span><span class="p">]</span> <span class="o">=</span> <span class="n">resolution</span>
 
 <div class="viewcode-block" id="EffectWidget.refresh_fbo_setup">
 <a class="viewcode-back" href="../../../api-kivy.uix.effectwidget.html#kivy.uix.effectwidget.EffectWidget.refresh_fbo_setup">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">refresh_fbo_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;(internal) Creates and assigns one :class:`~kivy.graphics.Fbo`</span>
+<span class="w">        </span><span class="sd">'''(internal) Creates and assigns one :class:`~kivy.graphics.Fbo`</span>
 <span class="sd">        per effect, and makes sure all sizes etc. are correct and</span>
 <span class="sd">        consistent.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="c1"># Add/remove fbos until there is one per effect</span>
         <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fbo_list</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">effects</span><span class="p">):</span>
             <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">:</span>
@@ -1206,7 +1206,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Aug 15, 2026.
+    Last updated on Aug 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->
