@@ -375,6 +375,7 @@
 <li><a class="reference internal" href="#buttonbehavior">ButtonBehavior</a></li>
 <li><a class="reference internal" href="#togglebuttonbehavior">ToggleButtonBehavior</a></li>
 <li><a class="reference internal" href="#clock">Clock</a></li>
+<li><a class="reference internal" href="#aliasproperty">AliasProperty</a></li>
 <li><a class="reference internal" href="#svg">SVG</a></li>
 </ul>
 </li>
@@ -1275,6 +1276,70 @@ instances, restoring the shared behavior in an idiomatic way.</p>
 </pre></div>
 </div>
 </section>
+<section id="aliasproperty">
+<h3>AliasProperty<a class="headerlink" href="#aliasproperty" title="Link to this heading">¶</a></h3>
+<p><em>Fixed Dispatch Inconsistencies for the Initial Value and</em> <code class="docutils literal notranslate"><span class="pre">None</span></code> <em>Getter Results</em></p>
+<p>In Kivy 3.x.x, two related bugs in <a class="reference internal" href="api-kivy.properties.html#kivy.properties.AliasProperty" title="kivy.properties.AliasProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">AliasProperty</span></code></a> dispatch
+have been fixed (see <a class="reference external" href="https://github.com/kivy/kivy/issues/6901">#6901</a>).</p>
+<p><strong>Behavior Changes</strong></p>
+<ul class="simple">
+<li><p><strong>Initial value is now always dispatched.</strong> Previously, whether the very
+first value of an <code class="docutils literal notranslate"><span class="pre">AliasProperty</span></code> was dispatched (e.g. when one of its
+<code class="docutils literal notranslate"><span class="pre">bind</span></code>-ed dependencies changed before the alias property had ever been
+read) depended on unrelated implementation details, such as whether the
+alias property had already been read once, or whether an <code class="docutils literal notranslate"><span class="pre">on_&lt;name&gt;</span></code>
+handler existed on the class (which forced an early read during
+<code class="docutils literal notranslate"><span class="pre">__init__</span></code>). Now, the first time an alias property’s value is
+established, it is <strong>always</strong> dispatched exactly once.</p></li>
+<li><p><strong>Fixed missed dispatches when the getter returns</strong> <code class="docutils literal notranslate"><span class="pre">None</span></code>. Previously,
+the alias property’s internally tracked value was only kept up to date
+when <code class="docutils literal notranslate"><span class="pre">cache=True</span></code>. This meant that with <code class="docutils literal notranslate"><span class="pre">cache=False</span></code>, real changes
+could be silently missed (or, if the getter’s result happened to equal a
+leftover default, dropped) whenever the getter legitimately returned
+<code class="docutils literal notranslate"><span class="pre">None</span></code>. The internal tracking is now always kept in sync, regardless of
+<code class="docutils literal notranslate"><span class="pre">cache</span></code>, so changes are correctly detected and dispatched even when the
+getter returns <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.event</span><span class="w"> </span><span class="kn">import</span> <span class="n">EventDispatcher</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.properties</span><span class="w"> </span><span class="kn">import</span> <span class="n">NumericProperty</span><span class="p">,</span> <span class="n">AliasProperty</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Rect</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_aspect_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="n">aspect_ratio</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span>
+        <span class="n">_get_aspect_ratio</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">'width'</span><span class="p">,</span> <span class="s1">'height'</span><span class="p">),</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_aspect_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'aspect_ratio: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+
+<span class="c1"># Kivy 2.x.x</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">Rect</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="mi">1</span>   <span class="c1"># prints "aspect_ratio: 100.0"</span>
+<span class="n">r</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="mi">0</span>   <span class="c1"># missing dispatch - `on_aspect_ratio` is NOT called</span>
+
+<span class="c1"># Kivy 3.x.x</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">Rect</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="mi">1</span>   <span class="c1"># prints "aspect_ratio: 100.0"</span>
+<span class="n">r</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="mi">0</span>   <span class="c1"># prints "aspect_ratio: None"</span>
+</pre></div>
+</div>
+<p><strong>Migration Impact</strong></p>
+<p>This is primarily a <strong>bug fix</strong>. It should not require code changes for most
+applications, and in most cases will surface events (dispatches) that your
+application was previously and incorrectly <em>not</em> receiving.</p>
+<p>The one behavior to be aware of: code that binds to an <code class="docutils literal notranslate"><span class="pre">AliasProperty</span></code>
+(directly, via <code class="docutils literal notranslate"><span class="pre">bind()</span></code>/<code class="docutils literal notranslate"><span class="pre">fbind()</span></code>, or implicitly via an <code class="docutils literal notranslate"><span class="pre">on_&lt;name&gt;</span></code>
+handler) and relies on its dependencies changing during <code class="docutils literal notranslate"><span class="pre">__init__</span></code> may now
+observe an extra initial dispatch call that previously did not fire in some
+constructions. If your callback assumed it would only ever be called for
+genuine value transitions, guard against redundant no-op work as needed,
+for example by comparing against the previously known value inside the
+callback itself.</p>
+</section>
 <section id="svg">
 <h3>SVG<a class="headerlink" href="#svg" title="Link to this heading">¶</a></h3>
 <p><em>Removal of the experimental kivy.graphics.svg module</em></p>
@@ -1423,7 +1488,7 @@ easier for end users to identify your app’s directories when browsing their fi
 <p>If you set <code class="docutils literal notranslate"><span class="pre">KIVY_DESKTOP_PATH_ID</span></code> in an existing app, your data will move to a new
 location. You may need to migrate existing data (see Linux migration example above).</p>
 <p>For complete documentation, see <a class="reference internal" href="guide/environment.html#environment"><span class="std std-ref">Controlling the environment</span></a> and <code class="docutils literal notranslate"><span class="pre">examples/desktop_path_id/</span></code>.
-<a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a></p>
+<a href="#id2"><span class="problematic" id="id3">``</span></a><a href="#id4"><span class="problematic" id="id5">`</span></a></p>
 </section>
 
 
@@ -1448,7 +1513,7 @@ location. You may need to migrate existing data (see Linux migration example abo
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Sep 02, 2026.
+    Last updated on Sep 12, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

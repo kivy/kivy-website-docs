@@ -790,6 +790,28 @@ early.</p>
 </dd>
 </dl>
 <div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.0.0: </span>Fixed two related dispatch inconsistencies:</p>
+<ul class="simple">
+<li><p>Previously, whether the very first value of an <a class="reference internal" href="#kivy.properties.AliasProperty" title="kivy.properties.AliasProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">AliasProperty</span></code></a>
+was dispatched (e.g. when the bound properties changed before the
+alias property was ever read) depended on unrelated implementation
+details, such as whether the alias property had already been read
+once, or whether an <code class="docutils literal notranslate"><span class="pre">on_&lt;name&gt;</span></code> handler existed (which caused it
+to be read early during <code class="docutils literal notranslate"><span class="pre">__init__</span></code>). Now, the first time an alias
+property’s value is established, it is always dispatched.</p></li>
+<li><p>Previously, once an alias property’s tracked value had been
+established, a bound property change that caused the getter to
+legitimately return the same value it was already tracking as
+<cite>None</cite> (its uninitialized placeholder) would silently fail to
+dispatch, e.g. when the getter itself could return <cite>None</cite>, or when
+<code class="docutils literal notranslate"><span class="pre">cache</span></code> is <cite>False</cite> (in which case the tracked value was never
+updated at all, so most - or all - real changes could go
+undetected). Now, the alias property’s internal tracking is kept
+up to date regardless of <code class="docutils literal notranslate"><span class="pre">cache</span></code>, so changes are correctly
+detected and dispatched even when the getter returns <cite>None</cite>.</p></li>
+</ul>
+</div>
+<div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 1.9.0: </span><cite>rebind</cite> has been introduced.</p>
 </div>
 <div class="versionchanged">
@@ -1691,7 +1713,7 @@ here are some examples of how VariableListProperty is handled.</p>
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Sep 02, 2026.
+    Last updated on Sep 12, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->
