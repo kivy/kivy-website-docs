@@ -662,9 +662,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">counter</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">create_touch</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">is_double_tap</span><span class="p">,</span> <span class="n">do_graphics</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="o">=</span><span class="kc">None</span>
-    <span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_touch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">do_graphics</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">event_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_event_id</span><span class="p">()</span>
         <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">button</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">do_graphics</span><span class="p">:</span>
@@ -674,7 +672,6 @@
             <span class="n">is_touch</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">type_id</span><span class="o">=</span><span class="s1">'touch'</span>
         <span class="p">)</span>
-        <span class="n">touch</span><span class="o">.</span><span class="n">is_double_tap</span> <span class="o">=</span> <span class="n">is_double_tap</span>
         <span class="n">touch</span><span class="o">.</span><span class="n">modifiers</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">modifiers</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">modifiers</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">touches</span><span class="p">[</span><span class="n">event_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">touch</span>
         <span class="k">if</span> <span class="n">do_graphics</span><span class="p">:</span>
@@ -737,13 +734,12 @@
         <span class="k">if</span> <span class="n">found_touch</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">current_drag</span> <span class="o">=</span> <span class="n">found_touch</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">is_double_tap</span> <span class="o">=</span> <span class="s1">'shift'</span> <span class="ow">in</span> <span class="n">modifiers</span>
             <span class="n">do_graphics</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">disable_multitouch</span>
                 <span class="ow">and</span> <span class="p">(</span><span class="n">button</span> <span class="o">!=</span> <span class="s1">'left'</span> <span class="ow">or</span> <span class="s1">'ctrl'</span> <span class="ow">in</span> <span class="n">modifiers</span><span class="p">)</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">create_touch</span><span class="p">(</span>
-                <span class="n">win</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">is_double_tap</span><span class="p">,</span> <span class="n">do_graphics</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span>
+                <span class="n">win</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">do_graphics</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span>
             <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_mouse_release</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
@@ -823,7 +819,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Sep 12, 2026.
+    Last updated on Sep 13, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->
