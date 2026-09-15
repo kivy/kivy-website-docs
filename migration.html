@@ -376,6 +376,7 @@
 <li><a class="reference internal" href="#togglebuttonbehavior">ToggleButtonBehavior</a></li>
 <li><a class="reference internal" href="#clock">Clock</a></li>
 <li><a class="reference internal" href="#aliasproperty">AliasProperty</a></li>
+<li><a class="reference internal" href="#mouse-input-provider">Mouse Input Provider</a></li>
 <li><a class="reference internal" href="#svg">SVG</a></li>
 </ul>
 </li>
@@ -1340,6 +1341,63 @@ genuine value transitions, guard against redundant no-op work as needed,
 for example by comparing against the previously known value inside the
 callback itself.</p>
 </section>
+<section id="mouse-input-provider">
+<h3>Mouse Input Provider<a class="headerlink" href="#mouse-input-provider" title="Link to this heading">¶</a></h3>
+<p><em>Multiple Mouse Buttons Can Now Be Held Down Simultaneously</em></p>
+<p>In Kivy 3.x.x, the mouse input provider
+(<a class="reference internal" href="api-kivy.input.providers.mouse.html#kivy.input.providers.mouse.MouseMotionEventProvider" title="kivy.input.providers.mouse.MouseMotionEventProvider"><code class="xref py py-class docutils literal notranslate"><span class="pre">MouseMotionEventProvider</span></code></a>) has been
+fixed to correctly track multiple mouse buttons that are held down at the
+same time when multitouch simulation is disabled (<code class="docutils literal notranslate"><span class="pre">disable_multitouch</span></code>)
+(see <a class="reference external" href="https://github.com/kivy/kivy/issues/3597">#3597</a>).</p>
+<p><strong>Behavior Changes</strong></p>
+<ul class="simple">
+<li><p><strong>Multiple simultaneous button-drags are now tracked independently.</strong>
+Previously, the provider only tracked a single “current drag” at a time.
+If a second mouse button was pressed while a first button was still held
+down, the second button’s press was silently ignored (no
+<code class="docutils literal notranslate"><span class="pre">on_touch_down</span></code> was dispatched for it) until the first button was
+released. Now, each button gets its own independent touch when
+<code class="docutils literal notranslate"><span class="pre">disable_multitouch</span></code> is set, so pressing a second (or third) button
+while another is held correctly dispatches its own
+<code class="docutils literal notranslate"><span class="pre">on_touch_down</span></code>/<code class="docutils literal notranslate"><span class="pre">on_touch_move</span></code>/<code class="docutils literal notranslate"><span class="pre">on_touch_up</span></code> sequence.</p></li>
+<li><p>This change only affects behavior when <code class="docutils literal notranslate"><span class="pre">disable_multitouch</span></code> is active.
+When multitouch simulation is enabled (the default), only one simulated
+touch (the red dot) is tracked at a time, as before.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.widget</span><span class="w"> </span><span class="kn">import</span> <span class="n">Widget</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">MainWindow</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">touch</span><span class="o">.</span><span class="n">button</span><span class="si">}</span><span class="s1"> is being pressed'</span><span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">TestingApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">MainWindow</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+    <span class="n">TestingApp</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="c1"># config: [input] mouse = mouse,disable_multitouch</span>
+
+<span class="c1"># Kivy 2.x.x</span>
+<span class="c1"># press and hold left -&gt; "left is being pressed"</span>
+<span class="c1"># press right while left is still held -&gt; (nothing printed)</span>
+
+<span class="c1"># Kivy 3.x.x</span>
+<span class="c1"># press and hold left -&gt; "left is being pressed"</span>
+<span class="c1"># press right while left is still held -&gt; "right is being pressed"</span>
+</pre></div>
+</div>
+<p><strong>Migration Impact</strong></p>
+<p>This is primarily a <strong>bug fix</strong>. It should not require code changes for
+most applications, and mainly benefits applications using
+<code class="docutils literal notranslate"><span class="pre">disable_multitouch</span></code> that need to respond to more than one mouse button
+at a time (e.g. left + right held together).</p>
+</section>
 <section id="svg">
 <h3>SVG<a class="headerlink" href="#svg" title="Link to this heading">¶</a></h3>
 <p><em>Removal of the experimental kivy.graphics.svg module</em></p>
@@ -1488,7 +1546,7 @@ easier for end users to identify your app’s directories when browsing their fi
 <p>If you set <code class="docutils literal notranslate"><span class="pre">KIVY_DESKTOP_PATH_ID</span></code> in an existing app, your data will move to a new
 location. You may need to migrate existing data (see Linux migration example above).</p>
 <p>For complete documentation, see <a class="reference internal" href="guide/environment.html#environment"><span class="std std-ref">Controlling the environment</span></a> and <code class="docutils literal notranslate"><span class="pre">examples/desktop_path_id/</span></code>.
-<a href="#id2"><span class="problematic" id="id3">``</span></a><a href="#id4"><span class="problematic" id="id5">`</span></a></p>
+<a href="#id3"><span class="problematic" id="id4">``</span></a><a href="#id5"><span class="problematic" id="id6">`</span></a></p>
 </section>
 
 
@@ -1513,7 +1571,7 @@ location. You may need to migrate existing data (see Linux migration example abo
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Sep 13, 2026.
+    Last updated on Sep 15, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->
