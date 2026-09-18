@@ -1127,6 +1127,11 @@
         <span class="n">next_args</span> <span class="o">=</span> <span class="n">_delayed_start</span>
         <span class="k">if</span> <span class="n">next_args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
+        <span class="c1"># Detach the queue before processing it. Callbacks may change</span>
+        <span class="c1"># properties and schedule new delayed calls; those must start a fresh</span>
+        <span class="c1"># queue (processed on the next sync) instead of being linked into</span>
+        <span class="c1"># the queue being traversed and then lost when it is reset.</span>
+        <span class="n">_delayed_start</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="k">while</span> <span class="n">next_args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="ne">StopIteration</span><span class="p">:</span>
             <span class="c1"># is this try/except still needed? yes, in case widget died in this</span>
@@ -1137,8 +1142,7 @@
                 <span class="k">pass</span>
             <span class="n">args</span> <span class="o">=</span> <span class="n">next_args</span>
             <span class="n">next_args</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">args</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">_delayed_start</span> <span class="o">=</span> <span class="kc">None</span></div>
+            <span class="n">args</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
 <div class="viewcode-block" id="BuilderBase.unbind_widget">
@@ -1362,7 +1366,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Sep 15, 2026.
+    Last updated on Sep 18, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->
