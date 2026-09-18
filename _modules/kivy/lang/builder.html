@@ -1122,6 +1122,14 @@
 <span class="sd">        expressions related to the canvas.</span>
 
 <span class="sd">        .. versionadded:: 1.7.0</span>
+
+<span class="sd">        .. versionchanged:: 3.0.0</span>
+<span class="sd">            Operations scheduled while a sync pass is running (e.g. a canvas</span>
+<span class="sd">            expression that changes a property another canvas expression is</span>
+<span class="sd">            bound to) are no longer dropped. They are queued and executed on</span>
+<span class="sd">            the next call to :meth:`sync`, not within the current pass.</span>
+<span class="sd">            :meth:`kivy.base.EventLoopBase.idle` calls :meth:`sync` twice per</span>
+<span class="sd">            frame, so this is usually still within the same frame.</span>
 <span class="sd">        '''</span>
         <span class="k">global</span> <span class="n">_delayed_start</span>
         <span class="n">next_args</span> <span class="o">=</span> <span class="n">_delayed_start</span>
