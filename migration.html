@@ -353,7 +353,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#removals">Removals</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="#application-storage-directories">Application Storage Directories</a></li>
 </ul>
 
         </div>
@@ -378,11 +377,12 @@
 <li><a class="reference internal" href="#aliasproperty">AliasProperty</a></li>
 <li><a class="reference internal" href="#mouse-input-provider">Mouse Input Provider</a></li>
 <li><a class="reference internal" href="#svg">SVG</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li><a class="reference internal" href="#application-storage-directories">Application Storage Directories</a></li>
+<li><a class="reference internal" href="#gestures">Gestures</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
             
@@ -1432,10 +1432,8 @@ explicit import or Factory registration is required.</p>
 removed. <code class="docutils literal notranslate"><span class="pre">SvgWidget</span></code> and <code class="docutils literal notranslate"><span class="pre">AsyncSvgWidget</span></code> are registered in the Factory
 under their own names and can be used directly from KV.</p>
 </section>
-</section>
-</section>
 <section id="application-storage-directories">
-<h1>Application Storage Directories<a class="headerlink" href="#application-storage-directories" title="Link to this heading">¶</a></h1>
+<h3>Application Storage Directories<a class="headerlink" href="#application-storage-directories" title="Link to this heading">¶</a></h3>
 <p><em>Linux user_data_dir Path Change (XDG Compliance Fix)</em></p>
 <p>In Kivy 3.x.x, the <code class="docutils literal notranslate"><span class="pre">App.user_data_dir</span></code> path on Linux has been corrected to follow
 the XDG Base Directory specification. Previously, it incorrectly used <code class="docutils literal notranslate"><span class="pre">XDG_CONFIG_HOME</span></code>
@@ -1540,8 +1538,21 @@ easier for end users to identify your app’s directories when browsing their fi
 <p><strong>Warning:</strong></p>
 <p>If you set <code class="docutils literal notranslate"><span class="pre">KIVY_DESKTOP_PATH_ID</span></code> in an existing app, your data will move to a new
 location. You may need to migrate existing data (see Linux migration example above).</p>
-<p>For complete documentation, see <a class="reference internal" href="guide/environment.html#environment"><span class="std std-ref">Controlling the environment</span></a> and <code class="docutils literal notranslate"><span class="pre">examples/desktop_path_id/</span></code>.
-<a href="#id4"><span class="problematic" id="id5">``</span></a><a href="#id6"><span class="problematic" id="id7">`</span></a></p>
+<p>For complete documentation, see <a class="reference internal" href="guide/environment.html#environment"><span class="std std-ref">Controlling the environment</span></a> and <code class="docutils literal notranslate"><span class="pre">examples/desktop_path_id/</span></code>.</p>
+</section>
+<section id="gestures">
+<h3>Gestures<a class="headerlink" href="#gestures" title="Link to this heading">¶</a></h3>
+<p><em>Gesture matching is now rotation-invariant by default</em></p>
+<p><strong>Behavior Changes</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">GestureDatabase.find()</span></code> and gesture equality (<code class="docutils literal notranslate"><span class="pre">==</span></code>) default to
+<code class="docutils literal notranslate"><span class="pre">rotation_invariant=True</span></code>, and that flag now works as documented. Gestures
+that differ only by rotation, such as a swipe right and a swipe left, now
+match at the default <code class="docutils literal notranslate"><span class="pre">minscore</span></code> of 0.9 where they previously did not.</p>
+<p><strong>Migration Impact</strong></p>
+<p>Apps that relied on the old, uncompensated behavior should pass
+<code class="docutils literal notranslate"><span class="pre">rotation_invariant=False</span></code> to keep it.</p>
+</section>
+</section>
 </section>
 
 
