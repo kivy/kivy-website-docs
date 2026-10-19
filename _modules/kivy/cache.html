@@ -622,9 +622,10 @@
                 <span class="n">lastaccess</span> <span class="o">=</span> <span class="n">Cache</span><span class="o">.</span><span class="n">_objects</span><span class="p">[</span><span class="n">category</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s1">'lastaccess'</span><span class="p">]</span>
                 <span class="n">objtimeout</span> <span class="o">=</span> <span class="n">Cache</span><span class="o">.</span><span class="n">_objects</span><span class="p">[</span><span class="n">category</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s1">'timeout'</span><span class="p">]</span>
 
-                <span class="c1"># take the object timeout if available</span>
-                <span class="k">if</span> <span class="n">objtimeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">timeout</span> <span class="o">=</span> <span class="n">objtimeout</span>
+                <span class="c1"># take the object timeout if available, else the category's</span>
+                <span class="n">timeout</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">objtimeout</span> <span class="k">if</span> <span class="n">objtimeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                    <span class="k">else</span> <span class="n">Cache</span><span class="o">.</span><span class="n">_categories</span><span class="p">[</span><span class="n">category</span><span class="p">][</span><span class="s1">'timeout'</span><span class="p">])</span>
 
                 <span class="c1"># no timeout, cancel</span>
                 <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
