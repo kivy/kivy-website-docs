@@ -1035,6 +1035,9 @@
 
 <span class="sd">    .. note:: The `resize` option does not currently work with SDL3 on Android.</span>
 
+<span class="sd">    .. note:: On iPad a floating or undocked keyboard does not move the</span>
+<span class="sd">        window: :attr:`keyboard_height` is 0 while the keyboard floats.</span>
+
 <span class="sd">    .. versionadded:: 1.9.0</span>
 
 <span class="sd">    .. versionchanged:: 1.9.1</span>
@@ -1106,11 +1109,22 @@
 <span class="sd">    (``get_keyboard_height``), which reports the live IME inset height in</span>
 <span class="sd">    the units of :attr:`size`.</span>
 
+<span class="sd">    .. note::</span>
+<span class="sd">        On iOS the value is how far the keyboard covers the window from its</span>
+<span class="sd">        bottom edge, not the keyboard's own height. On iPad a floating or</span>
+<span class="sd">        undocked keyboard does not reach the bottom edge, so</span>
+<span class="sd">        :attr:`keyboard_height` is 0 while it is floating and</span>
+<span class="sd">        :attr:`softinput_mode` leaves the window as is. A floating keyboard</span>
+<span class="sd">        can therefore cover the focused widget; the user can drag it out of</span>
+<span class="sd">        the way. This matches the default behavior of UIKit's</span>
+<span class="sd">        ``UIKeyboardLayoutGuide`` (``followsUndockedKeyboard`` is ``NO``).</span>
+
 <span class="sd">    .. versionadded:: 1.9.0</span>
 
 <span class="sd">    .. versionchanged:: 3.0.0</span>
 <span class="sd">        The Android/iOS height is now sourced from :mod:`kivy.mobile` instead of</span>
-<span class="sd">        the legacy ``android`` module.</span>
+<span class="sd">        the legacy ``android`` module. On iPad a floating or undocked keyboard</span>
+<span class="sd">        reports 0.</span>
 
 <span class="sd">    :attr:`keyboard_height` is a read-only</span>
 <span class="sd">    :class:`~kivy.properties.AliasProperty` and defaults to 0.</span>
@@ -3229,7 +3243,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Oct 27, 2026.
+    Last updated on Oct 28, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

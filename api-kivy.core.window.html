@@ -1103,12 +1103,24 @@ Will return 0 if not on mobile platform or if IME is not active.</p>
 <p>On iOS and Android the value is read from <code class="xref py py-mod docutils literal notranslate"><span class="pre">kivy.mobile</span></code>
 (<code class="docutils literal notranslate"><span class="pre">get_keyboard_height</span></code>), which reports the live IME inset height in
 the units of <a class="reference internal" href="#kivy.core.window.WindowBase.size" title="kivy.core.window.WindowBase.size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">size</span></code></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On iOS the value is how far the keyboard covers the window from its
+bottom edge, not the keyboard’s own height. On iPad a floating or
+undocked keyboard does not reach the bottom edge, so
+<a class="reference internal" href="#kivy.core.window.WindowBase.keyboard_height" title="kivy.core.window.WindowBase.keyboard_height"><code class="xref py py-attr docutils literal notranslate"><span class="pre">keyboard_height</span></code></a> is 0 while it is floating and
+<a class="reference internal" href="#kivy.core.window.WindowBase.softinput_mode" title="kivy.core.window.WindowBase.softinput_mode"><code class="xref py py-attr docutils literal notranslate"><span class="pre">softinput_mode</span></code></a> leaves the window as is. A floating keyboard
+can therefore cover the focused widget; the user can drag it out of
+the way. This matches the default behavior of UIKit’s
+<code class="docutils literal notranslate"><span class="pre">UIKeyboardLayoutGuide</span></code> (<code class="docutils literal notranslate"><span class="pre">followsUndockedKeyboard</span></code> is <code class="docutils literal notranslate"><span class="pre">NO</span></code>).</p>
+</div>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 1.9.0.</span></p>
 </div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.0.0: </span>The Android/iOS height is now sourced from <code class="xref py py-mod docutils literal notranslate"><span class="pre">kivy.mobile</span></code> instead of
-the legacy <code class="docutils literal notranslate"><span class="pre">android</span></code> module.</p>
+the legacy <code class="docutils literal notranslate"><span class="pre">android</span></code> module. On iPad a floating or undocked keyboard
+reports 0.</p>
 </div>
 <p><a class="reference internal" href="#kivy.core.window.WindowBase.keyboard_height" title="kivy.core.window.WindowBase.keyboard_height"><code class="xref py py-attr docutils literal notranslate"><span class="pre">keyboard_height</span></code></a> is a read-only
 <a class="reference internal" href="api-kivy.properties.html#kivy.properties.AliasProperty" title="kivy.properties.AliasProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">AliasProperty</span></code></a> and defaults to 0.</p>
@@ -2228,6 +2240,11 @@ defaults to ‘’.</p>
 <p class="admonition-title">Note</p>
 <p>The <cite>resize</cite> option does not currently work with SDL3 on Android.</p>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On iPad a floating or undocked keyboard does not move the
+window: <a class="reference internal" href="#kivy.core.window.WindowBase.keyboard_height" title="kivy.core.window.WindowBase.keyboard_height"><code class="xref py py-attr docutils literal notranslate"><span class="pre">keyboard_height</span></code></a> is 0 while the keyboard floats.</p>
+</div>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 1.9.0.</span></p>
 </div>
@@ -2383,7 +2400,7 @@ read-only <a class="reference internal" href="api-kivy.properties.html#kivy.prop
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Oct 27, 2026.
+    Last updated on Oct 28, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

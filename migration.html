@@ -379,6 +379,7 @@
 <li><a class="reference internal" href="#svg">SVG</a></li>
 <li><a class="reference internal" href="#application-storage-directories">Application Storage Directories</a></li>
 <li><a class="reference internal" href="#gestures">Gestures</a></li>
+<li><a class="reference internal" href="#software-keyboard">Software Keyboard</a></li>
 </ul>
 </li>
 </ul>
@@ -1552,6 +1553,28 @@ match at the default <code class="docutils literal notranslate"><span class="pre
 <p>Apps that relied on the old, uncompensated behavior should pass
 <code class="docutils literal notranslate"><span class="pre">rotation_invariant=False</span></code> to keep it.</p>
 </section>
+<section id="software-keyboard">
+<h3>Software Keyboard<a class="headerlink" href="#software-keyboard" title="Link to this heading">¶</a></h3>
+<p><em>New: iPad floating keyboard support</em></p>
+<p>Kivy 3.x.x supports the iPad’s floating and undocked keyboard. On iOS,
+<a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.keyboard_height" title="kivy.core.window.WindowBase.keyboard_height"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Window.keyboard_height</span></code></a>
+is how far the software keyboard covers the window from its bottom edge:</p>
+<ul class="simple">
+<li><p>A docked keyboard reports its height, as before.</p></li>
+<li><p>A floating or undocked keyboard covers none of the bottom edge, so
+<code class="docutils literal notranslate"><span class="pre">keyboard_height</span></code> is 0 and
+<a class="reference internal" href="api-kivy.core.window.html#kivy.core.window.WindowBase.softinput_mode" title="kivy.core.window.WindowBase.softinput_mode"><code class="xref py py-attr docutils literal notranslate"><span class="pre">softinput_mode</span></code></a> leaves the window in
+place. Moving the floating keyboard around the screen does not move the
+window.</p></li>
+</ul>
+<p>This matches the default behavior of UIKit’s <code class="docutils literal notranslate"><span class="pre">UIKeyboardLayoutGuide</span></code>, which
+follows the keyboard only while it is docked (<code class="docutils literal notranslate"><span class="pre">followsUndockedKeyboard</span></code> is
+<code class="docutils literal notranslate"><span class="pre">NO</span></code>).</p>
+<p><strong>Migration Impact</strong></p>
+<p>This is <strong>not a breaking change</strong>, and no code changes are needed: apps that
+use <code class="docutils literal notranslate"><span class="pre">softinput_mode</span></code> handle the floating keyboard automatically. A floating
+keyboard can cover the focused widget; the user can drag it out of the way.</p>
+</section>
 </section>
 </section>
 
@@ -1577,7 +1600,7 @@ match at the default <code class="docutils literal notranslate"><span class="pre
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Oct 27, 2026.
+    Last updated on Oct 28, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->
