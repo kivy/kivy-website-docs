@@ -9,7 +9,7 @@
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
     <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Tesselate Demonstration &mdash; Kivy 2.3.1 documentation</title>
+    <title>Tesselate Demonstration &mdash; Kivy 2.3.2 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> 
       <link rel="stylesheet" href="../_static/fresh.css" type="text/css" />
@@ -36,7 +36,7 @@
         <script type="text/javascript" src="../_static/kivy.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="Kivy 2.3.1 documentation" href="../index.html" />
+    <link rel="top" title="Kivy 2.3.2 documentation" href="../index.html" />
     <link rel="up" title="Gallery of Examples" href="index.html" />
     <link rel="next" title="Texture Wrapping and Coordinates Example" href="gen__canvas__texture__py.html" />
     <link rel="prev" title="Stencil demo" href="gen__canvas__stencil_canvas__py.html" /> 
@@ -403,97 +403,97 @@ top of the screen. The ‘debug’ button toggles showing the mesh in different
 colors.</p>
 <section id="file-canvas-tesselate-py">
 <span id="canvas-tesselate-py"></span><h2>File <strong>canvas/tesselate.py</strong><a class="headerlink" href="#file-canvas-tesselate-py" title="Permalink to this heading">¶</a></h2>
-<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">'''</span>
 <span class="sd">Tesselate Demonstration</span>
 <span class="sd">=======================</span>
 
 <span class="sd">This demonstrates the experimental library for tesselating polygons. You</span>
 <span class="sd">should see a hollow square with some buttons below it. You can click and</span>
 <span class="sd">drag to create additional shapes, watching the number of vertices and elements</span>
-<span class="sd">at the top of the screen. The &#39;debug&#39; button toggles showing the mesh in</span>
+<span class="sd">at the top of the screen. The 'debug' button toggles showing the mesh in</span>
 <span class="sd">different colors.</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
 
-<span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
-<span class="kn">from</span> <span class="nn">kivy.graphics</span> <span class="kn">import</span> <span class="n">Mesh</span><span class="p">,</span> <span class="n">Color</span>
-<span class="kn">from</span> <span class="nn">kivy.graphics.tesselator</span> <span class="kn">import</span> <span class="n">Tesselator</span><span class="p">,</span> <span class="n">WINDING_ODD</span><span class="p">,</span> <span class="n">TYPE_POLYGONS</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.floatlayout</span> <span class="kn">import</span> <span class="n">FloatLayout</span>
-<span class="kn">from</span> <span class="nn">kivy.lang</span> <span class="kn">import</span> <span class="n">Builder</span>
-<span class="kn">from</span> <span class="nn">kivy.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.graphics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Mesh</span><span class="p">,</span> <span class="n">Color</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.graphics.tesselator</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tesselator</span><span class="p">,</span> <span class="n">WINDING_ODD</span><span class="p">,</span> <span class="n">TYPE_POLYGONS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.floatlayout</span><span class="w"> </span><span class="kn">import</span> <span class="n">FloatLayout</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.lang</span><span class="w"> </span><span class="kn">import</span> <span class="n">Builder</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">Logger</span>
 
-<span class="n">Builder</span><span class="o">.</span><span class="n">load_string</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="n">Builder</span><span class="o">.</span><span class="n">load_string</span><span class="p">(</span><span class="s2">"""</span>
 <span class="s2">&lt;ShapeBuilder&gt;:</span>
 <span class="s2">    BoxLayout:</span>
 <span class="s2">        size_hint_y: None</span>
-<span class="s2">        height: &quot;48dp&quot;</span>
-<span class="s2">        spacing: &quot;2dp&quot;</span>
-<span class="s2">        padding: &quot;2dp&quot;</span>
+<span class="s2">        height: "48dp"</span>
+<span class="s2">        spacing: "2dp"</span>
+<span class="s2">        padding: "2dp"</span>
 
 <span class="s2">        ToggleButton:</span>
-<span class="s2">            text: &quot;Debug&quot;</span>
+<span class="s2">            text: "Debug"</span>
 <span class="s2">            id: debug</span>
 <span class="s2">            on_release: root.build()</span>
 <span class="s2">        Button:</span>
-<span class="s2">            text: &quot;New shape&quot;</span>
+<span class="s2">            text: "New shape"</span>
 <span class="s2">            on_release: root.push_shape()</span>
 <span class="s2">        Button:</span>
-<span class="s2">            text: &quot;Build&quot;</span>
+<span class="s2">            text: "Build"</span>
 <span class="s2">            on_release: root.build()</span>
 <span class="s2">        Button:</span>
-<span class="s2">            text: &quot;Reset&quot;</span>
+<span class="s2">            text: "Reset"</span>
 <span class="s2">            on_release: root.reset()</span>
 
 <span class="s2">    BoxLayout:</span>
 <span class="s2">        size_hint_y: None</span>
-<span class="s2">        height: &quot;48dp&quot;</span>
+<span class="s2">        height: "48dp"</span>
 <span class="s2">        top: root.top</span>
-<span class="s2">        spacing: &quot;2dp&quot;</span>
-<span class="s2">        padding: &quot;2dp&quot;</span>
+<span class="s2">        spacing: "2dp"</span>
+<span class="s2">        padding: "2dp"</span>
 <span class="s2">        Label:</span>
 <span class="s2">            id: status</span>
-<span class="s2">            text: &quot;Status&quot;</span>
-<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+<span class="s2">            text: "Status"</span>
+<span class="s2">"""</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">ShapeBuilder</span><span class="p">(</span><span class="n">FloatLayout</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ShapeBuilder</span><span class="p">(</span><span class="n">FloatLayout</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ShapeBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shapes</span> <span class="o">=</span> <span class="p">[</span>
             <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">300</span><span class="p">],</span>
             <span class="p">[</span><span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">250</span><span class="p">]</span>
-        <span class="p">]</span>  <span class="c1"># the &#39;hollow square&#39; shape</span>
+        <span class="p">]</span>  <span class="c1"># the 'hollow square' shape</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">super</span><span class="p">(</span><span class="n">ShapeBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_touch_down</span><span class="p">(</span><span class="n">touch</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
-        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;tesselate: on_touch_down (</span><span class="si">%5.2f</span><span class="s1">, </span><span class="si">%5.2f</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span>
+        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'tesselate: on_touch_down (</span><span class="si">%5.2f</span><span class="s1">, </span><span class="si">%5.2f</span><span class="s1">)'</span> <span class="o">%</span> <span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
         <span class="k">return</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">on_touch_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_touch_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">super</span><span class="p">(</span><span class="n">ShapeBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_touch_move</span><span class="p">(</span><span class="n">touch</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
-        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;tesselate: on_touch_move (</span><span class="si">%5.2f</span><span class="s1">, </span><span class="si">%5.2f</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span>
+        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'tesselate: on_touch_move (</span><span class="si">%5.2f</span><span class="s1">, </span><span class="si">%5.2f</span><span class="s1">)'</span> <span class="o">%</span> <span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
         <span class="k">return</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">on_touch_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_touch_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">super</span><span class="p">(</span><span class="n">ShapeBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_touch_up</span><span class="p">(</span><span class="n">touch</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
-        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;tesselate: on_touch_up (</span><span class="si">%5.2f</span><span class="s1">, </span><span class="si">%5.2f</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span>
+        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'tesselate: on_touch_up (</span><span class="si">%5.2f</span><span class="s1">, </span><span class="si">%5.2f</span><span class="s1">)'</span> <span class="o">%</span> <span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">push_shape</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">push_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">push_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shapes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">tess</span> <span class="o">=</span> <span class="n">Tesselator</span><span class="p">()</span>
         <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">shape</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">shapes</span><span class="p">:</span>
@@ -506,15 +506,15 @@ colors.</p>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">count</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="n">tess</span><span class="o">.</span><span class="n">tesselate</span><span class="p">(</span><span class="n">WINDING_ODD</span><span class="p">,</span> <span class="n">TYPE_POLYGONS</span><span class="p">)</span>
-        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;tesselate: build: tess.tesselate returns </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ret</span><span class="p">))</span>
+        <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'tesselate: build: tess.tesselate returns </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ret</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
-        <span class="n">debug</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">&quot;down&quot;</span>
+        <span class="n">debug</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s2">"down"</span>
         <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
             <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">after</span><span class="p">:</span>
                 <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span>
                 <span class="k">for</span> <span class="n">vertices</span><span class="p">,</span> <span class="n">indices</span> <span class="ow">in</span> <span class="n">tess</span><span class="o">.</span><span class="n">meshes</span><span class="p">:</span>
-                    <span class="n">Color</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;hsv&quot;</span><span class="p">)</span>
+                    <span class="n">Color</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">"hsv"</span><span class="p">)</span>
                     <span class="n">c</span> <span class="o">+=</span> <span class="mf">0.3</span>
                     <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
                     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span> <span class="o">//</span> <span class="mi">4</span><span class="p">):</span>
@@ -524,27 +524,27 @@ colors.</p>
                         <span class="n">indices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
                         <span class="n">indices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
                     <span class="n">indices</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-                    <span class="n">Mesh</span><span class="p">(</span><span class="n">vertices</span><span class="o">=</span><span class="n">vertices</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="n">indices</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">)</span>
+                    <span class="n">Mesh</span><span class="p">(</span><span class="n">vertices</span><span class="o">=</span><span class="n">vertices</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="n">indices</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">"lines"</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">after</span><span class="p">:</span>
                 <span class="n">Color</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">vertices</span><span class="p">,</span> <span class="n">indices</span> <span class="ow">in</span> <span class="n">tess</span><span class="o">.</span><span class="n">meshes</span><span class="p">:</span>
                     <span class="n">Mesh</span><span class="p">(</span><span class="n">vertices</span><span class="o">=</span><span class="n">vertices</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="n">indices</span><span class="p">,</span>
-                         <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;triangle_fan&quot;</span><span class="p">)</span>
+                         <span class="n">mode</span><span class="o">=</span><span class="s2">"triangle_fan"</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Shapes: </span><span class="si">{}</span><span class="s2"> - Vertex: </span><span class="si">{}</span><span class="s2"> - Elements: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">"Shapes: </span><span class="si">{}</span><span class="s2"> - Vertex: </span><span class="si">{}</span><span class="s2"> - Elements: </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">count</span><span class="p">,</span> <span class="n">tess</span><span class="o">.</span><span class="n">vertex_count</span><span class="p">,</span> <span class="n">tess</span><span class="o">.</span><span class="n">element_count</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shapes</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Shapes: </span><span class="si">{}</span><span class="s2"> - Vertex: </span><span class="si">{}</span><span class="s2"> - Elements: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">"Shapes: </span><span class="si">{}</span><span class="s2"> - Vertex: </span><span class="si">{}</span><span class="s2"> - Elements: </span><span class="si">{}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
 
-<span class="k">class</span> <span class="nc">TessApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TessApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">ShapeBuilder</span><span class="p">()</span>
 
 
@@ -601,7 +601,7 @@ colors.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010-2024, Kivy Team and other contributors.
-      Last updated on Dec 26, 2024.
+      Last updated on Nov 08, 2026.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

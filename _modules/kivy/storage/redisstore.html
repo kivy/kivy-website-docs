@@ -8,7 +8,7 @@
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
     
-    <title>kivy.storage.redisstore &mdash; Kivy 2.3.1 documentation</title>
+    <title>kivy.storage.redisstore &mdash; Kivy 2.3.2 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" /> 
       <link rel="stylesheet" href="../../../_static/fresh.css" type="text/css" />
@@ -35,7 +35,7 @@
         <script type="text/javascript" src="../../../_static/kivy.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="top" title="Kivy 2.3.1 documentation" href="../../../index.html" />
+    <link rel="top" title="Kivy 2.3.2 documentation" href="../../../index.html" />
     <link rel="up" title="kivy.storage" href="../storage.html" /> 
   </head>
   <body>
@@ -377,7 +377,7 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.storage.redisstore</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">Redis Store</span>
 <span class="sd">===========</span>
 
@@ -387,61 +387,61 @@
 
 <span class="sd">    from kivy.storage.redisstore import RedisStore</span>
 
-<span class="sd">    params = dict(host=&#39;localhost&#39;, port=6379, db=14)</span>
+<span class="sd">    params = dict(host='localhost', port=6379, db=14)</span>
 <span class="sd">    store = RedisStore(params)</span>
 
-<span class="sd">All the key-value pairs will be stored with a prefix &#39;store&#39; by default.</span>
+<span class="sd">All the key-value pairs will be stored with a prefix 'store' by default.</span>
 <span class="sd">You can instantiate the storage with another prefix like this::</span>
 
 
 <span class="sd">    from kivy.storage.redisstore import RedisStore</span>
 
-<span class="sd">    params = dict(host=&#39;localhost&#39;, port=6379, db=14)</span>
-<span class="sd">    store = RedisStore(params, prefix=&#39;mystore2&#39;)</span>
+<span class="sd">    params = dict(host='localhost', port=6379, db=14)</span>
+<span class="sd">    store = RedisStore(params, prefix='mystore2')</span>
 
 <span class="sd">The params dictionary will be passed to the redis.StrictRedis class.</span>
 
 <span class="sd">See `redis-py &lt;https://github.com/andymccurdy/redis-py&gt;`_.</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;RedisStore&#39;</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'RedisStore'</span><span class="p">,</span> <span class="p">)</span>
 
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">json</span> <span class="kn">import</span> <span class="n">loads</span><span class="p">,</span> <span class="n">dumps</span>
-<span class="kn">from</span> <span class="nn">kivy.compat</span> <span class="kn">import</span> <span class="n">iteritems</span>
-<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">StringProperty</span>
-<span class="kn">from</span> <span class="nn">kivy.storage</span> <span class="kn">import</span> <span class="n">AbstractStore</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">json</span><span class="w"> </span><span class="kn">import</span> <span class="n">loads</span><span class="p">,</span> <span class="n">dumps</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.compat</span><span class="w"> </span><span class="kn">import</span> <span class="n">iteritems</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.properties</span><span class="w"> </span><span class="kn">import</span> <span class="n">StringProperty</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.storage</span><span class="w"> </span><span class="kn">import</span> <span class="n">AbstractStore</span>
 
-<span class="c1"># don&#39;t import redis during the documentation generation</span>
-<span class="k">if</span> <span class="s1">&#39;KIVY_DOC&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">redis</span>
+<span class="c1"># don't import redis during the documentation generation</span>
+<span class="k">if</span> <span class="s1">'KIVY_DOC'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">redis</span>
 
 
-<div class="viewcode-block" id="RedisStore"><a class="viewcode-back" href="../../../api-kivy.storage.redisstore.html#kivy.storage.redisstore.RedisStore">[docs]</a><span class="k">class</span> <span class="nc">RedisStore</span><span class="p">(</span><span class="n">AbstractStore</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Store implementation using a Redis database.</span>
+<div class="viewcode-block" id="RedisStore"><a class="viewcode-back" href="../../../api-kivy.storage.redisstore.html#kivy.storage.redisstore.RedisStore">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">RedisStore</span><span class="p">(</span><span class="n">AbstractStore</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">'''Store implementation using a Redis database.</span>
 <span class="sd">    See the :mod:`kivy.storage` module documentation for more information.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">prefix</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">&#39;store&#39;</span><span class="p">)</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">'store'</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">redis_params</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">redis_params</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">redis_params</span> <span class="o">=</span> <span class="n">redis_params</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">RedisStore</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">store_load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">store_load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">StrictRedis</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">redis_params</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">store_sync</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">store_sync</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">pass</span>
 
-    <span class="k">def</span> <span class="nf">store_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;.d.&#39;</span> <span class="o">+</span> <span class="n">key</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">store_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">'.d.'</span> <span class="o">+</span> <span class="n">key</span>
         <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">value</span>
 
-    <span class="k">def</span> <span class="nf">store_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;.d.&#39;</span> <span class="o">+</span> <span class="n">key</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">store_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">'.d.'</span> <span class="o">+</span> <span class="n">key</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">hgetall</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
@@ -449,8 +449,8 @@
             <span class="n">result</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">result</span>
 
-    <span class="k">def</span> <span class="nf">store_put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
-        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;.d.&#39;</span> <span class="o">+</span> <span class="n">key</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">store_put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">'.d.'</span> <span class="o">+</span> <span class="n">key</span>
         <span class="n">pipe</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">pipeline</span><span class="p">()</span>
         <span class="n">pipe</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">iteritems</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
@@ -458,21 +458,21 @@
         <span class="n">pipe</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
         <span class="k">return</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">store_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;.d.&#39;</span> <span class="o">+</span> <span class="n">key</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">store_delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">'.d.'</span> <span class="o">+</span> <span class="n">key</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">store_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">z</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;.d.&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">z</span><span class="p">:]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">keys</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;.d.*&#39;</span><span class="p">)]</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">store_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">'.d.'</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">z</span><span class="p">:]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">keys</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">'.d.*'</span><span class="p">)]</span>
 
-    <span class="k">def</span> <span class="nf">store_find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">store_find</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filters</span><span class="p">):</span>
         <span class="n">fkeys</span> <span class="o">=</span> <span class="n">filters</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
         <span class="n">fvalues</span> <span class="o">=</span> <span class="n">filters</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">store_keys</span><span class="p">():</span>
-            <span class="n">skey</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;.d.&#39;</span> <span class="o">+</span> <span class="n">key</span>
+            <span class="n">skey</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">'.d.'</span> <span class="o">+</span> <span class="n">key</span>
             <span class="n">svalues</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">hmget</span><span class="p">(</span><span class="n">skey</span><span class="p">,</span> <span class="n">fkeys</span><span class="p">)</span>
             <span class="k">if</span> <span class="kc">None</span> <span class="ow">in</span> <span class="n">svalues</span><span class="p">:</span>
                 <span class="k">continue</span>
@@ -518,7 +518,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010-2024, Kivy Team and other contributors.
-      Last updated on Dec 26, 2024.
+      Last updated on Nov 08, 2026.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

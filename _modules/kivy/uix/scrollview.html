@@ -8,7 +8,7 @@
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
     
-    <title>kivy.uix.scrollview &mdash; Kivy 2.3.1 documentation</title>
+    <title>kivy.uix.scrollview &mdash; Kivy 2.3.2 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" /> 
       <link rel="stylesheet" href="../../../_static/fresh.css" type="text/css" />
@@ -35,7 +35,7 @@
         <script type="text/javascript" src="../../../_static/kivy.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="top" title="Kivy 2.3.1 documentation" href="../../../index.html" />
+    <link rel="top" title="Kivy 2.3.2 documentation" href="../../../index.html" />
     <link rel="up" title="kivy" href="../../kivy.html" /> 
   </head>
   <body>
@@ -377,14 +377,14 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.uix.scrollview</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">ScrollView</span>
 <span class="sd">==========</span>
 
 <span class="sd">.. versionadded:: 1.0.4</span>
 
 <span class="sd">The :class:`ScrollView` widget provides a scrollable/pannable viewport that is</span>
-<span class="sd">clipped at the scrollview&#39;s bounding box.</span>
+<span class="sd">clipped at the scrollview's bounding box.</span>
 
 <span class="sd">.. note::</span>
 <span class="sd">    Use :class:`~kivy.uix.recycleview.RecycleView` for generating large</span>
@@ -448,8 +448,8 @@
 <span class="sd">also enable scrolling for that dimension when the :class:`ScrollView` is</span>
 <span class="sd">smaller than the minimum size.</span>
 
-<span class="sd">To scroll a :class:`~kivy.uix.gridlayout.GridLayout` on it&#39;s Y-axis/vertically,</span>
-<span class="sd">set the child&#39;s width  to that of the ScrollView (size_hint_x=1), and set</span>
+<span class="sd">To scroll a :class:`~kivy.uix.gridlayout.GridLayout` on it's Y-axis/vertically,</span>
+<span class="sd">set the child's width  to that of the ScrollView (size_hint_x=1), and set</span>
 <span class="sd">the size_hint_y property to None::</span>
 
 <span class="sd">    from kivy.uix.gridlayout import GridLayout</span>
@@ -460,7 +460,7 @@
 
 <span class="sd">    layout = GridLayout(cols=1, spacing=10, size_hint_y=None)</span>
 <span class="sd">    # Make sure the height is such that there is something to scroll.</span>
-<span class="sd">    layout.bind(minimum_height=layout.setter(&#39;height&#39;))</span>
+<span class="sd">    layout.bind(minimum_height=layout.setter('height'))</span>
 <span class="sd">    for i in range(100):</span>
 <span class="sd">        btn = Button(text=str(i), size_hint_y=None, height=40)</span>
 <span class="sd">        layout.add_widget(btn)</span>
@@ -482,7 +482,7 @@
 <span class="sd">            text_size: self.width, None</span>
 <span class="sd">            padding: 10, 10</span>
 <span class="sd">            text:</span>
-<span class="sd">                &#39;really some amazing text\\n&#39; * 100</span>
+<span class="sd">                'really some amazing text\\n' * 100</span>
 
 <span class="sd">Overscroll Effects</span>
 <span class="sd">------------------</span>
@@ -520,35 +520,35 @@
 
 <span class="sd">All the effects are located in the :mod:`kivy.effects`.</span>
 
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;ScrollView&#39;</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'ScrollView'</span><span class="p">,</span> <span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
-<span class="kn">from</span> <span class="nn">kivy.animation</span> <span class="kn">import</span> <span class="n">Animation</span>
-<span class="kn">from</span> <span class="nn">kivy.compat</span> <span class="kn">import</span> <span class="n">string_types</span>
-<span class="kn">from</span> <span class="nn">kivy.config</span> <span class="kn">import</span> <span class="n">Config</span>
-<span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
-<span class="kn">from</span> <span class="nn">kivy.factory</span> <span class="kn">import</span> <span class="n">Factory</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.stencilview</span> <span class="kn">import</span> <span class="n">StencilView</span>
-<span class="kn">from</span> <span class="nn">kivy.metrics</span> <span class="kn">import</span> <span class="n">dp</span>
-<span class="kn">from</span> <span class="nn">kivy.effects.dampedscroll</span> <span class="kn">import</span> <span class="n">DampedScrollEffect</span>
-<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">NumericProperty</span><span class="p">,</span> <span class="n">BooleanProperty</span><span class="p">,</span> <span class="n">AliasProperty</span><span class="p">,</span> \
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.animation</span><span class="w"> </span><span class="kn">import</span> <span class="n">Animation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.compat</span><span class="w"> </span><span class="kn">import</span> <span class="n">string_types</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.clock</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clock</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.factory</span><span class="w"> </span><span class="kn">import</span> <span class="n">Factory</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.stencilview</span><span class="w"> </span><span class="kn">import</span> <span class="n">StencilView</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">dp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.effects.dampedscroll</span><span class="w"> </span><span class="kn">import</span> <span class="n">DampedScrollEffect</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.properties</span><span class="w"> </span><span class="kn">import</span> <span class="n">NumericProperty</span><span class="p">,</span> <span class="n">BooleanProperty</span><span class="p">,</span> <span class="n">AliasProperty</span><span class="p">,</span> \
     <span class="n">ObjectProperty</span><span class="p">,</span> <span class="n">ListProperty</span><span class="p">,</span> <span class="n">ReferenceListProperty</span><span class="p">,</span> <span class="n">OptionProperty</span><span class="p">,</span> \
     <span class="n">ColorProperty</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.behaviors</span> <span class="kn">import</span> <span class="n">FocusBehavior</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.behaviors</span><span class="w"> </span><span class="kn">import</span> <span class="n">FocusBehavior</span>
 
 
-<span class="c1"># When we are generating documentation, Config doesn&#39;t exist</span>
+<span class="c1"># When we are generating documentation, Config doesn't exist</span>
 <span class="n">_scroll_timeout</span> <span class="o">=</span> <span class="n">_scroll_distance</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="k">if</span> <span class="n">Config</span><span class="p">:</span>
-    <span class="n">_scroll_timeout</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s1">&#39;widgets&#39;</span><span class="p">,</span> <span class="s1">&#39;scroll_timeout&#39;</span><span class="p">)</span>
-    <span class="n">_scroll_distance</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">sp&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s1">&#39;widgets&#39;</span><span class="p">,</span>
-                                                   <span class="s1">&#39;scroll_distance&#39;</span><span class="p">))</span>
+    <span class="n">_scroll_timeout</span> <span class="o">=</span> <span class="n">Config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s1">'widgets'</span><span class="p">,</span> <span class="s1">'scroll_timeout'</span><span class="p">)</span>
+    <span class="n">_scroll_distance</span> <span class="o">=</span> <span class="s1">'</span><span class="si">{}</span><span class="s1">sp'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">Config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s1">'widgets'</span><span class="p">,</span>
+                                                   <span class="s1">'scroll_distance'</span><span class="p">))</span>
 
 
-<div class="viewcode-block" id="ScrollView"><a class="viewcode-back" href="../../../api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView">[docs]</a><span class="k">class</span> <span class="nc">ScrollView</span><span class="p">(</span><span class="n">StencilView</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;ScrollView class. See module documentation for more information.</span>
+<div class="viewcode-block" id="ScrollView"><a class="viewcode-back" href="../../../api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ScrollView</span><span class="p">(</span><span class="n">StencilView</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">'''ScrollView class. See module documentation for more information.</span>
 
 <span class="sd">    :Events:</span>
 <span class="sd">        `on_scroll_start`</span>
@@ -563,35 +563,35 @@
 <span class="sd">        now dispatched when scrolling to handle nested ScrollViews.</span>
 
 <span class="sd">    .. versionchanged:: 1.7.0</span>
-<span class="sd">        `auto_scroll`, `scroll_friction`, `scroll_moves`, `scroll_stoptime&#39; has</span>
+<span class="sd">        `auto_scroll`, `scroll_friction`, `scroll_moves`, `scroll_stoptime' has</span>
 <span class="sd">        been deprecated, use :attr:`effect_cls` instead.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">scroll_distance</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="n">_scroll_distance</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Distance to move before scrolling the :class:`ScrollView`, in pixels. As</span>
+<span class="w">    </span><span class="sd">'''Distance to move before scrolling the :class:`ScrollView`, in pixels. As</span>
 <span class="sd">    soon as the distance has been traveled, the :class:`ScrollView` will start</span>
 <span class="sd">    to scroll, and no touch event will go to children.</span>
-<span class="sd">    It is advisable that you base this value on the dpi of your target device&#39;s</span>
+<span class="sd">    It is advisable that you base this value on the dpi of your target device's</span>
 <span class="sd">    screen.</span>
 
 <span class="sd">    :attr:`scroll_distance` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to 20 (pixels), according to the default value in user</span>
 <span class="sd">    configuration.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">scroll_wheel_distance</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="s1">&#39;20sp&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Distance to move when scrolling with a mouse wheel.</span>
-<span class="sd">    It is advisable that you base this value on the dpi of your target device&#39;s</span>
+    <span class="n">scroll_wheel_distance</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="s1">'20sp'</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">'''Distance to move when scrolling with a mouse wheel.</span>
+<span class="sd">    It is advisable that you base this value on the dpi of your target device's</span>
 <span class="sd">    screen.</span>
 
 <span class="sd">    .. versionadded:: 1.8.0</span>
 
 <span class="sd">    :attr:`scroll_wheel_distance` is a</span>
 <span class="sd">    :class:`~kivy.properties.NumericProperty` , defaults to 20 pixels.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">scroll_timeout</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="n">_scroll_timeout</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Timeout allowed to trigger the :attr:`scroll_distance`, in milliseconds.</span>
+<span class="w">    </span><span class="sd">'''Timeout allowed to trigger the :attr:`scroll_distance`, in milliseconds.</span>
 <span class="sd">    If the user has not moved :attr:`scroll_distance` within the timeout,</span>
 <span class="sd">    the scrolling will be disabled, and the touch event will go to the</span>
 <span class="sd">    children.</span>
@@ -602,11 +602,11 @@
 
 <span class="sd">    .. versionchanged:: 1.5.0</span>
 <span class="sd">        Default value changed from 250 to 55.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">scroll_x</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;X scrolling value, between 0 and 1. If 0, the content&#39;s left side will</span>
-<span class="sd">    touch the left side of the ScrollView. If 1, the content&#39;s right side will</span>
+<span class="w">    </span><span class="sd">'''X scrolling value, between 0 and 1. If 0, the content's left side will</span>
+<span class="sd">    touch the left side of the ScrollView. If 1, the content's right side will</span>
 <span class="sd">    touch the right side.</span>
 
 <span class="sd">    This property is controlled by :class:`ScrollView` only if</span>
@@ -614,11 +614,11 @@
 
 <span class="sd">    :attr:`scroll_x` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to 0.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">scroll_y</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mf">1.</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Y scrolling value, between 0 and 1. If 0, the content&#39;s bottom side will</span>
-<span class="sd">    touch the bottom side of the ScrollView. If 1, the content&#39;s top side will</span>
+<span class="w">    </span><span class="sd">'''Y scrolling value, between 0 and 1. If 0, the content's bottom side will</span>
+<span class="sd">    touch the bottom side of the ScrollView. If 1, the content's top side will</span>
 <span class="sd">    touch the top side.</span>
 
 <span class="sd">    This property is controlled by :class:`ScrollView` only if</span>
@@ -626,42 +626,42 @@
 
 <span class="sd">    :attr:`scroll_y` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to 1.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">do_scroll_x</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Allow scroll on X axis.</span>
+<span class="w">    </span><span class="sd">'''Allow scroll on X axis.</span>
 
 <span class="sd">    :attr:`do_scroll_x` is a :class:`~kivy.properties.BooleanProperty` and</span>
 <span class="sd">    defaults to True.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">do_scroll_y</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Allow scroll on Y axis.</span>
+<span class="w">    </span><span class="sd">'''Allow scroll on Y axis.</span>
 
 <span class="sd">    :attr:`do_scroll_y` is a :class:`~kivy.properties.BooleanProperty` and</span>
 <span class="sd">    defaults to True.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="k">def</span> <span class="nf">_get_do_scroll</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_do_scroll</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_y</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_set_do_scroll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_do_scroll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_y</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_y</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
     <span class="n">do_scroll</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_do_scroll</span><span class="p">,</span> <span class="n">_set_do_scroll</span><span class="p">,</span>
-                              <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;do_scroll_x&#39;</span><span class="p">,</span> <span class="s1">&#39;do_scroll_y&#39;</span><span class="p">),</span>
+                              <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">'do_scroll_x'</span><span class="p">,</span> <span class="s1">'do_scroll_y'</span><span class="p">),</span>
                               <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Allow scroll on X or Y axis.</span>
+<span class="w">    </span><span class="sd">'''Allow scroll on X or Y axis.</span>
 
 <span class="sd">    :attr:`do_scroll` is a :class:`~kivy.properties.AliasProperty` of</span>
 <span class="sd">    (:attr:`do_scroll_x` + :attr:`do_scroll_y`)</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">always_overscroll</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Make sure user can overscroll even if there is not enough content</span>
+<span class="w">    </span><span class="sd">'''Make sure user can overscroll even if there is not enough content</span>
 <span class="sd">    to require scrolling.</span>
 
 <span class="sd">    This is useful if you want to trigger some action on overscroll, but</span>
@@ -675,9 +675,9 @@
 <span class="sd">    The option was added and enabled by default, set to False to get the</span>
 <span class="sd">    previous behavior of only allowing to overscroll when there is</span>
 <span class="sd">    enough content to allow scrolling.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="k">def</span> <span class="nf">_get_vbar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_vbar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># must return (y, height) in %</span>
         <span class="c1"># calculate the viewport size / scrollview size %</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_viewport</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -692,21 +692,21 @@
         <span class="k">return</span> <span class="p">(</span><span class="n">py</span><span class="p">,</span> <span class="n">ph</span><span class="p">)</span>
 
     <span class="n">vbar</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_vbar</span><span class="p">,</span>
-                         <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;scroll_y&#39;</span><span class="p">,</span> <span class="s1">&#39;_viewport&#39;</span><span class="p">,</span> <span class="s1">&#39;viewport_size&#39;</span><span class="p">,</span>
-                               <span class="s1">&#39;height&#39;</span><span class="p">),</span>
+                         <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">'scroll_y'</span><span class="p">,</span> <span class="s1">'_viewport'</span><span class="p">,</span> <span class="s1">'viewport_size'</span><span class="p">,</span>
+                               <span class="s1">'height'</span><span class="p">),</span>
                          <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Return a tuple of (position, size) of the vertical scrolling bar.</span>
+<span class="w">    </span><span class="sd">'''Return a tuple of (position, size) of the vertical scrolling bar.</span>
 
 <span class="sd">    .. versionadded:: 1.2.0</span>
 
 <span class="sd">    The position and size are normalized between 0-1, and represent a</span>
 <span class="sd">    proportion of the current scrollview height. This property is used</span>
-<span class="sd">    internally for drawing the little vertical bar when you&#39;re scrolling.</span>
+<span class="sd">    internally for drawing the little vertical bar when you're scrolling.</span>
 
 <span class="sd">    :attr:`vbar` is a :class:`~kivy.properties.AliasProperty`, readonly.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="k">def</span> <span class="nf">_get_hbar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_hbar</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># must return (x, width) in %</span>
         <span class="c1"># calculate the viewport size / scrollview size %</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_viewport</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -721,22 +721,22 @@
         <span class="k">return</span> <span class="p">(</span><span class="n">px</span><span class="p">,</span> <span class="n">pw</span><span class="p">)</span>
 
     <span class="n">hbar</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">_get_hbar</span><span class="p">,</span>
-                         <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;scroll_x&#39;</span><span class="p">,</span> <span class="s1">&#39;_viewport&#39;</span><span class="p">,</span> <span class="s1">&#39;viewport_size&#39;</span><span class="p">,</span>
-                               <span class="s1">&#39;width&#39;</span><span class="p">),</span>
+                         <span class="n">bind</span><span class="o">=</span><span class="p">(</span><span class="s1">'scroll_x'</span><span class="p">,</span> <span class="s1">'_viewport'</span><span class="p">,</span> <span class="s1">'viewport_size'</span><span class="p">,</span>
+                               <span class="s1">'width'</span><span class="p">),</span>
                          <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Return a tuple of (position, size) of the horizontal scrolling bar.</span>
+<span class="w">    </span><span class="sd">'''Return a tuple of (position, size) of the horizontal scrolling bar.</span>
 
 <span class="sd">    .. versionadded:: 1.2.0</span>
 
 <span class="sd">    The position and size are normalized between 0-1, and represent a</span>
 <span class="sd">    proportion of the current scrollview height. This property is used</span>
-<span class="sd">    internally for drawing the little horizontal bar when you&#39;re scrolling.</span>
+<span class="sd">    internally for drawing the little horizontal bar when you're scrolling.</span>
 
 <span class="sd">    :attr:`hbar` is a :class:`~kivy.properties.AliasProperty`, readonly.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">bar_color</span> <span class="o">=</span> <span class="n">ColorProperty</span><span class="p">([</span><span class="mf">.7</span><span class="p">,</span> <span class="mf">.7</span><span class="p">,</span> <span class="mf">.7</span><span class="p">,</span> <span class="mf">.9</span><span class="p">])</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Color of horizontal / vertical scroll bar, in RGBA format.</span>
+<span class="w">    </span><span class="sd">'''Color of horizontal / vertical scroll bar, in RGBA format.</span>
 
 <span class="sd">    .. versionadded:: 1.2.0</span>
 
@@ -746,10 +746,10 @@
 <span class="sd">    .. versionchanged:: 2.0.0</span>
 <span class="sd">        Changed from :class:`~kivy.properties.ListProperty` to</span>
 <span class="sd">        :class:`~kivy.properties.ColorProperty`.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">bar_inactive_color</span> <span class="o">=</span> <span class="n">ColorProperty</span><span class="p">([</span><span class="mf">.7</span><span class="p">,</span> <span class="mf">.7</span><span class="p">,</span> <span class="mf">.7</span><span class="p">,</span> <span class="mf">.2</span><span class="p">])</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Color of horizontal / vertical scroll bar (in RGBA format), when no</span>
+<span class="w">    </span><span class="sd">'''Color of horizontal / vertical scroll bar (in RGBA format), when no</span>
 <span class="sd">    scroll is happening.</span>
 
 <span class="sd">    .. versionadded:: 1.9.0</span>
@@ -760,59 +760,59 @@
 <span class="sd">    .. versionchanged:: 2.0.0</span>
 <span class="sd">        Changed from :class:`~kivy.properties.ListProperty` to</span>
 <span class="sd">        :class:`~kivy.properties.ColorProperty`.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">bar_width</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="s1">&#39;2dp&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Width of the horizontal / vertical scroll bar. The width is interpreted</span>
+    <span class="n">bar_width</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="s1">'2dp'</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">'''Width of the horizontal / vertical scroll bar. The width is interpreted</span>
 <span class="sd">    as a height for the horizontal bar.</span>
 
 <span class="sd">    .. versionadded:: 1.2.0</span>
 
 <span class="sd">    :attr:`bar_width` is a :class:`~kivy.properties.NumericProperty` and</span>
 <span class="sd">    defaults to 2.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">bar_pos_x</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="s1">&#39;bottom&#39;</span><span class="p">))</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Which side of the ScrollView the horizontal scroll bar should go</span>
-<span class="sd">    on. Possible values are &#39;top&#39; and &#39;bottom&#39;.</span>
+    <span class="n">bar_pos_x</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">'bottom'</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">(</span><span class="s1">'top'</span><span class="p">,</span> <span class="s1">'bottom'</span><span class="p">))</span>
+<span class="w">    </span><span class="sd">'''Which side of the ScrollView the horizontal scroll bar should go</span>
+<span class="sd">    on. Possible values are 'top' and 'bottom'.</span>
 
 <span class="sd">    .. versionadded:: 1.8.0</span>
 
 <span class="sd">    :attr:`bar_pos_x` is an :class:`~kivy.properties.OptionProperty`,</span>
-<span class="sd">    defaults to &#39;bottom&#39;.</span>
+<span class="sd">    defaults to 'bottom'.</span>
 
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">bar_pos_y</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">))</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Which side of the ScrollView the vertical scroll bar should go</span>
-<span class="sd">    on. Possible values are &#39;left&#39; and &#39;right&#39;.</span>
+    <span class="n">bar_pos_y</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">'right'</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">(</span><span class="s1">'left'</span><span class="p">,</span> <span class="s1">'right'</span><span class="p">))</span>
+<span class="w">    </span><span class="sd">'''Which side of the ScrollView the vertical scroll bar should go</span>
+<span class="sd">    on. Possible values are 'left' and 'right'.</span>
 
 <span class="sd">    .. versionadded:: 1.8.0</span>
 
 <span class="sd">    :attr:`bar_pos_y` is an :class:`~kivy.properties.OptionProperty` and</span>
-<span class="sd">    defaults to &#39;right&#39;.</span>
+<span class="sd">    defaults to 'right'.</span>
 
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">bar_pos</span> <span class="o">=</span> <span class="n">ReferenceListProperty</span><span class="p">(</span><span class="n">bar_pos_x</span><span class="p">,</span> <span class="n">bar_pos_y</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Which side of the scroll view to place each of the bars on.</span>
+<span class="w">    </span><span class="sd">'''Which side of the scroll view to place each of the bars on.</span>
 
 <span class="sd">    :attr:`bar_pos` is a :class:`~kivy.properties.ReferenceListProperty` of</span>
 <span class="sd">    (:attr:`bar_pos_x`, :attr:`bar_pos_y`)</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">bar_margin</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Margin between the bottom / right side of the scrollview when drawing</span>
+<span class="w">    </span><span class="sd">'''Margin between the bottom / right side of the scrollview when drawing</span>
 <span class="sd">    the horizontal / vertical scroll bar.</span>
 
 <span class="sd">    .. versionadded:: 1.2.0</span>
 
 <span class="sd">    :attr:`bar_margin` is a :class:`~kivy.properties.NumericProperty`, default</span>
 <span class="sd">    to 0</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">effect_cls</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="n">DampedScrollEffect</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Class effect to instantiate for X and Y axis.</span>
+<span class="w">    </span><span class="sd">'''Class effect to instantiate for X and Y axis.</span>
 
 <span class="sd">    .. versionadded:: 1.7.0</span>
 
@@ -823,57 +823,57 @@
 <span class="sd">        If you set a string, the :class:`~kivy.factory.Factory` will be used to</span>
 <span class="sd">        resolve the class.</span>
 
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">effect_x</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Effect to apply for the X axis. If None is set, an instance of</span>
+<span class="w">    </span><span class="sd">'''Effect to apply for the X axis. If None is set, an instance of</span>
 <span class="sd">    :attr:`effect_cls` will be created.</span>
 
 <span class="sd">    .. versionadded:: 1.7.0</span>
 
 <span class="sd">    :attr:`effect_x` is an :class:`~kivy.properties.ObjectProperty` and</span>
 <span class="sd">    defaults to None.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">effect_y</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Effect to apply for the Y axis. If None is set, an instance of</span>
+<span class="w">    </span><span class="sd">'''Effect to apply for the Y axis. If None is set, an instance of</span>
 <span class="sd">    :attr:`effect_cls` will be created.</span>
 
 <span class="sd">    .. versionadded:: 1.7.0</span>
 
 <span class="sd">    :attr:`effect_y` is an :class:`~kivy.properties.ObjectProperty` and</span>
 <span class="sd">    defaults to None, read-only.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">viewport_size</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;(internal) Size of the internal viewport. This is the size of your only</span>
+<span class="w">    </span><span class="sd">'''(internal) Size of the internal viewport. This is the size of your only</span>
 <span class="sd">    child in the scrollview.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">scroll_type</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">([</span><span class="s1">&#39;content&#39;</span><span class="p">],</span> <span class="n">options</span><span class="o">=</span><span class="p">([</span><span class="s1">&#39;content&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;bars&#39;</span><span class="p">],</span>
-                                 <span class="p">[</span><span class="s1">&#39;bars&#39;</span><span class="p">,</span> <span class="s1">&#39;content&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">,</span> <span class="s1">&#39;bars&#39;</span><span class="p">]))</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Sets the type of scrolling to use for the content of the scrollview.</span>
-<span class="sd">    Available options are: [&#39;content&#39;], [&#39;bars&#39;], [&#39;bars&#39;, &#39;content&#39;].</span>
+    <span class="n">scroll_type</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">([</span><span class="s1">'content'</span><span class="p">],</span> <span class="n">options</span><span class="o">=</span><span class="p">([</span><span class="s1">'content'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'bars'</span><span class="p">],</span>
+                                 <span class="p">[</span><span class="s1">'bars'</span><span class="p">,</span> <span class="s1">'content'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'content'</span><span class="p">,</span> <span class="s1">'bars'</span><span class="p">]))</span>
+<span class="w">    </span><span class="sd">'''Sets the type of scrolling to use for the content of the scrollview.</span>
+<span class="sd">    Available options are: ['content'], ['bars'], ['bars', 'content'].</span>
 
 <span class="sd">    +---------------------+------------------------------------------------+</span>
-<span class="sd">    | [&#39;content&#39;]         | Content is scrolled by dragging or swiping the |</span>
+<span class="sd">    | ['content']         | Content is scrolled by dragging or swiping the |</span>
 <span class="sd">    |                     | content directly.                              |</span>
 <span class="sd">    +---------------------+------------------------------------------------+</span>
-<span class="sd">    | [&#39;bars&#39;]            | Content is scrolled by dragging or swiping the |</span>
+<span class="sd">    | ['bars']            | Content is scrolled by dragging or swiping the |</span>
 <span class="sd">    |                     | scroll bars.                                   |</span>
 <span class="sd">    +---------------------+------------------------------------------------+</span>
-<span class="sd">    | [&#39;bars&#39;, &#39;content&#39;] | Content is scrolled by either of the above     |</span>
+<span class="sd">    | ['bars', 'content'] | Content is scrolled by either of the above     |</span>
 <span class="sd">    |                     | methods.                                       |</span>
 <span class="sd">    +---------------------+------------------------------------------------+</span>
 
 <span class="sd">    .. versionadded:: 1.8.0</span>
 
 <span class="sd">    :attr:`scroll_type` is an :class:`~kivy.properties.OptionProperty` and</span>
-<span class="sd">    defaults to [&#39;content&#39;].</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    defaults to ['content'].</span>
+<span class="sd">    '''</span>
 
     <span class="n">smooth_scroll_end</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Whether smooth scroll end should be used when scrolling with the</span>
+<span class="w">    </span><span class="sd">'''Whether smooth scroll end should be used when scrolling with the</span>
 <span class="sd">    mouse-wheel and the factor of transforming the scroll distance to</span>
 <span class="sd">    velocity. This option also enables velocity addition meaning if you</span>
 <span class="sd">    scroll more, you will scroll faster and further. The recommended value</span>
@@ -884,7 +884,7 @@
 
 <span class="sd">    :attr:`smooth_scroll_end` is a :class:`~kivy.properties.NumericProperty`</span>
 <span class="sd">    and defaults to None.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="c1"># private, for internal use only</span>
 
@@ -895,22 +895,22 @@
     <span class="n">_update_effect_bounds_ev</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">_bind_inactive_bar_color_ev</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">_set_viewport_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_viewport_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">viewport_size</span> <span class="o">=</span> <span class="n">value</span>
 
-    <span class="k">def</span> <span class="nf">on__viewport</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on__viewport</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
             <span class="n">value</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_set_viewport_size</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">viewport_size</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">size</span>
 
-    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;on_scroll_start&#39;</span><span class="p">,</span> <span class="s1">&#39;on_scroll_move&#39;</span><span class="p">,</span> <span class="s1">&#39;on_scroll_stop&#39;</span><span class="p">)</span>
+    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'on_scroll_start'</span><span class="p">,</span> <span class="s1">'on_scroll_move'</span><span class="p">,</span> <span class="s1">'on_scroll_stop'</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_touch</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update_from_scroll</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">create_trigger</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">update_from_scroll</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="c1"># create a specific canvas for the viewport</span>
-        <span class="kn">from</span> <span class="nn">kivy.graphics</span> <span class="kn">import</span> <span class="n">PushMatrix</span><span class="p">,</span> <span class="n">Translate</span><span class="p">,</span> <span class="n">PopMatrix</span><span class="p">,</span> <span class="n">Canvas</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.graphics</span><span class="w"> </span><span class="kn">import</span> <span class="n">PushMatrix</span><span class="p">,</span> <span class="n">Translate</span><span class="p">,</span> <span class="n">PopMatrix</span><span class="p">,</span> <span class="n">Canvas</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">canvas_viewport</span> <span class="o">=</span> <span class="n">Canvas</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="n">Canvas</span><span class="p">()</span>
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas_viewport</span><span class="o">.</span><span class="n">before</span><span class="p">:</span>
@@ -921,9 +921,9 @@
 
         <span class="nb">super</span><span class="p">(</span><span class="n">ScrollView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">register_event_type</span><span class="p">(</span><span class="s1">&#39;on_scroll_start&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">register_event_type</span><span class="p">(</span><span class="s1">&#39;on_scroll_move&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">register_event_type</span><span class="p">(</span><span class="s1">&#39;on_scroll_stop&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_event_type</span><span class="p">(</span><span class="s1">'on_scroll_start'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_event_type</span><span class="p">(</span><span class="s1">'on_scroll_move'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_event_type</span><span class="p">(</span><span class="s1">'on_scroll_stop'</span><span class="p">)</span>
 
         <span class="c1"># now add the viewport canvas to our canvas</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">canvas_viewport</span><span class="p">)</span>
@@ -941,31 +941,31 @@
         <span class="n">update_effect_x_bounds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_effect_x_bounds</span>
         <span class="n">update_effect_y_bounds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_effect_y_bounds</span>
         <span class="n">fbind</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">,</span> <span class="n">update_effect_x_bounds</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">,</span> <span class="n">update_effect_y_bounds</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;viewport_size&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_effect_bounds</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;_viewport&#39;</span><span class="p">,</span> <span class="n">update_effect_widget</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;scroll_x&#39;</span><span class="p">,</span> <span class="n">trigger_update_from_scroll</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;scroll_y&#39;</span><span class="p">,</span> <span class="n">trigger_update_from_scroll</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;pos&#39;</span><span class="p">,</span> <span class="n">trigger_update_from_scroll</span><span class="p">)</span>
-        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="n">trigger_update_from_scroll</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'width'</span><span class="p">,</span> <span class="n">update_effect_x_bounds</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'height'</span><span class="p">,</span> <span class="n">update_effect_y_bounds</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'viewport_size'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_effect_bounds</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'_viewport'</span><span class="p">,</span> <span class="n">update_effect_widget</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'scroll_x'</span><span class="p">,</span> <span class="n">trigger_update_from_scroll</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'scroll_y'</span><span class="p">,</span> <span class="n">trigger_update_from_scroll</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'pos'</span><span class="p">,</span> <span class="n">trigger_update_from_scroll</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">'size'</span><span class="p">,</span> <span class="n">trigger_update_from_scroll</span><span class="p">)</span>
 
         <span class="n">trigger_update_from_scroll</span><span class="p">()</span>
         <span class="n">update_effect_widget</span><span class="p">()</span>
         <span class="n">update_effect_x_bounds</span><span class="p">()</span>
         <span class="n">update_effect_y_bounds</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">on_effect_x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_effect_x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
             <span class="n">value</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">scroll</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_update_effect_x</span><span class="p">)</span>
             <span class="n">value</span><span class="o">.</span><span class="n">target_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_viewport</span>
 
-    <span class="k">def</span> <span class="nf">on_effect_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_effect_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
             <span class="n">value</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">scroll</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_update_effect_y</span><span class="p">)</span>
             <span class="n">value</span><span class="o">.</span><span class="n">target_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_viewport</span>
 
-    <span class="k">def</span> <span class="nf">on_effect_cls</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_effect_cls</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
             <span class="bp">cls</span> <span class="o">=</span> <span class="n">Factory</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">effect_x</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">target_widget</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_viewport</span><span class="p">)</span>
@@ -973,13 +973,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">target_widget</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_viewport</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">scroll</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_update_effect_y</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_update_effect_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_effect_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_x</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">effect_x</span><span class="o">.</span><span class="n">target_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_viewport</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span><span class="o">.</span><span class="n">target_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_viewport</span>
 
-    <span class="k">def</span> <span class="nf">_update_effect_x_bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_effect_x_bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_viewport</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_x</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="n">scrollable_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewport_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -987,7 +987,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">effect_x</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">scrollable_width</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">effect_x</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">scrollable_width</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span>
 
-    <span class="k">def</span> <span class="nf">_update_effect_y_bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_effect_y_bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_viewport</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="n">scrollable_height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewport_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -995,11 +995,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="n">scrollable_height</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span><span class="o">.</span><span class="n">max</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span>
 
-    <span class="k">def</span> <span class="nf">_update_effect_bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_effect_bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_effect_x_bounds</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_effect_y_bounds</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_update_effect_x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_effect_x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="n">vp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_viewport</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">vp</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_x</span><span class="p">:</span>
             <span class="k">return</span>
@@ -1015,7 +1015,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">=</span> <span class="o">-</span><span class="n">sx</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update_from_scroll</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_update_effect_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_effect_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="n">vp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_viewport</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">vp</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span><span class="p">:</span>
             <span class="k">return</span>
@@ -1031,20 +1031,20 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">=</span> <span class="o">-</span><span class="n">sy</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update_from_scroll</span><span class="p">()</span>
 
-<div class="viewcode-block" id="ScrollView.to_local"><a class="viewcode-back" href="../../../api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView.to_local">[docs]</a>    <span class="k">def</span> <span class="nf">to_local</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">):</span>
+<div class="viewcode-block" id="ScrollView.to_local"><a class="viewcode-back" href="../../../api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView.to_local">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_local</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">):</span>
         <span class="n">tx</span><span class="p">,</span> <span class="n">ty</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g_translate</span><span class="o">.</span><span class="n">xy</span>
         <span class="k">return</span> <span class="n">x</span> <span class="o">-</span> <span class="n">tx</span><span class="p">,</span> <span class="n">y</span> <span class="o">-</span> <span class="n">ty</span></div>
 
-<div class="viewcode-block" id="ScrollView.to_parent"><a class="viewcode-back" href="../../../api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView.to_parent">[docs]</a>    <span class="k">def</span> <span class="nf">to_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">):</span>
+<div class="viewcode-block" id="ScrollView.to_parent"><a class="viewcode-back" href="../../../api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView.to_parent">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">):</span>
         <span class="n">tx</span><span class="p">,</span> <span class="n">ty</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g_translate</span><span class="o">.</span><span class="n">xy</span>
         <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">tx</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">ty</span></div>
 
-    <span class="k">def</span> <span class="nf">_apply_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_apply_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">tx</span><span class="p">,</span> <span class="n">ty</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g_translate</span><span class="o">.</span><span class="n">xy</span>
         <span class="n">m</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">tx</span><span class="p">,</span> <span class="n">ty</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ScrollView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">_apply_transform</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">simulate_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">simulate_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="c1"># at this point the touch is in parent coords</span>
         <span class="n">touch</span><span class="o">.</span><span class="n">push</span><span class="p">()</span>
         <span class="n">touch</span><span class="o">.</span><span class="n">apply_transform_2d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_local</span><span class="p">)</span>
@@ -1052,8 +1052,8 @@
         <span class="n">touch</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">ret</span>
 
-<div class="viewcode-block" id="ScrollView.on_motion"><a class="viewcode-back" href="../../../api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView.on_motion">[docs]</a>    <span class="k">def</span> <span class="nf">on_motion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">etype</span><span class="p">,</span> <span class="n">me</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">me</span><span class="o">.</span><span class="n">type_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">motion_filter</span> <span class="ow">and</span> <span class="s1">&#39;pos&#39;</span> <span class="ow">in</span> <span class="n">me</span><span class="o">.</span><span class="n">profile</span><span class="p">:</span>
+<div class="viewcode-block" id="ScrollView.on_motion"><a class="viewcode-back" href="../../../api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView.on_motion">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">on_motion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">etype</span><span class="p">,</span> <span class="n">me</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">me</span><span class="o">.</span><span class="n">type_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">motion_filter</span> <span class="ow">and</span> <span class="s1">'pos'</span> <span class="ow">in</span> <span class="n">me</span><span class="o">.</span><span class="n">profile</span><span class="p">:</span>
             <span class="n">me</span><span class="o">.</span><span class="n">push</span><span class="p">()</span>
             <span class="n">me</span><span class="o">.</span><span class="n">apply_transform_2d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_local</span><span class="p">)</span>
             <span class="n">ret</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_motion</span><span class="p">(</span><span class="n">etype</span><span class="p">,</span> <span class="n">me</span><span class="p">)</span>
@@ -1061,28 +1061,28 @@
             <span class="k">return</span> <span class="n">ret</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_motion</span><span class="p">(</span><span class="n">etype</span><span class="p">,</span> <span class="n">me</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ScrollView.on_touch_down"><a class="viewcode-back" href="../../../api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView.on_touch_down">[docs]</a>    <span class="k">def</span> <span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_scroll_start&#39;</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+<div class="viewcode-block" id="ScrollView.on_touch_down"><a class="viewcode-back" href="../../../api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView.on_touch_down">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_scroll_start'</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_touch</span> <span class="o">=</span> <span class="n">touch</span>
             <span class="n">touch</span><span class="o">.</span><span class="n">grab</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">True</span></div>
 
-    <span class="k">def</span> <span class="nf">_touch_in_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_touch_in_handle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">pos</span>
         <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">size</span>
         <span class="k">return</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">touch</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">width</span> <span class="ow">and</span> <span class="n">y</span> <span class="o">&lt;=</span> <span class="n">touch</span><span class="o">.</span><span class="n">y</span> <span class="o">&lt;=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">height</span>
 
-    <span class="k">def</span> <span class="nf">on_scroll_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">,</span> <span class="n">check_children</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_scroll_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">,</span> <span class="n">check_children</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">check_children</span><span class="p">:</span>
             <span class="n">touch</span><span class="o">.</span><span class="n">push</span><span class="p">()</span>
             <span class="n">touch</span><span class="o">.</span><span class="n">apply_transform_2d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_local</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch_children</span><span class="p">(</span><span class="s1">&#39;on_scroll_start&#39;</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch_children</span><span class="p">(</span><span class="s1">'on_scroll_start'</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
                 <span class="n">touch</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
                 <span class="k">return</span> <span class="kc">True</span>
             <span class="n">touch</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">collide_point</span><span class="p">(</span><span class="o">*</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">):</span>
-            <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">(</span><span class="s1">&#39;svavoid&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">(</span><span class="s1">'svavoid'</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">disabled</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
@@ -1096,7 +1096,7 @@
             <span class="k">return</span> <span class="kc">True</span>
         <span class="n">scroll_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_type</span>
         <span class="n">ud</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span>
-        <span class="n">scroll_bar</span> <span class="o">=</span> <span class="s1">&#39;bars&#39;</span> <span class="ow">in</span> <span class="n">scroll_type</span>
+        <span class="n">scroll_bar</span> <span class="o">=</span> <span class="s1">'bars'</span> <span class="ow">in</span> <span class="n">scroll_type</span>
 
         <span class="c1"># check if touch is in bar_x(horizontal) or bar_y(vertical)</span>
         <span class="c1"># width_enable_overscroll or vp.width &gt; self.width</span>
@@ -1109,26 +1109,26 @@
             <span class="ow">or</span> <span class="n">vp</span><span class="o">.</span><span class="n">height</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
         <span class="p">)</span>
 
-        <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;bottom&#39;</span><span class="p">:</span> <span class="n">touch</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">bar_margin</span><span class="p">,</span>
-             <span class="s1">&#39;top&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">top</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">bar_margin</span><span class="p">,</span>
-             <span class="s1">&#39;left&#39;</span><span class="p">:</span> <span class="n">touch</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">bar_margin</span><span class="p">,</span>
-             <span class="s1">&#39;right&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">bar_margin</span><span class="p">}</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'bottom'</span><span class="p">:</span> <span class="n">touch</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">bar_margin</span><span class="p">,</span>
+             <span class="s1">'top'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">top</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">bar_margin</span><span class="p">,</span>
+             <span class="s1">'left'</span><span class="p">:</span> <span class="n">touch</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">bar_margin</span><span class="p">,</span>
+             <span class="s1">'right'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">right</span> <span class="o">-</span> <span class="n">touch</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">bar_margin</span><span class="p">}</span>
 
-        <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;in_bar_x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">scroll_bar</span> <span class="ow">and</span> <span class="n">width_scrollable</span> <span class="ow">and</span>
+        <span class="n">ud</span><span class="p">[</span><span class="s1">'in_bar_x'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">scroll_bar</span> <span class="ow">and</span> <span class="n">width_scrollable</span> <span class="ow">and</span>
                           <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">bar_pos_x</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bar_width</span><span class="p">))</span>
-        <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;in_bar_y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">scroll_bar</span> <span class="ow">and</span> <span class="n">height_scrollable</span> <span class="ow">and</span>
+        <span class="n">ud</span><span class="p">[</span><span class="s1">'in_bar_y'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">scroll_bar</span> <span class="ow">and</span> <span class="n">height_scrollable</span> <span class="ow">and</span>
                           <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">d</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">bar_pos_y</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bar_width</span><span class="p">))</span>
 
-        <span class="k">if</span> <span class="s1">&#39;button&#39;</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">profile</span> <span class="ow">and</span> <span class="n">touch</span><span class="o">.</span><span class="n">button</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;scroll&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">'button'</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">profile</span> <span class="ow">and</span> <span class="n">touch</span><span class="o">.</span><span class="n">button</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'scroll'</span><span class="p">):</span>
             <span class="n">btn</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">button</span>
             <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_wheel_distance</span>
             <span class="n">e</span> <span class="o">=</span> <span class="kc">None</span>
 
             <span class="k">if</span> <span class="p">(</span>
-                <span class="p">(</span><span class="n">btn</span> <span class="o">==</span> <span class="s1">&#39;scrolldown&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span>
-                <span class="ow">or</span> <span class="p">(</span><span class="n">btn</span> <span class="o">==</span> <span class="s1">&#39;scrollup&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
-                <span class="ow">or</span> <span class="p">(</span><span class="n">btn</span> <span class="o">==</span> <span class="s1">&#39;scrollleft&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span>
-                <span class="ow">or</span> <span class="p">(</span><span class="n">btn</span> <span class="o">==</span> <span class="s1">&#39;scrollright&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="p">(</span><span class="n">btn</span> <span class="o">==</span> <span class="s1">'scrolldown'</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="ow">or</span> <span class="p">(</span><span class="n">btn</span> <span class="o">==</span> <span class="s1">'scrollup'</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="ow">or</span> <span class="p">(</span><span class="n">btn</span> <span class="o">==</span> <span class="s1">'scrollleft'</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="ow">or</span> <span class="p">(</span><span class="n">btn</span> <span class="o">==</span> <span class="s1">'scrollright'</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
             <span class="p">):</span>
                 <span class="k">return</span> <span class="kc">False</span>
 
@@ -1136,22 +1136,22 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">effect_x</span>
                 <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_y</span>
                 <span class="ow">and</span> <span class="n">height_scrollable</span>
-                <span class="ow">and</span> <span class="n">btn</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;scrolldown&#39;</span><span class="p">,</span> <span class="s1">&#39;scrollup&#39;</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">btn</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'scrolldown'</span><span class="p">,</span> <span class="s1">'scrollup'</span><span class="p">)</span>
             <span class="p">):</span>
-                <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_x</span> <span class="k">if</span> <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;in_bar_x&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span>
+                <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_x</span> <span class="k">if</span> <span class="n">ud</span><span class="p">[</span><span class="s1">'in_bar_x'</span><span class="p">]</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span>
 
             <span class="k">elif</span> <span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span>
                 <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_x</span>
                 <span class="ow">and</span> <span class="n">width_scrollable</span>
-                <span class="ow">and</span> <span class="n">btn</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;scrollleft&#39;</span><span class="p">,</span> <span class="s1">&#39;scrollright&#39;</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">btn</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'scrollleft'</span><span class="p">,</span> <span class="s1">'scrollright'</span><span class="p">)</span>
             <span class="p">):</span>
-                <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span> <span class="k">if</span> <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;in_bar_y&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_x</span>
+                <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span> <span class="k">if</span> <span class="n">ud</span><span class="p">[</span><span class="s1">'in_bar_y'</span><span class="p">]</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_x</span>
 
             <span class="k">if</span> <span class="n">e</span><span class="p">:</span>
-                <span class="c1"># make sure the effect&#39;s value is synced to scroll value</span>
+                <span class="c1"># make sure the effect's value is synced to scroll value</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_update_effect_bounds</span><span class="p">()</span>
-                <span class="k">if</span> <span class="n">btn</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;scrolldown&#39;</span><span class="p">,</span> <span class="s1">&#39;scrollleft&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">btn</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'scrolldown'</span><span class="p">,</span> <span class="s1">'scrollleft'</span><span class="p">):</span>
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">smooth_scroll_end</span><span class="p">:</span>
                         <span class="n">e</span><span class="o">.</span><span class="n">velocity</span> <span class="o">-=</span> <span class="n">m</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">smooth_scroll_end</span>
                     <span class="k">else</span><span class="p">:</span>
@@ -1160,7 +1160,7 @@
                         <span class="k">else</span><span class="p">:</span>
                             <span class="n">e</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">value</span> <span class="o">-</span> <span class="n">m</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
                         <span class="n">e</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="k">elif</span> <span class="n">btn</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;scrollup&#39;</span><span class="p">,</span> <span class="s1">&#39;scrollright&#39;</span><span class="p">):</span>
+                <span class="k">elif</span> <span class="n">btn</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'scrollup'</span><span class="p">,</span> <span class="s1">'scrollright'</span><span class="p">):</span>
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">smooth_scroll_end</span><span class="p">:</span>
                         <span class="n">e</span><span class="o">.</span><span class="n">velocity</span> <span class="o">+=</span> <span class="n">m</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">smooth_scroll_end</span>
                     <span class="k">else</span><span class="p">:</span>
@@ -1169,20 +1169,20 @@
                         <span class="k">else</span><span class="p">:</span>
                             <span class="n">e</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="n">m</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">min</span><span class="p">)</span>
                         <span class="n">e</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">(</span><span class="s1">&#39;svavoid&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">(</span><span class="s1">'svavoid'</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="n">e</span><span class="o">.</span><span class="n">trigger_velocity_update</span><span class="p">()</span>
             <span class="k">return</span> <span class="kc">True</span>
 
-        <span class="n">in_bar</span> <span class="o">=</span> <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;in_bar_x&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;in_bar_y&#39;</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">scroll_type</span> <span class="o">==</span> <span class="p">[</span><span class="s1">&#39;bars&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">in_bar</span><span class="p">:</span>
+        <span class="n">in_bar</span> <span class="o">=</span> <span class="n">ud</span><span class="p">[</span><span class="s1">'in_bar_x'</span><span class="p">]</span> <span class="ow">or</span> <span class="n">ud</span><span class="p">[</span><span class="s1">'in_bar_y'</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">scroll_type</span> <span class="o">==</span> <span class="p">[</span><span class="s1">'bars'</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">in_bar</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulate_touch_down</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">in_bar</span><span class="p">:</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;in_bar_y&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">ud</span><span class="p">[</span><span class="s1">'in_bar_y'</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_touch_in_handle</span><span class="p">(</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_handle_y_pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_y_size</span><span class="p">,</span> <span class="n">touch</span><span class="p">)):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">=</span> <span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
-            <span class="k">elif</span> <span class="p">(</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;in_bar_x&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span>
+            <span class="k">elif</span> <span class="p">(</span><span class="n">ud</span><span class="p">[</span><span class="s1">'in_bar_x'</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_touch_in_handle</span><span class="p">(</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_handle_x_pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_x_size</span><span class="p">,</span> <span class="n">touch</span><span class="p">)):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">=</span> <span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span>
@@ -1193,26 +1193,26 @@
         <span class="n">uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">()</span>
 
         <span class="n">ud</span><span class="p">[</span><span class="n">uid</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;mode&#39;</span><span class="p">:</span> <span class="s1">&#39;unknown&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;dx&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s1">&#39;dy&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s1">&#39;user_stopped&#39;</span><span class="p">:</span> <span class="n">in_bar</span><span class="p">,</span>
-            <span class="s1">&#39;frames&#39;</span><span class="p">:</span> <span class="n">Clock</span><span class="o">.</span><span class="n">frames</span><span class="p">,</span>
-            <span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="n">touch</span><span class="o">.</span><span class="n">time_start</span><span class="p">,</span>
+            <span class="s1">'mode'</span><span class="p">:</span> <span class="s1">'unknown'</span><span class="p">,</span>
+            <span class="s1">'dx'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s1">'dy'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s1">'user_stopped'</span><span class="p">:</span> <span class="n">in_bar</span><span class="p">,</span>
+            <span class="s1">'frames'</span><span class="p">:</span> <span class="n">Clock</span><span class="o">.</span><span class="n">frames</span><span class="p">,</span>
+            <span class="s1">'time'</span><span class="p">:</span> <span class="n">touch</span><span class="o">.</span><span class="n">time_start</span><span class="p">,</span>
         <span class="p">}</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_x</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_x</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;in_bar_x&#39;</span><span class="p">]</span>
-                <span class="ow">and</span> <span class="ow">not</span> <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;in_bar_y&#39;</span><span class="p">]):</span>
-            <span class="c1"># make sure the effect&#39;s value is synced to scroll value</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_x</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_x</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">ud</span><span class="p">[</span><span class="s1">'in_bar_x'</span><span class="p">]</span>
+                <span class="ow">and</span> <span class="ow">not</span> <span class="n">ud</span><span class="p">[</span><span class="s1">'in_bar_y'</span><span class="p">]):</span>
+            <span class="c1"># make sure the effect's value is synced to scroll value</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_update_effect_bounds</span><span class="p">()</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_effect_x_start_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">effect_x</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_scroll_x_mouse</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_y</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;in_bar_x&#39;</span><span class="p">]</span>
-                <span class="ow">and</span> <span class="ow">not</span> <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;in_bar_y&#39;</span><span class="p">]):</span>
-            <span class="c1"># make sure the effect&#39;s value is synced to scroll value</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_y</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">ud</span><span class="p">[</span><span class="s1">'in_bar_x'</span><span class="p">]</span>
+                <span class="ow">and</span> <span class="ow">not</span> <span class="n">ud</span><span class="p">[</span><span class="s1">'in_bar_y'</span><span class="p">]):</span>
+            <span class="c1"># make sure the effect's value is synced to scroll value</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_update_effect_bounds</span><span class="p">()</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_effect_y_start_height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
@@ -1224,9 +1224,9 @@
                                 <span class="bp">self</span><span class="o">.</span><span class="n">scroll_timeout</span> <span class="o">/</span> <span class="mf">1000.</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span>
 
-<div class="viewcode-block" id="ScrollView.on_touch_move"><a class="viewcode-back" href="../../../api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView.on_touch_move">[docs]</a>    <span class="k">def</span> <span class="nf">on_touch_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+<div class="viewcode-block" id="ScrollView.on_touch_move"><a class="viewcode-back" href="../../../api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView.on_touch_move">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">on_touch_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_touch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">touch</span><span class="p">:</span>
-            <span class="c1"># don&#39;t pass on touch to children if outside the sv</span>
+            <span class="c1"># don't pass on touch to children if outside the sv</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">collide_point</span><span class="p">(</span><span class="o">*</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">):</span>
                 <span class="c1"># touch is in parent</span>
                 <span class="n">touch</span><span class="o">.</span><span class="n">push</span><span class="p">()</span>
@@ -1237,9 +1237,9 @@
         <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">grab_current</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;sv.&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'sv.'</span><span class="p">)</span>
                    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">):</span>
-            <span class="c1"># don&#39;t pass on touch to children if outside the sv</span>
+            <span class="c1"># don't pass on touch to children if outside the sv</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">collide_point</span><span class="p">(</span><span class="o">*</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">):</span>
                 <span class="c1"># touch is in window coordinates</span>
                 <span class="n">touch</span><span class="o">.</span><span class="n">push</span><span class="p">()</span>
@@ -1249,17 +1249,17 @@
                 <span class="k">return</span> <span class="n">res</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-        <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;sv.handled&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_scroll_move&#39;</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+        <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">'sv.handled'</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'x'</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">'y'</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_scroll_move'</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span></div>
 
-    <span class="k">def</span> <span class="nf">on_scroll_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">(</span><span class="s1">&#39;svavoid&#39;</span><span class="p">)</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_scroll_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">(</span><span class="s1">'svavoid'</span><span class="p">)</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
 
         <span class="n">touch</span><span class="o">.</span><span class="n">push</span><span class="p">()</span>
         <span class="n">touch</span><span class="o">.</span><span class="n">apply_transform_2d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_local</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch_children</span><span class="p">(</span><span class="s1">&#39;on_scroll_move&#39;</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch_children</span><span class="p">(</span><span class="s1">'on_scroll_move'</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
             <span class="n">touch</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="n">touch</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
@@ -1268,7 +1268,7 @@
 
         <span class="c1"># By default this touch can be used to defocus currently focused</span>
         <span class="c1"># widget, like any touch outside of ScrollView.</span>
-        <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;sv.can_defocus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">'sv.can_defocus'</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="n">uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">uid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">:</span>
@@ -1277,7 +1277,7 @@
         <span class="n">ud</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="n">uid</span><span class="p">]</span>
 
         <span class="c1"># check if the minimum distance has been travelled</span>
-        <span class="k">if</span> <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;unknown&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ud</span><span class="p">[</span><span class="s1">'mode'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'unknown'</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_x</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_y</span><span class="p">):</span>
                 <span class="c1"># touch is in parent, but _change expects window coords</span>
                 <span class="n">touch</span><span class="o">.</span><span class="n">push</span><span class="p">()</span>
@@ -1286,20 +1286,20 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_change_touch_mode</span><span class="p">()</span>
                 <span class="n">touch</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
                 <span class="k">return</span>
-            <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;dx&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">dx</span><span class="p">)</span>
-            <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;dy&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">dy</span><span class="p">)</span>
-            <span class="k">if</span> <span class="p">((</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;dx&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_distance</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_x</span><span class="p">)</span> <span class="ow">or</span>
-                    <span class="p">(</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;dy&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_distance</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_y</span><span class="p">)):</span>
-                <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;scroll&#39;</span>
+            <span class="n">ud</span><span class="p">[</span><span class="s1">'dx'</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">dx</span><span class="p">)</span>
+            <span class="n">ud</span><span class="p">[</span><span class="s1">'dy'</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">dy</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">((</span><span class="n">ud</span><span class="p">[</span><span class="s1">'dx'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_distance</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_x</span><span class="p">)</span> <span class="ow">or</span>
+                    <span class="p">(</span><span class="n">ud</span><span class="p">[</span><span class="s1">'dy'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_distance</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_y</span><span class="p">)):</span>
+                <span class="n">ud</span><span class="p">[</span><span class="s1">'mode'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'scroll'</span>
 
-        <span class="k">if</span> <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;scroll&#39;</span><span class="p">:</span>
-            <span class="n">not_in_bar</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;in_bar_x&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="ow">and</span> \
-                <span class="ow">not</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;in_bar_y&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ud</span><span class="p">[</span><span class="s1">'mode'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'scroll'</span><span class="p">:</span>
+            <span class="n">not_in_bar</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'in_bar_x'</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="ow">and</span> \
+                <span class="ow">not</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'in_bar_y'</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;sv.handled&#39;</span><span class="p">][</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_x</span> \
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">'sv.handled'</span><span class="p">][</span><span class="s1">'x'</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_x</span> \
                     <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_x</span><span class="p">:</span>
                 <span class="n">width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span>
-                <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;in_bar_x&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'in_bar_x'</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hbar</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
                         <span class="n">dx</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">dx</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">width</span> <span class="o">-</span> <span class="n">width</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">hbar</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">+</span> <span class="n">dx</span><span class="p">,</span> <span class="mf">0.</span><span class="p">),</span> <span class="mf">1.</span><span class="p">)</span>
@@ -1310,13 +1310,13 @@
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                     <span class="n">rv</span> <span class="o">=</span> <span class="kc">False</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;sv.handled&#39;</span><span class="p">][</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">'sv.handled'</span><span class="p">][</span><span class="s1">'x'</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="c1"># Touch resulted in scroll should not defocus focused widget</span>
-                <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;sv.can_defocus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;sv.handled&#39;</span><span class="p">][</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_y</span> \
+                <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">'sv.can_defocus'</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">'sv.handled'</span><span class="p">][</span><span class="s1">'y'</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_y</span> \
                     <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span><span class="p">:</span>
                 <span class="n">height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span>
-                <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;in_bar_y&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">vbar</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mf">1.0</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'in_bar_y'</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">vbar</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mf">1.0</span><span class="p">:</span>
                     <span class="n">dy</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">dy</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">height</span> <span class="o">-</span> <span class="n">height</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">vbar</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">+</span> <span class="n">dy</span><span class="p">,</span> <span class="mf">0.</span><span class="p">),</span> <span class="mf">1.</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update_from_scroll</span><span class="p">()</span>
@@ -1326,18 +1326,18 @@
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                     <span class="n">rv</span> <span class="o">=</span> <span class="kc">False</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;sv.handled&#39;</span><span class="p">][</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">'sv.handled'</span><span class="p">][</span><span class="s1">'y'</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="c1"># Touch resulted in scroll should not defocus focused widget</span>
-                <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">&#39;sv.can_defocus&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;dt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">time_update</span> <span class="o">-</span> <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span>
-            <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">time_update</span>
-            <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;user_stopped&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="s1">'sv.can_defocus'</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">ud</span><span class="p">[</span><span class="s1">'dt'</span><span class="p">]</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">time_update</span> <span class="o">-</span> <span class="n">ud</span><span class="p">[</span><span class="s1">'time'</span><span class="p">]</span>
+            <span class="n">ud</span><span class="p">[</span><span class="s1">'time'</span><span class="p">]</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">time_update</span>
+            <span class="n">ud</span><span class="p">[</span><span class="s1">'user_stopped'</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="n">rv</span>
 
-<div class="viewcode-block" id="ScrollView.on_touch_up"><a class="viewcode-back" href="../../../api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView.on_touch_up">[docs]</a>    <span class="k">def</span> <span class="nf">on_touch_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
-        <span class="n">uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">(</span><span class="s1">&#39;svavoid&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="ScrollView.on_touch_up"><a class="viewcode-back" href="../../../api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView.on_touch_up">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">on_touch_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+        <span class="n">uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">(</span><span class="s1">'svavoid'</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_touch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">touch</span> <span class="ow">and</span> <span class="n">uid</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">:</span>
-            <span class="c1"># don&#39;t pass on touch to children if outside the sv</span>
+            <span class="c1"># don't pass on touch to children if outside the sv</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">collide_point</span><span class="p">(</span><span class="o">*</span><span class="n">touch</span><span class="o">.</span><span class="n">pos</span><span class="p">):</span>
                 <span class="c1"># touch is in parents</span>
                 <span class="n">touch</span><span class="o">.</span><span class="n">push</span><span class="p">()</span>
@@ -1348,25 +1348,25 @@
                 <span class="n">touch</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_scroll_stop&#39;</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_scroll_stop'</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
             <span class="n">touch</span><span class="o">.</span><span class="n">ungrab</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sv.can_defocus&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'sv.can_defocus'</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
                 <span class="c1"># Focused widget should stay focused</span>
                 <span class="n">FocusBehavior</span><span class="o">.</span><span class="n">ignored_touch</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">True</span></div>
 
-    <span class="k">def</span> <span class="nf">on_scroll_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">,</span> <span class="n">check_children</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_scroll_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">,</span> <span class="n">check_children</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_touch</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="k">if</span> <span class="n">check_children</span><span class="p">:</span>
             <span class="n">touch</span><span class="o">.</span><span class="n">push</span><span class="p">()</span>
             <span class="n">touch</span><span class="o">.</span><span class="n">apply_transform_2d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_local</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch_children</span><span class="p">(</span><span class="s1">&#39;on_scroll_stop&#39;</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch_children</span><span class="p">(</span><span class="s1">'on_scroll_stop'</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
                 <span class="n">touch</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
                 <span class="k">return</span> <span class="kc">True</span>
             <span class="n">touch</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">(</span><span class="s1">&#39;svavoid&#39;</span><span class="p">)</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">(</span><span class="s1">'svavoid'</span><span class="p">)</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
@@ -1374,17 +1374,17 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_touch</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">()</span>
         <span class="n">ud</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="n">uid</span><span class="p">]</span>
-        <span class="n">not_in_bar</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;in_bar_x&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="ow">and</span> \
-            <span class="ow">not</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;in_bar_y&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">not_in_bar</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'in_bar_x'</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="ow">and</span> \
+            <span class="ow">not</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'in_bar_y'</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_x</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_x</span> <span class="ow">and</span> <span class="n">not_in_bar</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">effect_x</span><span class="o">.</span><span class="n">stop</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_y</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span> <span class="ow">and</span> <span class="n">not_in_bar</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span><span class="o">.</span><span class="n">stop</span><span class="p">(</span><span class="n">touch</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;unknown&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ud</span><span class="p">[</span><span class="s1">'mode'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'unknown'</span><span class="p">:</span>
             <span class="c1"># we must do the click at least..</span>
             <span class="c1"># only send the click if it was not a click to stop</span>
             <span class="c1"># autoscrolling</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;user_stopped&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">ud</span><span class="p">[</span><span class="s1">'user_stopped'</span><span class="p">]:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">simulate_touch_down</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
             <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_do_touch_up</span><span class="p">,</span> <span class="n">touch</span><span class="p">),</span> <span class="mf">.2</span><span class="p">)</span>
 
@@ -1395,25 +1395,25 @@
         <span class="n">ev</span><span class="p">()</span>
 
         <span class="c1"># if we do mouse scrolling, always accept it</span>
-        <span class="k">if</span> <span class="s1">&#39;button&#39;</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">profile</span> <span class="ow">and</span> <span class="n">touch</span><span class="o">.</span><span class="n">button</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;scroll&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">'button'</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">profile</span> <span class="ow">and</span> <span class="n">touch</span><span class="o">.</span><span class="n">button</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'scroll'</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">()</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span>
 
-<div class="viewcode-block" id="ScrollView.scroll_to"><a class="viewcode-back" href="../../../api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView.scroll_to">[docs]</a>    <span class="k">def</span> <span class="nf">scroll_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">animate</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Scrolls the viewport to ensure that the given widget is visible,</span>
+<div class="viewcode-block" id="ScrollView.scroll_to"><a class="viewcode-back" href="../../../api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView.scroll_to">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">scroll_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">animate</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">'''Scrolls the viewport to ensure that the given widget is visible,</span>
 <span class="sd">        optionally with padding and animation. If animate is True (the</span>
 <span class="sd">        default), then the default animation parameters will be used.</span>
 <span class="sd">        Otherwise, it should be a dict containing arguments to pass to</span>
 <span class="sd">        :class:`~kivy.animation.Animation` constructor.</span>
 
 <span class="sd">        .. versionadded:: 1.9.1</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
             <span class="k">return</span>
 
         <span class="c1"># if _viewport is layout and has pending operation, reschedule</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_viewport</span><span class="p">,</span> <span class="s1">&#39;do_layout&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_viewport</span><span class="p">,</span> <span class="s1">'do_layout'</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_viewport</span><span class="o">.</span><span class="n">_trigger_layout</span><span class="o">.</span><span class="n">is_triggered</span><span class="p">:</span>
                 <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span>
                      <span class="k">lambda</span> <span class="o">*</span><span class="n">dt</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">scroll_to</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">padding</span><span class="p">,</span> <span class="n">animate</span><span class="p">))</span>
@@ -1444,20 +1444,20 @@
 
         <span class="k">if</span> <span class="n">animate</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">animate</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-                <span class="n">animate</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">:</span> <span class="s1">&#39;out_quad&#39;</span><span class="p">}</span>
-            <span class="n">Animation</span><span class="o">.</span><span class="n">stop_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;scroll_x&#39;</span><span class="p">,</span> <span class="s1">&#39;scroll_y&#39;</span><span class="p">)</span>
+                <span class="n">animate</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'d'</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="s1">'t'</span><span class="p">:</span> <span class="s1">'out_quad'</span><span class="p">}</span>
+            <span class="n">Animation</span><span class="o">.</span><span class="n">stop_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">'scroll_x'</span><span class="p">,</span> <span class="s1">'scroll_y'</span><span class="p">)</span>
             <span class="n">Animation</span><span class="p">(</span><span class="n">scroll_x</span><span class="o">=</span><span class="n">sxp</span><span class="p">,</span> <span class="n">scroll_y</span><span class="o">=</span><span class="n">syp</span><span class="p">,</span> <span class="o">**</span><span class="n">animate</span><span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">scroll_x</span> <span class="o">=</span> <span class="n">sxp</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">=</span> <span class="n">syp</span></div>
 
-<div class="viewcode-block" id="ScrollView.convert_distance_to_scroll"><a class="viewcode-back" href="../../../api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView.convert_distance_to_scroll">[docs]</a>    <span class="k">def</span> <span class="nf">convert_distance_to_scroll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Convert a distance in pixels to a scroll distance, depending on the</span>
+<div class="viewcode-block" id="ScrollView.convert_distance_to_scroll"><a class="viewcode-back" href="../../../api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView.convert_distance_to_scroll">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">convert_distance_to_scroll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">'''Convert a distance in pixels to a scroll distance, depending on the</span>
 <span class="sd">        content size and the scrollview size.</span>
 
 <span class="sd">        The result will be a tuple of scroll distance that can be added to</span>
 <span class="sd">        :data:`scroll_x` and :data:`scroll_y`</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_viewport</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
         <span class="n">vp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_viewport</span>
@@ -1473,14 +1473,14 @@
             <span class="n">sy</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="n">sx</span><span class="p">,</span> <span class="n">sy</span></div>
 
-<div class="viewcode-block" id="ScrollView.update_from_scroll"><a class="viewcode-back" href="../../../api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView.update_from_scroll">[docs]</a>    <span class="k">def</span> <span class="nf">update_from_scroll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Force the reposition of the content, according to current value of</span>
+<div class="viewcode-block" id="ScrollView.update_from_scroll"><a class="viewcode-back" href="../../../api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView.update_from_scroll">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">update_from_scroll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">'''Force the reposition of the content, according to current value of</span>
 <span class="sd">        :attr:`scroll_x` and :attr:`scroll_y`.</span>
 
 <span class="sd">        This method is automatically called when one of the :attr:`scroll_x`,</span>
 <span class="sd">        :attr:`scroll_y`, :attr:`pos` or :attr:`size` properties change, or</span>
 <span class="sd">        if the size of the content changes.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_viewport</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">g_translate</span><span class="o">.</span><span class="n">xy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span>
             <span class="k">return</span>
@@ -1527,25 +1527,25 @@
         <span class="k">if</span> <span class="n">ev</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">ev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bind_inactive_bar_color_ev</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">create_trigger</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_bind_inactive_bar_color</span><span class="p">,</span> <span class="mf">.5</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">funbind</span><span class="p">(</span><span class="s1">&#39;bar_inactive_color&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_change_bar_color</span><span class="p">)</span>
-        <span class="n">Animation</span><span class="o">.</span><span class="n">stop_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_bar_color&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;bar_color&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_change_bar_color</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">funbind</span><span class="p">(</span><span class="s1">'bar_inactive_color'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_change_bar_color</span><span class="p">)</span>
+        <span class="n">Animation</span><span class="o">.</span><span class="n">stop_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">'_bar_color'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">'bar_color'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_change_bar_color</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bar_color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bar_color</span>
         <span class="n">ev</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">_bind_inactive_bar_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">l</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">funbind</span><span class="p">(</span><span class="s1">&#39;bar_color&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_change_bar_color</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;bar_inactive_color&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_change_bar_color</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_bind_inactive_bar_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">l</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">funbind</span><span class="p">(</span><span class="s1">'bar_color'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_change_bar_color</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">'bar_inactive_color'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_change_bar_color</span><span class="p">)</span>
         <span class="n">Animation</span><span class="p">(</span>
             <span class="n">_bar_color</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bar_inactive_color</span><span class="p">,</span>
-            <span class="n">d</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="s1">&#39;out_quart&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">d</span><span class="o">=</span><span class="mf">.5</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="s1">'out_quart'</span><span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_change_bar_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inst</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_change_bar_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inst</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_bar_color</span> <span class="o">=</span> <span class="n">value</span>
 
-<div class="viewcode-block" id="ScrollView.add_widget"><a class="viewcode-back" href="../../../api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView.add_widget">[docs]</a>    <span class="k">def</span> <span class="nf">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="ScrollView.add_widget"><a class="viewcode-back" href="../../../api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView.add_widget">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_viewport</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;ScrollView accept only one widget&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'ScrollView accept only one widget'</span><span class="p">)</span>
         <span class="n">canvas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas_viewport</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ScrollView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -1555,7 +1555,7 @@
                     <span class="n">size_hint_min</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update_from_scroll</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_update_from_scroll</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ScrollView.remove_widget"><a class="viewcode-back" href="../../../api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView.remove_widget">[docs]</a>    <span class="k">def</span> <span class="nf">remove_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="ScrollView.remove_widget"><a class="viewcode-back" href="../../../api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView.remove_widget">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">remove_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">canvas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas_viewport</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ScrollView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -1563,10 +1563,10 @@
         <span class="k">if</span> <span class="n">widget</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">_viewport</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_viewport</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-    <span class="k">def</span> <span class="nf">_get_uid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;sv&#39;</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">.</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_uid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">'sv'</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">'</span><span class="si">{0}</span><span class="s1">.</span><span class="si">{1}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">uid</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_change_touch_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_change_touch_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_touch</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="n">uid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_uid</span><span class="p">()</span>
@@ -1575,9 +1575,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_touch</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="k">return</span>
         <span class="n">ud</span> <span class="o">=</span> <span class="n">touch</span><span class="o">.</span><span class="n">ud</span><span class="p">[</span><span class="n">uid</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;unknown&#39;</span> <span class="ow">or</span> <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;user_stopped&#39;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">ud</span><span class="p">[</span><span class="s1">'mode'</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">'unknown'</span> <span class="ow">or</span> <span class="n">ud</span><span class="p">[</span><span class="s1">'user_stopped'</span><span class="p">]:</span>
             <span class="k">return</span>
-        <span class="n">diff_frames</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">frames</span> <span class="o">-</span> <span class="n">ud</span><span class="p">[</span><span class="s1">&#39;frames&#39;</span><span class="p">]</span>
+        <span class="n">diff_frames</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">frames</span> <span class="o">-</span> <span class="n">ud</span><span class="p">[</span><span class="s1">'frames'</span><span class="p">]</span>
 
         <span class="c1"># in order to be able to scroll on very slow devices, let at least 3</span>
         <span class="c1"># frames displayed to accumulate some velocity. And then, change the</span>
@@ -1592,9 +1592,9 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_scroll_y</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">effect_y</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
         <span class="c1"># XXX the next line was in the condition. But this stop</span>
-        <span class="c1"># the possibility to &quot;drag&quot; an object out of the scrollview in the</span>
+        <span class="c1"># the possibility to "drag" an object out of the scrollview in the</span>
         <span class="c1"># non-used direction: if you have an horizontal scrollview, a</span>
-        <span class="c1"># vertical gesture will not &quot;stop&quot; the scroll view to look for an</span>
+        <span class="c1"># vertical gesture will not "stop" the scroll view to look for an</span>
         <span class="c1"># horizontal gesture, until the timeout is done.</span>
         <span class="c1"># and touch.dx + touch.dy == 0:</span>
         <span class="n">touch</span><span class="o">.</span><span class="n">ungrab</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -1607,13 +1607,13 @@
         <span class="n">touch</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
         <span class="k">return</span>
 
-    <span class="k">def</span> <span class="nf">_do_touch_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_do_touch_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
         <span class="c1"># touch is in window coords</span>
         <span class="n">touch</span><span class="o">.</span><span class="n">push</span><span class="p">()</span>
         <span class="n">touch</span><span class="o">.</span><span class="n">apply_transform_2d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_widget</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ScrollView</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_touch_up</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
         <span class="n">touch</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-        <span class="c1"># don&#39;t forget about grab event!</span>
+        <span class="c1"># don't forget about grab event!</span>
         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">grab_list</span><span class="p">[:]:</span>
             <span class="n">touch</span><span class="o">.</span><span class="n">grab_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">()</span>
@@ -1628,34 +1628,34 @@
         <span class="n">touch</span><span class="o">.</span><span class="n">grab_current</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">kivy.app</span> <span class="kn">import</span> <span class="n">App</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
 
-    <span class="kn">from</span> <span class="nn">kivy.uix.gridlayout</span> <span class="kn">import</span> <span class="n">GridLayout</span>
-    <span class="kn">from</span> <span class="nn">kivy.uix.button</span> <span class="kn">import</span> <span class="n">Button</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.gridlayout</span><span class="w"> </span><span class="kn">import</span> <span class="n">GridLayout</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.button</span><span class="w"> </span><span class="kn">import</span> <span class="n">Button</span>
 
-    <span class="k">class</span> <span class="nc">ScrollViewApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
+    <span class="k">class</span><span class="w"> </span><span class="nc">ScrollViewApp</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
 
-        <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="n">layout1</span> <span class="o">=</span> <span class="n">GridLayout</span><span class="p">(</span><span class="n">cols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
-            <span class="n">layout1</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">minimum_height</span><span class="o">=</span><span class="n">layout1</span><span class="o">.</span><span class="n">setter</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">),</span>
-                         <span class="n">minimum_width</span><span class="o">=</span><span class="n">layout1</span><span class="o">.</span><span class="n">setter</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">))</span>
+            <span class="n">layout1</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">minimum_height</span><span class="o">=</span><span class="n">layout1</span><span class="o">.</span><span class="n">setter</span><span class="p">(</span><span class="s1">'height'</span><span class="p">),</span>
+                         <span class="n">minimum_width</span><span class="o">=</span><span class="n">layout1</span><span class="o">.</span><span class="n">setter</span><span class="p">(</span><span class="s1">'width'</span><span class="p">))</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">40</span><span class="p">):</span>
                 <span class="n">btn</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
                              <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
                 <span class="n">layout1</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">btn</span><span class="p">)</span>
-            <span class="n">scrollview1</span> <span class="o">=</span> <span class="n">ScrollView</span><span class="p">(</span><span class="n">bar_width</span><span class="o">=</span><span class="s1">&#39;2dp&#39;</span><span class="p">,</span> <span class="n">smooth_scroll_end</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+            <span class="n">scrollview1</span> <span class="o">=</span> <span class="n">ScrollView</span><span class="p">(</span><span class="n">bar_width</span><span class="o">=</span><span class="s1">'2dp'</span><span class="p">,</span> <span class="n">smooth_scroll_end</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
             <span class="n">scrollview1</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">layout1</span><span class="p">)</span>
 
             <span class="n">layout2</span> <span class="o">=</span> <span class="n">GridLayout</span><span class="p">(</span><span class="n">cols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
-            <span class="n">layout2</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">minimum_height</span><span class="o">=</span><span class="n">layout2</span><span class="o">.</span><span class="n">setter</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">),</span>
-                         <span class="n">minimum_width</span><span class="o">=</span><span class="n">layout2</span><span class="o">.</span><span class="n">setter</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">))</span>
+            <span class="n">layout2</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">minimum_height</span><span class="o">=</span><span class="n">layout2</span><span class="o">.</span><span class="n">setter</span><span class="p">(</span><span class="s1">'height'</span><span class="p">),</span>
+                         <span class="n">minimum_width</span><span class="o">=</span><span class="n">layout2</span><span class="o">.</span><span class="n">setter</span><span class="p">(</span><span class="s1">'width'</span><span class="p">))</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">40</span><span class="p">):</span>
                 <span class="n">btn</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
                              <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
                 <span class="n">layout2</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">btn</span><span class="p">)</span>
-            <span class="n">scrollview2</span> <span class="o">=</span> <span class="n">ScrollView</span><span class="p">(</span><span class="n">scroll_type</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;bars&#39;</span><span class="p">],</span>
-                                     <span class="n">bar_width</span><span class="o">=</span><span class="s1">&#39;9dp&#39;</span><span class="p">,</span>
+            <span class="n">scrollview2</span> <span class="o">=</span> <span class="n">ScrollView</span><span class="p">(</span><span class="n">scroll_type</span><span class="o">=</span><span class="p">[</span><span class="s1">'bars'</span><span class="p">],</span>
+                                     <span class="n">bar_width</span><span class="o">=</span><span class="s1">'9dp'</span><span class="p">,</span>
                                      <span class="n">scroll_wheel_distance</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
             <span class="n">scrollview2</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">layout2</span><span class="p">)</span>
 
@@ -1703,7 +1703,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010-2024, Kivy Team and other contributors.
-      Last updated on Dec 26, 2024.
+      Last updated on Nov 08, 2026.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

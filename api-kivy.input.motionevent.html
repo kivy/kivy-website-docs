@@ -9,7 +9,7 @@
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
     <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Motion Event &mdash; Kivy 2.3.1 documentation</title>
+    <title>Motion Event &mdash; Kivy 2.3.2 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" /> 
       <link rel="stylesheet" href="_static/fresh.css" type="text/css" />
@@ -36,7 +36,7 @@
         <script type="text/javascript" src="_static/kivy.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="Kivy 2.3.1 documentation" href="index.html" />
+    <link rel="top" title="Kivy 2.3.2 documentation" href="index.html" />
     <link rel="up" title="Input management" href="api-kivy.input.html" />
     <link rel="next" title="Motion Event Factory" href="api-kivy.input.factory.html" />
     <link rel="prev" title="Input recorder" href="api-kivy.input.recorder.html" /> 
@@ -570,20 +570,20 @@ an event manager.</p>
 <p>A manager can also assign a new <cite>type_id</cite> to
 <a class="reference internal" href="#kivy.input.motionevent.MotionEvent.type_id" title="kivy.input.motionevent.MotionEvent.type_id"><code class="xref py py-attr docutils literal notranslate"><span class="pre">MotionEvent.type_id</span></code></a> before dispatching it to the widgets. This useful
 when dispatching a specific event:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MouseTouchManager</span><span class="p">(</span><span class="n">EventManagerBase</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">MouseTouchManager</span><span class="p">(</span><span class="n">EventManagerBase</span><span class="p">):</span>
 
-    <span class="n">type_ids</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;touch&#39;</span><span class="p">,)</span>
+    <span class="n">type_ids</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'touch'</span><span class="p">,)</span>
 
-    <span class="k">def</span> <span class="nf">dispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">etype</span><span class="p">,</span> <span class="n">me</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">etype</span><span class="p">,</span> <span class="n">me</span><span class="p">):</span>
         <span class="n">accepted</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="k">if</span> <span class="n">me</span><span class="o">.</span><span class="n">device</span> <span class="o">==</span> <span class="s1">&#39;mouse&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">me</span><span class="o">.</span><span class="n">device</span> <span class="o">==</span> <span class="s1">'mouse'</span><span class="p">:</span>
             <span class="n">me</span><span class="o">.</span><span class="n">push</span><span class="p">()</span> <span class="c1"># Save current type_id and other values</span>
-            <span class="n">me</span><span class="o">.</span><span class="n">type_id</span> <span class="o">=</span> <span class="s1">&#39;mouse_touch&#39;</span>
+            <span class="n">me</span><span class="o">.</span><span class="n">type_id</span> <span class="o">=</span> <span class="s1">'mouse_touch'</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">transform_motion_event_2d</span><span class="p">(</span><span class="n">me</span><span class="p">)</span>
             <span class="c1"># Dispatch mouse touch event to widgets which registered</span>
-            <span class="c1"># to receive &#39;mouse_touch&#39;</span>
+            <span class="c1"># to receive 'mouse_touch'</span>
             <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">children</span><span class="p">[:]:</span>
-                <span class="k">if</span> <span class="n">widget</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">&#39;on_motion&#39;</span><span class="p">,</span> <span class="n">etype</span><span class="p">,</span> <span class="n">me</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">widget</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_motion'</span><span class="p">,</span> <span class="n">etype</span><span class="p">,</span> <span class="n">me</span><span class="p">):</span>
                     <span class="n">accepted</span> <span class="o">=</span> <span class="kc">True</span>
                     <span class="k">break</span>
             <span class="n">me</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="c1"># Restore</span>
@@ -595,7 +595,7 @@ when dispatching a specific event:</p>
 <h2>Listening to a motion event<a class="headerlink" href="#listening-to-a-motion-event" title="Permalink to this heading">¶</a></h2>
 <p>If you want to receive all motion events, touch or not, you can bind the
 MotionEvent from the <code class="xref py py-class docutils literal notranslate"><span class="pre">Window</span></code> to your own callback:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">on_motion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">etype</span><span class="p">,</span> <span class="n">me</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_motion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">etype</span><span class="p">,</span> <span class="n">me</span><span class="p">):</span>
     <span class="c1"># will receive all motion events.</span>
     <span class="k">pass</span>
 
@@ -645,14 +645,14 @@ available.</p>
 </tbody>
 </table>
 <p>If you want to know whether the current <a class="reference internal" href="#kivy.input.motionevent.MotionEvent" title="kivy.input.motionevent.MotionEvent"><code class="xref py py-class docutils literal notranslate"><span class="pre">MotionEvent</span></code></a> has an angle:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">on_touch_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
-    <span class="k">if</span> <span class="s1">&#39;angle&#39;</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">profile</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The touch angle is&#39;</span><span class="p">,</span> <span class="n">touch</span><span class="o">.</span><span class="n">a</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_touch_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s1">'angle'</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">profile</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'The touch angle is'</span><span class="p">,</span> <span class="n">touch</span><span class="o">.</span><span class="n">a</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>If you want to select only the fiducials:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">on_touch_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
-    <span class="k">if</span> <span class="s1">&#39;markerid&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">profile</span><span class="p">:</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_touch_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s1">'markerid'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">touch</span><span class="o">.</span><span class="n">profile</span><span class="p">:</span>
         <span class="k">return</span>
 </pre></div>
 </div>
@@ -789,21 +789,21 @@ screen coordinate system (self.dx, self.dy).</p>
 subsequent <a class="reference internal" href="api-kivy.uix.widget.html#kivy.uix.widget.Widget.on_touch_move" title="kivy.uix.widget.Widget.on_touch_move"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_touch_move()</span></code></a> and
 <a class="reference internal" href="api-kivy.uix.widget.html#kivy.uix.widget.Widget.on_touch_up" title="kivy.uix.widget.Widget.on_touch_up"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_touch_up()</span></code></a> events, even if the touch
 is not dispatched by the parent:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
     <span class="n">touch</span><span class="o">.</span><span class="n">grab</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">on_touch_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">on_touch_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">grab_current</span> <span class="ow">is</span> <span class="bp">self</span><span class="p">:</span>
         <span class="c1"># I received my grabbed touch</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># it&#39;s a normal touch</span>
+        <span class="c1"># it's a normal touch</span>
 
-<span class="k">def</span> <span class="nf">on_touch_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">on_touch_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">touch</span><span class="o">.</span><span class="n">grab_current</span> <span class="ow">is</span> <span class="bp">self</span><span class="p">:</span>
         <span class="c1"># I receive my grabbed touch, I must ungrab it!</span>
         <span class="n">touch</span><span class="o">.</span><span class="n">ungrab</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># it&#39;s a normal touch</span>
+        <span class="c1"># it's a normal touch</span>
         <span class="k">pass</span>
 </pre></div>
 </div>
@@ -1181,7 +1181,7 @@ never the same across all existing events.</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010-2024, Kivy Team and other contributors.
-      Last updated on Dec 26, 2024.
+      Last updated on Nov 08, 2026.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

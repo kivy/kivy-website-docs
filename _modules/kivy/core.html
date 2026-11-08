@@ -8,7 +8,7 @@
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
     
-    <title>kivy.core &mdash; Kivy 2.3.1 documentation</title>
+    <title>kivy.core &mdash; Kivy 2.3.2 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" /> 
       <link rel="stylesheet" href="../../_static/fresh.css" type="text/css" />
@@ -35,7 +35,7 @@
         <script type="text/javascript" src="../../_static/kivy.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="top" title="Kivy 2.3.1 documentation" href="../../index.html" />
+    <link rel="top" title="Kivy 2.3.2 documentation" href="../../index.html" />
     <link rel="up" title="kivy" href="../kivy.html" /> 
   </head>
   <body>
@@ -377,7 +377,7 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.core</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">Core Abstraction</span>
 <span class="sd">================</span>
 
@@ -385,7 +385,7 @@
 <span class="sd">implementations. For further information, please refer to</span>
 <span class="sd">:ref:`architecture` and the :ref:`providers` section of the documentation.</span>
 
-<span class="sd">In most cases, you shouldn&#39;t directly use a library that&#39;s already covered</span>
+<span class="sd">In most cases, you shouldn't directly use a library that's already covered</span>
 <span class="sd">by the core abstraction. Always try to use our providers first.</span>
 <span class="sd">In case we are missing a feature or method, please let us know by</span>
 <span class="sd">opening a new Bug report instead of relying on your library.</span>
@@ -393,29 +393,29 @@
 <span class="sd">.. warning::</span>
 <span class="sd">    These are **not** widgets! These are just abstractions of the respective</span>
 <span class="sd">    functionality. For example, you cannot add a core image to your window.</span>
-<span class="sd">    You have to use the image **widget** class instead. If you&#39;re really</span>
+<span class="sd">    You have to use the image **widget** class instead. If you're really</span>
 <span class="sd">    looking for widgets, please refer to :mod:`kivy.uix` instead.</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
 
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">sysconfig</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">traceback</span>
-<span class="kn">import</span> <span class="nn">tempfile</span>
-<span class="kn">import</span> <span class="nn">subprocess</span>
-<span class="kn">import</span> <span class="nn">importlib</span>
-<span class="kn">import</span> <span class="nn">kivy</span>
-<span class="kn">from</span> <span class="nn">kivy.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sysconfig</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">kivy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">Logger</span>
 
 
-<div class="viewcode-block" id="CoreCriticalException"><a class="viewcode-back" href="../../api-kivy.core.html#kivy.core.CoreCriticalException">[docs]</a><span class="k">class</span> <span class="nc">CoreCriticalException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="CoreCriticalException"><a class="viewcode-back" href="../../api-kivy.core.html#kivy.core.CoreCriticalException">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">CoreCriticalException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="k">pass</span></div>
 
 
-<span class="k">def</span> <span class="nf">core_select_lib</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">llist</span><span class="p">,</span> <span class="n">create_instance</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                    <span class="n">base</span><span class="o">=</span><span class="s1">&#39;kivy.core&#39;</span><span class="p">,</span> <span class="n">basemodule</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="k">if</span> <span class="s1">&#39;KIVY_DOC&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">core_select_lib</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">llist</span><span class="p">,</span> <span class="n">create_instance</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="n">base</span><span class="o">=</span><span class="s1">'kivy.core'</span><span class="p">,</span> <span class="n">basemodule</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s1">'KIVY_DOC'</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
         <span class="k">return</span>
     <span class="n">category</span> <span class="o">=</span> <span class="n">category</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
     <span class="n">basemodule</span> <span class="o">=</span> <span class="n">basemodule</span> <span class="ow">or</span> <span class="n">category</span>
@@ -428,14 +428,14 @@
                 <span class="k">if</span> <span class="n">option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kivy</span><span class="o">.</span><span class="n">kivy_options</span><span class="p">[</span><span class="n">category</span><span class="p">]:</span>
                     <span class="n">libs_ignored</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">modulename</span><span class="p">)</span>
                     <span class="n">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                        <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">: Provider &lt;</span><span class="si">{1}</span><span class="s1">&gt; ignored by config&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="s1">'</span><span class="si">{0}</span><span class="s1">: Provider &lt;</span><span class="si">{1}</span><span class="s1">&gt; ignored by config'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                             <span class="n">category</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span> <span class="n">option</span><span class="p">))</span>
                     <span class="k">continue</span>
             <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
                 <span class="k">pass</span>
 
             <span class="c1"># import module</span>
-            <span class="n">mod</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">__import__</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{2}</span><span class="s1">.</span><span class="si">{0}</span><span class="s1">.</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">mod</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">__import__</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'</span><span class="si">{2}</span><span class="s1">.</span><span class="si">{0}</span><span class="s1">.</span><span class="si">{1}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                 <span class="n">basemodule</span><span class="p">,</span> <span class="n">modulename</span><span class="p">,</span> <span class="n">base</span><span class="p">),</span>
                 <span class="nb">globals</span><span class="o">=</span><span class="nb">globals</span><span class="p">(),</span>
                 <span class="nb">locals</span><span class="o">=</span><span class="nb">locals</span><span class="p">(),</span>
@@ -443,9 +443,9 @@
             <span class="bp">cls</span> <span class="o">=</span> <span class="n">mod</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">classname</span><span class="p">)</span>
 
             <span class="c1"># ok !</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">: Provider: </span><span class="si">{1}{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'</span><span class="si">{0}</span><span class="s1">: Provider: </span><span class="si">{1}{2}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                 <span class="n">category</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span> <span class="n">option</span><span class="p">,</span>
-                <span class="s1">&#39;(</span><span class="si">{0}</span><span class="s1"> ignored)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">libs_ignored</span><span class="p">)</span> <span class="k">if</span> <span class="n">libs_ignored</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+                <span class="s1">'(</span><span class="si">{0}</span><span class="s1"> ignored)'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">libs_ignored</span><span class="p">)</span> <span class="k">if</span> <span class="n">libs_ignored</span> <span class="k">else</span> <span class="s1">''</span><span class="p">))</span>
             <span class="k">if</span> <span class="n">create_instance</span><span class="p">:</span>
                 <span class="bp">cls</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span>
             <span class="k">return</span> <span class="bp">cls</span>
@@ -453,37 +453,37 @@
         <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">errs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">option</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()[</span><span class="mi">2</span><span class="p">]))</span>
             <span class="n">libs_ignored</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">modulename</span><span class="p">)</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">: Ignored &lt;</span><span class="si">{1}</span><span class="s1">&gt; (import error)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">'</span><span class="si">{0}</span><span class="s1">: Ignored &lt;</span><span class="si">{1}</span><span class="s1">&gt; (import error)'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                 <span class="n">category</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span> <span class="n">option</span><span class="p">))</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">''</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
 
         <span class="k">except</span> <span class="n">CoreCriticalException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">errs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">option</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()[</span><span class="mi">2</span><span class="p">]))</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">: Unable to use </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">'</span><span class="si">{0}</span><span class="s1">: Unable to use </span><span class="si">{1}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                 <span class="n">category</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span> <span class="n">option</span><span class="p">))</span>
             <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">: The module raised an important error: </span><span class="si">{1!r}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="s1">'</span><span class="si">{0}</span><span class="s1">: The module raised an important error: </span><span class="si">{1!r}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                     <span class="n">category</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span> <span class="n">e</span><span class="o">.</span><span class="n">message</span><span class="p">))</span>
             <span class="k">raise</span>
 
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">errs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">option</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()[</span><span class="mi">2</span><span class="p">]))</span>
             <span class="n">libs_ignored</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">modulename</span><span class="p">)</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">: Unable to use </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">'</span><span class="si">{0}</span><span class="s1">: Unable to use </span><span class="si">{1}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                 <span class="n">category</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span> <span class="n">option</span><span class="p">))</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">''</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
 
-    <span class="n">err</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> - </span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="se">\n</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span>
-                   <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_tb</span><span class="p">(</span><span class="n">tb</span><span class="p">)))</span> <span class="k">for</span> <span class="n">opt</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">tb</span> <span class="ow">in</span> <span class="n">errs</span><span class="p">])</span>
+    <span class="n">err</span> <span class="o">=</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">'</span><span class="si">{}</span><span class="s1"> - </span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="se">\n</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span>
+                   <span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_tb</span><span class="p">(</span><span class="n">tb</span><span class="p">)))</span> <span class="k">for</span> <span class="n">opt</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">tb</span> <span class="ow">in</span> <span class="n">errs</span><span class="p">])</span>
     <span class="n">Logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span>
-        <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">: Unable to find any valuable </span><span class="si">{0}</span><span class="s1"> provider. Please enable &#39;</span>
-        <span class="s1">&#39;debug logging (e.g. add -d if running from the command line, or &#39;</span>
-        <span class="s1">&#39;change the log level in the config) and re-run your app to &#39;</span>
-        <span class="s1">&#39;identify potential causes</span><span class="se">\n</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">category</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span> <span class="n">err</span><span class="p">))</span>
+        <span class="s1">'</span><span class="si">{0}</span><span class="s1">: Unable to find any valuable </span><span class="si">{0}</span><span class="s1"> provider. Please enable '</span>
+        <span class="s1">'debug logging (e.g. add -d if running from the command line, or '</span>
+        <span class="s1">'change the log level in the config) and re-run your app to '</span>
+        <span class="s1">'identify potential causes</span><span class="se">\n</span><span class="si">{1}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">category</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span> <span class="n">err</span><span class="p">))</span>
 
 
-<span class="k">def</span> <span class="nf">core_register_libs</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">libs</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="s1">&#39;kivy.core&#39;</span><span class="p">):</span>
-    <span class="k">if</span> <span class="s1">&#39;KIVY_DOC&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">core_register_libs</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">libs</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="s1">'kivy.core'</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s1">'KIVY_DOC'</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
         <span class="k">return</span>
     <span class="n">category</span> <span class="o">=</span> <span class="n">category</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
     <span class="n">kivy_options</span> <span class="o">=</span> <span class="n">kivy</span><span class="o">.</span><span class="n">kivy_options</span><span class="p">[</span><span class="n">category</span><span class="p">]</span>
@@ -493,7 +493,7 @@
     <span class="k">for</span> <span class="n">option</span><span class="p">,</span> <span class="n">lib</span> <span class="ow">in</span> <span class="n">libs</span><span class="p">:</span>
         <span class="c1"># module activated in config ?</span>
         <span class="k">if</span> <span class="n">option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kivy_options</span><span class="p">:</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">: option &lt;</span><span class="si">{1}</span><span class="s1">&gt; ignored by config&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">'</span><span class="si">{0}</span><span class="s1">: option &lt;</span><span class="si">{1}</span><span class="s1">&gt; ignored by config'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                 <span class="n">category</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span> <span class="n">option</span><span class="p">))</span>
             <span class="n">libs_ignored</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lib</span><span class="p">)</span>
             <span class="k">continue</span>
@@ -507,7 +507,7 @@
                 <span class="n">lib</span> <span class="o">=</span> <span class="n">libs_loadable</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
             <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="n">importlib</span><span class="o">.</span><span class="n">__import__</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{2}</span><span class="s1">.</span><span class="si">{0}</span><span class="s1">.</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">lib</span><span class="p">,</span> <span class="n">base</span><span class="p">),</span>
+            <span class="n">importlib</span><span class="o">.</span><span class="n">__import__</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'</span><span class="si">{2}</span><span class="s1">.</span><span class="si">{0}</span><span class="s1">.</span><span class="si">{1}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">lib</span><span class="p">,</span> <span class="n">base</span><span class="p">),</span>
                        <span class="nb">globals</span><span class="o">=</span><span class="nb">globals</span><span class="p">(),</span>
                        <span class="nb">locals</span><span class="o">=</span><span class="nb">locals</span><span class="p">(),</span>
                        <span class="n">fromlist</span><span class="o">=</span><span class="p">[</span><span class="n">lib</span><span class="p">],</span>
@@ -516,113 +516,113 @@
             <span class="n">libs_loaded</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lib</span><span class="p">)</span>
 
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">: Unable to use &lt;</span><span class="si">{1}</span><span class="s1">&gt; as loader!&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">'</span><span class="si">{0}</span><span class="s1">: Unable to use &lt;</span><span class="si">{1}</span><span class="s1">&gt; as loader!'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                 <span class="n">category</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span> <span class="n">option</span><span class="p">))</span>
-            <span class="n">Logger</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">''</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="n">e</span><span class="p">)</span>
             <span class="n">libs_ignored</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lib</span><span class="p">)</span>
 
-    <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">: Providers: </span><span class="si">{1}</span><span class="s1"> </span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'</span><span class="si">{0}</span><span class="s1">: Providers: </span><span class="si">{1}</span><span class="s1"> </span><span class="si">{2}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
         <span class="n">category</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span>
-        <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">libs_loaded</span><span class="p">),</span>
-        <span class="s1">&#39;(</span><span class="si">{0}</span><span class="s1"> ignored)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">libs_ignored</span><span class="p">))</span> <span class="k">if</span> <span class="n">libs_ignored</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+        <span class="s1">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">libs_loaded</span><span class="p">),</span>
+        <span class="s1">'(</span><span class="si">{0}</span><span class="s1"> ignored)'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s1">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">libs_ignored</span><span class="p">))</span> <span class="k">if</span> <span class="n">libs_ignored</span> <span class="k">else</span> <span class="s1">''</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">libs_loaded</span>
 
 
-<span class="k">def</span> <span class="nf">handle_win_lib_import_error</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">provider</span><span class="p">,</span> <span class="n">mod_name</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">!=</span> <span class="s1">&#39;win32&#39;</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">handle_win_lib_import_error</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">provider</span><span class="p">,</span> <span class="n">mod_name</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">!=</span> <span class="s1">'win32'</span><span class="p">:</span>
         <span class="k">return</span>
 
-    <span class="k">assert</span> <span class="n">mod_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;kivy.&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">mod_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'kivy.'</span><span class="p">)</span>
     <span class="n">kivy_root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">kivy</span><span class="o">.</span><span class="vm">__file__</span><span class="p">)</span>
-    <span class="n">dirs</span> <span class="o">=</span> <span class="n">mod_name</span><span class="p">[</span><span class="mi">5</span><span class="p">:]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+    <span class="n">dirs</span> <span class="o">=</span> <span class="n">mod_name</span><span class="p">[</span><span class="mi">5</span><span class="p">:]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)</span>
     <span class="n">mod_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">kivy_root</span><span class="p">,</span> <span class="o">*</span><span class="n">dirs</span><span class="p">)</span>
 
     <span class="c1"># get the full expected path to the compiled pyd file</span>
     <span class="c1"># filename is &lt;debug&gt;.cp&lt;major&gt;&lt;minor&gt;-&lt;platform&gt;.pyd</span>
     <span class="c1"># https://github.com/python/cpython/blob/master/Doc/whatsnew/3.5.rst</span>
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s1">&#39;gettotalrefcount&#39;</span><span class="p">):</span>  <span class="c1"># debug</span>
-        <span class="n">mod_path</span> <span class="o">+=</span> <span class="s1">&#39;._d&#39;</span>
-    <span class="n">mod_path</span> <span class="o">+=</span> <span class="s1">&#39;.cp</span><span class="si">{}{}</span><span class="s1">-</span><span class="si">{}</span><span class="s1">.pyd&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s1">'gettotalrefcount'</span><span class="p">):</span>  <span class="c1"># debug</span>
+        <span class="n">mod_path</span> <span class="o">+=</span> <span class="s1">'._d'</span>
+    <span class="n">mod_path</span> <span class="o">+=</span> <span class="s1">'.cp</span><span class="si">{}{}</span><span class="s1">-</span><span class="si">{}</span><span class="s1">.pyd'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">minor</span><span class="p">,</span>
-        <span class="n">sysconfig</span><span class="o">.</span><span class="n">get_platform</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">))</span>
+        <span class="n">sysconfig</span><span class="o">.</span><span class="n">get_platform</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'-'</span><span class="p">,</span> <span class="s1">'_'</span><span class="p">))</span>
 
     <span class="c1"># does the compiled pyd exist at all?</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">mod_path</span><span class="p">):</span>
         <span class="n">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-            <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Failed trying to import &quot;</span><span class="si">{}</span><span class="s1">&quot; for provider </span><span class="si">{}</span><span class="s1">. Compiled file &#39;</span>
-            <span class="s1">&#39;does not exist. Have you perhaps forgotten to compile Kivy, or &#39;</span>
-            <span class="s1">&#39;did not install all required dependencies?&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s1">'</span><span class="si">{}</span><span class="s1">: Failed trying to import "</span><span class="si">{}</span><span class="s1">" for provider </span><span class="si">{}</span><span class="s1">. Compiled file '</span>
+            <span class="s1">'does not exist. Have you perhaps forgotten to compile Kivy, or '</span>
+            <span class="s1">'did not install all required dependencies?'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                 <span class="n">category</span><span class="p">,</span> <span class="n">provider</span><span class="p">,</span> <span class="n">mod_path</span><span class="p">))</span>
         <span class="k">return</span>
 
     <span class="c1"># tell user to provide dependency walker</span>
-    <span class="n">env_var</span> <span class="o">=</span> <span class="s1">&#39;KIVY_</span><span class="si">{}</span><span class="s1">_DEPENDENCY_WALKER&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">provider</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+    <span class="n">env_var</span> <span class="o">=</span> <span class="s1">'KIVY_</span><span class="si">{}</span><span class="s1">_DEPENDENCY_WALKER'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">provider</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
     <span class="k">if</span> <span class="n">env_var</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
         <span class="n">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-            <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">: Failed trying to import the &quot;</span><span class="si">{1}</span><span class="s1">&quot; provider from &quot;</span><span class="si">{2}</span><span class="s1">&quot;. &#39;</span>
-            <span class="s1">&#39;This error is often encountered when a dependency is missing,&#39;</span>
-            <span class="s1">&#39; or if there are multiple copies of the same dependency dll on &#39;</span>
-            <span class="s1">&#39;the Windows PATH and they are incompatible with each other. &#39;</span>
-            <span class="s1">&#39;This can occur if you are mixing installations (such as different&#39;</span>
-            <span class="s1">&#39; python installations, like anaconda python and a system python) &#39;</span>
-            <span class="s1">&#39;or if another unrelated program added its directory to the PATH. &#39;</span>
-            <span class="s1">&#39;Please examine your PATH and python installation for potential &#39;</span>
-            <span class="s1">&#39;issues. To further troubleshoot a &quot;DLL load failed&quot; error, &#39;</span>
-            <span class="s1">&#39;please download &#39;</span>
-            <span class="s1">&#39;&quot;Dependency Walker&quot; (64 or 32 bit version - matching your python &#39;</span>
-            <span class="s1">&#39;bitness) from dependencywalker.com and set the environment &#39;</span>
-            <span class="s1">&#39;variable </span><span class="si">{3}</span><span class="s1"> to the full path of the downloaded depends.exe file &#39;</span>
-            <span class="s1">&#39;and rerun your application to generate an error report&#39;</span><span class="o">.</span>
+            <span class="s1">'</span><span class="si">{0}</span><span class="s1">: Failed trying to import the "</span><span class="si">{1}</span><span class="s1">" provider from "</span><span class="si">{2}</span><span class="s1">". '</span>
+            <span class="s1">'This error is often encountered when a dependency is missing,'</span>
+            <span class="s1">' or if there are multiple copies of the same dependency dll on '</span>
+            <span class="s1">'the Windows PATH and they are incompatible with each other. '</span>
+            <span class="s1">'This can occur if you are mixing installations (such as different'</span>
+            <span class="s1">' python installations, like anaconda python and a system python) '</span>
+            <span class="s1">'or if another unrelated program added its directory to the PATH. '</span>
+            <span class="s1">'Please examine your PATH and python installation for potential '</span>
+            <span class="s1">'issues. To further troubleshoot a "DLL load failed" error, '</span>
+            <span class="s1">'please download '</span>
+            <span class="s1">'"Dependency Walker" (64 or 32 bit version - matching your python '</span>
+            <span class="s1">'bitness) from dependencywalker.com and set the environment '</span>
+            <span class="s1">'variable </span><span class="si">{3}</span><span class="s1"> to the full path of the downloaded depends.exe file '</span>
+            <span class="s1">'and rerun your application to generate an error report'</span><span class="o">.</span>
             <span class="nb">format</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">provider</span><span class="p">,</span> <span class="n">mod_path</span><span class="p">,</span> <span class="n">env_var</span><span class="p">))</span>
         <span class="k">return</span>
 
     <span class="n">depends_bin</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="n">env_var</span><span class="p">]</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">depends_bin</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;&quot;</span><span class="si">{}</span><span class="s1">&quot; provided in </span><span class="si">{}</span><span class="s1"> does not exist&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'"</span><span class="si">{}</span><span class="s1">" provided in </span><span class="si">{}</span><span class="s1"> does not exist'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">depends_bin</span><span class="p">,</span> <span class="n">env_var</span><span class="p">))</span>
 
     <span class="c1"># make file for the resultant log</span>
     <span class="n">fd</span><span class="p">,</span> <span class="n">temp_file</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkstemp</span><span class="p">(</span>
-        <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.dwi&#39;</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;kivy_depends_</span><span class="si">{}</span><span class="s1">_log_&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">provider</span><span class="p">),</span>
-        <span class="nb">dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~/&#39;</span><span class="p">))</span>
+        <span class="n">suffix</span><span class="o">=</span><span class="s1">'.dwi'</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">'kivy_depends_</span><span class="si">{}</span><span class="s1">_log_'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">provider</span><span class="p">),</span>
+        <span class="nb">dir</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">'~/'</span><span class="p">))</span>
     <span class="n">os</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
 
     <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-        <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Running dependency walker &quot;</span><span class="si">{}</span><span class="s1">&quot; on &quot;</span><span class="si">{}</span><span class="s1">&quot; to generate &#39;</span>
-        <span class="s1">&#39;troubleshooting log. Please wait for it to complete&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="s1">'</span><span class="si">{}</span><span class="s1">: Running dependency walker "</span><span class="si">{}</span><span class="s1">" on "</span><span class="si">{}</span><span class="s1">" to generate '</span>
+        <span class="s1">'troubleshooting log. Please wait for it to complete'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">category</span><span class="p">,</span> <span class="n">depends_bin</span><span class="p">,</span> <span class="n">mod_path</span><span class="p">))</span>
     <span class="n">Logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-        <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Dependency walker command is &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="s1">'</span><span class="si">{}</span><span class="s1">: Dependency walker command is "</span><span class="si">{}</span><span class="s1">"'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">category</span><span class="p">,</span>
-            <span class="p">[</span><span class="n">depends_bin</span><span class="p">,</span> <span class="s1">&#39;/c&#39;</span><span class="p">,</span> <span class="s1">&#39;/od:</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">temp_file</span><span class="p">),</span> <span class="n">mod_path</span><span class="p">]))</span>
+            <span class="p">[</span><span class="n">depends_bin</span><span class="p">,</span> <span class="s1">'/c'</span><span class="p">,</span> <span class="s1">'/od:</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">temp_file</span><span class="p">),</span> <span class="n">mod_path</span><span class="p">]))</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">([</span>
-            <span class="n">depends_bin</span><span class="p">,</span> <span class="s1">&#39;/c&#39;</span><span class="p">,</span> <span class="s1">&#39;/od:</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">temp_file</span><span class="p">),</span> <span class="n">mod_path</span><span class="p">])</span>
+            <span class="n">depends_bin</span><span class="p">,</span> <span class="s1">'/c'</span><span class="p">,</span> <span class="s1">'/od:</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">temp_file</span><span class="p">),</span> <span class="n">mod_path</span><span class="p">])</span>
     <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">exc</span><span class="o">.</span><span class="n">returncode</span> <span class="o">&gt;=</span> <span class="mh">0x00010000</span><span class="p">:</span>
             <span class="n">Logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: Dependency walker failed with error code &quot;</span><span class="si">{}</span><span class="s1">&quot;. No &#39;</span>
-                <span class="s1">&#39;error report was generated&#39;</span><span class="o">.</span>
+                <span class="s1">'</span><span class="si">{}</span><span class="s1">: Dependency walker failed with error code "</span><span class="si">{}</span><span class="s1">". No '</span>
+                <span class="s1">'error report was generated'</span><span class="o">.</span>
                 <span class="nb">format</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">exc</span><span class="o">.</span><span class="n">returncode</span><span class="p">))</span>
             <span class="k">return</span>
 
     <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-        <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: dependency walker generated &quot;</span><span class="si">{}</span><span class="s1">&quot; containing troubleshooting &#39;</span>
-        <span class="s1">&#39;information about provider </span><span class="si">{}</span><span class="s1"> and its failing file &quot;</span><span class="si">{}</span><span class="s1"> (</span><span class="si">{}</span><span class="s1">)&quot;. You &#39;</span>
-        <span class="s1">&#39;can open the file in dependency walker to view any potential issues &#39;</span>
-        <span class="s1">&#39;and troubleshoot it yourself. &#39;</span>
-        <span class="s1">&#39;To share the file with the Kivy developers and request support, &#39;</span>
-        <span class="s1">&#39;please contact us at our support channels &#39;</span>
-        <span class="s1">&#39;https://kivy.org/doc/master/contact.html (not on github, unless &#39;</span>
-        <span class="s1">&#39;it</span><span class="se">\&#39;</span><span class="s1">s truly a bug). Make sure to provide the generated file as well &#39;</span>
-        <span class="s1">&#39;as the *complete* Kivy log being printed here. Keep in mind the &#39;</span>
-        <span class="s1">&#39;generated dependency walker log file contains paths to dlls on your &#39;</span>
-        <span class="s1">&#39;system used by kivy or its dependencies to help troubleshoot them, &#39;</span>
-        <span class="s1">&#39;and these paths may include your name in them. Please view the &#39;</span>
-        <span class="s1">&#39;log file in dependency walker before sharing to ensure you are not &#39;</span>
-        <span class="s1">&#39;sharing sensitive paths&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="s1">'</span><span class="si">{}</span><span class="s1">: dependency walker generated "</span><span class="si">{}</span><span class="s1">" containing troubleshooting '</span>
+        <span class="s1">'information about provider </span><span class="si">{}</span><span class="s1"> and its failing file "</span><span class="si">{}</span><span class="s1"> (</span><span class="si">{}</span><span class="s1">)". You '</span>
+        <span class="s1">'can open the file in dependency walker to view any potential issues '</span>
+        <span class="s1">'and troubleshoot it yourself. '</span>
+        <span class="s1">'To share the file with the Kivy developers and request support, '</span>
+        <span class="s1">'please contact us at our support channels '</span>
+        <span class="s1">'https://kivy.org/doc/master/contact.html (not on github, unless '</span>
+        <span class="s1">'it</span><span class="se">\'</span><span class="s1">s truly a bug). Make sure to provide the generated file as well '</span>
+        <span class="s1">'as the *complete* Kivy log being printed here. Keep in mind the '</span>
+        <span class="s1">'generated dependency walker log file contains paths to dlls on your '</span>
+        <span class="s1">'system used by kivy or its dependencies to help troubleshoot them, '</span>
+        <span class="s1">'and these paths may include your name in them. Please view the '</span>
+        <span class="s1">'log file in dependency walker before sharing to ensure you are not '</span>
+        <span class="s1">'sharing sensitive paths'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">category</span><span class="p">,</span> <span class="n">temp_file</span><span class="p">,</span> <span class="n">provider</span><span class="p">,</span> <span class="n">mod_name</span><span class="p">,</span> <span class="n">mod_path</span><span class="p">))</span>
 </pre></div>
 
@@ -662,7 +662,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010-2024, Kivy Team and other contributors.
-      Last updated on Dec 26, 2024.
+      Last updated on Nov 08, 2026.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

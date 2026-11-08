@@ -8,7 +8,7 @@
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
     
-    <title>kivy.tools.packaging.pyinstaller_hooks &mdash; Kivy 2.3.1 documentation</title>
+    <title>kivy.tools.packaging.pyinstaller_hooks &mdash; Kivy 2.3.2 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" /> 
       <link rel="stylesheet" href="../../../../_static/fresh.css" type="text/css" />
@@ -35,7 +35,7 @@
         <script type="text/javascript" src="../../../../_static/kivy.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
-    <link rel="top" title="Kivy 2.3.1 documentation" href="../../../../index.html" />
+    <link rel="top" title="Kivy 2.3.2 documentation" href="../../../../index.html" />
     <link rel="up" title="kivy" href="../../../kivy.html" /> 
   </head>
   <body>
@@ -377,7 +377,7 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.tools.packaging.pyinstaller_hooks</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">Pyinstaller hooks</span>
 <span class="sd">=================</span>
 
@@ -410,13 +410,13 @@
 <span class="sd">-------------</span>
 
 <span class="sd">When a module is imported indirectly, e.g. with ``__import__``, pyinstaller</span>
-<span class="sd">won&#39;t know about it and the module has to be added through ``hiddenimports``.</span>
+<span class="sd">won't know about it and the module has to be added through ``hiddenimports``.</span>
 
 <span class="sd">``hiddenimports`` and other hook variables can be specified within a hook as</span>
 <span class="sd">described above. Also, these variable can be passed to ``Analysis`` and their</span>
-<span class="sd">values are then appended to the hook&#39;s values for these variables.</span>
+<span class="sd">values are then appended to the hook's values for these variables.</span>
 
-<span class="sd">Most of kivy&#39;s core modules, e.g. video are imported indirectly and therefore</span>
+<span class="sd">Most of kivy's core modules, e.g. video are imported indirectly and therefore</span>
 <span class="sd">need to be added in hiddenimports. The default PyInstaller hook adds all the</span>
 <span class="sd">providers. To overwrite, a modified kivy-hook similar to the default hook, such</span>
 <span class="sd">as :func:`hookspath` that only imports the desired modules can be added. One</span>
@@ -435,76 +435,76 @@
 
 <span class="sd">``filename`` is the name and path of the hook file to create. If ``filename``</span>
 <span class="sd">is not provided the hook is printed to the terminal.</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">pkgutil</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">join</span>
-<span class="kn">import</span> <span class="nn">importlib</span>
-<span class="kn">import</span> <span class="nn">subprocess</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pkgutil</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">os.path</span><span class="w"> </span><span class="kn">import</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">join</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
 
-<span class="kn">import</span> <span class="nn">kivy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">kivy</span>
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">kivy</span> <span class="kn">import</span> <span class="n">deps</span> <span class="k">as</span> <span class="n">old_deps</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">kivy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deps</span> <span class="k">as</span> <span class="n">old_deps</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="n">old_deps</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">kivy_deps</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">kivy_deps</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="n">kivy_deps</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="kn">from</span> <span class="nn">kivy.factory</span> <span class="kn">import</span> <span class="n">Factory</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.factory</span><span class="w"> </span><span class="kn">import</span> <span class="n">Factory</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="c1"># Pyinstaller &gt;= 6</span>
-    <span class="kn">from</span> <span class="nn">PyInstaller.depend.bindepend</span> <span class="kn">import</span> <span class="n">get_imports</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">PyInstaller.depend.bindepend</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_imports</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="c1"># Pyinstaller &lt; 6</span>
-    <span class="kn">from</span> <span class="nn">PyInstaller.depend.bindepend</span> <span class="kn">import</span> <span class="n">selectImports</span> <span class="k">as</span> <span class="n">get_imports</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">PyInstaller.depend.bindepend</span><span class="w"> </span><span class="kn">import</span> <span class="n">selectImports</span> <span class="k">as</span> <span class="n">get_imports</span>
 
-<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">environ</span>
-<span class="k">if</span> <span class="s1">&#39;KIVY_DOC&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">environ</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">PyInstaller.utils.hooks</span> <span class="kn">import</span> <span class="n">collect_submodules</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">os</span><span class="w"> </span><span class="kn">import</span> <span class="n">environ</span>
+<span class="k">if</span> <span class="s1">'KIVY_DOC'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">environ</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">PyInstaller.utils.hooks</span><span class="w"> </span><span class="kn">import</span> <span class="n">collect_submodules</span>
 
     <span class="n">curdir</span> <span class="o">=</span> <span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
 
     <span class="n">kivy_modules</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;xml.etree.cElementTree&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;kivy.core.gl&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;kivy.weakmethod&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;kivy.core.window.window_info&#39;</span><span class="p">,</span>
-    <span class="p">]</span> <span class="o">+</span> <span class="n">collect_submodules</span><span class="p">(</span><span class="s1">&#39;kivy.graphics&#39;</span><span class="p">)</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;List of kivy modules that are always needed as hiddenimports of</span>
+        <span class="s1">'xml.etree.cElementTree'</span><span class="p">,</span>
+        <span class="s1">'kivy.core.gl'</span><span class="p">,</span>
+        <span class="s1">'kivy.weakmethod'</span><span class="p">,</span>
+        <span class="s1">'kivy.core.window.window_info'</span><span class="p">,</span>
+    <span class="p">]</span> <span class="o">+</span> <span class="n">collect_submodules</span><span class="p">(</span><span class="s1">'kivy.graphics'</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">'''List of kivy modules that are always needed as hiddenimports of</span>
 <span class="sd">    pyinstaller.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
-    <span class="n">excludedimports</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;tkinter&#39;</span><span class="p">,</span> <span class="s1">&#39;_tkinter&#39;</span><span class="p">,</span> <span class="s1">&#39;twisted&#39;</span><span class="p">]</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;List of excludedimports that should always be excluded from</span>
+    <span class="n">excludedimports</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'tkinter'</span><span class="p">,</span> <span class="s1">'_tkinter'</span><span class="p">,</span> <span class="s1">'twisted'</span><span class="p">]</span>
+<span class="w">    </span><span class="sd">'''List of excludedimports that should always be excluded from</span>
 <span class="sd">    pyinstaller.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
 
     <span class="n">datas</span> <span class="o">=</span> <span class="p">[</span>
         <span class="p">(</span><span class="n">kivy</span><span class="o">.</span><span class="n">kivy_data_dir</span><span class="p">,</span>
-         <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;kivy_install&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">kivy</span><span class="o">.</span><span class="n">kivy_data_dir</span><span class="p">))),</span>
+         <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">'kivy_install'</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">kivy</span><span class="o">.</span><span class="n">kivy_data_dir</span><span class="p">))),</span>
         <span class="p">(</span><span class="n">kivy</span><span class="o">.</span><span class="n">kivy_modules_dir</span><span class="p">,</span>
-         <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;kivy_install&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">kivy</span><span class="o">.</span><span class="n">kivy_modules_dir</span><span class="p">)))</span>
+         <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">'kivy_install'</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">kivy</span><span class="o">.</span><span class="n">kivy_modules_dir</span><span class="p">)))</span>
     <span class="p">]</span>
-<span class="sd">&#39;&#39;&#39;List of data to be included by pyinstaller.</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''List of data to be included by pyinstaller.</span>
+<span class="sd">'''</span>
 
 
-<div class="viewcode-block" id="runtime_hooks"><a class="viewcode-back" href="../../../../api-kivy.tools.packaging.pyinstaller_hooks.html#kivy.tools.packaging.pyinstaller_hooks.runtime_hooks">[docs]</a><span class="k">def</span> <span class="nf">runtime_hooks</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns a list with the runtime hooks for kivy. It can be used with</span>
+<div class="viewcode-block" id="runtime_hooks"><a class="viewcode-back" href="../../../../api-kivy.tools.packaging.pyinstaller_hooks.html#kivy.tools.packaging.pyinstaller_hooks.runtime_hooks">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">runtime_hooks</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">'''Returns a list with the runtime hooks for kivy. It can be used with</span>
 <span class="sd">    ``runtime_hooks=runtime_hooks()`` in the spec file. Pyinstaller comes</span>
 <span class="sd">    preinstalled with this hook.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">join</span><span class="p">(</span><span class="n">curdir</span><span class="p">,</span> <span class="s1">&#39;pyi_rth_kivy.py&#39;</span><span class="p">)]</span></div>
+<span class="sd">    '''</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">join</span><span class="p">(</span><span class="n">curdir</span><span class="p">,</span> <span class="s1">'pyi_rth_kivy.py'</span><span class="p">)]</span></div>
 
 
-<div class="viewcode-block" id="hookspath"><a class="viewcode-back" href="../../../../api-kivy.tools.packaging.pyinstaller_hooks.html#kivy.tools.packaging.pyinstaller_hooks.hookspath">[docs]</a><span class="k">def</span> <span class="nf">hookspath</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns a list with the directory that contains the alternate (not</span>
+<div class="viewcode-block" id="hookspath"><a class="viewcode-back" href="../../../../api-kivy.tools.packaging.pyinstaller_hooks.html#kivy.tools.packaging.pyinstaller_hooks.hookspath">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">hookspath</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">'''Returns a list with the directory that contains the alternate (not</span>
 <span class="sd">    the default included with pyinstaller) pyinstaller hook for kivy,</span>
 <span class="sd">    ``kivy/tools/packaging/pyinstaller_hooks/kivy-hook.py``. It is</span>
 <span class="sd">    typically used with ``hookspath=hookspath()`` in the spec</span>
@@ -515,19 +515,19 @@
 <span class="sd">    alternate hook only included the essential modules and leaves the core</span>
 <span class="sd">    providers to be included additionally with :func:`get_deps_minimal`</span>
 <span class="sd">    or :func:`get_deps_all`.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">curdir</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="get_hooks"><a class="viewcode-back" href="../../../../api-kivy.tools.packaging.pyinstaller_hooks.html#kivy.tools.packaging.pyinstaller_hooks.get_hooks">[docs]</a><span class="k">def</span> <span class="nf">get_hooks</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns the dict for the spec ``hookspath`` and ``runtime_hooks``</span>
+<div class="viewcode-block" id="get_hooks"><a class="viewcode-back" href="../../../../api-kivy.tools.packaging.pyinstaller_hooks.html#kivy.tools.packaging.pyinstaller_hooks.get_hooks">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_hooks</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">'''Returns the dict for the spec ``hookspath`` and ``runtime_hooks``</span>
 <span class="sd">    values.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;hookspath&#39;</span><span class="p">:</span> <span class="n">hookspath</span><span class="p">(),</span> <span class="s1">&#39;runtime_hooks&#39;</span><span class="p">:</span> <span class="n">runtime_hooks</span><span class="p">()}</span></div>
+<span class="sd">    '''</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">'hookspath'</span><span class="p">:</span> <span class="n">hookspath</span><span class="p">(),</span> <span class="s1">'runtime_hooks'</span><span class="p">:</span> <span class="n">runtime_hooks</span><span class="p">()}</span></div>
 
 
-<div class="viewcode-block" id="get_deps_minimal"><a class="viewcode-back" href="../../../../api-kivy.tools.packaging.pyinstaller_hooks.html#kivy.tools.packaging.pyinstaller_hooks.get_deps_minimal">[docs]</a><span class="k">def</span> <span class="nf">get_deps_minimal</span><span class="p">(</span><span class="n">exclude_ignored</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns Kivy hidden modules as well as excluded modules to be used</span>
+<div class="viewcode-block" id="get_deps_minimal"><a class="viewcode-back" href="../../../../api-kivy.tools.packaging.pyinstaller_hooks.html#kivy.tools.packaging.pyinstaller_hooks.get_deps_minimal">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_deps_minimal</span><span class="p">(</span><span class="n">exclude_ignored</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">'''Returns Kivy hidden modules as well as excluded modules to be used</span>
 <span class="sd">    with ``Analysis``.</span>
 
 <span class="sd">    The function takes core modules as keyword arguments and their value</span>
@@ -541,20 +541,20 @@
 <span class="sd">            loaded on this system are added to hidden imports. This is the</span>
 <span class="sd">            default if the keyword name is not specified.</span>
 <span class="sd">        ``None``: Exclude</span>
-<span class="sd">            Don&#39;t return this core module at all.</span>
+<span class="sd">            Don't return this core module at all.</span>
 <span class="sd">        ``A string or list of strings``: Providers to include</span>
 <span class="sd">            Each string is the name of a provider for this module to be</span>
 <span class="sd">            included.</span>
 
 <span class="sd">    For example, ``get_deps_minimal(video=None, window=True,</span>
-<span class="sd">    audio=[&#39;gstplayer&#39;, &#39;ffpyplayer&#39;], spelling=&#39;enchant&#39;)`` will exclude all</span>
+<span class="sd">    audio=['gstplayer', 'ffpyplayer'], spelling='enchant')`` will exclude all</span>
 <span class="sd">    the video providers, will include the gstreamer and ffpyplayer providers</span>
 <span class="sd">    for audio, will include the enchant provider for spelling, and will use the</span>
 <span class="sd">    current default provider for ``window``.</span>
 
 <span class="sd">    ``exclude_ignored``, if ``True`` (the default), if the value for a core</span>
 <span class="sd">    library is ``None``, then if ``exclude_ignored`` is True, not only will the</span>
-<span class="sd">    library not be included in the hiddenimports but it&#39;ll also added to the</span>
+<span class="sd">    library not be included in the hiddenimports but it'll also added to the</span>
 <span class="sd">    excluded imports to prevent it being included accidentally by pyinstaller.</span>
 
 <span class="sd">    :returns:</span>
@@ -564,7 +564,7 @@
 <span class="sd">        include/exclude. This can be passed directly to `Analysis`` with</span>
 <span class="sd">        e.g. ::</span>
 
-<span class="sd">            a = Analysis([&#39;..\\kivy\\examples\\demo\\touchtracer\\main.py&#39;],</span>
+<span class="sd">            a = Analysis(['..\\kivy\\examples\\demo\\touchtracer\\main.py'],</span>
 <span class="sd">                        ...</span>
 <span class="sd">                         hookspath=hookspath(),</span>
 <span class="sd">                         runtime_hooks=[],</span>
@@ -572,17 +572,17 @@
 <span class="sd">                         win_private_assemblies=False,</span>
 <span class="sd">                         cipher=block_cipher,</span>
 <span class="sd">                         **get_deps_minimal(video=None, audio=None))</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">core_mods</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;audio&#39;</span><span class="p">,</span> <span class="s1">&#39;camera&#39;</span><span class="p">,</span> <span class="s1">&#39;clipboard&#39;</span><span class="p">,</span> <span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="s1">&#39;spelling&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span>
-                 <span class="s1">&#39;video&#39;</span><span class="p">,</span> <span class="s1">&#39;window&#39;</span><span class="p">]</span>
+<span class="sd">    '''</span>
+    <span class="n">core_mods</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'audio'</span><span class="p">,</span> <span class="s1">'camera'</span><span class="p">,</span> <span class="s1">'clipboard'</span><span class="p">,</span> <span class="s1">'image'</span><span class="p">,</span> <span class="s1">'spelling'</span><span class="p">,</span> <span class="s1">'text'</span><span class="p">,</span>
+                 <span class="s1">'video'</span><span class="p">,</span> <span class="s1">'window'</span><span class="p">]</span>
     <span class="n">mods</span> <span class="o">=</span> <span class="n">kivy_modules</span><span class="p">[:]</span>
     <span class="n">excludes</span> <span class="o">=</span> <span class="n">excludedimports</span><span class="p">[:]</span>
 
     <span class="k">for</span> <span class="n">mod_name</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">mod_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">core_mods</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> not found in </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mod_name</span><span class="p">,</span> <span class="n">core_mods</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">'</span><span class="si">{}</span><span class="s1"> not found in </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mod_name</span><span class="p">,</span> <span class="n">core_mods</span><span class="p">))</span>
 
-        <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;kivy.core.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mod_name</span><span class="p">)</span>
+        <span class="n">full_name</span> <span class="o">=</span> <span class="s1">'kivy.core.</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mod_name</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">val</span><span class="p">:</span>
             <span class="n">core_mods</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">mod_name</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">exclude_ignored</span><span class="p">:</span>
@@ -596,44 +596,44 @@
         <span class="n">single_mod</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)):</span>
             <span class="n">single_mod</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="n">mods</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;kivy.core.</span><span class="si">{0}</span><span class="s1">.</span><span class="si">{0}</span><span class="s1">_</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mod_name</span><span class="p">,</span> <span class="n">val</span><span class="p">))</span>
+            <span class="n">mods</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'kivy.core.</span><span class="si">{0}</span><span class="s1">.</span><span class="si">{0}</span><span class="s1">_</span><span class="si">{1}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mod_name</span><span class="p">,</span> <span class="n">val</span><span class="p">))</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">single_mod</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">val</span><span class="p">:</span>
-                <span class="n">mods</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;kivy.core.</span><span class="si">{0}</span><span class="s1">.</span><span class="si">{0}</span><span class="s1">_</span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mod_name</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+                <span class="n">mods</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'kivy.core.</span><span class="si">{0}</span><span class="s1">.</span><span class="si">{0}</span><span class="s1">_</span><span class="si">{1}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mod_name</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
 
     <span class="k">for</span> <span class="n">mod_name</span> <span class="ow">in</span> <span class="n">core_mods</span><span class="p">:</span>  <span class="c1"># process remaining default modules</span>
-        <span class="n">full_name</span> <span class="o">=</span> <span class="s1">&#39;kivy.core.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mod_name</span><span class="p">)</span>
+        <span class="n">full_name</span> <span class="o">=</span> <span class="s1">'kivy.core.</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mod_name</span><span class="p">)</span>
         <span class="n">mods</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">full_name</span><span class="p">)</span>
         <span class="n">m</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">full_name</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">mod_name</span> <span class="o">==</span> <span class="s1">&#39;clipboard&#39;</span> <span class="ow">and</span> <span class="n">m</span><span class="o">.</span><span class="n">CutBuffer</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">mod_name</span> <span class="o">==</span> <span class="s1">'clipboard'</span> <span class="ow">and</span> <span class="n">m</span><span class="o">.</span><span class="n">CutBuffer</span><span class="p">:</span>
             <span class="n">mods</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">CutBuffer</span><span class="o">.</span><span class="vm">__module__</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">mod_name</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()):</span>  <span class="c1"># e.g. video -&gt; Video</span>
             <span class="n">val</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">mod_name</span><span class="o">.</span><span class="n">capitalize</span><span class="p">())</span>
             <span class="k">if</span> <span class="n">val</span><span class="p">:</span>
-                <span class="n">mods</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="s1">&#39;__module__&#39;</span><span class="p">))</span>
+                <span class="n">mods</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="s1">'__module__'</span><span class="p">))</span>
 
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="s1">&#39;libs_loaded&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">m</span><span class="o">.</span><span class="n">libs_loaded</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="s1">'libs_loaded'</span><span class="p">)</span> <span class="ow">and</span> <span class="n">m</span><span class="o">.</span><span class="n">libs_loaded</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">libs_loaded</span><span class="p">:</span>
-                <span class="n">mods</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;kivy.core.</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mod_name</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+                <span class="n">mods</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'kivy.core.</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mod_name</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
 
     <span class="n">mods</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">mods</span><span class="p">))</span>
 
     <span class="n">binaries</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="s1">&#39;gstplayer&#39;</span> <span class="ow">in</span> <span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mods</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="s1">'gstplayer'</span> <span class="ow">in</span> <span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mods</span><span class="p">):</span>
         <span class="n">binaries</span> <span class="o">=</span> <span class="n">_find_gst_binaries</span><span class="p">()</span>
     <span class="k">elif</span> <span class="n">exclude_ignored</span><span class="p">:</span>
-        <span class="n">excludes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;kivy.lib.gstplayer&#39;</span><span class="p">)</span>
+        <span class="n">excludes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'kivy.lib.gstplayer'</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="p">{</span>
-        <span class="s1">&#39;hiddenimports&#39;</span><span class="p">:</span> <span class="n">mods</span><span class="p">,</span>
-        <span class="s1">&#39;excludes&#39;</span><span class="p">:</span> <span class="n">excludes</span><span class="p">,</span>
-        <span class="s1">&#39;binaries&#39;</span><span class="p">:</span> <span class="n">binaries</span><span class="p">,</span>
+        <span class="s1">'hiddenimports'</span><span class="p">:</span> <span class="n">mods</span><span class="p">,</span>
+        <span class="s1">'excludes'</span><span class="p">:</span> <span class="n">excludes</span><span class="p">,</span>
+        <span class="s1">'binaries'</span><span class="p">:</span> <span class="n">binaries</span><span class="p">,</span>
     <span class="p">}</span></div>
 
 
-<div class="viewcode-block" id="get_deps_all"><a class="viewcode-back" href="../../../../api-kivy.tools.packaging.pyinstaller_hooks.html#kivy.tools.packaging.pyinstaller_hooks.get_deps_all">[docs]</a><span class="k">def</span> <span class="nf">get_deps_all</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Similar to :func:`get_deps_minimal`, but this returns all the</span>
+<div class="viewcode-block" id="get_deps_all"><a class="viewcode-back" href="../../../../api-kivy.tools.packaging.pyinstaller_hooks.html#kivy.tools.packaging.pyinstaller_hooks.get_deps_all">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_deps_all</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">'''Similar to :func:`get_deps_minimal`, but this returns all the</span>
 <span class="sd">    kivy modules that can indirectly imported. Which includes all</span>
 <span class="sd">    the possible kivy providers.</span>
 
@@ -648,29 +648,29 @@
 <span class="sd">        include/exclude. This can be passed directly to `Analysis`` with</span>
 <span class="sd">        e.g. ::</span>
 
-<span class="sd">            a = Analysis([&#39;..\\kivy\\examples\\demo\\touchtracer\\main.py&#39;],</span>
+<span class="sd">            a = Analysis(['..\\kivy\\examples\\demo\\touchtracer\\main.py'],</span>
 <span class="sd">                        ...</span>
 <span class="sd">                         **get_deps_all())</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
     <span class="k">return</span> <span class="p">{</span>
-        <span class="s1">&#39;binaries&#39;</span><span class="p">:</span> <span class="n">_find_gst_binaries</span><span class="p">(),</span>
-        <span class="s1">&#39;hiddenimports&#39;</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">kivy_modules</span> <span class="o">+</span>
-                                    <span class="n">collect_submodules</span><span class="p">(</span><span class="s1">&#39;kivy.core&#39;</span><span class="p">))),</span>
-        <span class="s1">&#39;excludes&#39;</span><span class="p">:</span> <span class="p">[]}</span></div>
+        <span class="s1">'binaries'</span><span class="p">:</span> <span class="n">_find_gst_binaries</span><span class="p">(),</span>
+        <span class="s1">'hiddenimports'</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">kivy_modules</span> <span class="o">+</span>
+                                    <span class="n">collect_submodules</span><span class="p">(</span><span class="s1">'kivy.core'</span><span class="p">))),</span>
+        <span class="s1">'excludes'</span><span class="p">:</span> <span class="p">[]}</span></div>
 
 
-<div class="viewcode-block" id="get_factory_modules"><a class="viewcode-back" href="../../../../api-kivy.tools.packaging.pyinstaller_hooks.html#kivy.tools.packaging.pyinstaller_hooks.get_factory_modules">[docs]</a><span class="k">def</span> <span class="nf">get_factory_modules</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns a list of all the modules registered in the kivy factory.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">mods</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;module&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">Factory</span><span class="o">.</span><span class="n">classes</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+<div class="viewcode-block" id="get_factory_modules"><a class="viewcode-back" href="../../../../api-kivy.tools.packaging.pyinstaller_hooks.html#kivy.tools.packaging.pyinstaller_hooks.get_factory_modules">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_factory_modules</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">'''Returns a list of all the modules registered in the kivy factory.</span>
+<span class="sd">    '''</span>
+    <span class="n">mods</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'module'</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">Factory</span><span class="o">.</span><span class="n">classes</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mods</span> <span class="k">if</span> <span class="n">m</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="add_dep_paths"><a class="viewcode-back" href="../../../../api-kivy.tools.packaging.pyinstaller_hooks.html#kivy.tools.packaging.pyinstaller_hooks.add_dep_paths">[docs]</a><span class="k">def</span> <span class="nf">add_dep_paths</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Should be called by the hook. It adds the paths with the binary</span>
+<div class="viewcode-block" id="add_dep_paths"><a class="viewcode-back" href="../../../../api-kivy.tools.packaging.pyinstaller_hooks.html#kivy.tools.packaging.pyinstaller_hooks.add_dep_paths">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">add_dep_paths</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">'''Should be called by the hook. It adds the paths with the binary</span>
 <span class="sd">    dependencies to the system path so that pyinstaller can find the binaries</span>
 <span class="sd">    during its crawling stage.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
     <span class="n">paths</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">if</span> <span class="n">old_deps</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">importer</span><span class="p">,</span> <span class="n">modname</span><span class="p">,</span> <span class="n">ispkg</span> <span class="ow">in</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">iter_modules</span><span class="p">(</span>
@@ -682,10 +682,10 @@
                 <span class="n">mod</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">module_from_spec</span><span class="p">(</span><span class="n">module_spec</span><span class="p">)</span>
                 <span class="n">module_spec</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">exec_module</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;deps: Error importing dependency: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">"deps: Error importing dependency: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
                 <span class="k">continue</span>
 
-            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="s1">&#39;dep_bins&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="s1">'dep_bins'</span><span class="p">):</span>
                 <span class="n">paths</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">mod</span><span class="o">.</span><span class="n">dep_bins</span><span class="p">)</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span>
 
@@ -701,32 +701,32 @@
             <span class="n">mod</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">module_from_spec</span><span class="p">(</span><span class="n">module_spec</span><span class="p">)</span>
             <span class="n">module_spec</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">exec_module</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;deps: Error importing dependency: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">"deps: Error importing dependency: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
             <span class="k">continue</span>
 
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="s1">&#39;dep_bins&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="s1">'dep_bins'</span><span class="p">):</span>
             <span class="n">paths</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">mod</span><span class="o">.</span><span class="n">dep_bins</span><span class="p">)</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">_find_gst_plugin_path</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns a list of directories to search for GStreamer plugins.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">if</span> <span class="s1">&#39;GST_PLUGIN_PATH&#39;</span> <span class="ow">in</span> <span class="n">environ</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_find_gst_plugin_path</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">'''Returns a list of directories to search for GStreamer plugins.</span>
+<span class="sd">    '''</span>
+    <span class="k">if</span> <span class="s1">'GST_PLUGIN_PATH'</span> <span class="ow">in</span> <span class="n">environ</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">[</span>
             <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
-            <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">environ</span><span class="p">[</span><span class="s1">&#39;GST_PLUGIN_PATH&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">pathsep</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">environ</span><span class="p">[</span><span class="s1">'GST_PLUGIN_PATH'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">pathsep</span><span class="p">)</span>
         <span class="p">]</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">p</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
-            <span class="p">[</span><span class="s1">&#39;gst-inspect-1.0&#39;</span><span class="p">,</span> <span class="s1">&#39;coreelements&#39;</span><span class="p">],</span>
+            <span class="p">[</span><span class="s1">'gst-inspect-1.0'</span><span class="p">,</span> <span class="s1">'coreelements'</span><span class="p">],</span>
             <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">universal_newlines</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">except</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">[]</span>
     <span class="p">(</span><span class="n">stdoutdata</span><span class="p">,</span> <span class="n">stderrdata</span><span class="p">)</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
 
-    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\s+(\S+libgstcoreelements\.\S+)&#39;</span><span class="p">,</span> <span class="n">stdoutdata</span><span class="p">)</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">'\s+(\S+libgstcoreelements\.\S+)'</span><span class="p">,</span> <span class="n">stdoutdata</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">match</span><span class="p">:</span>
         <span class="k">return</span> <span class="p">[]</span>
@@ -734,19 +734,19 @@
     <span class="k">return</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))]</span>
 
 
-<span class="k">def</span> <span class="nf">_find_gst_binaries</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns a list of GStreamer plugins and libraries to pass as the</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_find_gst_binaries</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">'''Returns a list of GStreamer plugins and libraries to pass as the</span>
 <span class="sd">    ``binaries`` argument of ``Analysis``.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    '''</span>
     <span class="n">gst_plugin_path</span> <span class="o">=</span> <span class="n">_find_gst_plugin_path</span><span class="p">()</span>
 
     <span class="n">plugin_filepaths</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">plugin_dir</span> <span class="ow">in</span> <span class="n">gst_plugin_path</span><span class="p">:</span>
         <span class="n">plugin_filepaths</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
-            <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">plugin_dir</span><span class="p">,</span> <span class="s1">&#39;libgst*&#39;</span><span class="p">)))</span>
+            <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">plugin_dir</span><span class="p">,</span> <span class="s1">'libgst*'</span><span class="p">)))</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">plugin_filepaths</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Could not find GStreamer plugins. &#39;</span> <span class="o">+</span>
-                     <span class="s1">&#39;Possible solution: set GST_PLUGIN_PATH&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">'Could not find GStreamer plugins. '</span> <span class="o">+</span>
+                     <span class="s1">'Possible solution: set GST_PLUGIN_PATH'</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">[]</span>
 
     <span class="n">lib_filepaths</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
@@ -754,8 +754,8 @@
         <span class="n">plugin_deps</span> <span class="o">=</span> <span class="n">get_imports</span><span class="p">(</span><span class="n">plugin_filepath</span><span class="p">)</span>
         <span class="n">lib_filepaths</span><span class="o">.</span><span class="n">update</span><span class="p">([</span><span class="n">path</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">plugin_deps</span><span class="p">])</span>
 
-    <span class="n">plugin_binaries</span> <span class="o">=</span> <span class="p">[(</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;gst-plugins&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">plugin_filepaths</span><span class="p">]</span>
-    <span class="n">lib_binaries</span> <span class="o">=</span> <span class="p">[(</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">lib_filepaths</span><span class="p">]</span>
+    <span class="n">plugin_binaries</span> <span class="o">=</span> <span class="p">[(</span><span class="n">f</span><span class="p">,</span> <span class="s1">'gst-plugins'</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">plugin_filepaths</span><span class="p">]</span>
+    <span class="n">lib_binaries</span> <span class="o">=</span> <span class="p">[(</span><span class="n">f</span><span class="p">,</span> <span class="s1">'.'</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">lib_filepaths</span><span class="p">]</span>
 
     <span class="k">return</span> <span class="n">plugin_binaries</span> <span class="o">+</span> <span class="n">lib_binaries</span>
 </pre></div>
@@ -796,7 +796,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010-2024, Kivy Team and other contributors.
-      Last updated on Dec 26, 2024.
+      Last updated on Nov 08, 2026.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

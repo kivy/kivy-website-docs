@@ -8,7 +8,7 @@
     <meta name="twitter:site" content="@kivyframework">
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
     
-    <title>kivy.factory &mdash; Kivy 2.3.1 documentation</title>
+    <title>kivy.factory &mdash; Kivy 2.3.2 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" /> 
       <link rel="stylesheet" href="../../_static/fresh.css" type="text/css" />
@@ -35,7 +35,7 @@
         <script type="text/javascript" src="../../_static/kivy.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="top" title="Kivy 2.3.1 documentation" href="../../index.html" />
+    <link rel="top" title="Kivy 2.3.2 documentation" href="../../index.html" />
     <link rel="up" title="kivy" href="../kivy.html" /> 
   </head>
   <body>
@@ -377,7 +377,7 @@
             <div class="toc"><h2>Table Of Contents</h2></div>
             
   <h1>Source code for kivy.factory</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span></span><span class="sd">'''</span>
 <span class="sd">Factory object</span>
 <span class="sd">==============</span>
 
@@ -391,8 +391,8 @@
 <span class="sd">Example for registering a class/module::</span>
 
 <span class="sd">    &gt;&gt;&gt; from kivy.factory import Factory</span>
-<span class="sd">    &gt;&gt;&gt; Factory.register(&#39;Widget&#39;, module=&#39;kivy.uix.widget&#39;)</span>
-<span class="sd">    &gt;&gt;&gt; Factory.register(&#39;Vector&#39;, module=&#39;kivy.vector&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; Factory.register('Widget', module='kivy.uix.widget')</span>
+<span class="sd">    &gt;&gt;&gt; Factory.register('Vector', module='kivy.vector')</span>
 
 <span class="sd">Example of using the Factory::</span>
 
@@ -403,64 +403,64 @@
 <span class="sd">Example using a class name::</span>
 
 <span class="sd">    &gt;&gt;&gt; from kivy.factory import Factory</span>
-<span class="sd">    &gt;&gt;&gt; Factory.register(&#39;MyWidget&#39;, cls=MyWidget)</span>
+<span class="sd">    &gt;&gt;&gt; Factory.register('MyWidget', cls=MyWidget)</span>
 
 <span class="sd">By default, the first classname you register via the factory is permanent.</span>
 <span class="sd">If you wish to change the registered class, you need to unregister the</span>
 <span class="sd">classname before you re-assign it::</span>
 
 <span class="sd">    &gt;&gt;&gt; from kivy.factory import Factory</span>
-<span class="sd">    &gt;&gt;&gt; Factory.register(&#39;MyWidget&#39;, cls=MyWidget)</span>
+<span class="sd">    &gt;&gt;&gt; Factory.register('MyWidget', cls=MyWidget)</span>
 <span class="sd">    &gt;&gt;&gt; widget = Factory.MyWidget()</span>
-<span class="sd">    &gt;&gt;&gt; Factory.unregister(&#39;MyWidget&#39;)</span>
-<span class="sd">    &gt;&gt;&gt; Factory.register(&#39;MyWidget&#39;, cls=CustomWidget)</span>
+<span class="sd">    &gt;&gt;&gt; Factory.unregister('MyWidget')</span>
+<span class="sd">    &gt;&gt;&gt; Factory.register('MyWidget', cls=CustomWidget)</span>
 <span class="sd">    &gt;&gt;&gt; customWidget = Factory.MyWidget()</span>
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Factory&#39;</span><span class="p">,</span> <span class="s1">&#39;FactoryBase&#39;</span><span class="p">,</span> <span class="s1">&#39;FactoryException&#39;</span><span class="p">)</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'Factory'</span><span class="p">,</span> <span class="s1">'FactoryBase'</span><span class="p">,</span> <span class="s1">'FactoryException'</span><span class="p">)</span>
 
-<span class="kn">import</span> <span class="nn">copy</span>
-<span class="kn">import</span> <span class="nn">importlib</span>
-<span class="kn">from</span> <span class="nn">kivy.logger</span> <span class="kn">import</span> <span class="n">Logger</span>
-<span class="kn">from</span> <span class="nn">kivy.context</span> <span class="kn">import</span> <span class="n">register_context</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">Logger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.context</span><span class="w"> </span><span class="kn">import</span> <span class="n">register_context</span>
 
 
-<div class="viewcode-block" id="FactoryException"><a class="viewcode-back" href="../../api-kivy.factory.html#kivy.factory.FactoryException">[docs]</a><span class="k">class</span> <span class="nc">FactoryException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="FactoryException"><a class="viewcode-back" href="../../api-kivy.factory.html#kivy.factory.FactoryException">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">FactoryException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="k">pass</span></div>
 
 
-<span class="k">class</span> <span class="nc">FactoryBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">FactoryBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">FactoryBase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">classes</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">create_from</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">factory</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a instance of the class, and initializes to the state of</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_from</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">factory</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Creates a instance of the class, and initializes to the state of</span>
 <span class="sd">        ``factory``.</span>
 
 <span class="sd">        :param factory: The factory to initialize from.</span>
 <span class="sd">        :return: A new instance of this class.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">obj</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span>
         <span class="n">obj</span><span class="o">.</span><span class="n">classes</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">factory</span><span class="o">.</span><span class="n">classes</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">obj</span>
 
-    <span class="k">def</span> <span class="nf">is_template</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">classname</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Return True if the classname is a template from the</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_template</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">classname</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">'''Return True if the classname is a template from the</span>
 <span class="sd">        :class:`~kivy.lang.Builder`.</span>
 
 <span class="sd">        .. versionadded:: 1.0.5</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="n">classname</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">[</span><span class="n">classname</span><span class="p">][</span><span class="s1">&#39;is_template&#39;</span><span class="p">]</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">[</span><span class="n">classname</span><span class="p">][</span><span class="s1">'is_template'</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">classname</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">is_template</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">register</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">classname</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">is_template</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                  <span class="n">baseclasses</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">warn</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Register a new classname referring to a real class or</span>
+<span class="w">        </span><span class="sd">'''Register a new classname referring to a real class or</span>
 <span class="sd">        class definition in a module. Warn, if True will emit a warning message</span>
 <span class="sd">        when a class is re-declared.</span>
 
@@ -472,84 +472,84 @@
 
 <span class="sd">        .. versionchanged:: 1.0.5</span>
 <span class="sd">            :attr:`is_template` has been added in 1.0.5.</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">if</span> <span class="bp">cls</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">module</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">baseclasses</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s1">&#39;You must specify either cls= or module= or baseclasses =&#39;</span><span class="p">)</span>
+                <span class="s1">'You must specify either cls= or module= or baseclasses ='</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">classname</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">warn</span><span class="p">:</span>
                 <span class="n">info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">[</span><span class="n">classname</span><span class="p">]</span>
-                <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Factory: Ignored class &quot;</span><span class="si">{}</span><span class="s1">&quot; re-declaration. &#39;</span>
-                <span class="s1">&#39;Current -  module: </span><span class="si">{}</span><span class="s1">, cls: </span><span class="si">{}</span><span class="s1">, baseclass: </span><span class="si">{}</span><span class="s1">, filename: </span><span class="si">{}</span><span class="s1">. &#39;</span>
-                <span class="s1">&#39;Ignored -  module: </span><span class="si">{}</span><span class="s1">, cls: </span><span class="si">{}</span><span class="s1">, baseclass: </span><span class="si">{}</span><span class="s1">, filename: </span><span class="si">{}</span><span class="s1">.&#39;</span><span class="o">.</span>
-                <span class="nb">format</span><span class="p">(</span><span class="n">classname</span><span class="p">,</span> <span class="n">info</span><span class="p">[</span><span class="s1">&#39;module&#39;</span><span class="p">],</span> <span class="n">info</span><span class="p">[</span><span class="s1">&#39;cls&#39;</span><span class="p">],</span>
-                       <span class="n">info</span><span class="p">[</span><span class="s1">&#39;baseclasses&#39;</span><span class="p">],</span> <span class="n">info</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">],</span> <span class="n">module</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span>
+                <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">'Factory: Ignored class "</span><span class="si">{}</span><span class="s1">" re-declaration. '</span>
+                <span class="s1">'Current -  module: </span><span class="si">{}</span><span class="s1">, cls: </span><span class="si">{}</span><span class="s1">, baseclass: </span><span class="si">{}</span><span class="s1">, filename: </span><span class="si">{}</span><span class="s1">. '</span>
+                <span class="s1">'Ignored -  module: </span><span class="si">{}</span><span class="s1">, cls: </span><span class="si">{}</span><span class="s1">, baseclass: </span><span class="si">{}</span><span class="s1">, filename: </span><span class="si">{}</span><span class="s1">.'</span><span class="o">.</span>
+                <span class="nb">format</span><span class="p">(</span><span class="n">classname</span><span class="p">,</span> <span class="n">info</span><span class="p">[</span><span class="s1">'module'</span><span class="p">],</span> <span class="n">info</span><span class="p">[</span><span class="s1">'cls'</span><span class="p">],</span>
+                       <span class="n">info</span><span class="p">[</span><span class="s1">'baseclasses'</span><span class="p">],</span> <span class="n">info</span><span class="p">[</span><span class="s1">'filename'</span><span class="p">],</span> <span class="n">module</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span>
                        <span class="n">baseclasses</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">[</span><span class="n">classname</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;module&#39;</span><span class="p">:</span> <span class="n">module</span><span class="p">,</span>
-            <span class="s1">&#39;cls&#39;</span><span class="p">:</span> <span class="bp">cls</span><span class="p">,</span>
-            <span class="s1">&#39;is_template&#39;</span><span class="p">:</span> <span class="n">is_template</span><span class="p">,</span>
-            <span class="s1">&#39;baseclasses&#39;</span><span class="p">:</span> <span class="n">baseclasses</span><span class="p">,</span>
-            <span class="s1">&#39;filename&#39;</span><span class="p">:</span> <span class="n">filename</span><span class="p">}</span>
+            <span class="s1">'module'</span><span class="p">:</span> <span class="n">module</span><span class="p">,</span>
+            <span class="s1">'cls'</span><span class="p">:</span> <span class="bp">cls</span><span class="p">,</span>
+            <span class="s1">'is_template'</span><span class="p">:</span> <span class="n">is_template</span><span class="p">,</span>
+            <span class="s1">'baseclasses'</span><span class="p">:</span> <span class="n">baseclasses</span><span class="p">,</span>
+            <span class="s1">'filename'</span><span class="p">:</span> <span class="n">filename</span><span class="p">}</span>
 
-    <span class="k">def</span> <span class="nf">unregister</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">classnames</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Unregisters the classnames previously registered via the</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">unregister</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">classnames</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">'''Unregisters the classnames previously registered via the</span>
 <span class="sd">        register method. This allows the same classnames to be re-used in</span>
 <span class="sd">        different contexts.</span>
 
 <span class="sd">        .. versionadded:: 1.7.1</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="k">for</span> <span class="n">classname</span> <span class="ow">in</span> <span class="n">classnames</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">classname</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">classname</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">unregister_from_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&#39;&#39;&#39;Unregister all the factory objects related to the filename passed in</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">unregister_from_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">'''Unregister all the factory objects related to the filename passed in</span>
 <span class="sd">        the parameter.</span>
 
 <span class="sd">        .. versionadded:: 1.7.0</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+<span class="sd">        '''</span>
         <span class="n">to_remove</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span>
-                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="s1">&#39;filename&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">filename</span><span class="p">]</span>
+                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="s1">'filename'</span><span class="p">]</span> <span class="o">==</span> <span class="n">filename</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">to_remove</span><span class="p">:</span>
             <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="n">classes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
                 <span class="c1"># if trying to access attributes like checking for `bind`</span>
                 <span class="c1"># then raise AttributeError</span>
                 <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
-                    <span class="s1">&#39;First letter of class name &lt;</span><span class="si">%s</span><span class="s1">&gt; is in lowercase&#39;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="n">FactoryException</span><span class="p">(</span><span class="s1">&#39;Unknown class &lt;</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+                    <span class="s1">'First letter of class name &lt;</span><span class="si">%s</span><span class="s1">&gt; is in lowercase'</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">FactoryException</span><span class="p">(</span><span class="s1">'Unknown class &lt;</span><span class="si">%s</span><span class="s1">&gt;'</span> <span class="o">%</span> <span class="n">name</span><span class="p">)</span>
 
         <span class="n">item</span> <span class="o">=</span> <span class="n">classes</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
-        <span class="bp">cls</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;cls&#39;</span><span class="p">]</span>
+        <span class="bp">cls</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">'cls'</span><span class="p">]</span>
 
         <span class="c1"># No class to return, import the module</span>
         <span class="k">if</span> <span class="bp">cls</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;module&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="s1">'module'</span><span class="p">]:</span>
                 <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">__import__</span><span class="p">(</span>
-                    <span class="n">name</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;module&#39;</span><span class="p">],</span>
-                    <span class="n">fromlist</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">,</span>
+                    <span class="n">name</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="s1">'module'</span><span class="p">],</span>
+                    <span class="n">fromlist</span><span class="o">=</span><span class="s1">'*'</span><span class="p">,</span>
                     <span class="n">level</span><span class="o">=</span><span class="mi">0</span>  <span class="c1"># force absolute</span>
                 <span class="p">)</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
                     <span class="k">raise</span> <span class="n">FactoryException</span><span class="p">(</span>
-                        <span class="s1">&#39;No class named &lt;</span><span class="si">%s</span><span class="s1">&gt; in module &lt;</span><span class="si">%s</span><span class="s1">&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span>
-                            <span class="n">name</span><span class="p">,</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;module&#39;</span><span class="p">]))</span>
-                <span class="bp">cls</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;cls&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+                        <span class="s1">'No class named &lt;</span><span class="si">%s</span><span class="s1">&gt; in module &lt;</span><span class="si">%s</span><span class="s1">&gt;'</span> <span class="o">%</span> <span class="p">(</span>
+                            <span class="n">name</span><span class="p">,</span> <span class="n">item</span><span class="p">[</span><span class="s1">'module'</span><span class="p">]))</span>
+                <span class="bp">cls</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">'cls'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
 
-            <span class="k">elif</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;baseclasses&#39;</span><span class="p">]:</span>
+            <span class="k">elif</span> <span class="n">item</span><span class="p">[</span><span class="s1">'baseclasses'</span><span class="p">]:</span>
                 <span class="n">rootwidgets</span> <span class="o">=</span> <span class="p">[]</span>
-                <span class="k">for</span> <span class="n">basecls</span> <span class="ow">in</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;baseclasses&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;+&#39;</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">basecls</span> <span class="ow">in</span> <span class="n">item</span><span class="p">[</span><span class="s1">'baseclasses'</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'+'</span><span class="p">):</span>
                     <span class="n">rootwidgets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Factory</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">basecls</span><span class="p">))</span>
-                <span class="bp">cls</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;cls&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">rootwidgets</span><span class="p">),</span> <span class="p">{})</span>
+                <span class="bp">cls</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">'cls'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">rootwidgets</span><span class="p">),</span> <span class="p">{})</span>
 
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">FactoryException</span><span class="p">(</span><span class="s1">&#39;No information to create the class&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">FactoryException</span><span class="p">(</span><span class="s1">'No information to create the class'</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="bp">cls</span>
 
@@ -557,16 +557,16 @@
 
 
 <span class="c1">#: Factory instance to use for getting new classes</span>
-<span class="n">Factory</span><span class="p">:</span> <span class="n">FactoryBase</span> <span class="o">=</span> <span class="n">register_context</span><span class="p">(</span><span class="s1">&#39;Factory&#39;</span><span class="p">,</span> <span class="n">FactoryBase</span><span class="p">)</span>
+<span class="n">Factory</span><span class="p">:</span> <span class="n">FactoryBase</span> <span class="o">=</span> <span class="n">register_context</span><span class="p">(</span><span class="s1">'Factory'</span><span class="p">,</span> <span class="n">FactoryBase</span><span class="p">)</span>
 
 <span class="c1"># Now import the file with all registers</span>
 <span class="c1"># automatically generated by build_factory</span>
-<span class="kn">import</span> <span class="nn">kivy.factory_registers</span>  <span class="c1"># NOQA</span>
-<span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Factory: </span><span class="si">%d</span><span class="s1"> symbols loaded&#39;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">Factory</span><span class="o">.</span><span class="n">classes</span><span class="p">))</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">kivy.factory_registers</span>  <span class="c1"># NOQA</span>
+<span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Factory: </span><span class="si">%d</span><span class="s1"> symbols loaded'</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">Factory</span><span class="o">.</span><span class="n">classes</span><span class="p">))</span>
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">Factory</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;Vector&#39;</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="s1">&#39;kivy.vector&#39;</span><span class="p">)</span>
-    <span class="n">Factory</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">&#39;Widget&#39;</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="s1">&#39;kivy.uix.widget&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+    <span class="n">Factory</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">'Vector'</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="s1">'kivy.vector'</span><span class="p">)</span>
+    <span class="n">Factory</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s1">'Widget'</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="s1">'kivy.uix.widget'</span><span class="p">)</span>
 </pre></div>
 
             <div class="footerlinks">
@@ -605,7 +605,7 @@
     <!--
     <div class="footer">
       &copy; Copyright 2010-2024, Kivy Team and other contributors.
-      Last updated on Dec 26, 2024.
+      Last updated on Nov 08, 2026.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

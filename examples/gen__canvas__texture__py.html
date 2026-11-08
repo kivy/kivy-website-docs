@@ -9,7 +9,7 @@
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
     <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Texture Wrapping and Coordinates Example &mdash; Kivy 2.3.1 documentation</title>
+    <title>Texture Wrapping and Coordinates Example &mdash; Kivy 2.3.2 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> 
       <link rel="stylesheet" href="../_static/fresh.css" type="text/css" />
@@ -36,7 +36,7 @@
         <script type="text/javascript" src="../_static/kivy.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="Kivy 2.3.1 documentation" href="../index.html" />
+    <link rel="top" title="Kivy 2.3.2 documentation" href="../index.html" />
     <link rel="up" title="Gallery of Examples" href="index.html" />
     <link rel="next" title="Shuffled Camera Feed Puzzle" href="gen__demo__camera_puzzle__py.html" />
     <link rel="prev" title="Tesselate Demonstration" href="gen__canvas__tesselate__py.html" /> 
@@ -408,7 +408,7 @@ while the buttons change how the texture is rendered when more than one copy is
 in the rectangle (the texture_wrap).</p>
 <section id="file-canvas-texture-py">
 <span id="canvas-texture-py"></span><h2>File <strong>canvas/texture.py</strong><a class="headerlink" href="#file-canvas-texture-py" title="Permalink to this heading">¶</a></h2>
-<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&#39;&#39;&#39;</span>
+<div class="code highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">'''</span>
 <span class="sd">Texture Wrapping and Coordinates Example</span>
 <span class="sd">========================================</span>
 
@@ -422,39 +422,39 @@ in the rectangle (the texture_wrap).</p>
 <span class="sd">than one copy is in the rectangle (the</span>
 <span class="sd">texture_wrap).</span>
 
-<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">'''</span>
 
 
-<span class="kn">from</span> <span class="nn">kivy.uix.widget</span> <span class="kn">import</span> <span class="n">Widget</span>
-<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">ObjectProperty</span><span class="p">,</span> <span class="n">ListProperty</span><span class="p">,</span> <span class="n">StringProperty</span>
-<span class="kn">from</span> <span class="nn">kivy.lang</span> <span class="kn">import</span> <span class="n">Builder</span>
-<span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
-<span class="kn">from</span> <span class="nn">kivy.base</span> <span class="kn">import</span> <span class="n">runTouchApp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.widget</span><span class="w"> </span><span class="kn">import</span> <span class="n">Widget</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.properties</span><span class="w"> </span><span class="kn">import</span> <span class="n">ObjectProperty</span><span class="p">,</span> <span class="n">ListProperty</span><span class="p">,</span> <span class="n">StringProperty</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.lang</span><span class="w"> </span><span class="kn">import</span> <span class="n">Builder</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.clock</span><span class="w"> </span><span class="kn">import</span> <span class="n">Clock</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">runTouchApp</span>
 
 
-<span class="k">class</span> <span class="nc">TextureAccessibleWidget</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TextureAccessibleWidget</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
     <span class="n">texture</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">tex_coords</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-    <span class="n">texture_wrap</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">&#39;clamp_to_edge&#39;</span><span class="p">)</span>
+    <span class="n">texture_wrap</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">'clamp_to_edge'</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">TextureAccessibleWidget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">texture_init</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">texture_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">texture_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">texture</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">texture</span>
 
-    <span class="k">def</span> <span class="nf">on_texture_wrap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_texture_wrap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">texture</span><span class="o">.</span><span class="n">wrap</span> <span class="o">=</span> <span class="n">value</span>
 
 
-<span class="n">root</span> <span class="o">=</span> <span class="n">Builder</span><span class="o">.</span><span class="n">load_string</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">Builder</span><span class="o">.</span><span class="n">load_string</span><span class="p">(</span><span class="s1">'''</span>
 <span class="s1">&lt;TextureAccessibleWidget&gt;:</span>
 <span class="s1">    canvas:</span>
 <span class="s1">        Rectangle:</span>
 <span class="s1">            pos: self.pos</span>
 <span class="s1">            size: self.size</span>
-<span class="s1">            source: &#39;texture_example_image.png&#39;</span>
+<span class="s1">            source: 'texture_example_image.png'</span>
 <span class="s1">            tex_coords: root.tex_coords</span>
 
 <span class="s1">&lt;SliderWithValue@BoxLayout&gt;:</span>
@@ -473,10 +473,10 @@ in the rectangle (the texture_wrap).</p>
 <span class="s1">        text: str(slider.value)[:4]</span>
 
 <span class="s1">BoxLayout:</span>
-<span class="s1">    orientation: &#39;vertical&#39;</span>
+<span class="s1">    orientation: 'vertical'</span>
 <span class="s1">    BoxLayout:</span>
 <span class="s1">        SliderWithValue:</span>
-<span class="s1">            orientation: &#39;vertical&#39;</span>
+<span class="s1">            orientation: 'vertical'</span>
 <span class="s1">            size_hint_x: None</span>
 <span class="s1">            width: dp(40)</span>
 <span class="s1">            min: 0</span>
@@ -485,7 +485,7 @@ in the rectangle (the texture_wrap).</p>
 <span class="s1">            on_value: taw.tex_coords[5] = self.value</span>
 <span class="s1">            on_value: taw.tex_coords[7] = self.value</span>
 <span class="s1">        SliderWithValue:</span>
-<span class="s1">            orientation: &#39;vertical&#39;</span>
+<span class="s1">            orientation: 'vertical'</span>
 <span class="s1">            size_hint_x: None</span>
 <span class="s1">            width: dp(40)</span>
 <span class="s1">            min: 0</span>
@@ -494,8 +494,8 @@ in the rectangle (the texture_wrap).</p>
 <span class="s1">            on_value: taw.height = self.value</span>
 <span class="s1">        AnchorLayout:</span>
 <span class="s1">            id: taw_container</span>
-<span class="s1">            anchor_x: &#39;left&#39;</span>
-<span class="s1">            anchor_y: &#39;bottom&#39;</span>
+<span class="s1">            anchor_x: 'left'</span>
+<span class="s1">            anchor_y: 'bottom'</span>
 <span class="s1">            TextureAccessibleWidget:</span>
 <span class="s1">                id: taw</span>
 <span class="s1">                size_hint: None, None</span>
@@ -503,21 +503,21 @@ in the rectangle (the texture_wrap).</p>
 <span class="s1">        size_hint_y: None</span>
 <span class="s1">        height: dp(80)</span>
 <span class="s1">        BoxLayout:</span>
-<span class="s1">            orientation: &#39;vertical&#39;</span>
+<span class="s1">            orientation: 'vertical'</span>
 <span class="s1">            size_hint_x: None</span>
 <span class="s1">            width: dp(80)</span>
 <span class="s1">            Label:</span>
-<span class="s1">                text: &#39;size&#39;</span>
+<span class="s1">                text: 'size'</span>
 <span class="s1">                text_size: self.size</span>
-<span class="s1">                halign: &#39;right&#39;</span>
-<span class="s1">                valign: &#39;middle&#39;</span>
+<span class="s1">                halign: 'right'</span>
+<span class="s1">                valign: 'middle'</span>
 <span class="s1">            Label:</span>
-<span class="s1">                text: &#39;tex_coords&#39;</span>
+<span class="s1">                text: 'tex_coords'</span>
 <span class="s1">                text_size: self.size</span>
-<span class="s1">                halign: &#39;left&#39;</span>
-<span class="s1">                valign: &#39;middle&#39;</span>
+<span class="s1">                halign: 'left'</span>
+<span class="s1">                valign: 'middle'</span>
 <span class="s1">        BoxLayout:</span>
-<span class="s1">            orientation: &#39;vertical&#39;</span>
+<span class="s1">            orientation: 'vertical'</span>
 <span class="s1">            SliderWithValue:</span>
 <span class="s1">                min: 0</span>
 <span class="s1">                max: taw_container.width</span>
@@ -534,20 +534,20 @@ in the rectangle (the texture_wrap).</p>
 <span class="s1">        size_hint_y: None</span>
 <span class="s1">        height: dp(50)</span>
 <span class="s1">        Label:</span>
-<span class="s1">            text: &#39;texture wrap:&#39;</span>
+<span class="s1">            text: 'texture wrap:'</span>
 <span class="s1">            text_size: self.size</span>
-<span class="s1">            valign: &#39;middle&#39;</span>
-<span class="s1">            halign: &#39;center&#39;</span>
+<span class="s1">            valign: 'middle'</span>
+<span class="s1">            halign: 'center'</span>
 <span class="s1">        Button:</span>
-<span class="s1">            text: &#39;clamp_to_edge&#39;</span>
-<span class="s1">            on_press: taw.texture_wrap = &#39;clamp_to_edge&#39;</span>
+<span class="s1">            text: 'clamp_to_edge'</span>
+<span class="s1">            on_press: taw.texture_wrap = 'clamp_to_edge'</span>
 <span class="s1">        Button:</span>
-<span class="s1">            text: &#39;repeat&#39;</span>
-<span class="s1">            on_press: taw.texture_wrap = &#39;repeat&#39;</span>
+<span class="s1">            text: 'repeat'</span>
+<span class="s1">            on_press: taw.texture_wrap = 'repeat'</span>
 <span class="s1">        Button:</span>
-<span class="s1">            text: &#39;mirrored_repeat&#39;</span>
-<span class="s1">            on_press: taw.texture_wrap = &#39;mirrored_repeat&#39;</span>
-<span class="s1">&#39;&#39;&#39;</span><span class="p">)</span>
+<span class="s1">            text: 'mirrored_repeat'</span>
+<span class="s1">            on_press: taw.texture_wrap = 'mirrored_repeat'</span>
+<span class="s1">'''</span><span class="p">)</span>
 
 
 <span class="n">runTouchApp</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
@@ -607,7 +607,7 @@ in the rectangle (the texture_wrap).</p>
     <!--
     <div class="footer">
       &copy; Copyright 2010-2024, Kivy Team and other contributors.
-      Last updated on Dec 26, 2024.
+      Last updated on Nov 08, 2026.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->

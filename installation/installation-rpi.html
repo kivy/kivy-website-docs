@@ -9,7 +9,7 @@
     <meta name="color-scheme" content="dark light"> <!--tells web browser about which themes are supported -->
     <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Installation on Raspberry Pi &mdash; Kivy 2.3.1 documentation</title>
+    <title>Installation on Raspberry Pi &mdash; Kivy 2.3.2 documentation</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" /> 
       <link rel="stylesheet" href="../_static/fresh.css" type="text/css" />
@@ -36,7 +36,7 @@
         <script type="text/javascript" src="../_static/kivy.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="Kivy 2.3.1 documentation" href="../index.html" /> 
+    <link rel="top" title="Kivy 2.3.2 documentation" href="../index.html" /> 
   </head>
   <body>
 
@@ -478,10 +478,10 @@ before continuing.</p>
 
 <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">xorg</span> <span class="n">wget</span> <span class="n">libxrender</span><span class="o">-</span><span class="n">dev</span> <span class="n">lsb</span><span class="o">-</span><span class="n">release</span> <span class="n">libraspberrypi</span><span class="o">-</span><span class="n">dev</span> <span class="n">raspberrypi</span><span class="o">-</span><span class="n">kernel</span><span class="o">-</span><span class="n">headers</span>
 
-<span class="c1"># If we&#39;re on Debian buster, we need to install cmake from backports as the cmake version</span>
+<span class="c1"># If we're on Debian buster, we need to install cmake from backports as the cmake version</span>
 <span class="c1"># in buster is too old to build sdl2</span>
-<span class="k">if</span> <span class="p">[</span> <span class="s2">&quot;$(lsb_release -cs)&quot;</span> <span class="o">=</span> <span class="s2">&quot;buster&quot;</span> <span class="p">];</span> <span class="n">then</span> \
-    <span class="n">echo</span> <span class="s2">&quot;deb http://deb.debian.org/debian buster-backports main&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="o">.</span><span class="n">list</span><span class="p">;</span> \
+<span class="k">if</span> <span class="p">[</span> <span class="s2">"$(lsb_release -cs)"</span> <span class="o">=</span> <span class="s2">"buster"</span> <span class="p">];</span> <span class="n">then</span> \
+    <span class="n">echo</span> <span class="s2">"deb http://deb.debian.org/debian buster-backports main"</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">sources</span><span class="o">.</span><span class="n">list</span><span class="p">;</span> \
     <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span><span class="p">;</span> \
     <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="o">-</span><span class="n">t</span> <span class="n">buster</span><span class="o">-</span><span class="n">backports</span> <span class="n">cmake</span><span class="p">;</span> \
 <span class="n">fi</span>
@@ -525,17 +525,17 @@ GL context using the KMS/DRM API.</p>
 <section id="hardware-acceleration">
 <h2>Hardware acceleration<a class="headerlink" href="#hardware-acceleration" title="Permalink to this heading">¶</a></h2>
 <p>If you are getting output similar to this when running your app:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">INFO</span>   <span class="p">]</span> <span class="n">GL</span><span class="p">:</span> <span class="n">OpenGL</span> <span class="n">vendor</span> <span class="o">&lt;</span><span class="sa">b</span><span class="s1">&#39;VMware, Inc.&#39;</span><span class="o">&gt;</span>
-<span class="p">[</span><span class="n">INFO</span>   <span class="p">]</span> <span class="n">GL</span><span class="p">:</span> <span class="n">OpenGL</span> <span class="n">renderer</span> <span class="o">&lt;</span><span class="sa">b</span><span class="s1">&#39;llvmpipe (LLVM 9.0.1, 128 bits)&#39;</span><span class="o">&gt;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">INFO</span>   <span class="p">]</span> <span class="n">GL</span><span class="p">:</span> <span class="n">OpenGL</span> <span class="n">vendor</span> <span class="o">&lt;</span><span class="sa">b</span><span class="s1">'VMware, Inc.'</span><span class="o">&gt;</span>
+<span class="p">[</span><span class="n">INFO</span>   <span class="p">]</span> <span class="n">GL</span><span class="p">:</span> <span class="n">OpenGL</span> <span class="n">renderer</span> <span class="o">&lt;</span><span class="sa">b</span><span class="s1">'llvmpipe (LLVM 9.0.1, 128 bits)'</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>Then it means that the renderer is <strong>NOT</strong> hardware accelerated. This can be fixed by adding your user to the render group:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">adduser</span> <span class="s2">&quot;$USER&quot;</span> <span class="n">render</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">adduser</span> <span class="s2">"$USER"</span> <span class="n">render</span>
 </pre></div>
 </div>
 <p>You will then see an output similar to this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">INFO</span>   <span class="p">]</span> <span class="n">GL</span><span class="p">:</span> <span class="n">OpenGL</span> <span class="n">vendor</span> <span class="o">&lt;</span><span class="sa">b</span><span class="s1">&#39;Broadcom&#39;</span><span class="o">&gt;</span>
-<span class="p">[</span><span class="n">INFO</span>   <span class="p">]</span> <span class="n">GL</span><span class="p">:</span> <span class="n">OpenGL</span> <span class="n">renderer</span> <span class="o">&lt;</span><span class="sa">b</span><span class="s1">&#39;V3D 4.2&#39;</span><span class="o">&gt;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">INFO</span>   <span class="p">]</span> <span class="n">GL</span><span class="p">:</span> <span class="n">OpenGL</span> <span class="n">vendor</span> <span class="o">&lt;</span><span class="sa">b</span><span class="s1">'Broadcom'</span><span class="o">&gt;</span>
+<span class="p">[</span><span class="n">INFO</span>   <span class="p">]</span> <span class="n">GL</span><span class="p">:</span> <span class="n">OpenGL</span> <span class="n">renderer</span> <span class="o">&lt;</span><span class="sa">b</span><span class="s1">'V3D 4.2'</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 </section>
@@ -642,7 +642,7 @@ configure Kivy to use it as an input source. To do this, edit the file
     <!--
     <div class="footer">
       &copy; Copyright 2010-2024, Kivy Team and other contributors.
-      Last updated on Dec 26, 2024.
+      Last updated on Nov 08, 2026.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 6.2.1.
 </div>
 -->
