@@ -465,7 +465,9 @@
         <span class="c1"># logarithmically, as you pull further, creating natural</span>
         <span class="c1"># rubber band behavior.</span>
         <span class="c1"># Formula from WebKit: (1.0 - (1.0 / ((x * coeff / dim) + 1.0))) * dim</span>
-        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">overscroll</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.001</span><span class="p">:</span>
+        <span class="c1"># Safety net: return 0 when the dimension is unknown (None) or not</span>
+        <span class="c1"># positive instead of raising or dividing by zero.</span>
+        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">overscroll</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.001</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">dimension</span> <span class="ow">or</span> <span class="n">dimension</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">0</span>
 
         <span class="n">sign</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">overscroll</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
@@ -481,16 +483,17 @@
         <span class="c1"># Detects whether this effect is used for X or Y scrolling by checking</span>
         <span class="c1"># which effect instance (effect_x or effect_y) this is in the parent</span>
         <span class="c1"># ScrollView.</span>
-        <span class="c1"># Returns the appropriate dimension.</span>
-        <span class="n">target_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_widget</span>
-        <span class="n">sv</span> <span class="o">=</span> <span class="n">target_widget</span><span class="o">.</span><span class="n">parent</span>
+        <span class="c1"># Returns the size of the visible area, i.e. the ScrollView itself.</span>
+        <span class="c1"># target_widget is the ScrollView's content widget (its _viewport),</span>
+        <span class="c1"># whose size can be 0 (e.g. an empty RecycleView).</span>
+        <span class="n">sv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_widget</span><span class="o">.</span><span class="n">parent</span>
 
         <span class="k">if</span> <span class="n">sv</span><span class="o">.</span><span class="n">effect_x</span> <span class="ow">is</span> <span class="bp">self</span><span class="p">:</span>
             <span class="c1"># This is the X effect - use width for horizontal scrolling</span>
-            <span class="k">return</span> <span class="n">target_widget</span><span class="o">.</span><span class="n">width</span>
+            <span class="k">return</span> <span class="n">sv</span><span class="o">.</span><span class="n">width</span>
         <span class="k">elif</span> <span class="n">sv</span><span class="o">.</span><span class="n">effect_y</span> <span class="ow">is</span> <span class="bp">self</span><span class="p">:</span>
             <span class="c1"># This is the Y effect - use height for vertical scrolling</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_widget</span><span class="o">.</span><span class="n">height</span>
+            <span class="k">return</span> <span class="n">sv</span><span class="o">.</span><span class="n">height</span>
 
 <div class="viewcode-block" id="DampedScrollEffect.update_velocity">
 <a class="viewcode-back" href="../../../api-kivy.effects.dampedscroll.html#kivy.effects.dampedscroll.DampedScrollEffect.update_velocity">[docs]</a>
