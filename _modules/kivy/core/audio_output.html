@@ -541,19 +541,37 @@
 <span class="sd">        .. versionchanged:: 3.0.0</span>
 <span class="sd">            `filename` may be a :class:`os.PathLike` (e.g. :class:`pathlib.Path`)</span>
 <span class="sd">            in addition to a ``str``.</span>
+
+<span class="sd">        .. versionchanged:: 3.0.0</span>
+<span class="sd">            A ``content://`` source is routed to the ``android`` provider by</span>
+<span class="sd">            scheme instead of being matched against the provider extensions.</span>
 <span class="sd">        '''</span>
         <span class="c1"># Coerce os.PathLike -&gt; str so extension parsing below is safe even</span>
         <span class="c1"># when resource_find does not resolve the file.</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="n">path_to_str</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-        <span class="n">rfn</span> <span class="o">=</span> <span class="n">resource_find</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">rfn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">filename</span> <span class="o">=</span> <span class="n">rfn</span>
-        <span class="n">ext</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-        <span class="k">if</span> <span class="s1">'?'</span> <span class="ow">in</span> <span class="n">ext</span><span class="p">:</span>
-            <span class="n">ext</span> <span class="o">=</span> <span class="n">ext</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'?'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># A content:// source is resolved by the Android ContentResolver</span>
+        <span class="n">is_content_uri</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"content://"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">is_content_uri</span><span class="p">:</span>
+            <span class="c1"># Content URIs have no reliable extension; the scheme stands in</span>
+            <span class="c1"># for it in provider-selection messages.</span>
+            <span class="n">ext</span> <span class="o">=</span> <span class="s2">"content://"</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rfn</span> <span class="o">=</span> <span class="n">resource_find</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">rfn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">rfn</span>
+            <span class="n">ext</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="k">if</span> <span class="s1">'?'</span> <span class="ow">in</span> <span class="n">ext</span><span class="p">:</span>
+                <span class="n">ext</span> <span class="o">=</span> <span class="n">ext</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'?'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">check_compatibility</span><span class="p">(</span><span class="n">provider_class</span><span class="p">,</span> <span class="n">extension</span><span class="p">):</span>
 <span class="w">            </span><span class="sd">"""Check if provider supports the given extension."""</span>
+            <span class="k">if</span> <span class="n">is_content_uri</span><span class="p">:</span>
+                <span class="c1"># content:// URIs are resolved by Android's ContentResolver,</span>
+                <span class="c1"># so route them to the android provider by scheme rather than</span>
+                <span class="c1"># by extension. SDL3 can open them too, but its audio device</span>
+                <span class="c1"># pauses with the activity, which stops playback.</span>
+                <span class="k">return</span> <span class="n">provider_class</span><span class="o">.</span><span class="n">_provider_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">'android'</span>
             <span class="k">return</span> <span class="n">extension</span> <span class="ow">in</span> <span class="n">provider_class</span><span class="o">.</span><span class="n">extensions</span><span class="p">()</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">try_load</span><span class="p">(</span><span class="n">provider_class</span><span class="p">,</span> <span class="n">fname</span><span class="p">):</span>
@@ -566,7 +584,7 @@
         <span class="k">def</span><span class="w"> </span><span class="nf">fallback_load</span><span class="p">():</span>
 <span class="w">            </span><span class="sd">"""Load using default provider priority."""</span>
             <span class="k">for</span> <span class="n">classobj</span> <span class="ow">in</span> <span class="n">SoundLoader</span><span class="o">.</span><span class="n">_classes</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">ext</span> <span class="ow">in</span> <span class="n">classobj</span><span class="o">.</span><span class="n">extensions</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">check_compatibility</span><span class="p">(</span><span class="n">classobj</span><span class="p">,</span> <span class="n">ext</span><span class="p">):</span>
                     <span class="k">try</span><span class="p">:</span>
                         <span class="k">return</span> <span class="n">classobj</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span>
                     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
@@ -613,6 +631,11 @@
 <span class="w">    </span><span class="sd">'''Filename / source of your audio file.</span>
 
 <span class="sd">    .. versionadded:: 1.3.0</span>
+
+<span class="sd">    .. versionchanged:: 3.0.0</span>
+<span class="sd">        On Android, ``content://`` URIs from a ContentProvider (MediaStore,</span>
+<span class="sd">        the Storage Access Framework, a share intent) are supported by the</span>
+<span class="sd">        ``android`` provider.</span>
 
 <span class="sd">    :attr:`source` is a :class:`~kivy.properties.StringProperty` that defaults</span>
 <span class="sd">    to None and is read-only. Use the :meth:`SoundLoader.load` for loading</span>
@@ -767,7 +790,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Nov 17, 2026.
+    Last updated on Nov 18, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->
