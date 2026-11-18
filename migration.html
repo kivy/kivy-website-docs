@@ -380,6 +380,7 @@
 <li><a class="reference internal" href="#application-storage-directories">Application Storage Directories</a></li>
 <li><a class="reference internal" href="#gestures">Gestures</a></li>
 <li><a class="reference internal" href="#software-keyboard">Software Keyboard</a></li>
+<li><a class="reference internal" href="#video">Video</a></li>
 </ul>
 </li>
 </ul>
@@ -1574,6 +1575,85 @@ follows the keyboard only while it is docked (<code class="docutils literal notr
 <p>This is <strong>not a breaking change</strong>, and no code changes are needed: apps that
 use <code class="docutils literal notranslate"><span class="pre">softinput_mode</span></code> handle the floating keyboard automatically. A floating
 keyboard can cover the focused widget; the user can drag it out of the way.</p>
+</section>
+<section id="video">
+<h3>Video<a class="headerlink" href="#video" title="Link to this heading">¶</a></h3>
+<p><em>New default video provider on macOS and iOS: AVFoundation</em></p>
+<p>Kivy 3.x.x adds an <code class="docutils literal notranslate"><span class="pre">avfoundation</span></code> video provider, built on Apple’s own
+AVFoundation framework, and makes it the first choice on macOS and iOS. In
+Kivy 2.x.x, playing video on macOS needed ffpyplayer (installed by the
+<code class="docutils literal notranslate"><span class="pre">media</span></code> or <code class="docutils literal notranslate"><span class="pre">full</span></code> selector) or GStreamer.</p>
+<p><strong>Behavior Changes</strong></p>
+<ul class="simple">
+<li><p>Video plays with a plain <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">kivy</span></code>. No extra package is needed.</p></li>
+<li><p>Decoded frames are shared with OpenGL through ANGLE, with no copy through
+the CPU. ANGLE is the only GL backend on macOS and iOS in Kivy 3.x.x, so
+this needs no setup.</p></li>
+<li><p>Which formats play depends on AVFoundation, not on Kivy. MP4 and MOV files
+with H.264 or HEVC video play. Formats that ffpyplayer or GStreamer decoded
+with their own codecs and that AVFoundation can’t open no longer play by
+default.</p></li>
+<li><p>If a video can’t be shown without a CPU copy, typically because macOS
+decoded it in software, playback stops with a single log message and the
+<code class="docutils literal notranslate"><span class="pre">on_eos</span></code> event, rather than showing a black picture.</p></li>
+<li><p>The provider has one option, <code class="docutils literal notranslate"><span class="pre">automatically_waits_to_minimize_stalling</span></code>,
+passed through <a class="reference internal" href="api-kivy.uix.video.html#kivy.uix.video.Video.options" title="kivy.uix.video.Video.options"><code class="xref py py-attr docutils literal notranslate"><span class="pre">options</span></code></a>. See that property
+for details.</p></li>
+</ul>
+<p><strong>Migration Impact</strong></p>
+<p>Most apps need no changes. Apps that installed ffpyplayer or GStreamer only
+to play video on macOS can remove them. Keep them if the app also uses them
+for audio.</p>
+<p>To keep the Kivy 2.x.x behavior, for example to play a format AVFoundation
+can’t open, select the previous provider before importing Kivy:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">'KIVY_VIDEO'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'ffpyplayer'</span>  <span class="c1"># or 'gstplayer'</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">kivy</span>
+</pre></div>
+</div>
+<p><em>New default video provider on Windows: Media Foundation</em></p>
+<p>Kivy 3.x.x adds a <code class="docutils literal notranslate"><span class="pre">mediafoundation</span></code> video provider, built on Windows’ own
+Media Foundation framework, and makes it the first choice on Windows. In
+Kivy 2.x.x, playing video on Windows needed GStreamer (<code class="docutils literal notranslate"><span class="pre">kivy_deps.gstreamer</span></code>,
+installed by the <code class="docutils literal notranslate"><span class="pre">media</span></code> or <code class="docutils literal notranslate"><span class="pre">full</span></code> selector) or ffpyplayer.</p>
+<p><strong>Behavior Changes</strong></p>
+<ul class="simple">
+<li><p>Video plays with a plain <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">kivy</span></code>. No extra package is needed.</p></li>
+<li><p>Decoded frames go straight from the GPU decoder into an OpenGL texture,
+with no copy through the CPU, on every Windows GL backend (<code class="docutils literal notranslate"><span class="pre">glew</span></code>,
+<code class="docutils literal notranslate"><span class="pre">sdl3</span></code> and <code class="docutils literal notranslate"><span class="pre">angle_sdl3</span></code>). If the graphics driver can’t share textures
+that way, the provider copies each frame through the CPU instead, and
+playback still works.</p></li>
+<li><p>Which formats play depends on the decoders installed in Windows, not on
+Kivy. Standard MP4 files (H.264 video with AAC audio) play on any Windows
+PC. HEVC (H.265), AV1, VP9 and MPEG-2 play once Microsoft’s matching video
+extension is installed from the Microsoft Store. The HEVC extension is not
+free on every PC. Formats that GStreamer or ffpyplayer decoded with their
+own codecs, and that Windows has no decoder for, no longer play by default.</p></li>
+<li><p>Windows “N” and “KN” editions ship without Media Foundation. There, Kivy
+skips this provider and uses the next one installed (<code class="docutils literal notranslate"><span class="pre">gstplayer</span></code> or
+<code class="docutils literal notranslate"><span class="pre">ffpyplayer</span></code>), or plays no video if neither is. Installing the Media
+Feature Pack (Settings &gt; Apps &gt; Optional features) makes Media Foundation
+available.</p></li>
+</ul>
+<p><strong>Migration Impact</strong></p>
+<p>Most apps need no changes. Apps that installed <code class="docutils literal notranslate"><span class="pre">kivy_deps.gstreamer</span></code> or
+ffpyplayer only to play video on Windows can remove them. Keep them if the
+app also uses them for audio. PyInstaller builds no longer need
+<code class="docutils literal notranslate"><span class="pre">gstreamer.dep_bins</span></code> for video either: Media Foundation is part of Windows,
+and <code class="xref py py-func docutils literal notranslate"><span class="pre">get_deps_minimal()</span></code> and
+<code class="xref py py-func docutils literal notranslate"><span class="pre">get_deps_all()</span></code> include the
+<code class="docutils literal notranslate"><span class="pre">mediafoundation</span></code> provider like any other.</p>
+<p>To keep the Kivy 2.x.x behavior, for example to play a format Windows can’t
+decode, select the previous provider before importing Kivy:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">'KIVY_VIDEO'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'gstplayer'</span>  <span class="c1"># or 'ffpyplayer'</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">kivy</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="guide/environment.html#environment"><span class="std std-ref">Controlling the environment</span></a> for the full list of <code class="docutils literal notranslate"><span class="pre">KIVY_VIDEO</span></code> values.</p>
 </section>
 </section>
 </section>

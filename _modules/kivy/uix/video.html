@@ -380,6 +380,21 @@
 <span class="sd">:class:`~kivy.core.video.VideoBase` implementation is used under the</span>
 <span class="sd">hood.</span>
 
+<span class="sd">On macOS and iOS, the default AVFoundation provider plays whatever</span>
+<span class="sd">AVFoundation can open, such as MP4 and MOV files with H.264 or HEVC</span>
+<span class="sd">video. See :class:`~kivy.core.video.video_avfoundation.VideoAVFoundation`</span>
+<span class="sd">for details.</span>
+
+<span class="sd">On Windows, the default Media Foundation provider plays whatever the</span>
+<span class="sd">system's installed decoders support. Standard MP4 (H.264 video, AAC</span>
+<span class="sd">audio) works out of the box; HEVC, AV1, VP9 and MPEG-2 become playable</span>
+<span class="sd">once Microsoft's matching video extensions are installed from the</span>
+<span class="sd">Microsoft Store. Windows "N" and "KN" editions ship without Media</span>
+<span class="sd">Foundation, so Kivy uses the next installed provider there unless the</span>
+<span class="sd">Media Feature Pack is installed. See</span>
+<span class="sd">:class:`~kivy.core.video.video_mediafoundation.VideoMediaFoundation`</span>
+<span class="sd">for details.</span>
+
 <span class="sd">Video loading is asynchronous - many properties are not available until</span>
 <span class="sd">the video is loaded (when the texture is created)::</span>
 
@@ -552,10 +567,11 @@
 <span class="sd">        first decodable frame is available rather than buffering</span>
 <span class="sd">        ahead).</span>
 
-<span class="sd">    Other providers (GStreamer, FFmpeg / ffpyplayer) currently expose no</span>
-<span class="sd">    documented ``options`` keys: unknown kwargs in ``options`` are also</span>
-<span class="sd">    unpacked as keyword arguments to the core video for back-compat with</span>
-<span class="sd">    apps that put well-known kwargs (e.g. ``eos='loop'``) in this dict.</span>
+<span class="sd">    Other providers (Media Foundation, GStreamer, FFmpeg / ffpyplayer)</span>
+<span class="sd">    currently expose no documented ``options`` keys: unknown kwargs in</span>
+<span class="sd">    ``options`` are also unpacked as keyword arguments to the core video</span>
+<span class="sd">    for back-compat with apps that put well-known kwargs (e.g.</span>
+<span class="sd">    ``eos='loop'``) in this dict.</span>
 
 <span class="sd">    Example::</span>
 

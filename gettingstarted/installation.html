@@ -521,7 +521,9 @@ from the kivy-team provided PyPi wheels. Simply do:</p>
 </div>
 <p>This also installs the minimum dependencies of Kivy. To additionally install Kivy with
 <strong>audio/video</strong> support, install either <code class="docutils literal notranslate"><span class="pre">kivy[base,media]</span></code> or <code class="docutils literal notranslate"><span class="pre">kivy[full]</span></code>.
-See <span class="xref std std-ref">Kivy’s dependencies</span> for the list of selectors.</p>
+See <span class="xref std std-ref">Kivy’s dependencies</span> for the list of selectors.
+On Windows and macOS, video plays without these, through the operating system’s own
+media framework (Media Foundation on Windows, AVFoundation on macOS).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>When using Raspberry Pi OS Lite or similar Linux-based headless systems, it may be necessary to install additional
@@ -753,7 +755,10 @@ version).</p>
 <li><p><a class="reference external" href="https://gstreamer.freedesktop.org">gstreamer</a> (optional)</p>
 <p><code class="docutils literal notranslate"><span class="pre">kivy_deps.gstreamer</span></code> is an optional dependency which is only needed for audio/video support.
 We only provide it on Windows, for other platforms it must be installed independently.
-Alternatively, use <a class="reference external" href="https://pypi.org/project/ffpyplayer/">ffpyplayer</a>  instead.</p>
+Alternatively, use <a class="reference external" href="https://pypi.org/project/ffpyplayer/">ffpyplayer</a>  instead.
+Since Kivy 3.0.0, Windows plays video through its own Media Foundation by default, so
+GStreamer is only needed there to play formats Windows has no decoder for (selected with
+<code class="docutils literal notranslate"><span class="pre">KIVY_VIDEO=gstplayer</span></code>), or for audio.</p>
 </li>
 <li><p><a class="reference external" href="https://glew.sourceforge.net/">glew</a> and/or
 <a class="reference external" href="https://github.com/Microsoft/angle">angle</a></p>
