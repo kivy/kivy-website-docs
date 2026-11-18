@@ -380,6 +380,7 @@
 <li><a class="reference internal" href="#application-storage-directories">Application Storage Directories</a></li>
 <li><a class="reference internal" href="#gestures">Gestures</a></li>
 <li><a class="reference internal" href="#software-keyboard">Software Keyboard</a></li>
+<li><a class="reference internal" href="#graphics">Graphics</a></li>
 <li><a class="reference internal" href="#video">Video</a></li>
 </ul>
 </li>
@@ -1575,6 +1576,28 @@ follows the keyboard only while it is docked (<code class="docutils literal notr
 <p>This is <strong>not a breaking change</strong>, and no code changes are needed: apps that
 use <code class="docutils literal notranslate"><span class="pre">softinput_mode</span></code> handle the floating keyboard automatically. A floating
 keyboard can cover the focused widget; the user can drag it out of the way.</p>
+</section>
+<section id="graphics">
+<h3>Graphics<a class="headerlink" href="#graphics" title="Link to this heading">¶</a></h3>
+<p><em>Chained Matrix transformations apply in call order</em></p>
+<p><strong>Behavior Changes</strong></p>
+<p><a class="reference internal" href="api-kivy.graphics.transformation.html#kivy.graphics.transformation.Matrix.rotate" title="kivy.graphics.transformation.Matrix.rotate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Matrix.rotate()</span></code></a> now also
+rotates the translation of the matrix, and
+<a class="reference internal" href="api-kivy.graphics.transformation.html#kivy.graphics.transformation.Matrix.scale" title="kivy.graphics.transformation.Matrix.scale"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Matrix.scale()</span></code></a> scales the
+whole matrix instead of only its diagonal. Like
+<a class="reference internal" href="api-kivy.graphics.transformation.html#kivy.graphics.transformation.Matrix.translate" title="kivy.graphics.transformation.Matrix.translate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Matrix.translate()</span></code></a>,
+each call is applied after the transformation already in the matrix, so
+<code class="docutils literal notranslate"><span class="pre">Matrix().translate(x,</span> <span class="pre">y,</span> <span class="pre">0).rotate(angle,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">1)</span></code> now translates, then
+rotates. Results for a new <a class="reference internal" href="api-kivy.graphics.transformation.html#kivy.graphics.transformation.Matrix" title="kivy.graphics.transformation.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> are
+the same as before.</p>
+<p><strong>Migration Impact</strong></p>
+<p>Code that calls <code class="docutils literal notranslate"><span class="pre">rotate()</span></code> on a matrix with a translation, or <code class="docutils literal notranslate"><span class="pre">scale()</span></code> on
+a matrix that is not diagonal, now gets a different result. To get the old
+result, build each transformation from a new
+<a class="reference internal" href="api-kivy.graphics.transformation.html#kivy.graphics.transformation.Matrix" title="kivy.graphics.transformation.Matrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">Matrix</span></code></a> and combine them with
+<a class="reference internal" href="api-kivy.graphics.transformation.html#kivy.graphics.transformation.Matrix.multiply" title="kivy.graphics.transformation.Matrix.multiply"><code class="xref py py-meth docutils literal notranslate"><span class="pre">multiply()</span></code></a>. For example, the old
+result of <code class="docutils literal notranslate"><span class="pre">Matrix().translate(x,</span> <span class="pre">y,</span> <span class="pre">0).rotate(angle,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">1)</span></code> is
+<code class="docutils literal notranslate"><span class="pre">Matrix().translate(x,</span> <span class="pre">y,</span> <span class="pre">0).multiply(Matrix().rotate(angle,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">1))</span></code>.</p>
 </section>
 <section id="video">
 <h3>Video<a class="headerlink" href="#video" title="Link to this heading">¶</a></h3>

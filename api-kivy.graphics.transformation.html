@@ -573,20 +573,28 @@ into eye/camera space.</p>
 <span class="sig-name descname"><span class="pre">rotate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">double</span> <span class="pre">angle</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">double</span> <span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">double</span> <span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">double</span> <span class="pre">z</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#kivy.graphics.transformation.Matrix" title="kivy.graphics.transformation.Matrix"><span class="pre">Matrix</span></a></span></span><a class="headerlink" href="#kivy.graphics.transformation.Matrix.rotate" title="Link to this definition">¶</a></dt>
 <dd><p>Rotate the matrix through the angle around the axis (x, y, z)
 (inplace).</p>
+<p>The rotation is applied after the transformation already in the
+matrix: <code class="docutils literal notranslate"><span class="pre">m.rotate(...)</span></code> gives the same result as
+<code class="docutils literal notranslate"><span class="pre">Matrix().rotate(...).multiply(m)</span></code>, so
+<code class="docutils literal notranslate"><span class="pre">Matrix().translate(...).rotate(...)</span></code> translates, then rotates.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><cite>angle</cite>: float</dt><dd><p>The angle through which to rotate the matrix</p>
+<dt><cite>angle</cite>: float</dt><dd><p>The angle through which to rotate the matrix, in radians</p>
 </dd>
-<dt><cite>x</cite>: float</dt><dd><p>X position of the point</p>
+<dt><cite>x</cite>: float</dt><dd><p>X component of the rotation axis</p>
 </dd>
-<dt><cite>y</cite>: float</dt><dd><p>Y position of the point</p>
+<dt><cite>y</cite>: float</dt><dd><p>Y component of the rotation axis</p>
 </dd>
-<dt><cite>z</cite>: float</dt><dd><p>Z position of the point</p>
-</dd>
-</dl>
+<dt><cite>z</cite>: float</dt><dd><p>Z component of the rotation axis</p>
 </dd>
 </dl>
+</dd>
+</dl>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.0.0: </span>The translation of the matrix is rotated too. Before, the result
+was only right for a matrix without a translation.</p>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -594,6 +602,10 @@ into eye/camera space.</p>
 <span class="sig-name descname"><span class="pre">scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">double</span> <span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">double</span> <span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">double</span> <span class="pre">z</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#kivy.graphics.transformation.Matrix" title="kivy.graphics.transformation.Matrix"><span class="pre">Matrix</span></a></span></span><a class="headerlink" href="#kivy.graphics.transformation.Matrix.scale" title="Link to this definition">¶</a></dt>
 <dd><p>Scale the current matrix by the specified factors over
 each dimension (inplace).</p>
+<p>The scaling is applied after the transformation already in the
+matrix: <code class="docutils literal notranslate"><span class="pre">m.scale(...)</span></code> gives the same result as
+<code class="docutils literal notranslate"><span class="pre">Matrix().scale(...).multiply(m)</span></code>, so
+<code class="docutils literal notranslate"><span class="pre">Matrix().translate(...).scale(...)</span></code> translates, then scales.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
@@ -606,6 +618,10 @@ each dimension (inplace).</p>
 </dl>
 </dd>
 </dl>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.0.0: </span>The whole matrix is scaled, translation included. Before, only
+the diagonal was, which was only right for a diagonal matrix.</p>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -658,6 +674,10 @@ and returns the transformed <code class="docutils literal notranslate"><span cla
 <dt class="sig sig-object py" id="kivy.graphics.transformation.Matrix.translate">
 <span class="sig-name descname"><span class="pre">translate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">double</span> <span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">double</span> <span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">double</span> <span class="pre">z</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#kivy.graphics.transformation.Matrix" title="kivy.graphics.transformation.Matrix"><span class="pre">Matrix</span></a></span></span><a class="headerlink" href="#kivy.graphics.transformation.Matrix.translate" title="Link to this definition">¶</a></dt>
 <dd><p>Translate the matrix.</p>
+<p>The translation is applied after the transformation already in the
+matrix: <code class="docutils literal notranslate"><span class="pre">m.translate(...)</span></code> gives the same result as
+<code class="docutils literal notranslate"><span class="pre">Matrix().translate(...).multiply(m)</span></code>, so
+<code class="docutils literal notranslate"><span class="pre">Matrix().rotate(...).translate(...)</span></code> rotates, then translates.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
