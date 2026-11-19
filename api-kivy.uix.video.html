@@ -443,6 +443,18 @@ started/loaded by passing <code class="docutils literal notranslate"><span class
 <span class="n">video</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">eos</span><span class="o">=</span><span class="n">on_eos_change</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>If the video can’t be loaded or played, for example because its format
+has no installed decoder, <a class="reference internal" href="#kivy.uix.video.Video.state" title="kivy.uix.video.Video.state"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Video.state</span></code></a> changes to <code class="docutils literal notranslate"><span class="pre">'stop'</span></code> and
+the <code class="docutils literal notranslate"><span class="pre">on_error</span></code> event fires with a message. A missing local file is
+reported with any provider; other failures are reported by the Media
+Foundation (Windows) and AVFoundation (macOS, iOS) providers. Nothing is
+raised, so an app that doesn’t handle it keeps running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_video_error</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Video failed:'</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+
+<span class="n">video</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_error</span><span class="o">=</span><span class="n">on_video_error</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 3.0.0.</span></p>
 </div>
@@ -479,6 +491,19 @@ provider-specific <code class="xref py py-attr docutils literal notranslate"><sp
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">kivy.uix.video.</span></span><span class="sig-name descname"><span class="pre">Video</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/uix/video.html#Video"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.uix.video.Video" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="api-kivy.uix.image.html#kivy.uix.image.Image" title="kivy.uix.image.Image"><code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code></a></p>
 <p>Video class. See module documentation for more information.</p>
+<dl class="field-list">
+<dt class="field-odd">Events<span class="colon">:</span></dt>
+<dd class="field-odd"><dl>
+<dt><cite>on_error</cite>: error</dt><dd><p>Fired when the video can’t be loaded or played. <cite>error</cite> is a
+message describing the failure. <a class="reference internal" href="#kivy.uix.video.Video.state" title="kivy.uix.video.Video.state"><code class="xref py py-attr docutils literal notranslate"><span class="pre">state</span></code></a> is already
+<code class="docutils literal notranslate"><span class="pre">'stop'</span></code> when it fires.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.0.0.</span></p>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="kivy.uix.video.Video.buffering">
 <span class="sig-name descname"><span class="pre">buffering</span></span><a class="headerlink" href="#kivy.uix.video.Video.buffering" title="Link to this definition">¶</a></dt>

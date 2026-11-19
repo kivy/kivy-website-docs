@@ -377,6 +377,7 @@
 <li><a class="reference internal" href="#kivy.core.video.VideoBase.generate_thumbnail"><code class="docutils literal notranslate"><span class="pre">VideoBase.generate_thumbnail()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.video.VideoBase.load"><code class="docutils literal notranslate"><span class="pre">VideoBase.load()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.video.VideoBase.on_buffering"><code class="docutils literal notranslate"><span class="pre">VideoBase.on_buffering()</span></code></a></li>
+<li><a class="reference internal" href="#kivy.core.video.VideoBase.on_error"><code class="docutils literal notranslate"><span class="pre">VideoBase.on_error()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.video.VideoBase.options"><code class="docutils literal notranslate"><span class="pre">VideoBase.options</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.video.VideoBase.pause"><code class="docutils literal notranslate"><span class="pre">VideoBase.pause()</span></code></a></li>
 <li><a class="reference internal" href="#kivy.core.video.VideoBase.play"><code class="docutils literal notranslate"><span class="pre">VideoBase.play()</span></code></a></li>
@@ -412,6 +413,9 @@ event that fires whenever it changes.</p></li>
 <li><p><a class="reference internal" href="#kivy.core.video.VideoBase.options" title="kivy.core.video.VideoBase.options"><code class="xref py py-attr docutils literal notranslate"><span class="pre">VideoBase.options</span></code></a> provider-specific options dict so apps
 can pass opaque configuration through to the backend
 implementation. Each provider documents the keys it honors.</p></li>
+<li><p><a class="reference internal" href="#kivy.core.video.VideoBase.on_error" title="kivy.core.video.VideoBase.on_error"><code class="xref py py-attr docutils literal notranslate"><span class="pre">VideoBase.on_error</span></code></a> event, fired when the video can’t be
+loaded or played (for example, a format with no installed
+decoder). Playback is stopped first.</p></li>
 </ul>
 </div></blockquote>
 <p>Added two providers that play video through the operating system’s
@@ -477,6 +481,12 @@ ignored.</p>
 </dd>
 <dt><cite>on_buffering</cite></dt><dd><p>Fired when <a class="reference internal" href="#kivy.core.video.VideoBase.buffering" title="kivy.core.video.VideoBase.buffering"><code class="xref py py-attr docutils literal notranslate"><span class="pre">buffering</span></code></a> changes. Strictly a transition
 event; the boolean is also readable as a property.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.0.0.</span></p>
+</div>
+</dd>
+<dt><cite>on_error</cite></dt><dd><p>Fired when the video can’t be loaded or played. See
+<a class="reference internal" href="#kivy.core.video.VideoBase.on_error" title="kivy.core.video.VideoBase.on_error"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_error()</span></code></a>.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 3.0.0.</span></p>
 </div>
@@ -551,6 +561,23 @@ an informational message and returns <code class="docutils literal notranslate">
 <span class="sig-name descname"><span class="pre">on_buffering</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/video.html#VideoBase.on_buffering"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.video.VideoBase.on_buffering" title="Link to this definition">¶</a></dt>
 <dd><p>Fired when <a class="reference internal" href="#kivy.core.video.VideoBase.buffering" title="kivy.core.video.VideoBase.buffering"><code class="xref py py-attr docutils literal notranslate"><span class="pre">buffering</span></code></a> transitions.</p>
 <p><cite>value</cite> is the new buffering state (<code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code>).</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.0.0.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="kivy.core.video.VideoBase.on_error">
+<span class="sig-name descname"><span class="pre">on_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">error</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/core/video.html#VideoBase.on_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.core.video.VideoBase.on_error" title="Link to this definition">¶</a></dt>
+<dd><p>Fired when the video can’t be loaded or played, for example
+because the file is missing, the format has no installed
+decoder, or a stream fails mid-playback.</p>
+<p><cite>error</cite> is a message describing the failure. By the time this
+fires, playback has been stopped (<a class="reference internal" href="#kivy.core.video.VideoBase.state" title="kivy.core.video.VideoBase.state"><code class="xref py py-attr docutils literal notranslate"><span class="pre">state</span></code></a> is <code class="docutils literal notranslate"><span class="pre">''</span></code>) and
+<a class="reference internal" href="#kivy.core.video.VideoBase.buffering" title="kivy.core.video.VideoBase.buffering"><code class="xref py py-attr docutils literal notranslate"><span class="pre">buffering</span></code></a> is <code class="docutils literal notranslate"><span class="pre">False</span></code>. Nothing is raised: with no
+handler bound, a video that can’t play is only logged.</p>
+<p>Providers report failures through <code class="xref py py-meth docutils literal notranslate"><span class="pre">_do_error()</span></code>, which
+stops playback before dispatching this event.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 3.0.0.</span></p>
 </div>

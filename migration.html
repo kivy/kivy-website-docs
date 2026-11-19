@@ -1629,7 +1629,8 @@ with their own codecs and that AVFoundation can’t open no longer play by
 default.</p></li>
 <li><p>If a video can’t be shown without a CPU copy, typically because macOS
 decoded it in software, playback stops with a single log message and the
-<code class="docutils literal notranslate"><span class="pre">on_eos</span></code> event, rather than showing a black picture.</p></li>
+<code class="docutils literal notranslate"><span class="pre">on_error</span></code> event (see <em>New on_error event for videos that can’t play</em>
+below), rather than showing a black picture.</p></li>
 <li><p>The provider has one option, <code class="docutils literal notranslate"><span class="pre">automatically_waits_to_minimize_stalling</span></code>,
 passed through <a class="reference internal" href="api-kivy.uix.video.html#kivy.uix.video.Video.options" title="kivy.uix.video.Video.options"><code class="xref py py-attr docutils literal notranslate"><span class="pre">options</span></code></a>. See that property
 for details.</p></li>
@@ -1688,6 +1689,44 @@ decode, select the previous provider before importing Kivy:</p>
 </pre></div>
 </div>
 <p>See <a class="reference internal" href="guide/environment.html#environment"><span class="std std-ref">Controlling the environment</span></a> for the full list of <code class="docutils literal notranslate"><span class="pre">KIVY_VIDEO</span></code> values.</p>
+<p><em>New on_error event for videos that can’t play</em></p>
+<p>Kivy 3.x.x adds an <code class="docutils literal notranslate"><span class="pre">on_error</span></code> event to <a class="reference internal" href="api-kivy.core.video.html#kivy.core.video.VideoBase" title="kivy.core.video.VideoBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">VideoBase</span></code></a>,
+<a class="reference internal" href="api-kivy.uix.video.html#kivy.uix.video.Video" title="kivy.uix.video.Video"><code class="xref py py-class docutils literal notranslate"><span class="pre">Video</span></code></a> and <a class="reference internal" href="api-kivy.uix.videoplayer.html#kivy.uix.videoplayer.VideoPlayer" title="kivy.uix.videoplayer.VideoPlayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">VideoPlayer</span></code></a>.
+It fires when a video can’t be loaded or played: a missing file, a format with
+no installed decoder, a corrupt file, an invalid URL, or a stream that fails
+during playback. In Kivy 2.x.x such a video logged an error at most, and
+<a class="reference internal" href="api-kivy.uix.video.html#kivy.uix.video.Video.loaded" title="kivy.uix.video.Video.loaded"><code class="xref py py-attr docutils literal notranslate"><span class="pre">loaded</span></code></a> stayed <code class="docutils literal notranslate"><span class="pre">False</span></code> with no event, so an app
+couldn’t tell a failed video from one that was still loading.</p>
+<p><strong>Behavior Changes</strong></p>
+<ul class="simple">
+<li><p>When a video fails, playback stops: <a class="reference internal" href="api-kivy.uix.video.html#kivy.uix.video.Video.state" title="kivy.uix.video.Video.state"><code class="xref py py-attr docutils literal notranslate"><span class="pre">state</span></code></a>
+becomes <code class="docutils literal notranslate"><span class="pre">'stop'</span></code>, <a class="reference internal" href="api-kivy.uix.video.html#kivy.uix.video.Video.buffering" title="kivy.uix.video.Video.buffering"><code class="xref py py-attr docutils literal notranslate"><span class="pre">buffering</span></code></a> becomes
+<code class="docutils literal notranslate"><span class="pre">False</span></code>, and then <code class="docutils literal notranslate"><span class="pre">on_error</span></code> fires once, with a message describing the
+failure. <a class="reference internal" href="api-kivy.uix.video.html#kivy.uix.video.Video.loaded" title="kivy.uix.video.Video.loaded"><code class="xref py py-attr docutils literal notranslate"><span class="pre">loaded</span></code></a> stays <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p>Nothing is raised. An app that doesn’t bind <code class="docutils literal notranslate"><span class="pre">on_error</span></code> keeps running; the
+only visible difference is that <code class="docutils literal notranslate"><span class="pre">state</span></code> changes to <code class="docutils literal notranslate"><span class="pre">'stop'</span></code>.</p></li>
+<li><p>A missing local file is now reported too. In Kivy 2.x.x
+<a class="reference internal" href="api-kivy.uix.video.html#kivy.uix.video.Video" title="kivy.uix.video.Video"><code class="xref py py-class docutils literal notranslate"><span class="pre">Video</span></code></a> passed no filename to the provider when the
+file couldn’t be found, and nothing reported it.</p></li>
+<li><p>The Media Foundation (Windows) and AVFoundation (macOS, iOS) providers fire
+<code class="docutils literal notranslate"><span class="pre">on_error</span></code>. The <code class="docutils literal notranslate"><span class="pre">gstplayer</span></code> and <code class="docutils literal notranslate"><span class="pre">ffpyplayer</span></code> providers don’t yet: with
+them, only a missing local file is reported.</p></li>
+</ul>
+<p><strong>Migration Impact</strong></p>
+<p>Apps that waited for <a class="reference internal" href="api-kivy.uix.video.html#kivy.uix.video.Video.loaded" title="kivy.uix.video.Video.loaded"><code class="xref py py-attr docutils literal notranslate"><span class="pre">loaded</span></code></a> with a timeout to
+detect a failed video can bind <code class="docutils literal notranslate"><span class="pre">on_error</span></code> instead. Code that sets <code class="docutils literal notranslate"><span class="pre">state</span></code>
+back to <code class="docutils literal notranslate"><span class="pre">'play'</span></code> whenever it changes to <code class="docutils literal notranslate"><span class="pre">'stop'</span></code>, for example to replay a
+video, should check for an error first, so it doesn’t keep restarting a video
+that can’t play.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.uix.video</span><span class="w"> </span><span class="kn">import</span> <span class="n">Video</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">on_video_error</span><span class="p">(</span><span class="n">video</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Video failed:'</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>  <span class="c1"># for example, show a message instead</span>
+
+<span class="n">video</span> <span class="o">=</span> <span class="n">Video</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">'movie.mp4'</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s1">'play'</span><span class="p">)</span>
+<span class="n">video</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_error</span><span class="o">=</span><span class="n">on_video_error</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 </section>
 </section>

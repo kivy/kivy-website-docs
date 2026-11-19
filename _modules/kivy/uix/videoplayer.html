@@ -659,7 +659,18 @@
 <a class="viewcode-back" href="../../../api-kivy.uix.videoplayer.html#kivy.uix.videoplayer.VideoPlayer">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">VideoPlayer</span><span class="p">(</span><span class="n">GridLayout</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">'''VideoPlayer class. See module documentation for more information.</span>
+
+<span class="sd">    :Events:</span>
+<span class="sd">        `on_error`: error</span>
+<span class="sd">            Fired when the video can't be loaded or played, forwarded from</span>
+<span class="sd">            :class:`~kivy.uix.video.Video`. `error` is a message</span>
+<span class="sd">            describing the failure. :attr:`state` is already ``'stop'``</span>
+<span class="sd">            when it fires.</span>
+
+<span class="sd">            .. versionadded:: 3.0.0</span>
 <span class="sd">    '''</span>
+
+    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'on_error'</span><span class="p">,</span> <span class="p">)</span>
 
     <span class="n">source</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s1">''</span><span class="p">)</span>
 <span class="w">    </span><span class="sd">'''Source of the video to read.</span>
@@ -923,6 +934,12 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">_set_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">value</span>
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_video_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_error'</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="k">pass</span>
+
     <span class="k">def</span><span class="w"> </span><span class="nf">_do_video_load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_video</span> <span class="o">=</span> <span class="n">Video</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">,</span>
                             <span class="n">volume</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="p">,</span> <span class="n">pos_hint</span><span class="o">=</span><span class="p">{</span><span class="s1">'x'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">'y'</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
@@ -931,7 +948,8 @@
                          <span class="n">duration</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">setter</span><span class="p">(</span><span class="s1">'duration'</span><span class="p">),</span>
                          <span class="n">position</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">setter</span><span class="p">(</span><span class="s1">'position'</span><span class="p">),</span>
                          <span class="n">volume</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">setter</span><span class="p">(</span><span class="s1">'volume'</span><span class="p">),</span>
-                         <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_set_state</span><span class="p">)</span>
+                         <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_set_state</span><span class="p">,</span>
+                         <span class="n">on_error</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_video_error</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_video</span><span class="p">:</span>

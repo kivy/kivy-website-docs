@@ -426,6 +426,18 @@
 
 <span class="sd">    video.bind(eos=on_eos_change)</span>
 
+<span class="sd">If the video can't be loaded or played, for example because its format</span>
+<span class="sd">has no installed decoder, :attr:`Video.state` changes to ``'stop'`` and</span>
+<span class="sd">the ``on_error`` event fires with a message. A missing local file is</span>
+<span class="sd">reported with any provider; other failures are reported by the Media</span>
+<span class="sd">Foundation (Windows) and AVFoundation (macOS, iOS) providers. Nothing is</span>
+<span class="sd">raised, so an app that doesn't handle it keeps running::</span>
+
+<span class="sd">    def on_video_error(instance, error):</span>
+<span class="sd">        print('Video failed:', error)</span>
+
+<span class="sd">    video.bind(on_error=on_video_error)</span>
+
 <span class="sd">.. versionadded:: 3.0.0</span>
 
 <span class="sd">An observable :attr:`buffering` boolean for loading-overlay UX and a</span>
@@ -471,7 +483,17 @@
 <a class="viewcode-back" href="../../../api-kivy.uix.video.html#kivy.uix.video.Video">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Video</span><span class="p">(</span><span class="n">Image</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">'''Video class. See module documentation for more information.</span>
+
+<span class="sd">    :Events:</span>
+<span class="sd">        `on_error`: error</span>
+<span class="sd">            Fired when the video can't be loaded or played. `error` is a</span>
+<span class="sd">            message describing the failure. :attr:`state` is already</span>
+<span class="sd">            ``'stop'`` when it fires.</span>
+
+<span class="sd">            .. versionadded:: 3.0.0</span>
 <span class="sd">    '''</span>
+
+    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'on_error'</span><span class="p">,</span> <span class="p">)</span>
 
     <span class="n">preview</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="w">    </span><span class="sd">'''Filename / source of a preview image displayed before video starts.</span>
@@ -685,6 +707,14 @@
             <span class="c1"># Check if filename is not url</span>
             <span class="k">if</span> <span class="s1">'://'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">filename</span><span class="p">:</span>
                 <span class="n">filename</span> <span class="o">=</span> <span class="n">resource_find</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="c1"># No provider ever sees a missing local file, so</span>
+                    <span class="c1"># report the failed load here, as providers do.</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_video</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s1">'stop'</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span>
+                        <span class="s1">'on_error'</span><span class="p">,</span> <span class="s1">'file not found: </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">))</span>
+                    <span class="k">return</span>
             <span class="c1"># Forward both the dict (for providers that introspect</span>
             <span class="c1"># self._options) and the unpacked kwargs (back-compat with</span>
             <span class="c1"># apps that put well-known kwargs like 'eos' in options).</span>
@@ -700,7 +730,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_video</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_load</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_load</span><span class="p">,</span>
                              <span class="n">on_frame</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_video_frame</span><span class="p">,</span>
                              <span class="n">on_eos</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_eos</span><span class="p">,</span>
-                             <span class="n">on_buffering</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_buffering</span><span class="p">)</span>
+                             <span class="n">on_buffering</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_buffering</span><span class="p">,</span>
+                             <span class="n">on_error</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_error</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="s1">'play'</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_video</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">duration</span> <span class="o">=</span> <span class="mf">1.</span>
@@ -741,6 +772,13 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_on_buffering</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">buffering</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_on_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s1">'stop'</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_error'</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="k">pass</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_volume</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_video</span><span class="p">:</span>

@@ -388,6 +388,9 @@
 <span class="sd">      - :attr:`VideoBase.options` provider-specific options dict so apps</span>
 <span class="sd">        can pass opaque configuration through to the backend</span>
 <span class="sd">        implementation. Each provider documents the keys it honors.</span>
+<span class="sd">      - :attr:`VideoBase.on_error` event, fired when the video can't be</span>
+<span class="sd">        loaded or played (for example, a format with no installed</span>
+<span class="sd">        decoder). Playback is stopped first.</span>
 
 <span class="sd">    Added two providers that play video through the operating system's</span>
 <span class="sd">    own media framework, so no extra package is needed: ``avfoundation``</span>
@@ -461,13 +464,19 @@
 <span class="sd">            event; the boolean is also readable as a property.</span>
 
 <span class="sd">            .. versionadded:: 3.0.0</span>
+<span class="sd">        `on_error`</span>
+<span class="sd">            Fired when the video can't be loaded or played. See</span>
+<span class="sd">            :meth:`on_error`.</span>
+
+<span class="sd">            .. versionadded:: 3.0.0</span>
 <span class="sd">    '''</span>
 
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'_wantplay'</span><span class="p">,</span> <span class="s1">'_buffer'</span><span class="p">,</span> <span class="s1">'_filename'</span><span class="p">,</span> <span class="s1">'_texture'</span><span class="p">,</span>
                  <span class="s1">'_volume'</span><span class="p">,</span> <span class="s1">'eos'</span><span class="p">,</span> <span class="s1">'_state'</span><span class="p">,</span> <span class="s1">'_async'</span><span class="p">,</span> <span class="s1">'_autoplay'</span><span class="p">,</span>
                  <span class="s1">'_fps'</span><span class="p">,</span> <span class="s1">'_options'</span><span class="p">,</span> <span class="s1">'_buffering'</span><span class="p">)</span>
 
-    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'on_eos'</span><span class="p">,</span> <span class="s1">'on_load'</span><span class="p">,</span> <span class="s1">'on_frame'</span><span class="p">,</span> <span class="s1">'on_buffering'</span><span class="p">)</span>
+    <span class="n">__events__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'on_eos'</span><span class="p">,</span> <span class="s1">'on_load'</span><span class="p">,</span> <span class="s1">'on_frame'</span><span class="p">,</span> <span class="s1">'on_buffering'</span><span class="p">,</span>
+                  <span class="s1">'on_error'</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">'filename'</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
@@ -520,6 +529,26 @@
 <span class="w">        </span><span class="sd">'''Fired when :attr:`buffering` transitions.</span>
 
 <span class="sd">        `value` is the new buffering state (``True`` or ``False``).</span>
+
+<span class="sd">        .. versionadded:: 3.0.0</span>
+<span class="sd">        '''</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="VideoBase.on_error">
+<a class="viewcode-back" href="../../../api-kivy.core.video.html#kivy.core.video.VideoBase.on_error">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">on_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">'''Fired when the video can't be loaded or played, for example</span>
+<span class="sd">        because the file is missing, the format has no installed</span>
+<span class="sd">        decoder, or a stream fails mid-playback.</span>
+
+<span class="sd">        `error` is a message describing the failure. By the time this</span>
+<span class="sd">        fires, playback has been stopped (:attr:`state` is ``''``) and</span>
+<span class="sd">        :attr:`buffering` is ``False``. Nothing is raised: with no</span>
+<span class="sd">        handler bound, a video that can't play is only logged.</span>
+
+<span class="sd">        Providers report failures through :meth:`_do_error`, which</span>
+<span class="sd">        stops playback before dispatching this event.</span>
 
 <span class="sd">        .. versionadded:: 3.0.0</span>
 <span class="sd">        '''</span>
@@ -661,6 +690,19 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">play</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_eos'</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_do_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">'''Report that the video can't be loaded or played: stop</span>
+<span class="sd">        playback, clear :attr:`buffering`, then dispatch `on_error`.</span>
+<span class="sd">        Providers call this once per failure, from the main thread.</span>
+
+<span class="sd">        .. versionadded:: 3.0.0</span>
+<span class="sd">        '''</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_buffering</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_buffering</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_buffering'</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'on_error'</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">'''Update the video content to texture.</span>
