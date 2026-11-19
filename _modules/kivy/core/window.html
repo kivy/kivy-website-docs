@@ -1042,11 +1042,18 @@
 
 <span class="sd">    .. versionchanged:: 1.9.1</span>
 <span class="sd">        The 'below_target' option was added.</span>
+
+<span class="sd">    .. versionchanged:: 3.0.0</span>
+<span class="sd">        On Android, 'pan' and 'below_target' are applied by the system, which</span>
+<span class="sd">        pans the whole window; Kivy does not move the content as well, and</span>
+<span class="sd">        :attr:`keyboard_padding` has no effect for these modes.</span>
 <span class="sd">    '''</span>
 
     <span class="n">_keyboard_changed</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">_kheight</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">_kanimation</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_softinput_offset</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">_system_pans_softinput</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_free_kanimation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
         <span class="n">WindowBase</span><span class="o">.</span><span class="n">_kanimation</span> <span class="o">=</span> <span class="kc">None</span>
@@ -2147,11 +2154,17 @@
 <span class="sd">        .. versionadded:: 2.1.0</span>
 <span class="sd">        '''</span>
         <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">unrotated_size</span>
+        <span class="n">smode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">softinput_mode</span>
+        <span class="k">if</span> <span class="n">smode</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">'pan'</span><span class="p">,</span> <span class="s1">'below_target'</span><span class="p">}:</span>
+            <span class="c1"># touches must follow the content as update_viewport drew it</span>
+            <span class="n">kheight</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_softinput_offset</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">kheight</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyboard_height</span>
         <span class="n">me</span><span class="o">.</span><span class="n">scale_for_screen</span><span class="p">(</span>
             <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span>
             <span class="n">rotation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rotation</span><span class="p">,</span>
-            <span class="n">smode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">softinput_mode</span><span class="p">,</span>
-            <span class="n">kheight</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">keyboard_height</span>
+            <span class="n">smode</span><span class="o">=</span><span class="n">smode</span><span class="p">,</span>
+            <span class="n">kheight</span><span class="o">=</span><span class="n">kheight</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">widget</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">parent</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">parent</span>
@@ -2315,12 +2328,22 @@
 
         <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="n">_h</span> <span class="o">=</span> <span class="n">h</span>
-        <span class="k">if</span> <span class="n">smode</span> <span class="o">==</span> <span class="s1">'pan'</span><span class="p">:</span>
+        <span class="n">system_pan</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">smode</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">'pan'</span><span class="p">,</span> <span class="s1">'below_target'</span><span class="p">}</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_system_pans_softinput</span>
+            <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">allow_vkeyboard</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">smode</span> <span class="o">==</span> <span class="s1">'pan'</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">system_pan</span><span class="p">:</span>
             <span class="n">y</span> <span class="o">=</span> <span class="n">kheight</span>
-        <span class="k">elif</span> <span class="n">smode</span> <span class="o">==</span> <span class="s1">'below_target'</span><span class="p">:</span>
-            <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">kheight</span> <span class="o">&lt;</span> <span class="n">targettop</span> <span class="k">else</span> <span class="p">(</span><span class="n">kheight</span> <span class="o">-</span> <span class="n">targettop</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">smode</span> <span class="o">==</span> <span class="s1">'below_target'</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">system_pan</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">allow_vkeyboard</span><span class="p">:</span>
+                <span class="c1"># _get_kivy_vkheight already measures from the target</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">kheight</span>
+            <span class="k">elif</span> <span class="n">target</span><span class="p">:</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">kheight</span> <span class="o">-</span> <span class="n">targettop</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">smode</span> <span class="o">==</span> <span class="s1">'scale'</span><span class="p">:</span>
             <span class="n">_h</span> <span class="o">-=</span> <span class="n">kheight</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_softinput_offset</span> <span class="o">=</span> <span class="n">y</span>
 
         <span class="c1"># prepare the viewport</span>
         <span class="n">glViewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">_h</span><span class="p">)</span>
