@@ -376,6 +376,7 @@
 <li><a class="reference internal" href="#installation-of-examples">Installation of Examples</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#playing-video">Playing video</a></li>
 <li><a class="reference internal" href="#release-on-the-market">Release on the market</a></li>
 <li><a class="reference internal" href="#targeting-android">Targeting Android</a></li>
 </ul>
@@ -488,6 +489,58 @@ trying the Kivy launcher. You can run them as below:</p>
 </ol>
 </section>
 </section>
+<section id="playing-video">
+<span id="packaging-android-video"></span><h2>Playing video<a class="headerlink" href="#playing-video" title="Link to this heading">¶</a></h2>
+<p>Kivy’s video provider on Android,
+<code class="xref py py-class docutils literal notranslate"><span class="pre">VideoAndroid</span></code>, plays video through
+androidx.media3 ExoPlayer. ExoPlayer is a library, not part of Android, so the
+app has to add it to its build as a Maven dependency. Without it, every
+<a class="reference internal" href="../api-kivy.uix.video.html#kivy.uix.video.Video" title="kivy.uix.video.Video"><code class="xref py py-class docutils literal notranslate"><span class="pre">Video</span></code></a> fires <code class="docutils literal notranslate"><span class="pre">on_error</span></code> with a message that names the
+missing dependency.</p>
+<p>Media3 1.11 requires compiling against Android API 36.</p>
+<p>With Buildozer, in <code class="docutils literal notranslate"><span class="pre">buildozer.spec</span></code>:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">android.api</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">36</span>
+<span class="na">android.gradle_dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">androidx.media3:media3-exoplayer:1.11.1</span>
+</pre></div>
+</div>
+<p>Buildozer compiles against the API level the app targets, so this also makes
+the app target API 36.</p>
+<p>With kivyforge, in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[tool.kivy.android]</span>
+<span class="n">compile_sdk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">36</span>
+
+<span class="k">[tool.kivy.android.gradle]</span>
+<span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"androidx.media3:media3-exoplayer:1.11.1"</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Depending on what the app plays, it may need more:</p>
+<ul>
+<li><p><strong>HLS or DASH streams</strong> (<code class="docutils literal notranslate"><span class="pre">.m3u8</span></code>, <code class="docutils literal notranslate"><span class="pre">.mpd</span></code>): add
+<code class="docutils literal notranslate"><span class="pre">androidx.media3:media3-exoplayer-hls</span></code> or
+<code class="docutils literal notranslate"><span class="pre">androidx.media3:media3-exoplayer-dash</span></code>, at the same version. ExoPlayer
+picks them up by the stream’s file extension.</p></li>
+<li><p><strong>Network sources</strong> (<code class="docutils literal notranslate"><span class="pre">http://</span></code>, <code class="docutils literal notranslate"><span class="pre">https://</span></code>): declare the <code class="docutils literal notranslate"><span class="pre">INTERNET</span></code>
+permission.</p></li>
+<li><p><strong>Release builds with R8</strong> (code shrinking): Python reaches ExoPlayer through
+pyjnius, which R8 can’t see, so R8 would remove the classes the provider
+needs. Debug builds still play, but in the release build every video fires
+<code class="docutils literal notranslate"><span class="pre">on_error</span></code> with the missing-dependency message. Leave R8 off, or keep
+Media3 with this rule:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">keep</span> <span class="k">class</span><span class="w"> </span><span class="nc">androidx</span><span class="o">.</span><span class="n">media3</span><span class="o">.**</span> <span class="p">{</span> <span class="o">*</span><span class="p">;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>With kivyforge (after 0.1.2), turn R8 on and add the rule in
+<code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[tool.kivy.android.build_settings]</span>
+<span class="n">minify</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+
+<span class="k">[tool.kivy.android.proguard]</span>
+<span class="n">keep</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"-keep class androidx.media3.** { *; }"</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
 <section id="release-on-the-market">
 <span id="id2"></span><h2>Release on the market<a class="headerlink" href="#release-on-the-market" title="Link to this heading">¶</a></h2>
 <p>If you have built your own APK with Buildozer or with
@@ -536,7 +589,7 @@ of the <a class="reference internal" href="android.html"><span class="doc">Kivy 
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Nov 19, 2026.
+    Last updated on Nov 20, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

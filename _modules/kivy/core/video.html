@@ -399,6 +399,11 @@
 <span class="sd">    (:class:`~kivy.core.video.video_mediafoundation.VideoMediaFoundation`),</span>
 <span class="sd">    the default on Windows.</span>
 
+<span class="sd">    Rewrote the ``android`` provider</span>
+<span class="sd">    (:class:`~kivy.core.video.video_android.VideoAndroid`) on androidx.media3</span>
+<span class="sd">    ExoPlayer and made it the video provider on Android. The app has to add</span>
+<span class="sd">    ExoPlayer's Maven dependency to its build.</span>
+
 <span class="sd">.. versionchanged:: 1.10.0</span>
 <span class="sd">    The pyglet, pygst and gi providers have been removed.</span>
 
@@ -418,7 +423,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">core_select_lib</span><span class="p">,</span> <span class="n">get_provider_modules</span><span class="p">,</span> <span class="n">make_provider_tuple</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.event</span><span class="w"> </span><span class="kn">import</span> <span class="n">EventDispatcher</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">Logger</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">path_to_str</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kivy.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">path_to_str</span><span class="p">,</span> <span class="n">platform</span>
 
 
 <div class="viewcode-block" id="VideoBase">
@@ -765,6 +770,13 @@
 <span class="n">all_providers</span> <span class="o">=</span> <span class="n">get_provider_modules</span><span class="p">(</span><span class="s1">'video'</span><span class="p">)</span>
 <span class="n">video_providers</span> <span class="o">=</span> <span class="p">[]</span>
 
+<span class="c1"># android plays through androidx.media3 ExoPlayer, the only video</span>
+<span class="c1"># provider on Android. Its module imports jnius, so it is only tried there.</span>
+<span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s1">'android'</span><span class="p">:</span>
+    <span class="n">video_providers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">make_provider_tuple</span><span class="p">(</span>
+        <span class="s1">'android'</span><span class="p">,</span> <span class="n">all_providers</span><span class="p">,</span> <span class="s1">'VideoAndroid'</span>
+    <span class="p">))</span>
+
 <span class="c1"># avfoundation is the default video provider on Darwin (macOS / iOS).</span>
 <span class="c1"># It is compiled only when c_options['use_avfoundation'] is True in</span>
 <span class="c1"># setup.py, so the import naturally fails on non-Darwin platforms and</span>
@@ -808,7 +820,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Nov 19, 2026.
+    Last updated on Nov 20, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

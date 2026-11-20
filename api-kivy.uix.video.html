@@ -412,6 +412,13 @@ Foundation, so Kivy uses the next installed provider there unless the
 Media Feature Pack is installed. See
 <code class="xref py py-class docutils literal notranslate"><span class="pre">VideoMediaFoundation</span></code>
 for details.</p>
+<p>On Android, the <code class="docutils literal notranslate"><span class="pre">android</span></code> provider plays video through androidx.media3
+ExoPlayer, which the app has to add to its build as a Maven dependency
+(see “Playing video” in the Android packaging guide). It plays what the
+device’s decoders support: H.264 everywhere, HEVC, VP9 and AV1 on most
+recent devices, and HLS or DASH streams when the matching Media3 module is
+added too. See <code class="xref py py-class docutils literal notranslate"><span class="pre">VideoAndroid</span></code> for
+details.</p>
 <p>Video loading is asynchronous - many properties are not available until
 the video is loaded (when the texture is created):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_position_change</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
@@ -447,8 +454,8 @@ started/loaded by passing <code class="docutils literal notranslate"><span class
 has no installed decoder, <a class="reference internal" href="#kivy.uix.video.Video.state" title="kivy.uix.video.Video.state"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Video.state</span></code></a> changes to <code class="docutils literal notranslate"><span class="pre">'stop'</span></code> and
 the <code class="docutils literal notranslate"><span class="pre">on_error</span></code> event fires with a message. A missing local file is
 reported with any provider; other failures are reported by the Media
-Foundation (Windows) and AVFoundation (macOS, iOS) providers. Nothing is
-raised, so an app that doesn’t handle it keeps running:</p>
+Foundation (Windows), AVFoundation (macOS, iOS) and Android providers.
+Nothing is raised, so an app that doesn’t handle it keeps running:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_video_error</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">'Video failed:'</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
 
@@ -613,8 +620,8 @@ ahead).</p></li>
 </ul>
 </li>
 </ul>
-<p>Other providers (Media Foundation, GStreamer, FFmpeg / ffpyplayer)
-currently expose no documented <code class="docutils literal notranslate"><span class="pre">options</span></code> keys: unknown kwargs in
+<p>Other providers (Media Foundation, Android, GStreamer, FFmpeg /
+ffpyplayer) currently expose no documented <code class="docutils literal notranslate"><span class="pre">options</span></code> keys: unknown kwargs in
 <code class="docutils literal notranslate"><span class="pre">options</span></code> are also unpacked as keyword arguments to the core video
 for back-compat with apps that put well-known kwargs (e.g.
 <code class="docutils literal notranslate"><span class="pre">eos='loop'</span></code>) in this dict.</p>
@@ -764,7 +771,7 @@ to 1.</p>
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Nov 19, 2026.
+    Last updated on Nov 20, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

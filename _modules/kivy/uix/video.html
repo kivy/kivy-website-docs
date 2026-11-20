@@ -395,6 +395,14 @@
 <span class="sd">:class:`~kivy.core.video.video_mediafoundation.VideoMediaFoundation`</span>
 <span class="sd">for details.</span>
 
+<span class="sd">On Android, the ``android`` provider plays video through androidx.media3</span>
+<span class="sd">ExoPlayer, which the app has to add to its build as a Maven dependency</span>
+<span class="sd">(see "Playing video" in the Android packaging guide). It plays what the</span>
+<span class="sd">device's decoders support: H.264 everywhere, HEVC, VP9 and AV1 on most</span>
+<span class="sd">recent devices, and HLS or DASH streams when the matching Media3 module is</span>
+<span class="sd">added too. See :class:`~kivy.core.video.video_android.VideoAndroid` for</span>
+<span class="sd">details.</span>
+
 <span class="sd">Video loading is asynchronous - many properties are not available until</span>
 <span class="sd">the video is loaded (when the texture is created)::</span>
 
@@ -430,8 +438,8 @@
 <span class="sd">has no installed decoder, :attr:`Video.state` changes to ``'stop'`` and</span>
 <span class="sd">the ``on_error`` event fires with a message. A missing local file is</span>
 <span class="sd">reported with any provider; other failures are reported by the Media</span>
-<span class="sd">Foundation (Windows) and AVFoundation (macOS, iOS) providers. Nothing is</span>
-<span class="sd">raised, so an app that doesn't handle it keeps running::</span>
+<span class="sd">Foundation (Windows), AVFoundation (macOS, iOS) and Android providers.</span>
+<span class="sd">Nothing is raised, so an app that doesn't handle it keeps running::</span>
 
 <span class="sd">    def on_video_error(instance, error):</span>
 <span class="sd">        print('Video failed:', error)</span>
@@ -589,8 +597,8 @@
 <span class="sd">        first decodable frame is available rather than buffering</span>
 <span class="sd">        ahead).</span>
 
-<span class="sd">    Other providers (Media Foundation, GStreamer, FFmpeg / ffpyplayer)</span>
-<span class="sd">    currently expose no documented ``options`` keys: unknown kwargs in</span>
+<span class="sd">    Other providers (Media Foundation, Android, GStreamer, FFmpeg /</span>
+<span class="sd">    ffpyplayer) currently expose no documented ``options`` keys: unknown kwargs in</span>
 <span class="sd">    ``options`` are also unpacked as keyword arguments to the core video</span>
 <span class="sd">    for back-compat with apps that put well-known kwargs (e.g.</span>
 <span class="sd">    ``eos='loop'``) in this dict.</span>
@@ -874,7 +882,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Nov 19, 2026.
+    Last updated on Nov 20, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

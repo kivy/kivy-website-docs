@@ -1689,6 +1689,47 @@ decode, select the previous provider before importing Kivy:</p>
 </pre></div>
 </div>
 <p>See <a class="reference internal" href="guide/environment.html#environment"><span class="std std-ref">Controlling the environment</span></a> for the full list of <code class="docutils literal notranslate"><span class="pre">KIVY_VIDEO</span></code> values.</p>
+<p><em>Android video provider rebuilt on Media3 ExoPlayer</em></p>
+<p>Kivy 3.x.x replaces the <code class="docutils literal notranslate"><span class="pre">android</span></code> video provider, which was built on
+<code class="docutils literal notranslate"><span class="pre">android.media.MediaPlayer</span></code>, with one built on androidx.media3 ExoPlayer, and
+makes it the video provider on Android.</p>
+<p><strong>Behavior Changes</strong></p>
+<ul class="simple">
+<li><p>The app has to add ExoPlayer to its Android build as a Maven dependency,
+<code class="docutils literal notranslate"><span class="pre">androidx.media3:media3-exoplayer</span></code>, and compile against API 36, which
+Media3 1.11 requires. Without the dependency, every video fires <code class="docutils literal notranslate"><span class="pre">on_error</span></code>
+with a message that names it. See <a class="reference internal" href="guide/packaging-android.html#packaging-android-video"><span class="std std-ref">Playing video</span></a>.</p></li>
+<li><p>Frames are drawn from the decoder into an OpenGL texture without a copy
+through the CPU, as before. The crop and rotation the decoder reports are now
+applied, so portrait videos recorded on a phone play upright.</p></li>
+<li><p>HLS (<code class="docutils literal notranslate"><span class="pre">.m3u8</span></code>) and DASH (<code class="docutils literal notranslate"><span class="pre">.mpd</span></code>) streams play when the app also adds
+<code class="docutils literal notranslate"><span class="pre">androidx.media3:media3-exoplayer-hls</span></code> or <code class="docutils literal notranslate"><span class="pre">media3-exoplayer-dash</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">content://</span></code> URIs (MediaStore, the Storage Access Framework, a share intent)
+play, in addition to paths and <code class="docutils literal notranslate"><span class="pre">http(s)://</span></code> URLs.</p></li>
+<li><p>A video that can’t be played fires <code class="docutils literal notranslate"><span class="pre">on_error</span></code> (see <em>New on_error event for
+videos that can’t play</em> below).</p></li>
+<li><p>Playback pauses when the app is paused and resumes with it. The player
+requests audio focus, so it pauses for a phone call.</p></li>
+<li><p><a class="reference internal" href="api-kivy.core.video.html#kivy.core.video.VideoBase.generate_thumbnail" title="kivy.core.video.VideoBase.generate_thumbnail"><code class="xref py py-meth docutils literal notranslate"><span class="pre">generate_thumbnail()</span></code></a> is supported.</p></li>
+</ul>
+<p><strong>Migration Impact</strong></p>
+<p>Add the dependency, and raise the compile SDK, in the app’s build. With
+Buildozer, in <code class="docutils literal notranslate"><span class="pre">buildozer.spec</span></code>:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="na">android.api</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">36</span>
+<span class="na">android.gradle_dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">androidx.media3:media3-exoplayer:1.11.1</span>
+</pre></div>
+</div>
+<p>With kivyforge, in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[tool.kivy.android]</span>
+<span class="n">compile_sdk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">36</span>
+
+<span class="k">[tool.kivy.android.gradle]</span>
+<span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"androidx.media3:media3-exoplayer:1.11.1"</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Apps that play network sources also need the <code class="docutils literal notranslate"><span class="pre">INTERNET</span></code> permission. Apps whose
+release builds run R8 need a keep rule for Media3; see
+<a class="reference internal" href="guide/packaging-android.html#packaging-android-video"><span class="std std-ref">Playing video</span></a>.</p>
 <p><em>New on_error event for videos that can’t play</em></p>
 <p>Kivy 3.x.x adds an <code class="docutils literal notranslate"><span class="pre">on_error</span></code> event to <a class="reference internal" href="api-kivy.core.video.html#kivy.core.video.VideoBase" title="kivy.core.video.VideoBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">VideoBase</span></code></a>,
 <a class="reference internal" href="api-kivy.uix.video.html#kivy.uix.video.Video" title="kivy.uix.video.Video"><code class="xref py py-class docutils literal notranslate"><span class="pre">Video</span></code></a> and <a class="reference internal" href="api-kivy.uix.videoplayer.html#kivy.uix.videoplayer.VideoPlayer" title="kivy.uix.videoplayer.VideoPlayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">VideoPlayer</span></code></a>.
@@ -1708,8 +1749,9 @@ only visible difference is that <code class="docutils literal notranslate"><span
 <li><p>A missing local file is now reported too. In Kivy 2.x.x
 <a class="reference internal" href="api-kivy.uix.video.html#kivy.uix.video.Video" title="kivy.uix.video.Video"><code class="xref py py-class docutils literal notranslate"><span class="pre">Video</span></code></a> passed no filename to the provider when the
 file couldn’t be found, and nothing reported it.</p></li>
-<li><p>The Media Foundation (Windows) and AVFoundation (macOS, iOS) providers fire
-<code class="docutils literal notranslate"><span class="pre">on_error</span></code>. The <code class="docutils literal notranslate"><span class="pre">gstplayer</span></code> and <code class="docutils literal notranslate"><span class="pre">ffpyplayer</span></code> providers don’t yet: with
+<li><p>The Media Foundation (Windows), AVFoundation (macOS, iOS) and Android
+providers fire <code class="docutils literal notranslate"><span class="pre">on_error</span></code>. The <code class="docutils literal notranslate"><span class="pre">gstplayer</span></code> and <code class="docutils literal notranslate"><span class="pre">ffpyplayer</span></code> providers
+don’t yet: with
 them, only a missing local file is reported.</p></li>
 </ul>
 <p><strong>Migration Impact</strong></p>
@@ -1753,7 +1795,7 @@ that can’t play.</p>
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Nov 19, 2026.
+    Last updated on Nov 20, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->
