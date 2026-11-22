@@ -394,11 +394,16 @@
 <span id="video"></span><h1>Video<a class="headerlink" href="#module-kivy.uix.video" title="Link to this heading">¶</a></h1>
 <p>The <a class="reference internal" href="#kivy.uix.video.Video" title="kivy.uix.video.Video"><code class="xref py py-class docutils literal notranslate"><span class="pre">Video</span></code></a> widget is used to display video files and streams.
 Depending on your Video core provider, platform, and plugins, you will
-be able to play different formats. For example, gstreamer is more
-versatile, and can read many video containers and codecs such as MKV,
-OGV, AVI, MOV, FLV (if the correct gstreamer plugins are installed). Our
+be able to play different formats. Our
 <a class="reference internal" href="api-kivy.core.video.html#kivy.core.video.VideoBase" title="kivy.core.video.VideoBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">VideoBase</span></code></a> implementation is used under the
 hood.</p>
+<p>On Linux, including the Raspberry Pi, the <code class="docutils literal notranslate"><span class="pre">gstplayer</span></code> provider plays
+through the system’s GStreamer: local files, HTTP, HLS and DASH, in every
+format the installed GStreamer plugins support. Kivy’s wheels include it;
+only GStreamer’s runtime packages are needed. See
+<code class="xref py py-class docutils literal notranslate"><span class="pre">VideoGstplayer</span></code> for details. On
+Windows it is available as an alternative to Media Foundation with
+<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">&quot;kivy[gstreamer]&quot;</span></code>.</p>
 <p>On macOS and iOS, the default AVFoundation provider plays whatever
 AVFoundation can open, such as MP4 and MOV files with H.264 or HEVC
 video. See <code class="xref py py-class docutils literal notranslate"><span class="pre">VideoAVFoundation</span></code>
@@ -619,8 +624,19 @@ first decodable frame is available rather than buffering
 ahead).</p></li>
 </ul>
 </li>
+<li><p>GStreamer (Linux, Windows) – see
+<code class="xref py py-class docutils literal notranslate"><span class="pre">VideoGstplayer</span></code>:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">render</span></code> (<code class="docutils literal notranslate"><span class="pre">'auto'</span></code>, <code class="docutils literal notranslate"><span class="pre">'nv12'</span></code> or <code class="docutils literal notranslate"><span class="pre">'rgba'</span></code>, default
+<code class="docutils literal notranslate"><span class="pre">'auto'</span></code>) – how frames reach Kivy. <code class="docutils literal notranslate"><span class="pre">'auto'</span></code> and <code class="docutils literal notranslate"><span class="pre">'nv12'</span></code>
+upload the two NV12 planes and convert them with a shader;
+<code class="docutils literal notranslate"><span class="pre">'rgba'</span></code> converts on the CPU, for debugging.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">force_sw_decoders</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>, default <code class="docutils literal notranslate"><span class="pre">False</span></code>) – never use
+a hardware decoder.</p></li>
 </ul>
-<p>Other providers (Media Foundation, Android, GStreamer, FFmpeg /
+</li>
+</ul>
+<p>Other providers (Media Foundation, Android, FFmpeg /
 ffpyplayer) currently expose no documented <code class="docutils literal notranslate"><span class="pre">options</span></code> keys: unknown kwargs in
 <code class="docutils literal notranslate"><span class="pre">options</span></code> are also unpacked as keyword arguments to the core video
 for back-compat with apps that put well-known kwargs (e.g.

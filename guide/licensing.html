@@ -373,6 +373,7 @@
 <li><a class="reference internal" href="#dependencies">Dependencies</a></li>
 <li><a class="reference internal" href="#windows-pyinstaller">Windows (PyInstaller)</a><ul>
 <li><a class="reference internal" href="#visual-studio-redistributables">Visual Studio Redistributables</a></li>
+<li><a class="reference internal" href="#id1">GStreamer</a></li>
 <li><a class="reference internal" href="#other-libraries">Other libraries</a></li>
 </ul>
 </li>
@@ -413,7 +414,7 @@ only pasting a copyright notice in your app and not pretending you wrote the
 code.</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://docutils.sourceforge.io/COPYING.html">docutils</a></p></li>
-<li><p><a href="#id1"><span class="problematic" id="id2">`pygments https://github.com/pygments/pygments/blob/master/LICENSE`_</span></a></p></li>
+<li><p><a href="#id2"><span class="problematic" id="id3">`pygments https://github.com/pygments/pygments/blob/master/LICENSE`_</span></a></p></li>
 <li><p><a class="reference external" href="https://www.libsdl.org/license.php">sdl3</a></p></li>
 <li><p><a class="reference external" href="https://glew.sourceforge.net/glew.txt">glew</a></p></li>
 <li><p><a class="reference external" href="https://github.com/GStreamer/gstreamer/blob/master/COPYING">gstreamer</a>
@@ -441,6 +442,30 @@ requirements.</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://msdn.microsoft.com/en-us/library/8kche8ah(v=vs.90).aspx">List of redistributables</a></p></li>
 </ul>
+</section>
+<section id="id1">
+<h3>GStreamer<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<p>GStreamer is LGPL. If your app bundles GStreamer’s official wheels
+(<code class="docutils literal notranslate"><span class="pre">kivy[gstreamer]</span></code>), it ships GStreamer’s libraries and plugins and their
+dependencies, each under its own licence. The <code class="docutils literal notranslate"><span class="pre">gstreamer-plugins</span></code> wheel
+already contains FFmpeg’s decoders (gst-libav). The
+<code class="docutils literal notranslate"><span class="pre">gstreamer-plugins-restricted</span></code> wheel (<code class="docutils literal notranslate"><span class="pre">kivy[gstreamer-restricted]</span></code>)
+contains plugins upstream considers patent-encumbered in some countries, such
+as MPEG-TS; Kivy never installs it unless asked.</p>
+<p>The notices are yours to provide; neither Kivy nor the packaging tools
+collect them:</p>
+<ul class="simple">
+<li><p>The wheels contain no licence texts. Their metadata lists the licences of
+everything inside them, GPL ones included, without saying which component
+each belongs to. The licence of each component is in the recipe that
+builds it, in GStreamer’s <a class="reference external" href="https://gitlab.freedesktop.org/gstreamer/cerbero">cerbero</a>
+build system; take the texts from those projects.</p></li>
+<li><p>Check which of those components your app actually ships, in particular
+whether any of them is GPL, and what each licence and the restricted
+plugins mean for where you distribute your app.</p></li>
+</ul>
+<p>On Linux and the Raspberry Pi, Kivy uses the system’s GStreamer, so an app
+that doesn’t bundle it has no GStreamer notices to ship.</p>
 </section>
 <section id="other-libraries">
 <h3>Other libraries<a class="headerlink" href="#other-libraries" title="Link to this heading">¶</a></h3>

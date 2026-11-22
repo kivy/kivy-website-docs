@@ -764,16 +764,20 @@
 <span class="k">elif</span> <span class="n">platform</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'macosx'</span><span class="p">,</span> <span class="s1">'ios'</span><span class="p">):</span>
     <span class="n">audio_libs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">make_provider_tuple</span><span class="p">(</span><span class="s1">'avplayer'</span><span class="p">,</span> <span class="n">all_providers</span><span class="p">))</span>
 
+<span class="n">audio_libs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">make_provider_tuple</span><span class="p">(</span><span class="s1">'ffpyplayer'</span><span class="p">,</span> <span class="n">all_providers</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="n">USE_SDL3</span><span class="p">:</span>
+    <span class="n">audio_libs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">make_provider_tuple</span><span class="p">(</span><span class="s1">'sdl3'</span><span class="p">,</span> <span class="n">all_providers</span><span class="p">))</span>
+
+<span class="c1"># After sdl3: since 3.0 the GStreamer core is built into every Linux and</span>
+<span class="c1"># Windows wheel, and putting it first would change which provider plays a</span>
+<span class="c1"># sound on any machine that has GStreamer. It still plays the formats SDL3</span>
+<span class="c1"># doesn't claim.</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">kivy.lib.gstplayer</span><span class="w"> </span><span class="kn">import</span> <span class="n">GstPlayer</span>  <span class="c1"># NOQA</span>
     <span class="n">audio_libs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">make_provider_tuple</span><span class="p">(</span><span class="s1">'gstplayer'</span><span class="p">,</span> <span class="n">all_providers</span><span class="p">))</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="k">pass</span>
-
-<span class="n">audio_libs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">make_provider_tuple</span><span class="p">(</span><span class="s1">'ffpyplayer'</span><span class="p">,</span> <span class="n">all_providers</span><span class="p">))</span>
-
-<span class="k">if</span> <span class="n">USE_SDL3</span><span class="p">:</span>
-    <span class="n">audio_libs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">make_provider_tuple</span><span class="p">(</span><span class="s1">'sdl3'</span><span class="p">,</span> <span class="n">all_providers</span><span class="p">))</span>
 
 <span class="n">libs_loaded</span> <span class="o">=</span> <span class="n">core_register_libs</span><span class="p">(</span><span class="s1">'audio_output'</span><span class="p">,</span> <span class="n">audio_libs</span><span class="p">)</span>
 </pre></div>

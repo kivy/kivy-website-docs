@@ -378,6 +378,7 @@
 <li><a class="reference internal" href="#id2">Fedora</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#video-and-audio-with-gstreamer">Video and audio with GStreamer</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#using-software-packages-ppa-etc">Using software packages (PPA etc.)</a><ul>
@@ -488,6 +489,29 @@ before continuing. Additionally, if you’d like to be able to use the x11 windo
 </pre></div>
 </div>
 </section>
+</section>
+<section id="video-and-audio-with-gstreamer">
+<span id="install-gstreamer-linux"></span><h3>Video and audio with GStreamer<a class="headerlink" href="#video-and-audio-with-gstreamer" title="Link to this heading">¶</a></h3>
+<p>Kivy plays video through the system’s GStreamer (the <code class="docutils literal notranslate"><span class="pre">gstplayer</span></code> provider,
+<code class="xref py py-class docutils literal notranslate"><span class="pre">VideoGstplayer</span></code>). The provider is part
+of Kivy’s Linux wheels and is also built from source without GStreamer’s
+<code class="docutils literal notranslate"><span class="pre">-dev</span></code> packages: only the runtime is needed, at version 1.22 or newer. Many
+desktops already have most of it; for local files, HTTP, HLS and DASH install:</p>
+<p>Ubuntu, Debian and Raspberry Pi OS:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">gstreamer1</span><span class="mf">.0</span><span class="o">-</span><span class="n">plugins</span><span class="o">-</span><span class="n">base</span> <span class="n">gstreamer1</span><span class="mf">.0</span><span class="o">-</span><span class="n">plugins</span><span class="o">-</span><span class="n">good</span> \
+    <span class="n">gstreamer1</span><span class="mf">.0</span><span class="o">-</span><span class="n">plugins</span><span class="o">-</span><span class="n">bad</span> <span class="n">gstreamer1</span><span class="mf">.0</span><span class="o">-</span><span class="n">libav</span>
+</pre></div>
+</div>
+<p>Fedora (H.264 and some other formats need the RPM Fusion repository above):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">gstreamer1</span><span class="o">-</span><span class="n">plugins</span><span class="o">-</span><span class="n">base</span> <span class="n">gstreamer1</span><span class="o">-</span><span class="n">plugins</span><span class="o">-</span><span class="n">good</span> \
+    <span class="n">gstreamer1</span><span class="o">-</span><span class="n">plugins</span><span class="o">-</span><span class="n">bad</span><span class="o">-</span><span class="n">free</span> <span class="n">gstreamer1</span><span class="o">-</span><span class="n">plugin</span><span class="o">-</span><span class="n">libav</span>
+</pre></div>
+</div>
+<p>Hardware decoding uses GStreamer’s <code class="docutils literal notranslate"><span class="pre">va</span></code> plugin (in <code class="docutils literal notranslate"><span class="pre">-bad</span></code>) with the GPU’s
+VA-API driver, or NVIDIA’s <code class="docutils literal notranslate"><span class="pre">nvcodec</span></code>; the provider logs which decoder it
+uses. A format with no installed decoder fires
+<a class="reference internal" href="../api-kivy.core.video.html#kivy.core.video.VideoBase.on_error" title="kivy.core.video.VideoBase.on_error"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_error()</span></code></a> with <code class="docutils literal notranslate"><span class="pre">missing</span> <span class="pre">GStreamer</span> <span class="pre">plugin:</span></code>
+and the plugin’s name.</p>
 </section>
 </section>
 <section id="using-software-packages-ppa-etc">

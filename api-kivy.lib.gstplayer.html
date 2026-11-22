@@ -378,17 +378,23 @@
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 1.8.0.</span></p>
 </div>
-<p><cite>GstPlayer</cite> is a media player implemented specifically for Kivy with Gstreamer
-1.0. It doesn’t use Gi at all and is focused on what we want: the ability
-to read video and stream the image in a callback, or read an audio file.
-Don’t use it directly but use our Core providers instead.</p>
-<p>This player is automatically compiled if you have <cite>pkg-config –libs –cflags
-gstreamer-1.0</cite> working.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.0.0: </span>Rewritten. GStreamer is loaded at run time instead of linked, so the
+module is built without GStreamer and uses the runtime the machine
+has. It drives <code class="docutils literal notranslate"><span class="pre">playbin3</span></code> from Kivy’s thread (no GLib main loop and
+no callbacks from GStreamer’s threads). <code class="docutils literal notranslate"><span class="pre">glib_iteration</span></code> and the
+callback-based constructor are gone.</p>
+</div>
+<p><cite>GstPlayer</cite> is the GStreamer core used by Kivy’s <code class="docutils literal notranslate"><span class="pre">gstplayer</span></code> video and
+audio providers. Don’t use it directly; use the core providers instead.</p>
+<p>The compiled core, which opens GStreamer, is imported on first use of one
+of the names below; importing it raises <code class="docutils literal notranslate"><span class="pre">ImportError</span></code> when no usable
+GStreamer is found.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This is an external library and Kivy does not provide any support for it.
-It might change in the future and we advise you don’t rely on it in your
-code.</p>
+<p>This is an internal library and Kivy does not provide any support for
+it. It might change in the future and we advise you don’t rely on it in
+your code.</p>
 </div>
 <div class="toctree-wrapper compound">
 </div>

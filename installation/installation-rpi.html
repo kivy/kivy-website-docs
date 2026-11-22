@@ -380,6 +380,7 @@
 <li><a class="reference internal" href="#cross-compilation-for-raspberry-pi-os-bookworm-32-bit">Cross-Compilation for Raspberry Pi OS Bookworm (32 bit)</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#video-on-raspberry-pi">Video on Raspberry Pi</a></li>
 <li><a class="reference internal" href="#headless-support-on-raspberry-pi">Headless support on Raspberry Pi</a></li>
 <li><a class="reference internal" href="#hardware-acceleration">Hardware acceleration</a></li>
 <li><a class="reference internal" href="#raspberry-pi-window-provider-and-gl-backend">Raspberry Pi window provider and GL backend</a></li>
@@ -470,6 +471,20 @@ uses the (now deprecated but still useful) DISPMANX API is only compiled when ru
 platform that still  supports it.</p>
 <p>Please note that the <cite>egl_rpi</cite> window handler is not supported on Raspberry Pi 4 and higher.</p>
 </section>
+</section>
+<section id="video-on-raspberry-pi">
+<h2>Video on Raspberry Pi<a class="headerlink" href="#video-on-raspberry-pi" title="Link to this heading">¶</a></h2>
+<p>Kivy plays video through Raspberry Pi OS’s own GStreamer (the <code class="docutils literal notranslate"><span class="pre">gstplayer</span></code>
+provider). The Raspberry Pi OS desktop image already has everything it needs;
+on the Lite image, install the runtime (no <code class="docutils literal notranslate"><span class="pre">-dev</span></code> packages are needed):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">gstreamer1</span><span class="mf">.0</span><span class="o">-</span><span class="n">plugins</span><span class="o">-</span><span class="n">base</span> <span class="n">gstreamer1</span><span class="mf">.0</span><span class="o">-</span><span class="n">plugins</span><span class="o">-</span><span class="n">good</span> \
+    <span class="n">gstreamer1</span><span class="mf">.0</span><span class="o">-</span><span class="n">plugins</span><span class="o">-</span><span class="n">bad</span> <span class="n">gstreamer1</span><span class="mf">.0</span><span class="o">-</span><span class="n">libav</span>
+</pre></div>
+</div>
+<p>GStreamer 1.22 (Bookworm) is the minimum; Trixie ships 1.26.</p>
+<p>The Raspberry Pi 5 decodes HEVC in hardware; H.264 is decoded in software
+there. Every frame is copied into a Kivy texture, which 1080p video keeps up
+with; 4K video plays at a few frames per second.</p>
 </section>
 <section id="headless-support-on-raspberry-pi">
 <h2>Headless support on Raspberry Pi<a class="headerlink" href="#headless-support-on-raspberry-pi" title="Link to this heading">¶</a></h2>

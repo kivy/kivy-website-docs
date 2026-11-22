@@ -532,38 +532,28 @@ This section only applies if your app selects the GStreamer provider
 (<code class="docutils literal notranslate"><span class="pre">KIVY_VIDEO=gstplayer</span></code>), for example to play a format Windows has
 no decoder for.</p>
 </div>
-<p>Following we’ll slightly modify the example above to package a app that uses
-gstreamer for video. We’ll use the <code class="docutils literal notranslate"><span class="pre">videoplayer</span></code> example found at
-<code class="docutils literal notranslate"><span class="pre">examples-path\widgets\videoplayer.py</span></code>. Create a folder somewhere called
-<code class="docutils literal notranslate"><span class="pre">VideoPlayer</span></code> and on the command line change your current directory to that
-folder and do:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">PyInstaller</span> <span class="o">--</span><span class="n">name</span> <span class="n">gstvideo</span> <span class="n">examples</span><span class="o">-</span><span class="n">path</span>\<span class="n">widgets</span>\<span class="n">videoplayer</span><span class="o">.</span><span class="n">py</span>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.0.0: </span><code class="docutils literal notranslate"><span class="pre">kivy_deps.gstreamer</span></code> and its <code class="docutils literal notranslate"><span class="pre">gstreamer.dep_bins</span></code> are gone. The
+<code class="docutils literal notranslate"><span class="pre">gstplayer</span></code> provider now loads GStreamer when the app runs, from the
+official <code class="docutils literal notranslate"><span class="pre">gstreamer-*</span></code> wheels (<code class="docutils literal notranslate"><span class="pre">kivy[gstreamer]</span></code>) or installer.</p>
+</div>
+<p>To bundle GStreamer’s official wheels, pass them to <code class="docutils literal notranslate"><span class="pre">Analysis</span></code> with
+<code class="xref py py-func docutils literal notranslate"><span class="pre">get_gstreamer_datas()</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy.tools.packaging.pyinstaller_hooks</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_gstreamer_datas</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">Analysis</span><span class="p">([</span><span class="s1">'main.py'</span><span class="p">],</span>
+             <span class="o">...</span>
+             <span class="n">datas</span><span class="o">=</span><span class="n">get_gstreamer_datas</span><span class="p">(),</span>
+             <span class="o">...</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>to create the <code class="docutils literal notranslate"><span class="pre">gstvideo.spec</span></code> file. Edit as above and this time include the
-gstreamer dependency as well:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">kivy_deps</span><span class="w"> </span><span class="kn">import</span> <span class="n">sdl3</span><span class="p">,</span> <span class="n">glew</span><span class="p">,</span> <span class="n">gstreamer</span>
-</pre></div>
-</div>
-<p>and add the <code class="docutils literal notranslate"><span class="pre">Tree()</span></code> to include the video files, e.g.
-<code class="docutils literal notranslate"><span class="pre">Tree('examples-path\\widgets')</span></code> as well as the gstreamer dependencies so it
-should look something like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">coll</span> <span class="o">=</span> <span class="n">COLLECT</span><span class="p">(</span><span class="n">exe</span><span class="p">,</span> <span class="n">Tree</span><span class="p">(</span><span class="s1">'examples-path</span><span class="se">\\</span><span class="s1">widgets'</span><span class="p">),</span>
-               <span class="n">a</span><span class="o">.</span><span class="n">binaries</span><span class="p">,</span>
-               <span class="n">a</span><span class="o">.</span><span class="n">zipfiles</span><span class="p">,</span>
-               <span class="n">a</span><span class="o">.</span><span class="n">datas</span><span class="p">,</span>
-               <span class="o">*</span><span class="p">[</span><span class="n">Tree</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="p">(</span><span class="n">sdl3</span><span class="o">.</span><span class="n">dep_bins</span> <span class="o">+</span> <span class="n">glew</span><span class="o">.</span><span class="n">dep_bins</span> <span class="o">+</span> <span class="n">gstreamer</span><span class="o">.</span><span class="n">dep_bins</span><span class="p">)],</span>
-               <span class="n">strip</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-               <span class="n">upx</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-               <span class="n">name</span><span class="o">=</span><span class="s1">'gstvideo'</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Then build the spec file in <code class="docutils literal notranslate"><span class="pre">VideoPlayer</span></code> with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">PyInstaller</span> <span class="n">gstvideo</span><span class="o">.</span><span class="n">spec</span>
-</pre></div>
-</div>
-<p>and you should find gstvideo.exe in <code class="docutils literal notranslate"><span class="pre">VideoPlayer\dist\gstvideo</span></code>,
-which when run will play a video.</p>
+<p>Each installed <code class="docutils literal notranslate"><span class="pre">gstreamer-*</span></code> wheel is bundled whole, under its own package
+name. That covers GStreamer’s libraries and plugins, the plugin scanner, and
+GLib’s TLS module for HTTPS. The provider finds them at run time just as it
+does in a virtual environment. The wheels add about 260 MB, more with
+<code class="docutils literal notranslate"><span class="pre">kivy[gstreamer-restricted]</span></code>. The first video an app plays on a machine
+waits for GStreamer to scan its plugins in the background, which can take
+10 seconds or more; later launches don’t scan again.</p>
 </section>
 <section id="overwriting-the-default-hook">
 <span id="overwrite-win-hook"></span><h2>Overwriting the default hook<a class="headerlink" href="#overwriting-the-default-hook" title="Link to this heading">¶</a></h2>
@@ -571,9 +561,7 @@ which when run will play a video.</p>
 <section id="including-excluding-video-and-audio-and-reducing-app-size">
 <h2>Including/excluding video and audio and reducing app size<a class="headerlink" href="#including-excluding-video-and-audio-and-reducing-app-size" title="Link to this heading">¶</a></h2>
 <p>PyInstaller includes a hook for kivy that by default adds <strong>all</strong> the core
-modules used by kivy, e.g. audio, video, spelling etc (you still need to
-package the gstreamer dlls manually with <code class="docutils literal notranslate"><span class="pre">Tree()</span></code> - see the example above)
-and their dependencies. If the hook is not installed or to reduce app size some
+modules used by kivy, e.g. audio, video, spelling etc and their dependencies. If the hook is not installed or to reduce app size some
 of these modules may be excluded, e.g. if no audio/video is used, with
 an alternative hook.</p>
 <p>Kivy provides the alternate hook at
@@ -634,7 +622,7 @@ video in this example) with
 <section id="alternate-installations">
 <h2>Alternate installations<a class="headerlink" href="#alternate-installations" title="Link to this heading">¶</a></h2>
 <p>The previous examples used e.g.
-<code class="docutils literal notranslate"><span class="pre">*[Tree(p)</span> <span class="pre">for</span> <span class="pre">p</span> <span class="pre">in</span> <span class="pre">(sdl3.dep_bins</span> <span class="pre">+</span> <span class="pre">glew.dep_bins</span> <span class="pre">+</span> <span class="pre">gstreamer.dep_bins)],</span></code>
+<code class="docutils literal notranslate"><span class="pre">*[Tree(p)</span> <span class="pre">for</span> <span class="pre">p</span> <span class="pre">in</span> <span class="pre">(sdl3.dep_bins</span> <span class="pre">+</span> <span class="pre">glew.dep_bins)],</span></code>
 to make PyInstaller add all the dlls used by these dependencies. If kivy
 was not installed using the wheels method these commands will not work and e.g.
 <code class="docutils literal notranslate"><span class="pre">kivy_deps.sdl3</span></code> will fail to import. Instead, one must find the location

@@ -374,11 +374,17 @@
 
 <span class="sd">The :class:`Video` widget is used to display video files and streams.</span>
 <span class="sd">Depending on your Video core provider, platform, and plugins, you will</span>
-<span class="sd">be able to play different formats. For example, gstreamer is more</span>
-<span class="sd">versatile, and can read many video containers and codecs such as MKV,</span>
-<span class="sd">OGV, AVI, MOV, FLV (if the correct gstreamer plugins are installed). Our</span>
+<span class="sd">be able to play different formats. Our</span>
 <span class="sd">:class:`~kivy.core.video.VideoBase` implementation is used under the</span>
 <span class="sd">hood.</span>
+
+<span class="sd">On Linux, including the Raspberry Pi, the ``gstplayer`` provider plays</span>
+<span class="sd">through the system's GStreamer: local files, HTTP, HLS and DASH, in every</span>
+<span class="sd">format the installed GStreamer plugins support. Kivy's wheels include it;</span>
+<span class="sd">only GStreamer's runtime packages are needed. See</span>
+<span class="sd">:class:`~kivy.core.video.video_gstplayer.VideoGstplayer` for details. On</span>
+<span class="sd">Windows it is available as an alternative to Media Foundation with</span>
+<span class="sd">``pip install "kivy[gstreamer]"``.</span>
 
 <span class="sd">On macOS and iOS, the default AVFoundation provider plays whatever</span>
 <span class="sd">AVFoundation can open, such as MP4 and MOV files with H.264 or HEVC</span>
@@ -597,7 +603,17 @@
 <span class="sd">        first decodable frame is available rather than buffering</span>
 <span class="sd">        ahead).</span>
 
-<span class="sd">    Other providers (Media Foundation, Android, GStreamer, FFmpeg /</span>
+<span class="sd">    * GStreamer (Linux, Windows) -- see</span>
+<span class="sd">      :class:`~kivy.core.video.video_gstplayer.VideoGstplayer`:</span>
+
+<span class="sd">      - ``render`` (``'auto'``, ``'nv12'`` or ``'rgba'``, default</span>
+<span class="sd">        ``'auto'``) -- how frames reach Kivy. ``'auto'`` and ``'nv12'``</span>
+<span class="sd">        upload the two NV12 planes and convert them with a shader;</span>
+<span class="sd">        ``'rgba'`` converts on the CPU, for debugging.</span>
+<span class="sd">      - ``force_sw_decoders`` (``bool``, default ``False``) -- never use</span>
+<span class="sd">        a hardware decoder.</span>
+
+<span class="sd">    Other providers (Media Foundation, Android, FFmpeg /</span>
 <span class="sd">    ffpyplayer) currently expose no documented ``options`` keys: unknown kwargs in</span>
 <span class="sd">    ``options`` are also unpacked as keyword arguments to the core video</span>
 <span class="sd">    for back-compat with apps that put well-known kwargs (e.g.</span>

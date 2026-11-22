@@ -494,6 +494,20 @@ search for (only SDL ATM) dependencies. Please note that if <cite>KIVY_SDL3_PATH
 required for program execution.</p>
 </div>
 </dd>
+<dt>KIVY_GSTREAMER_ROOT</dt><dd><p>If set, the <code class="docutils literal notranslate"><span class="pre">gstplayer</span></code> video and audio providers load GStreamer from
+this prefix (the directory holding <code class="docutils literal notranslate"><span class="pre">bin</span></code> on Windows or <code class="docutils literal notranslate"><span class="pre">lib</span></code> on
+Linux, or the directory holding the libraries themselves) instead of
+looking for it. Without it, Linux uses the system’s GStreamer, and
+Windows looks for the official <code class="docutils literal notranslate"><span class="pre">gstreamer-libs</span></code> wheel, then the
+official installer (its <code class="docutils literal notranslate"><span class="pre">GSTREAMER_1_0_ROOT_*</span></code> variable), then
+<code class="docutils literal notranslate"><span class="pre">PATH</span></code>. The provider logs which GStreamer it loaded. GStreamer’s own
+variables (<code class="docutils literal notranslate"><span class="pre">GST_DEBUG</span></code>, <code class="docutils literal notranslate"><span class="pre">GST_PLUGIN_PATH</span></code>, <code class="docutils literal notranslate"><span class="pre">GST_REGISTRY_1_0</span></code>…)
+work as usual.</p>
+<p>Only read at run time: Kivy is built without GStreamer.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.0.0.</span></p>
+</div>
+</dd>
 </dl>
 </section>
 <section id="configuration">
@@ -581,6 +595,9 @@ same application. See the following modules for details:</p>
 </dd>
 <dt>KIVY_AUDIO_OUTPUT</dt><dd><p>Implementation to use for playing audio</p>
 <p>Values: sdl3, gstplayer, ffpyplayer, avplayer</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.0.0: </span><code class="docutils literal notranslate"><span class="pre">gstplayer</span></code> is tried after <code class="docutils literal notranslate"><span class="pre">sdl3</span></code>.</p>
+</div>
 </dd>
 <dt>KIVY_IMAGE</dt><dd><p>Implementation to use for reading image</p>
 <p>Values: sdl3, pil, imageio, tex, dds</p>

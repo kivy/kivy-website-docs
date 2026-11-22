@@ -370,6 +370,7 @@
 <li><a class="reference internal" href="#installation-components">Installation components</a><ul>
 <li><a class="reference internal" href="#installing-python">Installing Python</a></li>
 <li><a class="reference internal" href="#source-installation-dependencies">Source installation Dependencies</a></li>
+<li><a class="reference internal" href="#video-with-gstreamer-optional">Video with GStreamer (optional)</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#making-python-available-anywhere">Making Python available anywhere</a><ul>
@@ -420,6 +421,33 @@ ThorVG vector graphics library. Both are available on PyPI:</p>
 </pre></div>
 </div>
 <p>Now that the compiler and build tools are installed, continue to <a class="reference internal" href="../gettingstarted/installation.html#kivy-source-install"><span class="std std-ref">install Kivy</span></a>.</p>
+</section>
+<section id="video-with-gstreamer-optional">
+<span id="install-gstreamer-win"></span><h3>Video with GStreamer (optional)<a class="headerlink" href="#video-with-gstreamer-optional" title="Link to this heading">¶</a></h3>
+<p>Windows plays video through Media Foundation by default; nothing needs to be
+installed. GStreamer is an alternative, for formats or streams Media Foundation
+doesn’t handle, selected with <code class="docutils literal notranslate"><span class="pre">KIVY_VIDEO=gstplayer</span></code>. Install it with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="s2">"kivy[gstreamer]"</span>
+</pre></div>
+</div>
+<p>which installs GStreamer’s official wheels at one pinned version. HLS streams
+packaged as MPEG-TS (most of them) and MPEG-1 or MPEG-2 program streams
+(<code class="docutils literal notranslate"><span class="pre">.mpg</span></code> files) also need upstream’s restricted plugins:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="s2">"kivy[gstreamer-restricted]"</span>
+</pre></div>
+</div>
+<p>Alternatively, install GStreamer with its official installer (1.24 or newer):
+Kivy finds it through the installer’s <code class="docutils literal notranslate"><span class="pre">GSTREAMER_1_0_ROOT_*</span></code> variable, or
+<code class="docutils literal notranslate"><span class="pre">KIVY_GSTREAMER_ROOT</span></code> points at any GStreamer build. The first video played
+after installing makes GStreamer scan its plugins, which can take several
+seconds; it happens in the background and only once.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>With the 1.28.7 wheels, an HLS stream whose MPEG-TS demuxer is missing
+(<code class="docutils literal notranslate"><span class="pre">gstreamer-restricted</span></code> not installed) can abort the process when the
+pipeline is shut down after the error. Install <code class="docutils literal notranslate"><span class="pre">gstreamer-restricted</span></code>
+if your app plays HLS.</p>
+</div>
 </section>
 </section>
 <section id="making-python-available-anywhere">

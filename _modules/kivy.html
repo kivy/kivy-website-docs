@@ -401,7 +401,6 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">getopt</span><span class="w"> </span><span class="kn">import</span> <span class="n">getopt</span><span class="p">,</span> <span class="n">GetoptError</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">os</span><span class="w"> </span><span class="kn">import</span> <span class="n">environ</span><span class="p">,</span> <span class="n">makedirs</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">os.path</span><span class="w"> </span><span class="kn">import</span> <span class="n">dirname</span><span class="p">,</span> <span class="n">join</span><span class="p">,</span> <span class="n">basename</span><span class="p">,</span> <span class="n">exists</span><span class="p">,</span> <span class="n">expanduser</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pkgutil</span>
@@ -651,48 +650,31 @@
         <span class="k">break</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_patch_mod_deps_win</span><span class="p">(</span><span class="n">dep_mod</span><span class="p">,</span> <span class="n">mod_name</span><span class="p">):</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">site</span>
-    <span class="n">dep_bins</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span> <span class="n">site</span><span class="o">.</span><span class="n">USER_BASE</span><span class="p">]:</span>
-        <span class="n">p</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s1">'share'</span><span class="p">,</span> <span class="n">mod_name</span><span class="p">,</span> <span class="s1">'bin'</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"PATH"</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">pathsep</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"PATH"</span><span class="p">]</span>
-            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">os</span><span class="p">,</span> <span class="s1">'add_dll_directory'</span><span class="p">):</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">add_dll_directory</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-            <span class="n">dep_bins</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-
-    <span class="n">dep_mod</span><span class="o">.</span><span class="n">dep_bins</span> <span class="o">=</span> <span class="n">dep_bins</span>
-
+<span class="c1"># Kivy 2's GStreamer packages (GStreamer 1.18), no longer used. Importing one</span>
+<span class="c1"># would put its libraries on PATH and set GST_PLUGIN_PATH and GST_REGISTRY,</span>
+<span class="c1"># which a newer GStreamer found another way (the official installer,</span>
+<span class="c1"># KIVY_GSTREAMER_ROOT) also reads: its 1.18 plugins would load into it.</span>
+<span class="n">_OBSOLETE_DEPS</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'gstreamer'</span><span class="p">,</span> <span class="s1">'gstreamer_dev'</span><span class="p">)</span>
 
 <span class="c1"># if there are deps, import them so they can do their magic.</span>
 <span class="n">_packages</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">kivy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deps</span> <span class="k">as</span> <span class="n">old_deps</span>
-    <span class="k">for</span> <span class="n">importer</span><span class="p">,</span> <span class="n">modname</span><span class="p">,</span> <span class="n">ispkg</span> <span class="ow">in</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">iter_modules</span><span class="p">(</span><span class="n">old_deps</span><span class="o">.</span><span class="n">__path__</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">ispkg</span><span class="p">:</span>
-            <span class="k">continue</span>
-        <span class="k">if</span> <span class="n">modname</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'gst'</span><span class="p">):</span>
-            <span class="n">_packages</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">importer</span><span class="p">,</span> <span class="n">modname</span><span class="p">,</span> <span class="s1">'kivy.deps'</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">_packages</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">importer</span><span class="p">,</span> <span class="n">modname</span><span class="p">,</span> <span class="s1">'kivy.deps'</span><span class="p">))</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="k">pass</span>
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">kivy_deps</span>
-    <span class="k">for</span> <span class="n">importer</span><span class="p">,</span> <span class="n">modname</span><span class="p">,</span> <span class="n">ispkg</span> <span class="ow">in</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">iter_modules</span><span class="p">(</span><span class="n">kivy_deps</span><span class="o">.</span><span class="n">__path__</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">ispkg</span><span class="p">:</span>
-            <span class="k">continue</span>
-        <span class="k">if</span> <span class="n">modname</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'gst'</span><span class="p">):</span>
-            <span class="n">_packages</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">importer</span><span class="p">,</span> <span class="n">modname</span><span class="p">,</span> <span class="s1">'kivy_deps'</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">_packages</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">importer</span><span class="p">,</span> <span class="n">modname</span><span class="p">,</span> <span class="s1">'kivy_deps'</span><span class="p">))</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="k">pass</span>
-
 <span class="n">_logging_msgs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">_package</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'kivy.deps'</span><span class="p">,</span> <span class="s1">'kivy_deps'</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">_deps_mod</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">_package</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="k">for</span> <span class="n">importer</span><span class="p">,</span> <span class="n">modname</span><span class="p">,</span> <span class="n">ispkg</span> <span class="ow">in</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">iter_modules</span><span class="p">(</span><span class="n">_deps_mod</span><span class="o">.</span><span class="n">__path__</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ispkg</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">modname</span> <span class="ow">in</span> <span class="n">_OBSOLETE_DEPS</span><span class="p">:</span>
+            <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s1">'deps: Not importing "</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">": Kivy 3 no longer uses it. '</span>
+                <span class="s1">'Uninstall it (see the migration guide).'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">_package</span><span class="p">,</span> <span class="n">modname</span><span class="p">))</span>
+            <span class="k">continue</span>
+        <span class="n">_packages</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">importer</span><span class="p">,</span> <span class="n">modname</span><span class="p">,</span> <span class="n">_package</span><span class="p">))</span>
+
 <span class="k">for</span> <span class="n">importer</span><span class="p">,</span> <span class="n">modname</span><span class="p">,</span> <span class="n">package</span> <span class="ow">in</span> <span class="n">_packages</span><span class="p">:</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">module_spec</span> <span class="o">=</span> <span class="n">importer</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="n">modname</span><span class="p">)</span>
@@ -705,9 +687,6 @@
         <span class="n">_logging_msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
             <span class="s1">'deps: Successfully imported "</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">"</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span>
             <span class="nb">format</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">modname</span><span class="p">,</span> <span class="n">version</span><span class="p">))</span>
-
-        <span class="k">if</span> <span class="n">modname</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'gst'</span><span class="p">)</span> <span class="ow">and</span> <span class="n">version</span> <span class="o">==</span> <span class="s1">'0.3.3'</span><span class="p">:</span>
-            <span class="n">_patch_mod_deps_win</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="n">modname</span><span class="p">)</span>
 
     <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">Logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>

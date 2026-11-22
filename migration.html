@@ -1674,8 +1674,13 @@ available.</p></li>
 </ul>
 <p><strong>Migration Impact</strong></p>
 <p>Most apps need no changes. Apps that installed <code class="docutils literal notranslate"><span class="pre">kivy_deps.gstreamer</span></code> or
-ffpyplayer only to play video on Windows can remove them. Keep them if the
-app also uses them for audio. PyInstaller builds no longer need
+ffpyplayer only to play video on Windows can remove them. <code class="docutils literal notranslate"><span class="pre">kivy_deps.gstreamer</span></code>
+is no longer used at all: apps that still want GStreamer install
+<code class="docutils literal notranslate"><span class="pre">kivy[gstreamer]</span></code> instead (see <em>GStreamer provider rewritten</em> below).
+Kivy no longer imports it either; if it is still installed, Kivy logs a
+warning at startup. Remove it with
+<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pip</span> <span class="pre">uninstall</span> <span class="pre">kivy_deps.gstreamer</span> <span class="pre">kivy_deps.gstreamer_dev</span></code>.
+PyInstaller builds no longer need
 <code class="docutils literal notranslate"><span class="pre">gstreamer.dep_bins</span></code> for video either: Media Foundation is part of Windows,
 and <code class="xref py py-func docutils literal notranslate"><span class="pre">get_deps_minimal()</span></code> and
 <code class="xref py py-func docutils literal notranslate"><span class="pre">get_deps_all()</span></code> include the
@@ -1689,6 +1694,57 @@ decode, select the previous provider before importing Kivy:</p>
 </pre></div>
 </div>
 <p>See <a class="reference internal" href="guide/environment.html#environment"><span class="std std-ref">Controlling the environment</span></a> for the full list of <code class="docutils literal notranslate"><span class="pre">KIVY_VIDEO</span></code> values.</p>
+<p><em>GStreamer provider rewritten (Linux, Raspberry Pi, Windows)</em></p>
+<p>Kivy 3.x.x rewrites the <code class="docutils literal notranslate"><span class="pre">gstplayer</span></code> video and audio providers. GStreamer is
+now loaded when Kivy runs instead of being linked when Kivy is built, so the
+provider is part of every Linux, Raspberry Pi and Windows wheel. In Kivy 2.x.x
+the Linux and Raspberry Pi wheels were built without it, and Windows needed
+<code class="docutils literal notranslate"><span class="pre">kivy_deps.gstreamer</span></code>. <code class="docutils literal notranslate"><span class="pre">gstplayer</span></code> is the video provider on Linux and the
+Raspberry Pi, and an optional one on Windows, after <code class="docutils literal notranslate"><span class="pre">mediafoundation</span></code>. It is
+no longer built for macOS.</p>
+<p><strong>Behavior Changes</strong></p>
+<ul class="simple">
+<li><p>On Linux and the Raspberry Pi, video plays with <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">kivy</span></code> plus
+the distribution’s GStreamer runtime packages (see
+<a class="reference internal" href="installation/installation-linux.html#install-gstreamer-linux"><span class="std std-ref">Video and audio with GStreamer</span></a>). No <code class="docutils literal notranslate"><span class="pre">-dev</span></code> packages are needed to build
+Kivy from source either.</p></li>
+<li><p>GStreamer 1.22 or newer is needed on Linux and 1.24 or newer on Windows.
+With an older one the provider is unavailable, and the log says why.</p></li>
+<li><p>On Windows, <code class="docutils literal notranslate"><span class="pre">kivy_deps.gstreamer</span></code> (GStreamer 1.18) is replaced by
+GStreamer’s official wheels. The <code class="docutils literal notranslate"><span class="pre">gstreamer</span></code>, <code class="docutils literal notranslate"><span class="pre">media</span></code> and <code class="docutils literal notranslate"><span class="pre">full</span></code>
+selectors install them; the new <code class="docutils literal notranslate"><span class="pre">gstreamer-restricted</span></code> selector adds the
+restricted plugins, which include the MPEG-TS demuxer most HLS streams need
+and the MPEG-PS demuxer for <code class="docutils literal notranslate"><span class="pre">.mpg</span></code> files. <code class="docutils literal notranslate"><span class="pre">kivy_deps.gstreamer</span></code> had
+both, so an app that plays either with <code class="docutils literal notranslate"><span class="pre">gstplayer</span></code> on Windows needs
+<code class="docutils literal notranslate"><span class="pre">kivy[gstreamer-restricted]</span></code>.
+GStreamer’s official installer, or any build through
+<code class="docutils literal notranslate"><span class="pre">KIVY_GSTREAMER_ROOT</span></code>, works too.</p></li>
+<li><p>Playback uses <code class="docutils literal notranslate"><span class="pre">playbin3</span></code>: local files, HTTP, HLS and DASH.</p></li>
+<li><p>Frames are uploaded as two NV12 planes and converted to RGB by a shader,
+instead of converted to RGB on the CPU. The <code class="docutils literal notranslate"><span class="pre">render</span></code> option (see
+<a class="reference internal" href="api-kivy.uix.video.html#kivy.uix.video.Video.options" title="kivy.uix.video.Video.options"><code class="xref py py-attr docutils literal notranslate"><span class="pre">options</span></code></a>) selects the old CPU conversion,
+for debugging.</p></li>
+<li><p>The first frame is shown when the video is loaded, before <code class="docutils literal notranslate"><span class="pre">play()</span></code>, and
+appears again after a seek while paused. Video at more than 30 fps is no
+longer capped by the provider’s polling.</p></li>
+<li><p>A video that can’t play fires <code class="docutils literal notranslate"><span class="pre">on_error</span></code> with GStreamer’s reason, or
+<code class="docutils literal notranslate"><span class="pre">missing</span> <span class="pre">GStreamer</span> <span class="pre">plugin:</span> <span class="pre">&lt;name&gt;</span></code> when a decoder or demuxer isn’t
+installed.</p></li>
+<li><p>For audio, <code class="docutils literal notranslate"><span class="pre">gstplayer</span></code> is now tried after <code class="docutils literal notranslate"><span class="pre">sdl3</span></code>, so on a machine with
+GStreamer installed sounds keep playing through SDL3 as before.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kivy.lib.gstplayer</span></code> is internal and has changed completely;
+<code class="docutils literal notranslate"><span class="pre">glib_iteration</span></code> and the callback-based <code class="docutils literal notranslate"><span class="pre">GstPlayer</span></code> are gone.</p></li>
+</ul>
+<p><strong>Migration Impact</strong></p>
+<p>On Linux, install GStreamer’s runtime packages if video doesn’t play: the log
+names the missing plugin. On Windows, replace <code class="docutils literal notranslate"><span class="pre">kivy_deps.gstreamer</span></code> with
+<code class="docutils literal notranslate"><span class="pre">kivy[gstreamer]</span></code>. To keep using GStreamer for audio:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">'KIVY_AUDIO_OUTPUT'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'gstplayer'</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">kivy</span>
+</pre></div>
+</div>
 <p><em>Android video provider rebuilt on Media3 ExoPlayer</em></p>
 <p>Kivy 3.x.x replaces the <code class="docutils literal notranslate"><span class="pre">android</span></code> video provider, which was built on
 <code class="docutils literal notranslate"><span class="pre">android.media.MediaPlayer</span></code>, with one built on androidx.media3 ExoPlayer, and
@@ -1749,10 +1805,9 @@ only visible difference is that <code class="docutils literal notranslate"><span
 <li><p>A missing local file is now reported too. In Kivy 2.x.x
 <a class="reference internal" href="api-kivy.uix.video.html#kivy.uix.video.Video" title="kivy.uix.video.Video"><code class="xref py py-class docutils literal notranslate"><span class="pre">Video</span></code></a> passed no filename to the provider when the
 file couldn’t be found, and nothing reported it.</p></li>
-<li><p>The Media Foundation (Windows), AVFoundation (macOS, iOS) and Android
-providers fire <code class="docutils literal notranslate"><span class="pre">on_error</span></code>. The <code class="docutils literal notranslate"><span class="pre">gstplayer</span></code> and <code class="docutils literal notranslate"><span class="pre">ffpyplayer</span></code> providers
-don’t yet: with
-them, only a missing local file is reported.</p></li>
+<li><p>The Media Foundation (Windows), AVFoundation (macOS, iOS), Android and
+GStreamer providers fire <code class="docutils literal notranslate"><span class="pre">on_error</span></code>. The <code class="docutils literal notranslate"><span class="pre">ffpyplayer</span></code> provider doesn’t
+yet: with it, only a missing local file is reported.</p></li>
 </ul>
 <p><strong>Migration Impact</strong></p>
 <p>Apps that waited for <a class="reference internal" href="api-kivy.uix.video.html#kivy.uix.video.Video.loaded" title="kivy.uix.video.Video.loaded"><code class="xref py py-attr docutils literal notranslate"><span class="pre">loaded</span></code></a> with a timeout to
