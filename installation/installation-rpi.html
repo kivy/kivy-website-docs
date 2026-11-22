@@ -478,13 +478,15 @@ platform that still  supports it.</p>
 provider). The Raspberry Pi OS desktop image already has everything it needs;
 on the Lite image, install the runtime (no <code class="docutils literal notranslate"><span class="pre">-dev</span></code> packages are needed):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">gstreamer1</span><span class="mf">.0</span><span class="o">-</span><span class="n">plugins</span><span class="o">-</span><span class="n">base</span> <span class="n">gstreamer1</span><span class="mf">.0</span><span class="o">-</span><span class="n">plugins</span><span class="o">-</span><span class="n">good</span> \
-    <span class="n">gstreamer1</span><span class="mf">.0</span><span class="o">-</span><span class="n">plugins</span><span class="o">-</span><span class="n">bad</span> <span class="n">gstreamer1</span><span class="mf">.0</span><span class="o">-</span><span class="n">libav</span>
+    <span class="n">gstreamer1</span><span class="mf">.0</span><span class="o">-</span><span class="n">plugins</span><span class="o">-</span><span class="n">bad</span> <span class="n">gstreamer1</span><span class="mf">.0</span><span class="o">-</span><span class="n">libav</span> <span class="n">gstreamer1</span><span class="mf">.0</span><span class="o">-</span><span class="n">gl</span>
 </pre></div>
 </div>
 <p>GStreamer 1.22 (Bookworm) is the minimum; Trixie ships 1.26.</p>
 <p>The Raspberry Pi 5 decodes HEVC in hardware; H.264 is decoded in software
-there. Every frame is copied into a Kivy texture, which 1080p video keeps up
-with; 4K video plays at a few frames per second.</p>
+there. Hardware-decoded frames reach Kivy without a copy when Kivy’s GL
+context is EGL, which it is by default, so 4K HEVC plays at full rate. With
+GLX (<code class="docutils literal notranslate"><span class="pre">SDL_VIDEO_FORCE_EGL=0</span></code>) every frame is copied, 4K HEVC plays at a few
+frames per second, and the provider logs a warning saying so.</p>
 </section>
 <section id="headless-support-on-raspberry-pi">
 <h2>Headless support on Raspberry Pi<a class="headerlink" href="#headless-support-on-raspberry-pi" title="Link to this heading">¶</a></h2>

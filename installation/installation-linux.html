@@ -499,7 +499,7 @@ of Kivy’s Linux wheels and is also built from source without GStreamer’s
 desktops already have most of it; for local files, HTTP, HLS and DASH install:</p>
 <p>Ubuntu, Debian and Raspberry Pi OS:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">gstreamer1</span><span class="mf">.0</span><span class="o">-</span><span class="n">plugins</span><span class="o">-</span><span class="n">base</span> <span class="n">gstreamer1</span><span class="mf">.0</span><span class="o">-</span><span class="n">plugins</span><span class="o">-</span><span class="n">good</span> \
-    <span class="n">gstreamer1</span><span class="mf">.0</span><span class="o">-</span><span class="n">plugins</span><span class="o">-</span><span class="n">bad</span> <span class="n">gstreamer1</span><span class="mf">.0</span><span class="o">-</span><span class="n">libav</span>
+    <span class="n">gstreamer1</span><span class="mf">.0</span><span class="o">-</span><span class="n">plugins</span><span class="o">-</span><span class="n">bad</span> <span class="n">gstreamer1</span><span class="mf">.0</span><span class="o">-</span><span class="n">libav</span> <span class="n">gstreamer1</span><span class="mf">.0</span><span class="o">-</span><span class="n">gl</span>
 </pre></div>
 </div>
 <p>Fedora (H.264 and some other formats need the RPM Fusion repository above):</p>
@@ -508,8 +508,10 @@ desktops already have most of it; for local files, HTTP, HLS and DASH install:</
 </pre></div>
 </div>
 <p>Hardware decoding uses GStreamer’s <code class="docutils literal notranslate"><span class="pre">va</span></code> plugin (in <code class="docutils literal notranslate"><span class="pre">-bad</span></code>) with the GPU’s
-VA-API driver, or NVIDIA’s <code class="docutils literal notranslate"><span class="pre">nvcodec</span></code>; the provider logs which decoder it
-uses. A format with no installed decoder fires
+VA-API driver, or NVIDIA’s <code class="docutils literal notranslate"><span class="pre">nvcodec</span></code>. Decoded frames reach Kivy without a copy
+when Kivy’s GL context is EGL, which it is by default (see
+<code class="docutils literal notranslate"><span class="pre">SDL_VIDEO_FORCE_EGL</span></code> in <a class="reference internal" href="../guide/environment.html#environment"><span class="std std-ref">Controlling the environment</span></a>); the provider logs which path
+and decoder it uses. A format with no installed decoder fires
 <a class="reference internal" href="../api-kivy.core.video.html#kivy.core.video.VideoBase.on_error" title="kivy.core.video.VideoBase.on_error"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_error()</span></code></a> with <code class="docutils literal notranslate"><span class="pre">missing</span> <span class="pre">GStreamer</span> <span class="pre">plugin:</span></code>
 and the plugin’s name.</p>
 </section>

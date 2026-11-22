@@ -1720,10 +1720,13 @@ both, so an app that plays either with <code class="docutils literal notranslate
 GStreamer’s official installer, or any build through
 <code class="docutils literal notranslate"><span class="pre">KIVY_GSTREAMER_ROOT</span></code>, works too.</p></li>
 <li><p>Playback uses <code class="docutils literal notranslate"><span class="pre">playbin3</span></code>: local files, HTTP, HLS and DASH.</p></li>
-<li><p>Frames are uploaded as two NV12 planes and converted to RGB by a shader,
-instead of converted to RGB on the CPU. The <code class="docutils literal notranslate"><span class="pre">render</span></code> option (see
-<a class="reference internal" href="api-kivy.uix.video.html#kivy.uix.video.Video.options" title="kivy.uix.video.Video.options"><code class="xref py py-attr docutils literal notranslate"><span class="pre">options</span></code></a>) selects the old CPU conversion,
-for debugging.</p></li>
+<li><p>Frames are drawn from GStreamer’s own GL texture when Kivy’s GL context can
+share it (desktop GL on Windows; EGL or GLX on Linux). With EGL, Kivy’s
+default on Linux, hardware decoders’ frames are not copied at all: on the
+Raspberry Pi 5, 4K HEVC plays at full rate. Otherwise frames are uploaded as
+two NV12 planes and converted to RGB by a shader, instead of converted on
+the CPU. The <code class="docutils literal notranslate"><span class="pre">render</span></code> option (see <a class="reference internal" href="api-kivy.uix.video.html#kivy.uix.video.Video.options" title="kivy.uix.video.Video.options"><code class="xref py py-attr docutils literal notranslate"><span class="pre">options</span></code></a>)
+chooses.</p></li>
 <li><p>The first frame is shown when the video is loaded, before <code class="docutils literal notranslate"><span class="pre">play()</span></code>, and
 appears again after a seek while paused. Video at more than 30 fps is no
 longer capped by the provider’s polling.</p></li>
