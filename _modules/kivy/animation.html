@@ -695,7 +695,11 @@
         <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_widgets</span><span class="p">[</span><span class="n">widget</span><span class="o">.</span><span class="n">uid</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s1">'widget'</span><span class="p">:</span> <span class="n">widget</span><span class="p">,</span>
             <span class="s1">'properties'</span><span class="p">:</span> <span class="p">{},</span>
-            <span class="s1">'time'</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+            <span class="s1">'time'</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="c1"># the first update advances by at most one regular frame, so a</span>
+            <span class="c1"># slow frame right after start() doesn't skip into the animation;</span>
+            <span class="c1"># 1 / 60 covers start() being called in an unusually short frame</span>
+            <span class="s1">'first_step'</span><span class="p">:</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_step</span><span class="p">,</span> <span class="n">Clock</span><span class="o">.</span><span class="n">frametime</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="mf">60.</span><span class="p">)}</span>
 
         <span class="c1"># get current values</span>
         <span class="n">p</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">'properties'</span><span class="p">]</span>
@@ -744,7 +748,7 @@
                     <span class="k">continue</span>
 
             <span class="k">if</span> <span class="n">anim</span><span class="p">[</span><span class="s1">'time'</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">anim</span><span class="p">[</span><span class="s1">'time'</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.</span>
+                <span class="n">anim</span><span class="p">[</span><span class="s1">'time'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">anim</span><span class="p">[</span><span class="s1">'first_step'</span><span class="p">])</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">anim</span><span class="p">[</span><span class="s1">'time'</span><span class="p">]</span> <span class="o">+=</span> <span class="n">dt</span>
 
