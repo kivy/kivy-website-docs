@@ -988,6 +988,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">init_async_lib</span><span class="p">(</span><span class="n">async_lib</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ClockBaseBehavior</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_duration_ts0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_tick</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_tick</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_frame_deadline</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_tick</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_max_fps</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">Config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s1">'graphics'</span><span class="p">,</span> <span class="s1">'maxfps'</span><span class="p">))</span>
 
 <div class="viewcode-block" id="ClockBaseBehavior.init_async_lib">
@@ -1061,15 +1062,12 @@
 <span class="sd">        '''</span>
         <span class="n">fps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_fps</span>
         <span class="k">if</span> <span class="n">fps</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">min_sleep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_resolution</span><span class="p">()</span>
-            <span class="n">undershoot</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">/</span> <span class="mf">5.</span> <span class="o">*</span> <span class="n">min_sleep</span>
             <span class="n">usleep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">usleep</span>
-            <span class="n">ready</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_ready</span>
-
-            <span class="n">done</span><span class="p">,</span> <span class="n">sleeptime</span> <span class="o">=</span> <span class="n">ready</span><span class="p">(</span><span class="n">fps</span><span class="p">,</span> <span class="n">min_sleep</span><span class="p">,</span> <span class="n">undershoot</span><span class="p">)</span>
-            <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
+            <span class="n">deadline</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_frame_deadline</span><span class="p">(</span><span class="n">fps</span><span class="p">)</span>
+            <span class="n">sleeptime</span> <span class="o">=</span> <span class="n">deadline</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="k">while</span> <span class="n">sleeptime</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">usleep</span><span class="p">(</span><span class="mi">1000000</span> <span class="o">*</span> <span class="n">sleeptime</span><span class="p">)</span>
-                <span class="n">done</span><span class="p">,</span> <span class="n">sleeptime</span> <span class="o">=</span> <span class="n">ready</span><span class="p">(</span><span class="n">fps</span><span class="p">,</span> <span class="n">min_sleep</span><span class="p">,</span> <span class="n">undershoot</span><span class="p">)</span>
+                <span class="n">sleeptime</span> <span class="o">=</span> <span class="n">deadline</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
         <span class="n">current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dt</span> <span class="o">=</span> <span class="n">current</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_tick</span>
@@ -1084,19 +1082,13 @@
 <span class="sd">        '''</span>
         <span class="n">fps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_fps</span>
         <span class="k">if</span> <span class="n">fps</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">min_sleep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_resolution</span><span class="p">()</span>
-            <span class="n">undershoot</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">/</span> <span class="mf">5.</span> <span class="o">*</span> <span class="n">min_sleep</span>
-            <span class="n">ready</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_ready</span>
-
-            <span class="n">slept</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="n">done</span><span class="p">,</span> <span class="n">sleeptime</span> <span class="o">=</span> <span class="n">ready</span><span class="p">(</span><span class="n">fps</span><span class="p">,</span> <span class="n">min_sleep</span><span class="p">,</span> <span class="n">undershoot</span><span class="p">)</span>
-            <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
-                <span class="n">slept</span> <span class="o">=</span> <span class="kc">True</span>
-                <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_async_lib</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">sleeptime</span><span class="p">)</span>
-                <span class="n">done</span><span class="p">,</span> <span class="n">sleeptime</span> <span class="o">=</span> <span class="n">ready</span><span class="p">(</span><span class="n">fps</span><span class="p">,</span> <span class="n">min_sleep</span><span class="p">,</span> <span class="n">undershoot</span><span class="p">)</span>
-
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">slept</span><span class="p">:</span>
+            <span class="n">deadline</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_frame_deadline</span><span class="p">(</span><span class="n">fps</span><span class="p">)</span>
+            <span class="n">sleeptime</span> <span class="o">=</span> <span class="n">deadline</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">sleeptime</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_async_lib</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">while</span> <span class="n">sleeptime</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_async_lib</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">sleeptime</span><span class="p">)</span>
+                <span class="n">sleeptime</span> <span class="o">=</span> <span class="n">deadline</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_async_lib</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
@@ -1106,9 +1098,17 @@
         <span class="k">return</span> <span class="n">current</span></div>
 
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_check_ready</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fps</span><span class="p">,</span> <span class="n">min_sleep</span><span class="p">,</span> <span class="n">undershoot</span><span class="p">):</span>
-        <span class="n">sleeptime</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">fps</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_tick</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">sleeptime</span> <span class="o">-</span> <span class="n">undershoot</span> <span class="o">&lt;=</span> <span class="n">min_sleep</span><span class="p">,</span> <span class="n">sleeptime</span> <span class="o">-</span> <span class="n">undershoot</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_next_frame_deadline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fps</span><span class="p">):</span>
+        <span class="c1"># Deadlines advance by whole frames, so oversleeping in one frame</span>
+        <span class="c1"># doesn't delay the following ones. When the loop falls further</span>
+        <span class="c1"># behind (slow frames, a pause, or a maxfps change), start over.</span>
+        <span class="n">period</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">fps</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">deadline</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_frame_deadline</span> <span class="o">+</span> <span class="n">period</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">now</span> <span class="o">-</span> <span class="n">period</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">&lt;=</span> <span class="n">deadline</span> <span class="o">&lt;=</span> <span class="n">now</span> <span class="o">+</span> <span class="n">period</span><span class="p">:</span>
+            <span class="n">deadline</span> <span class="o">=</span> <span class="n">now</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_frame_deadline</span> <span class="o">=</span> <span class="n">deadline</span>
+        <span class="k">return</span> <span class="n">deadline</span>
 
 <div class="viewcode-block" id="ClockBaseBehavior.tick">
 <a class="viewcode-back" href="../../api-kivy.clock.html#kivy.clock.ClockBaseBehavior.tick">[docs]</a>
