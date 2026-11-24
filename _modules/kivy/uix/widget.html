@@ -1065,9 +1065,14 @@
         <span class="n">canvas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">before</span> <span class="k">if</span> <span class="n">canvas</span> <span class="o">==</span> <span class="s1">'before'</span> <span class="k">else</span> \
             <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">after</span> <span class="k">if</span> <span class="n">canvas</span> <span class="o">==</span> <span class="s1">'after'</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span>
 
+        <span class="c1"># The canvas is added before the widget goes into `children`, so</span>
+        <span class="c1"># that observers of `children` see it drawn. An observer may remove</span>
+        <span class="c1"># and re-add the widget; adding the canvas after the insert would</span>
+        <span class="c1"># then add it a second time, and the extra copy could never be</span>
+        <span class="c1"># removed.</span>
         <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">widget</span><span class="p">)</span>
             <span class="n">canvas</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">widget</span><span class="o">.</span><span class="n">canvas</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">widget</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">canvas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span>
             <span class="n">children</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span>
@@ -1082,13 +1087,20 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">next_index</span> <span class="o">+=</span> <span class="mi">1</span>
 
-            <span class="n">children</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">widget</span><span class="p">)</span>
             <span class="c1"># We never want to insert widget _before_ canvas.before.</span>
             <span class="k">if</span> <span class="n">next_index</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">canvas</span><span class="o">.</span><span class="n">has_before</span><span class="p">:</span>
                 <span class="n">next_index</span> <span class="o">=</span> <span class="mi">1</span>
             <span class="n">canvas</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">next_index</span><span class="p">,</span> <span class="n">widget</span><span class="o">.</span><span class="n">canvas</span><span class="p">)</span>
+            <span class="n">children</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">widget</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">widget</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="c1"># An observer of `children` removed the widget again.</span>
+            <span class="k">return</span>
+        <span class="c1"># Motion events are registered in `children` order, so this comes</span>
+        <span class="c1"># after the insert. Registering is repeat-safe, but if an observer</span>
+        <span class="c1"># re-added the widget, it is already bound: bind it only once.</span>
         <span class="k">for</span> <span class="n">type_id</span> <span class="ow">in</span> <span class="n">widget</span><span class="o">.</span><span class="n">motion_filter</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">register_for_motion_event</span><span class="p">(</span><span class="n">type_id</span><span class="p">,</span> <span class="n">widget</span><span class="p">)</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">funbind</span><span class="p">(</span><span class="s1">'motion_filter'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_motion_filter</span><span class="p">)</span>
         <span class="n">widget</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">'motion_filter'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_motion_filter</span><span class="p">)</span></div>
 
 
@@ -2081,7 +2093,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Nov 23, 2026.
+    Last updated on Nov 24, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->
