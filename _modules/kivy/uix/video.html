@@ -443,8 +443,8 @@
 <span class="sd">If the video can't be loaded or played, for example because its format</span>
 <span class="sd">has no installed decoder, :attr:`Video.state` changes to ``'stop'`` and</span>
 <span class="sd">the ``on_error`` event fires with a message. A missing local file is</span>
-<span class="sd">reported with any provider; other failures are reported by the Media</span>
-<span class="sd">Foundation (Windows), AVFoundation (macOS, iOS) and Android providers.</span>
+<span class="sd">reported with any provider; other failures are reported by the GStreamer,</span>
+<span class="sd">Media Foundation (Windows), AVFoundation (macOS, iOS) and Android providers.</span>
 <span class="sd">Nothing is raised, so an app that doesn't handle it keeps running::</span>
 
 <span class="sd">    def on_video_error(instance, error):</span>
@@ -481,6 +481,119 @@
 <span class="sd">        'movie.mp4', time=5.0, size=(320, 180))</span>
 <span class="sd">    if texture is not None:</span>
 <span class="sd">        thumbnail_image.texture = texture</span>
+
+<span class="sd">Network streams</span>
+<span class="sd">---------------</span>
+
+<span class="sd">To play a network stream, set :attr:`Video.source` to its URL::</span>
+
+<span class="sd">    video = Video(source='rtsp://192.168.1.20:8554/stream', state='play')</span>
+
+<span class="sd">Which streams play depends on the video provider:</span>
+
+<span class="sd">.. list-table::</span>
+<span class="sd">    :header-rows: 1</span>
+
+<span class="sd">    * - Stream</span>
+<span class="sd">      - GStreamer (Linux, Raspberry Pi; optional on Windows)</span>
+<span class="sd">      - Media Foundation (Windows)</span>
+<span class="sd">      - ExoPlayer (Android)</span>
+<span class="sd">      - AVFoundation (macOS, iOS)</span>
+<span class="sd">    * - RTSP, H.264 (``rtsp://``)</span>
+<span class="sd">      - Yes</span>
+<span class="sd">      - Yes</span>
+<span class="sd">      - Yes, with ``media3-exoplayer-rtsp``</span>
+<span class="sd">      - No</span>
+<span class="sd">    * - RTSP, H.265</span>
+<span class="sd">      - Yes</span>
+<span class="sd">      - No</span>
+<span class="sd">      - Depends on the device</span>
+<span class="sd">      - No</span>
+<span class="sd">    * - RTSP over TCP (``rtspt://``)</span>
+<span class="sd">      - Yes</span>
+<span class="sd">      - Yes</span>
+<span class="sd">      - Yes, with ``media3-exoplayer-rtsp``</span>
+<span class="sd">      - No</span>
+<span class="sd">    * - HLS (``.m3u8``)</span>
+<span class="sd">      - Yes (see below for Windows)</span>
+<span class="sd">      - No</span>
+<span class="sd">      - Yes, with ``media3-exoplayer-hls``</span>
+<span class="sd">      - Yes</span>
+<span class="sd">    * - DASH (``.mpd``)</span>
+<span class="sd">      - Yes</span>
+<span class="sd">      - No</span>
+<span class="sd">      - Yes, with ``media3-exoplayer-dash``</span>
+<span class="sd">      - No</span>
+<span class="sd">    * - MJPEG over HTTP (IP cameras)</span>
+<span class="sd">      - Yes</span>
+<span class="sd">      - No</span>
+<span class="sd">      - No</span>
+<span class="sd">      - No</span>
+
+<span class="sd">So on Windows, use GStreamer (``pip install "kivy[gstreamer-restricted]"``</span>
+<span class="sd">and ``KIVY_VIDEO=gstplayer``) for HLS, DASH, MJPEG or RTSP H.265. Most HLS</span>
+<span class="sd">streams use MPEG-TS segments, and GStreamer's MPEG-TS demuxer is in</span>
+<span class="sd">``gstreamer-plugins-restricted``. The ``gstreamer`` selector alone plays HLS</span>
+<span class="sd">with fMP4 segments and DASH. On Android, add the Media3 module for each kind</span>
+<span class="sd">of stream the app plays (see :ref:`packaging_android_video`).</span>
+
+<span class="sd">On macOS and iOS, AVFoundation plays HLS, with MPEG-TS or fMP4 segments, and</span>
+<span class="sd">fires ``on_error`` at once for the other streams. To show an RTSP camera</span>
+<span class="sd">there, have a server such as</span>
+<span class="sd">`MediaMTX &lt;https://github.com/bluenviron/mediamtx&gt;`_ repackage the stream as</span>
+<span class="sd">HLS.</span>
+
+<span class="sd">``rtspt://`` asks for RTP over TCP, not UDP. Use it when UDP is blocked or</span>
+<span class="sd">unreliable, for example through NAT, a firewall or a VPN.</span>
+
+<span class="sd">With GStreamer, Media Foundation and ExoPlayer, a live stream (RTSP, or HLS</span>
+<span class="sd">without an end) has no duration: :attr:`duration` stays at 0 and</span>
+<span class="sd">:meth:`seek` does nothing. Pausing and resuming work. After</span>
+<span class="sd">``state = 'stop'``, ``state = 'play'`` joins the stream again where it is</span>
+<span class="sd">now.</span>
+
+<span class="sd">With AVFoundation, a live HLS stream can be seeked. :attr:`duration` is the</span>
+<span class="sd">end of the part of the stream the server still lists, so it grows as the</span>
+<span class="sd">stream plays, and :meth:`seek` moves within that part: ``seek(1)`` goes to</span>
+<span class="sd">the live edge. After a pause, playback carries on from where it paused,</span>
+<span class="sd">behind the live edge; call ``video.seek(1)`` to catch up. After</span>
+<span class="sd">``state = 'stop'``, ``state = 'play'`` joins the stream again where it is</span>
+<span class="sd">now.</span>
+
+<span class="sd">If a stream can't be opened, ``on_error`` fires: the host can't be reached,</span>
+<span class="sd">the path doesn't exist, the connection is refused, or the provider can't</span>
+<span class="sd">play the format. A stream that stops after it started playing, because the</span>
+<span class="sd">server or the network went away, may end with ``eos`` instead of</span>
+<span class="sd">``on_error``. That depends on the provider and on how the connection ended,</span>
+<span class="sd">and some providers send both. AVFoundation sends only ``on_error``, after</span>
+<span class="sd">:attr:`buffering` has been ``True`` for about 30 seconds. To reconnect,</span>
+<span class="sd">watch for either one, then reload the source. Setting ``state`` alone</span>
+<span class="sd">doesn't reopen a stream that failed::</span>
+
+<span class="sd">    def reconnect(dt):</span>
+<span class="sd">        source = video.source</span>
+<span class="sd">        video.source = ''</span>
+<span class="sd">        video.source = source</span>
+<span class="sd">        video.state = 'play'</span>
+
+<span class="sd">    # A trigger runs once, even when eos and on_error both arrive.</span>
+<span class="sd">    reconnect_later = Clock.create_trigger(reconnect, 3)</span>
+<span class="sd">    video.bind(on_error=lambda *args: reconnect_later())</span>
+<span class="sd">    video.bind(eos=lambda instance, value: value and reconnect_later())</span>
+
+<span class="sd">On macOS and iOS, App Transport Security can block unencrypted ``http://``</span>
+<span class="sd">to a host name, such as ``http://camera.example.com/live.m3u8``. Then</span>
+<span class="sd">``on_error`` fires with a message that names App Transport Security. An IP</span>
+<span class="sd">address or a ``.local`` name isn't blocked. To allow a host, add an exception for its</span>
+<span class="sd">domain to the app's ``Info.plist``. With kivyforge, in ``pyproject.toml``:</span>
+
+<span class="sd">.. code-block:: toml</span>
+
+<span class="sd">    [tool.kivy.ios.info_plist.NSAppTransportSecurity.NSExceptionDomains."example.com"]</span>
+<span class="sd">    NSExceptionAllowsInsecureHTTPLoads = true</span>
+<span class="sd">    NSIncludesSubdomains = true</span>
+
+<span class="sd">For a macOS app, use ``tool.kivy.macos.info_plist`` instead.</span>
 <span class="sd">'''</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'Video'</span><span class="p">,</span> <span class="p">)</span>

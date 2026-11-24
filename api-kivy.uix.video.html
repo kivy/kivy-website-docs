@@ -370,6 +370,7 @@
           <div class="body" role="main">
             <div class="toc"><h2>Table Of Contents</h2><ul>
 <li><a class="reference internal" href="#">Video</a><ul>
+<li><a class="reference internal" href="#network-streams">Network streams</a></li>
 <li><a class="reference internal" href="#kivy.uix.video.Video"><code class="docutils literal notranslate"><span class="pre">Video</span></code></a><ul>
 <li><a class="reference internal" href="#kivy.uix.video.Video.buffering"><code class="docutils literal notranslate"><span class="pre">Video.buffering</span></code></a></li>
 <li><a class="reference internal" href="#kivy.uix.video.Video.duration"><code class="docutils literal notranslate"><span class="pre">Video.duration</span></code></a></li>
@@ -458,8 +459,8 @@ started/loaded by passing <code class="docutils literal notranslate"><span class
 <p>If the video can’t be loaded or played, for example because its format
 has no installed decoder, <a class="reference internal" href="#kivy.uix.video.Video.state" title="kivy.uix.video.Video.state"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Video.state</span></code></a> changes to <code class="docutils literal notranslate"><span class="pre">'stop'</span></code> and
 the <code class="docutils literal notranslate"><span class="pre">on_error</span></code> event fires with a message. A missing local file is
-reported with any provider; other failures are reported by the Media
-Foundation (Windows), AVFoundation (macOS, iOS) and Android providers.
+reported with any provider; other failures are reported by the GStreamer,
+Media Foundation (Windows), AVFoundation (macOS, iOS) and Android providers.
 Nothing is raised, so an app that doesn’t handle it keeps running:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">on_video_error</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">'Video failed:'</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
@@ -498,6 +499,119 @@ provider-specific <code class="xref py py-attr docutils literal notranslate"><sp
     <span class="n">thumbnail_image</span><span class="o">.</span><span class="n">texture</span> <span class="o">=</span> <span class="n">texture</span>
 </pre></div>
 </div>
+<section id="network-streams">
+<h2>Network streams<a class="headerlink" href="#network-streams" title="Link to this heading">¶</a></h2>
+<p>To play a network stream, set <code class="xref py py-attr docutils literal notranslate"><span class="pre">Video.source</span></code> to its URL:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">video</span> <span class="o">=</span> <span class="n">Video</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="s1">'rtsp://192.168.1.20:8554/stream'</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s1">'play'</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Which streams play depends on the video provider:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Stream</p></th>
+<th class="head"><p>GStreamer (Linux, Raspberry Pi; optional on Windows)</p></th>
+<th class="head"><p>Media Foundation (Windows)</p></th>
+<th class="head"><p>ExoPlayer (Android)</p></th>
+<th class="head"><p>AVFoundation (macOS, iOS)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>RTSP, H.264 (<code class="docutils literal notranslate"><span class="pre">rtsp://</span></code>)</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes, with <code class="docutils literal notranslate"><span class="pre">media3-exoplayer-rtsp</span></code></p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><p>RTSP, H.265</p></td>
+<td><p>Yes</p></td>
+<td><p>No</p></td>
+<td><p>Depends on the device</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-even"><td><p>RTSP over TCP (<code class="docutils literal notranslate"><span class="pre">rtspt://</span></code>)</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes</p></td>
+<td><p>Yes, with <code class="docutils literal notranslate"><span class="pre">media3-exoplayer-rtsp</span></code></p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><p>HLS (<code class="docutils literal notranslate"><span class="pre">.m3u8</span></code>)</p></td>
+<td><p>Yes (see below for Windows)</p></td>
+<td><p>No</p></td>
+<td><p>Yes, with <code class="docutils literal notranslate"><span class="pre">media3-exoplayer-hls</span></code></p></td>
+<td><p>Yes</p></td>
+</tr>
+<tr class="row-even"><td><p>DASH (<code class="docutils literal notranslate"><span class="pre">.mpd</span></code>)</p></td>
+<td><p>Yes</p></td>
+<td><p>No</p></td>
+<td><p>Yes, with <code class="docutils literal notranslate"><span class="pre">media3-exoplayer-dash</span></code></p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><p>MJPEG over HTTP (IP cameras)</p></td>
+<td><p>Yes</p></td>
+<td><p>No</p></td>
+<td><p>No</p></td>
+<td><p>No</p></td>
+</tr>
+</tbody>
+</table>
+<p>So on Windows, use GStreamer (<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">&quot;kivy[gstreamer-restricted]&quot;</span></code>
+and <code class="docutils literal notranslate"><span class="pre">KIVY_VIDEO=gstplayer</span></code>) for HLS, DASH, MJPEG or RTSP H.265. Most HLS
+streams use MPEG-TS segments, and GStreamer’s MPEG-TS demuxer is in
+<code class="docutils literal notranslate"><span class="pre">gstreamer-plugins-restricted</span></code>. The <code class="docutils literal notranslate"><span class="pre">gstreamer</span></code> selector alone plays HLS
+with fMP4 segments and DASH. On Android, add the Media3 module for each kind
+of stream the app plays (see <a class="reference internal" href="guide/packaging-android.html#packaging-android-video"><span class="std std-ref">Playing video</span></a>).</p>
+<p>On macOS and iOS, AVFoundation plays HLS, with MPEG-TS or fMP4 segments, and
+fires <code class="docutils literal notranslate"><span class="pre">on_error</span></code> at once for the other streams. To show an RTSP camera
+there, have a server such as
+<a class="reference external" href="https://github.com/bluenviron/mediamtx">MediaMTX</a> repackage the stream as
+HLS.</p>
+<p><code class="docutils literal notranslate"><span class="pre">rtspt://</span></code> asks for RTP over TCP, not UDP. Use it when UDP is blocked or
+unreliable, for example through NAT, a firewall or a VPN.</p>
+<p>With GStreamer, Media Foundation and ExoPlayer, a live stream (RTSP, or HLS
+without an end) has no duration: <code class="xref py py-attr docutils literal notranslate"><span class="pre">duration</span></code> stays at 0 and
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">seek()</span></code> does nothing. Pausing and resuming work. After
+<code class="docutils literal notranslate"><span class="pre">state</span> <span class="pre">=</span> <span class="pre">'stop'</span></code>, <code class="docutils literal notranslate"><span class="pre">state</span> <span class="pre">=</span> <span class="pre">'play'</span></code> joins the stream again where it is
+now.</p>
+<p>With AVFoundation, a live HLS stream can be seeked. <code class="xref py py-attr docutils literal notranslate"><span class="pre">duration</span></code> is the
+end of the part of the stream the server still lists, so it grows as the
+stream plays, and <code class="xref py py-meth docutils literal notranslate"><span class="pre">seek()</span></code> moves within that part: <code class="docutils literal notranslate"><span class="pre">seek(1)</span></code> goes to
+the live edge. After a pause, playback carries on from where it paused,
+behind the live edge; call <code class="docutils literal notranslate"><span class="pre">video.seek(1)</span></code> to catch up. After
+<code class="docutils literal notranslate"><span class="pre">state</span> <span class="pre">=</span> <span class="pre">'stop'</span></code>, <code class="docutils literal notranslate"><span class="pre">state</span> <span class="pre">=</span> <span class="pre">'play'</span></code> joins the stream again where it is
+now.</p>
+<p>If a stream can’t be opened, <code class="docutils literal notranslate"><span class="pre">on_error</span></code> fires: the host can’t be reached,
+the path doesn’t exist, the connection is refused, or the provider can’t
+play the format. A stream that stops after it started playing, because the
+server or the network went away, may end with <code class="docutils literal notranslate"><span class="pre">eos</span></code> instead of
+<code class="docutils literal notranslate"><span class="pre">on_error</span></code>. That depends on the provider and on how the connection ended,
+and some providers send both. AVFoundation sends only <code class="docutils literal notranslate"><span class="pre">on_error</span></code>, after
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">buffering</span></code> has been <code class="docutils literal notranslate"><span class="pre">True</span></code> for about 30 seconds. To reconnect,
+watch for either one, then reload the source. Setting <code class="docutils literal notranslate"><span class="pre">state</span></code> alone
+doesn’t reopen a stream that failed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">reconnect</span><span class="p">(</span><span class="n">dt</span><span class="p">):</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="n">video</span><span class="o">.</span><span class="n">source</span>
+    <span class="n">video</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="s1">''</span>
+    <span class="n">video</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span>
+    <span class="n">video</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s1">'play'</span>
+
+<span class="c1"># A trigger runs once, even when eos and on_error both arrive.</span>
+<span class="n">reconnect_later</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">create_trigger</span><span class="p">(</span><span class="n">reconnect</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">video</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_error</span><span class="o">=</span><span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">reconnect_later</span><span class="p">())</span>
+<span class="n">video</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">eos</span><span class="o">=</span><span class="k">lambda</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">value</span> <span class="ow">and</span> <span class="n">reconnect_later</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>On macOS and iOS, App Transport Security can block unencrypted <code class="docutils literal notranslate"><span class="pre">http://</span></code>
+to a host name, such as <code class="docutils literal notranslate"><span class="pre">http://camera.example.com/live.m3u8</span></code>. Then
+<code class="docutils literal notranslate"><span class="pre">on_error</span></code> fires with a message that names App Transport Security. An IP
+address or a <code class="docutils literal notranslate"><span class="pre">.local</span></code> name isn’t blocked. To allow a host, add an exception for its
+domain to the app’s <code class="docutils literal notranslate"><span class="pre">Info.plist</span></code>. With kivyforge, in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[tool.kivy.ios.info_plist.NSAppTransportSecurity.NSExceptionDomains.</span><span class="s2">"example.com"</span><span class="k">]</span>
+<span class="n">NSExceptionAllowsInsecureHTTPLoads</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="n">NSIncludesSubdomains</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+</pre></div>
+</div>
+<p>For a macOS app, use <code class="docutils literal notranslate"><span class="pre">tool.kivy.macos.info_plist</span></code> instead.</p>
+</section>
 <dl class="py class">
 <dt class="sig sig-object py" id="kivy.uix.video.Video">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">kivy.uix.video.</span></span><span class="sig-name descname"><span class="pre">Video</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/kivy/uix/video.html#Video"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#kivy.uix.video.Video" title="Link to this definition">¶</a></dt>

@@ -515,12 +515,25 @@ the app target API 36.</p>
 </div>
 <p>Depending on what the app plays, it may need more:</p>
 <ul>
-<li><p><strong>HLS or DASH streams</strong> (<code class="docutils literal notranslate"><span class="pre">.m3u8</span></code>, <code class="docutils literal notranslate"><span class="pre">.mpd</span></code>): add
-<code class="docutils literal notranslate"><span class="pre">androidx.media3:media3-exoplayer-hls</span></code> or
-<code class="docutils literal notranslate"><span class="pre">androidx.media3:media3-exoplayer-dash</span></code>, at the same version. ExoPlayer
-picks them up by the stream’s file extension.</p></li>
+<li><p><strong>HLS, DASH or RTSP streams</strong> (<code class="docutils literal notranslate"><span class="pre">.m3u8</span></code>, <code class="docutils literal notranslate"><span class="pre">.mpd</span></code>, <code class="docutils literal notranslate"><span class="pre">rtsp://</span></code>): add
+<code class="docutils literal notranslate"><span class="pre">androidx.media3:media3-exoplayer-hls</span></code>,
+<code class="docutils literal notranslate"><span class="pre">androidx.media3:media3-exoplayer-dash</span></code> or
+<code class="docutils literal notranslate"><span class="pre">androidx.media3:media3-exoplayer-rtsp</span></code>, at the same version. ExoPlayer
+picks them up by the stream’s file extension or URL scheme. <code class="docutils literal notranslate"><span class="pre">rtspt://</span></code>
+(RTSP over TCP) uses the RTSP module too. See “Network streams” in
+<a class="reference internal" href="../api-kivy.uix.video.html#module-kivy.uix.video" title="kivy.uix.video"><code class="xref py py-mod docutils literal notranslate"><span class="pre">kivy.uix.video</span></code></a> for what each provider plays.</p></li>
 <li><p><strong>Network sources</strong> (<code class="docutils literal notranslate"><span class="pre">http://</span></code>, <code class="docutils literal notranslate"><span class="pre">https://</span></code>): declare the <code class="docutils literal notranslate"><span class="pre">INTERNET</span></code>
 permission.</p></li>
+<li><p><strong>Unencrypted HTTP</strong> (<code class="docutils literal notranslate"><span class="pre">http://</span></code>, not <code class="docutils literal notranslate"><span class="pre">https://</span></code>): Android blocks
+cleartext traffic by default, so the stream fails with <code class="docutils literal notranslate"><span class="pre">on_error</span></code>. Set
+<code class="docutils literal notranslate"><span class="pre">android:usesCleartextTraffic=&quot;true&quot;</span></code> on the <code class="docutils literal notranslate"><span class="pre">&lt;application&gt;</span></code> element.
+With kivyforge, in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[tool.kivy.android.manifest.application]</span>
+<span class="s2">"android:usesCleartextTraffic"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+</pre></div>
+</div>
+<p>RTSP isn’t HTTP, so it doesn’t need this.</p>
+</li>
 <li><p><strong>Release builds with R8</strong> (code shrinking): Python reaches ExoPlayer through
 pyjnius, which R8 can’t see, so R8 would remove the classes the provider
 needs. Debug builds still play, but in the release build every video fires
