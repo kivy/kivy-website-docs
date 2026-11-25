@@ -385,6 +385,12 @@
 <span class="sd">    * "Ctrl + e": activate / deactivate the inspector view</span>
 <span class="sd">    * "Escape": cancel widget lookup first, then hide the inspector view</span>
 
+<span class="sd">.. note::</span>
+
+<span class="sd">    The :mod:`~kivy.modules.console` and :mod:`~kivy.modules.joycursor`</span>
+<span class="sd">    modules also use "Ctrl + e". If more than one of them is enabled, only</span>
+<span class="sd">    the module started last reacts to it.</span>
+
 <span class="sd">Available inspector interactions:</span>
 
 <span class="sd">    * tap once on a widget to select it without leaving inspect mode</span>
@@ -695,6 +701,9 @@
 
     <span class="n">_update_widget_tree_ev</span> <span class="o">=</span> <span class="kc">None</span>
 
+    <span class="c1"># kept above the other Window children while activated</span>
+    <span class="n">_keep_on_top</span> <span class="o">=</span> <span class="kc">True</span>
+
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">win</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'win'</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Inspector</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -705,7 +714,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">gtransform</span> <span class="o">=</span> <span class="n">Factory</span><span class="o">.</span><span class="n">Transform</span><span class="p">(</span><span class="n">Matrix</span><span class="p">())</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">grect</span> <span class="o">=</span> <span class="n">Factory</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
             <span class="n">Factory</span><span class="o">.</span><span class="n">PopMatrix</span><span class="p">()</span>
-        <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_interval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_widget_graphics</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="c1"># runs every frame, but only while the Inspector is activated</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_widget_graphics_ev</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">create_trigger</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_widget_graphics</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_touch_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">touch</span><span class="p">):</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Inspector</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_touch_down</span><span class="p">(</span><span class="n">touch</span><span class="p">)</span>
@@ -734,10 +745,24 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">on_window_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">children</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">avoid_bring_to_top</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">activated</span><span class="p">:</span>
             <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bring_to_top</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_bring_to_top</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">win</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">win</span>
+        <span class="c1"># only the other keep-on-top modules (Inspector, Console, JoyCursor)</span>
+        <span class="c1"># may be above it, otherwise they would keep swapping places</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">win</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">child</span> <span class="ow">is</span> <span class="bp">self</span><span class="p">:</span>
+                <span class="k">return</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="s1">'_keep_on_top'</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+                <span class="k">break</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">avoid_bring_to_top</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="n">win</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="n">win</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">avoid_bring_to_top</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="n">win</span><span class="p">:</span>
+                <span class="n">win</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">win</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">avoid_bring_to_top</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">highlight_at</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="n">widget</span> <span class="o">=</span> <span class="kc">None</span>
@@ -819,7 +844,11 @@
         <span class="k">return</span> <span class="n">ret</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">on_activated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">activated</span><span class="p">):</span>
+        <span class="c1"># stop any slide-in/slide-out still running; a cancelled close</span>
+        <span class="c1"># animation doesn't call animation_close</span>
+        <span class="n">Animation</span><span class="o">.</span><span class="n">cancel_all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">activated</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_widget_graphics_ev</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">grect</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">at_bottom</span><span class="p">:</span>
                 <span class="n">anim</span> <span class="o">=</span> <span class="n">Animation</span><span class="p">(</span><span class="n">top</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="s1">'out_quad'</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mf">.3</span><span class="p">)</span>
@@ -830,7 +859,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">widget</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">widget_info</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="c1"># during the close animation the Inspector is still a child of</span>
+            <span class="c1"># the Window, so only move it to the top instead of adding it</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bring_to_top</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_widget_graphics_ev</span><span class="p">()</span>
             <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Inspector: inspector activated'</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">at_bottom</span><span class="p">:</span>
                 <span class="n">Animation</span><span class="p">(</span><span class="n">top</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="s1">'out_quad'</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mf">.3</span><span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">)</span>
@@ -1124,9 +1156,14 @@
         <span class="n">ctx</span><span class="o">.</span><span class="n">ev_late_create</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
         <span class="k">del</span> <span class="n">ctx</span><span class="o">.</span><span class="n">ev_late_create</span>
     <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s1">'inspector'</span><span class="p">):</span>
-        <span class="n">win</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">inspector</span><span class="o">.</span><span class="n">on_window_children</span><span class="p">,</span>
-                   <span class="n">on_keyboard</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">inspector</span><span class="o">.</span><span class="n">keyboard_shortcut</span><span class="p">)</span>
-        <span class="n">win</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">inspector</span><span class="p">)</span>
+        <span class="n">ins</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">inspector</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="n">ins</span><span class="o">.</span><span class="n">on_window_children</span><span class="p">,</span>
+                   <span class="n">on_keyboard</span><span class="o">=</span><span class="n">ins</span><span class="o">.</span><span class="n">keyboard_shortcut</span><span class="p">)</span>
+        <span class="c1"># close without the slide-out animation: animation_close removes the</span>
+        <span class="c1"># Inspector from the Window and cancels its scheduled updates</span>
+        <span class="n">ins</span><span class="o">.</span><span class="n">activated</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">Animation</span><span class="o">.</span><span class="n">cancel_all</span><span class="p">(</span><span class="n">ins</span><span class="o">.</span><span class="n">layout</span><span class="p">)</span>
+        <span class="n">ins</span><span class="o">.</span><span class="n">animation_close</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">del</span> <span class="n">ctx</span><span class="o">.</span><span class="n">inspector</span></div>
 
 </pre></div>
@@ -1143,7 +1180,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Nov 24, 2026.
+    Last updated on Nov 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->

@@ -409,6 +409,12 @@
 <span class="sd">- "Left": select the previous sibling</span>
 <span class="sd">- "Right": select the next sibling</span>
 
+<span class="sd">.. note::</span>
+
+<span class="sd">    The :mod:`~kivy.modules.inspector` and :mod:`~kivy.modules.joycursor`</span>
+<span class="sd">    modules also use "Ctrl + e". If more than one of them is enabled, only</span>
+<span class="sd">    the module started last reacts to it.</span>
+
 <span class="sd">Additional information</span>
 <span class="sd">----------------------</span>
 
@@ -451,7 +457,7 @@
 <span class="sd">        def activate(self):</span>
 <span class="sd">            self.event = Clock.schedule_interval(self.update_fps, 1 / 2.)</span>
 
-<span class="sd">        def deactivated(self):</span>
+<span class="sd">        def deactivate(self):</span>
 <span class="sd">            self.event.cancel()</span>
 
 <span class="sd">        def update_fps(self, *args):</span>
@@ -782,7 +788,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">ev</span><span class="p">()</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">deactivated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">deactivate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_ev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_update_ev</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
 
@@ -1171,6 +1177,9 @@
     <span class="c1">#: True if the Console is activated (showed)</span>
     <span class="n">activated</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
+    <span class="c1"># kept above the other Window children while activated</span>
+    <span class="n">_keep_on_top</span> <span class="o">=</span> <span class="kc">True</span>
+
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">win</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'win'</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Console</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -1181,7 +1190,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">gtransform</span> <span class="o">=</span> <span class="n">Transform</span><span class="p">(</span><span class="n">Matrix</span><span class="p">())</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">grect</span> <span class="o">=</span> <span class="n">Rectangle</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
             <span class="n">PopMatrix</span><span class="p">()</span>
-        <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_interval</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_widget_graphics</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="c1"># runs every frame, but only while the Console is activated</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_widget_graphics_ev</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">create_trigger</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_widget_graphics</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_toolbar</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"left"</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">"panels"</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">"right"</span><span class="p">:</span> <span class="p">[]}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_addons</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1310,10 +1321,24 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">on_window_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">children</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">avoid_bring_to_top</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">activated</span><span class="p">:</span>
             <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bring_to_top</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_bring_to_top</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">win</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">win</span>
+        <span class="c1"># only the other keep-on-top modules (Inspector, Console, JoyCursor)</span>
+        <span class="c1"># may be above it, otherwise they would keep swapping places</span>
+        <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">win</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">child</span> <span class="ow">is</span> <span class="bp">self</span><span class="p">:</span>
+                <span class="k">return</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="s1">'_keep_on_top'</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+                <span class="k">break</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">avoid_bring_to_top</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="n">win</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="n">win</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">avoid_bring_to_top</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="n">win</span><span class="p">:</span>
+                <span class="n">win</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">win</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">avoid_bring_to_top</span> <span class="o">=</span> <span class="kc">False</span>
 
 <div class="viewcode-block" id="Console.highlight_at">
 <a class="viewcode-back" href="../../../api-kivy.modules.console.html#kivy.modules.console.Console.highlight_at">[docs]</a>
@@ -1380,27 +1405,31 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_deactivate_console</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_activate_console</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bring_to_top</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">addon</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_addons</span><span class="p">:</span>
             <span class="n">addon</span><span class="o">.</span><span class="n">activate</span><span class="p">()</span>
+        <span class="c1"># deactivating the addons also deactivated the current panel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_panel</span><span class="o">.</span><span class="n">cb_activate</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_widget_graphics_ev</span><span class="p">()</span>
         <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Console: console activated'</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_deactivate_console</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_widget_graphics_ev</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">addon</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_addons</span><span class="p">:</span>
             <span class="n">addon</span><span class="o">.</span><span class="n">deactivate</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">grect</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">inspect_enabled</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="c1"># self.win.remove_widget(self)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">win</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_window_node</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">Logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Console: console deactivated'</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">keyboard_shortcut</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">scancode</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
-        <span class="n">modifiers</span> <span class="o">=</span> <span class="n">largs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">scancode</span> <span class="o">==</span> <span class="mi">101</span> <span class="ow">and</span> <span class="n">modifiers</span> <span class="o">==</span> <span class="p">[</span><span class="s1">'ctrl'</span><span class="p">]:</span>
+        <span class="n">modifiers</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">largs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">scancode</span> <span class="o">==</span> <span class="mi">101</span> <span class="ow">and</span> <span class="s1">'ctrl'</span> <span class="ow">in</span> <span class="n">modifiers</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">modifiers</span> <span class="o">&amp;</span> <span class="p">{</span>
+                <span class="s1">'shift'</span><span class="p">,</span> <span class="s1">'alt'</span><span class="p">,</span> <span class="s1">'meta'</span><span class="p">}:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">activated</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">activated</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">activated</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">inspect_enabled</span> <span class="o">=</span> <span class="kc">True</span>
@@ -1464,18 +1493,25 @@
 <span class="sd">                The Widget to be inspected.</span>
 
 <span class="sd">    """</span>
-    <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">create_console</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">ctx</span><span class="p">))</span></div>
+    <span class="n">ctx</span><span class="o">.</span><span class="n">ev_late_create_console</span> <span class="o">=</span> <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span>
+        <span class="n">partial</span><span class="p">(</span><span class="n">create_console</span><span class="p">,</span> <span class="n">win</span><span class="p">,</span> <span class="n">ctx</span><span class="p">))</span></div>
 
 
 
 <div class="viewcode-block" id="stop">
 <a class="viewcode-back" href="../../../api-kivy.modules.console.html#kivy.modules.console.stop">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">stop</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Stop and unload any active Inspectors for the given *ctx*."""</span>
+<span class="w">    </span><span class="sd">"""Stop and unload any active Consoles for the given *ctx*."""</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s2">"ev_late_create_console"</span><span class="p">):</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="n">ev_late_create_console</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+        <span class="k">del</span> <span class="n">ctx</span><span class="o">.</span><span class="n">ev_late_create_console</span>
     <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="s2">"console"</span><span class="p">):</span>
-        <span class="n">win</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">console</span><span class="o">.</span><span class="n">on_window_children</span><span class="p">,</span>
-                   <span class="n">on_keyboard</span><span class="o">=</span><span class="n">ctx</span><span class="o">.</span><span class="n">console</span><span class="o">.</span><span class="n">keyboard_shortcut</span><span class="p">)</span>
-        <span class="n">win</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">console</span><span class="p">)</span>
+        <span class="n">console</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">console</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="n">console</span><span class="o">.</span><span class="n">on_window_children</span><span class="p">,</span>
+                   <span class="n">on_keyboard</span><span class="o">=</span><span class="n">console</span><span class="o">.</span><span class="n">keyboard_shortcut</span><span class="p">)</span>
+        <span class="c1"># deactivates the addons and removes the Console from the Window</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">activated</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="n">console</span><span class="p">)</span>
         <span class="k">del</span> <span class="n">ctx</span><span class="o">.</span><span class="n">console</span></div>
 
 </pre></div>
@@ -1492,7 +1528,7 @@
 <!--
 <div class="footer">
     &copy; Copyright 2010-2026, Kivy Team and other contributors.
-    Last updated on Nov 24, 2026.
+    Last updated on Nov 25, 2026.
     Created using Sphinx 9.1.0.
 </div>
 -->
